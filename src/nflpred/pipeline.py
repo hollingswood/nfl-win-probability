@@ -31,20 +31,28 @@ def current_season(today: dt.date) -> int:
 def build(refresh: bool, today: dt.date) -> pd.DataFrame:
     season = current_season(today)
     games = data.load_schedules(refresh=refresh)
-    pbp = data.load_pbp(range(2012, season + 1), refresh_current=season if refresh else None)
-    return F.build_features(games, pbp)
+    seasons = range(2012, season + 1)
+    cur = season if refresh else None
+    pbp = data.load_pbp(seasons, refresh_current=cur)
+    inj = (data.load_injuries(seasons, cur), data.load_snaps(seasons, cur), data.load_players(refresh))
+    return F.build_features(games, pbp, inj)
 
 
-def _to_prob(logodds: float) -> float:
-    return float(1 / (1 + np.exp(-logodds)))
+def _pts_to_prob_points(pts: float, sigma: float) -> float:
+    """Approximate win-probability points (vs. a coin flip) for a margin contribution."""
+    return float(100 * (M._norm_cdf(abs(pts) / sigma) - 0.5))
 
 
-def predict_games(model, games: pd.DataFrame) -> list[dict]:
-    p = model.predict_proba(games[F.FEATURES])[:, 1]
-    expl = M.explain_logistic(model, games)
+def _opt(v, nd=4):
+    return None if pd.isna(v) else round(float(v), nd)
+
+
+def predict_games(model: M.MarginModel, games: pd.DataFrame) -> list[dict]:
+    p = M.predict(model, games)
+    margin = model.predict_margin(games)
+    expl = M.explain(model, games)
     out = []
-    for (_, g), ph, ex in zip(games.iterrows(), p, expl):
-        fav_home = ph >= 0.5
+    for (_, g), ph, mg, ex in zip(games.iterrows(), p, margin, expl):
         out.append({
             "game_id": g["game_id"], "season": int(g["season"]), "week": int(g["week"]),
             "gameday": g["gameday"].date().isoformat(), "gametime": g.get("gametime"),
@@ -52,16 +60,19 @@ def predict_games(model, games: pd.DataFrame) -> list[dict]:
             "neutral_site": bool(g["location"] == "Neutral"),
             "home_qb": g.get("home_qb_name"), "away_qb": g.get("away_qb_name"),
             "home_win_prob": round(float(ph), 4), "away_win_prob": round(float(1 - ph), 4),
-            "pick": g["home_team"] if fav_home else g["away_team"],
-            "vegas_home_prob": None if pd.isna(g["vegas_home_prob"]) else round(float(g["vegas_home_prob"]), 4),
+            "pick": g["home_team"] if ph >= 0.5 else g["away_team"],
+            # Spreads as "home margin": +3 means home favored by 3.
+            "model_home_margin": round(float(mg), 1),
+            "vegas_home_margin": _opt(g.get("spread_line"), 1),
+            "vegas_home_prob": _opt(g["vegas_home_prob"]),
+            "injury_report": bool(g.get("home_inj_reported", 0) and g.get("away_inj_reported", 0)),
             "home_win": None if pd.isna(g["home_win"]) else int(g["home_win"]),
             "home_score": None if pd.isna(g["home_score"]) else int(g["home_score"]),
             "away_score": None if pd.isna(g["away_score"]) else int(g["away_score"]),
-            # Positive = favors home team. Converted to approx. probability points vs a coin flip.
             "top_factors": [
-                {"factor": e.label, "favors": g["home_team"] if e.logodds > 0 else g["away_team"],
-                 "logodds": round(e.logodds, 3),
-                 "prob_points": round(100 * (_to_prob(abs(e.logodds)) - 0.5), 1)}
+                {"factor": e.factor, "favors": g["home_team"] if e.points > 0 else g["away_team"],
+                 "points": round(abs(e.points), 1),
+                 "prob_points": round(_pts_to_prob_points(e.points, model.sigma), 1)}
                 for e in ex
             ],
         })
@@ -74,9 +85,9 @@ def season_to_date(df: pd.DataFrame, season: int) -> pd.DataFrame:
     done = df[(df["season"] == season) & df["home_win"].notna()]
     parts = []
     for wk, d in done.groupby("week"):
-        m = M.fit(df, "logistic", before_date=d["gameday"].min())
+        m = M.fit(df, before_date=d["gameday"].min())
         d = d.copy()
-        d["p_model"] = m.predict_proba(d[F.FEATURES])[:, 1]
+        d["p_model"] = M.predict(m, d)
         parts.append(d)
     return pd.concat(parts) if parts else done.assign(p_model=[])
 
@@ -88,7 +99,7 @@ def cmd_backtest(df: pd.DataFrame) -> dict:
         "seasons": f"{BACKTEST_SEASONS.start}-{BACKTEST_SEASONS.stop - 1}",
         "overall": allrows.drop(columns="season").to_dict(orient="index"),
         "by_season": summ[summ["season"] != "ALL"].to_dict(orient="records"),
-        "calibration_logistic": M.calibration_table(preds["home_win"], preds["p_logistic"]).to_dict(orient="records"),
+        "calibration": M.calibration_table(preds["home_win"], preds[f"p_{M.PRODUCTION}"]).to_dict(orient="records"),
     }
     OUT.mkdir(exist_ok=True)
     M.save_json(res, OUT / "backtest.json")
@@ -96,7 +107,7 @@ def cmd_backtest(df: pd.DataFrame) -> dict:
 
 
 def cmd_gate(res: dict) -> int:
-    new = res["overall"]["logistic"]["log_loss"]
+    new = res["overall"][M.PRODUCTION]["log_loss"]
     if not BASELINE.exists():
         print(f"No baseline; writing {new:.4f}")
         BASELINE.write_text(json.dumps({"log_loss": new}, indent=2))
@@ -112,7 +123,7 @@ def cmd_gate(res: dict) -> int:
 
 def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9) -> dict:
     season = current_season(today)
-    model = M.fit(df, "logistic")
+    model = M.fit(df)
     upcoming = df[(~df["completed"]) & (df["gameday"].dt.date >= today)
                   & (df["gameday"].dt.date <= today + dt.timedelta(days=horizon_days))]
     std = season_to_date(df, season)

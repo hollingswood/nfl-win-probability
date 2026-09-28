@@ -7,17 +7,32 @@ scores itself against Vegas. Retrains and republishes automatically every week.
 
 | Model | Log loss | Brier | Picks correct |
 |---|---|---|---|
-| Logistic regression (production) | 0.628 | 0.219 | 65.5% |
-| Gradient boosting (calibrated) | 0.635 | 0.222 | 63.6% |
+| **Margin model (production, v2)** | **0.624** | **0.217** | **65.8%** |
+| Logistic regression (v2 features) | 0.625 | 0.218 | 65.8% |
+| Gradient boosting (calibrated) | 0.632 | 0.221 | 63.9% |
+| v1 logistic (no QB-change / injury features) | 0.628 | 0.219 | 65.5% |
 | Vegas moneyline (no-vig) | 0.609 | 0.211 | 66.4% |
 | Always pick home team | 0.690 | 0.248 | 54.4% |
 
-Logistic regression beat gradient boosting, so it runs in production. It also makes per-game explanations exact.
+The production model predicts the home team's point margin with ridge regression, then converts it to a
+win probability (normal distribution, σ ≈ 13 points). Explanations are in points of margin.
+
+### What changed in v2 (tuned on 2015–2019, confirmed on 2020–2025 holdout)
+| Change | Validation LL | Holdout LL |
+|---|---|---|
+| v1 baseline | 0.6261 | 0.6295 |
+| + QB change (starter vs. team's recent QBs) | 0.6246 | 0.6273 |
+| + injuries (Out/Doubtful × recent snap share) | 0.6255 | 0.6258 |
+| + predict margin instead of win/loss | **0.6219** | **0.6242** |
+
+Tried and rejected (no consistent gain): garbage-time play filter, opponent-adjusted EPA,
+recency-weighted training, QB-rating and Elo parameter tuning, gradient boosting.
 
 ## Features (all computed from games before kickoff)
 Elo rating · starting QB EPA/dropback (shrunk toward replacement level, decays over ~20 games) ·
 offensive and defensive EPA/play and success rate · passing and rushing EPA · turnover margin ·
-recent point differential · rest days · home field / neutral site · division game.
+recent point differential · starter vs. team's usual QB · injuries (non-QB players Out/Doubtful,
+weighted by recent snap share) · rest days · home field / neutral site · division game.
 Team stats are exponentially weighted (8-game half-life) and carry across seasons.
 
 ## Run it
@@ -42,5 +57,7 @@ open site/index.html
 3. Settings → Actions → General → Workflow permissions: **Read and write**.
 4. For the Claude workflow: in Claude Code run `/install-github-app`, or add an `ANTHROPIC_API_KEY` repo secret.
 5. Run **Weekly predictions** once from the Actions tab (workflow_dispatch) to publish the first board.
+
+Experiments: `PYTHONPATH=src:scripts python -c "from experiment import run; ..."` (see `scripts/experiment.py`).
 
 Data: [nflverse](https://github.com/nflverse/nflverse-data). Not betting advice.

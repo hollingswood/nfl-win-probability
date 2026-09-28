@@ -58,10 +58,13 @@ section{display:grid;gap:14px}
 .edge{font-size:13px;color:var(--muted)}
 .edge strong{color:var(--ink);font-weight:600}
 .factors{display:grid;gap:4px;border-top:1px dashed var(--line);padding-top:8px}
-.f{display:grid;grid-template-columns:1fr 64px 44px;gap:8px;align-items:center;font-size:13px}
+.f{display:grid;grid-template-columns:1fr 56px 58px;gap:8px;align-items:center;font-size:13px}
 .f .fb{height:6px;background:var(--accent-soft);position:relative}
 .f .fb span{position:absolute;top:0;bottom:0;background:var(--accent)}
-.f .fv{text-align:right;font:12px var(--mono);color:var(--muted)}
+.f .fv{text-align:right;font:12px var(--mono);color:var(--muted);white-space:nowrap}
+.spreads{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.spreads b{color:var(--ink);font-weight:500}
+.spreads .pend{color:var(--vegas)}
 .tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
 
 /* tables & charts */
@@ -85,7 +88,7 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
   <header>
     <div class="eyebrow" id="stamp"></div>
     <h1>Win Probability Board</h1>
-    <p>Logistic regression on team efficiency (EPA), starting-QB form, Elo, turnovers, rest and home field. Every number uses only games played before kickoff. The red tick is the Vegas no-vig line for comparison.</p>
+    <p>Predicts each game's point margin from team efficiency (EPA), starting-QB form, injuries, Elo, turnovers, rest and home field, then converts it to a win probability. Every input uses only information available before kickoff. The red tick marks the Vegas no-vig line.</p>
   </header>
 
   <div class="strip" id="strip"></div>
@@ -117,7 +120,7 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
 
   <section class="notes">
     <h2 style="color:var(--ink)">How to read this</h2>
-    <p>Factor bars show how much each input moved the prediction away from a coin flip, in approximate percentage points, and which team it favors. Home field includes the league-wide home edge, which is near zero at neutral sites.</p>
+    <p>Factor bars show how many points of predicted margin each input is worth and which team it favors. Home field is about 2 points, and near zero at neutral sites. Injuries count every non-QB player listed Out or Doubtful, weighted by their recent share of snaps; reports come out Wednesday to Friday, so early-week numbers assume everyone is healthy.</p>
     <p>Vegas is a very strong benchmark. Matching it over a full season would be a good result; a large disagreement usually means the market knows something the model doesn't, like an injury announced after the data refresh.</p>
   </section>
   <footer id="foot"></footer>
@@ -134,7 +137,7 @@ const fmtDay = iso => new Date(iso+'T12:00:00').toLocaleDateString('en-US',{week
 document.getElementById('stamp').textContent =
   `${P.season} season · updated ${new Date(P.generated_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}`;
 
-const lg = B.overall.logistic, vg = B.overall.vegas, sm = P.season_to_date.model, sv = P.season_to_date.vegas;
+const lg = B.overall.margin, vg = B.overall.vegas, sm = P.season_to_date.model, sv = P.season_to_date.vegas;
 document.getElementById('strip').innerHTML = [
   [pct(lg.accuracy), `Backtest picks correct, ${B.seasons} (${lg.n.toLocaleString()} games)`],
   [pct(vg.accuracy), `Vegas favorite correct, same games`],
@@ -145,11 +148,12 @@ document.getElementById('strip').innerHTML = [
 document.getElementById('games').innerHTML = P.upcoming.map(g => {
   const hp = g.home_win_prob, homeFav = hp >= .5;
   const edge = g.vegas_home_prob == null ? null : (hp - g.vegas_home_prob);
-  const maxPts = 25;
+  const maxPts = 8;
   const factors = g.top_factors.map(f =>
     `<div class="f"><span>${esc(f.factor)} → <strong>${esc(f.favors)}</strong></span>
-      <span class="fb"><span style="left:0;width:${Math.min(100, f.prob_points/maxPts*100)}%"></span></span>
-      <span class="fv">+${f.prob_points.toFixed(1)}</span></div>`).join('');
+      <span class="fb"><span style="left:0;width:${Math.min(100, f.points/maxPts*100)}%"></span></span>
+      <span class="fv">${f.points.toFixed(1)} pts</span></div>`).join('');
+  const line = m => m == null ? '—' : (Math.abs(m) < 0.25 ? 'Pick' : (m > 0 ? `${esc(g.home_team)} −${Math.abs(m).toFixed(1)}` : `${esc(g.away_team)} −${Math.abs(m).toFixed(1)}`));
   let edgeTxt = 'No Vegas line yet';
   if (edge != null) {
     const who = edge > 0 ? g.home_team : g.away_team;
@@ -168,6 +172,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       ${g.vegas_home_prob!=null?`<span class="v" style="left:${(1-g.vegas_home_prob)*100}%"></span>`:''}
     </div>
     <div class="edge">${edgeTxt}</div>
+    <div class="spreads"><span>Model line <b>${line(g.model_home_margin)}</b></span><span>Vegas line <b>${line(g.vegas_home_margin)}</b></span>${g.injury_report?'':'<span class="pend">Injury report pending</span>'}</div>
     <div class="factors">${factors}</div>
   </article>`;
 }).join('');
@@ -183,7 +188,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     s+=`<text x="${x(t)}" y="${H-m.b+16}" text-anchor="middle">${pct(t)}</text>`;
   }
   s+=`<line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(1)}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
-  const pts=B.calibration_logistic, maxn=Math.max(...pts.map(p=>p.n));
+  const pts=B.calibration, maxn=Math.max(...pts.map(p=>p.n));
   s+=`<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="${pts.map(p=>x(p.predicted)+','+y(p.actual)).join(' ')}"/>`;
   for (const p of pts) s+=`<circle cx="${x(p.predicted)}" cy="${y(p.actual)}" r="${3+7*Math.sqrt(p.n/maxn)}" fill="var(--accent)" fill-opacity=".25" stroke="var(--accent)"><title>Predicted ${pct(p.predicted)}, actual ${pct(p.actual)} (${p.n} games)</title></circle>`;
   s+=`<text x="${x(.5)}" y="${H-4}" text-anchor="middle">Predicted home win probability</text>`;
@@ -194,9 +199,9 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
 // backtest table
 (function(){
   const rows={}; for (const r of B.by_season) (rows[r.season] ??= {})[r.model]=r;
-  const models=[['logistic','Model'],['gbm','Boosted trees'],['vegas','Vegas'],['home_always_55%','Always home']];
+  const models=[['margin','Model'],['logistic','Logistic'],['gbm','Boosted trees'],['vegas','Vegas'],['home_always','Always home']];
   let h=`<thead><tr><th>Season</th>${models.map(m=>`<th>${m[1]}</th>`).join('')}</tr></thead><tbody>`;
-  const line=(label,r)=>{const best=Math.min(r.logistic.log_loss,r.vegas.log_loss);
+  const line=(label,r)=>{const best=Math.min(...models.map(([k])=>r[k].log_loss));
     return `<tr><td>${label}</td>${models.map(([k])=>`<td class="${r[k].log_loss===best?'best':''}">${r[k].log_loss.toFixed(3)}</td>`).join('')}</tr>`};
   for (const s of Object.keys(rows).sort()) h+=line(s,rows[s]);
   h+=line('<strong>All</strong>',B.overall)+'</tbody>';

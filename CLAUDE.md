@@ -6,7 +6,9 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 ## Layout
 - `src/nflpred/data.py` — downloads nflverse schedules + play-by-play (release parquet files), cached in `data/raw/`
 - `src/nflpred/features.py` — all pre-game features. `FEATURES` is the model's input list.
-- `src/nflpred/model.py` — models, season-forward backtest, explanations (`FACTOR_GROUPS`)
+- `src/nflpred/injuries.py` — injury-report feature (Out/Doubtful × prior snap share)
+- `scripts/experiment.py` — harness: `run(name, feat_cfg, model_kind, features)` returns validation (2015-19) and holdout (2020-25) log loss. Pick changes on validation; report holdout.
+- `src/nflpred/model.py` — `MarginModel` (production: ridge on point margin → win prob), baselines, backtest, explanations in points (`FACTOR_GROUPS`)
 - `src/nflpred/pipeline.py` — CLI: `update`, `backtest`, `gate`
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past
@@ -33,13 +35,14 @@ python scripts/build_dashboard.py
 4. **Judge models by log loss and Brier score**, not accuracy. Report next to Vegas.
 5. If a change improves the backtest, update `model_baseline.json` in the same PR and say why in the
    PR description. If it's worse by more than 0.002 log loss, CI fails; don't raise the tolerance.
-6. Keep explanations exact: per-game factor contributions plus intercept must sum to the model's
-   log-odds (`test_explanations_sum_to_model_logit`). If you switch to a non-linear model, use
+6. Keep explanations exact: per-game factor contributions must sum to the predicted margin
+   (`test_explanations_sum_to_predicted_margin`). If you switch to a non-linear model, use
    SHAP and keep an equivalent test.
 
 ## Ideas backlog (good next PRs)
-- Opponent-adjusted EPA (adjust each game's EPA by opponent's defensive EPA)
-- Injury data (`nflverse-data` releases tag `injuries`) for non-QB starters
+- Late-season rest: flag week-18 games where a team's playoff seed is already locked (biggest remaining miss vs Vegas)
+- Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
+- Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
 - Weather/wind for outdoor games; travel distance and time zones
-- Point-spread regression model → convert to probability
-- Model + market blend as a separate labeled output
+- Already tried without gain (don't repeat without a new angle): garbage-time filter, opponent-adjusted EPA,
+  recency weighting, QB/Elo parameter grids, gradient boosting

@@ -15,7 +15,7 @@ RAW_DIR = Path(__file__).resolve().parents[2] / "data" / "raw"
 PBP_COLS = [
     "game_id", "season", "week", "posteam", "defteam", "play_type", "pass", "rush",
     "qb_kneel", "qb_spike", "epa", "success", "interception", "fumble_lost",
-    "fumbled_1_team", "qb_dropback", "qb_epa", "id", "cpoe",
+    "fumbled_1_team", "qb_dropback", "qb_epa", "id", "cpoe", "wp",
 ]
 
 
@@ -47,3 +47,30 @@ def load_pbp(seasons, refresh_current: int | None = None, raw_dir: Path = RAW_DI
         )
         frames.append(pd.read_parquet(path, columns=PBP_COLS))
     return pd.concat(frames, ignore_index=True)
+
+
+def _release(tag: str, name: str, seasons=None, refresh_current=None, raw_dir: Path = RAW_DIR):
+    if seasons is None:
+        return pd.read_parquet(_download(f"{BASE}/{tag}/{name}.parquet", raw_dir / f"{name}.parquet",
+                                         refresh_current is not None))
+    frames = []
+    for s in seasons:
+        try:
+            path = _download(f"{BASE}/{tag}/{name}_{s}.parquet", raw_dir / f"{name}_{s}.parquet",
+                             refresh=(s == refresh_current))
+            frames.append(pd.read_parquet(path))
+        except Exception:  # e.g. current season's file not published yet
+            continue
+    return pd.concat(frames, ignore_index=True)
+
+
+def load_injuries(seasons, refresh_current=None):
+    return _release("injuries", "injuries", seasons, refresh_current)
+
+
+def load_snaps(seasons, refresh_current=None):
+    return _release("snap_counts", "snap_counts", seasons, refresh_current)
+
+
+def load_players(refresh=False):
+    return _release("players", "players", None, 0 if refresh else None)

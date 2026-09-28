@@ -17,6 +17,8 @@ ELO_K = 20.0
 ELO_HFA = 48.0
 ELO_MEAN = 1505.0
 ELO_REVERT = 1 / 3
+WP_FILTER: tuple[float, float] | None = None  # e.g. (0.05, 0.95): drop garbage-time plays
+OPP_ADJUST = False       # adjust each game's efficiency for the opponent's pre-game rating
 
 # Relocated franchises: nflverse uses current abbreviations in pbp but schedules keep
 # historical ones in some seasons; normalize so a team's history is continuous.
@@ -25,7 +27,7 @@ TEAM_MAP = {"OAK": "LV", "SD": "LAC", "STL": "LA"}
 FEATURES = [
     "elo_diff", "qb_diff", "off_epa_diff", "def_epa_diff", "off_sr_diff", "def_sr_diff",
     "pass_epa_diff", "rush_epa_diff", "to_margin_diff", "pt_diff_diff", "rest_diff",
-    "home_field", "div_game",
+    "home_field", "div_game", "qb_change_diff", "inj_off_diff", "inj_def_diff",
 ]
 
 FEATURE_LABELS = {
@@ -42,6 +44,9 @@ FEATURE_LABELS = {
     "rest_diff": "Rest advantage",
     "home_field": "Home field",
     "div_game": "Division game",
+    "qb_change_diff": "Starter vs. team's usual QB",
+    "inj_off_diff": "Offensive injuries",
+    "inj_def_diff": "Defensive injuries",
 }
 
 
@@ -62,6 +67,9 @@ def prepare_schedule(games: pd.DataFrame, min_season: int = 2012) -> pd.DataFram
 def team_game_stats(pbp: pd.DataFrame) -> pd.DataFrame:
     p = pbp[(pbp["pass"].eq(1) | pbp["rush"].eq(1)) & pbp["epa"].notna()
             & pbp["qb_kneel"].ne(1) & pbp["qb_spike"].ne(1)].copy()
+    if WP_FILTER is not None and "wp" in p:
+        lo, hi = WP_FILTER
+        p = p[p["wp"].between(lo, hi) | p["wp"].isna()]
     p["posteam"] = _norm_team(p["posteam"])
     p["defteam"] = _norm_team(p["defteam"])
     p["fumbled_1_team"] = _norm_team(p["fumbled_1_team"])
@@ -92,15 +100,32 @@ def team_long(sched: pd.DataFrame) -> pd.DataFrame:
     return pd.concat([home, away], ignore_index=True)
 
 
+def _pre_ewm(lg: pd.DataFrame, col: str) -> pd.Series:
+    """EWMA over a team's strictly-prior games (shift(1) => the game itself is excluded)."""
+    return lg.groupby("team")[col].transform(
+        lambda x: x.shift(1).ewm(halflife=TEAM_HALFLIFE, ignore_na=True).mean())
+
+
 def rolling_team_features(sched: pd.DataFrame, tgs: pd.DataFrame) -> pd.DataFrame:
     lg = team_long(sched).merge(tgs, on=["game_id", "team"], how="left")
     lg["pt_diff"] = lg["pf"] - lg["pa"]
     lg = lg.sort_values(["team", "gameday", "game_id"])
     stats = ["off_epa", "def_epa", "off_sr", "def_sr", "pass_epa", "rush_epa", "to_margin", "pt_diff"]
-    # Only completed games contribute. shift(1) => strictly prior games.
     for s in stats:
-        lg[f"pre_{s}"] = lg.groupby("team")[s].transform(
-            lambda x: x.shift(1).ewm(halflife=TEAM_HALFLIFE, ignore_na=True).mean())
+        lg[f"pre_{s}"] = _pre_ewm(lg, s)
+    if OPP_ADJUST:
+        # Credit offense for facing good defenses (and vice versa), using the opponent's
+        # PRE-game rating only, then re-average. Still leak-free: game g's adjusted value
+        # is only used for games after g.
+        opp = lg[["game_id", "team"] + [f"pre_{s}" for s in ("off_epa", "def_epa", "off_sr", "def_sr")]]
+        opp = opp.rename(columns={"team": "opp", **{c: "opp_" + c for c in opp.columns if c.startswith("pre_")}})
+        lg = lg.merge(opp, on=["game_id", "opp"], how="left")
+        for a, b in (("off_epa", "def_epa"), ("off_sr", "def_sr"), ("def_epa", "off_epa"), ("def_sr", "off_sr")):
+            center = 0.44 if "sr" in b else 0.0  # fixed league-typical level (no peeking)
+            lg[f"{a}_adj"] = lg[a] - (lg[f"opp_pre_{b}"].fillna(center) - center)
+        lg = lg.sort_values(["team", "gameday", "game_id"])
+        for a in ("off_epa", "def_epa", "off_sr", "def_sr"):
+            lg[f"pre_{a}"] = _pre_ewm(lg, f"{a}_adj")
     return lg[["game_id", "team"] + [f"pre_{s}" for s in stats]]
 
 
@@ -141,6 +166,32 @@ def attach_qb(sched: pd.DataFrame, qbr: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def attach_qb_change(df: pd.DataFrame) -> pd.DataFrame:
+    """How today's starter compares with the QBs who produced the team's recent stats.
+
+    Team efficiency features are built from recent games, so if the usual starter is out,
+    they overstate (or understate) the team. qb_change = starter rating - EWMA of the team's
+    previous starters' pre-game ratings (strictly prior games).
+    """
+    long = pd.concat([
+        df[["game_id", "gameday", "home_team", "home_qb_rating", "completed"]].set_axis(
+            ["game_id", "gameday", "team", "qbr", "completed"], axis=1),
+        df[["game_id", "gameday", "away_team", "away_qb_rating", "completed"]].set_axis(
+            ["game_id", "gameday", "team", "qbr", "completed"], axis=1),
+    ]).sort_values(["team", "gameday", "game_id"])
+    played = long["qbr"].where(long["completed"])
+    long["team_qb_base"] = played.groupby(long["team"]).transform(
+        lambda x: x.shift(1).ewm(halflife=TEAM_HALFLIFE, ignore_na=True).mean())
+    long["qb_change"] = (long["qbr"] - long["team_qb_base"]).fillna(0.0)
+    out = df.copy()
+    for side in ("home", "away"):
+        m = long[["game_id", "team", "qb_change"]].rename(
+            columns={"team": f"{side}_team", "qb_change": f"{side}_qb_change"})
+        out = out.merge(m, on=["game_id", f"{side}_team"], how="left")
+    out["qb_change_diff"] = out["home_qb_change"] - out["away_qb_change"]
+    return out
+
+
 # ---------------------------------------------------------------- Elo
 def elo_ratings(sched: pd.DataFrame) -> pd.DataFrame:
     elo: dict[str, float] = {}
@@ -174,15 +225,31 @@ def elo_ratings(sched: pd.DataFrame) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------- assemble
-def build_features(games: pd.DataFrame, pbp: pd.DataFrame) -> pd.DataFrame:
+def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | None = None) -> pd.DataFrame:
+    """inj_data: optional (injuries, snap_counts, players) frames for the injury features."""
     sched = prepare_schedule(games)
     tgs = team_game_stats(pbp)
     roll = rolling_team_features(sched, tgs)
     df = attach_qb(sched, qb_ratings(pbp, sched))
+    df = attach_qb_change(df)
     df = df.merge(elo_ratings(sched), on="game_id")
     for side in ("home", "away"):
         r = roll.rename(columns={c: f"{side}_{c[4:]}" for c in roll.columns if c.startswith("pre_")})
         df = df.merge(r.rename(columns={"team": f"{side}_team"}), on=["game_id", f"{side}_team"], how="left")
+
+    if inj_data is not None:
+        from .injuries import team_injury_load
+        il = team_injury_load(*inj_data, sched)
+        for side in ("home", "away"):
+            df = df.merge(il.rename(columns={"team": f"{side}_team", "inj_off": f"{side}_inj_off",
+                                             "inj_def": f"{side}_inj_def", "inj_reported": f"{side}_inj_reported"}),
+                          on=["game_id", f"{side}_team"], how="left")
+    else:
+        for side in ("home", "away"):
+            df[[f"{side}_inj_off", f"{side}_inj_def", f"{side}_inj_reported"]] = 0.0
+    # Positive = the AWAY team is missing more, i.e. favors home.
+    df["inj_off_diff"] = df["away_inj_off"].fillna(0) - df["home_inj_off"].fillna(0)
+    df["inj_def_diff"] = df["away_inj_def"].fillna(0) - df["home_inj_def"].fillna(0)
 
     df["elo_diff"] = df["home_elo"] - df["away_elo"]
     df["qb_diff"] = df["home_qb_rating"] - df["away_qb_rating"]
