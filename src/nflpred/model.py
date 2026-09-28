@@ -140,6 +140,7 @@ FACTOR_GROUPS = {
     "Rest advantage": ["rest_diff"],
     "Home field": ["home_field"],
     "Division game": ["div_game"],
+    "Final-week rest risk": ["fw_elo_diff", "fw_pt_diff_diff", "fw_qb_diff"],
 }
 
 
@@ -171,3 +172,18 @@ def coefficients(model: MarginModel) -> dict:
 def save_json(obj, path):
     with open(path, "w") as f:
         json.dump(obj, f, indent=2, default=str)
+
+
+# ---------------------------------------------------------------- experiments
+def fit_predict(train, test, feats, kind="margin", alpha=RIDGE_ALPHA, C=0.05):
+    """Experiment helper: fit on `train` with an arbitrary feature list, return P(home win) for `test`."""
+    X, Xt = train[feats], test[feats]
+    if kind == "margin":
+        y = (train["home_score"] - train["away_score"]).values
+        m = make_pipeline(StandardScaler(), Ridge(alpha=alpha)).fit(X, y)
+        sigma = np.sqrt(np.mean((y - m.predict(X)) ** 2))
+        return _norm_cdf(m.predict(Xt) / sigma)
+    if kind == "logistic":
+        m = make_pipeline(StandardScaler(), LogisticRegression(C=C, max_iter=3000))
+        return m.fit(X, train["home_win"].astype(int)).predict_proba(Xt)[:, 1]
+    raise ValueError(kind)

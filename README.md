@@ -7,10 +7,10 @@ scores itself against Vegas. Retrains and republishes automatically every week.
 
 | Model | Log loss | Brier | Picks correct |
 |---|---|---|---|
-| **Margin model (production, v2)** | **0.624** | **0.217** | **65.8%** |
-| Logistic regression (v2 features) | 0.625 | 0.218 | 65.8% |
-| Gradient boosting (calibrated) | 0.632 | 0.221 | 63.9% |
-| v1 logistic (no QB-change / injury features) | 0.628 | 0.219 | 65.5% |
+| **Margin model (production, v3)** | **0.622** | **0.217** | **66.0%** |
+| Logistic regression (v3 features) | 0.624 | 0.217 | 66.5% |
+| Gradient boosting (calibrated) | 0.633 | 0.222 | 64.0% |
+| v1 logistic (original features) | 0.628 | 0.219 | 65.5% |
 | Vegas moneyline (no-vig) | 0.609 | 0.211 | 66.4% |
 | Always pick home team | 0.690 | 0.248 | 54.4% |
 
@@ -23,10 +23,21 @@ win probability (normal distribution, σ ≈ 13 points). Explanations are in poi
 | v1 baseline | 0.6261 | 0.6295 |
 | + QB change (starter vs. team's recent QBs) | 0.6246 | 0.6273 |
 | + injuries (Out/Doubtful × recent snap share) | 0.6255 | 0.6258 |
-| + predict margin instead of win/loss | **0.6219** | **0.6242** |
+| + predict margin instead of win/loss (v2) | 0.6219 | 0.6242 |
+| + final-week rest interactions (v3) | **0.6205** | **0.6228** |
 
 Tried and rejected (no consistent gain): garbage-time play filter, opponent-adjusted EPA,
-recency-weighted training, QB-rating and Elo parameter tuning, gradient boosting.
+weekly opponent-adjusted power ratings (`ratings.py`, off by default), recency-weighted training,
+QB-rating and Elo parameter tuning, gradient boosting.
+
+## Does it beat Vegas? (`scripts/vs_vegas.py` → `output/vs_vegas.json`)
+No, not against closing lines. On the 2020–2025 holdout (1,688 games): Vegas 0.607 log loss, model 0.623,
+model + Vegas blend (fit on 2015–2019) 0.610. Betting 1 unit whenever the model saw positive expected
+value at the actual moneyline lost money at every edge threshold (−3% to −9% ROI).
+
+The pipeline now measures **closing line value** instead: every run saves the line at publish time in
+`history/`, and `clv_report` checks whether the market later moved toward the model's side. Positive
+CLV over a few hundred picks is the standard evidence of a real edge against earlier (softer) lines.
 
 ## Features (all computed from games before kickoff)
 Elo rating · starting QB EPA/dropback (shrunk toward replacement level, decays over ~20 games) ·

@@ -92,6 +92,39 @@ def season_to_date(df: pd.DataFrame, season: int) -> pd.DataFrame:
     return pd.concat(parts) if parts else done.assign(p_model=[])
 
 
+def clv_report(df: pd.DataFrame, history_dir: Path = ROOT / "history") -> dict:
+    """Closing line value: did the market move toward the model's side after we published?
+
+    For each finished game, take the EARLIEST saved prediction (usually Tuesday), note the
+    Vegas line at that moment, and compare it with the closing line now in the schedule.
+    Consistently positive movement is the standard evidence of a real betting edge; it needs
+    far fewer games to detect than win/loss results.
+    """
+    first: dict[str, dict] = {}
+    for f in sorted(history_dir.glob("predictions_*.json")):
+        for g in json.loads(f.read_text()).get("upcoming", []):
+            if g.get("vegas_home_prob") is not None and g["game_id"] not in first:
+                first[g["game_id"]] = g
+    close = df.set_index("game_id")
+    rows = []
+    for gid, g in first.items():
+        if gid not in close.index or not close.at[gid, "completed"] or pd.isna(close.at[gid, "vegas_home_prob"]):
+            continue
+        open_p, close_p, model_p = g["vegas_home_prob"], float(close.at[gid, "vegas_home_prob"]), g["home_win_prob"]
+        if abs(model_p - open_p) < 0.02:
+            continue  # model agrees with the market; no side
+        side = 1 if model_p > open_p else -1
+        rows.append({"game_id": gid, "side": g["home_team"] if side > 0 else g["away_team"],
+                     "line_at_pick": open_p, "closing": close_p, "model": model_p,
+                     "clv_pts": round(100 * side * (close_p - open_p), 2)})
+    if not rows:
+        return {"games": 0}
+    c = np.array([r["clv_pts"] for r in rows])
+    return {"games": len(rows), "avg_clv_pts": round(float(c.mean()), 2),
+            "pct_toward_model": round(float((c > 0).mean()), 3),
+            "pct_away_from_model": round(float((c < 0).mean()), 3), "detail": rows}
+
+
 def cmd_backtest(df: pd.DataFrame) -> dict:
     preds, summ = M.backtest(df, BACKTEST_SEASONS)
     allrows = summ[summ["season"] == "ALL"].set_index("model")
@@ -135,6 +168,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9) -> dict:
         "upcoming": predict_games(model, upcoming),
         "season_to_date": {"model": std_score, "vegas": vegas_score,
                            "games": predict_games_with_p(std)},
+        "clv": clv_report(df),
         "coefficients": M.coefficients(model),
         "trained_on_games": int(len(M.train_rows(df))),
     }

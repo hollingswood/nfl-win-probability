@@ -35,6 +35,10 @@ jobs:
         run: python -m nflpred.pipeline update --no-refresh
         env:
           PYTHONPATH: src
+      - name: Vegas comparison (blend test + betting simulation)
+        run: python scripts/vs_vegas.py
+        env:
+          PYTHONPATH: src
       - name: Build dashboard
         run: python scripts/build_dashboard.py
         env:
@@ -45,7 +49,7 @@ jobs:
           cp output/predictions.json "history/predictions_$(date -u +%F).json"
           git config user.name "nfl-bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          git add history output/predictions.json output/backtest.json
+          git add history output/predictions.json output/backtest.json output/vs_vegas.json
           git commit -m "Weekly predictions $(date -u +%F)" || echo "no changes"
           git push
       - uses: actions/upload-pages-artifact@v3

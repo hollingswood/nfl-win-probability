@@ -113,6 +113,19 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
     </div>
   </section>
 
+  <section class="two">
+    <div class="panel">
+      <h2>Can it beat Vegas?</h2>
+      <p id="vvtxt"></p>
+      <div class="scroll"><table id="vv"></table></div>
+    </div>
+    <div class="panel">
+      <h2>Line movement check</h2>
+      <p>After each pick is published, does the betting line move toward the model's side by kickoff? Sharp bettors measure their edge this way, because it shows up in far fewer games than wins and losses do.</p>
+      <div id="clv"></div>
+    </div>
+  </section>
+
   <section>
     <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
     <div class="scroll"><table id="std"></table></div>
@@ -220,6 +233,21 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       <td class="${r.correct?'win':'loss'}">${r.correct?'✓ right':'✗ wrong'}</td></tr>`;
   }
   document.getElementById('std').innerHTML=h+'</tbody>';
+})();
+
+// vs Vegas
+(function(){
+  const V=D.vs_vegas; if(!V){document.getElementById('vvtxt').textContent='Run scripts/vs_vegas.py to generate.';return;}
+  const l=V.log_loss;
+  document.getElementById('vvtxt').innerHTML=`Not yet. On ${V.games.toLocaleString()} games from ${V.holdout}, Vegas closing lines scored <b class="num">${l.vegas.toFixed(3)}</b> log loss, the model <b class="num">${l.model.toFixed(3)}</b>, and a model + Vegas blend <b class="num">${l.blend.toFixed(3)}</b>. Betting 1 unit whenever the model saw positive expected value at the real odds:`;
+  let h='<thead><tr><th>Probabilities</th><th>Min. edge</th><th>Bets</th><th>Units</th><th>ROI</th></tr></thead><tbody>';
+  for(const b of V.betting) h+=`<tr><td>${b.probs==='blend'?'Model + Vegas':'Model'}</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
+  document.getElementById('vv').innerHTML=h+'</tbody>';
+})();
+(function(){
+  const c=P.clv, el=document.getElementById('clv');
+  if(!c||!c.games){el.innerHTML='<p class="edge">Tracking starts with this week\'s picks. Each run saves the line at publish time; results appear once those games are played.</p>';return;}
+  el.innerHTML=`<div class="strip"><div class="stat"><b class="num">${c.avg_clv_pts>0?'+':''}${c.avg_clv_pts.toFixed(2)}</b><span>Avg. line move toward model (pct. pts)</span></div><div class="stat"><b class="num">${Math.round(c.pct_toward_model*100)}%</b><span>Games where the line moved our way (${c.games} tracked)</span></div></div>`;
 })();
 
 document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;

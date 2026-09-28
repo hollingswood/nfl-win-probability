@@ -9,7 +9,7 @@ INJ = (data.load_injuries(range(2012, 2027)), data.load_snaps(range(2012, 2027))
 
 
 def run(name, feat_cfg=None, model_kind="logistic", features=None, fit_kw=None, inj=True):
-    importlib.reload(F); M.FEATURES = F.FEATURES  # reset defaults
+    importlib.reload(F)  # reset defaults
     for k, v in (feat_cfg or {}).items(): setattr(F, k, v)
     df = F.build_features(G, P, INJ if inj else None)
     feats = features or F.FEATURES

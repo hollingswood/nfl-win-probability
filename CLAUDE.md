@@ -39,10 +39,17 @@ python scripts/build_dashboard.py
    (`test_explanations_sum_to_predicted_margin`). If you switch to a non-linear model, use
    SHAP and keep an equivalent test.
 
+## Goal and how it's judged
+The goal is an edge over the betting market. Closing lines are not beaten on this data (see README),
+so judge progress by: (1) backtest log loss (CI gate), (2) `scripts/vs_vegas.py` blend test, which must
+beat Vegas alone on 2020-2025 to claim new information, and (3) live closing line value in `clv` of
+predictions.json. Never report a betting edge from in-sample or tuned-on-holdout results.
+
 ## Ideas backlog (good next PRs)
-- Late-season rest: flag week-18 games where a team's playoff seed is already locked (biggest remaining miss vs Vegas)
+- Clinch-aware final-week feature (actual seeding scenarios) instead of the simple final-week interaction
+- Log opening lines from a live odds API at publish time for a richer CLV record
 - Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
 - Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
 - Weather/wind for outdoor games; travel distance and time zones
 - Already tried without gain (don't repeat without a new angle): garbage-time filter, opponent-adjusted EPA,
-  recency weighting, QB/Elo parameter grids, gradient boosting
+  weekly power ratings, recency weighting, QB/Elo parameter grids, gradient boosting

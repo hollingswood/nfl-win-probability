@@ -13,6 +13,8 @@ payload = {
     "predictions": json.loads((ROOT / "output" / "predictions.json").read_text()),
     "backtest": json.loads((ROOT / "output" / "backtest.json").read_text()),
 }
+vv = ROOT / "output" / "vs_vegas.json"
+payload["vs_vegas"] = json.loads(vv.read_text()) if vv.exists() else None
 body = tpl.replace("__DATA__", json.dumps(payload).replace("</", "<\\/"))
 site = ROOT / "site"
 site.mkdir(exist_ok=True)

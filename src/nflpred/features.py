@@ -18,7 +18,8 @@ ELO_HFA = 48.0
 ELO_MEAN = 1505.0
 ELO_REVERT = 1 / 3
 WP_FILTER: tuple[float, float] | None = None  # e.g. (0.05, 0.95): drop garbage-time plays
-OPP_ADJUST = False       # adjust each game's efficiency for the opponent's pre-game rating
+OPP_ADJUST = False
+POWER_RATINGS = False    # weekly opponent-adjusted ratings (ratings.py): tested, no gain; off       # adjust each game's efficiency for the opponent's pre-game rating
 
 # Relocated franchises: nflverse uses current abbreviations in pbp but schedules keep
 # historical ones in some seasons; normalize so a team's history is continuous.
@@ -28,6 +29,7 @@ FEATURES = [
     "elo_diff", "qb_diff", "off_epa_diff", "def_epa_diff", "off_sr_diff", "def_sr_diff",
     "pass_epa_diff", "rush_epa_diff", "to_margin_diff", "pt_diff_diff", "rest_diff",
     "home_field", "div_game", "qb_change_diff", "inj_off_diff", "inj_def_diff",
+    "fw_elo_diff", "fw_pt_diff_diff", "fw_qb_diff",
 ]
 
 FEATURE_LABELS = {
@@ -47,6 +49,9 @@ FEATURE_LABELS = {
     "qb_change_diff": "Starter vs. team's usual QB",
     "inj_off_diff": "Offensive injuries",
     "inj_def_diff": "Defensive injuries",
+    "fw_elo_diff": "Final week: strength",
+    "fw_pt_diff_diff": "Final week: point diff",
+    "fw_qb_diff": "Final week: QB",
 }
 
 
@@ -251,6 +256,22 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     df["inj_off_diff"] = df["away_inj_off"].fillna(0) - df["home_inj_off"].fillna(0)
     df["inj_def_diff"] = df["away_inj_def"].fillna(0) - df["home_inj_def"].fillna(0)
 
+    if POWER_RATINGS:
+        from .ratings import power_ratings
+        df["margin"] = df["home_score"] - df["away_score"]
+        net = roll_net = None
+        tg = tgs.assign(net_epa=tgs["off_epa"] - tgs["def_epa"])[["game_id", "team", "net_epa"]]
+        df = df.merge(tg.rename(columns={"team": "home_team", "net_epa": "home_net_epa_g"}), on=["game_id", "home_team"], how="left")
+        df = df.merge(tg.rename(columns={"team": "away_team", "net_epa": "away_net_epa_g"}), on=["game_id", "away_team"], how="left")
+        df["epa_margin"] = df["home_net_epa_g"] - df["away_net_epa_g"]
+        for tgt in ("margin", "epa_margin"):
+            df = df.merge(power_ratings(df, tgt), on="game_id", how="left")
+        df["pr_pts_diff"] = (df["home_margin_rating"] - df["away_margin_rating"]).fillna(0)
+        df["pr_epa_diff"] = (df["home_epa_margin_rating"] - df["away_epa_margin_rating"]).fillna(0)
+    else:
+        df["pr_pts_diff"] = 0.0
+        df["pr_epa_diff"] = 0.0
+
     df["elo_diff"] = df["home_elo"] - df["away_elo"]
     df["qb_diff"] = df["home_qb_rating"] - df["away_qb_rating"]
     for s in ["off_epa", "off_sr", "pass_epa", "rush_epa", "to_margin", "pt_diff"]:
@@ -258,6 +279,12 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     # Defense: lower allowed is better, so flip sign so positive = home advantage.
     df["def_epa_diff"] = df["away_def_epa"] - df["home_def_epa"]
     df["def_sr_diff"] = df["away_def_sr"] - df["home_def_sr"]
+    # Final regular-season week: teams with nothing to play for rest starters, so normal
+    # strength edges matter less. The schedule is known in advance, so this is pre-game info.
+    last_wk = df[df["game_type"] == "REG"].groupby("season")["week"].max()
+    df["final_week"] = ((df["game_type"] == "REG") & (df["week"] == df["season"].map(last_wk))).astype(int)
+    for f in ("elo_diff", "pt_diff_diff", "qb_diff"):
+        df[f"fw_{f}"] = df["final_week"] * df[f].fillna(0)
     df["rest_diff"] = (df["home_rest"] - df["away_rest"]).clip(-7, 7)
     df["home_field"] = (df["location"] != "Neutral").astype(int)
     df["div_game"] = df["div_game"].fillna(0).astype(int)

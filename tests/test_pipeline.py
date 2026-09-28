@@ -113,3 +113,19 @@ def test_injury_snap_share_uses_only_prior_games():
     players = pd.DataFrame({"gsis_id": ["x1"], "pfr_id": ["p1"]})
     r = team_injury_load(inj, snaps, players, sched).set_index(["game_id", "team"])
     assert r.loc[("g2", "AAA"), "inj_off"] == pytest.approx(0.8 * 0.2)
+
+
+def test_clv_measures_line_move_toward_model(tmp_path):
+    import json
+    from nflpred.pipeline import clv_report
+    df = pd.DataFrame({"game_id": ["a", "b"], "completed": [True, True],
+                       "vegas_home_prob": [0.60, 0.40]})
+    snap = {"upcoming": [
+        {"game_id": "a", "home_team": "H1", "away_team": "A1", "vegas_home_prob": 0.55, "home_win_prob": 0.65},
+        {"game_id": "b", "home_team": "H2", "away_team": "A2", "vegas_home_prob": 0.45, "home_win_prob": 0.50},
+    ]}
+    (tmp_path / "predictions_2026-01-01.json").write_text(json.dumps(snap))
+    r = clv_report(df, tmp_path)
+    # a: model liked home, line moved 55->60 toward home: +5. b: model liked home, line moved away: -5.
+    assert r["games"] == 2 and r["avg_clv_pts"] == pytest.approx(0.0)
+    assert sorted(x["clv_pts"] for x in r["detail"]) == [-5.0, 5.0]
