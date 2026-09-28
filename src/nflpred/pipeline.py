@@ -17,6 +17,7 @@ import pandas as pd
 
 from . import data, features as F, model as M
 from . import odds as odds_lib, weather as weather_lib
+from . import qb_availability as qba
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "output"
@@ -42,6 +43,10 @@ def build(refresh: bool, today: dt.date) -> pd.DataFrame:
 def _pts_to_prob_points(pts: float, sigma: float) -> float:
     """Approximate win-probability points (vs. a coin flip) for a margin contribution."""
     return float(100 * (M._norm_cdf(abs(pts) / sigma) - 0.5))
+
+
+def _s(v):
+    return None if v is None or (isinstance(v, float) and np.isnan(v)) else str(v)
 
 
 def _opt(v, nd=4):
@@ -75,11 +80,13 @@ def game_context(g, forecast: dict | None, live: dict | None, p_home: float) -> 
 
 def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | None = None,
                   live: dict | None = None) -> list[dict]:
-    p = M.predict(model, games)
+    avail = qba.availability(games, qba.load_overrides())
+    p_full = M.predict(model, games)
+    p = qba.blended_prob(model, games, avail, M.predict)  # == p_full when both QBs are healthy
     margin = model.predict_margin(games)
     expl = M.explain(model, games)
     out = []
-    for (_, g), ph, mg, ex in zip(games.iterrows(), p, margin, expl):
+    for (_, g), ph, pf, mg, ex, (_, av) in zip(games.iterrows(), p, p_full, margin, expl, avail.iterrows()):
         ctx = game_context(
             g, (forecasts or {}).get(g["game_id"]),
             odds_lib.match(live, g["home_team"], g["away_team"], g["gameday"].date()) if live else None, ph)
@@ -91,6 +98,10 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
             "neutral_site": bool(g["location"] == "Neutral"),
             "home_qb": g.get("home_qb_name"), "away_qb": g.get("away_qb_name"),
             "home_win_prob": round(float(ph), 4), "away_win_prob": round(float(1 - ph), 4),
+            "qb_status": {side: {"status": _s(g.get(f"{side}_qb_status")), "practice": _s(g.get(f"{side}_qb_practice")),
+                                 "play_prob": round(float(av[f"{side}_qb_play_prob"]), 2),
+                                 "win_prob_if_starts": round(float(pf if side == "home" else 1 - pf), 4)}
+                          for side in ("home", "away")},
             "pick": g["home_team"] if ph >= 0.5 else g["away_team"],
             # Spreads as "home margin": +3 means home favored by 3.
             "model_home_margin": round(float(mg), 1),

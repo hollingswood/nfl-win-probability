@@ -174,6 +174,10 @@ function context(g){
   if(w&&w.indoors) bits.push('<span>Indoors</span>');
   else if(w) bits.push(`<span class="${w.wind_mph>=15?'warn':''}">${Math.round(w.temp_f)}°F, wind ${Math.round(w.wind_mph)} mph${w.gust_mph?` (gusts ${Math.round(w.gust_mph)})`:''}${w.precip_pct?`, ${w.precip_pct}% rain`:''}</span>`);
   else bits.push('<span>Forecast pending</span>');
+  for (const [side,team,qb] of [['away',g.away_team,g.away_qb],['home',g.home_team,g.home_qb]]) {
+    const q=(g.qb_status||{})[side];
+    if(q && q.play_prob<1) bits.push(`<span class="warn"><b>${esc(qb||team+' QB')}</b> ${esc(q.status||'')}${q.practice?` (${q.practice==='Did Not'?'did not practice':q.practice.toLowerCase()+' practice'})`:''}: starts ~${Math.round(q.play_prob*100)}% of the time</span>`);
+  }
   const o=c.live_odds;
   if(o){
     const side=(team,b,ev)=> b?`<span><b>${esc(team)}</b> best ${fmtML(b.price)} at ${esc(b.book)} · EV ${ev>0?'+':''}${(ev*100).toFixed(1)}%</span>`:'';

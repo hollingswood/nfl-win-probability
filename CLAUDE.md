@@ -11,6 +11,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/model.py` — `MarginModel` (production: ridge on point margin → win prob), baselines, backtest, explanations in points (`FACTOR_GROUPS`)
 - `src/nflpred/pipeline.py` — CLI: `update`, `backtest`, `gate`
 - `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
+- `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past
 

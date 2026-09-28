@@ -19,6 +19,8 @@ ELO_MEAN = 1505.0
 ELO_REVERT = 1 / 3
 WP_FILTER: tuple[float, float] | None = None  # e.g. (0.05, 0.95): drop garbage-time plays
 OPP_ADJUST = False
+PT_CAP: float | None = 21.0   # cap single-game point differential (blowouts are mostly noise)
+EPA_CAP: float | None = 0.3   # cap single-game EPA/play (offense, defense, pass, rush)
 POWER_RATINGS = False    # weekly opponent-adjusted ratings (ratings.py): tested, no gain; off       # adjust each game's efficiency for the opponent's pre-game rating
 
 # Relocated franchises: nflverse uses current abbreviations in pbp but schedules keep
@@ -114,6 +116,11 @@ def _pre_ewm(lg: pd.DataFrame, col: str) -> pd.Series:
 def rolling_team_features(sched: pd.DataFrame, tgs: pd.DataFrame) -> pd.DataFrame:
     lg = team_long(sched).merge(tgs, on=["game_id", "team"], how="left")
     lg["pt_diff"] = lg["pf"] - lg["pa"]
+    if PT_CAP is not None:
+        lg["pt_diff"] = lg["pt_diff"].clip(-PT_CAP, PT_CAP)
+    if EPA_CAP is not None:
+        for c in ("off_epa", "def_epa", "pass_epa", "rush_epa"):
+            lg[c] = lg[c].clip(-EPA_CAP, EPA_CAP)
     lg = lg.sort_values(["team", "gameday", "game_id"])
     stats = ["off_epa", "def_epa", "off_sr", "def_sr", "pass_epa", "rush_epa", "to_margin", "pt_diff"]
     for s in stats:
@@ -217,6 +224,8 @@ def elo_ratings(sched: pd.DataFrame) -> pd.DataFrame:
         hfa = 0.0 if r.location == "Neutral" else ELO_HFA
         exp_h = 1 / (1 + 10 ** (-(eh + hfa - ea) / 400))
         mov = r.home_score - r.away_score
+        if PT_CAP is not None:
+            mov = float(np.clip(mov, -PT_CAP, PT_CAP))
         act = 1.0 if mov > 0 else 0.0 if mov < 0 else 0.5
         wdiff = (eh + hfa - ea) if mov > 0 else (ea - eh - hfa)
         mult = np.log(abs(mov) + 1) * 2.2 / (wdiff * 0.001 + 2.2) if mov != 0 else 1.0
@@ -250,9 +259,24 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
             df = df.merge(il.rename(columns={"team": f"{side}_team", "inj_off": f"{side}_inj_off",
                                              "inj_def": f"{side}_inj_def", "inj_reported": f"{side}_inj_reported"}),
                           on=["game_id", f"{side}_team"], how="left")
+        # Starting QB listed Questionable/Doubtful that week (playing hurt, or may not play).
+        qi = inj_data[0]
+        qi = qi[qi["position"] == "QB"].assign(team=lambda x: x["team"].replace({"OAK": "LV", "SD": "LAC", "STL": "LA", "LAR": "LA"}))
+        qi = qi.drop_duplicates(["season", "week", "team", "gsis_id"], keep="last")
+        qi = qi[["season", "week", "team", "gsis_id", "report_status", "practice_status"]]
+        for side in ("home", "away"):
+            m = df[["season", "week", f"{side}_team", f"{side}_qb_id"]].merge(
+                qi.rename(columns={"team": f"{side}_team", "gsis_id": f"{side}_qb_id"}),
+                on=["season", "week", f"{side}_team", f"{side}_qb_id"], how="left")
+            df[f"{side}_qb_status"] = m["report_status"].values
+            df[f"{side}_qb_practice"] = m["practice_status"].str.extract("(Did Not|Limited|Full)")[0].values
+            df[f"{side}_qb_hurt"] = df[f"{side}_qb_status"].isin(["Questionable", "Doubtful"]).astype(int)
     else:
         for side in ("home", "away"):
-            df[[f"{side}_inj_off", f"{side}_inj_def", f"{side}_inj_reported"]] = 0.0
+            df[[f"{side}_inj_off", f"{side}_inj_def", f"{side}_inj_reported", f"{side}_qb_hurt"]] = 0.0
+            df[f"{side}_qb_status"] = None
+            df[f"{side}_qb_practice"] = None
+    df["qb_hurt_diff"] = df["away_qb_hurt"] - df["home_qb_hurt"]
     # Positive = the AWAY team is missing more, i.e. favors home.
     df["inj_off_diff"] = df["away_inj_off"].fillna(0) - df["home_inj_off"].fillna(0)
     df["inj_def_diff"] = df["away_inj_def"].fillna(0) - df["home_inj_def"].fillna(0)

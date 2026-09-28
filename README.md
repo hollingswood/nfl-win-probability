@@ -24,7 +24,22 @@ win probability (normal distribution, σ ≈ 13 points). Explanations are in poi
 | + QB change (starter vs. team's recent QBs) | 0.6246 | 0.6273 |
 | + injuries (Out/Doubtful × recent snap share) | 0.6255 | 0.6258 |
 | + predict margin instead of win/loss (v2) | 0.6219 | 0.6242 |
-| + final-week rest interactions (v3) | **0.6205** | **0.6228** |
+| + final-week rest interactions (v3) | 0.6205 | 0.6228 |
+| + blowout cap: single-game EPA ±0.3/play, point diff ±21 (v4) | **0.6206** | **0.6214** |
+
+Also tested: a "starting QB listed Questionable/Doubtful" feature (only ~150 games in history, the two
+periods disagreed: not adopted as a feature). Instead, upcoming games use a **QB availability blend**:
+
+| Starting QB status (final practice) | Historically started |
+|---|---|
+| Questionable (full) | 86% |
+| Questionable (limited) | 53% |
+| Questionable (did not practice) | 42% |
+| Doubtful | ~5% |
+
+P(win) = P(plays) × P(win with him) + (1 − P(plays)) × P(win with a replacement-level QB).
+Late news the report hasn't caught: add `overrides.json`, e.g.
+`{"2026_03_PHI_CHI": {"home_qb_play_prob": 0.4, "note": "no practice all week"}}`.
 
 Tried and rejected (no consistent gain): garbage-time play filter, opponent-adjusted EPA,
 weekly opponent-adjusted power ratings (`ratings.py`, off by default), recency-weighted training,

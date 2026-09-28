@@ -170,3 +170,25 @@ def test_travel_west_coast_team_early_kickoff(feats):
               & (feats["home_team"].isin(["NYG", "NYJ", "CAR", "ATL", "WAS", "MIA", "BUF", "PHI"]))]
     assert len(g) > 0
     assert (g["away_tz_shift"] == 3).all() and (g["away_body_hour"] == 10).all() and (g["away_km"] > 3000).all()
+
+
+def test_qb_availability_blend():
+    from nflpred import qb_availability as qba
+    assert qba.play_prob("Questionable", "Did Not") == 0.42
+    assert qba.play_prob(None, None) == 1.0 and qba.play_prob("Out", "Did Not") == 0.0
+    games = pd.DataFrame({"game_id": ["g"], "home_qb_status": ["Questionable"], "home_qb_practice": ["Limited"],
+                          "away_qb_status": [None], "away_qb_practice": [None]})
+    av = qba.availability(games, {"g": {"away_qb_play_prob": 0.5}})
+    assert av.loc[0, "home_qb_play_prob"] == 0.53 and av.loc[0, "away_qb_play_prob"] == 0.5
+    # healthy QBs => blend equals the plain prediction; replacement only ever lowers that side
+    fake = lambda m, g: 1 / (1 + np.exp(-(g["qb_diff"].values * 10)))
+    g = pd.DataFrame({"qb_diff": [0.2], "qb_change_diff": [0.0], "final_week": [0], "fw_qb_diff": [0.0],
+                      "home_qb_rating": [0.1], "away_qb_rating": [-0.1]})
+    healthy = pd.DataFrame({"home_qb_play_prob": [1.0], "away_qb_play_prob": [1.0]})
+    hurt = pd.DataFrame({"home_qb_play_prob": [0.4], "away_qb_play_prob": [1.0]})
+    assert qba.blended_prob(None, g, healthy, fake)[0] == pytest.approx(fake(None, g)[0])
+    assert qba.blended_prob(None, g, hurt, fake)[0] < fake(None, g)[0]
+
+
+def test_blowout_cap_limits_single_game_influence():
+    assert F.PT_CAP == 21 and F.EPA_CAP == 0.3
