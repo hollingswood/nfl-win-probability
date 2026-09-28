@@ -1,0 +1,221 @@
+<title>NFL Win Probability Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EEF1F2; --surface:#FFFFFF; --ink:#13202A; --muted:#5B6B76; --line:#D5DDE1;
+  --accent:#1D6A4B; --accent-soft:#D6E9DF; --away:#9AA8B2; --vegas:#C2412D;
+  --good:#1D7A4E; --bad:#B23A2B;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#0E151A;--surface:#151F26;--ink:#E4EBEE;--muted:#93A3AD;--line:#26343D;
+  --accent:#4DB384;--accent-soft:#1B3A2D;--away:#51616B;--vegas:#F07A62;--good:#5CC792;--bad:#F0806E;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--bg:#0E151A;--surface:#151F26;--ink:#E4EBEE;--muted:#93A3AD;--line:#26343D;
+  --accent:#4DB384;--accent-soft:#1B3A2D;--away:#51616B;--vegas:#F07A62;--good:#5CC792;--bad:#F0806E;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:0 16px}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px;display:grid;gap:36px}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0;text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,54px);line-height:1}
+h2{font-size:24px;line-height:1.1}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;gap:10px}
+header p{margin:0;color:var(--muted);max-width:66ch}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+section{display:grid;gap:14px}
+.sechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:10px;vertical-align:-1px;margin-right:6px;border-radius:2px}
+.legend i.tick{width:3px;height:14px;background:var(--vegas);vertical-align:-3px}
+
+/* scoreboard strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surface);padding:14px 16px;display:grid;gap:4px}
+.stat b{font:600 30px/1 var(--display)}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* game cards */
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.game{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:10px}
+.gmeta{display:flex;justify-content:space-between;font:12px var(--mono);color:var(--muted);letter-spacing:.04em}
+.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:8px}
+.team{display:grid;gap:0}
+.team.home{text-align:right}
+.team .ab{font:700 30px/1 var(--display)}
+.team .qb{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team .pct{font:500 20px/1.1 var(--mono)}
+.team.fav .ab,.team.fav .pct{color:var(--accent)}
+.at{font:600 14px var(--display);color:var(--muted);padding-bottom:4px}
+.bar{position:relative;height:12px;display:flex;border-radius:2px;overflow:visible}
+.bar .a{background:var(--away)}
+.bar .h{background:var(--accent)}
+.bar .v{position:absolute;top:-4px;width:3px;height:20px;background:var(--vegas);transform:translateX(-1.5px)}
+.edge{font-size:13px;color:var(--muted)}
+.edge strong{color:var(--ink);font-weight:600}
+.factors{display:grid;gap:4px;border-top:1px dashed var(--line);padding-top:8px}
+.f{display:grid;grid-template-columns:1fr 64px 44px;gap:8px;align-items:center;font-size:13px}
+.f .fb{height:6px;background:var(--accent-soft);position:relative}
+.f .fb span{position:absolute;top:0;bottom:0;background:var(--accent)}
+.f .fv{text-align:right;font:12px var(--mono);color:var(--muted)}
+.tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
+
+/* tables & charts */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.panel{background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:10px;align-content:start}
+.panel p{margin:0;font-size:14px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+td.win{color:var(--good)} td.loss{color:var(--bad)}
+.best{font-weight:600;color:var(--accent)}
+svg text{fill:var(--muted);font:11px var(--mono)}
+.notes{display:grid;gap:8px;font-size:14px;color:var(--muted);max-width:75ch}
+.notes p{margin:0}
+footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="stamp"></div>
+    <h1>Win Probability Board</h1>
+    <p>Logistic regression on team efficiency (EPA), starting-QB form, Elo, turnovers, rest and home field. Every number uses only games played before kickoff. The red tick is the Vegas no-vig line for comparison.</p>
+  </header>
+
+  <div class="strip" id="strip"></div>
+
+  <section>
+    <div class="sechead"><h2>Upcoming games</h2>
+      <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
+    </div>
+    <div class="games" id="games"></div>
+  </section>
+
+  <section class="two">
+    <div class="panel">
+      <h2>Is 70% really 70%?</h2>
+      <p>Backtest calibration: predicted home win probability vs. how often the home team actually won, games bucketed by prediction.</p>
+      <div id="calib"></div>
+    </div>
+    <div class="panel">
+      <h2>Backtest by season</h2>
+      <p>Log loss (lower is better). Each season is predicted by a model trained only on earlier seasons.</p>
+      <div class="scroll"><table id="bt"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
+    <div class="scroll"><table id="std"></table></div>
+  </section>
+
+  <section class="notes">
+    <h2 style="color:var(--ink)">How to read this</h2>
+    <p>Factor bars show how much each input moved the prediction away from a coin flip, in approximate percentage points, and which team it favors. Home field includes the league-wide home edge, which is near zero at neutral sites.</p>
+    <p>Vegas is a very strong benchmark. Matching it over a full season would be a good result; a large disagreement usually means the market knows something the model doesn't, like an injury announced after the data refresh.</p>
+  </section>
+  <footer id="foot"></footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const P = D.predictions, B = D.backtest;
+const pct = x => Math.round(x*100) + '%';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtDay = iso => new Date(iso+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+
+document.getElementById('stamp').textContent =
+  `${P.season} season · updated ${new Date(P.generated_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}`;
+
+const lg = B.overall.logistic, vg = B.overall.vegas, sm = P.season_to_date.model, sv = P.season_to_date.vegas;
+document.getElementById('strip').innerHTML = [
+  [pct(lg.accuracy), `Backtest picks correct, ${B.seasons} (${lg.n.toLocaleString()} games)`],
+  [pct(vg.accuracy), `Vegas favorite correct, same games`],
+  [sm.n ? `${Math.round(sm.accuracy*sm.n)}–${sm.n-Math.round(sm.accuracy*sm.n)}` : '—', `${P.season} record so far (Vegas ${sv.n?Math.round(sv.accuracy*sv.n)+'–'+(sv.n-Math.round(sv.accuracy*sv.n)):'—'})`],
+  [P.upcoming.length, `Games on the board`],
+].map(([b,s]) => `<div class="stat"><b class="num">${b}</b><span>${s}</span></div>`).join('');
+
+document.getElementById('games').innerHTML = P.upcoming.map(g => {
+  const hp = g.home_win_prob, homeFav = hp >= .5;
+  const edge = g.vegas_home_prob == null ? null : (hp - g.vegas_home_prob);
+  const maxPts = 25;
+  const factors = g.top_factors.map(f =>
+    `<div class="f"><span>${esc(f.factor)} → <strong>${esc(f.favors)}</strong></span>
+      <span class="fb"><span style="left:0;width:${Math.min(100, f.prob_points/maxPts*100)}%"></span></span>
+      <span class="fv">+${f.prob_points.toFixed(1)}</span></div>`).join('');
+  let edgeTxt = 'No Vegas line yet';
+  if (edge != null) {
+    const who = edge > 0 ? g.home_team : g.away_team;
+    edgeTxt = Math.abs(edge) < .03 ? `In line with Vegas (${pct(g.vegas_home_prob)} ${g.home_team})`
+      : `Model is <strong>${Math.round(Math.abs(edge)*100)} pts higher on ${esc(who)}</strong> than Vegas`;
+  }
+  return `<article class="game">
+    <div class="gmeta"><span>${fmtDay(g.gameday)} · ${esc(g.gametime||'')} · WK ${g.week}</span>${g.neutral_site?'<span class="tag">NEUTRAL</span>':''}</div>
+    <div class="teams">
+      <div class="team ${homeFav?'':'fav'}"><span class="ab">${esc(g.away_team)}</span><span class="qb">${esc(g.away_qb||'')}</span><span class="pct">${pct(1-hp)}</span></div>
+      <span class="at">@</span>
+      <div class="team home ${homeFav?'fav':''}"><span class="ab">${esc(g.home_team)}</span><span class="qb">${esc(g.home_qb||'')}</span><span class="pct">${pct(hp)}</span></div>
+    </div>
+    <div class="bar" role="img" aria-label="${esc(g.away_team)} ${pct(1-hp)}, ${esc(g.home_team)} ${pct(hp)}">
+      <span class="a" style="width:${(1-hp)*100}%"></span><span class="h" style="width:${hp*100}%"></span>
+      ${g.vegas_home_prob!=null?`<span class="v" style="left:${(1-g.vegas_home_prob)*100}%"></span>`:''}
+    </div>
+    <div class="edge">${edgeTxt}</div>
+    <div class="factors">${factors}</div>
+  </article>`;
+}).join('');
+
+// calibration chart
+(function(){
+  const W=420,H=300,m={l:44,r:14,t:12,b:36}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const x=v=>m.l+v*iw, y=v=>m.t+(1-v)*ih;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Calibration chart">`;
+  for (const t of [0,.25,.5,.75,1]) {
+    s+=`<line x1="${x(0)}" x2="${x(1)}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/>`;
+    s+=`<text x="${m.l-6}" y="${y(t)+4}" text-anchor="end">${pct(t)}</text>`;
+    s+=`<text x="${x(t)}" y="${H-m.b+16}" text-anchor="middle">${pct(t)}</text>`;
+  }
+  s+=`<line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(1)}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+  const pts=B.calibration_logistic, maxn=Math.max(...pts.map(p=>p.n));
+  s+=`<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="${pts.map(p=>x(p.predicted)+','+y(p.actual)).join(' ')}"/>`;
+  for (const p of pts) s+=`<circle cx="${x(p.predicted)}" cy="${y(p.actual)}" r="${3+7*Math.sqrt(p.n/maxn)}" fill="var(--accent)" fill-opacity=".25" stroke="var(--accent)"><title>Predicted ${pct(p.predicted)}, actual ${pct(p.actual)} (${p.n} games)</title></circle>`;
+  s+=`<text x="${x(.5)}" y="${H-4}" text-anchor="middle">Predicted home win probability</text>`;
+  s+=`<text x="${x(.02)}" y="${y(.93)}">Actual win rate</text></svg>`;
+  document.getElementById('calib').innerHTML=s;
+})();
+
+// backtest table
+(function(){
+  const rows={}; for (const r of B.by_season) (rows[r.season] ??= {})[r.model]=r;
+  const models=[['logistic','Model'],['gbm','Boosted trees'],['vegas','Vegas'],['home_always_55%','Always home']];
+  let h=`<thead><tr><th>Season</th>${models.map(m=>`<th>${m[1]}</th>`).join('')}</tr></thead><tbody>`;
+  const line=(label,r)=>{const best=Math.min(r.logistic.log_loss,r.vegas.log_loss);
+    return `<tr><td>${label}</td>${models.map(([k])=>`<td class="${r[k].log_loss===best?'best':''}">${r[k].log_loss.toFixed(3)}</td>`).join('')}</tr>`};
+  for (const s of Object.keys(rows).sort()) h+=line(s,rows[s]);
+  h+=line('<strong>All</strong>',B.overall)+'</tbody>';
+  document.getElementById('bt').innerHTML=h;
+})();
+
+// season to date
+(function(){
+  const g=P.season_to_date.games;
+  document.getElementById('stdh').textContent=`${P.season} so far`;
+  document.getElementById('stdsum').innerHTML = sm.n ? `Log loss: model <strong class="num">${sm.log_loss.toFixed(3)}</strong> · Vegas <strong class="num">${sv.log_loss.toFixed(3)}</strong> · ${sm.n} games, too few to judge` : '';
+  let h=`<thead><tr><th>Wk</th><th style="text-align:left">Game</th><th>Final</th><th>Model (home)</th><th>Vegas (home)</th><th>Pick</th></tr></thead><tbody>`;
+  for (const r of [...g].reverse()) {
+    h+=`<tr><td>${r.week}</td><td style="text-align:left">${esc(r.away_team)} @ ${esc(r.home_team)}</td><td>${r.away_score}–${r.home_score}</td>
+      <td>${pct(r.home_win_prob)}</td><td>${r.vegas_home_prob==null?'—':pct(r.vegas_home_prob)}</td>
+      <td class="${r.correct?'win':'loss'}">${r.correct?'✓ right':'✗ wrong'}</td></tr>`;
+  }
+  document.getElementById('std').innerHTML=h+'</tbody>';
+})();
+
+document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;
+</script>

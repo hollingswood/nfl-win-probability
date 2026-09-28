@@ -1,0 +1,59 @@
+name: Weekly predictions
+
+on:
+  schedule:
+    # Tuesdays 14:00 UTC (7am Arizona): after Monday Night Football, before lines settle.
+    - cron: "0 14 * * 2"
+    # Thursdays 14:00 UTC: refresh for QB/injury changes before TNF.
+    - cron: "0 14 * * 4"
+    # Sundays 15:00 UTC: final pre-kickoff refresh.
+    - cron: "0 15 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests must pass before publishing
+        run: pytest -q
+      - name: Refresh data, retrain, predict, grade
+        run: python -m nflpred.pipeline update
+        env:
+          PYTHONPATH: src
+      - name: Build dashboard
+        run: python scripts/build_dashboard.py
+        env:
+          PYTHONPATH: src
+      - name: Commit predictions history
+        run: |
+          mkdir -p history
+          cp output/predictions.json "history/predictions_$(date -u +%F).json"
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add history output/predictions.json
+          git commit -m "Weekly predictions $(date -u +%F)" || echo "no changes"
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: predict
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

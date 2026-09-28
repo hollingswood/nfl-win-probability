@@ -1,0 +1,212 @@
+"""Pre-game feature engineering.
+
+Every feature for a game is computed ONLY from games that finished before that game's
+kickoff date. `tests/test_leakage.py` enforces this by re-computing features with all
+future results removed and asserting nothing changes.
+"""
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+
+TEAM_HALFLIFE = 8        # games; recent form weighting for team efficiency
+QB_DECAY = 0.965         # per-game decay for QB rating (~20-game half-life)
+QB_PRIOR = -0.10         # EPA/dropback prior (≈ replacement-level starter)
+QB_PRIOR_DROPBACKS = 150  # strength of the prior, in dropbacks
+ELO_K = 20.0
+ELO_HFA = 48.0
+ELO_MEAN = 1505.0
+ELO_REVERT = 1 / 3
+
+# Relocated franchises: nflverse uses current abbreviations in pbp but schedules keep
+# historical ones in some seasons; normalize so a team's history is continuous.
+TEAM_MAP = {"OAK": "LV", "SD": "LAC", "STL": "LA"}
+
+FEATURES = [
+    "elo_diff", "qb_diff", "off_epa_diff", "def_epa_diff", "off_sr_diff", "def_sr_diff",
+    "pass_epa_diff", "rush_epa_diff", "to_margin_diff", "pt_diff_diff", "rest_diff",
+    "home_field", "div_game",
+]
+
+FEATURE_LABELS = {
+    "elo_diff": "Team strength (Elo)",
+    "qb_diff": "Starting QB edge",
+    "off_epa_diff": "Offensive efficiency",
+    "def_epa_diff": "Defensive efficiency",
+    "off_sr_diff": "Offensive success rate",
+    "def_sr_diff": "Defensive success rate",
+    "pass_epa_diff": "Passing game",
+    "rush_epa_diff": "Running game",
+    "to_margin_diff": "Turnover margin",
+    "pt_diff_diff": "Recent point differential",
+    "rest_diff": "Rest advantage",
+    "home_field": "Home field",
+    "div_game": "Division game",
+}
+
+
+def _norm_team(s: pd.Series) -> pd.Series:
+    return s.replace(TEAM_MAP)
+
+
+def prepare_schedule(games: pd.DataFrame, min_season: int = 2012) -> pd.DataFrame:
+    g = games[(games["season"] >= min_season)].copy()
+    for c in ("home_team", "away_team"):
+        g[c] = _norm_team(g[c])
+    g["gameday"] = pd.to_datetime(g["gameday"])
+    g["completed"] = g["home_score"].notna() & g["away_score"].notna()
+    return g.sort_values(["gameday", "game_id"]).reset_index(drop=True)
+
+
+# ---------------------------------------------------------------- team efficiency
+def team_game_stats(pbp: pd.DataFrame) -> pd.DataFrame:
+    p = pbp[(pbp["pass"].eq(1) | pbp["rush"].eq(1)) & pbp["epa"].notna()
+            & pbp["qb_kneel"].ne(1) & pbp["qb_spike"].ne(1)].copy()
+    p["posteam"] = _norm_team(p["posteam"])
+    p["defteam"] = _norm_team(p["defteam"])
+    p["fumbled_1_team"] = _norm_team(p["fumbled_1_team"])
+    p["pass_epa"] = np.where(p["pass"].eq(1), p["epa"], np.nan)
+    p["rush_epa"] = np.where(p["rush"].eq(1), p["epa"], np.nan)
+    p["to"] = p["interception"].fillna(0) + (
+        p["fumble_lost"].fillna(0) * (p["fumbled_1_team"] == p["posteam"]))
+    off = p.groupby(["game_id", "posteam"]).agg(
+        off_epa=("epa", "mean"), off_sr=("success", "mean"),
+        pass_epa=("pass_epa", "mean"), rush_epa=("rush_epa", "mean"),
+        to_committed=("to", "sum"), defteam=("defteam", "first"),
+    ).reset_index().rename(columns={"posteam": "team"})
+    opp = off[["game_id", "defteam", "off_epa", "off_sr", "to_committed"]].rename(
+        columns={"defteam": "team", "off_epa": "def_epa", "off_sr": "def_sr",
+                 "to_committed": "to_forced"})
+    out = off.drop(columns="defteam").merge(opp, on=["game_id", "team"], how="left")
+    out["to_margin"] = out["to_forced"] - out["to_committed"]
+    return out
+
+
+def team_long(sched: pd.DataFrame) -> pd.DataFrame:
+    """One row per (game, team) with points for/against."""
+    h = sched[["game_id", "season", "gameday", "home_team", "away_team", "home_score", "away_score"]]
+    home = h.rename(columns={"home_team": "team", "away_team": "opp",
+                             "home_score": "pf", "away_score": "pa"})
+    away = h.rename(columns={"away_team": "team", "home_team": "opp",
+                             "away_score": "pf", "home_score": "pa"})
+    return pd.concat([home, away], ignore_index=True)
+
+
+def rolling_team_features(sched: pd.DataFrame, tgs: pd.DataFrame) -> pd.DataFrame:
+    lg = team_long(sched).merge(tgs, on=["game_id", "team"], how="left")
+    lg["pt_diff"] = lg["pf"] - lg["pa"]
+    lg = lg.sort_values(["team", "gameday", "game_id"])
+    stats = ["off_epa", "def_epa", "off_sr", "def_sr", "pass_epa", "rush_epa", "to_margin", "pt_diff"]
+    # Only completed games contribute. shift(1) => strictly prior games.
+    for s in stats:
+        lg[f"pre_{s}"] = lg.groupby("team")[s].transform(
+            lambda x: x.shift(1).ewm(halflife=TEAM_HALFLIFE, ignore_na=True).mean())
+    return lg[["game_id", "team"] + [f"pre_{s}" for s in stats]]
+
+
+# ---------------------------------------------------------------- QB
+def qb_ratings(pbp: pd.DataFrame, sched: pd.DataFrame) -> pd.DataFrame:
+    """Post-game shrunk EPA/dropback state for each QB after each game they played."""
+    p = pbp[pbp["qb_dropback"].eq(1) & pbp["qb_epa"].notna() & pbp["id"].notna()]
+    qg = p.groupby(["id", "game_id"]).agg(epa=("qb_epa", "sum"), db=("qb_epa", "size")).reset_index()
+    qg = qg.merge(sched[["game_id", "gameday"]], on="game_id").sort_values(["id", "gameday"])
+    rows = []
+    for qb, d in qg.groupby("id", sort=False):
+        num = den = 0.0
+        for gd, e, n in zip(d["gameday"], d["epa"], d["db"]):
+            num = num * QB_DECAY + e
+            den = den * QB_DECAY + n
+            rows.append((qb, gd, (num + QB_PRIOR * QB_PRIOR_DROPBACKS) / (den + QB_PRIOR_DROPBACKS)))
+    return pd.DataFrame(rows, columns=["qb_id", "gameday", "qb_rating"]).sort_values("gameday")
+
+
+def attach_qb(sched: pd.DataFrame, qbr: pd.DataFrame) -> pd.DataFrame:
+    out = sched.copy()
+    for side in ("home", "away"):
+        # Fallback: if starter unknown, use the team's most recent starter.
+        long = pd.concat([
+            out[["gameday", "home_team", "home_qb_id"]].set_axis(["gameday", "team", "qb"], axis=1),
+            out[["gameday", "away_team", "away_qb_id"]].set_axis(["gameday", "team", "qb"], axis=1),
+        ]).sort_values("gameday")
+        long["qb"] = long.groupby("team")["qb"].ffill()
+        last = long.drop_duplicates(["gameday", "team"], keep="last")
+        filled = out[["gameday", f"{side}_team"]].merge(
+            last.rename(columns={"team": f"{side}_team"}), on=["gameday", f"{side}_team"], how="left")["qb"]
+        out[f"{side}_qb_id"] = out[f"{side}_qb_id"].fillna(pd.Series(filled.values, index=out.index))
+
+        key = out[["gameday", f"{side}_qb_id"]].reset_index().rename(columns={f"{side}_qb_id": "qb_id"})
+        key = key.sort_values("gameday")
+        m = pd.merge_asof(key, qbr, on="gameday", by="qb_id", allow_exact_matches=False)
+        out[f"{side}_qb_rating"] = m.set_index("index")["qb_rating"].reindex(out.index).fillna(QB_PRIOR)
+    return out
+
+
+# ---------------------------------------------------------------- Elo
+def elo_ratings(sched: pd.DataFrame) -> pd.DataFrame:
+    elo: dict[str, float] = {}
+    last_season: dict[str, int] = {}
+    pre_h, pre_a = [], []
+    for r in sched.itertuples(index=False):
+        for t in (r.home_team, r.away_team):
+            if t not in elo:
+                elo[t] = ELO_MEAN
+            elif last_season.get(t) != r.season:
+                elo[t] = ELO_MEAN * ELO_REVERT + elo[t] * (1 - ELO_REVERT)
+            last_season[t] = r.season
+        eh, ea = elo[r.home_team], elo[r.away_team]
+        pre_h.append(eh)
+        pre_a.append(ea)
+        if not r.completed:
+            continue
+        hfa = 0.0 if r.location == "Neutral" else ELO_HFA
+        exp_h = 1 / (1 + 10 ** (-(eh + hfa - ea) / 400))
+        mov = r.home_score - r.away_score
+        act = 1.0 if mov > 0 else 0.0 if mov < 0 else 0.5
+        wdiff = (eh + hfa - ea) if mov > 0 else (ea - eh - hfa)
+        mult = np.log(abs(mov) + 1) * 2.2 / (wdiff * 0.001 + 2.2) if mov != 0 else 1.0
+        delta = ELO_K * mult * (act - exp_h)
+        elo[r.home_team] = eh + delta
+        elo[r.away_team] = ea - delta
+    out = sched[["game_id"]].copy()
+    out["home_elo"] = pre_h
+    out["away_elo"] = pre_a
+    return out
+
+
+# ---------------------------------------------------------------- assemble
+def build_features(games: pd.DataFrame, pbp: pd.DataFrame) -> pd.DataFrame:
+    sched = prepare_schedule(games)
+    tgs = team_game_stats(pbp)
+    roll = rolling_team_features(sched, tgs)
+    df = attach_qb(sched, qb_ratings(pbp, sched))
+    df = df.merge(elo_ratings(sched), on="game_id")
+    for side in ("home", "away"):
+        r = roll.rename(columns={c: f"{side}_{c[4:]}" for c in roll.columns if c.startswith("pre_")})
+        df = df.merge(r.rename(columns={"team": f"{side}_team"}), on=["game_id", f"{side}_team"], how="left")
+
+    df["elo_diff"] = df["home_elo"] - df["away_elo"]
+    df["qb_diff"] = df["home_qb_rating"] - df["away_qb_rating"]
+    for s in ["off_epa", "off_sr", "pass_epa", "rush_epa", "to_margin", "pt_diff"]:
+        df[f"{s}_diff"] = df[f"home_{s}"] - df[f"away_{s}"]
+    # Defense: lower allowed is better, so flip sign so positive = home advantage.
+    df["def_epa_diff"] = df["away_def_epa"] - df["home_def_epa"]
+    df["def_sr_diff"] = df["away_def_sr"] - df["home_def_sr"]
+    df["rest_diff"] = (df["home_rest"] - df["away_rest"]).clip(-7, 7)
+    df["home_field"] = (df["location"] != "Neutral").astype(int)
+    df["div_game"] = df["div_game"].fillna(0).astype(int)
+
+    df["home_win"] = np.where(df["completed"], (df["home_score"] > df["away_score"]).astype(float), np.nan)
+    df.loc[df["completed"] & (df["home_score"] == df["away_score"]), "home_win"] = np.nan  # ties
+    df["vegas_home_prob"] = vegas_prob(df["home_moneyline"], df["away_moneyline"])
+    df[FEATURES] = df[FEATURES].fillna(0.0)
+    return df
+
+
+def _implied(ml: pd.Series) -> pd.Series:
+    return np.where(ml < 0, -ml / (-ml + 100), 100 / (ml + 100))
+
+
+def vegas_prob(home_ml: pd.Series, away_ml: pd.Series) -> pd.Series:
+    """No-vig home win probability from moneylines."""
+    h, a = _implied(home_ml.astype(float)), _implied(away_ml.astype(float))
+    return pd.Series(h / (h + a), index=home_ml.index)
