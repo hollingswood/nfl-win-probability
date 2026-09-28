@@ -10,6 +10,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `scripts/experiment.py` — harness: `run(name, feat_cfg, model_kind, features)` returns validation (2015-19) and holdout (2020-25) log loss. Pick changes on validation; report holdout.
 - `src/nflpred/model.py` — `MarginModel` (production: ridge on point margin → win prob), baselines, backtest, explanations in points (`FACTOR_GROUPS`)
 - `src/nflpred/pipeline.py` — CLI: `update`, `backtest`, `gate`
+- `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past
 
@@ -47,9 +48,11 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
 
 ## Ideas backlog (good next PRs)
 - Clinch-aware final-week feature (actual seeding scenarios) instead of the simple final-week interaction
-- Log opening lines from a live odds API at publish time for a richer CLV record
+- Once `history/odds_*.json` has a season of snapshots, measure CLV per book and per day of week
+- Late-news run ~90 min before kickoff (inactives) using the odds feed to detect big line moves
 - Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
 - Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
 - Weather/wind for outdoor games; travel distance and time zones
 - Already tried without gain (don't repeat without a new angle): garbage-time filter, opponent-adjusted EPA,
-  weekly power ratings, recency weighting, QB/Elo parameter grids, gradient boosting
+  weekly power ratings, recency weighting, QB/Elo parameter grids, gradient boosting,
+  travel/time zones/body clock, weather interactions, Next Gen Stats (QB CPOE/TTT, RYOE, separation)

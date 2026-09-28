@@ -5,13 +5,14 @@ from nflpred import data, features as F, model as M
 
 VAL, HOLD = range(2015, 2020), range(2020, 2026)
 G = data.load_schedules(); P = data.load_pbp(range(2012, 2027))
+NGS = tuple(data._release('nextgen_stats', n) for n in ('ngs_passing', 'ngs_rushing', 'ngs_receiving'))
 INJ = (data.load_injuries(range(2012, 2027)), data.load_snaps(range(2012, 2027)), data.load_players())
 
 
-def run(name, feat_cfg=None, model_kind="logistic", features=None, fit_kw=None, inj=True):
+def run(name, feat_cfg=None, model_kind="margin", features=None, fit_kw=None, inj=True, ngs=True):
     importlib.reload(F)  # reset defaults
     for k, v in (feat_cfg or {}).items(): setattr(F, k, v)
-    df = F.build_features(G, P, INJ if inj else None)
+    df = F.build_features(G, P, INJ if inj else None, NGS if ngs else None)
     feats = features or F.FEATURES
     out = {"name": name}
     for label, seasons in (("val", VAL), ("hold", HOLD)):

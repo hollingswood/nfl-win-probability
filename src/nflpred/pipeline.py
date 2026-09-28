@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 
 from . import data, features as F, model as M
+from . import odds as odds_lib, weather as weather_lib
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "output"
@@ -47,12 +48,42 @@ def _opt(v, nd=4):
     return None if pd.isna(v) else round(float(v), nd)
 
 
-def predict_games(model: M.MarginModel, games: pd.DataFrame) -> list[dict]:
+def _dec(american: float) -> float:
+    return 1 + american / 100 if american > 0 else 1 + 100 / -american
+
+
+def game_context(g, forecast: dict | None, live: dict | None, p_home: float) -> dict:
+    """Informational context shown with each pick. Travel and weather were tested as model
+    inputs and did not improve out-of-sample accuracy, so they are displayed, not modeled."""
+    ctx = {"travel": {
+        "away_km": round(float(g.get("away_km", 0) or 0)), "home_km": round(float(g.get("home_km", 0) or 0)),
+        "away_tz_shift": float(g.get("away_tz_shift", 0) or 0), "home_tz_shift": float(g.get("home_tz_shift", 0) or 0),
+        "away_body_hour": float(g.get("away_body_hour", 13) or 13), "home_body_hour": float(g.get("home_body_hour", 13) or 13),
+    }}
+    if g.get("roof") in ("dome", "closed"):
+        ctx["weather"] = {"indoors": True}
+    elif forecast:
+        ctx["weather"] = {"indoors": False, **forecast}
+    if live:
+        ctx["live_odds"] = dict(live)
+        for side, p in (("home", p_home), ("away", 1 - p_home)):
+            b = live.get(f"best_{side}_ml")
+            if b:
+                ctx["live_odds"][f"{side}_ev_at_best"] = round(p * _dec(b["price"]) - 1, 4)
+    return ctx
+
+
+def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | None = None,
+                  live: dict | None = None) -> list[dict]:
     p = M.predict(model, games)
     margin = model.predict_margin(games)
     expl = M.explain(model, games)
     out = []
     for (_, g), ph, mg, ex in zip(games.iterrows(), p, margin, expl):
+        ctx = game_context(
+            g, (forecasts or {}).get(g["game_id"]),
+            odds_lib.match(live, g["home_team"], g["away_team"], g["gameday"].date()) if live else None, ph)
+        lo = ctx.get("live_odds")
         out.append({
             "game_id": g["game_id"], "season": int(g["season"]), "week": int(g["week"]),
             "gameday": g["gameday"].date().isoformat(), "gametime": g.get("gametime"),
@@ -69,6 +100,9 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame) -> list[dict]:
             "home_win": None if pd.isna(g["home_win"]) else int(g["home_win"]),
             "home_score": None if pd.isna(g["home_score"]) else int(g["home_score"]),
             "away_score": None if pd.isna(g["away_score"]) else int(g["away_score"]),
+            # Line when we published: live multi-book consensus if available, else nflverse line.
+            "line_at_publish": lo["consensus_home_prob"] if lo else _opt(g["vegas_home_prob"]),
+            "context": ctx,
             "top_factors": [
                 {"factor": e.factor, "favors": g["home_team"] if e.points > 0 else g["away_team"],
                  "points": round(abs(e.points), 1),
@@ -103,14 +137,14 @@ def clv_report(df: pd.DataFrame, history_dir: Path = ROOT / "history") -> dict:
     first: dict[str, dict] = {}
     for f in sorted(history_dir.glob("predictions_*.json")):
         for g in json.loads(f.read_text()).get("upcoming", []):
-            if g.get("vegas_home_prob") is not None and g["game_id"] not in first:
+            if g.get("line_at_publish", g.get("vegas_home_prob")) is not None and g["game_id"] not in first:
                 first[g["game_id"]] = g
     close = df.set_index("game_id")
     rows = []
     for gid, g in first.items():
         if gid not in close.index or not close.at[gid, "completed"] or pd.isna(close.at[gid, "vegas_home_prob"]):
             continue
-        open_p, close_p, model_p = g["vegas_home_prob"], float(close.at[gid, "vegas_home_prob"]), g["home_win_prob"]
+        open_p, close_p, model_p = g.get("line_at_publish", g.get("vegas_home_prob")), float(close.at[gid, "vegas_home_prob"]), g["home_win_prob"]
         if abs(model_p - open_p) < 0.02:
             continue  # model agrees with the market; no side
         side = 1 if model_p > open_p else -1
@@ -154,18 +188,21 @@ def cmd_gate(res: dict) -> int:
     return 0
 
 
-def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9) -> dict:
+def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline: bool = False) -> dict:
     season = current_season(today)
     model = M.fit(df)
     upcoming = df[(~df["completed"]) & (df["gameday"].dt.date >= today)
                   & (df["gameday"].dt.date <= today + dt.timedelta(days=horizon_days))]
+    forecasts = {} if offline else weather_lib.forecasts_for(upcoming)
+    live = None if offline else odds_lib.snapshot(ROOT / "history")
     std = season_to_date(df, season)
     std_score = M.score(std["home_win"], std["p_model"]) if len(std) else {}
     vegas_score = M.score(std["home_win"], std["vegas_home_prob"]) if len(std) else {}
     result = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "season": season,
-        "upcoming": predict_games(model, upcoming),
+        "upcoming": predict_games(model, upcoming, forecasts, live),
+        "live_odds_available": bool(live),
         "season_to_date": {"model": std_score, "vegas": vegas_score,
                            "games": predict_games_with_p(std)},
         "clv": clv_report(df),
@@ -191,11 +228,12 @@ def main(argv=None) -> int:
     ap.add_argument("cmd", choices=["update", "backtest", "gate"])
     ap.add_argument("--no-refresh", action="store_true", help="use cached data")
     ap.add_argument("--today", help="override date (YYYY-MM-DD)")
+    ap.add_argument("--offline", action="store_true", help="skip live odds and weather APIs")
     a = ap.parse_args(argv)
     today = dt.date.fromisoformat(a.today) if a.today else dt.date.today()
     df = build(refresh=not a.no_refresh, today=today)
     if a.cmd == "update":
-        r = cmd_update(df, today)
+        r = cmd_update(df, today, offline=a.offline)
         for g in r["upcoming"]:
             print(f"{g['gameday']} {g['away_team']:>3} @ {g['home_team']:<3}  home {g['home_win_prob']:.0%}"
                   f"  (Vegas {g['vegas_home_prob'] if g['vegas_home_prob'] is not None else 'n/a'})")

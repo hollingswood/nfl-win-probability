@@ -129,3 +129,44 @@ def test_clv_measures_line_move_toward_model(tmp_path):
     # a: model liked home, line moved 55->60 toward home: +5. b: model liked home, line moved away: -5.
     assert r["games"] == 2 and r["avg_clv_pts"] == pytest.approx(0.0)
     assert sorted(x["clv_pts"] for x in r["detail"]) == [-5.0, 5.0]
+
+
+# ---------------------------------------------------------------- context sources (offline)
+def test_odds_summary_consensus_and_best_price():
+    from nflpred import odds
+    ev = [{"home_team": "Chicago Bears", "away_team": "Philadelphia Eagles",
+           "commence_time": "2026-09-29T00:15:00Z", "bookmakers": [
+               {"title": "BookA", "markets": [
+                   {"key": "h2h", "outcomes": [{"name": "Chicago Bears", "price": 170},
+                                               {"name": "Philadelphia Eagles", "price": -205}]},
+                   {"key": "spreads", "outcomes": [{"name": "Chicago Bears", "price": -110, "point": 4.5},
+                                                   {"name": "Philadelphia Eagles", "price": -110, "point": -4.5}]}]},
+               {"title": "BookB", "markets": [
+                   {"key": "h2h", "outcomes": [{"name": "Chicago Bears", "price": 180},
+                                               {"name": "Philadelphia Eagles", "price": -215}]}]}]}]
+    s = odds.summarize(ev)
+    g = s[("CHI", "PHI", "2026-09-29")]
+    assert g["books"] == 2 and g["best_home_ml"] == {"price": 180, "book": "BookB"}
+    assert g["best_away_ml"]["book"] == "BookA"
+    assert 0.33 < g["consensus_home_prob"] < 0.37 and g["consensus_home_margin"] == -4.5
+    import datetime as dt
+    assert odds.match(s, "CHI", "PHI", dt.date(2026, 9, 28)) is g  # 8:15pm ET = next UTC day
+
+
+def test_weather_picks_kickoff_hour():
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from nflpred import weather
+    payload = {"hourly": {"time": ["2026-10-04T16:00", "2026-10-04T17:00", "2026-10-04T18:00"],
+                          "temperature_2m": [60, 62, 64], "wind_speed_10m": [5, 18, 9],
+                          "wind_gusts_10m": [9, 27, 12], "precipitation_probability": [0, 40, 10]}}
+    ko = weather._kickoff_utc(pd.Timestamp("2026-10-04"), "13:00")  # 1pm EDT = 17:00 UTC
+    assert ko == datetime(2026, 10, 4, 17, tzinfo=ZoneInfo("UTC"))
+    assert weather.parse_forecast(payload, ko) == {"temp_f": 62, "wind_mph": 18, "gust_mph": 27, "precip_pct": 40}
+
+
+def test_travel_west_coast_team_early_kickoff(feats):
+    g = feats[(feats["away_team"] == "SEA") & (feats["gametime"] == "13:00")
+              & (feats["home_team"].isin(["NYG", "NYJ", "CAR", "ATL", "WAS", "MIA", "BUF", "PHI"]))]
+    assert len(g) > 0
+    assert (g["away_tz_shift"] == 3).all() and (g["away_body_hour"] == 10).all() and (g["away_km"] > 3000).all()

@@ -31,10 +31,11 @@ jobs:
         run: python -m nflpred.pipeline gate
         env:
           PYTHONPATH: src
-      - name: Retrain, predict, grade
+      - name: Retrain, predict, grade (+ live odds and kickoff weather)
         run: python -m nflpred.pipeline update --no-refresh
         env:
           PYTHONPATH: src
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Vegas comparison (blend test + betting simulation)
         run: python scripts/vs_vegas.py
         env:

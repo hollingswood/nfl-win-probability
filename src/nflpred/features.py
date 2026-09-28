@@ -230,8 +230,9 @@ def elo_ratings(sched: pd.DataFrame) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------- assemble
-def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | None = None) -> pd.DataFrame:
-    """inj_data: optional (injuries, snap_counts, players) frames for the injury features."""
+def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | None = None,
+                   ngs_data: tuple | None = None) -> pd.DataFrame:
+    """inj_data: optional (injuries, snap_counts, players); ngs_data: optional (passing, rushing, receiving)."""
     sched = prepare_schedule(games)
     tgs = team_game_stats(pbp)
     roll = rolling_team_features(sched, tgs)
@@ -286,6 +287,25 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     for f in ("elo_diff", "pt_diff_diff", "qb_diff"):
         df[f"fw_{f}"] = df["final_week"] * df[f].fillna(0)
     df["rest_diff"] = (df["home_rest"] - df["away_rest"]).clip(-7, 7)
+
+    # Travel / time zones / body clock (schedule-derived, known in advance)
+    from .travel import travel_features
+    df = df.merge(travel_features(sched), on="game_id", how="left")
+
+    # Weather: game-time temp/wind from the schedule (forecast for upcoming games, see weather.py).
+    outdoor = df["roof"].isin(["outdoors", "open"])
+    wind = df["wind"].where(outdoor, 0).fillna(0).clip(0, 30)
+    temp = df["temp"].where(outdoor, 70).fillna(60)
+    df["wind_pass"] = wind / 10 * df["pass_epa_diff"].fillna(0)   # wind shrinks passing edges
+    warm = warm_weather_teams(sched)
+    cold = (temp <= 35).astype(int)
+    df["cold_edge"] = cold * (df["away_team"].map(warm).fillna(0) - df["home_team"].map(warm).fillna(0))
+
+    if ngs_data is not None:
+        from .ngs import ngs_features
+        df = ngs_features(df, *ngs_data)
+    else:
+        df[["qb_cpoe_diff", "qb_ttt_diff", "ryoe_diff", "sep_diff"]] = 0.0
     df["home_field"] = (df["location"] != "Neutral").astype(int)
     df["div_game"] = df["div_game"].fillna(0).astype(int)
 
@@ -294,6 +314,17 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     df["vegas_home_prob"] = vegas_prob(df["home_moneyline"], df["away_moneyline"])
     df[FEATURES] = df[FEATURES].fillna(0.0)
     return df
+
+
+def warm_weather_teams(sched: pd.DataFrame) -> pd.Series:
+    """1 for teams whose home stadium is a dome/closed roof or in a warm climate (lat < 34)."""
+    from .travel import STADIUMS
+    h = sched[sched["location"] != "Neutral"]
+    last = h.sort_values("gameday").groupby("home_team").tail(8)
+    roof = last.groupby("home_team")["roof"].agg(lambda r: r.value_counts().index[0])
+    sid = last.groupby("home_team")["stadium_id"].agg(lambda r: r.value_counts().index[0])
+    lat = sid.map(lambda x: STADIUMS.get(x, (40, 0, ""))[0])
+    return (roof.isin(["dome", "closed"]) | (lat < 34)).astype(int)
 
 
 def _implied(ml: pd.Series) -> pd.Series:

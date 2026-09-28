@@ -30,6 +30,17 @@ Tried and rejected (no consistent gain): garbage-time play filter, opponent-adju
 weekly opponent-adjusted power ratings (`ratings.py`, off by default), recency-weighted training,
 QB-rating and Elo parameter tuning, gradient boosting.
 
+## Context sources (shown on each pick, not model inputs)
+| Source | What | Where it runs |
+|---|---|---|
+| The Odds API | Lines from every US sportsbook: consensus no-vig probability and spread, best moneyline per side and which book has it, model EV at that price. Saved to `history/odds_*.json` for CLV. | Weekly workflow, needs `ODDS_API_KEY` secret |
+| Open-Meteo | Kickoff-hour temperature, wind, gusts, rain chance for outdoor games | Weekly workflow, no key |
+| Travel (`travel.py`) | Distance, time zones crossed, kickoff time on each team's body clock | Everywhere |
+
+Tested as model inputs on 2015–2019 / 2020–2025 and **rejected** (changes within ±0.002 log loss, inconsistent direction):
+travel distance and time zones, body-clock kickoff, weather (wind × passing, cold × dome teams), Next Gen Stats
+(QB CPOE and time to throw, team rushing yards over expected, receiver separation). The market prices these already.
+
 ## Does it beat Vegas? (`scripts/vs_vegas.py` → `output/vs_vegas.json`)
 No, not against closing lines. On the 2020–2025 holdout (1,688 games): Vegas 0.607 log loss, model 0.623,
 model + Vegas blend (fit on 2015–2019) 0.610. Betting 1 unit whenever the model saw positive expected
@@ -66,8 +77,9 @@ open site/index.html
 1. Create a GitHub repo and push this folder.
 2. Settings → Pages → Source: **GitHub Actions**.
 3. Settings → Actions → General → Workflow permissions: **Read and write**.
-4. For the Claude workflow: in Claude Code run `/install-github-app`, or add an `ANTHROPIC_API_KEY` repo secret.
-5. Run **Weekly predictions** once from the Actions tab (workflow_dispatch) to publish the first board.
+4. Live odds: get a free key at the-odds-api.com and add it as repo secret `ODDS_API_KEY`.
+5. For the Claude workflow: in Claude Code run `/install-github-app`, or add an `ANTHROPIC_API_KEY` repo secret.
+6. Run **Weekly predictions** once from the Actions tab (workflow_dispatch) to publish the first board.
 
 Experiments: `PYTHONPATH=src:scripts python -c "from experiment import run; ..."` (see `scripts/experiment.py`).
 
