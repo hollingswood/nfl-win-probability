@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
   pages: write
   id-token: write
 
@@ -72,12 +73,18 @@ jobs:
       - name: Commit predictions history
         run: |
           mkdir -p history
-          cp output/predictions.json "history/predictions_$(date -u +%F).json"
+          cp output/predictions.json "history/predictions_$(date -u +%FT%H%M).json"
           git config user.name "nfl-bot"
           git config user.email "nfl-bot@users.noreply.github.com"
           git add history output/predictions.json output/backtest.json output/vs_vegas.json
           git commit -m "Weekly predictions $(date -u +%F)" || echo "no changes"
           git push
+      - name: Alert on new bets (only once the model has passed validation)
+        if: hashFiles('output/alert.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "New bets $(date -u +%F)" --body-file output/alert.md
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

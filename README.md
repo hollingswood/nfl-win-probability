@@ -60,6 +60,21 @@ Every run before the games pulls free public feeds and applies them to upcoming 
 - Precedence: `overrides.json` (manual) > live feeds > nflverse report. Feeds failing never block a run.
 - Yahoo isn't used: its API needs a per-user OAuth login.
 
+## Paper bets → recommendations (`bets.py`, rules in `betting_rules.json`)
+The model does not recommend bets until it has proven itself on bets logged in real time.
+
+- **Shadow mode (default):** every run checks each upcoming game. A moneyline side qualifies when, using a
+  model + market blend (weights fit on 2015–2019 only), expected value at the **best available price** is ≥ 3%,
+  the odds are between −400 and +400, both starting QBs are confirmed, the injury report is out, and the line
+  hasn't moved 2+ points against that side since we first saw it. It is logged once, at that price and book,
+  in `history/paper_bets.json`, and never changed.
+- **Stakes:** quarter-Kelly, 0.25–2 units per bet (1 unit = 1% of bankroll), max 8 units per week (biggest edges first).
+- **Grading:** after each game: win/loss, profit in units, and closing line value (our price vs. the closing fair odds).
+- **Switch to live (pre-registered, version 1):** ≥ 200 graded bets **and** average CLV > 0 with p < 0.05 **and**
+  positive ROI. Then the dashboard shows "Recommended bets" and each new qualifying bet opens a GitHub issue
+  (you get an email / GitHub app notification).
+- Changing any rule starts a new version with a fresh record. Thresholds are never tuned to results.
+
 ## Context sources (shown on each pick, not model inputs)
 | Source | What | Where it runs |
 |---|---|---|

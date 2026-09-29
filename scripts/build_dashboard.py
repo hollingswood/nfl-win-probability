@@ -5,6 +5,7 @@ Writes:
   site/artifact.html   body-only version (for publishing as a Claude artifact)
 """
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +16,9 @@ payload = {
 }
 vv = ROOT / "output" / "vs_vegas.json"
 payload["vs_vegas"] = json.loads(vv.read_text()) if vv.exists() else None
-body = tpl.replace("__DATA__", json.dumps(payload).replace("</", "<\\/"))
+sys.path.insert(0, str(ROOT / "src"))
+from nflpred.model import clean_json  # noqa: E402
+body = tpl.replace("__DATA__", json.dumps(clean_json(payload), allow_nan=False).replace("</", "<\\/"))
 site = ROOT / "site"
 site.mkdir(exist_ok=True)
 (site / "artifact.html").write_text(body)

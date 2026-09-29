@@ -12,6 +12,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/pipeline.py` — CLI: `update`, `backtest`, `gate`
 - `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
 - `src/nflpred/news.py` — live injury/depth-chart news (Sleeper + ESPN public feeds) applied to upcoming games; tested offline with fixtures in tests
+- `src/nflpred/bets.py` + `betting_rules.json` — paper-bet ledger (`history/paper_bets.json`), grading, CLV, pre-registered switch to live recommendations. NEVER edit rules or the validation test in place to fit results: bump `version` instead.
 - `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past

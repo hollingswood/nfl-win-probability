@@ -18,6 +18,7 @@
   color-scheme:dark;--bg:#0E151A;--surface:#151F26;--ink:#E4EBEE;--muted:#93A3AD;--line:#26343D;
   --accent:#4DB384;--accent-soft:#1B3A2D;--away:#51616B;--vegas:#F07A62;--good:#5CC792;--bad:#F0806E;}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:0 16px}
 .wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px;display:grid;gap:36px}
 h1,h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0;text-transform:uppercase}
@@ -70,6 +71,11 @@ section{display:grid;gap:14px}
 .ctx .warn{color:var(--vegas)}
 .news{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
 .news li{background:var(--surface);border:1px solid var(--line);padding:8px 12px}
+.pill{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid var(--muted);color:var(--muted)}
+.pill.live{border-color:var(--good);color:var(--good)}
+.chk{font-family:var(--mono);font-size:12px}
+.chk.ok{color:var(--good)} .chk.no{color:var(--muted)}
+.betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
 .tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
 
 /* tables & charts */
@@ -103,6 +109,14 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
       <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
     </div>
     <div class="games" id="games"></div>
+  </section>
+
+  <section id="betswrap">
+    <div class="sechead"><h2 id="betsh">Paper bets</h2><span class="pill" id="betmode"></span></div>
+    <p class="edge" id="betintro"></p>
+    <div class="strip" id="betstats"></div>
+    <div class="scroll"><table id="betopen"></table></div>
+    <div class="scroll"><table id="betgraded"></table></div>
   </section>
 
   <section id="newswrap">
@@ -208,7 +222,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     edgeTxt = Math.abs(edge) < .03 ? `In line with Vegas (${pct(g.vegas_home_prob)} ${g.home_team})`
       : `Model is <strong>${Math.round(Math.abs(edge)*100)} pts higher on ${esc(who)}</strong> than Vegas`;
   }
-  return `<article class="game">
+  return `<article class="game" data-gid="${esc(g.game_id)}">
     <div class="gmeta"><span>${fmtDay(g.gameday)} · ${esc(g.gametime||'')} · WK ${g.week}</span>${g.neutral_site?'<span class="tag">NEUTRAL</span>':''}</div>
     <div class="teams">
       <div class="team ${homeFav?'':'fav'}"><span class="ab">${esc(g.away_team)}</span><span class="qb">${esc(g.away_qb||'')}</span><span class="pct">${pct(1-hp)}</span></div>
@@ -292,6 +306,31 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
   const r=n.report, ok=v=>v&&String(v).startsWith('ok');
   document.getElementById('newsrc').textContent=`Sleeper: ${ok(r.sleeper)?'ok':(r.sleeper||'n/a').split(' ')[0]} · ESPN: ${ok(r.espn)?'ok':'unavailable'} · checked ${new Date(r.fetched_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}`;
   el.innerHTML = (n.changes&&n.changes.length) ? n.changes.map(c=>`<li>${esc(c.text)}</li>`).join('') : '<li>No starting-QB changes since the official injury report.</li>';
+})();
+
+(function(){
+  const B=P.bets, wrap=document.getElementById('betswrap');
+  if(!B||B.error){wrap.hidden=true;return;}
+  const live=B.mode==='live', r=B.record, fmtP=x=>x>0?`+${x}`:`${x}`;
+  document.getElementById('betsh').textContent = live ? 'Recommended bets' : 'Paper bets';
+  const m=document.getElementById('betmode'); m.textContent = live ? 'Live · validated' : 'Shadow mode · not recommendations'; if(live) m.classList.add('live');
+  document.getElementById('betintro').innerHTML = live
+    ? 'The model passed its pre-registered test, so qualifying bets are recommended. Stakes are in units (1 unit = 1% of your bankroll).'
+    : `The model logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. Recommendations turn on only if, after at least ${r.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> the paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
+  document.getElementById('betstats').innerHTML=[
+    [`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
+    [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(r.checks.roi_positive,'')}`],
+    [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `Avg. closing line value ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`],
+  ].map(([b,s])=>`<div class="stat"><b class="num">${b}</b><span>${s}</span></div>`).join('');
+  const open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+  document.getElementById('betopen').innerHTML = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
+    open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left"><b>${esc(b.team)}</b> vs ${esc(b.opponent)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
+    : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
+  document.getElementById('betgraded').innerHTML = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
+    gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${esc(b.team)} vs ${esc(b.opponent)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
+  // flag on game cards
+  for (const b of open) { const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`); if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${esc(b.team)} ${fmtP(b.price)}</span>`); }
 })();
 
 document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;

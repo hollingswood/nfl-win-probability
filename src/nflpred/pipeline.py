@@ -19,6 +19,7 @@ from . import data, features as F, model as M
 from . import odds as odds_lib, weather as weather_lib
 from . import qb_availability as qba
 from . import news as news_lib
+from . import bets as bets_lib
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "output"
@@ -121,7 +122,7 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
             "gameday": g["gameday"].date().isoformat(), "gametime": g.get("gametime"),
             "home_team": g["home_team"], "away_team": g["away_team"],
             "neutral_site": bool(g["location"] == "Neutral"),
-            "home_qb": g.get("home_qb_name"), "away_qb": g.get("away_qb_name"),
+            "home_qb": _s(g.get("home_qb_name")), "away_qb": _s(g.get("away_qb_name")),
             "home_win_prob": round(float(ph), 4), "away_win_prob": round(float(1 - ph), 4),
             "qb_status": {side: {"status": _s(g.get(f"{side}_qb_status")), "practice": _s(g.get(f"{side}_qb_practice")),
                                  "play_prob": round(float(av[f"{side}_qb_play_prob"]), 2),
@@ -250,8 +251,20 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         "coefficients": M.coefficients(model),
         "trained_on_games": int(len(M.train_rows(df))),
     }
+    try:
+        result["bets"] = bets_lib.process(result, df, ROOT / "history")
+    except Exception as e:  # paper betting must never block predictions
+        result["bets"] = {"error": str(e)}
+        print("bets: failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
+    alert = OUT / "alert.md"
+    alert.unlink(missing_ok=True)
+    b = result.get("bets", {})
+    if b.get("mode") == "live" and b.get("new"):
+        lines = [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
+                 f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in b["new"]]
+        alert.write_text("New qualifying bets (model validated):\n\n" + "\n".join(lines))
     return result
 
 

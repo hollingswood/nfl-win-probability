@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "frozen_on": "2026-09-29",
+  "note": "Pre-registered before any paper results. Do not edit thresholds or the validation test to fit results; changing anything starts a new version with a fresh record.",
+  "market": "moneyline",
+  "probability": {
+    "method": "model + market blend (logistic on logits)",
+    "model": 0.5347313875402179,
+    "vegas": 0.5797653003282607,
+    "intercept": -0.06073726398948234,
+    "fit_on": "2015-2019 walk-forward predictions",
+    "games": 1329
+  },
+  "qualify": {
+    "min_edge_at_best_price": 0.03,
+    "min_american_odds": -400,
+    "max_american_odds": 400,
+    "require_both_starting_qbs_confirmed": true,
+    "require_injury_report_published": true,
+    "require_line_not_moved_away_since_first_seen": true
+  },
+  "sizing": {
+    "unit_pct_of_bankroll": 1.0,
+    "kelly_fraction": 0.25,
+    "max_units": 2.0,
+    "min_units": 0.25,
+    "max_units_per_week": 8.0,
+    "note": "Stake = quarter-Kelly on the blended probability, clipped to [min_units, max_units]; bets for a week are taken in order of edge until max_units_per_week is reached."
+  },
+  "lock": "A paper bet is recorded once, at the first run where it qualifies, at the best price available then. Later runs never change it.",
+  "validation": {
+    "min_bets": 200,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "bet decimal odds x closing no-vig probability of that side - 1"
+  }
+}

@@ -269,3 +269,79 @@ def test_backup_rating_used_when_starter_sits():
                       "home_qb_rating": [0.0], "away_qb_rating": [0.0], "home_backup_qb_rating": [-0.3]})
     assert qba.with_replacement(g, "home").at[0, "qb_diff"] == pytest.approx(-0.3)
     assert qba.with_replacement(g, "away").at[0, "qb_diff"] == pytest.approx(0.1)  # no backup known: -0.10
+
+
+# ---------------------------------------------------------------- paper betting
+def _game(p_home=0.60, cons=0.50, home_ml=+110, away_ml=-120, qb_ok=True, inj=True, gid="2026_05_AAA_BBB"):
+    return {"game_id": gid, "season": 2026, "week": 5, "gameday": "2026-10-11",
+            "home_team": "BBB", "away_team": "AAA", "home_win_prob": p_home, "injury_report": inj,
+            "qb_status": {"home": {"play_prob": 1.0 if qb_ok else 0.53}, "away": {"play_prob": 1.0}},
+            "context": {"live_odds": {"consensus_home_prob": cons,
+                                      "best_home_ml": {"price": home_ml, "book": "BookA"},
+                                      "best_away_ml": {"price": away_ml, "book": "BookB"}}}}
+
+
+def test_bet_rules_are_frozen_and_complete():
+    from nflpred import bets
+    r = bets.load_rules()
+    assert r["version"] == 1 and r["validation"]["min_bets"] == 200
+    assert 0 < r["probability"]["model"] < 1.5 and 0 < r["probability"]["vegas"] < 1.5
+
+
+def test_bet_qualifies_only_with_edge_and_safety_checks():
+    from nflpred import bets
+    r = bets.load_rules()
+    bet = bets.evaluate(_game(), r, None)
+    assert bet and bet["team"] == "BBB" and bet["price"] == 110 and bet["book"] == "BookA"
+    assert bet["edge"] >= 0.03 and 0.25 <= bet["units"] <= 2.0
+    assert 0.5 < bet["p_blend"] < 0.6  # blend sits between market (0.50) and model (0.60)
+    assert bets.evaluate(_game(p_home=0.51), r, None) is None          # no edge
+    assert bets.evaluate(_game(qb_ok=False), r, None) is None          # QB questionable
+    assert bets.evaluate(_game(inj=False), r, None) is None            # injury report not out
+    assert bets.evaluate(_game(), r, first_market=0.56) is None        # line moved 6 pts against BBB
+
+
+def test_bet_locks_once_and_grades_with_clv(tmp_path):
+    from nflpred import bets
+    games = pd.DataFrame({"game_id": ["2026_05_AAA_BBB"], "completed": [False], "home_score": [np.nan],
+                          "away_score": [np.nan], "vegas_home_prob": [0.55]})
+    out1 = bets.process({"upcoming": [_game()]}, games, tmp_path)
+    assert len(out1["new"]) == 1 and out1["mode"] == "shadow"
+    out2 = bets.process({"upcoming": [_game(home_ml=+150)]}, games, tmp_path)  # better price later
+    assert out2["new"] == [] and out2["open"][0]["price"] == 110                 # still the locked bet
+    games.loc[0, ["completed", "home_score", "away_score"]] = [True, 24, 17]
+    out3 = bets.process({"upcoming": []}, games, tmp_path)
+    g = out3["recent_graded"][0]
+    assert g["result"] == "win" and g["profit_units"] == pytest.approx(g["units"] * 1.10, abs=1e-3)
+    assert g["clv"] == pytest.approx(2.10 * 0.55 - 1, abs=1e-4)  # +110 vs closing fair 55%
+    assert out3["record"]["graded"] == 1 and not out3["record"]["passed"]
+
+
+def test_validation_requires_all_checks():
+    from nflpred import bets
+    r = bets.load_rules()
+    mk = lambda clv, res: {"status": "graded", "rules_version": 1, "units": 1.0, "result": res,
+                           "profit_units": 0.95 if res == "win" else -1.0, "clv": clv}
+    good = [mk(0.03 + 0.01 * (i % 3), "win" if i % 2 else "loss") for i in range(250)]
+    rec = bets.record(good, r)
+    assert rec["checks"]["enough_bets"] and rec["checks"]["clv_positive_and_significant"]
+    assert not rec["checks"]["roi_positive"] and not rec["passed"]  # 125-125 at -105 loses money
+    few = bets.record(good[:50], r)
+    assert not few["checks"]["enough_bets"]
+
+
+def test_outputs_are_strict_json(tmp_path):
+    """NaN in predictions.json broke the dashboard once (missing QB name). Never again."""
+    import json
+    M.save_json({"a": float("nan"), "b": [np.float64("nan"), 1.5], "c": {"d": np.int64(3)}}, tmp_path / "x.json")
+    assert json.loads((tmp_path / "x.json").read_text(), parse_constant=lambda c: pytest.fail(c)) == \
+        {"a": None, "b": [None, 1.5], "c": {"d": 3}}
+
+
+def test_weekly_exposure_cap(tmp_path):
+    from nflpred import bets
+    games = pd.DataFrame({"game_id": [], "completed": [], "home_score": [], "away_score": [], "vegas_home_prob": []})
+    ups = [_game(p_home=0.75, cons=0.50, gid=f"2026_05_A{i}_B{i}") for i in range(8)]
+    out = bets.process({"upcoming": ups}, games, tmp_path)
+    assert sum(b["units"] for b in out["new"]) <= 8.0 and len(out["new"]) < 8
+    assert any("weekly exposure cap" in "; ".join(g["bet_check"]) for g in ups)

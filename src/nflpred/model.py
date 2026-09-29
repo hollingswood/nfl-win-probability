@@ -169,9 +169,24 @@ def coefficients(model: MarginModel) -> dict:
         "intercept": float(rg.intercept_), "sigma": model.sigma}
 
 
+def clean_json(obj):
+    """Replace NaN/inf (invalid JSON; breaks the dashboard) with None, recursively."""
+    if isinstance(obj, float):
+        return None if (obj != obj or obj in (float("inf"), float("-inf"))) else obj
+    if isinstance(obj, dict):
+        return {k: clean_json(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [clean_json(v) for v in obj]
+    if isinstance(obj, (np.floating,)):
+        return clean_json(float(obj))
+    if isinstance(obj, (np.integer,)):
+        return int(obj)
+    return obj
+
+
 def save_json(obj, path):
     with open(path, "w") as f:
-        json.dump(obj, f, indent=2, default=str)
+        json.dump(clean_json(obj), f, indent=2, default=str, allow_nan=False)
 
 
 # ---------------------------------------------------------------- experiments
