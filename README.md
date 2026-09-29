@@ -45,6 +45,21 @@ Tried and rejected (no consistent gain): garbage-time play filter, opponent-adju
 weekly opponent-adjusted power ratings (`ratings.py`, off by default), recency-weighted training,
 QB-rating and Elo parameter tuning, gradient boosting.
 
+## Automatic injury and depth-chart news (`news.py`)
+Every run before the games pulls free public feeds and applies them to upcoming games:
+
+| Source | What we use | When |
+|---|---|---|
+| Sleeper API (`api.sleeper.app/v1/players/nfl`) | Injury status, practice participation, depth-chart order for every player | Tue, Thu, first Sunday run (Sleeper asks apps to pull this list sparingly) |
+| ESPN game summaries (unofficial public endpoint) | Per-game injury lists | Every run, including ~75 min before each kickoff window |
+
+- Live statuses replace the nflverse report for that week, so the injury feature and QB-availability blend use the newest information.
+- If the listed starting QB is Out, the highest healthy QB on the depth chart becomes the starter.
+- If a starter is Questionable/Doubtful, the "sits" scenario uses the actual backup's rating instead of a generic replacement level.
+- Every change is listed on the dashboard ("Latest news applied").
+- Precedence: `overrides.json` (manual) > live feeds > nflverse report. Feeds failing never block a run.
+- Yahoo isn't used: its API needs a per-user OAuth login.
+
 ## Context sources (shown on each pick, not model inputs)
 | Source | What | Where it runs |
 |---|---|---|

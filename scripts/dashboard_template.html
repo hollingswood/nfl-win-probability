@@ -68,6 +68,8 @@ section{display:grid;gap:14px}
 .ctx{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted)}
 .ctx b{color:var(--ink);font-weight:600}
 .ctx .warn{color:var(--vegas)}
+.news{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
+.news li{background:var(--surface);border:1px solid var(--line);padding:8px 12px}
 .tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
 
 /* tables & charts */
@@ -101,6 +103,11 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
       <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
     </div>
     <div class="games" id="games"></div>
+  </section>
+
+  <section id="newswrap">
+    <div class="sechead"><h2>Latest news applied</h2><span class="edge" id="newsrc"></span></div>
+    <ul class="news" id="news"></ul>
   </section>
 
   <section class="two">
@@ -277,6 +284,14 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
   const c=P.clv, el=document.getElementById('clv');
   if(!c||!c.games){el.innerHTML='<p class="edge">Tracking starts with this week\'s picks. Each run saves the line at publish time; results appear once those games are played.</p>';return;}
   el.innerHTML=`<div class="strip"><div class="stat"><b class="num">${c.avg_clv_pts>0?'+':''}${c.avg_clv_pts.toFixed(2)}</b><span>Avg. line move toward model (pct. pts)</span></div><div class="stat"><b class="num">${Math.round(c.pct_toward_model*100)}%</b><span>Games where the line moved our way (${c.games} tracked)</span></div></div>`;
+})();
+
+(function(){
+  const n=P.news, el=document.getElementById('news');
+  if(!n||!n.report){document.getElementById('newswrap').hidden=true;return;}
+  const r=n.report, ok=v=>v&&String(v).startsWith('ok');
+  document.getElementById('newsrc').textContent=`Sleeper: ${ok(r.sleeper)?'ok':(r.sleeper||'n/a').split(' ')[0]} · ESPN: ${ok(r.espn)?'ok':'unavailable'} · checked ${new Date(r.fetched_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}`;
+  el.innerHTML = (n.changes&&n.changes.length) ? n.changes.map(c=>`<li>${esc(c.text)}</li>`).join('') : '<li>No starting-QB changes since the official injury report.</li>';
 })();
 
 document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;

@@ -11,6 +11,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/model.py` — `MarginModel` (production: ridge on point margin → win prob), baselines, backtest, explanations in points (`FACTOR_GROUPS`)
 - `src/nflpred/pipeline.py` — CLI: `update`, `backtest`, `gate`
 - `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
+- `src/nflpred/news.py` — live injury/depth-chart news (Sleeper + ESPN public feeds) applied to upcoming games; tested offline with fixtures in tests
 - `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past
@@ -50,7 +51,8 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
 ## Ideas backlog (good next PRs)
 - Clinch-aware final-week feature (actual seeding scenarios) instead of the simple final-week interaction
 - Once `history/odds_*.json` has a season of snapshots, measure CLV per book and per day of week
-- Late-news run ~90 min before kickoff (inactives) using the odds feed to detect big line moves
+- Verify the first live Sleeper/ESPN responses match the parsers (field names are from their public docs, not yet seen live)
+- QB rating should fade with time off (currently decays per game played only; overrated Keenum in 2026 wk3)
 - Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
 - Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
 - Weather/wind for outdoor games; travel distance and time zones

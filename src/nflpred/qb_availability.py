@@ -54,7 +54,10 @@ def availability(games: pd.DataFrame, overrides: dict | None = None) -> pd.DataF
 def with_replacement(games: pd.DataFrame, side: str) -> pd.DataFrame:
     """Copy of games with `side`'s starter swapped for a replacement-level QB."""
     g = games.copy()
-    delta = REPLACEMENT_RATING - g[f"{side}_qb_rating"]
+    # Use the actual backup's rating (from the live depth chart) when known, else replacement level.
+    backup = g.get(f"{side}_backup_qb_rating")
+    repl = backup.fillna(REPLACEMENT_RATING) if backup is not None else REPLACEMENT_RATING
+    delta = repl - g[f"{side}_qb_rating"]
     sign = 1 if side == "home" else -1
     g["qb_diff"] = g["qb_diff"] + sign * delta
     g["qb_change_diff"] = g["qb_change_diff"] + sign * delta

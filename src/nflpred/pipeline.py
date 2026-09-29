@@ -18,6 +18,7 @@ import pandas as pd
 from . import data, features as F, model as M
 from . import odds as odds_lib, weather as weather_lib
 from . import qb_availability as qba
+from . import news as news_lib
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "output"
@@ -30,14 +31,38 @@ def current_season(today: dt.date) -> int:
     return today.year if today.month >= 8 else today.year - 1
 
 
-def build(refresh: bool, today: dt.date) -> pd.DataFrame:
+LAST_NEWS: dict = {}
+
+
+def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: int = 9,
+          news_sources: tuple = ("sleeper", "espn")) -> pd.DataFrame:
+    """Load data and build features. With live_news, upcoming games get the latest injury
+    statuses and projected starting QBs from Sleeper/ESPN (see news.py)."""
     season = current_season(today)
     games = data.load_schedules(refresh=refresh)
     seasons = range(2012, season + 1)
     cur = season if refresh else None
     pbp = data.load_pbp(seasons, refresh_current=cur)
-    inj = (data.load_injuries(seasons, cur), data.load_snaps(seasons, cur), data.load_players(refresh))
-    return F.build_features(games, pbp, inj)
+    injuries, snaps, players = data.load_injuries(seasons, cur), data.load_snaps(seasons, cur), data.load_players(refresh)
+    LAST_NEWS.clear()
+    if live_news:
+        gd = pd.to_datetime(games["gameday"]).dt.date
+        up = games[games["home_score"].isna() & (gd >= today) & (gd <= today + dt.timedelta(days=horizon_days))]
+        live, report = news_lib.fetch_live(up, players, news_sources)
+        log = []
+        if not live.empty:
+            rows = news_lib.injury_rows(live, up)
+            log += news_lib.status_changes(injuries, rows, up)
+            games, starter_log = news_lib.apply_to_schedule(
+                games, news_lib.projected_starters(live), live, set(up["game_id"]))
+            log += starter_log
+            injuries = news_lib.merge_injuries(injuries, rows)
+            report["live_injury_rows"] = int(len(rows))
+        LAST_NEWS.update({"report": report, "changes": log})
+        print("news:", json.dumps(report))
+        for c in log:
+            print("news:", c["text"])
+    return F.build_features(games, pbp, (injuries, snaps, players))
 
 
 def _pts_to_prob_points(pts: float, sigma: float) -> float:
@@ -204,6 +229,10 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     model = M.fit(df)
     upcoming = df[(~df["completed"]) & (df["gameday"].dt.date >= today)
                   & (df["gameday"].dt.date <= today + dt.timedelta(days=horizon_days))]
+    if today == dt.date.today():  # live run: drop games that have already kicked off
+        now = dt.datetime.now(dt.timezone.utc)
+        started = [weather_lib._kickoff_utc(g, t) <= now for g, t in zip(upcoming["gameday"], upcoming["gametime"])]
+        upcoming = upcoming[[not x for x in started]]
     forecasts = {} if offline else weather_lib.forecasts_for(upcoming)
     live = None if offline else odds_lib.snapshot(ROOT / "history")
     std = season_to_date(df, season)
@@ -214,6 +243,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         "season": season,
         "upcoming": predict_games(model, upcoming, forecasts, live),
         "live_odds_available": bool(live),
+        "news": dict(LAST_NEWS),
         "season_to_date": {"model": std_score, "vegas": vegas_score,
                            "games": predict_games_with_p(std)},
         "clv": clv_report(df),
@@ -239,10 +269,12 @@ def main(argv=None) -> int:
     ap.add_argument("cmd", choices=["update", "backtest", "gate"])
     ap.add_argument("--no-refresh", action="store_true", help="use cached data")
     ap.add_argument("--today", help="override date (YYYY-MM-DD)")
-    ap.add_argument("--offline", action="store_true", help="skip live odds and weather APIs")
+    ap.add_argument("--offline", action="store_true", help="skip live odds, weather and news APIs")
+    ap.add_argument("--news-sources", default="sleeper,espn", help="comma list: sleeper,espn")
     a = ap.parse_args(argv)
     today = dt.date.fromisoformat(a.today) if a.today else dt.date.today()
-    df = build(refresh=not a.no_refresh, today=today)
+    df = build(refresh=not a.no_refresh, today=today, live_news=(a.cmd == "update" and not a.offline),
+               news_sources=tuple(x.strip() for x in a.news_sources.split(",") if x.strip()))
     if a.cmd == "update":
         r = cmd_update(df, today, offline=a.offline)
         for g in r["upcoming"]:

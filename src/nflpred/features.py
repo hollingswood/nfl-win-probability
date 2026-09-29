@@ -175,6 +175,12 @@ def attach_qb(sched: pd.DataFrame, qbr: pd.DataFrame) -> pd.DataFrame:
         key = key.sort_values("gameday")
         m = pd.merge_asof(key, qbr, on="gameday", by="qb_id", allow_exact_matches=False)
         out[f"{side}_qb_rating"] = m.set_index("index")["qb_rating"].reindex(out.index).fillna(QB_PRIOR)
+        if f"{side}_backup_qb_id" in out:
+            bk = out[["gameday", f"{side}_backup_qb_id"]].reset_index().rename(
+                columns={f"{side}_backup_qb_id": "qb_id"}).sort_values("gameday")
+            bk["qb_id"] = bk["qb_id"].astype(qbr["qb_id"].dtype)
+            mb = pd.merge_asof(bk, qbr, on="gameday", by="qb_id", allow_exact_matches=False)
+            out[f"{side}_backup_qb_rating"] = mb.set_index("index")["qb_rating"].reindex(out.index)
     return out
 
 

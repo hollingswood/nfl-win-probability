@@ -192,3 +192,80 @@ def test_qb_availability_blend():
 
 def test_blowout_cap_limits_single_game_influence():
     assert F.PT_CAP == 21 and F.EPA_CAP == 0.3
+
+
+# ---------------------------------------------------------------- live news (offline fixtures)
+SLEEPER_FIXTURE = {
+    "1": {"full_name": "Caleb Williams", "team": "CHI", "position": "QB", "gsis_id": "00-0039918",
+          "injury_status": "Out", "practice_participation": "DNP", "depth_chart_position": "QB",
+          "depth_chart_order": 1, "news_updated": 1759000000000},
+    "2": {"full_name": "Tyson Bagent", "team": "CHI", "position": "QB", "gsis_id": "00-0038416",
+          "injury_status": "Questionable", "practice_participation": "DNP", "depth_chart_position": "QB",
+          "depth_chart_order": 2},
+    "3": {"full_name": "Case Keenum", "team": "CHI", "position": "QB", "gsis_id": "00-0029076",
+          "injury_status": None, "depth_chart_position": "QB", "depth_chart_order": 3},
+    "4": {"full_name": "Dallas Goedert", "team": "PHI", "position": "TE", "gsis_id": "00-0034272",
+          "injury_status": "IR", "depth_chart_position": "TE", "depth_chart_order": 1},
+    "5": {"full_name": "Free Agent", "team": None, "position": "WR"},
+    "6": {"full_name": "Matthew Stafford", "team": "LAR", "position": "QB", "gsis_id": "00-0026498",
+          "injury_status": None, "depth_chart_position": "QB", "depth_chart_order": 1},
+}
+
+
+def test_sleeper_parsing_and_team_codes():
+    from nflpred import news
+    d = news.parse_sleeper(SLEEPER_FIXTURE)
+    assert len(d) == 5  # free agent dropped
+    assert d.set_index("full_name").loc["Matthew Stafford", "team"] == "LA"
+    assert d.set_index("full_name").loc["Dallas Goedert", "report_status"] == "Out"  # IR -> Out
+    assert d.set_index("full_name").loc["Tyson Bagent", "practice_status"] == "Did Not Participate In Practice"
+
+
+def test_projected_starter_skips_out_qb_and_sets_backup():
+    from nflpred import news
+    live = news.parse_sleeper(SLEEPER_FIXTURE)
+    st = news.projected_starters(live)["CHI"]
+    assert st["starter"] == "Tyson Bagent" and st["backup"] == "Case Keenum"
+    games = pd.DataFrame({"game_id": ["g"], "season": [2026], "week": [3], "home_team": ["CHI"], "away_team": ["PHI"],
+                          "home_qb_id": ["00-0039918"], "home_qb_name": ["Caleb Williams"],
+                          "away_qb_id": ["00-0035704"], "away_qb_name": ["Jalen Hurts"], "home_score": [np.nan]})
+    g2, log = news.apply_to_schedule(games, news.projected_starters(live), live, {"g"})
+    assert g2.at[0, "home_qb_name"] == "Tyson Bagent" and g2.at[0, "home_backup_qb_id"] == "00-0029076"
+    assert g2.at[0, "away_qb_name"] == "Jalen Hurts"  # PHI not in fixture depth chart: untouched
+    assert len(log) == 1 and "Tyson Bagent projected to start" in log[0]["text"]
+
+
+def test_live_injuries_replace_nflverse_for_that_week_only():
+    from nflpred import news
+    live = news.parse_sleeper(SLEEPER_FIXTURE)
+    up = pd.DataFrame({"season": [2026], "week": [3], "home_team": ["CHI"], "away_team": ["PHI"]})
+    rows = news.injury_rows(live, up)
+    old = pd.DataFrame({"season": [2026, 2026], "week": [3, 2], "team": ["CHI", "CHI"],
+                        "gsis_id": ["00-0038416", "00-0038416"], "position": ["QB", "QB"],
+                        "report_status": ["Questionable", "Questionable"],
+                        "practice_status": ["Full Participation in Practice"] * 2})
+    merged = news.merge_injuries(old, rows)
+    wk3 = merged[(merged.week == 3) & (merged.gsis_id == "00-0038416")]
+    assert wk3["practice_status"].tolist() == ["Did Not Participate In Practice"]  # live wins
+    assert len(merged[merged.week == 2]) == 1  # older week untouched
+    log = news.status_changes(old, rows, up)
+    assert any("Caleb Williams" in c["text"] and "Out" in c["text"] for c in log)
+
+
+def test_espn_summary_parsing():
+    from nflpred import news
+    summ = {"injuries": [{"team": {"abbreviation": "WSH"}, "injuries": [
+        {"status": "Out", "date": "2026-09-27T18:00Z",
+         "athlete": {"id": "123", "displayName": "Some Tackle", "position": {"abbreviation": "OT"}}}]}]}
+    d = news.parse_espn_summary(summ, {"123": "00-0099999"})
+    assert d.iloc[0][["team", "gsis_id", "report_status", "source"]].tolist() == ["WAS", "00-0099999", "Out", "ESPN"]
+    both = news.combine(news.parse_sleeper(SLEEPER_FIXTURE), d)
+    assert (both["full_name"] == "Some Tackle").sum() == 1
+
+
+def test_backup_rating_used_when_starter_sits():
+    from nflpred import qb_availability as qba
+    g = pd.DataFrame({"qb_diff": [0.0], "qb_change_diff": [0.0], "final_week": [0], "fw_qb_diff": [0.0],
+                      "home_qb_rating": [0.0], "away_qb_rating": [0.0], "home_backup_qb_rating": [-0.3]})
+    assert qba.with_replacement(g, "home").at[0, "qb_diff"] == pytest.approx(-0.3)
+    assert qba.with_replacement(g, "away").at[0, "qb_diff"] == pytest.approx(0.1)  # no backup known: -0.10

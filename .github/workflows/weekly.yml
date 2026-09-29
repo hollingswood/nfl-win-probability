@@ -1,13 +1,24 @@
 name: Weekly predictions
 
+concurrency:
+  group: predictions
+  cancel-in-progress: false
+
 on:
   schedule:
     # Tuesdays 14:00 UTC (7am Arizona): after Monday Night Football, before lines settle.
     - cron: "0 14 * * 2"
     # Thursdays 14:00 UTC: refresh for QB/injury changes before TNF.
     - cron: "0 14 * * 4"
-    # Sundays 15:00 UTC: final pre-kickoff refresh.
-    - cron: "0 15 * * 0"
+    # Pre-kickoff news runs, ~75 min before each window (after inactives start posting).
+    # UTC; covers both daylight time (Sep-early Nov) and standard time. GitHub may start
+    # scheduled runs 5-20 min late, so these aim early.
+    - cron: "45 15 * * 0"   # Sun 1:00pm ET games (EDT) - full news pull incl. Sleeper
+    - cron: "45 16 * * 0"   # Sun 1:00pm ET games (EST)
+    - cron: "5 19 * * 0"    # Sun 4:05/4:25pm ET (EDT)
+    - cron: "5 20 * * 0"    # Sun 4:05/4:25pm ET (EST)
+    - cron: "5 23 * * 0,1,4"  # SNF / MNF / TNF (EDT)
+    - cron: "5 0 * * 1,2,5"   # SNF / MNF / TNF (EST)
   workflow_dispatch:
 
 permissions:
@@ -31,12 +42,20 @@ jobs:
         run: python -m nflpred.pipeline gate
         env:
           PYTHONPATH: src
-      - name: Retrain, predict, grade (+ live odds and kickoff weather)
-        run: python -m nflpred.pipeline update --no-refresh
+      - name: Retrain, predict, grade (+ live odds, kickoff weather, injury/depth-chart news)
+        # Sleeper's full player list is pulled on the Tue/Thu runs and the first Sunday run;
+        # later pre-kickoff runs use ESPN's per-game injury lists (lighter, polled often).
+        run: |
+          SOURCES="espn"
+          case "${{ github.event.schedule }}" in
+            "0 14 * * 2"|"0 14 * * 4"|"45 15 * * 0"|"") SOURCES="sleeper,espn" ;;
+          esac
+          python -m nflpred.pipeline update --no-refresh --news-sources "$SOURCES"
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Vegas comparison (blend test + betting simulation)
+        if: github.event.schedule == '0 14 * * 2' || github.event_name == 'workflow_dispatch'
         run: python scripts/vs_vegas.py
         env:
           PYTHONPATH: src
