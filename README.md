@@ -50,7 +50,7 @@ Every run before the games pulls free public feeds and applies them to upcoming 
 
 | Source | What we use | When |
 |---|---|---|
-| Sleeper API (`api.sleeper.app/v1/players/nfl`) | Injury status, practice participation, depth-chart order for every player | Tue, Thu, first Sunday run (Sleeper asks apps to pull this list sparingly) |
+| Sleeper API (`api.sleeper.app/v1/players/nfl`) | Injury status, practice participation, depth-chart order for every player | Daily run + Friday final-report run (Sleeper asks apps to pull this list at most daily) |
 | ESPN game summaries (unofficial public endpoint) | Per-game injury lists | Every run, including ~75 min before each kickoff window |
 
 - Live statuses replace the nflverse report for that week, so the injury feature and QB-availability blend use the newest information.
@@ -100,7 +100,7 @@ open site/index.html
 | Workflow | When | What |
 |---|---|---|
 | `ci.yml` | every push / PR | tests (incl. leakage) + backtest regression gate |
-| `weekly.yml` | Tue, Thu, Sun | refresh data → retrain → predict → commit history → deploy GitHub Pages |
+| `weekly.yml` | Daily 7am AZ, Fri 1:30pm AZ (final injury report), ~75 min before each kickoff window | refresh data + news + odds → retrain → predict → commit history → deploy GitHub Pages |
 | `claude.yml` | PRs and `@claude` mentions | Claude reviews PRs against `CLAUDE.md`; `@claude` in an issue implements it |
 
 ### One-time setup

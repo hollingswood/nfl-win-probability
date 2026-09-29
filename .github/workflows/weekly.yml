@@ -6,14 +6,14 @@ concurrency:
 
 on:
   schedule:
-    # Tuesdays 14:00 UTC (7am Arizona): after Monday Night Football, before lines settle.
-    - cron: "0 14 * * 2"
-    # Thursdays 14:00 UTC: refresh for QB/injury changes before TNF.
-    - cron: "0 14 * * 4"
+    # Daily 14:00 UTC (7:00am Arizona): fresh stats, news and a line snapshot every day.
+    - cron: "0 14 * * *"
+    # Fridays 20:30 UTC (1:30pm Arizona): after the final injury report (game statuses) posts.
+    - cron: "30 20 * * 5"
     # Pre-kickoff news runs, ~75 min before each window (after inactives start posting).
     # UTC; covers both daylight time (Sep-early Nov) and standard time. GitHub may start
     # scheduled runs 5-20 min late, so these aim early.
-    - cron: "45 15 * * 0"   # Sun 1:00pm ET games (EDT) - full news pull incl. Sleeper
+    - cron: "45 15 * * 0"   # Sun 1:00pm ET games (EDT)
     - cron: "45 16 * * 0"   # Sun 1:00pm ET games (EST)
     - cron: "5 19 * * 0"    # Sun 4:05/4:25pm ET (EDT)
     - cron: "5 20 * * 0"    # Sun 4:05/4:25pm ET (EST)
@@ -43,20 +43,26 @@ jobs:
         env:
           PYTHONPATH: src
       - name: Retrain, predict, grade (+ live odds, kickoff weather, injury/depth-chart news)
-        # Sleeper's full player list is pulled on the Tue/Thu runs and the first Sunday run;
-        # later pre-kickoff runs use ESPN's per-game injury lists (lighter, polled often).
+        # Sleeper's full player list is pulled by the daily run and the Friday final-report run;
+        # pre-kickoff runs use ESPN's per-game injury lists (lighter, polled often).
         run: |
           SOURCES="espn"
           case "${{ github.event.schedule }}" in
-            "0 14 * * 2"|"0 14 * * 4"|"45 15 * * 0"|"") SOURCES="sleeper,espn" ;;
+            "0 14 * * *"|"30 20 * * 5"|"") SOURCES="sleeper,espn" ;;
           esac
           python -m nflpred.pipeline update --no-refresh --news-sources "$SOURCES"
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Vegas comparison (blend test + betting simulation)
-        if: github.event.schedule == '0 14 * * 2' || github.event_name == 'workflow_dispatch'
-        run: python scripts/vs_vegas.py
+        # Weekly (Tuesday's daily run) or on manual runs; it re-runs the 2015-2025 comparison.
+        if: github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "2" ]; then
+            python scripts/vs_vegas.py
+          else
+            echo "Vegas comparison runs on Tuesdays"
+          fi
         env:
           PYTHONPATH: src
       - name: Build dashboard
