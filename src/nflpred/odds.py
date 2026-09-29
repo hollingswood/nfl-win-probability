@@ -38,20 +38,33 @@ def fetch(api_key: str | None = None, timeout: float = 20) -> list[dict]:
     key = api_key or os.environ.get("ODDS_API_KEY")
     if not key:
         raise RuntimeError("ODDS_API_KEY not set")
-    q = urllib.parse.urlencode({"apiKey": key, "regions": "us", "markets": "h2h,spreads",
+    # us + us2 covers the regulated US books (us2 adds e.g. ESPN BET, Fanatics, Hard Rock);
+    # cost = markets x regions = 4 credits per call.
+    q = urllib.parse.urlencode({"apiKey": key, "regions": "us,us2", "markets": "h2h,spreads",
                                 "oddsFormat": "american"})
     with urllib.request.urlopen(f"{URL}?{q}", timeout=timeout) as r:
         return json.load(r)
 
 
-def summarize(events: list[dict]) -> dict[tuple[str, str, str], dict]:
-    """(home_abbr, away_abbr, kickoff date UTC) -> consensus + best prices."""
+def load_allowed_books(path=None) -> set | None:
+    from pathlib import Path
+    path = path or Path(__file__).resolve().parents[2] / "my_books.json"
+    try:
+        return set(json.loads(Path(path).read_text())["allowed_books"])
+    except Exception:
+        return None
+
+
+def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str, str, str], dict]:
+    """(home_abbr, away_abbr, kickoff date UTC) -> consensus + best prices.
+    Consensus uses every book; best prices and per-book spreads only books in `allowed` (if given)."""
     out = {}
     for ev in events:
         home, away = TEAM_ABBR.get(ev["home_team"]), TEAM_ABBR.get(ev["away_team"])
         if not home or not away:
             continue
         probs, spreads, best = [], [], {"home": None, "away": None}
+        book_spreads = []
         for bk in ev.get("bookmakers", []):
             mk = {m["key"]: m for m in bk.get("markets", [])}
             if "h2h" in mk:
@@ -59,13 +72,21 @@ def summarize(events: list[dict]) -> dict[tuple[str, str, str], dict]:
                 if ev["home_team"] in px and ev["away_team"] in px:
                     h, a = _implied(px[ev["home_team"]]), _implied(px[ev["away_team"]])
                     probs.append(h / (h + a))
+                    if allowed is not None and bk.get("key") not in allowed:
+                        continue
                     for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
                         if best[side] is None or px[name] > best[side]["price"]:
                             best[side] = {"price": px[name], "book": bk.get("title", bk.get("key"))}
             if "spreads" in mk:
-                for o in mk["spreads"]["outcomes"]:
-                    if o["name"] == ev["home_team"] and o.get("point") is not None:
-                        spreads.append(-o["point"])  # home -3.5 => home margin +3.5
+                sp = {o["name"]: o for o in mk["spreads"]["outcomes"]}
+                ho, ao = sp.get(ev["home_team"]), sp.get(ev["away_team"])
+                if ho and ho.get("point") is not None:
+                    spreads.append(-ho["point"])  # home -3.5 => home margin +3.5
+                if (ho and ao and ho.get("point") is not None and ao.get("point") is not None
+                        and (allowed is None or bk.get("key") in allowed)):
+                    book_spreads.append({"book": bk.get("title", bk.get("key")),
+                                         "home_point": ho["point"], "home_price": ho["price"],
+                                         "away_point": ao["point"], "away_price": ao["price"]})
         if not probs:
             continue
         out[(home, away, ev["commence_time"][:10])] = {
@@ -73,6 +94,7 @@ def summarize(events: list[dict]) -> dict[tuple[str, str, str], dict]:
             "consensus_home_prob": round(statistics.median(probs), 4),
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],
+            "spreads_by_book": book_spreads,
             "commence_time": ev["commence_time"],
         }
     return out
@@ -88,7 +110,7 @@ def snapshot(history_dir: Path) -> dict | None:
     history_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M")
     (history_dir / f"odds_{ts}.json").write_text(json.dumps(events))
-    return summarize(events)
+    return summarize(events, load_allowed_books())
 
 
 def match(summary: dict, home: str, away: str, gameday) -> dict | None:

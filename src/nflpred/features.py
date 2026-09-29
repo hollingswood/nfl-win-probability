@@ -31,7 +31,7 @@ FEATURES = [
     "elo_diff", "qb_diff", "off_epa_diff", "def_epa_diff", "off_sr_diff", "def_sr_diff",
     "pass_epa_diff", "rush_epa_diff", "to_margin_diff", "pt_diff_diff", "rest_diff",
     "home_field", "div_game", "qb_change_diff", "inj_off_diff", "inj_def_diff",
-    "fw_elo_diff", "fw_pt_diff_diff", "fw_qb_diff",
+    "fw_elo_diff", "fw_pt_diff_diff", "fw_qb_diff", "ot_diff",
 ]
 
 FEATURE_LABELS = {
@@ -54,6 +54,7 @@ FEATURE_LABELS = {
     "fw_elo_diff": "Final week: strength",
     "fw_pt_diff_diff": "Final week: point diff",
     "fw_qb_diff": "Final week: QB",
+    "ot_diff": "Coming off overtime",
 }
 
 
@@ -317,6 +318,7 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     for f in ("elo_diff", "pt_diff_diff", "qb_diff"):
         df[f"fw_{f}"] = df["final_week"] * df[f].fillna(0)
     df["rest_diff"] = (df["home_rest"] - df["away_rest"]).clip(-7, 7)
+    df = attach_prev_overtime(df)
 
     # Travel / time zones / body clock (schedule-derived, known in advance)
     from .travel import travel_features
@@ -344,6 +346,22 @@ def build_features(games: pd.DataFrame, pbp: pd.DataFrame, inj_data: tuple | Non
     df["vegas_home_prob"] = vegas_prob(df["home_moneyline"], df["away_moneyline"])
     df[FEATURES] = df[FEATURES].fillna(0.0)
     return df
+
+
+def attach_prev_overtime(df: pd.DataFrame) -> pd.DataFrame:
+    """1 if the team's previous game THIS season went to overtime (fatigue; tested 2026-09-29:
+    teams off OT underperformed by ~2 pts in 2015-19 and ~0.4 in 2020-25)."""
+    long = pd.concat([
+        df[["game_id", "season", "gameday", "home_team", "overtime"]].set_axis(["game_id", "season", "gameday", "team", "ot"], axis=1),
+        df[["game_id", "season", "gameday", "away_team", "overtime"]].set_axis(["game_id", "season", "gameday", "team", "ot"], axis=1),
+    ]).sort_values(["team", "gameday", "game_id"])
+    long["prev_ot"] = long.groupby(["team", "season"])["ot"].shift(1).fillna(0).clip(0, 1)
+    out = df
+    for side in ("home", "away"):
+        m = long[["game_id", "team", "prev_ot"]].rename(columns={"team": f"{side}_team", "prev_ot": f"{side}_prev_ot"})
+        out = out.merge(m, on=["game_id", f"{side}_team"], how="left")
+    out["ot_diff"] = out["away_prev_ot"].fillna(0) - out["home_prev_ot"].fillna(0)  # + = visitor off OT
+    return out
 
 
 def warm_weather_teams(sched: pd.DataFrame) -> pd.Series:

@@ -13,6 +13,8 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
 - `src/nflpred/news.py` — live injury/depth-chart news (Sleeper + ESPN public feeds) applied to upcoming games; tested offline with fixtures in tests
 - `src/nflpred/bets.py` + `betting_rules.json` — paper-bet ledger (`history/paper_bets.json`), grading, CLV, pre-registered switch to live recommendations. NEVER edit rules or the validation test in place to fit results: bump `version` instead.
+- `src/nflpred/margins.py` — key-number-aware margin distribution (cover/push/win probabilities)
+- `src/nflpred/spread_bets.py` + `spread_rules.json` — spread paper-bet track (separate ledger `history/paper_bets_spread.json`); `my_books.json` = books allowed for line shopping
 - `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past
@@ -58,5 +60,7 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   weekly power ratings, recency weighting, QB/Elo parameter grids, gradient boosting,
   travel/time zones/body clock, weather interactions, Next Gen Stats (QB CPOE/TTT, RYOE, separation),
   special teams EPA, starter injuries by position group / OL clusters, QB draft-capital prior, QB time-off fade,
-  new head coach, early-season interactions, referee tendencies (all 2026-09-29, see README table;
-  code in scripts/extra_features.py)
+  new head coach, early-season interactions, referee tendencies, turf mismatch, conference game, Thu/Mon,
+  home stand/road trip, bye flags, bounce-back/letdown (all 2026-09-29, see README table; code in
+  scripts/extra_features.py). ADOPTED from that batch: coming off overtime (ot_diff).
+- Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist

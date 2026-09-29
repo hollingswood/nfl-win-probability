@@ -30,7 +30,7 @@ def test_no_future_leakage(raw, feats, cutoff):
     cut = pd.Timestamp(cutoff)
     g2 = g.copy()
     future = pd.to_datetime(g2["gameday"]) >= cut
-    g2.loc[future, ["home_score", "away_score", "result", "total"]] = np.nan
+    g2.loc[future, ["home_score", "away_score", "result", "total", "overtime"]] = np.nan
     future_ids = set(g2.loc[future, "game_id"])
     p2 = p[~p["game_id"].isin(future_ids)]
     snaps2 = snaps[~snaps["game_id"].isin(future_ids)]
@@ -364,3 +364,72 @@ def test_void_bets_are_ignored(tmp_path):
     games = pd.DataFrame({"game_id": [], "completed": [], "home_score": [], "away_score": [], "vegas_home_prob": []})
     out = bets.process({"upcoming": [_game()]}, games, tmp_path)
     assert len(out["new"]) == 1 and out["record"]["graded"] == 0  # void bet doesn't block or count
+
+
+# ---------------------------------------------------------------- spread track + key numbers
+def test_key_numbers_make_3_and_7_likely_and_ties_rare():
+    from nflpred import spread_bets as sb, margins as K
+    r = sb.load_rules()
+    p = K.pmf(np.array([-3.0]), r["margin"]["sigma"], r["_weights"])[0]
+    at = lambda k: p[K.KS == k][0] + p[K.KS == -k][0]
+    assert at(3) > 1.8 * at(2) and at(7) > at(8) and at(3) > at(4)
+    assert p[K.KS == 0][0] < 0.01
+    hc, pu, ac = K.cover_probs(np.array([0.0]), 13.0, np.array([-3.0]), r["_weights"])
+    assert pu[0] > 0.05 and abs(hc[0] + pu[0] + ac[0] - 1) < 1e-9  # pushes on 3 are common
+
+
+def test_spread_best_line_across_books_and_grading(tmp_path):
+    from nflpred import spread_bets as sb
+    r = sb.load_rules()
+    g = _game(p_home=0.6)
+    g["model_home_margin"] = 14.0  # big disagreement; blend (mostly market) still ~5.8
+    g["context"]["live_odds"].update({"consensus_home_margin": 3.0, "spreads_by_book": [
+        {"book": "A", "home_point": -3.5, "home_price": -110, "away_point": 3.5, "away_price": -110},
+        {"book": "B", "home_point": -3.0, "home_price": -115, "away_point": 3.0, "away_price": -105}]})
+    a = sb.analyze(g, r)
+    assert a["best"]["side"] == "home" and a["best"]["book"] == "B"   # -3 at -115 beats -3.5 at -110 near a key number
+    assert len(a["best"]["buy_options"]) == 2 and a["best"]["buy_options"][0]["point"] == -2.5
+    games = pd.DataFrame({"game_id": [g["game_id"]], "completed": [False], "home_score": [np.nan],
+                          "away_score": [np.nan], "spread_line": [3.5]})
+    out = sb.process({"upcoming": [g]}, games, tmp_path)
+    bet = out["new"][0]
+    assert bet["point"] == -3.0 and bet["book"] == "B"
+    games.loc[0, ["completed", "home_score", "away_score"]] = [True, 20, 17]   # won by exactly 3 -> push
+    out2 = sb.process({"upcoming": []}, games, tmp_path)
+    graded = out2["recent_graded"][0]
+    assert graded["result"] == "push" and graded["profit_units"] == 0.0
+    assert graded["clv_points"] == pytest.approx(0.5)  # we got -3, market closed -3.5
+
+
+def test_buy_point_price_shift():
+    from nflpred.spread_bets import _shift_price
+    assert _shift_price(-110, 20) == -130 and _shift_price(105, 20) == -115 and _shift_price(150, 10) == 140
+
+
+def test_odds_summary_keeps_each_books_spread():
+    from nflpred import odds
+    ev = [{"home_team": "Chicago Bears", "away_team": "Philadelphia Eagles", "commence_time": "2026-09-29T00:15:00Z",
+           "bookmakers": [{"title": "BookA", "markets": [
+               {"key": "h2h", "outcomes": [{"name": "Chicago Bears", "price": 170}, {"name": "Philadelphia Eagles", "price": -205}]},
+               {"key": "spreads", "outcomes": [{"name": "Chicago Bears", "price": -110, "point": 4.5},
+                                               {"name": "Philadelphia Eagles", "price": -110, "point": -4.5}]}]}]}]
+    s = odds.summarize(ev)[("CHI", "PHI", "2026-09-29")]
+    assert s["spreads_by_book"] == [{"book": "BookA", "home_point": 4.5, "home_price": -110,
+                                     "away_point": -4.5, "away_price": -110}]
+
+
+def test_line_shopping_only_uses_allowed_books():
+    from nflpred import odds
+    ev = [{"home_team": "Chicago Bears", "away_team": "Philadelphia Eagles", "commence_time": "2026-09-29T00:15:00Z",
+           "bookmakers": [
+               {"key": "offshore", "title": "Offshore", "markets": [
+                   {"key": "h2h", "outcomes": [{"name": "Chicago Bears", "price": 200}, {"name": "Philadelphia Eagles", "price": -190}]},
+                   {"key": "spreads", "outcomes": [{"name": "Chicago Bears", "price": -105, "point": 5.0},
+                                                   {"name": "Philadelphia Eagles", "price": -105, "point": -5.0}]}]},
+               {"key": "draftkings", "title": "DraftKings", "markets": [
+                   {"key": "h2h", "outcomes": [{"name": "Chicago Bears", "price": 170}, {"name": "Philadelphia Eagles", "price": -205}]},
+                   {"key": "spreads", "outcomes": [{"name": "Chicago Bears", "price": -110, "point": 4.5},
+                                                   {"name": "Philadelphia Eagles", "price": -110, "point": -4.5}]}]}]}]
+    s = odds.summarize(ev, allowed={"draftkings"})[("CHI", "PHI", "2026-09-29")]
+    assert s["best_home_ml"]["book"] == "DraftKings" and s["books"] == 2      # consensus still uses both
+    assert [b["book"] for b in s["spreads_by_book"]] == ["DraftKings"]

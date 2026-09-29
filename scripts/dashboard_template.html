@@ -69,6 +69,7 @@ section{display:grid;gap:14px}
 .ctx{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted)}
 .ctx b{color:var(--ink);font-weight:600}
 .ctx .warn{color:var(--vegas)}
+.ctx .buy{color:var(--accent)}
 .news{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
 .news li{background:var(--surface);border:1px solid var(--line);padding:8px 12px}
 .pill{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid var(--muted);color:var(--muted)}
@@ -76,6 +77,8 @@ section{display:grid;gap:14px}
 .chk{font-family:var(--mono);font-size:12px}
 .chk.ok{color:var(--good)} .chk.no{color:var(--muted)}
 .betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
+.track{display:grid;gap:10px;margin-top:8px}
+.track h3{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;display:flex;gap:10px;align-items:center}
 .tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
 
 /* tables & charts */
@@ -114,9 +117,7 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
   <section id="betswrap">
     <div class="sechead"><h2 id="betsh">Paper bets</h2><span class="pill" id="betmode"></span></div>
     <p class="edge" id="betintro"></p>
-    <div class="strip" id="betstats"></div>
-    <div class="scroll"><table id="betopen"></table></div>
-    <div class="scroll"><table id="betgraded"></table></div>
+    <div id="tracks"></div>
   </section>
 
   <section id="newswrap">
@@ -199,6 +200,13 @@ function context(g){
     const q=(g.qb_status||{})[side];
     if(q && q.play_prob<1) bits.push(`<span class="warn"><b>${esc(qb||team+' QB')}</b> ${esc(q.status||'')}${q.practice?` (${q.practice==='Did Not'?'did not practice':q.practice.toLowerCase()+' practice'})`:''}: starts ~${Math.round(q.play_prob*100)}% of the time</span>`);
   }
+  const sp=g.spread;
+  if(sp&&sp.best){ const b=sp.best, pt=x=>`${x>0?'+':''}${x}`;
+    const exp=sp.expected_home_margin, fav=exp>=0?g.home_team:g.away_team;
+    let t=`<span><b>Spread</b>: expects ${esc(fav)} by ${Math.abs(exp).toFixed(1)} · best <b>${esc(b.team)} ${pt(b.point)}</b> (${fmtML(b.price)}) at ${esc(b.book)} · covers ${Math.round(b.p_cover*100)}%${b.p_push>0.02?`, push ${Math.round(b.p_push*100)}%`:''} · edge ${b.ev>0?'+':''}${(b.ev*100).toFixed(1)}%</span>`;
+    const buy=(b.buy_options||[]).filter(o=>o.ev>b.ev+0.005).sort((x,y)=>y.ev-x.ev)[0];
+    if(buy) t+=`<span class="buy">Buying to ${pt(buy.point)} at ~${fmtML(buy.est_price)} would be worth ${buy.ev>0?'+':''}${(buy.ev*100).toFixed(1)}% (estimated price)</span>`;
+    bits.push(t); }
   const o=c.live_odds;
   if(o){
     const side=(team,b,ev)=> b?`<span><b>${esc(team)}</b> best ${fmtML(b.price)} at ${esc(b.book)} · edge ${ev>0?'+':''}${(ev*100).toFixed(1)}%</span>`:'';
@@ -289,9 +297,10 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
 (function(){
   const V=D.vs_vegas; if(!V){document.getElementById('vvtxt').textContent='Run scripts/vs_vegas.py to generate.';return;}
   const l=V.log_loss;
-  document.getElementById('vvtxt').innerHTML=`Not yet. On ${V.games.toLocaleString()} games from ${V.holdout}, Vegas closing lines scored <b class="num">${l.vegas.toFixed(3)}</b> log loss, the model <b class="num">${l.model.toFixed(3)}</b>, and a model + Vegas blend <b class="num">${l.blend.toFixed(3)}</b>. Betting 1 unit whenever the model saw positive expected value at the real odds:`;
+  document.getElementById('vvtxt').innerHTML=`Not yet. On ${V.games.toLocaleString()} games from ${V.holdout}, Vegas closing lines scored <b class="num">${l.vegas.toFixed(3)}</b> log loss, the model <b class="num">${l.model.toFixed(3)}</b>, and a model + Vegas blend <b class="num">${l.blend.toFixed(3)}</b>. Betting 1 unit whenever the model saw positive expected value at the real closing prices. The spread rows are the first positive result, but 556 bets leave a noise band of about ±4%, which is why they are being paper-tested live:`;
   let h='<thead><tr><th>Probabilities</th><th>Min. edge</th><th>Bets</th><th>Units</th><th>ROI</th></tr></thead><tbody>';
-  for(const b of V.betting) h+=`<tr><td>${b.probs==='blend'?'Model + Vegas':'Model'}</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
+  for(const b of V.betting) h+=`<tr><td>Moneyline: ${b.probs==='blend'?'model + Vegas':'model'}</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
+  for(const b of (V.spread_betting||[])) h+=`<tr><td>Spread: model + Vegas, key numbers</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
   document.getElementById('vv').innerHTML=h+'</tbody>';
 })();
 (function(){
@@ -309,28 +318,29 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
 })();
 
 (function(){
-  const B=P.bets, wrap=document.getElementById('betswrap');
-  if(!B||B.error){wrap.hidden=true;return;}
-  const live=B.mode==='live', r=B.record, fmtP=x=>x>0?`+${x}`:`${x}`;
-  document.getElementById('betsh').textContent = live ? 'Recommended bets' : 'Paper bets';
-  const m=document.getElementById('betmode'); m.textContent = live ? 'Live · validated' : 'Shadow mode · not recommendations'; if(live) m.classList.add('live');
-  document.getElementById('betintro').innerHTML = live
-    ? 'The model passed its pre-registered test, so qualifying bets are recommended. Stakes are in units (1 unit = 1% of your bankroll).'
-    : `The model logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. Recommendations turn on only if, after at least ${r.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> the paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  const tracks=[['Moneyline',P.bets],['Spread',P.spread_bets]].filter(([,B])=>B&&!B.error);
+  if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
+  const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
+  document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
+  const m=document.getElementById('betmode'); m.textContent = anyLive ? 'A track is live · validated' : 'Shadow mode · not recommendations'; if(anyLive) m.classList.add('live');
+  const r0=tracks[0][1].record;
+  document.getElementById('betintro').innerHTML = `Two separate tracks, each with its own locked rules and record. Each logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. A track switches to recommendations only if, after at least ${r0.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> its paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
   const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
-  document.getElementById('betstats').innerHTML=[
-    [`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
-    [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(r.checks.roi_positive,'')}`],
-    [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `Avg. closing line value ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`],
-  ].map(([b,s])=>`<div class="stat"><b class="num">${b}</b><span>${s}</span></div>`).join('');
-  const open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
-  document.getElementById('betopen').innerHTML = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
-    open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left"><b>${esc(b.team)}</b> vs ${esc(b.opponent)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
-    : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
-  document.getElementById('betgraded').innerHTML = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
-    gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${esc(b.team)} vs ${esc(b.opponent)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
-  // flag on game cards
-  for (const b of open) { const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`); if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${esc(b.team)} ${fmtP(b.price)}</span>`); }
+  const betLabel=(b,spread)=>spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
+  document.getElementById('tracks').innerHTML = tracks.map(([name,B])=>{
+    const spread=name==='Spread', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+    const stats=[[`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
+      [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(r.checks.roi_positive,'')}`],
+      [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `Avg. closing line value ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
+      .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
+    const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
+    const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
+      gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
+    for (const b of open) { const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`); if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:fmtP(b.price)}</span>`); }
+    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div></div>`;
+  }).join('');
 })();
 
 document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;

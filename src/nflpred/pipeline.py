@@ -20,6 +20,7 @@ from . import odds as odds_lib, weather as weather_lib
 from . import qb_availability as qba
 from . import news as news_lib
 from . import bets as bets_lib
+from . import spread_bets as spread_lib
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "output"
@@ -275,15 +276,26 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:  # paper betting must never block predictions
         result["bets"] = {"error": str(e)}
         print("bets: failed:", e)
+    try:
+        result["spread_bets"] = spread_lib.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["spread_bets"] = {"error": str(e)}
+        print("spread bets: failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     alert = OUT / "alert.md"
     alert.unlink(missing_ok=True)
+    lines = []
     b = result.get("bets", {})
-    if b.get("mode") == "live" and b.get("new"):
-        lines = [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
-                 f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in b["new"]]
-        alert.write_text("New qualifying bets (model validated):\n\n" + "\n".join(lines))
+    if b.get("mode") == "live":
+        lines += [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
+                  f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in b.get("new", [])]
+    sb = result.get("spread_bets", {})
+    if sb.get("mode") == "live":
+        lines += [f"- **{x['team']} {x['point']:+g}** ({x['price']:+d}) at {x['book']} vs {x['opponent']} "
+                  f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in sb.get("new", [])]
+    if lines:
+        alert.write_text("New qualifying bets (validated track):\n\n" + "\n".join(lines))
     return result
 
 

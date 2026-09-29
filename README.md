@@ -25,7 +25,8 @@ win probability (normal distribution, σ ≈ 13 points). Explanations are in poi
 | + injuries (Out/Doubtful × recent snap share) | 0.6255 | 0.6258 |
 | + predict margin instead of win/loss (v2) | 0.6219 | 0.6242 |
 | + final-week rest interactions (v3) | 0.6205 | 0.6228 |
-| + blowout cap: single-game EPA ±0.3/play, point diff ±21 (v4) | **0.6206** | **0.6214** |
+| + blowout cap: single-game EPA ±0.3/play, point diff ±21 (v4) | 0.6206 | 0.6214 |
+| + team coming off an overtime game (v5) | **0.6191** | **0.6208** |
 
 Also tested: a "starting QB listed Questionable/Doubtful" feature (only ~150 games in history, the two
 periods disagreed: not adopted as a feature). Instead, upcoming games use a **QB availability blend**:
@@ -60,7 +61,27 @@ Every run before the games pulls free public feeds and applies them to upcoming 
 - Precedence: `overrides.json` (manual) > live feeds > nflverse report. Feeds failing never block a run.
 - Yahoo isn't used: its API needs a per-user OAuth login.
 
+## Spreads and key numbers (`margins.py`, `spread_bets.py`, rules in `spread_rules.json`)
+- **Key numbers:** margins are priced with a normal curve re-weighted by how often NFL games actually end on each
+  margin (fit on 2012–2014): 3 is ~2.3× more common than a smooth curve says, 7 ~1.6×, 10 ~1.4×, ties ~0.2×.
+  Better spread-cover log loss on both 2015–19 and 2020–25, and push rates on whole-number lines match reality
+  (predicted 4.5% vs actual 4.3%). Moneyline win probabilities keep the smooth curve (key numbers didn't help there).
+- **Spread margin:** 0.33 × model margin + 0.74 × market margin − 0.57 (fit on 2015–2019), σ = 12.8.
+- **Backtest 2020–2025 at real closing spreads and prices, 3% edge threshold: 556 bets, +2.5% ROI** — the first
+  positive result, but the noise band is about ±4%, so it is being paper-tested live. (Same strategy with a smooth
+  curve instead of key numbers: −6.2%. Model alone: −1.7%.)
+- **Line shopping:** every licensed book's actual spread and price is evaluated, so −3 at one book vs −3.5 at another
+  is a real, priced half-point. Buying extra points is shown as an *estimate* only (typical cost 10¢, 20¢ onto/off 3,
+  15¢ onto/off 7; the free odds plan has no alternate-line prices) and is never paper-bet.
+- **Books:** `my_books.json` lists the sportsbooks you can actually use (default: licensed US books). Best prices and
+  paper bets use only those; the market consensus uses every book.
+
 ## Paper bets → recommendations (`bets.py`, rules in `betting_rules.json`)
+Two independent tracks with their own locked rules and records: **moneyline** (`betting_rules.json`, v1) and
+**spread** (`spread_rules.json`, v1, same thresholds, sizing and validation test). A track switches to live
+recommendations on its own record only. Historically the moneyline approach lost money at closing prices in every
+variant tried (including moneylines derived from the market-anchored spread margin: −5.8%), so it serves as a control.
+
 The model does not recommend bets until it has proven itself on bets logged in real time.
 
 - **Shadow mode (default):** every run checks each upcoming game. A moneyline side qualifies when, using a
@@ -82,7 +103,7 @@ The model does not recommend bets until it has proven itself on bets logged in r
 | Open-Meteo | Kickoff-hour temperature, wind, gusts, rain chance for outdoor games | Weekly workflow, no key |
 | Travel (`travel.py`) | Distance, time zones crossed, kickoff time on each team's body clock | Everywhere |
 
-### Candidate features tested 2026-09-29 (`scripts/extra_features.py`), all rejected
+### Candidate features tested 2026-09-29 (`scripts/extra_features.py`)
 Rule: adopt only if log loss improves on BOTH 2015–2019 validation and 2020–2025 holdout (baseline 0.6203 / 0.6215).
 
 | Candidate | Validation | Holdout |
@@ -96,6 +117,13 @@ Rule: adopt only if log loss improves on BOTH 2015–2019 validation and 2020–
 | New head coach | −0.0002 | +0.0003 |
 | Early-season (weeks 1–4) interactions | −0.0002 | +0.0011 |
 | Referee home-margin tendency | +0.0002 | +0.0008 |
+| Turf mismatch (visitor's home surface ≠ venue) | −0.0018 | +0.0007 |
+| Conference game | +0.0000 | −0.0004 |
+| Thursday / Monday game | −0.0000 | +0.0002 |
+| Home stand / second straight road game | +0.0006 | +0.0000 |
+| Off a bye (incl. playoff bye) | −0.0000 | +0.0001 |
+| Bounce-back after 17+ pt loss / letdown after 17+ pt win | +0.0003 | +0.0001 |
+| **Coming off an overtime game — ADOPTED** | **−0.0012** | **−0.0007** |
 
 The draft-capital prior technically passed, but its table rests on 25 QBs and the simpler version failed the
 holdout, so it was treated as noise. The market already prices all of these.
@@ -103,6 +131,8 @@ holdout, so it was treated as noise. The market already prices all of these.
 Tested as model inputs on 2015–2019 / 2020–2025 and **rejected** (changes within ±0.002 log loss, inconsistent direction):
 travel distance and time zones, body-clock kickoff, weather (wind × passing, cold × dome teams), Next Gen Stats
 (QB CPOE and time to throw, team rushing yards over expected, receiver separation). The market prices these already.
+
+Not testable: Super Bowl winner/loser next game (~2 games a year). Favorites-early/dogs-late will be measured from our own odds snapshots once enough accumulate.
 
 ## Does it beat Vegas? (`scripts/vs_vegas.py` → `output/vs_vegas.json`)
 No, not against closing lines. On the 2020–2025 holdout (1,688 games): Vegas 0.607 log loss, model 0.623,

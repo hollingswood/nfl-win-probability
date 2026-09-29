@@ -186,3 +186,49 @@ def referee(df, shrink=60):
     out = out.merge(d[["game_id", "ref_home_edge"]], on="game_id", how="left")
     out["ref_home_edge"] = out["ref_home_edge"].fillna(0)
     return out
+
+
+# ---------------------------------------------------------------- F. situational (schedule-derived)
+AFC = {"BAL", "BUF", "CIN", "CLE", "DEN", "HOU", "IND", "JAX", "KC", "LV", "LAC", "MIA", "NE", "NYJ", "PIT", "TEN"}
+GRASS = {"grass", "dessograss"}
+
+
+def situational(df):
+    out = df.copy()
+    # conference game
+    out["conf_game"] = (out["home_team"].isin(AFC) == out["away_team"].isin(AFC)).astype(int)
+    # day of week (these change the size of home edge; learned as main effects)
+    wd = pd.to_datetime(out["gameday"]).dt.dayofweek
+    out["thu"], out["mon"] = (wd == 3).astype(int), (wd == 0).astype(int)
+    # turf: does the visitor's home surface type differ from this venue's?
+    s = out["surface"].fillna("").str.lower().str.strip()
+    out["venue_grass"] = s.isin(GRASS).astype(int)
+    home_surf = (out[out["location"] != "Neutral"].sort_values("gameday").groupby(["season", "home_team"])["venue_grass"]
+                 .agg(lambda x: x.mode().iloc[0] if len(x) else np.nan).rename("team_grass").reset_index())
+    m = out[["season", "away_team"]].merge(home_surf.rename(columns={"home_team": "away_team"}), on=["season", "away_team"], how="left")
+    out["surface_mismatch"] = ((m["team_grass"].values != out["venue_grass"].values) & m["team_grass"].notna().values).astype(int)
+    # per-team previous game (same season only)
+    long = pd.concat([
+        out[["game_id", "season", "gameday", "home_team", "home_score", "away_score", "overtime", "home_rest"]]
+            .set_axis(["game_id", "season", "gameday", "team", "pf", "pa", "ot", "rest"], axis=1).assign(is_home=1),
+        out[["game_id", "season", "gameday", "away_team", "away_score", "home_score", "overtime", "away_rest"]]
+            .set_axis(["game_id", "season", "gameday", "team", "pf", "pa", "ot", "rest"], axis=1).assign(is_home=0),
+    ]).sort_values(["team", "gameday"])
+    g = long.groupby(["team", "season"])
+    long["prev_home"] = g["is_home"].shift(1)
+    long["prev_ot"] = g["ot"].shift(1).fillna(0)
+    long["prev_margin"] = (g["pf"].shift(1) - g["pa"].shift(1))
+    long["big_loss"] = (long["prev_margin"] <= -17).astype(int)
+    long["big_win"] = (long["prev_margin"] >= 17).astype(int)
+    long["off_bye"] = (long["rest"] >= 13).astype(int)
+    for side in ("home", "away"):
+        m = long[["game_id", "team", "prev_home", "prev_ot", "big_loss", "big_win", "off_bye"]].rename(
+            columns={c: f"{side}_{c}" for c in ["prev_home", "prev_ot", "big_loss", "big_win", "off_bye"]} | {"team": f"{side}_team"})
+        out = out.merge(m, on=["game_id", f"{side}_team"], how="left")
+    out["home_stand"] = (out["home_prev_home"] == 1).astype(int)          # home team was also home last week
+    out["road_trip"] = (out["away_prev_home"] == 0).astype(int)           # visitor was also on the road last week
+    out["ot_diff"] = out["away_prev_ot"].fillna(0) - out["home_prev_ot"].fillna(0)   # + = visitor coming off OT
+    out["bye_diff"] = out["home_off_bye"].fillna(0) - out["away_off_bye"].fillna(0)
+    out["bounce_diff"] = out["home_big_loss"].fillna(0) - out["away_big_loss"].fillna(0)
+    out["letdown_diff"] = out["home_big_win"].fillna(0) - out["away_big_win"].fillna(0)
+    return out

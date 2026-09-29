@@ -47,7 +47,35 @@ def main():
             n = int(bh.sum() + ba.sum())
             bets.append({"probs": src, "min_edge": edge, "bets": n,
                          "units": round(float(pnl.sum()), 1), "roi": round(float(pnl.sum() / max(n, 1)), 4)})
-    res = {"holdout": "2020-2025", "games": int(len(hold)),
+    # ---- spread track: frozen spread_rules.json (blend fit on 2015-2019), key-number pricing,
+    # bet at the actual closing spread and price, 2020-2025 only
+    from nflpred import spread_bets as SB, margins as K
+    sr = SB.load_rules()
+    parts = []
+    for s in range(2020, 2026):
+        te = df[(df.season == s) & df.home_win.notna() & df.spread_line.notna()
+                & df.home_spread_odds.notna() & df.away_spread_odds.notna()].copy()
+        te["mu_model"] = M.fit(df, before_season=s).predict_margin(te)
+        parts.append(te)
+    sp = pd.concat(parts)
+    m = sr["margin"]
+    mu = m["model"] * sp["mu_model"] + m["market"] * sp["spread_line"] + m["intercept"]
+    line = -sp["spread_line"].values
+    hc, pu, ac = K.cover_probs(mu.values, m["sigma"], line, sr["_weights"])
+    dh, da = dec(sp.home_spread_odds.values), dec(sp.away_spread_odds.values)
+    adj = (sp.home_score - sp.away_score).values + line
+    evh, eva = hc * dh + pu - 1, ac * da + pu - 1
+    spread_bets = []
+    for edge in (0.0, 0.03, 0.05):
+        bh = (evh > edge) & (evh >= eva)
+        ba = (eva > edge) & (eva > evh)
+        pnl = np.where(bh, np.where(adj > 0, dh - 1, np.where(adj == 0, 0, -1)), 0) + \
+            np.where(ba, np.where(adj < 0, da - 1, np.where(adj == 0, 0, -1)), 0)
+        n = int(bh.sum() + ba.sum())
+        spread_bets.append({"probs": "blend + key numbers", "min_edge": edge, "bets": n,
+                            "units": round(float(pnl.sum()), 1), "roi": round(float(pnl.sum() / max(n, 1)), 4)})
+
+    res = {"holdout": "2020-2025", "games": int(len(hold)), "spread_betting": spread_bets,
            "log_loss": {"vegas": L(hold.vegas_home_prob), "model": L(hold.p), "blend": L(hold.pb)},
            "blend_weights": {"model": float(blend.coef_[0][0]), "vegas": float(blend.coef_[0][1])},
            "betting": bets}

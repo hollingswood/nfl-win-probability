@@ -141,6 +141,7 @@ FACTOR_GROUPS = {
     "Home field": ["home_field"],
     "Division game": ["div_game"],
     "Final-week rest risk": ["fw_elo_diff", "fw_pt_diff_diff", "fw_qb_diff"],
+    "Coming off overtime": ["ot_diff"],
 }
 
 
