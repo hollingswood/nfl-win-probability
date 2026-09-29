@@ -82,6 +82,24 @@ The model does not recommend bets until it has proven itself on bets logged in r
 | Open-Meteo | Kickoff-hour temperature, wind, gusts, rain chance for outdoor games | Weekly workflow, no key |
 | Travel (`travel.py`) | Distance, time zones crossed, kickoff time on each team's body clock | Everywhere |
 
+### Candidate features tested 2026-09-29 (`scripts/extra_features.py`), all rejected
+Rule: adopt only if log loss improves on BOTH 2015–2019 validation and 2020–2025 holdout (baseline 0.6203 / 0.6215).
+
+| Candidate | Validation | Holdout |
+|---|---|---|
+| Special teams net EPA (kickoffs, punts, FGs, XPs) | −0.0003 | +0.0010 |
+| Starters out by position group (OL, secondary, skill, front) | +0.0009 | +0.0006 |
+| 2+ offensive-line starters out | +0.0008 | +0.0002 |
+| QB prior by draft capital (4 buckets) | −0.0004 | −0.0004 |
+| …same, simplified to 1st round vs. rest (robustness check) | −0.0006 | +0.0001 |
+| QB rating fades with time off (1-year half-life) | −0.0001 | +0.0002 |
+| New head coach | −0.0002 | +0.0003 |
+| Early-season (weeks 1–4) interactions | −0.0002 | +0.0011 |
+| Referee home-margin tendency | +0.0002 | +0.0008 |
+
+The draft-capital prior technically passed, but its table rests on 25 QBs and the simpler version failed the
+holdout, so it was treated as noise. The market already prices all of these.
+
 Tested as model inputs on 2015–2019 / 2020–2025 and **rejected** (changes within ±0.002 log loss, inconsistent direction):
 travel distance and time zones, body-clock kickoff, weather (wind × passing, cold × dome teams), Next Gen Stats
 (QB CPOE and time to throw, team rushing yards over expected, receiver separation). The market prices these already.

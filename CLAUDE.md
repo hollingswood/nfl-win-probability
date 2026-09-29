@@ -53,10 +53,10 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
 - Clinch-aware final-week feature (actual seeding scenarios) instead of the simple final-week interaction
 - Once `history/odds_*.json` has a season of snapshots, measure CLV per book and per day of week
 - Live formats checked 2026-09-29 via web fetch: ESPN summary `injuries` structure matches `parse_espn_summary` exactly; Sleeper field names match `parse_sleeper` (saw injury_status values IR/PUP; practice_participation values not yet observed live, confirm on first game-week run)
-- QB rating should fade with time off (currently decays per game played only; overrated Keenum in 2026 wk3)
-- Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
-- Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
-- Weather/wind for outdoor games; travel distance and time zones
+- Once paper bets accumulate: use our own line-movement history (history/odds_*.json) as a bet filter
 - Already tried without gain (don't repeat without a new angle): garbage-time filter, opponent-adjusted EPA,
   weekly power ratings, recency weighting, QB/Elo parameter grids, gradient boosting,
-  travel/time zones/body clock, weather interactions, Next Gen Stats (QB CPOE/TTT, RYOE, separation)
+  travel/time zones/body clock, weather interactions, Next Gen Stats (QB CPOE/TTT, RYOE, separation),
+  special teams EPA, starter injuries by position group / OL clusters, QB draft-capital prior, QB time-off fade,
+  new head coach, early-season interactions, referee tendencies (all 2026-09-29, see README table;
+  code in scripts/extra_features.py)
