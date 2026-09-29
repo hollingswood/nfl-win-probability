@@ -51,7 +51,7 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
 ## Ideas backlog (good next PRs)
 - Clinch-aware final-week feature (actual seeding scenarios) instead of the simple final-week interaction
 - Once `history/odds_*.json` has a season of snapshots, measure CLV per book and per day of week
-- Verify the first live Sleeper/ESPN responses match the parsers (field names are from their public docs, not yet seen live)
+- Live formats checked 2026-09-29 via web fetch: ESPN summary `injuries` structure matches `parse_espn_summary` exactly; Sleeper field names match `parse_sleeper` (saw injury_status values IR/PUP; practice_participation values not yet observed live, confirm on first game-week run)
 - QB rating should fade with time off (currently decays per game played only; overrated Keenum in 2026 wk3)
 - Preseason priors: roster turnover / draft capital / coaching change for weeks 1-4
 - Injury weighting by position (OL/CB clusters, WR1) instead of flat snap share
