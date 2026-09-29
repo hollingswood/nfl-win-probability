@@ -345,3 +345,22 @@ def test_weekly_exposure_cap(tmp_path):
     out = bets.process({"upcoming": ups}, games, tmp_path)
     assert sum(b["units"] for b in out["new"]) <= 8.0 and len(out["new"]) < 8
     assert any("weekly exposure cap" in "; ".join(g["bet_check"]) for g in ups)
+
+
+def test_injury_report_flag_uses_official_report_only():
+    """Live feeds carry last week's statuses; they must not count as this week's report being out."""
+    from nflpred.pipeline import official_reports
+    official = pd.DataFrame({"season": [2026, 2026], "week": [4.0, 4.0], "team": ["CHI", "PHI"],
+                             "report_status": [None, "Out"]})  # CHI: practice-only row so far
+    rep = official_reports(official)
+    assert (2026, 4, "PHI") in rep and (2026, 4, "CHI") not in rep
+
+
+def test_void_bets_are_ignored(tmp_path):
+    import json
+    from nflpred import bets
+    (tmp_path / "paper_bets.json").write_text(json.dumps([{**bets.evaluate(_game(), bets.load_rules(), None),
+                                                           "status": "void"}]))
+    games = pd.DataFrame({"game_id": [], "completed": [], "home_score": [], "away_score": [], "vegas_home_prob": []})
+    out = bets.process({"upcoming": [_game()]}, games, tmp_path)
+    assert len(out["new"]) == 1 and out["record"]["graded"] == 0  # void bet doesn't block or count

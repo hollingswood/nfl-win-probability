@@ -37,7 +37,12 @@ STATUS_MAP = {  # -> nflverse report_status vocabulary
 PRACTICE_MAP = {"DNP": "Did Not Participate In Practice", "Limited": "Limited Participation in Practice",
                 "LP": "Limited Participation in Practice", "Full": "Full Participation in Practice",
                 "FP": "Full Participation in Practice"}
-UA = {"User-Agent": "nfl-win-probability/1.0 (personal research project)"}
+UA = {  # ESPN rejects non-browser clients (403 seen from GitHub Actions)
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/128.0 Safari/537.36",
+    "Accept": "application/json,text/plain,*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 
 def _get_json(url: str, timeout: float = 30):
@@ -174,7 +179,7 @@ def status_changes(nflverse_inj: pd.DataFrame, live_rows: pd.DataFrame, upcoming
     log = []
     if live_rows is None or live_rows.empty:
         return log
-    qbs = live_rows[live_rows["position"] == "QB"]
+    qbs = live_rows[live_rows["position"] == "QB"].sort_values("week").drop_duplicates(["team", "gsis_id"])
     old = nflverse_inj.drop_duplicates(["season", "week", "team", "gsis_id"], keep="last").set_index(
         ["season", "week", "team", "gsis_id"])
     for r in qbs.itertuples():

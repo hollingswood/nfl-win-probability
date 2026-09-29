@@ -35,6 +35,13 @@ def current_season(today: dt.date) -> int:
 LAST_NEWS: dict = {}
 
 
+def official_reports(official: pd.DataFrame) -> set:
+    """(season, week, team) with a published official game-status report."""
+    o = official[official["report_status"].notna()]
+    team = o["team"].replace({"OAK": "LV", "SD": "LAC", "STL": "LA", "LAR": "LA"})
+    return set(zip(o["season"].astype(int), o["week"].astype(int), team))
+
+
 def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: int = 9,
           news_sources: tuple = ("sleeper", "espn")) -> pd.DataFrame:
     """Load data and build features. With live_news, upcoming games get the latest injury
@@ -46,6 +53,7 @@ def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: 
     pbp = data.load_pbp(seasons, refresh_current=cur)
     injuries, snaps, players = data.load_injuries(seasons, cur), data.load_snaps(seasons, cur), data.load_players(refresh)
     LAST_NEWS.clear()
+    official_before_live = injuries
     if live_news:
         gd = pd.to_datetime(games["gameday"]).dt.date
         up = games[games["home_score"].isna() & (gd >= today) & (gd <= today + dt.timedelta(days=horizon_days))]
@@ -63,7 +71,14 @@ def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: 
         print("news:", json.dumps(report))
         for c in log:
             print("news:", c["text"])
-    return F.build_features(games, pbp, (injuries, snaps, players))
+    df = F.build_features(games, pbp, (injuries, snaps, players))
+    # "Injury report out" means the OFFICIAL game-status report (Out/Doubtful/Questionable designations,
+    # published Wed-Fri) exists for that team and week. Live feeds and practice-only reports don't count.
+    rep = official_reports(official_before_live)
+    for side in ("home", "away"):
+        keys = list(zip(df["season"], df["week"], df[f"{side}_team"]))
+        df[f"{side}_inj_reported"] = [1.0 if k in rep else 0.0 for k in keys]
+    return df
 
 
 def _pts_to_prob_points(pts: float, sigma: float) -> float:
@@ -97,7 +112,11 @@ def game_context(g, forecast: dict | None, live: dict | None, p_home: float) -> 
         ctx["weather"] = {"indoors": False, **forecast}
     if live:
         ctx["live_odds"] = dict(live)
-        for side, p in (("home", p_home), ("away", 1 - p_home)):
+        # EV uses the same model + market blend as the paper-bet rules (raw model edges are overconfident).
+        w = bets_lib.load_rules()["probability"]
+        pb = bets_lib.blend_prob(p_home, live["consensus_home_prob"], w)
+        ctx["live_odds"]["blend_home_prob"] = round(pb, 4)
+        for side, p in (("home", pb), ("away", 1 - pb)):
             b = live.get(f"best_{side}_ml")
             if b:
                 ctx["live_odds"][f"{side}_ev_at_best"] = round(p * _dec(b["price"]) - 1, 4)

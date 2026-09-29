@@ -158,7 +158,7 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
   <section class="notes">
     <h2 style="color:var(--ink)">How to read this</h2>
     <p>Factor bars show how many points of predicted margin each input is worth and which team it favors. Home field is about 2 points, and near zero at neutral sites. Injuries count every non-QB player listed Out or Doubtful, weighted by their recent share of snaps; reports come out Wednesday to Friday, so early-week numbers assume everyone is healthy.</p>
-    <p>Travel, time zones, body clock, weather and Next Gen Stats were each tested as model inputs and did not improve out-of-sample accuracy, so they appear on the cards as context and are not part of the prediction. Live odds come from multiple sportsbooks when an Odds API key is set; "EV" is the model's expected return at the best available price, and the backtest above shows those edges have not been profitable against closing lines.</p>
+    <p>Travel, time zones, body clock, weather and Next Gen Stats were each tested as model inputs and did not improve out-of-sample accuracy, so they appear on the cards as context and are not part of the prediction. Live odds come from multiple sportsbooks when an Odds API key is set; "edge" is the expected return at the best available price using the model blended with the market (the same probability the paper bets use), and the backtest above shows those edges have not been profitable against closing lines.</p>
     <p>Vegas is a very strong benchmark. Matching it over a full season would be a good result; a large disagreement usually means the market knows something the model doesn't, like an injury announced after the data refresh.</p>
   </section>
   <footer id="foot"></footer>
@@ -201,7 +201,7 @@ function context(g){
   }
   const o=c.live_odds;
   if(o){
-    const side=(team,b,ev)=> b?`<span><b>${esc(team)}</b> best ${fmtML(b.price)} at ${esc(b.book)} · EV ${ev>0?'+':''}${(ev*100).toFixed(1)}%</span>`:'';
+    const side=(team,b,ev)=> b?`<span><b>${esc(team)}</b> best ${fmtML(b.price)} at ${esc(b.book)} · edge ${ev>0?'+':''}${(ev*100).toFixed(1)}%</span>`:'';
     bits.push(side(g.away_team,o.best_away_ml,o.away_ev_at_best), side(g.home_team,o.best_home_ml,o.home_ev_at_best), `<span>${o.books} books</span>`);
   }
   return bits.join('');

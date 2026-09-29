@@ -163,7 +163,7 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, rules: dict | No
     path = history_dir / "paper_bets.json"
     ledger = json.loads(path.read_text()) if path.exists() else []
     ledger = [grade(b, games) if b.get("status") == "open" else b for b in ledger]
-    have = {b["game_id"] for b in ledger}
+    have = {b["game_id"] for b in ledger if b.get("status") != "void"}
     first = first_seen_market(history_dir)
     cands = []
     for g in pred.get("upcoming", []):
@@ -175,7 +175,8 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, rules: dict | No
     cap = rules["sizing"].get("max_units_per_week")
     new = []
     for bet, g in sorted(cands, key=lambda x: -x[0]["edge"]):  # biggest edges first
-        used = sum(b["units"] for b in ledger + new if b["season"] == bet["season"] and b["week"] == bet["week"])
+        used = sum(b["units"] for b in ledger + new
+                   if b.get("status") != "void" and b["season"] == bet["season"] and b["week"] == bet["week"])
         if cap is not None and used + bet["units"] > cap + 1e-9:
             g["bet_check"].append(f"weekly exposure cap ({cap:g} units) reached")
             continue
