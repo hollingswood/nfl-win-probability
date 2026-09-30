@@ -1,0 +1,565 @@
+{
+  "tuned": {
+    "margin_capNone": {
+      "variant": "margin",
+      "cap": null,
+      "params": {
+        "q_w": 0.7137504084777826,
+        "q_off": 8.845008536327045,
+        "rho": 0.5500794299262849,
+        "hfa": 2.075463942703976,
+        "s_p": 9.654067798039677
+      },
+      "tune_ll": 0.6223085119743704
+    },
+    "margin_cap28.0": {
+      "variant": "margin",
+      "cap": 28.0,
+      "params": {
+        "q_w": 0.842786562722867,
+        "q_off": 7.846729884602631,
+        "rho": 0.5349319750812633,
+        "hfa": 1.9390696391520459,
+        "s_p": 8.784016820493155
+      },
+      "tune_ll": 0.6217602952306166
+    },
+    "margin_cap21.0": {
+      "variant": "margin",
+      "cap": 21.0,
+      "params": {
+        "q_w": 0.9592986478316619,
+        "q_off": 7.286129320392251,
+        "rho": 0.5414489903400902,
+        "hfa": 1.7843340369977816,
+        "s_p": 7.761174942511069
+      },
+      "tune_ll": 0.6216280008613891
+    },
+    "margin_cap14.0": {
+      "variant": "margin",
+      "cap": 14.0,
+      "params": {
+        "q_w": 1.0882011176619486,
+        "q_off": 5.507096508048735,
+        "rho": 0.5194809544964667,
+        "hfa": 1.3792780430050153,
+        "s_p": 5.065954100097057
+      },
+      "tune_ll": 0.6228450511870974
+    },
+    "epa": {
+      "variant": "epa",
+      "cap": 21.0,
+      "params": {
+        "q_w": 0.09956523470634042,
+        "q_off": 0.35435530796988846,
+        "rho": 0.6005528654500477,
+        "hfa": 1.1741635547356302,
+        "s_p": 4.885910052648569,
+        "w": 0.5009110332124844,
+        "k": 0.07510492364168134,
+        "hfa_e": -4.324568710057093,
+        "s_z": 3.589391824836698
+      },
+      "tune_ll": 0.6202323865678181
+    },
+    "qb": {
+      "variant": "qb",
+      "cap": 21.0,
+      "params": {
+        "q_w": 0.4813753341595526,
+        "q_off": 6.526278582334291,
+        "rho": 0.5549435191383171,
+        "hfa": 1.9545334547903728,
+        "s_p": 8.798110090249672,
+        "beta": 21.170897742703005
+      },
+      "tune_ll": 0.6131507103715154
+    },
+    "epa_qb": {
+      "variant": "epa_qb",
+      "cap": 21.0,
+      "params": {
+        "q_w": 0.06010739318066904,
+        "q_off": 0.1849313167739101,
+        "rho": 0.6279407533628911,
+        "hfa": 1.2578909408255432,
+        "s_p": 5.164279887499752,
+        "w": 0.4957958796084979,
+        "k": 0.1450438031974233,
+        "hfa_e": -6.229108251647741,
+        "s_z": 3.5583421503150015,
+        "beta": 11.654288005791825
+      },
+      "tune_ll": 0.6118309864866769
+    },
+    "margin": {
+      "variant": "margin",
+      "cap": 21.0,
+      "params": {
+        "q_w": 0.9592986478316619,
+        "q_off": 7.286129320392251,
+        "rho": 0.5414489903400902,
+        "hfa": 1.7843340369977816,
+        "s_p": 7.761174942511069
+      },
+      "tune_ll": 0.6216280008613891
+    }
+  },
+  "best_cap": 21.0,
+  "sigma_rating_only": {
+    "margin": 10.037094756996746,
+    "epa": 5.459523816083145,
+    "qb": 10.270906611828595,
+    "epa_qb": 5.532445813105277
+  },
+  "leakage": {
+    "margin": {
+      "2019-11-10": {
+        "games_checked": 4686,
+        "games_on_cutoff": 11,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 9.15724281481307
+      },
+      "2023-10-01": {
+        "games_checked": 5707,
+        "games_on_cutoff": 14,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 8.156964229903936
+      }
+    },
+    "epa": {
+      "2019-11-10": {
+        "games_checked": 4686,
+        "games_on_cutoff": 11,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 5.359327525513994
+      },
+      "2023-10-01": {
+        "games_checked": 5707,
+        "games_on_cutoff": 14,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 4.663559489989791
+      }
+    },
+    "qb": {
+      "2019-11-10": {
+        "games_checked": 4686,
+        "games_on_cutoff": 11,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 8.694205061281895
+      },
+      "2023-10-01": {
+        "games_checked": 5707,
+        "games_on_cutoff": 14,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 7.190711627536876
+      }
+    },
+    "epa_qb": {
+      "2019-11-10": {
+        "games_checked": 4686,
+        "games_on_cutoff": 11,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 4.496247809524693
+      },
+      "2023-10-01": {
+        "games_checked": 5707,
+        "games_on_cutoff": 14,
+        "max_abs_diff": 0.0,
+        "max_change_after_cutoff": 4.024503430511552
+      }
+    }
+  },
+  "results": [
+    {
+      "name": "Production (ridge, FEATURES)",
+      "kind": "production",
+      "val": {
+        "ll": 0.6192,
+        "brier": 0.2156,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6209,
+        "brier": 0.216,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Vegas closing (no-vig)",
+      "kind": "market",
+      "val": {
+        "ll": 0.6187,
+        "brier": 0.2151,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.607,
+        "brier": 0.21,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [margin]",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6311,
+        "brier": 0.2206,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6366,
+        "brier": 0.2229,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [margin] native var",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6314,
+        "brier": 0.2207,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6375,
+        "brier": 0.2231,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [epa]",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6292,
+        "brier": 0.2197,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6374,
+        "brier": 0.2231,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [epa] native var",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6294,
+        "brier": 0.2198,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6383,
+        "brier": 0.2234,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [qb]",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6219,
+        "brier": 0.2167,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6266,
+        "brier": 0.2187,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [qb] native var",
+      "kind": "rating",
+      "val": {
+        "ll": 0.622,
+        "brier": 0.2168,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6272,
+        "brier": 0.2189,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [epa_qb]",
+      "kind": "rating",
+      "val": {
+        "ll": 0.6199,
+        "brier": 0.2157,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6276,
+        "brier": 0.219,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [epa_qb] native var",
+      "kind": "rating",
+      "val": {
+        "ll": 0.62,
+        "brier": 0.2158,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6283,
+        "brier": 0.2192,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff[margin]",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.6191,
+        "brier": 0.2156,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.621,
+        "brier": 0.2161,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff[epa]",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.6186,
+        "brier": 0.2153,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6211,
+        "brier": 0.2161,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff[qb] (team part)",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.6191,
+        "brier": 0.2156,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6211,
+        "brier": 0.2162,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff_qb[qb] (team+QB)",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.619,
+        "brier": 0.2155,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.621,
+        "brier": 0.2161,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff[epa_qb] (team part)",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.6187,
+        "brier": 0.2154,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6213,
+        "brier": 0.2162,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod - Elo/pt_diff + ss_diff[epa]",
+      "kind": "production+rating",
+      "val": {
+        "ll": 0.6196,
+        "brier": 0.2156,
+        "n": 1330
+      },
+      "hold": {
+        "ll": 0.6228,
+        "brier": 0.2167,
+        "n": 1688
+      }
+    }
+  ],
+  "blends": [
+    {
+      "name": "Vegas closing raw",
+      "weights": {},
+      "val": {
+        "ll": 0.6187,
+        "brier": 0.2151,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.607,
+        "brier": 0.21,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Vegas alone (recalibrated)",
+      "weights": {
+        "Vegas closing (no-vig)": 1.012
+      },
+      "val": {
+        "ll": 0.6186,
+        "brier": 0.2151,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.6068,
+        "brier": 0.2098,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Production + Vegas",
+      "weights": {
+        "Production (ridge, FEATURES)": 0.559,
+        "Vegas closing (no-vig)": 0.558
+      },
+      "val": {
+        "ll": 0.6143,
+        "brier": 0.2133,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.6091,
+        "brier": 0.2107,
+        "n": 1688
+      }
+    },
+    {
+      "name": "KF rating only [epa_qb] + Vegas",
+      "weights": {
+        "KF rating only [epa_qb]": 0.481,
+        "Vegas closing (no-vig)": 0.588
+      },
+      "val": {
+        "ll": 0.6157,
+        "brier": 0.2138,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.6119,
+        "brier": 0.212,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Prod + ss_diff[epa] + Vegas",
+      "weights": {
+        "Prod + ss_diff[epa]": 0.576,
+        "Vegas closing (no-vig)": 0.538
+      },
+      "val": {
+        "ll": 0.6142,
+        "brier": 0.2133,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.6096,
+        "brier": 0.211,
+        "n": 1688
+      }
+    },
+    {
+      "name": "Production + KF rating only [epa_qb] + Vegas",
+      "weights": {
+        "Production (ridge, FEATURES)": 0.5,
+        "KF rating only [epa_qb]": 0.083,
+        "Vegas closing (no-vig)": 0.531
+      },
+      "val": {
+        "ll": 0.6142,
+        "brier": 0.2133,
+        "n": 1329
+      },
+      "hold": {
+        "ll": 0.6097,
+        "brier": 0.211,
+        "n": 1688
+      }
+    }
+  ],
+  "diagnostics": {
+    "margin": {
+      "corr_with_elo_diff": 0.965,
+      "corr_mu_with_minus_spread_line": 0.861
+    },
+    "epa": {
+      "corr_with_elo_diff": 0.962,
+      "corr_mu_with_minus_spread_line": 0.855
+    },
+    "qb": {
+      "corr_with_elo_diff": 0.912,
+      "corr_mu_with_minus_spread_line": 0.912
+    },
+    "epa_qb": {
+      "corr_with_elo_diff": 0.895,
+      "corr_mu_with_minus_spread_line": 0.904
+    }
+  },
+  "verdict": [
+    {
+      "name": "Prod + ss_diff[margin]",
+      "d_val": -0.0001,
+      "d_hold": 0.0001,
+      "adopt_rule_met": false
+    },
+    {
+      "name": "Prod + ss_diff[epa]",
+      "d_val": -0.0006,
+      "d_hold": 0.0002,
+      "adopt_rule_met": false
+    },
+    {
+      "name": "Prod + ss_diff[qb] (team part)",
+      "d_val": -0.0001,
+      "d_hold": 0.0002,
+      "adopt_rule_met": false
+    },
+    {
+      "name": "Prod + ss_diff_qb[qb] (team+QB)",
+      "d_val": -0.0002,
+      "d_hold": 0.0001,
+      "adopt_rule_met": false
+    },
+    {
+      "name": "Prod + ss_diff[epa_qb] (team part)",
+      "d_val": -0.0005,
+      "d_hold": 0.0004,
+      "adopt_rule_met": false
+    },
+    {
+      "name": "Prod - Elo/pt_diff + ss_diff[epa]",
+      "d_val": 0.0004,
+      "d_hold": 0.0019,
+      "adopt_rule_met": false
+    }
+  ],
+  "harness_production": {
+    "name": "production",
+    "val_ll": 0.6192,
+    "val_acc": 0.661,
+    "hold_ll": 0.6209,
+    "hold_acc": 0.663
+  }
+}

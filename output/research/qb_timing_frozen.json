@@ -1,0 +1,28 @@
+{
+  "frozen_at": "2026-09-30",
+  "note": "Frozen after looking only at 2012-2022 (close ATS) and 2020-2022 (early-week snapshots). 2023-2025 is run once with scripts/research/qb_timing.py --holdout. Pass bar per rule, Bonferroni over 3 rules (alpha = 0.05/3): close-ATS rules need cover rate > 52.38% with one-sided binomial p < 0.0167; CLV rules need mean price-based CLV (vs edge_lab.closing_fair mu_close_all) > 0 with one-sided t-test p < 0.0167.",
+  "rules": [
+    {
+      "id": "R1_close_fade_lateral_qb_change",
+      "type": "close_ats",
+      "description": "At the close, bet AGAINST a team whose starter differs from its previous game's starter (same season: new QB, returning starter, or earlier backup back in) when our pre-game QB ratings say it is a lateral move (|rating(new) - rating(last week's)| <= 0.05 EPA/dropback) and the opponent is not also changing QBs. Graded vs nflverse closing spread at -110.",
+      "filter": "kind in ['new', 'return', 'other_change'] and abs(gap) <= 0.05 and opp_kind not in ['new', 'return', 'other_change']",
+      "bet": "against",
+      "dev_evidence": "team covered 34.9% (n=83) in 2012-2019 and 33.3% (n=30) in 2020-2022; selected from ~20 sub-type/gap bins, so expect shrinkage"
+    },
+    {
+      "id": "R2_oracle_early_against_new_qb",
+      "type": "early_clv",
+      "book": "D3_oracle_early_against_new_qb_all",
+      "description": "DIAGNOSTIC, NOT BETTABLE FROM PUBLIC DATA: at the first snapshot after both teams' previous games (+4h), bet against a team that WILL start a new QB (uses the actual starter = perfect early news) at the best allowed-book price. Measures whether early lines still under-price QB changes that later happen, i.e. the value of being first with the news.",
+      "dev_evidence": "2020-2022: n=75, mean CLV +7.8% (SE 1.7%), every season positive"
+    },
+    {
+      "id": "R3_after_report_against_QD_starter",
+      "type": "early_clv",
+      "book": "I5_after_final_report_starter_QD_against_team",
+      "description": "Implementable: when last week's starter is Questionable/Doubtful on the final injury report, bet against his team at the first snapshot after the report's last modification, best allowed-book price.",
+      "dev_evidence": "2020-2022: n=53, mean CLV -1.2% (SE 1.3%) -- above the -3.2% vig baseline but below zero; the best implementable QB-timing rule found, low prior"
+    }
+  ]
+}

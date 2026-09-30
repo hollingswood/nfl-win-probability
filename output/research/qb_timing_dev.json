@@ -1,0 +1,925 @@
+{
+  "close_2012_2019": {
+    "all_teams_baseline": {
+      "n": 4152,
+      "cover": 0.5,
+      "se": 0.0078,
+      "mean_resid": 0.0,
+      "resid_se": 0.2,
+      "p_two_sided_vs_50": 1.0
+    },
+    "kind:new": {
+      "n": 140,
+      "cover": 0.4643,
+      "se": 0.0421,
+      "mean_resid": -1.6,
+      "resid_se": 1.08,
+      "p_two_sided_vs_50": 0.447
+    },
+    "kind:return": {
+      "n": 119,
+      "cover": 0.479,
+      "se": 0.0458,
+      "mean_resid": -0.59,
+      "resid_se": 1.26,
+      "p_two_sided_vs_50": 0.714
+    },
+    "kind:other_change": {
+      "n": 60,
+      "cover": 0.5,
+      "se": 0.0645,
+      "mean_resid": 1.04,
+      "resid_se": 1.68,
+      "p_two_sided_vs_50": 1.0
+    },
+    "kind:backup_cont": {
+      "n": 323,
+      "cover": 0.4551,
+      "se": 0.0277,
+      "mean_resid": -1.72,
+      "resid_se": 0.7,
+      "p_two_sided_vs_50": 0.1191
+    },
+    "subtype:new_injury_listed": {
+      "n": 69,
+      "cover": 0.4203,
+      "se": 0.0594,
+      "mean_resid": -1.82,
+      "resid_se": 1.46,
+      "p_two_sided_vs_50": 0.2284
+    },
+    "subtype:new_prev_left_early_unlisted": {
+      "n": 16,
+      "cover": 0.5,
+      "se": 0.125,
+      "mean_resid": -0.53,
+      "resid_se": 3.45,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:new_not_listed": {
+      "n": 55,
+      "cover": 0.5091,
+      "se": 0.0674,
+      "mean_resid": -1.64,
+      "resid_se": 1.82,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:return_after_1": {
+      "n": 48,
+      "cover": 0.4583,
+      "se": 0.0719,
+      "mean_resid": -0.05,
+      "resid_se": 1.69,
+      "p_two_sided_vs_50": 0.6655
+    },
+    "subtype:return_after_2plus": {
+      "n": 71,
+      "cover": 0.493,
+      "se": 0.0593,
+      "mean_resid": -0.97,
+      "resid_se": 1.79,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:other_qb_back_in": {
+      "n": 60,
+      "cover": 0.5,
+      "se": 0.0645,
+      "mean_resid": 1.04,
+      "resid_se": 1.68,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:backup_continuing": {
+      "n": 323,
+      "cover": 0.4551,
+      "se": 0.0277,
+      "mean_resid": -1.72,
+      "resid_se": 0.7,
+      "p_two_sided_vs_50": 0.1191
+    },
+    "rookie_debut": {
+      "n": 34,
+      "cover": 0.4412,
+      "se": 0.0852,
+      "mean_resid": -3.0,
+      "resid_se": 2.42,
+      "p_two_sided_vs_50": 0.6076
+    },
+    "first_career_start_non_rookie": {
+      "n": 28,
+      "cover": 0.4286,
+      "se": 0.0935,
+      "mean_resid": 0.27,
+      "resid_se": 1.92,
+      "p_two_sided_vs_50": 0.5716
+    },
+    "new_by_gap": {
+      "big_drop(gap<-0.15)": {
+        "n": 34,
+        "cover": 0.4706,
+        "se": 0.0856,
+        "mean_resid": -1.4,
+        "resid_se": 2.07,
+        "p_two_sided_vs_50": 0.8642
+      },
+      "mid_drop(-0.15..-0.05)": {
+        "n": 49,
+        "cover": 0.4694,
+        "se": 0.0713,
+        "mean_resid": -1.84,
+        "resid_se": 1.67,
+        "p_two_sided_vs_50": 0.7754
+      },
+      "small(|gap|<0.05)": {
+        "n": 38,
+        "cover": 0.3947,
+        "se": 0.0793,
+        "mean_resid": -2.78,
+        "resid_se": 2.22,
+        "p_two_sided_vs_50": 0.2559
+      },
+      "upgrade(gap>0.05)": {
+        "n": 19,
+        "cover": 0.5789,
+        "se": 0.1133,
+        "mean_resid": 1.0,
+        "resid_se": 3.56,
+        "p_two_sided_vs_50": 0.6476
+      }
+    },
+    "return_by_gap": {
+      "big_upgrade(gap>0.15)": {
+        "n": 34,
+        "cover": 0.5588,
+        "se": 0.0852,
+        "mean_resid": 1.1,
+        "resid_se": 2.22,
+        "p_two_sided_vs_50": 0.6076
+      },
+      "mid_upgrade(0.05..0.15)": {
+        "n": 44,
+        "cover": 0.5,
+        "se": 0.0754,
+        "mean_resid": 0.73,
+        "resid_se": 2.32,
+        "p_two_sided_vs_50": 1.0
+      },
+      "small(|gap|<=0.05)": {
+        "n": 25,
+        "cover": 0.28,
+        "se": 0.0898,
+        "mean_resid": -5.43,
+        "resid_se": 2.46,
+        "p_two_sided_vs_50": 0.0433
+      },
+      "downgrade(gap<-0.05)": {
+        "n": 16,
+        "cover": 0.5625,
+        "se": 0.124,
+        "mean_resid": 0.18,
+        "resid_se": 3.13,
+        "p_two_sided_vs_50": 0.8036
+      }
+    },
+    "home_resid_on_net_gap_pts_change_games": {
+      "n": 325,
+      "intercept": -0.445,
+      "slope": 0.222,
+      "slope_se": 0.133,
+      "slope_t": 1.67,
+      "ols_se": 0.141
+    },
+    "home_resid_on_net_gap_pts_all_games": {
+      "n": 2136,
+      "intercept": -0.117,
+      "slope": 0.234,
+      "slope_se": 0.128,
+      "slope_t": 1.82,
+      "ols_se": 0.126
+    }
+  },
+  "close_2020_2022": {
+    "all_teams_baseline": {
+      "n": 1648,
+      "cover": 0.5,
+      "se": 0.0123,
+      "mean_resid": 0.0,
+      "resid_se": 0.31,
+      "p_two_sided_vs_50": 1.0
+    },
+    "kind:new": {
+      "n": 72,
+      "cover": 0.5833,
+      "se": 0.0581,
+      "mean_resid": 1.29,
+      "resid_se": 1.39,
+      "p_two_sided_vs_50": 0.1945
+    },
+    "kind:return": {
+      "n": 54,
+      "cover": 0.4259,
+      "se": 0.0673,
+      "mean_resid": -4.01,
+      "resid_se": 1.69,
+      "p_two_sided_vs_50": 0.3409
+    },
+    "kind:other_change": {
+      "n": 37,
+      "cover": 0.5676,
+      "se": 0.0814,
+      "mean_resid": 0.81,
+      "resid_se": 1.61,
+      "p_two_sided_vs_50": 0.5114
+    },
+    "kind:backup_cont": {
+      "n": 134,
+      "cover": 0.5224,
+      "se": 0.0432,
+      "mean_resid": 0.45,
+      "resid_se": 1.13,
+      "p_two_sided_vs_50": 0.666
+    },
+    "subtype:new_injury_listed": {
+      "n": 40,
+      "cover": 0.625,
+      "se": 0.0765,
+      "mean_resid": 2.82,
+      "resid_se": 1.81,
+      "p_two_sided_vs_50": 0.1539
+    },
+    "subtype:new_prev_left_early_unlisted": {
+      "n": 4,
+      "cover": 0.5,
+      "se": 0.25,
+      "mean_resid": 6.5,
+      "resid_se": 7.68,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:new_not_listed": {
+      "n": 28,
+      "cover": 0.5357,
+      "se": 0.0942,
+      "mean_resid": -1.5,
+      "resid_se": 2.18,
+      "p_two_sided_vs_50": 0.8506
+    },
+    "subtype:return_after_1": {
+      "n": 26,
+      "cover": 0.4231,
+      "se": 0.0969,
+      "mean_resid": -5.78,
+      "resid_se": 2.44,
+      "p_two_sided_vs_50": 0.5572
+    },
+    "subtype:return_after_2plus": {
+      "n": 28,
+      "cover": 0.4286,
+      "se": 0.0935,
+      "mean_resid": -2.3,
+      "resid_se": 2.34,
+      "p_two_sided_vs_50": 0.5716
+    },
+    "subtype:other_qb_back_in": {
+      "n": 37,
+      "cover": 0.5676,
+      "se": 0.0814,
+      "mean_resid": 0.81,
+      "resid_se": 1.61,
+      "p_two_sided_vs_50": 0.5114
+    },
+    "subtype:backup_continuing": {
+      "n": 134,
+      "cover": 0.5224,
+      "se": 0.0432,
+      "mean_resid": 0.45,
+      "resid_se": 1.13,
+      "p_two_sided_vs_50": 0.666
+    },
+    "rookie_debut": {
+      "n": 17,
+      "cover": 0.5882,
+      "se": 0.1194,
+      "mean_resid": 2.92,
+      "resid_se": 3.27,
+      "p_two_sided_vs_50": 0.6291
+    },
+    "first_career_start_non_rookie": {
+      "n": 15,
+      "cover": 0.8,
+      "se": 0.1033,
+      "mean_resid": 5.69,
+      "resid_se": 2.12,
+      "p_two_sided_vs_50": 0.0352
+    },
+    "new_by_gap": {
+      "big_drop(gap<-0.15)": {
+        "n": 22,
+        "cover": 0.6818,
+        "se": 0.0993,
+        "mean_resid": 4.2,
+        "resid_se": 2.56,
+        "p_two_sided_vs_50": 0.1338
+      },
+      "mid_drop(-0.15..-0.05)": {
+        "n": 25,
+        "cover": 0.64,
+        "se": 0.096,
+        "mean_resid": 2.71,
+        "resid_se": 2.58,
+        "p_two_sided_vs_50": 0.2295
+      },
+      "small(|gap|<0.05)": {
+        "n": 15,
+        "cover": 0.3333,
+        "se": 0.1217,
+        "mean_resid": -5.78,
+        "resid_se": 2.56,
+        "p_two_sided_vs_50": 0.3018
+      },
+      "upgrade(gap>0.05)": {
+        "n": 10,
+        "cover": 0.6,
+        "se": 0.1549,
+        "mean_resid": 2.36,
+        "resid_se": 2.47,
+        "p_two_sided_vs_50": 0.7539
+      }
+    },
+    "return_by_gap": {
+      "big_upgrade(gap>0.15)": {
+        "n": 19,
+        "cover": 0.4737,
+        "se": 0.1145,
+        "mean_resid": -3.84,
+        "resid_se": 3.06,
+        "p_two_sided_vs_50": 1.0
+      },
+      "mid_upgrade(0.05..0.15)": {
+        "n": 18,
+        "cover": 0.5,
+        "se": 0.1179,
+        "mean_resid": -4.72,
+        "resid_se": 3.74,
+        "p_two_sided_vs_50": 1.0
+      },
+      "small(|gap|<=0.05)": {
+        "n": 9,
+        "cover": 0.2222,
+        "se": 0.1386,
+        "mean_resid": -4.05,
+        "resid_se": 1.76,
+        "p_two_sided_vs_50": 0.1797
+      },
+      "downgrade(gap<-0.05)": {
+        "n": 8,
+        "cover": 0.375,
+        "se": 0.1712,
+        "mean_resid": -2.75,
+        "resid_se": 3.6,
+        "p_two_sided_vs_50": 0.7266
+      }
+    },
+    "home_resid_on_net_gap_pts_change_games": {
+      "n": 172,
+      "intercept": -0.699,
+      "slope": -0.283,
+      "slope_se": 0.156,
+      "slope_t": -1.82,
+      "ols_se": 0.167
+    },
+    "home_resid_on_net_gap_pts_all_games": {
+      "n": 838,
+      "intercept": -0.184,
+      "slope": -0.255,
+      "slope_se": 0.142,
+      "slope_t": -1.8,
+      "ols_se": 0.164
+    }
+  },
+  "close_2012_2022": {
+    "all_teams_baseline": {
+      "n": 5800,
+      "cover": 0.5,
+      "se": 0.0066,
+      "mean_resid": 0.0,
+      "resid_se": 0.17,
+      "p_two_sided_vs_50": 1.0
+    },
+    "kind:new": {
+      "n": 212,
+      "cover": 0.5047,
+      "se": 0.0343,
+      "mean_resid": -0.61,
+      "resid_se": 0.86,
+      "p_two_sided_vs_50": 0.9453
+    },
+    "kind:return": {
+      "n": 173,
+      "cover": 0.4624,
+      "se": 0.0379,
+      "mean_resid": -1.65,
+      "resid_se": 1.02,
+      "p_two_sided_vs_50": 0.3616
+    },
+    "kind:other_change": {
+      "n": 97,
+      "cover": 0.5258,
+      "se": 0.0507,
+      "mean_resid": 0.95,
+      "resid_se": 1.2,
+      "p_two_sided_vs_50": 0.6849
+    },
+    "kind:backup_cont": {
+      "n": 457,
+      "cover": 0.4748,
+      "se": 0.0234,
+      "mean_resid": -1.09,
+      "resid_se": 0.6,
+      "p_two_sided_vs_50": 0.3034
+    },
+    "subtype:new_injury_listed": {
+      "n": 109,
+      "cover": 0.4954,
+      "se": 0.0479,
+      "mean_resid": -0.12,
+      "resid_se": 1.15,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:new_prev_left_early_unlisted": {
+      "n": 20,
+      "cover": 0.5,
+      "se": 0.1118,
+      "mean_resid": 0.88,
+      "resid_se": 3.13,
+      "p_two_sided_vs_50": 1.0
+    },
+    "subtype:new_not_listed": {
+      "n": 83,
+      "cover": 0.5181,
+      "se": 0.0548,
+      "mean_resid": -1.59,
+      "resid_se": 1.4,
+      "p_two_sided_vs_50": 0.8264
+    },
+    "subtype:return_after_1": {
+      "n": 74,
+      "cover": 0.4459,
+      "se": 0.0578,
+      "mean_resid": -2.06,
+      "resid_se": 1.42,
+      "p_two_sided_vs_50": 0.416
+    },
+    "subtype:return_after_2plus": {
+      "n": 99,
+      "cover": 0.4747,
+      "se": 0.0502,
+      "mean_resid": -1.34,
+      "resid_se": 1.44,
+      "p_two_sided_vs_50": 0.6879
+    },
+    "subtype:other_qb_back_in": {
+      "n": 97,
+      "cover": 0.5258,
+      "se": 0.0507,
+      "mean_resid": 0.95,
+      "resid_se": 1.2,
+      "p_two_sided_vs_50": 0.6849
+    },
+    "subtype:backup_continuing": {
+      "n": 457,
+      "cover": 0.4748,
+      "se": 0.0234,
+      "mean_resid": -1.09,
+      "resid_se": 0.6,
+      "p_two_sided_vs_50": 0.3034
+    },
+    "rookie_debut": {
+      "n": 51,
+      "cover": 0.4902,
+      "se": 0.07,
+      "mean_resid": -0.95,
+      "resid_se": 1.97,
+      "p_two_sided_vs_50": 1.0
+    },
+    "first_career_start_non_rookie": {
+      "n": 43,
+      "cover": 0.5581,
+      "se": 0.0757,
+      "mean_resid": 2.24,
+      "resid_se": 1.48,
+      "p_two_sided_vs_50": 0.5424
+    },
+    "new_by_gap": {
+      "big_drop(gap<-0.15)": {
+        "n": 56,
+        "cover": 0.5536,
+        "se": 0.0664,
+        "mean_resid": 0.72,
+        "resid_se": 1.64,
+        "p_two_sided_vs_50": 0.5044
+      },
+      "mid_drop(-0.15..-0.05)": {
+        "n": 74,
+        "cover": 0.527,
+        "se": 0.058,
+        "mean_resid": -0.31,
+        "resid_se": 1.42,
+        "p_two_sided_vs_50": 0.7275
+      },
+      "small(|gap|<0.05)": {
+        "n": 53,
+        "cover": 0.3774,
+        "se": 0.0666,
+        "mean_resid": -3.67,
+        "resid_se": 1.74,
+        "p_two_sided_vs_50": 0.0984
+      },
+      "upgrade(gap>0.05)": {
+        "n": 29,
+        "cover": 0.5862,
+        "se": 0.0915,
+        "mean_resid": 1.5,
+        "resid_se": 2.4,
+        "p_two_sided_vs_50": 0.4583
+      }
+    },
+    "return_by_gap": {
+      "big_upgrade(gap>0.15)": {
+        "n": 53,
+        "cover": 0.5283,
+        "se": 0.0686,
+        "mean_resid": -0.67,
+        "resid_se": 1.81,
+        "p_two_sided_vs_50": 0.7838
+      },
+      "mid_upgrade(0.05..0.15)": {
+        "n": 62,
+        "cover": 0.5,
+        "se": 0.0635,
+        "mean_resid": -0.83,
+        "resid_se": 1.98,
+        "p_two_sided_vs_50": 1.0
+      },
+      "small(|gap|<=0.05)": {
+        "n": 34,
+        "cover": 0.2647,
+        "se": 0.0757,
+        "mean_resid": -5.05,
+        "resid_se": 1.85,
+        "p_two_sided_vs_50": 0.009
+      },
+      "downgrade(gap<-0.05)": {
+        "n": 24,
+        "cover": 0.5,
+        "se": 0.1021,
+        "mean_resid": -0.76,
+        "resid_se": 2.39,
+        "p_two_sided_vs_50": 1.0
+      }
+    },
+    "home_resid_on_net_gap_pts_change_games": {
+      "n": 497,
+      "intercept": -0.573,
+      "slope": 0.038,
+      "slope_se": 0.103,
+      "slope_t": 0.37,
+      "ols_se": 0.109
+    },
+    "home_resid_on_net_gap_pts_all_games": {
+      "n": 2974,
+      "intercept": -0.134,
+      "slope": 0.062,
+      "slope_se": 0.098,
+      "slope_t": 0.63,
+      "ols_se": 0.1
+    }
+  },
+  "early_2020_2022": {
+    "n_games_with_snapshots": 834,
+    "median_hours_before_early_snapshot": 147.83333333333334,
+    "line_move_early_to_close_toward_team": {
+      "no_change_teams": {
+        "n": 1334,
+        "mean": 0.15,
+        "se": 0.05,
+        "mean_abs": 1.25,
+        "share_abs_ge_1": 0.48
+      },
+      "new:all": {
+        "n": 75,
+        "mean": -2.15,
+        "se": 0.29,
+        "mean_abs": 2.56,
+        "share_abs_ge_1": 0.773
+      },
+      "new:prev_starter_Q_or_D": {
+        "n": 16,
+        "mean": -3.28,
+        "se": 0.55,
+        "mean_abs": 3.38,
+        "share_abs_ge_1": 0.875
+      },
+      "new:prev_starter_left_prev_game": {
+        "n": 13,
+        "mean": -0.13,
+        "se": 0.37,
+        "mean_abs": 1.14,
+        "share_abs_ge_1": 0.692
+      },
+      "new:prev_starter_listed_Out": {
+        "n": 16,
+        "mean": -2.29,
+        "se": 0.48,
+        "mean_abs": 2.29,
+        "share_abs_ge_1": 0.625
+      },
+      "new:prev_starter_not_listed": {
+        "n": 30,
+        "mean": -2.33,
+        "se": 0.53,
+        "mean_abs": 2.89,
+        "share_abs_ge_1": 0.833
+      },
+      "return:all": {
+        "n": 55,
+        "mean": 0.61,
+        "se": 0.24,
+        "mean_abs": 1.39,
+        "share_abs_ge_1": 0.636
+      },
+      "return:prev_starter_Q_or_D": {
+        "n": 5,
+        "mean": -0.14,
+        "se": 0.5,
+        "mean_abs": 0.93,
+        "share_abs_ge_1": 0.6
+      },
+      "return:prev_starter_left_prev_game": {
+        "n": 6,
+        "mean": -0.04,
+        "se": 0.54,
+        "mean_abs": 0.97,
+        "share_abs_ge_1": 0.333
+      },
+      "return:prev_starter_listed_Out": {
+        "n": 4,
+        "mean": -1.01,
+        "se": 0.68,
+        "mean_abs": 1.18,
+        "share_abs_ge_1": 0.5
+      },
+      "return:prev_starter_not_listed": {
+        "n": 40,
+        "mean": 0.96,
+        "se": 0.29,
+        "mean_abs": 1.53,
+        "share_abs_ge_1": 0.7
+      }
+    },
+    "bets": {
+      "D1_oracle_early_against_new_qb_drop": {
+        "n": 48,
+        "mean_clv": 0.0786,
+        "clv_se": 0.0199,
+        "t": 3.95,
+        "p_one_sided": 0.00013,
+        "beat_close": 0.667,
+        "roi": -0.0779,
+        "pass": true,
+        "clv_sharp_close": 0.0803
+      },
+      "D2_oracle_early_for_returning_upgrade": {
+        "n": 37,
+        "mean_clv": 0.0149,
+        "clv_se": 0.0173,
+        "t": 0.86,
+        "p_one_sided": 0.19703,
+        "beat_close": 0.514,
+        "roi": 0.0134,
+        "pass": false,
+        "clv_sharp_close": 0.0153
+      },
+      "D3_oracle_early_against_new_qb_all": {
+        "n": 75,
+        "mean_clv": 0.0784,
+        "clv_se": 0.017,
+        "t": 4.62,
+        "p_one_sided": 1e-05,
+        "beat_close": 0.68,
+        "roi": -0.0281,
+        "pass": true,
+        "clv_sharp_close": 0.079
+      },
+      "D4_oracle_early_for_new_qb_all": {
+        "n": 75,
+        "mean_clv": -0.1384,
+        "clv_se": 0.0165,
+        "t": -8.37,
+        "p_one_sided": 1.0,
+        "beat_close": 0.16,
+        "roi": -0.0155,
+        "pass": false,
+        "clv_sharp_close": -0.139
+      },
+      "I1_early_against_team_whose_starter_left_prev_game": {
+        "n": 32,
+        "mean_clv": -0.0492,
+        "clv_se": 0.0189,
+        "t": -2.61,
+        "p_one_sided": 0.99312,
+        "beat_close": 0.281,
+        "roi": 0.0776,
+        "pass": false,
+        "clv_sharp_close": -0.0475
+      },
+      "I2_early_for_team_whose_starter_left_prev_game": {
+        "n": 32,
+        "mean_clv": -0.0188,
+        "clv_se": 0.0187,
+        "t": -1.01,
+        "p_one_sided": 0.83976,
+        "beat_close": 0.406,
+        "roi": -0.1267,
+        "pass": false,
+        "clv_sharp_close": -0.0206
+      },
+      "I3_after_final_report_Out_against_team": {
+        "n": 36,
+        "mean_clv": -0.0289,
+        "clv_se": 0.009,
+        "t": -3.22,
+        "p_one_sided": 0.99862,
+        "beat_close": 0.222,
+        "roi": 0.0345,
+        "pass": false,
+        "clv_sharp_close": -0.0282
+      },
+      "I4_after_final_report_Out_for_team": {
+        "n": 36,
+        "mean_clv": -0.03,
+        "clv_se": 0.0088,
+        "t": -3.42,
+        "p_one_sided": 0.99919,
+        "beat_close": 0.222,
+        "roi": -0.0655,
+        "pass": false,
+        "clv_sharp_close": -0.0308
+      },
+      "I5_after_final_report_starter_QD_against_team": {
+        "n": 53,
+        "mean_clv": -0.0119,
+        "clv_se": 0.013,
+        "t": -0.92,
+        "p_one_sided": 0.81917,
+        "beat_close": 0.377,
+        "roi": -0.0762,
+        "pass": false,
+        "clv_sharp_close": -0.013
+      },
+      "I6_after_final_report_starter_QD_for_team": {
+        "n": 53,
+        "mean_clv": -0.0467,
+        "clv_se": 0.0134,
+        "t": -3.49,
+        "p_one_sided": 0.99951,
+        "beat_close": 0.226,
+        "roi": 0.0373,
+        "pass": false,
+        "clv_sharp_close": -0.0456
+      },
+      "N0_baseline_all_sides_early": {
+        "n": 1668,
+        "mean_clv": -0.0317,
+        "clv_se": 0.0025,
+        "t": -12.67,
+        "p_one_sided": 1.0,
+        "beat_close": 0.348,
+        "roi": -0.0261,
+        "pass": false,
+        "clv_sharp_close": -0.0317
+      }
+    },
+    "bets_by_season": {
+      "D1_oracle_early_against_new_qb_drop": {
+        "2020": 0.0491,
+        "2021": 0.143,
+        "2022": 0.0551
+      },
+      "D2_oracle_early_for_returning_upgrade": {
+        "2020": 0.0347,
+        "2021": -0.023,
+        "2022": 0.0316
+      },
+      "D3_oracle_early_against_new_qb_all": {
+        "2020": 0.0456,
+        "2021": 0.1232,
+        "2022": 0.0715
+      },
+      "D4_oracle_early_for_new_qb_all": {
+        "2020": -0.1163,
+        "2021": -0.1793,
+        "2022": -0.1243
+      },
+      "I1_early_against_team_whose_starter_left_prev_game": {
+        "2020": -0.057,
+        "2021": -0.0311,
+        "2022": -0.0601
+      },
+      "I2_early_for_team_whose_starter_left_prev_game": {
+        "2020": -0.0157,
+        "2021": -0.0397,
+        "2022": -0.0021
+      },
+      "I3_after_final_report_Out_against_team": {
+        "2020": -0.0271,
+        "2021": -0.029,
+        "2022": -0.0307
+      },
+      "I4_after_final_report_Out_for_team": {
+        "2020": -0.0366,
+        "2021": -0.0246,
+        "2022": -0.0286
+      },
+      "I5_after_final_report_starter_QD_against_team": {
+        "2020": -0.0407,
+        "2021": 0.0412,
+        "2022": -0.0344
+      },
+      "I6_after_final_report_starter_QD_for_team": {
+        "2020": -0.0241,
+        "2021": -0.0959,
+        "2022": -0.023
+      },
+      "N0_baseline_all_sides_early": {
+        "2020": -0.0347,
+        "2021": -0.0297,
+        "2022": -0.0309
+      }
+    }
+  },
+  "counts_2012_2022": {
+    "backup_continuing": 517,
+    "new_injury_listed": 117,
+    "new_not_listed": 92,
+    "new_prev_left_early_unlisted": 20,
+    "none": 4905,
+    "other_qb_back_in": 103,
+    "return_after_1": 84,
+    "return_after_2plus": 110
+  },
+  "frozen_rules_dev": {
+    "R1_close_fade_lateral_qb_change": {
+      "n": 113,
+      "wins": 74,
+      "cover": 0.6549,
+      "se": 0.0447,
+      "roi_at_110": 0.2502,
+      "p_one_sided_vs_524": 0.00329,
+      "pass": true,
+      "by_season": {
+        "2012": 1.0,
+        "2013": 0.55,
+        "2014": 0.5455,
+        "2015": 0.625,
+        "2016": 0.875,
+        "2017": 0.6923,
+        "2018": 0.6667,
+        "2019": 0.5455,
+        "2020": 0.6667,
+        "2021": 0.8182,
+        "2022": 0.5
+      }
+    },
+    "R2_oracle_early_against_new_qb": {
+      "n": 75,
+      "mean_clv": 0.0784,
+      "clv_se": 0.017,
+      "t": 4.62,
+      "p_one_sided": 1e-05,
+      "beat_close": 0.68,
+      "roi": -0.0281,
+      "pass": true,
+      "clv_sharp_close": 0.079,
+      "by_season": {
+        "2020": 0.0456,
+        "2021": 0.1232,
+        "2022": 0.0715
+      }
+    },
+    "R3_after_report_against_QD_starter": {
+      "n": 53,
+      "mean_clv": -0.0119,
+      "clv_se": 0.013,
+      "t": -0.92,
+      "p_one_sided": 0.81917,
+      "beat_close": 0.377,
+      "roi": -0.0762,
+      "pass": false,
+      "clv_sharp_close": -0.013,
+      "by_season": {
+        "2020": -0.0407,
+        "2021": 0.0412,
+        "2022": -0.0344
+      }
+    }
+  }
+}

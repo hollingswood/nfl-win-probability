@@ -127,7 +127,59 @@ def evaluate(game: dict, r: dict, first_margin: float | None) -> dict | None:
             "grade": b["grade"], "grade_why": b["why"], "grading_version": b["grading_version"]}
 
 
-def grade(bet: dict, games: pd.DataFrame, r: dict) -> dict:
+def closing_margins(history_dir: Path, r: dict) -> dict[tuple[str, str], list[dict]]:
+    """Closing market from OUR OWN last odds snapshot before each kickoff, using spreads AND prices.
+    (home, away) -> [{"commence": iso, "mu": price-implied expected home margin, "ts": snapshot, "age_min": ...}]
+    The nflverse spread_line is only the closing number; it ignores the closing juice (+3 at -120 is
+    not the same bet as +3 at -105), which made spread CLV look positive when it wasn't."""
+    from datetime import datetime as _dt
+    from . import odds as O
+    best: dict[tuple, dict] = {}
+    for f in sorted(history_dir.glob("odds_*.json")):
+        try:
+            ts = _dt.strptime(f.stem[5:], "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc)
+            events = json.loads(f.read_text())
+        except Exception:
+            continue
+        for ev in events:
+            home, away = O.TEAM_ABBR.get(ev.get("home_team")), O.TEAM_ABBR.get(ev.get("away_team"))
+            if not home or not away or not ev.get("commence_time"):
+                continue
+            kick = _dt.fromisoformat(ev["commence_time"].replace("Z", "+00:00"))
+            if ts >= kick:
+                continue
+            rows = []
+            for bk in ev.get("bookmakers", []):
+                for m in bk.get("markets", []):
+                    if m.get("key") != "spreads":
+                        continue
+                    sp = {o["name"]: o for o in m.get("outcomes", [])}
+                    ho, ao = sp.get(ev["home_team"]), sp.get(ev["away_team"])
+                    if ho and ao and ho.get("point") is not None:
+                        rows.append((ho["point"], ho["price"], ao.get("point"), ao["price"]))
+            if not rows:
+                continue
+            k = (home, away, ev["commence_time"])
+            if k not in best or ts > best[k]["_ts"]:
+                best[k] = {"_ts": ts, "rows": rows, "kick": kick}
+    out: dict[tuple[str, str], list[dict]] = {}
+    for (home, away, commence), v in best.items():
+        mu = K.market_mu(v["rows"], r["margin"]["sigma"], r["_weights"])
+        if mu is not None:
+            out.setdefault((home, away), []).append({
+                "commence": commence, "mu": round(mu, 3), "ts": v["_ts"].isoformat(timespec="minutes"),
+                "age_min": round((v["kick"] - v["_ts"]).total_seconds() / 60)})
+    return out
+
+
+def _find_close(closes: dict, home: str, away: str, gameday) -> dict | None:
+    for c in closes.get((home, away), []):
+        if abs((pd.Timestamp(c["commence"]).tz_convert(None).normalize() - pd.Timestamp(gameday)).days) <= 1:
+            return c
+    return None
+
+
+def grade(bet: dict, games: pd.DataFrame, r: dict, closes: dict | None = None) -> dict:
     g = games[games["game_id"] == bet["game_id"]]
     if g.empty or not bool(g["completed"].iloc[0]):
         return bet
@@ -137,12 +189,17 @@ def grade(bet: dict, games: pd.DataFrame, r: dict) -> dict:
     out = dict(bet, status="graded", final=f"{int(x['away_score'])}-{int(x['home_score'])}")
     out["result"] = "win" if adj > 0 else "push" if adj == 0 else "loss"
     out["profit_units"] = round(bet["units"] * (ml.decimal(bet["price"]) - 1), 3) if adj > 0 else (0.0 if adj == 0 else -bet["units"])
-    close = x.get("spread_line")  # closing expected home margin (+ = home favored)
+    close = x.get("spread_line")  # closing NUMBER only (+ = home favored); kept for reference
     if close is not None and not pd.isna(close):
         out["closing_home_margin"] = float(close)
-        # CLV: our line and price valued with the closing market as the expected margin
-        out["clv"] = round(side_ev(float(close), bet["point"], bet["price"], bet["side"], r)[0], 4)
         out["clv_points"] = round(bet["point"] - ((-float(close)) if bet["side"] == "home" else float(close)), 1)
+    c = _find_close(closes or {}, x.get("home_team"), x.get("away_team"), x.get("gameday")) if closes else None
+    if c is not None:
+        # CLV: our line and price valued at the closing market's price-implied expected margin.
+        # Bets without a closing snapshot get no CLV (they don't count toward the CLV test).
+        out["clv"] = round(side_ev(c["mu"], bet["point"], bet["price"], bet["side"], r)[0], 4)
+        out["clv_source"] = f"own closing snapshot {c['ts']} ({c['age_min']} min before kickoff), prices included"
+        out["closing_mu"] = c["mu"]
     return out
 
 
@@ -165,7 +222,8 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
     history_dir.mkdir(parents=True, exist_ok=True)
     path = history_dir / "paper_bets_spread.json"
     ledger = json.loads(path.read_text()) if path.exists() else []
-    ledger = [grade(b, games, r) if b.get("status") == "open" else b for b in ledger]
+    closes = closing_margins(history_dir, r)
+    ledger = [grade(b, games, r, closes) if b.get("status") == "open" else b for b in ledger]
     have = {b["game_id"] for b in ledger if b.get("status") != "void"}
     first = first_seen_margin(history_dir)
     cands = []

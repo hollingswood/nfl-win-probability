@@ -1,0 +1,62 @@
+{
+ "frozen_at": "2026-09-30T15:16:09",
+ "developed_on": "seasons <= 2022 only (nflverse closes 1999-2022; snapshots 2020-2022)",
+ "dev_generated": "2026-09-30T15:16:01",
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "evaluate_once": true,
+ "prices": [
+  -110,
+  -120,
+  -130,
+  -140
+ ],
+ "grading": [
+  "tie_loses",
+  "reduce"
+ ],
+ "candidates": [
+  {
+   "id": "R1_wong_classic",
+   "desc": "Every leg whose nflverse closing spread is +1.5/+2/+2.5 (dog) or -7.5/-8/-8.5 (fav), all game types; pair legs within a week in kickoff order.",
+   "spreads": [
+    1.5,
+    2.0,
+    2.5,
+    -7.5,
+    -8.0,
+    -8.5
+   ]
+  },
+  {
+   "id": "R2_wong_total_le48_5",
+   "desc": "R1 restricted to closing total_line <= 48.5 (the published 'total < 49' filter).",
+   "spreads": [
+    1.5,
+    2.0,
+    2.5,
+    -7.5,
+    -8.0,
+    -8.5
+   ],
+   "total_max": 48.5
+  },
+  {
+   "id": "R3_wong_best_late_book_total_le48_5",
+   "desc": "Executable version of R2: Wong range judged on the BEST allowed-book number at the last pre-kick snapshot (~1h before kickoff; my_books.json books), teased from that number; closing total <= 48.5. Evaluated only where snapshot data exists (2023-2025).",
+   "spreads": [
+    1.5,
+    2.0,
+    2.5,
+    -7.5,
+    -8.0,
+    -8.5
+   ],
+   "total_max": 48.5,
+   "number": "best_late"
+  }
+ ]
+}

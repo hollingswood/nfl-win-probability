@@ -1,0 +1,104 @@
+{
+ "frozen_at": "2026-09-30T22:21:20.869561+00:00",
+ "trained_on": [
+  2020,
+  2021,
+  2022
+ ],
+ "pass_bar": "mean price-based CLV > 0 and one-sided p < 0.05/3",
+ "strategies": {
+  "LM1_spread_sharp_lead": {
+   "market": "sp",
+   "target": "y_sp",
+   "clip": 3.0,
+   "alpha": 1.0,
+   "model": "ridge",
+   "features": [
+    "x_sharp"
+   ],
+   "rule": "ev",
+   "thr": 0.02,
+   "min_h": 3.0,
+   "max_h": 216.0,
+   "intercept": -0.031567946975949855,
+   "coef": {
+    "x_sharp": 0.5848300351855241
+   },
+   "dev_oof": {
+    "bets": 86,
+    "per_season": 28.7,
+    "clv": 0.0317,
+    "clv_t": 2.32,
+    "clv_p": 0.01021,
+    "beat_close": 0.64,
+    "roi": -0.0041,
+    "roi_se": 0.1037,
+    "median_hours": 146.8
+   }
+  },
+  "LM2_ml_sharp_fav": {
+   "market": "ml",
+   "target": "y_ml",
+   "clip": 0.3,
+   "alpha": 1.0,
+   "model": "ridge",
+   "features": [
+    "z_sharp",
+    "z_fav",
+    "x_sharp"
+   ],
+   "rule": "ev",
+   "thr": 0.03,
+   "min_h": 3.0,
+   "max_h": 216.0,
+   "intercept": -0.005167128828226217,
+   "coef": {
+    "z_sharp": 0.25852511184711646,
+    "z_fav": 0.012969244628597644,
+    "x_sharp": 0.05961522668668329
+   },
+   "dev_oof": {
+    "bets": 158,
+    "per_season": 52.7,
+    "clv": 0.0338,
+    "clv_t": 2.94,
+    "clv_p": 0.00163,
+    "beat_close": 0.614,
+    "roi": -0.0447,
+    "roi_se": 0.1496,
+    "median_hours": 138.0
+   }
+  },
+  "LM3_spread_sharp_model": {
+   "market": "sp",
+   "target": "y_sp",
+   "clip": 3.0,
+   "alpha": 1.0,
+   "model": "ridge",
+   "features": [
+    "x_sharp",
+    "x_model"
+   ],
+   "rule": "ev",
+   "thr": 0.01,
+   "min_h": 3.0,
+   "max_h": 216.0,
+   "intercept": -0.04064390798552281,
+   "coef": {
+    "x_sharp": 0.5769540552788078,
+    "x_model": 0.03842956549847369
+   },
+   "dev_oof": {
+    "bets": 168,
+    "per_season": 56.0,
+    "clv": 0.0172,
+    "clv_t": 2.11,
+    "clv_p": 0.01764,
+    "beat_close": 0.601,
+    "roi": 0.0771,
+    "roi_se": 0.0725,
+    "median_hours": 113.2
+   }
+  }
+ }
+}

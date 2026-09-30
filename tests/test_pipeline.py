@@ -503,3 +503,31 @@ def test_odds_history_plan_and_backfill(tmp_path):
     (tmp_path / "done_2023.txt").unlink()
     res = OH.backfill(games, [2023], "k", out_dir=tmp_path, fetcher=lambda *a: (payload, 1030), reserve=1000)
     assert res["fetched"] == 0 or res["stopped"]
+
+
+def test_spread_clv_uses_closing_prices(tmp_path):
+    """Spread CLV comes from our last odds snapshot before kickoff, prices included; a later
+    (post-kickoff) snapshot is ignored and +3 at -120 is not treated like +3 at -105."""
+    import json as _j
+    from nflpred import spread_bets as SB
+    r = SB.load_rules()
+    def ev(price_home, price_away, point_home=-3):
+        return [{"home_team": "Kansas City Chiefs", "away_team": "Denver Broncos",
+                 "commence_time": "2026-10-04T20:25:00Z", "bookmakers": [{"key": "draftkings", "markets": [
+                     {"key": "spreads", "outcomes": [
+                         {"name": "Kansas City Chiefs", "point": point_home, "price": price_home},
+                         {"name": "Denver Broncos", "point": -point_home, "price": price_away}]}]}]}]
+    (tmp_path / "odds_2026-10-01T1410.json").write_text(_j.dumps(ev(-110, -110)))
+    (tmp_path / "odds_2026-10-04T1910.json").write_text(_j.dumps(ev(-125, 105)))   # the close
+    (tmp_path / "odds_2026-10-04T2300.json").write_text(_j.dumps(ev(-300, 250)))   # after kickoff: ignored
+    closes = SB.closing_margins(tmp_path, r)
+    c = closes[("KC", "DEN")][0]
+    assert c["ts"].startswith("2026-10-04T19:10") and c["mu"] > 3.2
+    games = pd.DataFrame([{"game_id": "g", "completed": True, "home_score": 24, "away_score": 20,
+                           "home_team": "KC", "away_team": "DEN", "gameday": pd.Timestamp("2026-10-04"),
+                           "spread_line": 3.0}])
+    bet = {"game_id": "g", "side": "away", "point": 3.0, "price": -105, "units": 1.0}
+    g = SB.grade(bet, games, r, closes)
+    # closing juice made DEN +3 worth less than even: our -105 did NOT beat the close
+    assert g["clv"] < 0 and "prices included" in g["clv_source"]
+    assert "clv" not in SB.grade(bet, games, r, {})   # no closing snapshot -> no CLV claimed
