@@ -76,6 +76,14 @@ Every run before the games pulls free public feeds and applies them to upcoming 
 - **Books:** `my_books.json` lists the sportsbooks you can actually use (default: licensed US books). Best prices and
   paper bets use only those; the market consensus uses every book.
 
+## Grades (`grading.py`, version 1)
+Every opportunity gets a grade from A+ to C, defined before any paper results: +1/+2 for edge (capped, because the
+biggest model-vs-market gaps were not the best bets), −1 if the model is far from the market, ±1 if the line has
+moved toward/against us since first seen, ±1 for the right/wrong side of 3 or 7 (spreads), −1 for a QB change.
+Spread backtest 2020–25 by grade (no line-movement data historically): A +15.2% (47 bets), B+ +0.2% (168),
+B +2.1% (226), C+ +1.8% (101), C −1.4% (14): ordered at the extremes, flat in the middle, small samples.
+The paper record reports performance by grade for each track; that is the real test of whether grades mean anything.
+
 ## Paper bets → recommendations (`bets.py`, rules in `betting_rules.json`)
 Two independent tracks with their own locked rules and records: **moneyline** (`betting_rules.json`, v1) and
 **spread** (`spread_rules.json`, v1, same thresholds, sizing and validation test). A track switches to live

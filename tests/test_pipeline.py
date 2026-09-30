@@ -433,3 +433,36 @@ def test_line_shopping_only_uses_allowed_books():
     s = odds.summarize(ev, allowed={"draftkings"})[("CHI", "PHI", "2026-09-29")]
     assert s["best_home_ml"]["book"] == "DraftKings" and s["books"] == 2      # consensus still uses both
     assert [b["book"] for b in s["spreads_by_book"]] == ["DraftKings"]
+
+
+# ---------------------------------------------------------------- grades
+def test_grades_reward_confirmation_and_penalize_warning_signs():
+    from nflpred import grading as G
+    base = G.grade("spread", 0.06, 2.0, None, 3.5)                    # +2 edge, +1 right side of 3
+    assert base["grade"] == "A" and base["score"] == 3
+    assert G.grade("spread", 0.06, 2.0, 1.0, 3.5)["grade"] == "A+"    # line moved our way
+    assert G.grade("spread", 0.06, 9.0, None, 3.5)["score"] == 2      # model far from market
+    assert G.grade("spread", 0.06, 2.0, None, 2.5)["score"] == 1      # wrong side of 3
+    assert G.grade("spread", 0.06, 2.0, None, 3.5, qb_flag=True)["score"] == 2
+    assert G.grade("moneyline", 0.40, 5.0, None)["score"] == 2        # huge edge is capped at +2
+    assert G.letter(-3) == "C"
+
+
+def test_grade_performance_table():
+    from nflpred import grading as G
+    led = [{"status": "graded", "grade": "A", "units": 1, "result": "win", "profit_units": 0.9, "clv": 0.02},
+           {"status": "graded", "grade": "A", "units": 1, "result": "loss", "profit_units": -1.0, "clv": 0.00},
+           {"status": "graded", "grade": "C", "units": 1, "result": "loss", "profit_units": -1.0},
+           {"status": "open", "grade": "A", "units": 1}]
+    t = {r["grade"]: r for r in G.by_grade(led)}
+    assert t["A"]["bets"] == 2 and t["A"]["roi"] == pytest.approx(-0.05) and t["A"]["avg_clv"] == pytest.approx(0.01)
+    assert t["C"]["avg_clv"] is None
+
+
+def test_every_paper_bet_carries_a_grade(tmp_path):
+    from nflpred import bets
+    games = pd.DataFrame({"game_id": [], "completed": [], "home_score": [], "away_score": [], "vegas_home_prob": []})
+    g = _game()
+    out = bets.process({"upcoming": [g]}, games, tmp_path)
+    assert out["new"][0]["grade"] in {"A+", "A", "B+", "B", "C+", "C"}
+    assert g["moneyline"]["verdict"] == "bet" and "p_needed" in g["moneyline"]

@@ -21,6 +21,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from . import grading as G
+
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "betting_rules.json"
 
@@ -79,6 +81,15 @@ def evaluate(game: dict, rules: dict, first_market: float | None) -> dict | None
         edge = p * decimal(bk["price"]) - 1
         if best is None or edge > best["edge"]:
             best = {"side": side, "p": p, "price": bk["price"], "book": bk["book"], "edge": edge, "market": mkt}
+    first_side = None if first_market is None else (first_market if best["side"] == "home" else 1 - first_market)
+    moved = None if first_side is None else 100 * (best["market"] - first_side)
+    p_model_side = game["home_win_prob"] if best["side"] == "home" else 1 - game["home_win_prob"]
+    qbc = game.get("qb_change") or {}
+    qb_flag = any(abs(qbc.get(s) or 0) > G.QB_CHANGE_FLAG for s in ("home", "away"))
+    gr = G.grade("moneyline", best["edge"], 100 * (p_model_side - best["market"]), moved, None, qb_flag)
+    game["moneyline"] = {"side": best["side"], "team": game[f"{best['side']}_team"], "price": best["price"],
+                         "book": best["book"], "p_ours": round(best["p"], 4), "p_market": round(best["market"], 4),
+                         "p_needed": round(1 / decimal(best["price"]), 4), "edge": round(best["edge"], 4), **gr}
     if best["edge"] < q["min_edge_at_best_price"]:
         reasons.append(f"best edge {best['edge']:+.1%} below {q['min_edge_at_best_price']:.0%}")
     if not (q["min_american_odds"] <= best["price"] <= q["max_american_odds"]):
@@ -105,6 +116,7 @@ def evaluate(game: dict, rules: dict, first_market: float | None) -> dict | None
         "p_model": round(game["home_win_prob"] if best["side"] == "home" else 1 - game["home_win_prob"], 4),
         "p_market": round(best["market"], 4), "p_blend": round(best["p"], 4), "edge": round(best["edge"], 4),
         "units": kelly_units(best["p"], best["price"], rules["sizing"]), "status": "open",
+        "grade": gr["grade"], "grade_why": gr["why"], "grading_version": gr["grading_version"],
     }
 
 
@@ -185,7 +197,13 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, rules: dict | No
     path.write_text(json.dumps(ledger, indent=2))
     rec = record(ledger, rules)
     mode = "live" if rec["passed"] else "shadow"
-    return {"mode": mode, "rules_version": rules["version"], "new": new,
+    for g in pred.get("upcoming", []):  # final verdict for the card: bet / lean / pass
+        v = g.get("moneyline")
+        if v:
+            logged = any(b["game_id"] == g["game_id"] and b.get("status") != "void" for b in ledger)
+            v["verdict"] = "bet" if logged else ("lean" if v["edge"] > 0 else "pass")
+            v["reasons"] = [] if logged else list(g.get("bet_check") or [])
+    return {"mode": mode, "rules_version": rules["version"], "new": new, "by_grade": G.by_grade(ledger),
             "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:],
             "record": rec}

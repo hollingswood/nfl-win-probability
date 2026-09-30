@@ -15,6 +15,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/bets.py` + `betting_rules.json` — paper-bet ledger (`history/paper_bets.json`), grading, CLV, pre-registered switch to live recommendations. NEVER edit rules or the validation test in place to fit results: bump `version` instead.
 - `src/nflpred/margins.py` — key-number-aware margin distribution (cover/push/win probabilities)
 - `src/nflpred/spread_bets.py` + `spread_rules.json` — spread paper-bet track (separate ledger `history/paper_bets_spread.json`); `my_books.json` = books allowed for line shopping
+- `src/nflpred/grading.py` — bet grades A+..C (GRADING_VERSION 1) and performance-by-grade tables; bump the version to change the scheme
 - `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past

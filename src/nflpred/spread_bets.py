@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 
 from . import bets as ml
+from . import grading as G
 from . import margins as K
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -80,7 +81,9 @@ def analyze(game: dict, r: dict) -> dict | None:
                 best = {"side": side, "team": game[f"{side}_team"], "point": point, "price": price, "book": b["book"],
                         "ev": round(ev, 4), "p_cover": round(pw, 4), "p_push": round(pu, 4)}
     best["buy_options"] = buy_point_options(mu, best["point"], best["price"], best["side"], r)
-    return {"expected_home_margin": round(mu, 2), "best": best, "books": len(books)}
+    best["p_needed"] = round((1 - best["p_push"]) / ml.decimal(best["price"]), 4)  # break-even cover chance
+    return {"expected_home_margin": round(mu, 2), "model_home_margin": game["model_home_margin"],
+            "market_home_margin": lo["consensus_home_margin"], "best": best, "books": len(books)}
 
 
 def evaluate(game: dict, r: dict, first_margin: float | None) -> dict | None:
@@ -101,10 +104,16 @@ def evaluate(game: dict, r: dict, first_margin: float | None) -> dict | None:
     if q["require_injury_report_published"] and not game.get("injury_report"):
         reasons.append("injury report not out")
     now_margin = game["context"]["live_odds"]["consensus_home_margin"]
+    toward = None
     if first_margin is not None:
         moved = (now_margin - first_margin) if b["side"] == "away" else (first_margin - now_margin)
+        toward = -moved
         if moved >= q["require_line_not_moved_away_since_first_seen_points"]:
             reasons.append("line moved against this side since first seen")
+    qbc = game.get("qb_change") or {}
+    qb_flag = any(abs(qbc.get(s) or 0) > G.QB_CHANGE_FLAG for s in ("home", "away"))
+    gr = G.grade("spread", b["ev"], a["model_home_margin"] - a["market_home_margin"], toward, b["point"], qb_flag)
+    b.update(gr)
     if reasons:
         return None
     p_nopush = b["p_cover"] / max(1 - b["p_push"], 1e-9)
@@ -114,7 +123,8 @@ def evaluate(game: dict, r: dict, first_margin: float | None) -> dict | None:
             "side": b["side"], "team": b["team"], "opponent": game["away_team" if b["side"] == "home" else "home_team"],
             "point": b["point"], "price": b["price"], "book": b["book"], "edge": b["ev"],
             "p_cover": b["p_cover"], "p_push": b["p_push"], "expected_home_margin": a["expected_home_margin"],
-            "units": ml.kelly_units(p_nopush, b["price"], r["sizing"]), "status": "open"}
+            "units": ml.kelly_units(p_nopush, b["price"], r["sizing"]), "status": "open",
+            "grade": b["grade"], "grade_why": b["why"], "grading_version": b["grading_version"]}
 
 
 def grade(bet: dict, games: pd.DataFrame, r: dict) -> dict:
@@ -174,6 +184,13 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
     ledger += new
     path.write_text(json.dumps(ledger, indent=2))
     rec = ml.record(ledger, r)
+    for g in pred.get("upcoming", []):
+        a = g.get("spread")
+        if a:
+            logged = any(b["game_id"] == g["game_id"] and b.get("status") != "void" for b in ledger)
+            a["verdict"] = "bet" if logged else ("lean" if a["best"]["ev"] > 0 else "pass")
+            a["reasons"] = [] if logged else list(g.get("spread_check") or [])
     return {"track": "spread", "mode": "live" if rec["passed"] else "shadow", "rules_version": r["version"],
+            "by_grade": G.by_grade(ledger),
             "new": new, "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:], "record": rec}

@@ -1,9 +1,10 @@
-<title>NFL Win Probability Board</title>
+<title>NFL Edge Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
+  --lean:#C98A12;
   --bg:#EEF1F2; --surface:#FFFFFF; --ink:#13202A; --muted:#5B6B76; --line:#D5DDE1;
   --accent:#1D6A4B; --accent-soft:#D6E9DF; --away:#9AA8B2; --vegas:#C2412D;
   --good:#1D7A4E; --bad:#B23A2B;
@@ -79,6 +80,32 @@ section{display:grid;gap:14px}
 .betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
 .track{display:grid;gap:10px;margin-top:8px}
 .track h3{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;display:flex;gap:10px;align-items:center}
+.keyrow{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;color:var(--muted)}
+.verdict{font:600 11px var(--mono);letter-spacing:.06em;padding:2px 7px;border-radius:2px;border:1px solid;white-space:nowrap}
+.verdict.bet{background:var(--good);border-color:var(--good);color:var(--surface)}
+.verdict.lean{border-color:#C98A12;color:#C98A12}
+.verdict.pass{border-color:var(--line);color:var(--muted)}
+.grade{font:700 13px var(--mono);padding:1px 6px;border-radius:2px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.grade.g-a{border-color:var(--good);color:var(--good)}
+.grade.g-b{border-color:var(--accent);color:var(--accent)}
+.markets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:420px){.markets{grid-template-columns:1fr}}
+.mkt{border:1px solid var(--line);padding:8px 10px;display:grid;gap:3px;font-size:13px}
+.mkt.is-bet{border-color:var(--good);box-shadow:inset 3px 0 0 var(--good)}
+.mkt.is-lean{border-color:#C98A12;box-shadow:inset 3px 0 0 #C98A12}
+.mkt .mh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 6px;font:600 11px var(--mono);letter-spacing:.08em;color:var(--muted)}
+.mkt .pick{font:700 16px var(--display);letter-spacing:.02em}
+.mkt .odds{color:var(--muted);font-size:12px}
+.mkt .cmp{font-family:var(--mono);font-size:12px}
+.mkt .why{font-size:11px;color:var(--muted)}
+.gap{font-size:13px;border-top:1px dashed var(--line);padding-top:8px}
+.gap b{color:var(--ink)}
+.subh{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+table.board td,table.board th{white-space:nowrap}
+.ctl{font:600 9px var(--mono);letter-spacing:.06em;color:var(--muted);border:1px dashed var(--muted);padding:0 4px;border-radius:2px;vertical-align:1px}
+tr.ctrl td{opacity:.72}
+.bpick{display:grid;gap:1px}
+.bpick small{font:11px var(--body);color:var(--muted)}
 .tag{font:500 11px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:1px 5px;border-radius:2px}
 
 /* tables & charts */
@@ -90,7 +117,15 @@ table{border-collapse:collapse;width:100%;font-size:14px}
 th{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
 th:first-child,td:first-child{text-align:left}
 td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
-td.win{color:var(--good)} td.loss{color:var(--bad)}
+td.win{color:var(--good)}
+table.board td{vertical-align:top}
+table.board .bpick small, table.board .why{white-space:normal}
+@media (max-width:640px){
+  table.board th:nth-child(5),table.board td:nth-child(5),table.board th:nth-child(6),table.board td:nth-child(6){display:none}
+  table.board td:nth-child(2){min-width:0;white-space:normal}
+  table.board .why{display:block;font-size:11px}
+  table.board td,table.board th{padding:6px 4px}
+} td.loss{color:var(--bad)}
 .best{font-weight:600;color:var(--accent)}
 svg text{fill:var(--muted);font:11px var(--mono)}
 .notes{display:grid;gap:8px;font-size:14px;color:var(--muted);max-width:75ch}
@@ -101,14 +136,21 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
 <div class="wrap">
   <header>
     <div class="eyebrow" id="stamp"></div>
-    <h1>Win Probability Board</h1>
-    <p>Predicts each game's point margin from team efficiency (EPA), starting-QB form, injuries, Elo, turnovers, rest and home field, then converts it to a win probability. Every input uses only information available before kickoff. The red tick marks the Vegas no-vig line.</p>
+    <h1>NFL Edge Board</h1>
+    <p>A bet is only worth making when <b>our chance</b> of winning it is higher than the chance the <b>price requires</b>. That gap is the <b>edge</b>. Every game below shows it separately for the moneyline and the spread, at the best price among your sportsbooks, with a verdict and a grade.</p>
+    <div class="keyrow"><span class="verdict bet" id="betkey">PAPER BET</span> qualifies under the locked rules (a real bet only after the track is validated) <span class="verdict lean">LEAN</span> positive edge, but too small or waiting on something <span class="verdict pass">NO EDGE</span> the price is fair or worse</div>
   </header>
 
   <div class="strip" id="strip"></div>
 
   <section>
-    <div class="sechead"><h2>Upcoming games</h2>
+    <div class="sechead"><h2 id="boardh">This week's board</h2><span class="pill" id="boardmode"></span></div>
+    <p class="edge" id="boardintro"></p>
+    <div class="scroll"><table id="board" class="board"></table></div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2>Games</h2>
       <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
     </div>
     <div class="games" id="games"></div>
@@ -158,6 +200,8 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
 
   <section class="notes">
     <h2 style="color:var(--ink)">How to read this</h2>
+    <p><b>Edge vs. factors.</b> The factor bars explain how the model arrived at its own line, in points. They are not edges: Vegas sees most of the same things. The edge comes only from the gap between the model's line and Vegas's line, and the bet math deliberately shrinks that gap toward Vegas before calculating our chance. A game can have big factors and zero edge.</p>
+    <p><b>Grades</b> (A+ to C) start from the edge and subtract for warning signs: the model far from the market, a QB change, the wrong side of 3 or 7, or the line moving against us. They add for the line moving our way or the right side of a key number.</p>
     <p>Factor bars show how many points of predicted margin each input is worth and which team it favors. Home field is about 2 points, and near zero at neutral sites. Injuries count every non-QB player listed Out or Doubtful, weighted by their recent share of snaps; reports come out Wednesday to Friday, so early-week numbers assume everyone is healthy.</p>
     <p>Travel, time zones, body clock, weather and Next Gen Stats were each tested as model inputs and did not improve out-of-sample accuracy, so they appear on the cards as context and are not part of the prediction. Live odds come from multiple sportsbooks when an Odds API key is set; "edge" is the expected return at the best available price using the model blended with the market (the same probability the paper bets use), and the backtest above shows those edges have not been profitable against closing lines.</p>
     <p>Vegas is a very strong benchmark. Matching it over a full season would be a good result; a large disagreement usually means the market knows something the model doesn't, like an injury announced after the data refresh.</p>
@@ -200,35 +244,54 @@ function context(g){
     const q=(g.qb_status||{})[side];
     if(q && q.play_prob<1) bits.push(`<span class="warn"><b>${esc(qb||team+' QB')}</b> ${esc(q.status||'')}${q.practice?` (${q.practice==='Did Not'?'did not practice':q.practice.toLowerCase()+' practice'})`:''}: starts ~${Math.round(q.play_prob*100)}% of the time</span>`);
   }
-  const sp=g.spread;
-  if(sp&&sp.best){ const b=sp.best, pt=x=>`${x>0?'+':''}${x}`;
-    const exp=sp.expected_home_margin, fav=exp>=0?g.home_team:g.away_team;
-    let t=`<span><b>Spread</b>: expects ${esc(fav)} by ${Math.abs(exp).toFixed(1)} · best <b>${esc(b.team)} ${pt(b.point)}</b> (${fmtML(b.price)}) at ${esc(b.book)} · covers ${Math.round(b.p_cover*100)}%${b.p_push>0.02?`, push ${Math.round(b.p_push*100)}%`:''} · edge ${b.ev>0?'+':''}${(b.ev*100).toFixed(1)}%</span>`;
-    const buy=(b.buy_options||[]).filter(o=>o.ev>b.ev+0.005).sort((x,y)=>y.ev-x.ev)[0];
-    if(buy) t+=`<span class="buy">Buying to ${pt(buy.point)} at ~${fmtML(buy.est_price)} would be worth ${buy.ev>0?'+':''}${(buy.ev*100).toFixed(1)}% (estimated price)</span>`;
-    bits.push(t); }
-  const o=c.live_odds;
-  if(o){
-    const side=(team,b,ev)=> b?`<span><b>${esc(team)}</b> best ${fmtML(b.price)} at ${esc(b.book)} · edge ${ev>0?'+':''}${(ev*100).toFixed(1)}%</span>`:'';
-    bits.push(side(g.away_team,o.best_away_ml,o.away_ev_at_best), side(g.home_team,o.best_home_ml,o.home_ev_at_best), `<span>${o.books} books</span>`);
-  }
+  if(!g.injury_report) bits.push('<span class="warn">Injury report not out yet</span>');
   return bits.join('');
 }
+const pt = x => `${x>0?'+':''}${x}`;
+const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
+const ANY_LIVE = (P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live');
+const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE'};
+const niceReason = r => r.replace('best edge','edge').replace('below 3%','below the 3% bar').replace('injury report not out','waiting for the injury report').replace('starting QB not confirmed','waiting on a QB decision');
+function market(kind, g){
+  // returns {html, row} for the moneyline or spread box; row feeds the board
+  if(kind==='ml'){
+    const m=g.moneyline; if(!m) return {html:`<div class="mkt"><div class="mh"><span>MONEYLINE</span></div><span class="odds">No live odds yet</span></div>`};
+    const v=m.verdict||'pass', edge=m.edge;
+    const reason=v==='lean'&&m.reasons&&m.reasons.length?`<span class="why">Not a bet yet: ${esc(m.reasons.map(niceReason).join('; '))}</span>`:'';
+    const html=`<div class="mkt is-${v}"><div class="mh"><span>MONEYLINE <span class="ctl" title="This approach lost money in every backtest; tracked as a comparison">CONTROL</span></span><span style="display:flex;gap:4px">${v!=='pass'?`<span class="grade ${gradeCls(m.grade)}">${m.grade}</span>`:''}<span class="verdict ${v}">${VERDICT[v]}</span></span></div>
+      <span class="pick">${esc(m.team)} ${fmtML(m.price)}</span><span class="odds">best price at ${esc(m.book)}</span>
+      <span class="cmp">Our chance ${pct(m.p_ours)} vs ${pct(m.p_needed)} needed</span>
+      <span class="cmp"><b>Edge ${edge>0?'+':''}${(edge*100).toFixed(1)}%</b></span>${reason}</div>`;
+    return {html, row: edge>0 ? {g, market:'Moneyline', pick:`${m.team} ${fmtML(m.price)}`, book:m.book, ours:m.p_ours, needed:m.p_needed, edge, grade:m.grade, score:m.score, verdict:v, why:m.why, reasons:m.reasons} : null};
+  }
+  const sp=g.spread; if(!sp||!sp.best) return {html:`<div class="mkt"><div class="mh"><span>SPREAD</span></div><span class="odds">No live spreads yet</span></div>`};
+  const b=sp.best, v=sp.verdict||'pass';
+  const reason=v==='lean'&&sp.reasons&&sp.reasons.length?`<span class="why">Not a bet yet: ${esc(sp.reasons.map(niceReason).join('; '))}</span>`:'';
+  const buy=(b.buy_options||[]).filter(o=>o.ev>b.ev+0.005).sort((x,y)=>y.ev-x.ev)[0];
+  const html=`<div class="mkt is-${v}"><div class="mh"><span>SPREAD</span><span style="display:flex;gap:4px">${v!=='pass'?`<span class="grade ${gradeCls(b.grade)}">${b.grade}</span>`:''}<span class="verdict ${v}">${VERDICT[v]}</span></span></div>
+    <span class="pick">${esc(b.team)} ${pt(b.point)}</span><span class="odds">${fmtML(b.price)} at ${esc(b.book)}</span>
+    <span class="cmp">Covers ${pct(b.p_cover)} vs ${pct(b.p_needed)} needed${b.p_push>0.02?` · push ${pct(b.p_push)}`:''}</span>
+    <span class="cmp"><b>Edge ${b.ev>0?'+':''}${(b.ev*100).toFixed(1)}%</b></span>${reason}
+    ${buy?`<span class="why">Buying to ${pt(buy.point)} at ~${fmtML(buy.est_price)} would be worth ${(buy.ev*100).toFixed(1)}% (estimated price)</span>`:''}</div>`;
+  return {html, row: b.ev>0 ? {g, market:'Spread', pick:`${b.team} ${pt(b.point)} (${fmtML(b.price)})`, book:b.book, ours:b.p_cover, needed:b.p_needed, edge:b.ev, grade:b.grade, score:b.score, verdict:v, why:b.why, reasons:sp.reasons} : null};
+}
 
+const boardRows=[];
 document.getElementById('games').innerHTML = P.upcoming.map(g => {
   const hp = g.home_win_prob, homeFav = hp >= .5;
-  const edge = g.vegas_home_prob == null ? null : (hp - g.vegas_home_prob);
   const maxPts = 8;
   const factors = g.top_factors.map(f =>
     `<div class="f"><span>${esc(f.factor)} → <strong>${esc(f.favors)}</strong></span>
       <span class="fb"><span style="left:0;width:${Math.min(100, f.points/maxPts*100)}%"></span></span>
       <span class="fv">${f.points.toFixed(1)} pts</span></div>`).join('');
   const line = m => m == null ? '—' : (Math.abs(m) < 0.25 ? 'Pick' : (m > 0 ? `${esc(g.home_team)} −${Math.abs(m).toFixed(1)}` : `${esc(g.away_team)} −${Math.abs(m).toFixed(1)}`));
-  let edgeTxt = 'No Vegas line yet';
-  if (edge != null) {
-    const who = edge > 0 ? g.home_team : g.away_team;
-    edgeTxt = Math.abs(edge) < .03 ? `In line with Vegas (${pct(g.vegas_home_prob)} ${g.home_team})`
-      : `Model is <strong>${Math.round(Math.abs(edge)*100)} pts higher on ${esc(who)}</strong> than Vegas`;
+  const ml=market('ml',g), sp=market('spread',g);
+  if(ml.row) boardRows.push(ml.row); if(sp.row) boardRows.push(sp.row);
+  let gap='No Vegas line yet.';
+  if(g.vegas_home_margin!=null){
+    const d=g.model_home_margin-g.vegas_home_margin, who=d>0?g.home_team:g.away_team;
+    gap = Math.abs(d)<1 ? `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: essentially the same, so there's little to exploit.`
+      : `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: the model is <b>${Math.abs(d).toFixed(1)} pts higher on ${esc(who)}</b>. This gap is the only source of edge. The bet math trusts Vegas more than the model (it uses about ⅓ model, ⅔ market), so a big gap becomes a much smaller edge.`;
   }
   return `<article class="game" data-gid="${esc(g.game_id)}">
     <div class="gmeta"><span>${fmtDay(g.gameday)} · ${esc(g.gametime||'')} · WK ${g.week}</span>${g.neutral_site?'<span class="tag">NEUTRAL</span>':''}</div>
@@ -237,16 +300,36 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       <span class="at">@</span>
       <div class="team home ${homeFav?'fav':''}"><span class="ab">${esc(g.home_team)}</span><span class="qb">${esc(g.home_qb||'')}</span><span class="pct">${pct(hp)}</span></div>
     </div>
-    <div class="bar" role="img" aria-label="${esc(g.away_team)} ${pct(1-hp)}, ${esc(g.home_team)} ${pct(hp)}">
+    <div class="bar" role="img" aria-label="Model: ${esc(g.away_team)} ${pct(1-hp)}, ${esc(g.home_team)} ${pct(hp)}">
       <span class="a" style="width:${(1-hp)*100}%"></span><span class="h" style="width:${hp*100}%"></span>
       ${g.vegas_home_prob!=null?`<span class="v" style="left:${(1-g.vegas_home_prob)*100}%"></span>`:''}
     </div>
-    <div class="edge">${edgeTxt}</div>
-    <div class="spreads"><span>Model line <b>${line(g.model_home_margin)}</b></span><span>Vegas line <b>${line(g.vegas_home_margin)}</b></span>${g.injury_report?'':'<span class="pend">Injury report pending</span>'}</div>
+    <div class="markets">${ml.html}${sp.html}</div>
+    <div class="gap">${gap}</div>
+    <div class="factors"><span class="subh">What drives the model's number (Vegas sees most of these too)</span>${factors}</div>
     <div class="ctx">${context(g)}</div>
-    <div class="factors">${factors}</div>
   </article>`;
 }).join('');
+
+if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
+// board: every positive-edge opportunity, best grade first
+(function(){
+  const order={'A+':0,'A':1,'B+':2,'B':3,'C+':4,'C':5};
+  boardRows.sort((a,b)=>(order[a.grade]??9)-(order[b.grade]??9) || (a.market==='Spread'?0:1)-(b.market==='Spread'?0:1) || b.edge-a.edge);
+  const live=(P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live');
+  document.getElementById('boardh').textContent = live ? 'Best bets this week' : "This week's board";
+  const m=document.getElementById('boardmode'); m.textContent = live ? 'Live' : 'Shadow mode · paper only'; if(live) m.classList.add('live');
+  const nNo = P.upcoming.length*2 - boardRows.length;
+  document.getElementById('boardintro').innerHTML = boardRows.length
+    ? `Every bet with a positive edge, best grade first (${nNo} market${nNo===1?'':'s'} with no edge are left off). <b>Spread</b> is the track being tested for real (+2.5% in the 2020–25 backtest). <b>Moneyline</b> rows are a faded <em>control</em>: their edges look big, but that approach lost money in every backtest. <b>BET</b> rows are logged as paper bets; <b>LEAN</b> rows show why they aren't. Grades weigh the edge against warning signs; see "Do the grades work?" below. ${live?'':'<b>Nothing here is a recommendation until a track passes its test.</b>'}`
+    : 'No positive edges right now. Lines and news update daily.';
+  document.getElementById('board').innerHTML = boardRows.length ? `<thead><tr><th style="text-align:left">Grade</th><th style="text-align:left">Pick</th><th>Edge</th><th style="text-align:left">Status</th><th>Our chance</th><th>Needed</th></tr></thead><tbody>`+
+    boardRows.map(r=>`<tr class="${r.market==='Moneyline'?'ctrl':''}"><td style="text-align:left"><span class="grade ${gradeCls(r.grade)}" title="${esc((r.why||[]).join(', '))}">${r.grade}</span></td>
+      <td style="text-align:left"><span class="bpick"><b>${esc(r.pick)}</b><small>${r.market}${r.market==='Moneyline'?' (control)':''} · ${esc(r.g.away_team)} @ ${esc(r.g.home_team)} · ${fmtDay(r.g.gameday)} · ${esc(r.book)}</small></span></td>
+      <td><b>+${(r.edge*100).toFixed(1)}%</b></td>
+      <td style="text-align:left"><span class="verdict ${r.verdict}">${VERDICT[r.verdict]}</span> <span class="why">${r.verdict==='lean'?esc((r.reasons||[]).map(niceReason).join('; ')):''}</span></td>
+      <td>${pct(r.ours)}</td><td>${pct(r.needed)}</td></tr>`).join('')+'</tbody>' : '';
+})();
 
 // calibration chart
 (function(){
@@ -334,12 +417,16 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `Avg. closing line value ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${b.grade?`<span class="grade ${gradeCls(b.grade)}">${b.grade}</span> `:''}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
       gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
     for (const b of open) { const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`); if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:fmtP(b.price)}</span>`); }
-    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div></div>`;
+    const bg=B.by_grade||[];
+    const gradeT = bg.length ? `<thead><tr><th style="text-align:left">Grade</th><th>Bets</th><th>W–L</th><th>Units</th><th>ROI</th><th>Avg. CLV</th></tr></thead><tbody>`+
+      bg.map(x=>`<tr><td style="text-align:left"><span class="grade ${gradeCls(x.grade)}">${x.grade}</span></td><td>${x.bets}</td><td>${x.wins}–${x.losses}</td><td>${x.profit_units>0?'+':''}${x.profit_units}</td><td class="${x.roi>=0?'win':'loss'}">${(x.roi*100).toFixed(1)}%</td><td>${x.avg_clv==null?'—':(x.avg_clv*100).toFixed(1)+'%'}</td></tr>`).join('')+'</tbody>'
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">Do the grades work? Performance by grade appears here once paper bets are graded. In the 2020–25 spread backtest, A-grade bets returned +15% (47 bets), B-grades +0–2%, C-grades −1%: promising, but small samples.</td></tr></tbody>`;
+    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div><span class="subh">Do the grades work? (${name.toLowerCase()} paper record by grade)</span><div class="scroll"><table>${gradeT}</table></div></div>`;
   }).join('');
 })();
 

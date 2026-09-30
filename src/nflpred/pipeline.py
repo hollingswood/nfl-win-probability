@@ -143,6 +143,7 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
             "home_team": g["home_team"], "away_team": g["away_team"],
             "neutral_site": bool(g["location"] == "Neutral"),
             "home_qb": _s(g.get("home_qb_name")), "away_qb": _s(g.get("away_qb_name")),
+            "qb_change": {"home": _opt(g.get("home_qb_change"), 3), "away": _opt(g.get("away_qb_change"), 3)},
             "home_win_prob": round(float(ph), 4), "away_win_prob": round(float(1 - ph), 4),
             "qb_status": {side: {"status": _s(g.get(f"{side}_qb_status")), "practice": _s(g.get(f"{side}_qb_practice")),
                                  "play_prob": round(float(av[f"{side}_qb_play_prob"]), 2),
