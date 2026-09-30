@@ -69,3 +69,27 @@ def save(weights: dict, sigma: float, path: Path, meta: dict):
 def load(path: Path):
     d = json.loads(path.read_text())
     return float(d["sigma"]), {int(k): v for k, v in d["weights"].items()}
+
+
+_GRID = np.arange(-35, 35.001, 0.05)
+
+
+def implied_mu(home_point: float, p_home_cover_nopush: float, sigma: float, weights=None) -> float:
+    """Expected home margin implied by a market line AND its no-vig prices.
+    E.g. home -3 priced -120/+100 implies a bit more than 3 points; the number alone would say 3."""
+    hc, pu, ac = cover_probs(_GRID, sigma, np.full_like(_GRID, float(home_point)), weights)
+    q = hc / np.maximum(hc + ac, 1e-12)  # increasing in mu
+    return float(np.interp(p_home_cover_nopush, q, _GRID))
+
+
+def market_mu(rows, sigma, weights=None) -> float | None:
+    """Median implied expected home margin over books. rows: iterable of
+    (home_point, home_price, away_point, away_price) with American prices."""
+    vals = []
+    for hp, hpr, ap, apr in rows:
+        if None in (hp, hpr, apr) or any(isinstance(x, float) and np.isnan(x) for x in (hp, hpr, apr)):
+            continue
+        ih = -hpr / (-hpr + 100) if hpr < 0 else 100 / (hpr + 100)
+        ia = -apr / (-apr + 100) if apr < 0 else 100 / (apr + 100)
+        vals.append(implied_mu(hp, ih / (ih + ia), sigma, weights))
+    return float(np.median(vals)) if vals else None

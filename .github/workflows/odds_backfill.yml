@@ -5,6 +5,11 @@ name: Historical odds backfill
 on:
   workflow_dispatch:
     inputs:
+      plan:
+        description: "main = sides 2020-25 (done); extras = totals + openers + hourly sample (~21k credits)"
+        type: choice
+        options: [extras, totals, openers, hourly, main]
+        default: extras
       seasons:
         description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
         default: "2020-2025"
@@ -14,7 +19,7 @@ on:
         default: true
       reserve:
         description: "Stop before the account drops below this many credits"
-        default: "1000"
+        default: "500"
 
 concurrency:
   group: odds-backfill
@@ -38,7 +43,9 @@ jobs:
         run: |
           ARGS="--seasons ${{ inputs.seasons }} --reserve ${{ inputs.reserve }}"
           if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
-          python -m nflpred.odds_history $ARGS
+          PLANS="${{ inputs.plan }}"
+          if [ "$PLANS" = "extras" ]; then PLANS="totals openers hourly"; fi
+          for P in $PLANS; do python -m nflpred.odds_history --plan $P $ARGS; done
         env:
           PYTHONPATH: src
           PYTHONUNBUFFERED: "1"  # show progress lines live in the log

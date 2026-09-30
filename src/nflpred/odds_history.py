@@ -39,6 +39,8 @@ OUT_DIR = ROOT / "data" / "historical_odds"
 URL = "https://api.the-odds-api.com/v4/historical/sports/americanfootball_nfl/odds"
 FIELDS = ["requested_ts", "snapshot_ts", "event_id", "commence_time", "home", "away", "book", "book_title",
           "last_update", "ml_home", "ml_away", "sp_home_point", "sp_home_price", "sp_away_point", "sp_away_price"]
+TOTAL_FIELDS = ["requested_ts", "snapshot_ts", "event_id", "commence_time", "home", "away", "book", "book_title",
+                "last_update", "tot_point", "tot_over_price", "tot_under_price"]
 FIRST_AVAILABLE = datetime(2020, 6, 6, tzinfo=timezone.utc)
 
 
@@ -62,6 +64,66 @@ def plan_snapshots(games: pd.DataFrame, season: int, horizon_days: int = 9) -> l
     return keep
 
 
+def _daily(games, season, horizon_days, add):
+    """Walk the season's days; add(base_midnight_utc) returns datetimes for that day."""
+    g = games[games["season"] == season]
+    kicks = sorted({_kickoff_utc(r.gameday, r.gametime) for r in g.itertuples()})
+    if not kicks:
+        return [], []
+    times = set()
+    day = (kicks[0] - timedelta(days=horizon_days)).date()
+    while day <= kicks[-1].date():
+        times |= set(add(datetime(day.year, day.month, day.day, tzinfo=timezone.utc)))
+        day += timedelta(days=1)
+    return times, kicks
+
+
+def _keep(times, kicks, horizon_days=9):
+    return [t for t in sorted(times)
+            if any(t < k <= t + timedelta(days=horizon_days) for k in kicks) and t >= FIRST_AVAILABLE]
+
+
+def plan_totals(games, season, horizon_days=9):
+    """Totals: Tuesday 7:10am AZ, Friday report run, 75 min before each kickoff."""
+    times, kicks = _daily(games, season, horizon_days, lambda b: (
+        [b + timedelta(hours=14, minutes=10)] if b.weekday() == 1 else []) + (
+        [b + timedelta(hours=21, minutes=40)] if b.weekday() == 4 else []))
+    return _keep(set(times) | {k - timedelta(minutes=75) for k in kicks}, kicks, horizon_days)
+
+
+def plan_openers(games, season, horizon_days=9):
+    """Next week's opening lines: Sunday 7:30pm ET and midnight ET (23:30 and 04:00 UTC)."""
+    times, kicks = _daily(games, season, horizon_days, lambda b: (
+        [b + timedelta(hours=23, minutes=30)] if b.weekday() == 6 else []) + (
+        [b + timedelta(hours=4)] if b.weekday() == 0 else []))
+    return _keep(times, kicks, horizon_days)
+
+
+HOURLY_SEASONS, HOURLY_WEEKS = (2025,), range(3, 13)
+
+
+def plan_hourly(games, season, horizon_days=9):
+    """Hourly sample (does checking more often catch more soft prices?): 2025 weeks 3-12,
+    every hour from Saturday 15:00 UTC to Sunday 16:00 UTC."""
+    if season not in HOURLY_SEASONS:
+        return []
+    g = games[(games["season"] == season) & games["week"].isin(list(HOURLY_WEEKS)) & (games["weekday"] == "Sunday")]
+    kicks = sorted({_kickoff_utc(r.gameday, r.gametime) for r in g.itertuples()})
+    times = set()
+    for sunday in {d.date() for d in pd.to_datetime(g["gameday"])}:
+        start = datetime(sunday.year, sunday.month, sunday.day, tzinfo=timezone.utc) - timedelta(hours=9)
+        times |= {start + timedelta(hours=h) for h in range(26)}
+    return _keep(times, kicks, horizon_days)
+
+
+PLANS = {  # name: (planner, markets, regions, subdirectory, fields)
+    "main": (None, "h2h,spreads", "us,us2", "", FIELDS),
+    "totals": (plan_totals, "totals", "us", "totals", TOTAL_FIELDS),
+    "openers": (plan_openers, "h2h,spreads", "us", "openers", FIELDS),
+    "hourly": (plan_hourly, "h2h,spreads", "us", "hourly", FIELDS),
+}
+
+
 def rows_from_snapshot(payload: dict, requested: datetime) -> list[dict]:
     rows = []
     for ev in payload.get("data", []):
@@ -81,6 +143,11 @@ def rows_from_snapshot(payload: dict, requested: datetime) -> list[dict]:
                 ho, ao = sp.get(ev["home_team"]) or {}, sp.get(ev["away_team"]) or {}
                 r["sp_home_point"], r["sp_home_price"] = ho.get("point"), ho.get("price")
                 r["sp_away_point"], r["sp_away_price"] = ao.get("point"), ao.get("price")
+            if "totals" in mk:
+                tt = {o["name"]: o for o in mk["totals"]["outcomes"]}
+                ov, un = tt.get("Over") or {}, tt.get("Under") or {}
+                r["tot_point"] = ov.get("point", un.get("point"))
+                r["tot_over_price"], r["tot_under_price"] = ov.get("price"), un.get("price")
             rows.append(r)
     return rows
 
@@ -102,24 +169,36 @@ def fetch(key: str, when: datetime, regions: str, markets: str, timeout: float =
     raise RuntimeError(f"failed after retries: {when}")
 
 
-def _append(path: Path, rows: list[dict]):
+def remaining_credits(key: str) -> float | None:
+    """The /sports endpoint is free (costs 0) and reports the account's remaining credits."""
+    try:
+        with urllib.request.urlopen(f"https://api.the-odds-api.com/v4/sports?apiKey={key}", timeout=20) as r:
+            v = r.headers.get("x-requests-remaining")
+            return float(v) if v is not None else None
+    except Exception as e:
+        print("credit check failed:", e)
+        return None
+
+
+def _append(path: Path, rows: list[dict], fields=FIELDS):
     new = not path.exists()
     with gzip.open(path, "at", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=FIELDS)
+        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         if new:
             w.writeheader()
         w.writerows(rows)
 
 
 def backfill(games, seasons, key, regions="us,us2", markets="h2h,spreads", reserve=1000, out_dir=OUT_DIR,
-             dry_run=False, fetcher=fetch):
+             dry_run=False, fetcher=fetch, planner=None, fields=FIELDS):
+    planner = planner or plan_snapshots
     cost = 10 * len(markets.split(",")) * len(regions.split(","))
     out_dir.mkdir(parents=True, exist_ok=True)
     total = {"snapshots": 0, "credits": 0, "fetched": 0, "rows": 0, "remaining": None, "stopped": None}
     for s in seasons:
         done_path = out_dir / f"done_{s}.txt"
         done = set(done_path.read_text().split()) if done_path.exists() else set()
-        todo = [t for t in plan_snapshots(games, s) if t.isoformat() not in done]
+        todo = [t for t in planner(games, s) if t.isoformat() not in done]
         total["snapshots"] += len(todo)
         total["credits"] += len(todo) * cost
         print(f"{s}: {len(todo)} snapshots to fetch (~{len(todo) * cost:,} credits)")
@@ -134,7 +213,7 @@ def backfill(games, seasons, key, regions="us,us2", markets="h2h,spreads", reser
             total["remaining"] = remaining
             rows = rows_from_snapshot(payload, t)
             if rows:
-                _append(out_dir / f"nfl_odds_{s}.csv.gz", rows)
+                _append(out_dir / f"nfl_odds_{s}.csv.gz", rows, fields)
             with done_path.open("a") as f:
                 f.write(t.isoformat() + "\n")
             total["fetched"] += 1
@@ -154,7 +233,8 @@ def _seasons(arg: str) -> list[int]:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--seasons", default="2020-2025")
-    ap.add_argument("--regions", default="us,us2")
+    ap.add_argument("--plan", default="main", choices=list(PLANS))
+    ap.add_argument("--regions", default=None, help="override the plan's regions")
     ap.add_argument("--reserve", type=int, default=1000)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
@@ -163,13 +243,18 @@ def main(argv=None):
     key = os.environ.get("ODDS_API_KEY", "")
     if not a.dry_run and not key:
         raise SystemExit("ODDS_API_KEY not set")
+    planner, markets, regions, sub, fields = PLANS[a.plan]
+    if key:
+        print(f"credits remaining before this run: {remaining_credits(key)}")
     res = backfill(games, sorted(_seasons(a.seasons), reverse=True),  # newest first
-                   key, regions=a.regions, reserve=a.reserve, dry_run=a.dry_run)
+                   key, regions=a.regions or regions, markets=markets, reserve=a.reserve, dry_run=a.dry_run,
+                   out_dir=OUT_DIR / sub if sub else OUT_DIR, planner=planner, fields=fields)
+    res["plan"] = a.plan
     print(json.dumps(res))
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a") as f:
-            f.write(f"### Historical odds {'(dry run)' if a.dry_run else ''}\n\n```\n{json.dumps(res, indent=2)}\n```\n")
+            f.write(f"### Historical odds: {a.plan} {'(dry run)' if a.dry_run else ''}\n\n```\n{json.dumps(res, indent=2)}\n```\n")
 
 
 if __name__ == "__main__":

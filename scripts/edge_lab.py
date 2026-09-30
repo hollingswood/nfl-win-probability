@@ -159,6 +159,45 @@ def stats(b: pd.DataFrame, market: str) -> dict:
             "clv_t": round(float(z), 2), "beat_close": round(float((clv > 0).mean()), 3)}
 
 
+# ---------------------------------------------------------------- honest closing line (prices, not just the number)
+def closing_fair(seasons=None) -> pd.DataFrame:
+    """Per game, from the LAST pre-kickoff snapshot (~75 min before kickoff):
+    mu_close_sharp / mu_close_all = expected home margin implied by spreads AND prices (key-number model);
+    p_close_sharp / p_close_all = no-vig home win probability. Use these for CLV; the nflverse
+    spread_line ignores the closing juice (that flaw made two spread angles look like winners)."""
+    p = ROOT / "data" / "closing_fair.parquet"
+    if p.exists():
+        c = pd.read_parquet(p)
+        return c if seasons is None else c[c.season.isin(seasons)]
+    r = SB.load_rules()
+    w, sig = r["_weights"], r["margin"]["sigma"]
+    wf = R.walk_forward()
+    wf["gameday"] = pd.to_datetime(wf.gameday)
+    wf["kick"] = pd.to_datetime([_kickoff_utc(x.gameday, x.gametime) for x in wf.itertuples()], utc=True)
+    o = R.match_games(R.load_odds(), wf).merge(wf[["game_id", "kick"]], on="game_id")
+    o = o[o.requested_ts < o.kick]
+    last = o[o.requested_ts == o.groupby("game_id").requested_ts.transform("max")]
+    rows = []
+    for gid, d in last.groupby("game_id"):
+        rec = {"game_id": gid, "season": int(d.season.iloc[0])}
+        for lab, dd in (("sharp", d[d.book.isin(SHARP)]), ("all", d)):
+            rec[f"mu_close_{lab}"] = K.market_mu(zip(dd.sp_home_point, dd.sp_home_price, dd.sp_away_point,
+                                                     dd.sp_away_price), sig, w)
+            m = dd[dd.ml_home.notna() & dd.ml_away.notna()]
+            rec[f"p_close_{lab}"] = float(np.median(_nv(m.ml_home.values, m.ml_away.values))) if len(m) else np.nan
+        rows.append(rec)
+    c = pd.DataFrame(rows)
+    c.to_parquet(p)
+    return c if seasons is None else c[c.season.isin(seasons)]
+
+
+def spread_clv_price(mu_close_home, point, price, side) -> float:
+    """CLV of a spread bet valued at the price-implied closing expected margin."""
+    if mu_close_home is None or pd.isna(mu_close_home):
+        return np.nan
+    return SB.side_ev(float(mu_close_home), float(point), int(price), side, SB.load_rules())[0]
+
+
 # ---------------------------------------------------------------- frozen candidates (edge_candidates.json)
 def _prep(t: pd.DataFrame):
     side_cons_pt = np.where(t.side == "home", -t.m_cons, t.m_cons)
