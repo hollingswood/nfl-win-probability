@@ -214,3 +214,24 @@ Body: `{"ref":"main","inputs":{"run_type":"<run_type>"}}`.
 
 The token is a fine-grained personal access token limited to this repository with
 **Actions: Read and write** and nothing else. Failed runs email the repo owner (GitHub default).
+
+## Replay on real early-week lines (2026-09-30)
+
+`scripts/replay_early_lines.py` replays the frozen rules (spread v1, moneyline v1, grading v1) on
+2020-2025 using 1,891 historical odds snapshots (The Odds API, `data/historical_odds/`) taken at
+the same moments the live pipeline runs, with a walk-forward model, the licensed books in
+`my_books.json`, the injury-report and QB-confirmed timing rules, first-qualifying-run locking and
+the weekly cap. An independent audit found three replay bugs (stale "first seen" line, QB check on
+the after-the-fact starter, missing first prices); the numbers below are after the fixes.
+
+| Track | Bets | Flat ROI | 95% range | Avg CLV | Beat the close |
+|---|---|---|---|---|---|
+| Spread v1 | 506 | -0.3% | -8% to +8% | -0.2% | 51% |
+| Moneyline v1 | 487 | +1.8% | -9% to +13% | -0.5% | 44% |
+
+Verdict: no demonstrated edge on the lines we'd actually bet; grades did not rank results.
+Model-free check of "favorites early, dogs late": favorites covered 49.3% at the early line vs
+48.4% at the close (lines did not drift toward favorites on average) — right direction, too small
+to be an edge on its own. Post-hoc leads (NOT validated; would need a new pre-registered version
+tested on unseen data): spread underdogs taken early beat the close 67% of the time (176 bets,
+CLV +1.2%); 8%+ edges beat the close 67% (78 bets).
