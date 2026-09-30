@@ -195,18 +195,22 @@ workflow. Both fire; whichever starts second sees the first one (within 40 minut
 itself, so odds-API credits aren't spent twice. Clicking **Run workflow** (run_type `manual`)
 never skips and also runs the Vegas comparison.
 
-Outside-scheduler jobs (timezone America/New_York; each a POST to
+Outside-scheduler jobs (timezone America/Phoenix, which has no daylight saving; game-time jobs
+fire twice, one hour apart, so one run lands right for Eastern daylight time and the other for
+Eastern standard time; the off-season one is just an extra refresh). Each is a POST to
 `https://api.github.com/repos/hollingswood/nfl-win-probability/actions/workflows/weekly.yml/dispatches`
 with headers `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`,
-`Content-Type: application/json`; success = HTTP 204):
+`Content-Type: application/json`; success = HTTP 204:
 
-| Job | When (ET) | Body |
-|---|---|---|
-| Daily | every day 10:10 AM | `{"ref":"main","inputs":{"run_type":"daily"}}` |
-| Friday final report | Fri 4:40 PM | `{"ref":"main","inputs":{"run_type":"friday"}}` |
-| Sunday early | Sun 11:45 AM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
-| Sunday late | Sun 3:05 PM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
-| Night games | Sun, Mon, Thu 7:05 PM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
+| Job | When (Arizona) | Crontab | run_type |
+|---|---|---|---|
+| Daily | every day 7:10 AM | `10 7 * * *` | daily |
+| Friday final report | Fri 2:40 PM | `40 14 * * 5` | friday |
+| Sunday early (1pm ET games) | Sun 8:45 + 9:45 AM | `45 8,9 * * 0` | gameday |
+| Sunday late (4pm ET games) | Sun 12:05 + 1:05 PM | `5 12,13 * * 0` | gameday |
+| Night games (Sun/Mon/Thu) | 4:05 + 5:05 PM | `5 16,17 * * 0,1,4` | gameday |
+
+Body: `{"ref":"main","inputs":{"run_type":"<run_type>"}}`.
 
 The token is a fine-grained personal access token limited to this repository with
 **Actions: Read and write** and nothing else. Failed runs email the repo owner (GitHub default).
