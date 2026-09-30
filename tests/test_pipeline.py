@@ -466,3 +466,40 @@ def test_every_paper_bet_carries_a_grade(tmp_path):
     out = bets.process({"upcoming": [g]}, games, tmp_path)
     assert out["new"][0]["grade"] in {"A+", "A", "B+", "B", "C+", "C"}
     assert g["moneyline"]["verdict"] == "bet" and "p_needed" in g["moneyline"]
+
+
+def test_odds_history_plan_and_backfill(tmp_path):
+    """Historical odds: snapshots only when a game is upcoming; rows parsed; resumable; reserve respected."""
+    import gzip, csv
+    from datetime import datetime, timezone
+    from nflpred import odds_history as OH
+    games = pd.DataFrame({"season": [2023, 2023], "gameday": pd.to_datetime(["2023-09-10", "2023-09-17"]),
+                          "gametime": ["13:00", "20:20"]})
+    plan = OH.plan_snapshots(games, 2023)
+    assert plan[0] == datetime(2023, 9, 1, 21, 40, tzinfo=timezone.utc)          # first run within 9 days of kickoff
+    assert datetime(2023, 9, 8, 21, 40, tzinfo=timezone.utc) in plan               # Friday run
+    assert datetime(2023, 9, 10, 15, 45, tzinfo=timezone.utc) in plan              # 75 min before 1pm ET
+    assert datetime(2023, 9, 18, 14, 10, tzinfo=timezone.utc) not in plan          # nothing left to play
+    payload = {"timestamp": "2023-09-01T14:05:00Z", "data": [{
+        "id": "e1", "commence_time": "2023-09-10T17:00:00Z", "home_team": "Washington Football Team",
+        "away_team": "Arizona Cardinals", "bookmakers": [{"key": "draftkings", "title": "DraftKings",
+        "last_update": "x", "markets": [
+            {"key": "h2h", "outcomes": [{"name": "Washington Football Team", "price": -300},
+                                        {"name": "Arizona Cardinals", "price": 250}]},
+            {"key": "spreads", "outcomes": [{"name": "Washington Football Team", "price": -110, "point": -7},
+                                            {"name": "Arizona Cardinals", "price": -110, "point": 7}]}]}]}]}
+    calls = []
+    def fake(key, t, regions, markets):
+        calls.append(t)
+        return payload, 100000 - 40 * len(calls)
+    res = OH.backfill(games, [2023], "k", out_dir=tmp_path, fetcher=fake)
+    assert res["fetched"] == len(plan) and not res["stopped"]
+    with gzip.open(tmp_path / "nfl_odds_2023.csv.gz", "rt") as f:
+        rows = list(csv.DictReader(f))
+    assert rows[0]["home"] == "WAS" and rows[0]["ml_away"] == "250" and rows[0]["sp_home_point"] == "-7"
+    n = len(calls)
+    OH.backfill(games, [2023], "k", out_dir=tmp_path, fetcher=fake)                 # resume: nothing refetched
+    assert len(calls) == n
+    (tmp_path / "done_2023.txt").unlink()
+    res = OH.backfill(games, [2023], "k", out_dir=tmp_path, fetcher=lambda *a: (payload, 1030), reserve=1000)
+    assert res["fetched"] == 0 or res["stopped"]

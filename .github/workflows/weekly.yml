@@ -110,7 +110,7 @@ jobs:
           git config user.email "nfl-bot@users.noreply.github.com"
           git add history output/predictions.json output/backtest.json output/vs_vegas.json
           git commit -m "Weekly predictions $(date -u +%F)" || echo "no changes"
-          git push
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
       - name: Alert on new bets (only once the model has passed validation)
         if: hashFiles('output/alert.md') != ''
         env:

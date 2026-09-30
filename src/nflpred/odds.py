@@ -27,6 +27,7 @@ TEAM_ABBR = {
     "Minnesota Vikings": "MIN", "New England Patriots": "NE", "New Orleans Saints": "NO", "New York Giants": "NYG",
     "New York Jets": "NYJ", "Philadelphia Eagles": "PHI", "Pittsburgh Steelers": "PIT", "San Francisco 49ers": "SF",
     "Seattle Seahawks": "SEA", "Tampa Bay Buccaneers": "TB", "Tennessee Titans": "TEN", "Washington Commanders": "WAS",
+    "Washington Football Team": "WAS", "Washington Redskins": "WAS",  # 2020-21 names (historical odds)
 }
 
 
