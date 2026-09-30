@@ -235,3 +235,30 @@ Model-free check of "favorites early, dogs late": favorites covered 49.3% at the
 to be an edge on its own. Post-hoc leads (NOT validated; would need a new pre-registered version
 tested on unseen data): spread underdogs taken early beat the close 67% of the time (176 bets,
 CLV +1.2%); 8%+ edges beat the close 67% (78 bets).
+
+## Edge search with a locked holdout (2026-09-30)
+
+`scripts/edge_lab.py` searched for angles on 2020-2022 only (model v2 ideas, market-only
+"soft book vs sharp book" prices, line momentum, key numbers, timing, season phase, dynamic
+gating on trailing CLV, low-volume long shots). Seven candidates were frozen in
+`edge_candidates.json` and committed, then tested once on 2023-2025
+(`output/edge_holdout_2023_2025.json`). Pass = CLV > 0 at one-sided p < 0.05/7.
+
+| Candidate | Holdout bets | ROI | CLV (pre-registered) | Pre-reg result | CLV at closing *prices* |
+|---|---|---|---|---|---|
+| C1 spread dog, soft vs sharp ≥3% | 459 | -4.3% | +2.0% | pass | **-0.7% / -1.0%** |
+| C2 ML dog +100..+400, soft vs sharp ≥3% | 155 | +20.2% | +1.9% (p=0.04) | fail | +1.9% / +2.3% |
+| C3 spread soft vs sharp ≥2% + model ≥2% | 167 | +0.7% | +2.1% | pass | **-1.7% / -2.0%** |
+| C4 ML soft vs sharp ≥2% + model agrees | 145 | +0.9% | +1.2% (p=0.03) | fail | +2.5% / +2.4% |
+| C5 spread model v2 (dogs, model ≥3%) | 247 | +1.1% | +0.7% | fail | -1.9% / -2.1% |
+| C6 ML long shots +150..+300, model ≥12 pts over sharp | 57 | -8.1% | +0.6% | fail | +0.6% / +1.0% |
+| C7 spread soft vs sharp, gated on trailing CLV | 453 | -4.7% | +1.2% | fail | -1.2% / -1.4% |
+
+Important finding: the pre-registered spread CLV valued our bet against the closing *number*
+(nflverse `spread_line`) and ignored the closing *juice*. Re-measured against the closing prices
+of the sharp books / all books (last snapshot, `scripts/edge_check_spread_clv.py`), every spread
+candidate has negative CLV, so C1/C3's "pass" is an artifact. The key-number distribution itself
+is well calibrated (predicted vs actual cover/push within ~0.5 pt). Moneyline CLV needs no
+key-number model and holds up (`scripts/edge_check_ml_clv.py`): C2/C4 are the only credible
+leads, positive in both periods but not significant after the multiple-testing correction.
+The live spread track's CLV (spread_bets.grade) has the same flaw and must use closing prices.
