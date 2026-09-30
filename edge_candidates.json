@@ -1,0 +1,29 @@
+{
+  "frozen_on": "2026-09-30",
+  "developed_on": "2020-2022 seasons only (scripts/edge_lab.py); 2023-2025 untouched until this file is committed",
+  "test": "Run ONCE on 2023-2025. Pass = mean CLV > 0 with one-sided p < 0.05/7 (Bonferroni for 7 candidates). ROI reported but not the pass test (too noisy). Every candidate is reported.",
+  "common": {
+    "books": "my_books.json (best price among them)",
+    "fair_sharp": "median no-vig of lowvig, betonlineag, circasports, bookmaker",
+    "sanity": "spread point within 2.5 of consensus; moneyline implied prob within 0.12 of consensus; spread price -200..+200; ML -1000..+1000; sharp line present",
+    "lock": "one bet per game, at the first qualifying snapshot, best-scoring book/side at that snapshot",
+    "eligible": "model-based rules only use snapshots after the injury report / QB confirmation (same rules as the replay)",
+    "stake": "flat 1 unit for testing"
+  },
+  "candidates": [
+    {"id": "C1_spread_sharp_dog", "type": "market-only", "market": "spread",
+     "rule": "underdog side (point > 0) where EV at our book's line+price vs sharp fair (key-number pricing) >= 3%"},
+    {"id": "C2_ml_sharp_dog", "type": "market-only", "market": "moneyline",
+     "rule": "underdog +100..+400 where EV vs sharp no-vig probability >= 3%"},
+    {"id": "C3_spread_sharp_and_model", "type": "market+model", "market": "spread",
+     "rule": "eligible snapshot; EV vs sharp >= 2% AND EV under frozen spread-v1 model blend >= 2%"},
+    {"id": "C4_ml_sharp_and_model", "type": "market+model", "market": "moneyline",
+     "rule": "eligible snapshot; EV vs sharp >= 2% AND EV under raw model probability >= 0"},
+    {"id": "C5_spread_model_dog", "type": "model v2", "market": "spread",
+     "rule": "eligible snapshot; underdog; EV under frozen spread-v1 model blend >= 3%"},
+    {"id": "C6_ml_longshot_model", "type": "low-volume", "market": "moneyline",
+     "rule": "eligible snapshot; price +150..+300; model win prob - sharp win prob >= 0.12"},
+    {"id": "C7_spread_sharp_gated", "type": "dynamic", "market": "spread",
+     "rule": "EV vs sharp >= 2% (any side), only while the strategy's last 20 settled bets have mean CLV > 0 (needs 10+ to gate)"}
+  ]
+}
