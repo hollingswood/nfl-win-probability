@@ -41,6 +41,7 @@ jobs:
           python -m nflpred.odds_history $ARGS
         env:
           PYTHONPATH: src
+          PYTHONUNBUFFERED: "1"  # show progress lines live in the log
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Commit what was downloaded (also after a failure, so a re-run resumes)
         if: always() && inputs.dry_run == false
