@@ -1,0 +1,63 @@
+{
+ "note": "Frozen after development on 2020-2022 only (77 rule configurations tried, see totals.json dev). Evaluated ONCE on 2023-2025 by scripts/research/totals.py holdout. Bettable books = my_books.json allowed books present in the data; one bet per game at the first qualifying snapshot, best-scoring book/side there.",
+ "pass_bar": "mean price-based CLV > 0 with one-sided p < 0.05/3 (t-test over bets); CLV = EV of (side, point, price) under the closing fair total (last pre-kickoff snapshot, ~75 min out; sharp books lowvig/betonlineag/circasports/bookmaker, else all books), key-number total distribution fit on 2012-2019.",
+ "rules": [
+  {
+   "name": "R1_soft_vs_sharp_early",
+   "kind": "soft_vs_sharp",
+   "snaps": [
+    "tue",
+    "fri"
+   ],
+   "min_ev": 0.01,
+   "desc": "At the Tuesday 14:10 UTC or Friday 21:40 UTC snapshot, bet any allowed-book over/under whose EV under the sharp books' no-vig fair total AT THAT SNAPSHOT exceeds +1%.",
+   "dev_2020_2022": {
+    "bets": 78,
+    "clv": 0.0176,
+    "clv_t": 2.37,
+    "roi": 0.14,
+    "roi_se": 0.106
+   }
+  },
+  {
+   "name": "R2_wind15_under_tuesday",
+   "kind": "wind",
+   "snaps": [
+    "tue"
+   ],
+   "wind_min": 15,
+   "side": "under",
+   "desc": "Outdoor/open-roof game with RECORDED game wind >= 15 mph: bet the under at the Tuesday snapshot, best allowed price. OPTIMISTIC: recorded wind stands in for a 5-day forecast a Tuesday bettor would not have.",
+   "dev_2020_2022": {
+    "bets": 68,
+    "clv": 0.0365,
+    "clv_t": 2.7,
+    "roi": 0.207,
+    "roi_se": 0.111
+   }
+  },
+  {
+   "name": "R3_model_predicts_move",
+   "kind": "move",
+   "variant": "base",
+   "snaps": [
+    "tue",
+    "fri"
+   ],
+   "beta": {
+    "tue": 0.105,
+    "fri": 0.051
+   },
+   "min_ev": 0.0,
+   "desc": "Predicted close = current fair total (sharp, else all) + beta * (walk-forward totals model - current fair); beta fit on 2020-2022 (Tue 0.105, Fri 0.051). Model = ridge on EWMA team EPA/success, neutral pace (sec/play), plays, points, indoor, division, league scoring level; trained only on prior seasons (2013+), no weather. Bet the over/under at an allowed book when EV under the predicted close > 0.",
+   "dev_2020_2022_in_sample_beta": {
+    "bets": 244,
+    "clv": 0.0127,
+    "clv_t": 2.53,
+    "roi": 0.128,
+    "roi_se": 0.06
+   }
+  }
+ ],
+ "frozen_at": "2026-09-30T22:45:20+00:00"
+}

@@ -262,3 +262,19 @@ is well calibrated (predicted vs actual cover/push within ~0.5 pt). Moneyline CL
 key-number model and holds up (`scripts/edge_check_ml_clv.py`): C2/C4 are the only credible
 leads, positive in both periods but not significant after the multiple-testing correction.
 The live spread track's CLV (spread_bets.grade) has the same flaw and must use closing prices.
+
+## Research round 2 (2026-09-30): what else was tested
+
+Each study developed rules on 2020-2022 (or earlier), froze them in `output/research/*_frozen.json`,
+then ran 2023-2025 once. Honest CLV = against closing *prices* (`edge_lab.closing_fair`).
+Details in `output/research/<topic>.md`, code in `scripts/research/`.
+
+| Study | Result | Verdict |
+|---|---|---|
+| Teasers (Wong 6-pt, 2-team) | best rule (totals ≤48.5, best number pre-kick): leg 76.5%, ROI +6% at -120, -1% at -140; CIs ±15% | No edge at today's -130/-140 prices |
+| Line-movement model | direction slightly predictable (corr 0.11-0.16) but CLV after price ≤0 (ML variant +1.7%, p=0.09) | No edge |
+| QB news timing | close prices QB changes correctly; early lines miss by ~2 pts, but only if you know first | No public-info edge; log news timing live |
+| Totals + wind | Tuesday unders with ≥15 mph wind: CLV +7% but uses recorded wind (future info); Friday version +1.2% | Lead: paper-trade with the real Tuesday forecast |
+| Sunday-night openers | more price gaps but they don't predict the close (CLV ≈0 to +1.6%, fails) | No edge |
+| Hourly price checks (2025 sample) | +0.3-0.6 extra soft-vs-sharp bets/week at CLV ~+1.4%; opportunities last ~5-6 h | Small gain; hourly checks ~2,900 credits/month |
+| State-space (Kalman) team ratings | ≤0.0006 log-loss change; no info beyond the closing line | Do not adopt |

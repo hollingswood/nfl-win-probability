@@ -65,4 +65,8 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   new head coach, early-season interactions, referee tendencies, turf mismatch, conference game, Thu/Mon,
   home stand/road trip, bye flags, bounce-back/letdown (all 2026-09-29, see README table; code in
   scripts/extra_features.py). ADOPTED from that batch: coming off overtime (ot_diff).
+  Also tried 2026-09-30 (README "Research round 2"): Wong teasers, line-movement model, QB-news timing,
+  totals/wind (recorded-wind version leaks), Sunday-night openers, state-space/Kalman ratings.
+- Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
+- Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist

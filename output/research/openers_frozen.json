@@ -1,0 +1,33 @@
+{
+  "frozen_at": "2026-09-30T15:44:16",
+  "developed_on": [
+    2020,
+    2021,
+    2022
+  ],
+  "holdout": [
+    2023,
+    2024,
+    2025
+  ],
+  "evaluate_once": true,
+  "rules": [
+    "ml_any_sharp2",
+    "ml_model5_clean"
+  ],
+  "why": "Dev 2020-22 at openers: market-only soft-vs-sharp gaps had ~zero CLV (ml_any_sharp2 n=48, CLV[all] +0.04%; dog/spread variants negative), vs +2-5% for the same rules at later snapshots. ml_any_sharp2 is frozen anyway as the DIRECT test of 'are openers exploitable by soft-vs-sharp shopping' (expected to fail). ml_model5_clean (model win prob >= market+5pp and model EV >= 3%, only games with no QB on any report/no QB change and both teams' previous games final at the snapshot) was the best less-contaminated model rule at the opener (n=86, CLV[all] +1.98%, p=0.043; later snapshots +0.73%). Caveat: p_model still uses final-report non-QB injury inputs (look-ahead), so a pass would be an upper bound.",
+  "definition": {
+    "ml_any_sharp2": {
+      "market": "ml",
+      "score": "ev_sharp",
+      "uses_model": false
+    },
+    "ml_model5_clean": {
+      "market": "ml",
+      "score": "ev_model",
+      "uses_model": true
+    }
+  },
+  "bet_placement": "opener snapshots only (Sun 23:30 and Mon 04:00 UTC, games 72-216h away); one bet per game at the first qualifying opener snapshot, best-scoring book/side; books = my_books.json present in the region-us opener file; sanity filters as edge_lab._prep",
+  "pass_bar": "mean price-based CLV (ML: p_close_all; spread: mu_close_all via key-number pricing) > 0 with one-sided p < 0.025 (0.05/2)"
+}
