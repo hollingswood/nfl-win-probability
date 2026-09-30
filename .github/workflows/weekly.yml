@@ -19,7 +19,15 @@ on:
     - cron: "5 20 * * 0"    # Sun 4:05/4:25pm ET (EST)
     - cron: "5 23 * * 0,1,4"  # SNF / MNF / TNF (EDT)
     - cron: "5 0 * * 1,2,5"   # SNF / MNF / TNF (EST)
+  # Also started by an outside scheduler (cron-job.org) through the GitHub API, because GitHub's
+  # own schedule is best-effort and can skip runs. See README "Making sure it runs".
   workflow_dispatch:
+    inputs:
+      run_type:
+        description: "manual = full run incl. Vegas comparison; daily / friday / gameday = scheduled kinds"
+        type: choice
+        options: [manual, daily, friday, gameday]
+        default: manual
 
 permissions:
   contents: write
@@ -28,7 +36,29 @@ permissions:
   id-token: write
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.dedupe.outputs.skip }}
+    steps:
+      # Both GitHub's schedule and the outside scheduler fire at about the same times; whichever
+      # starts second skips itself so odds-API credits aren't spent twice. Manual runs never skip.
+      - name: Skip if another run already covered this slot
+        id: dedupe
+        if: github.event_name == 'schedule' || inputs.run_type != 'manual'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          since=$(date -u -d '-40 minutes' +%Y-%m-%dT%H:%M:%SZ)
+          n=$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/weekly.yml/runs?created=%3E$since&per_page=20" |
+            python3 -c "import json,sys; rs=json.load(sys.stdin).get('workflow_runs',[]); print(sum(r['id']<${{ github.run_id }} and r['conclusion'] in (None,'success') for r in rs))")
+          echo "earlier runs in the last 40 min: $n"
+          if [ "${n:-0}" -gt 0 ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+
   predict:
+    needs: check
+    if: needs.check.outputs.skip != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,9 +78,10 @@ jobs:
         # pre-kickoff runs use ESPN's per-game injury lists (lighter, polled often).
         run: |
           SOURCES="espn"
-          case "${{ github.event.schedule }}" in
-            "17 14 * * *"|"37 20 * * 5"|"") SOURCES="sleeper,espn" ;;
+          case "${{ github.event.schedule }}|${{ inputs.run_type }}" in
+            "17 14 * * *|"*|"37 20 * * 5|"*|"|manual"|"|daily"|"|friday"|"|") SOURCES="sleeper,espn" ;;
           esac
+          echo "news sources: $SOURCES"
           python -m nflpred.pipeline update --no-refresh --news-sources "$SOURCES"
         env:
           PYTHONPATH: src
@@ -59,7 +90,8 @@ jobs:
         # Weekly (Tuesday's daily run) or on manual runs; it re-runs the 2015-2025 comparison.
         if: github.event.schedule == '17 14 * * *' || github.event_name == 'workflow_dispatch'
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "2" ]; then
+          RT="${{ inputs.run_type }}"
+          if [ "$RT" = "manual" ] || { [ "$RT" != "friday" ] && [ "$RT" != "gameday" ] && [ "$(date -u +%u)" = "2" ]; }; then
             python scripts/vs_vegas.py
           else
             echo "Vegas comparison runs on Tuesdays"

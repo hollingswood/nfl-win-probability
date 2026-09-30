@@ -185,3 +185,28 @@ open site/index.html
 Experiments: `PYTHONPATH=src:scripts python -c "from experiment import run; ..."` (see `scripts/experiment.py`).
 
 Data: [nflverse](https://github.com/nflverse/nflverse-data). Not betting advice.
+
+## Making sure it runs
+
+GitHub's own `schedule` is best-effort: runs start late and are sometimes skipped (the first
+scheduled 7:00am run on 2026-09-30 never fired). So the same times are also triggered from
+outside by [cron-job.org](https://cron-job.org) (free), which calls GitHub's API to start the
+workflow. Both fire; whichever starts second sees the first one (within 40 minutes) and skips
+itself, so odds-API credits aren't spent twice. Clicking **Run workflow** (run_type `manual`)
+never skips and also runs the Vegas comparison.
+
+Outside-scheduler jobs (timezone America/New_York; each a POST to
+`https://api.github.com/repos/hollingswood/nfl-win-probability/actions/workflows/weekly.yml/dispatches`
+with headers `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`,
+`Content-Type: application/json`; success = HTTP 204):
+
+| Job | When (ET) | Body |
+|---|---|---|
+| Daily | every day 10:10 AM | `{"ref":"main","inputs":{"run_type":"daily"}}` |
+| Friday final report | Fri 4:40 PM | `{"ref":"main","inputs":{"run_type":"friday"}}` |
+| Sunday early | Sun 11:45 AM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
+| Sunday late | Sun 3:05 PM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
+| Night games | Sun, Mon, Thu 7:05 PM | `{"ref":"main","inputs":{"run_type":"gameday"}}` |
+
+The token is a fine-grained personal access token limited to this repository with
+**Actions: Read and write** and nothing else. Failed runs email the repo owner (GitHub default).
