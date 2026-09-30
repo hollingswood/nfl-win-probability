@@ -282,6 +282,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["spread_bets"] = {"error": str(e)}
         print("spread bets: failed:", e)
+    try:
+        from . import ml_v2
+        result["ml_v2_bets"] = ml_v2.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["ml_v2_bets"] = {"error": str(e)}
+        print("moneyline v2 bets: failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     alert = OUT / "alert.md"
@@ -295,6 +301,10 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if sb.get("mode") == "live":
         lines += [f"- **{x['team']} {x['point']:+g}** ({x['price']:+d}) at {x['book']} vs {x['opponent']} "
                   f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in sb.get("new", [])]
+    v2 = result.get("ml_v2_bets", {})
+    if v2.get("mode") == "live":
+        lines += [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
+                  f"({x['gameday']}): {x['edge']:+.1%} vs sharp books, stake {x['units']}u" for x in v2.get("new", [])]
     if lines:
         alert.write_text("New qualifying bets (validated track):\n\n" + "\n".join(lines))
     return result

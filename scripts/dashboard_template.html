@@ -249,7 +249,7 @@ function context(g){
 }
 const pt = x => `${x>0?'+':''}${x}`;
 const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
-const ANY_LIVE = (P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live');
+const ANY_LIVE = (P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live')||(P.ml_v2_bets&&P.ml_v2_bets.mode==='live');
 const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE'};
 const niceReason = r => r.replace('best edge','edge').replace('below 3%','below the 3% bar').replace('injury report not out','waiting for the injury report').replace('starting QB not confirmed','waiting on a QB decision');
 function market(kind, g){
@@ -316,12 +316,12 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 (function(){
   const order={'A+':0,'A':1,'B+':2,'B':3,'C+':4,'C':5};
   boardRows.sort((a,b)=>(order[a.grade]??9)-(order[b.grade]??9) || (a.market==='Spread'?0:1)-(b.market==='Spread'?0:1) || b.edge-a.edge);
-  const live=(P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live');
+  const live=ANY_LIVE;
   document.getElementById('boardh').textContent = live ? 'Best bets this week' : "This week's board";
   const m=document.getElementById('boardmode'); m.textContent = live ? 'Live' : 'Shadow mode · paper only'; if(live) m.classList.add('live');
   const nNo = P.upcoming.length*2 - boardRows.length;
   document.getElementById('boardintro').innerHTML = boardRows.length
-    ? `Every bet with a positive edge, best grade first (${nNo} market${nNo===1?'':'s'} with no edge are left off). <b>Spread</b> is the track being tested for real (+2.5% in the 2020–25 backtest). <b>Moneyline</b> rows are a faded <em>control</em>: their edges look big, but that approach lost money in every backtest. <b>BET</b> rows are logged as paper bets; <b>LEAN</b> rows show why they aren't. Grades weigh the edge against warning signs; see "Do the grades work?" below. ${live?'':'<b>Nothing here is a recommendation until a track passes its test.</b>'}`
+    ? `Every bet with a positive edge, best grade first (${nNo} market${nNo===1?'':'s'} with no edge are left off). These are the v1 model edges; replayed on real 2020–25 early-week lines they showed <b>no edge</b> (spread −0.3%, moneyline +1.8% with negative closing line value), so treat them as information, not picks. The moneyline v2 track (see Paper bets) is the current lead. <b>BET</b> rows are logged as paper bets; <b>LEAN</b> rows show why they aren't. Grades weigh the edge against warning signs; see "Do the grades work?" below. ${live?'':'<b>Nothing here is a recommendation until a track passes its test.</b>'}`
     : 'No positive edges right now. Lines and news update daily.';
   document.getElementById('board').innerHTML = boardRows.length ? `<thead><tr><th style="text-align:left">Grade</th><th style="text-align:left">Pick</th><th>Edge</th><th style="text-align:left">Status</th><th>Our chance</th><th>Needed</th></tr></thead><tbody>`+
     boardRows.map(r=>`<tr class="${r.market==='Moneyline'?'ctrl':''}"><td style="text-align:left"><span class="grade ${gradeCls(r.grade)}" title="${esc((r.why||[]).join(', '))}">${r.grade}</span></td>
@@ -380,7 +380,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 (function(){
   const V=D.vs_vegas; if(!V){document.getElementById('vvtxt').textContent='Run scripts/vs_vegas.py to generate.';return;}
   const l=V.log_loss;
-  document.getElementById('vvtxt').innerHTML=`Not yet. On ${V.games.toLocaleString()} games from ${V.holdout}, Vegas closing lines scored <b class="num">${l.vegas.toFixed(3)}</b> log loss, the model <b class="num">${l.model.toFixed(3)}</b>, and a model + Vegas blend <b class="num">${l.blend.toFixed(3)}</b>. Betting 1 unit whenever the model saw positive expected value at the real closing prices. The spread rows are the first positive result, but 556 bets leave a noise band of about ±4%, which is why they are being paper-tested live:`;
+  document.getElementById('vvtxt').innerHTML=`Not yet. On ${V.games.toLocaleString()} games from ${V.holdout}, Vegas closing lines scored <b class="num">${l.vegas.toFixed(3)}</b> log loss, the model <b class="num">${l.model.toFixed(3)}</b>, and a model + Vegas blend <b class="num">${l.blend.toFixed(3)}</b>. Betting 1 unit whenever the model saw positive expected value at the real closing prices. These use closing lines. Replayed on the early-week lines you could actually bet, neither track had an edge (see README):`;
   let h='<thead><tr><th>Probabilities</th><th>Min. edge</th><th>Bets</th><th>Units</th><th>ROI</th></tr></thead><tbody>';
   for(const b of V.betting) h+=`<tr><td>Moneyline: ${b.probs==='blend'?'model + Vegas':'model'}</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
   for(const b of (V.spread_betting||[])) h+=`<tr><td>Spread: model + Vegas, key numbers</td><td>${Math.round(b.min_edge*100)}%</td><td>${b.bets}</td><td class="${b.units>=0?'win':'loss'}">${b.units>0?'+':''}${b.units.toFixed(1)}</td><td class="${b.roi>=0?'win':'loss'}">${(b.roi*100).toFixed(1)}%</td></tr>`;
@@ -401,13 +401,13 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=[['Moneyline',P.bets],['Spread',P.spread_bets]].filter(([,B])=>B&&!B.error);
+  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
   const m=document.getElementById('betmode'); m.textContent = anyLive ? 'A track is live · validated' : 'Shadow mode · not recommendations'; if(anyLive) m.classList.add('live');
   const r0=tracks[0][1].record;
-  document.getElementById('betintro').innerHTML = `Two separate tracks, each with its own locked rules and record. Each logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. A track switches to recommendations only if, after at least ${r0.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> its paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  document.getElementById('betintro').innerHTML = `Separate tracks, each with its own locked rules and record. <b>Moneyline v2</b> is the current lead: it bets only when one of your books offers a better price than the sharp books' fair price and the model agrees (positive closing line value on 2020–22 and on unseen 2023–25, not yet statistically conclusive). Spread v1 and moneyline v1 showed no edge on real 2020–25 early-week lines and are kept as controls. Each logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. A track switches to recommendations only if, after at least ${r0.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> its paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
   const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
   const betLabel=(b,spread)=>spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   document.getElementById('tracks').innerHTML = tracks.map(([name,B])=>{
@@ -425,7 +425,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
     const bg=B.by_grade||[];
     const gradeT = bg.length ? `<thead><tr><th style="text-align:left">Grade</th><th>Bets</th><th>W–L</th><th>Units</th><th>ROI</th><th>Avg. CLV</th></tr></thead><tbody>`+
       bg.map(x=>`<tr><td style="text-align:left"><span class="grade ${gradeCls(x.grade)}">${x.grade}</span></td><td>${x.bets}</td><td>${x.wins}–${x.losses}</td><td>${x.profit_units>0?'+':''}${x.profit_units}</td><td class="${x.roi>=0?'win':'loss'}">${(x.roi*100).toFixed(1)}%</td><td>${x.avg_clv==null?'—':(x.avg_clv*100).toFixed(1)+'%'}</td></tr>`).join('')+'</tbody>'
-      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">Do the grades work? Performance by grade appears here once paper bets are graded. In the 2020–25 spread backtest, A-grade bets returned +15% (47 bets), B-grades +0–2%, C-grades −1%: promising, but small samples.</td></tr></tbody>`;
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">Do the grades work? Performance by grade appears here once paper bets are graded. On the 2020–25 early-line replay the grades did not rank results.</td></tr></tbody>`;
     return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div><span class="subh">Do the grades work? (${name.toLowerCase()} paper record by grade)</span><div class="scroll"><table>${gradeT}</table></div></div>`;
   }).join('');
 })();

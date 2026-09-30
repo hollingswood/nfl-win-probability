@@ -56,6 +56,9 @@ def load_allowed_books(path=None) -> set | None:
         return None
 
 
+SHARP_BOOKS = {"lowvig", "betonlineag", "circasports", "bookmaker"}
+
+
 def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str, str, str], dict]:
     """(home_abbr, away_abbr, kickoff date UTC) -> consensus + best prices.
     Consensus uses every book; best prices and per-book spreads only books in `allowed` (if given)."""
@@ -65,6 +68,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         if not home or not away:
             continue
         probs, spreads, best = [], [], {"home": None, "away": None}
+        sharp_probs = []
         book_spreads = []
         for bk in ev.get("bookmakers", []):
             mk = {m["key"]: m for m in bk.get("markets", [])}
@@ -73,6 +77,8 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                 if ev["home_team"] in px and ev["away_team"] in px:
                     h, a = _implied(px[ev["home_team"]]), _implied(px[ev["away_team"]])
                     probs.append(h / (h + a))
+                    if bk.get("key") in SHARP_BOOKS:
+                        sharp_probs.append(h / (h + a))
                     if allowed is not None and bk.get("key") not in allowed:
                         continue
                     for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
@@ -93,6 +99,8 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         out[(home, away, ev["commence_time"][:10])] = {
             "books": len(probs),
             "consensus_home_prob": round(statistics.median(probs), 4),
+            "sharp_home_prob": round(statistics.median(sharp_probs), 4) if sharp_probs else None,
+            "sharp_books": len(sharp_probs),
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],
             "spreads_by_book": book_spreads,

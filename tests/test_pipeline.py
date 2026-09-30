@@ -531,3 +531,27 @@ def test_spread_clv_uses_closing_prices(tmp_path):
     # closing juice made DEN +3 worth less than even: our -105 did NOT beat the close
     assert g["clv"] < 0 and "prices included" in g["clv_source"]
     assert "clv" not in SB.grade(bet, games, r, {})   # no closing snapshot -> no CLV claimed
+
+
+def test_ml_v2_soft_vs_sharp(tmp_path):
+    """Moneyline v2 bets only when an allowed book beats the sharp no-vig price by 2%+ and the model agrees."""
+    from nflpred import odds as O, ml_v2
+    ev = [{"home_team": "Kansas City Chiefs", "away_team": "Denver Broncos", "commence_time": "2026-10-04T20:25:00Z",
+           "bookmakers": [
+               {"key": "lowvig", "title": "LowVig", "markets": [{"key": "h2h", "outcomes": [
+                   {"name": "Kansas City Chiefs", "price": -200}, {"name": "Denver Broncos", "price": 190}]}]},
+               {"key": "betonlineag", "title": "BetOnline", "markets": [{"key": "h2h", "outcomes": [
+                   {"name": "Kansas City Chiefs", "price": -205}, {"name": "Denver Broncos", "price": 185}]}]},
+               {"key": "draftkings", "title": "DraftKings", "markets": [{"key": "h2h", "outcomes": [
+                   {"name": "Kansas City Chiefs", "price": -240}, {"name": "Denver Broncos", "price": 215}]}]}]}]
+    s = O.summarize(ev, {"draftkings"})
+    lo = next(iter(s.values()))
+    assert lo["sharp_books"] == 2 and 0.64 < lo["sharp_home_prob"] < 0.67
+    game = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "KC", "away_team": "DEN",
+            "home_win_prob": 0.62, "injury_report": True, "qb_status": {}, "context": {"live_odds": lo}}
+    bet = ml_v2.evaluate(game, ml_v2.load_rules())
+    assert bet and bet["team"] == "DEN" and bet["price"] == 215 and bet["edge"] >= 0.02   # ~34.5% fair at +215
+    game2 = dict(game, home_win_prob=0.75, context={"live_odds": lo})
+    assert ml_v2.evaluate(game2, ml_v2.load_rules()) is None and "model disagrees" in game2["ml_v2_check"]
+    game3 = dict(game, injury_report=False, context={"live_odds": lo})
+    assert ml_v2.evaluate(game3, ml_v2.load_rules()) is None

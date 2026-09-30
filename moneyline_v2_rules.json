@@ -1,0 +1,32 @@
+{
+  "track": "moneyline_v2",
+  "version": 1,
+  "frozen_on": "2026-09-30",
+  "note": "Pre-registered from candidate C4 (edge_candidates.json): developed on 2020-22, one-shot holdout 2023-25 CLV +1.2% vs nflverse close (p=0.034, did not clear the 7-way corrected bar) and +2.4% vs our own closing snapshot. The 2026 season is its clean test. Do not edit to fit results; bump version instead.",
+  "market": "moneyline",
+  "idea": "Soft sportsbooks lag the sharp books. Bet when one of my_books.json offers a price better than the sharp books' no-vig fair price AND the model agrees the price is not negative-EV.",
+  "sharp_books": ["lowvig", "betonlineag", "circasports", "bookmaker"],
+  "qualify": {
+    "min_ev_vs_sharp": 0.02,
+    "min_ev_vs_model": 0.0,
+    "min_american_odds": -1000,
+    "max_american_odds": 1000,
+    "max_price_gap_vs_consensus": 0.12,
+    "require_both_starting_qbs_confirmed": true,
+    "require_injury_report_published": true
+  },
+  "sizing": {
+    "unit_pct_of_bankroll": 1.0,
+    "kelly_fraction": 0.25,
+    "max_units": 2.0,
+    "min_units": 0.25,
+    "max_units_per_week": 8.0,
+    "probability_for_stake": "sharp no-vig"
+  },
+  "validation": {
+    "min_bets": 150,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "bet decimal odds x nflverse closing no-vig probability of that side - 1 (same as moneyline v1)"
+  }
+}
