@@ -6,10 +6,10 @@ concurrency:
 
 on:
   schedule:
-    # Daily 14:00 UTC (7:00am Arizona): fresh stats, news and a line snapshot every day.
-    - cron: "0 14 * * *"
-    # Fridays 20:30 UTC (1:30pm Arizona): after the final injury report (game statuses) posts.
-    - cron: "30 20 * * 5"
+    # Daily 14:17 UTC (7:17am Arizona; off the top of the hour, when GitHub delays or drops scheduled runs): fresh stats, news and a line snapshot every day.
+    - cron: "17 14 * * *"
+    # Fridays 20:37 UTC (1:37pm Arizona): after the final injury report (game statuses) posts.
+    - cron: "37 20 * * 5"
     # Pre-kickoff news runs, ~75 min before each window (after inactives start posting).
     # UTC; covers both daylight time (Sep-early Nov) and standard time. GitHub may start
     # scheduled runs 5-20 min late, so these aim early.
@@ -49,7 +49,7 @@ jobs:
         run: |
           SOURCES="espn"
           case "${{ github.event.schedule }}" in
-            "0 14 * * *"|"30 20 * * 5"|"") SOURCES="sleeper,espn" ;;
+            "17 14 * * *"|"37 20 * * 5"|"") SOURCES="sleeper,espn" ;;
           esac
           python -m nflpred.pipeline update --no-refresh --news-sources "$SOURCES"
         env:
@@ -57,7 +57,7 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Vegas comparison (blend test + betting simulation)
         # Weekly (Tuesday's daily run) or on manual runs; it re-runs the 2015-2025 comparison.
-        if: github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '17 14 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "2" ]; then
             python scripts/vs_vegas.py
