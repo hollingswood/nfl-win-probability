@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "pinnacle = Pinnacle moneylines 2024-25 (~2k credits); main/extras already done"
+        description: "props = receiving-yards props 2023-25 (~17k credits; dry run first); others already done"
         type: choice
-        options: [pinnacle, extras, totals, openers, hourly, main]
-        default: pinnacle
+        options: [props, pinnacle, extras, totals, openers, hourly, main]
+        default: props
       seasons:
         description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
         default: "2020-2025"

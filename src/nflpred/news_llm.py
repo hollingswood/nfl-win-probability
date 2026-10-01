@@ -163,7 +163,11 @@ def main():
     import sys
     root = Path(__file__).resolve().parents[2]
     if "--probe" in sys.argv:
-        print(json.dumps(probe(), indent=2))
+        res = probe()
+        res["_checked_at"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
+        (root / "history").mkdir(exist_ok=True)
+        (root / "history" / "news_probe.json").write_text(json.dumps(res, indent=2))  # readable without log access
+        print(json.dumps(res, indent=2))
         return
     print(json.dumps(scan(root / "history"), indent=2))
 

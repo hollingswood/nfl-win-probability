@@ -126,6 +126,93 @@ def plan_pinnacle(games, season, horizon_days=9):
     return _keep(set(times) | {k - timedelta(minutes=75) for k in kicks}, kicks, horizon_days)
 
 
+PROP_FIELDS = ["requested_ts", "snapshot_ts", "event_id", "commence_time", "home", "away", "book", "market",
+               "player", "point", "over_price", "under_price"]
+EVENT_URL = "https://api.the-odds-api.com/v4/historical/sports/americanfootball_nfl/events/{eid}/odds"
+
+
+def backfill_props(seasons, key, market="player_reception_yds", regions="us", reserve=500, out_dir=None,
+                   dry_run=False, fetcher=None):
+    """Player props via the per-EVENT historical endpoint (data from May 2023; 10 credits per market per
+    region per event-snapshot). Two snapshots per game: Friday 21:40 UTC (or 24 h before a non-Sunday
+    kickoff) and 75 min before kickoff (the close, for CLV). Event ids come from the side-odds files."""
+    out_dir = out_dir or OUT_DIR / "props"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    total = {"snapshots": 0, "credits": 0, "fetched": 0, "rows": 0, "remaining": None, "stopped": None}
+    for s in seasons:
+        f = OUT_DIR / f"nfl_odds_{s}.csv.gz"
+        if not f.exists() or s < 2023:
+            continue
+        raw = pd.read_csv(f, usecols=["event_id", "commence_time", "home", "away", "requested_ts"])
+        # one event per real game: the feed sometimes carries duplicate/rescheduled event ids — keep the id
+        # seen in the most snapshots, at its latest commence time
+        n = raw.groupby("event_id").requested_ts.nunique().rename("n")
+        ev = raw.drop_duplicates("event_id", keep="last").join(n, on="event_id")
+        ev["day"] = pd.to_datetime(ev.commence_time, utc=True).dt.tz_convert("America/New_York").dt.date
+        ev = ev.sort_values("n").drop_duplicates(["home", "away", "day"], keep="last")
+        ev = ev[pd.to_datetime(ev.commence_time, utc=True) >= pd.Timestamp("2023-05-03", tz="UTC")]
+        done_path = out_dir / f"done_{market}_{s}.txt"
+        done = set(done_path.read_text().split()) if done_path.exists() else set()
+        todo = []
+        for r in ev.itertuples():
+            kick = pd.Timestamp(r.commence_time).to_pydatetime()
+            if kick.weekday() == 6:   # Sunday game -> Friday 21:40 UTC
+                early = datetime(kick.year, kick.month, kick.day, 21, 40, tzinfo=timezone.utc) - timedelta(days=2)
+            else:
+                early = kick - timedelta(hours=24)
+            for t in (early, kick - timedelta(minutes=75)):
+                tag = f"{r.event_id}|{t.isoformat()}"
+                if tag not in done:
+                    todo.append((r, t, tag))
+        cost = 10 * len(regions.split(","))
+        total["snapshots"] += len(todo)
+        total["credits"] += len(todo) * cost
+        print(f"{s}: {len(todo)} event-snapshots for {market} (~{len(todo) * cost:,} credits)")
+        if dry_run:
+            continue
+        for r, t, tag in todo:
+            if total["remaining"] is not None and total["remaining"] - cost < reserve:
+                total["stopped"] = f"reserve of {reserve} credits reached"
+                return total
+            q = urllib.parse.urlencode({"apiKey": key, "regions": regions, "markets": market, "oddsFormat": "american",
+                                        "date": t.strftime("%Y-%m-%dT%H:%M:%SZ")})
+            try:
+                if fetcher:
+                    payload, remaining = fetcher(r.event_id, t)
+                else:
+                    with urllib.request.urlopen(f"{EVENT_URL.format(eid=r.event_id)}?{q}", timeout=30) as resp:
+                        remaining = resp.headers.get("x-requests-remaining")
+                        remaining = float(remaining) if remaining is not None else None
+                        payload = json.load(resp)
+            except urllib.error.HTTPError as e:
+                if e.code in (401, 403):
+                    raise
+                payload, remaining = {"data": {}}, total["remaining"]   # 404/422: event not in archive
+            total["remaining"] = remaining
+            d = payload.get("data") or {}
+            rows = []
+            for bk in d.get("bookmakers", []):
+                for m in bk.get("markets", []):
+                    by_player = {}
+                    for o in m.get("outcomes", []):
+                        p = by_player.setdefault(o.get("description"), {})
+                        p["point"] = o.get("point")
+                        p["over_price" if o.get("name") == "Over" else "under_price"] = o.get("price")
+                    for player, p in by_player.items():
+                        rows.append({"requested_ts": t.isoformat(), "snapshot_ts": payload.get("timestamp"),
+                                     "event_id": r.event_id, "commence_time": r.commence_time, "home": r.home,
+                                     "away": r.away, "book": bk.get("key"), "market": m.get("key"), "player": player, **p})
+            if rows:
+                _append(out_dir / f"{market}_{s}.csv.gz", rows, PROP_FIELDS)
+            with done_path.open("a") as fh:
+                fh.write(tag + "\n")
+            total["fetched"] += 1
+            total["rows"] += len(rows)
+            if total["fetched"] % 100 == 0:
+                print(f"  {total['fetched']} fetched, {total['rows']:,} rows, {remaining} credits left")
+    return total
+
+
 PLANS = {  # name: (planner, markets, regions, subdirectory, fields)
     "main": (None, "h2h,spreads", "us,us2", "", FIELDS),
     "totals": (plan_totals, "totals", "us", "totals", TOTAL_FIELDS),
@@ -249,7 +336,7 @@ def _seasons(arg: str) -> list[int]:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--seasons", default="2020-2025")
-    ap.add_argument("--plan", default="main", choices=list(PLANS))
+    ap.add_argument("--plan", default="main", help="main/totals/openers/hourly/pinnacle or props[:market_key]")
     ap.add_argument("--regions", default=None, help="override the plan's regions")
     ap.add_argument("--reserve", type=int, default=1000)
     ap.add_argument("--dry-run", action="store_true")
@@ -259,9 +346,20 @@ def main(argv=None):
     key = os.environ.get("ODDS_API_KEY", "")
     if not a.dry_run and not key:
         raise SystemExit("ODDS_API_KEY not set")
-    planner, markets, regions, sub, fields = PLANS[a.plan]
     if key:
         print(f"credits remaining before this run: {remaining_credits(key)}")
+    if a.plan.startswith("props"):
+        market = a.plan.split(":", 1)[1] if ":" in a.plan else "player_reception_yds"
+        res = backfill_props(sorted(_seasons(a.seasons), reverse=True), key, market=market, reserve=a.reserve,
+                             dry_run=a.dry_run)
+        res["plan"] = a.plan
+        print(json.dumps(res))
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            with open(summary, "a") as f:
+                f.write(f"### Historical odds: {a.plan} {'(dry run)' if a.dry_run else ''}\n\n```\n{json.dumps(res, indent=2)}\n```\n")
+        return
+    planner, markets, regions, sub, fields = PLANS[a.plan]
     res = backfill(games, sorted(_seasons(a.seasons), reverse=True),  # newest first
                    key, regions=a.regions or regions, markets=markets, reserve=a.reserve, dry_run=a.dry_run,
                    out_dir=OUT_DIR / sub if sub else OUT_DIR, planner=planner, fields=fields)
