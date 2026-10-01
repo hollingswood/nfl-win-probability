@@ -1,0 +1,26 @@
+{
+  "track": "night_west",
+  "version": 1,
+  "frozen_on": "2026-09-30",
+  "note": "Pre-registered lead from output/research/walters_factors.md: in night games between teams from different time zones, the more western team beat the closing spread by ~2 points (2003-22 t=3.4; 2023-25 +2.2±1.05, 56.5% covers, n=113). Found by inspecting 2003-22 results, so 2026+ is the clean test. Lines do not move toward it during the week, so it is bet just before kickoff. Do not edit to fit results; bump version instead.",
+  "market": "spread",
+  "qualify": {
+    "night_kickoff_et_hour_at_least": 19,
+    "different_home_time_zones": true,
+    "zones": {"E": ["ATL","BAL","BUF","CAR","CIN","CLE","DET","IND","JAX","MIA","NE","NYG","NYJ","PHI","PIT","TB","WAS"],
+              "C": ["CHI","DAL","GB","HOU","KC","MIN","NO","TEN"],
+              "M": ["ARI","DEN"],
+              "P": ["LA","LAC","LV","SEA","SF"]},
+    "bet_within_hours_of_kickoff": 3,
+    "min_american_odds": -150,
+    "max_american_odds": 130,
+    "bet": "the more western team's spread at the allowed book with the best value (number and price) vs the all-book consensus"
+  },
+  "sizing": {"units": 1.0},
+  "validation": {
+    "min_bets": 100,
+    "cover_rate_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "test": "one-sided binomial test of wins vs the break-even rate implied by the prices taken (pushes excluded); CLV is recorded but is not the test, because the market does not move toward this factor"
+  }
+}

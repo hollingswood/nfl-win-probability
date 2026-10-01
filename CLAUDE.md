@@ -18,6 +18,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/odds_history.py` + workflow `odds_backfill.yml` — one-time resumable download of 2020-25 historical lines (paid Odds API plan) into `data/historical_odds/` (committed), at the same moments the live pipeline runs
 - `src/nflpred/ml_v2.py` + `moneyline_v2_rules.json` — moneyline v2 track (soft-book price vs sharp no-vig + model agrees); ledger history/paper_bets_ml_v2.json
 - `src/nflpred/totals.py` + `totals_wind_rules.json` + `totals_dist.json` — totals pricing (key-number total distribution) and the forecast-wind under track; ledger history/paper_bets_totals_wind.json
+- `src/nflpred/night_west.py` + `night_west_rules.json` — night-game body-clock track (back the more western team in 7pm+ ET games, bet in the last 3 h); graded on cover rate (binomial), CLV informational; ledger history/paper_bets_night_west.json
 - `pipeline watch` + `.github/workflows/odds_watch.yml` — hourly odds-only refresh for the price-sensitive tracks (no retraining; v1 tracks act only on full runs). Odds snapshots are saved as history/odds_*.json.gz
 - `news.log_first_seen` → history/news_log.jsonl: when we first saw each injury/QB status (to measure news-vs-line timing)
 - `src/nflpred/grading.py` — bet grades A+..C (GRADING_VERSION 1) and performance-by-grade tables; bump the version to change the scheme

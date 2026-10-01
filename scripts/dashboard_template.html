@@ -249,7 +249,7 @@ function context(g){
 }
 const pt = x => `${x>0?'+':''}${x}`;
 const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','totals_wind_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
 const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE'};
 const niceReason = r => r.replace('best edge','edge').replace('below 3%','below the 3% bar').replace('injury report not out','waiting for the injury report').replace('starting QB not confirmed','waiting on a QB decision');
 function market(kind, g){
@@ -401,7 +401,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Totals · forecast-wind unders',P.totals_wind_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
+  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Totals · forecast-wind unders',P.totals_wind_bets],['Night games · western team (body clock)',P.night_west_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
@@ -411,10 +411,10 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
   const betLabel=(b,spread)=>b.side==='under'?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   document.getElementById('tracks').innerHTML = tracks.map(([name,B])=>{
-    const spread=name==='Spread', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+    const spread=name==='Spread'||name.startsWith('Night'), live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(r.checks.roi_positive,'')}`],
-      [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `Avg. closing line value ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
+      [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
       open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${b.grade?`<span class="grade ${gradeCls(b.grade)}">${b.grade}</span> `:''}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'

@@ -621,3 +621,23 @@ def test_summary_pinnacle_exchanges_and_all_book_consensus():
     assert lo["pinnacle_home_prob"] is not None and lo["best_exchange_away_ml"]["price"] == 180
     assert lo["best_away_ml"]["book"] == "draftkings"          # best price only from allowed books
     assert lo["consensus_home_margin"] == 3.5                   # consensus spread uses ALL books
+
+
+def test_night_west_track():
+    from datetime import datetime, timezone
+    from nflpred import night_west as NW
+    r = NW.load_rules()
+    lo = {"consensus_home_margin": 3.0, "spreads_by_book": [
+        {"book": "DraftKings", "home_point": -3.0, "home_price": -110, "away_point": 3.0, "away_price": -110},
+        {"book": "FanDuel", "home_point": -2.5, "home_price": -120, "away_point": 3.5, "away_price": -105}]}
+    g = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "NYG", "away_team": "SF",
+         "kickoff_utc": "2026-10-05T00:20:00+00:00", "context": {"live_odds": lo}}    # 8:20pm ET, SF (Pacific) at NYG
+    bet = NW.evaluate(g, r, datetime(2026, 10, 4, 22, 0, tzinfo=timezone.utc))
+    assert bet and bet["team"] == "SF" and bet["point"] == 3.5 and bet["book"] == "FanDuel"
+    assert NW.evaluate(dict(g, context={"live_odds": lo}), r, datetime(2026, 10, 4, 14, 0, tzinfo=timezone.utc)) is None  # too early
+    day = dict(g, kickoff_utc="2026-10-04T17:00:00+00:00", context={"live_odds": lo})
+    assert NW.evaluate(day, r, datetime(2026, 10, 4, 15, 0, tzinfo=timezone.utc)) is None   # 1pm ET: not a night game
+    same = dict(g, away_team="DAL", home_team="KC", context={"live_odds": lo})
+    assert NW.evaluate(same, r, datetime(2026, 10, 4, 22, 0, tzinfo=timezone.utc)) is None  # same zone
+    rec = NW.record([{"status": "graded", "rules_version": 1, "result": "win", "units": 1, "profit_units": 0.95, "price": -105}], r)
+    assert rec["wins"] == 1 and not rec["passed"]
