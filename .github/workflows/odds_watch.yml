@@ -32,6 +32,13 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: AI news reader (logs injury/QB signals with first-seen time; no bets)
+        continue-on-error: true
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then python -m nflpred.news_llm; else python -m nflpred.news_llm --probe; fi
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Build dashboard
         run: python scripts/build_dashboard.py
         env:

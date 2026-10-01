@@ -658,3 +658,22 @@ def test_ml_v3_uses_pinnacle_blend(tmp_path):
     out = ml_v2.process_v3({"upcoming": [g]}, pd.DataFrame(columns=["game_id", "completed"]), tmp_path)
     assert out["track"] == "moneyline_v3" and (tmp_path / "paper_bets_ml_v3.json").exists()
     assert g.get("ml_v3") and "ml_v2" not in g
+
+
+def test_news_llm_scan_dedupes_and_logs(tmp_path):
+    from datetime import datetime, timezone
+    from nflpred import news_llm as NL
+    items = [{"title": "Bears QB Smith ruled out Sunday", "link": "u1", "published": None, "summary": "Smith (ankle) is out."},
+             {"title": "Game recap", "link": "u2", "published": None, "summary": "..."}]
+    calls = []
+    def fake_llm(batch, key):
+        calls.append(len(batch))
+        return [{"item": 0, "player": "J. Smith", "team": "CHI", "position": "QB", "signal": "out",
+                 "is_starting_qb_news": True, "game_week_relevant": True, "certainty": 1.0, "quote": "ruled out"},
+                {"item": 1, "player": "x", "team": "XXX"}]              # invalid team dropped
+    t = datetime(2026, 10, 1, 16, tzinfo=timezone.utc)
+    assert NL.scan(tmp_path, api_key=None)["skipped"]
+    r = NL.scan(tmp_path, "k", t, fetcher=lambda u: items, llm=fake_llm)
+    assert r["signals"] == 1 and r["qb_signals"] == ["J. Smith (CHI): out"]
+    r2 = NL.scan(tmp_path, "k", t, fetcher=lambda u: items, llm=fake_llm)
+    assert r2["new_items"] == 0 and len(calls) == 1                     # nothing re-sent to the model
