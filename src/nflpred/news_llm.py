@@ -110,7 +110,7 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
 
 
 def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = None, fetcher=fetch_feed,
-         llm=call_claude, max_items: int = 60) -> dict:
+         llm=call_claude, max_items: int = 150) -> dict:
     api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     report = {"feeds": {}, "new_items": 0, "signals": 0}
     if not api_key:
@@ -129,11 +129,12 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
             continue
         for it in items:
             k = _key(it)
-            if k not in seen:
-                seen.add(k)
+            if k not in seen and k not in {x["key"] for x in new}:
                 new.append(dict(it, source=name, key=k))
     report["new_items"] = len(new)
     signals = []
+    # newest first; only items actually sent to the model are marked seen (the rest wait for next run)
+    new.sort(key=lambda x: x.get("published") or "", reverse=True)
     for i in range(0, min(len(new), max_items), 30):  # batches of 30 items
         batch = new[i:i + 30]
         try:
@@ -146,6 +147,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                                 "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
                                 **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
                                                          "game_week_relevant", "certainty", "quote")}})
+            seen.update(x["key"] for x in batch)
         except Exception as e:
             report.setdefault("errors", []).append(str(e)[:160])
     history_dir.mkdir(parents=True, exist_ok=True)

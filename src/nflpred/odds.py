@@ -41,8 +41,14 @@ EXTRA_BOOKS = "pinnacle,kalshi,prophetx,polymarket,novig,betopenly"
 EXCHANGES = {"kalshi", "prophetx", "polymarket", "novig", "betopenly"}
 
 
+CREDITS: dict = {}
+
+
 def _get(params: dict, timeout: float):
     with urllib.request.urlopen(f"{URL}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
+        for h in ("x-requests-remaining", "x-requests-used", "x-requests-last"):
+            if r.headers.get(h) is not None:
+                CREDITS[h] = r.headers.get(h)
         return json.load(r)
 
 
@@ -153,6 +159,9 @@ def snapshot(history_dir: Path) -> dict | None:
         return None
     history_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M")
+    if CREDITS:  # Odds API balance after this call, readable in the repo
+        (history_dir / "odds_credits.json").write_text(json.dumps(
+            {"checked_at": datetime.now(timezone.utc).isoformat(timespec="minutes"), **CREDITS}, indent=1))
     import gzip  # compressed: hourly snapshots would otherwise bloat the repo
     with gzip.open(history_dir / f"odds_{ts}.json.gz", "wt") as f:
         f.write(json.dumps(events))
