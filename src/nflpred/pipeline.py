@@ -294,6 +294,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         result["ml_v2_bets"] = {"error": str(e)}
         print("moneyline v2 bets: failed:", e)
     try:
+        from . import ml_v2 as _v
+        result["ml_v3_bets"] = _v.process_v3(result, df, ROOT / "history")
+    except Exception as e:
+        result["ml_v3_bets"] = {"error": str(e)}
+        print("moneyline v3 bets: failed:", e)
+    try:
         from . import night_west
         result["night_west_bets"] = night_west.process(result, df, ROOT / "history")
     except Exception as e:
@@ -326,6 +332,9 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if tw.get("mode") == "live":
         lines += [f"- **{x['team']} {x['point']}** ({x['price']:+d}) at {x['book']} ({x['gameday']}): "
                   f"forecast wind {x['forecast_wind_mph']:.0f} mph, stake {x['units']}u" for x in tw.get("new", [])]
+    for x in (result.get("ml_v3_bets", {}).get("new", []) if result.get("ml_v3_bets", {}).get("mode") == "live" else []):
+        lines.append(f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} ({x['gameday']}): "
+                     f"{x['edge']:+.1%} vs Pinnacle/sharp fair, stake {x['units']}u")
     v2 = result.get("ml_v2_bets", {})
     if v2.get("mode") == "live":
         lines += [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
@@ -382,7 +391,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     pred["upcoming"] = ups
     pred["odds_checked_at"] = now.isoformat(timespec="minutes")
     no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
-    for key, fn in (("ml_v2_bets", ml_v2.process), ("totals_wind_bets", totals_lib.process),
+    for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("totals_wind_bets", totals_lib.process),
                     ("night_west_bets", night_west.process)):
         try:
             res = fn(pred, no_games, ROOT / "history")

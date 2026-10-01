@@ -641,3 +641,20 @@ def test_night_west_track():
     assert NW.evaluate(same, r, datetime(2026, 10, 4, 22, 0, tzinfo=timezone.utc)) is None  # same zone
     rec = NW.record([{"status": "graded", "rules_version": 1, "result": "win", "units": 1, "profit_units": 0.95, "price": -105}], r)
     assert rec["wins"] == 1 and not rec["passed"]
+
+
+def test_ml_v3_uses_pinnacle_blend(tmp_path):
+    from nflpred import odds as O, ml_v2
+    def bk(key, mh, ma):
+        return {"key": key, "title": key, "markets": [{"key": "h2h", "outcomes": [
+            {"name": "Kansas City Chiefs", "price": mh}, {"name": "Denver Broncos", "price": ma}]}]}
+    ev = [{"home_team": "Kansas City Chiefs", "away_team": "Denver Broncos", "commence_time": "2026-10-04T20:25:00Z",
+           "bookmakers": [bk("pinnacle", -200, 180), bk("lowvig", -200, 190), bk("betonlineag", -205, 185),
+                          bk("draftkings", -240, 215)]}]
+    lo = next(iter(O.summarize(ev, {"draftkings"}).values()))
+    assert lo["pin_sharp_home_prob"] is not None
+    g = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "KC", "away_team": "DEN",
+         "home_win_prob": 0.62, "injury_report": True, "qb_status": {}, "context": {"live_odds": lo}}
+    out = ml_v2.process_v3({"upcoming": [g]}, pd.DataFrame(columns=["game_id", "completed"]), tmp_path)
+    assert out["track"] == "moneyline_v3" and (tmp_path / "paper_bets_ml_v3.json").exists()
+    assert g.get("ml_v3") and "ml_v2" not in g

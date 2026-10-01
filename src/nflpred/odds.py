@@ -86,6 +86,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
             continue
         probs, spreads, best = [], [], {"home": None, "away": None}
         sharp_probs, pin_probs, best_ex = [], [], {"home": None, "away": None}
+        ref3 = []  # moneyline v3 reference: Pinnacle + LowVig + BetOnline
         book_spreads = []
         for bk in ev.get("bookmakers", []):
             mk = {m["key"]: m for m in bk.get("markets", [])}
@@ -98,6 +99,8 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                         sharp_probs.append(h / (h + a))
                     if bk.get("key") == "pinnacle":
                         pin_probs.append(h / (h + a))
+                    if bk.get("key") in ("pinnacle", "lowvig", "betonlineag"):
+                        ref3.append(h / (h + a))
                     if bk.get("key") in EXCHANGES:
                         for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
                             if best_ex[side] is None or px[name] > best_ex[side]["price"]:
@@ -131,6 +134,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
             "sharp_home_prob": round(statistics.median(sharp_probs), 4) if sharp_probs else None,
             "sharp_books": len(sharp_probs),
             "pinnacle_home_prob": round(pin_probs[0], 4) if pin_probs else None,
+            "pin_sharp_home_prob": round(statistics.median(ref3), 4) if ref3 else None,
             "best_exchange_home_ml": best_ex["home"], "best_exchange_away_ml": best_ex["away"],
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],

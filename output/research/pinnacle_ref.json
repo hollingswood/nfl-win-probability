@@ -1,0 +1,707 @@
+{
+  "coverage": {
+    "requested_times": 323,
+    "main_snapshots_at_those_times": 7596,
+    "pinnacle_present": 3453,
+    "pinnacle_missing_pct": 54.54,
+    "sharp_missing_pct": 58.24,
+    "by_type": {
+      "fri2140": {
+        "n": 1965,
+        "pin_missing_pct": 67.23,
+        "sharp_missing_pct": 71.86
+      },
+      "other": {
+        "n": 4940,
+        "pin_missing_pct": 57.13,
+        "sharp_missing_pct": 60.75
+      },
+      "t75": {
+        "n": 691,
+        "pin_missing_pct": 0.0,
+        "sharp_missing_pct": 1.59
+      }
+    },
+    "games": 569,
+    "games_with_any_pinnacle": 569,
+    "sharp_books_actually_in_data": [
+      "betonlineag",
+      "lowvig"
+    ],
+    "median_quote_age_min": {
+      "pinnacle": 0.4,
+      "lowvig": 0.7,
+      "betonlineag": 0.6,
+      "draftkings": 0.7,
+      "fanduel": 0.4
+    }
+  },
+  "q1": {
+    "fri2140": {
+      "games_with_snapshot": 569,
+      "pin_missing_pct_latest": 7.21,
+      "sharp_missing_pct_latest": 9.84,
+      "games": 507,
+      "joint_vs_nflverse_close": {
+        "b_pin": 0.289,
+        "se_pin": 0.171,
+        "b_sharp": -0.131,
+        "se_sharp": 0.19
+      },
+      "rmse_vs_nflverse_close": {
+        "pinnacle": 2.365,
+        "sharp_median": 2.393,
+        "all_book": 2.32,
+        "avg_pin_sharp": 2.354,
+        "n": 507
+      },
+      "slope_nflverse_close": {
+        "b": 0.64,
+        "se": 0.15
+      },
+      "rmse_vs_own_close_all": {
+        "pinnacle": 2.061,
+        "sharp_median": 2.092,
+        "all_book": 2.047,
+        "avg_pin_sharp": 2.047,
+        "n": 507
+      },
+      "slope_own_close_all": {
+        "b": 0.633,
+        "se": 0.131
+      },
+      "rmse_vs_own_close_sharp": {
+        "pinnacle": 2.245,
+        "sharp_median": 2.271,
+        "all_book": 2.284,
+        "avg_pin_sharp": 2.231,
+        "n": 500
+      },
+      "slope_own_close_sharp": {
+        "b": 0.619,
+        "se": 0.143
+      },
+      "rmse_vs_own_close_pinnacle": {
+        "pinnacle": 2.143,
+        "sharp_median": 2.206,
+        "all_book": 2.2,
+        "avg_pin_sharp": 2.147,
+        "n": 507
+      },
+      "slope_own_close_pinnacle": {
+        "b": 0.78,
+        "se": 0.137
+      },
+      "logloss": {
+        "pinnacle": 0.59245,
+        "sharp_median": 0.59336,
+        "all_book": 0.59302,
+        "avg_pin_sharp": 0.59288,
+        "nflverse_close": 0.58857,
+        "n": 507
+      },
+      "logloss_pin_minus_sharp": {
+        "mean": -0.0009,
+        "se": 0.00062
+      },
+      "logloss_pin_minus_allbook": {
+        "mean": -0.00056,
+        "se": 0.00061
+      },
+      "mean_abs_pin_minus_sharp_pp": 0.532
+    },
+    "other": {
+      "games_with_snapshot": 569,
+      "pin_missing_pct_latest": 65.03,
+      "sharp_missing_pct_latest": 1.41,
+      "games": 553,
+      "joint_vs_nflverse_close": {
+        "b_pin": 0.048,
+        "se_pin": 0.135,
+        "b_sharp": 0.241,
+        "se_sharp": 0.154
+      },
+      "rmse_vs_nflverse_close": {
+        "pinnacle": 1.961,
+        "sharp_median": 1.922,
+        "all_book": 1.882,
+        "avg_pin_sharp": 1.913,
+        "n": 553
+      },
+      "slope_nflverse_close": {
+        "b": 0.327,
+        "se": 0.123
+      },
+      "rmse_vs_own_close_all": {
+        "pinnacle": 1.643,
+        "sharp_median": 1.596,
+        "all_book": 1.587,
+        "avg_pin_sharp": 1.585,
+        "n": 553
+      },
+      "slope_own_close_all": {
+        "b": 0.328,
+        "se": 0.101
+      },
+      "rmse_vs_own_close_sharp": {
+        "pinnacle": 1.829,
+        "sharp_median": 1.775,
+        "all_book": 1.857,
+        "avg_pin_sharp": 1.771,
+        "n": 545
+      },
+      "slope_own_close_sharp": {
+        "b": 0.28,
+        "se": 0.114
+      },
+      "rmse_vs_own_close_pinnacle": {
+        "pinnacle": 1.732,
+        "sharp_median": 1.754,
+        "all_book": 1.789,
+        "avg_pin_sharp": 1.711,
+        "n": 553
+      },
+      "slope_own_close_pinnacle": {
+        "b": 0.589,
+        "se": 0.11
+      },
+      "logloss": {
+        "pinnacle": 0.59986,
+        "sharp_median": 0.59968,
+        "all_book": 0.60043,
+        "avg_pin_sharp": 0.59974,
+        "nflverse_close": 0.59881,
+        "n": 553
+      },
+      "logloss_pin_minus_sharp": {
+        "mean": 0.00018,
+        "se": 0.00058
+      },
+      "logloss_pin_minus_allbook": {
+        "mean": -0.00057,
+        "se": 0.0006
+      },
+      "mean_abs_pin_minus_sharp_pp": 0.521
+    },
+    "t75": {
+      "games_with_snapshot": 569,
+      "pin_missing_pct_latest": 0.53,
+      "sharp_missing_pct_latest": 1.58,
+      "games": 560,
+      "joint_vs_nflverse_close": {
+        "b_pin": -0.124,
+        "se_pin": 0.07,
+        "b_sharp": -0.154,
+        "se_sharp": 0.074
+      },
+      "rmse_vs_nflverse_close": {
+        "pinnacle": 1.306,
+        "sharp_median": 1.288,
+        "all_book": 1.041,
+        "avg_pin_sharp": 1.245,
+        "n": 560
+      },
+      "slope_nflverse_close": {
+        "b": 0.455,
+        "se": 0.072
+      },
+      "rmse_vs_own_close_all": {
+        "pinnacle": 0.675,
+        "sharp_median": 0.638,
+        "all_book": 0.008,
+        "avg_pin_sharp": 0.547,
+        "n": 560
+      },
+      "slope_own_close_all": {
+        "b": 0.453,
+        "se": 0.032
+      },
+      "rmse_vs_own_close_sharp": {
+        "pinnacle": 0.727,
+        "sharp_median": 0.028,
+        "all_book": 0.638,
+        "avg_pin_sharp": 0.364,
+        "n": 560
+      },
+      "slope_own_close_sharp": {
+        "b": 0.001,
+        "se": 0.002
+      },
+      "rmse_vs_own_close_pinnacle": {
+        "pinnacle": 0.0,
+        "sharp_median": 0.727,
+        "all_book": 0.676,
+        "avg_pin_sharp": 0.363,
+        "n": 560
+      },
+      "slope_own_close_pinnacle": {
+        "b": 1.0,
+        "se": 0.0
+      },
+      "logloss": {
+        "pinnacle": 0.59885,
+        "sharp_median": 0.59799,
+        "all_book": 0.59858,
+        "avg_pin_sharp": 0.59839,
+        "nflverse_close": 0.59652,
+        "n": 560
+      },
+      "logloss_pin_minus_sharp": {
+        "mean": 0.00086,
+        "se": 0.00064
+      },
+      "logloss_pin_minus_allbook": {
+        "mean": 0.00026,
+        "se": 0.00062
+      },
+      "mean_abs_pin_minus_sharp_pp": 0.554
+    }
+  },
+  "q2": {
+    "C2_ml_sharp_dog|sharp": {
+      "bets": 73,
+      "per_season": 36.5,
+      "roi": 0.3507,
+      "roi_se": 0.2307,
+      "clv": 0.0203,
+      "clv_t": 1.24,
+      "beat_close": 0.616,
+      "clv_close_all": {
+        "mean": 0.0216,
+        "t": 1.35,
+        "beat": 0.616,
+        "n": 73
+      },
+      "clv_close_sharp": {
+        "mean": 0.0212,
+        "t": 1.26,
+        "beat": 0.616,
+        "n": 73
+      },
+      "clv_close_pin": {
+        "mean": 0.0257,
+        "t": 1.6,
+        "beat": 0.63,
+        "n": 73
+      },
+      "snap_mix": {
+        "other": 60,
+        "t75": 7,
+        "fri2140": 6
+      },
+      "by_season": {
+        "2024": {
+          "bets": 26,
+          "clv": 0.0103,
+          "roi": 0.6538
+        },
+        "2025": {
+          "bets": 47,
+          "clv": 0.0258,
+          "roi": 0.183
+        }
+      }
+    },
+    "C4_ml_sharp_and_model|sharp": {
+      "bets": 87,
+      "per_season": 43.5,
+      "roi": -0.0437,
+      "roi_se": 0.1898,
+      "clv": 0.0147,
+      "clv_t": 1.66,
+      "beat_close": 0.609,
+      "clv_close_all": {
+        "mean": 0.0307,
+        "t": 4.82,
+        "beat": 0.701,
+        "n": 87
+      },
+      "clv_close_sharp": {
+        "mean": 0.0356,
+        "t": 4.87,
+        "beat": 0.713,
+        "n": 87
+      },
+      "clv_close_pin": {
+        "mean": 0.0383,
+        "t": 5.36,
+        "beat": 0.724,
+        "n": 87
+      },
+      "snap_mix": {
+        "other": 43,
+        "fri2140": 22,
+        "t75": 22
+      },
+      "by_season": {
+        "2024": {
+          "bets": 33,
+          "clv": 0.0119,
+          "roi": -0.0683
+        },
+        "2025": {
+          "bets": 54,
+          "clv": 0.0165,
+          "roi": -0.0287
+        }
+      }
+    },
+    "C2_ml_sharp_dog|pin": {
+      "bets": 79,
+      "per_season": 39.5,
+      "roi": 0.207,
+      "roi_se": 0.2115,
+      "clv": 0.0139,
+      "clv_t": 1.1,
+      "beat_close": 0.608,
+      "clv_close_all": {
+        "mean": 0.0224,
+        "t": 1.87,
+        "beat": 0.646,
+        "n": 79
+      },
+      "clv_close_sharp": {
+        "mean": 0.0209,
+        "t": 1.63,
+        "beat": 0.62,
+        "n": 79
+      },
+      "clv_close_pin": {
+        "mean": 0.0359,
+        "t": 3.11,
+        "beat": 0.722,
+        "n": 79
+      },
+      "snap_mix": {
+        "other": 65,
+        "t75": 11,
+        "fri2140": 3
+      },
+      "by_season": {
+        "2024": {
+          "bets": 35,
+          "clv": 0.0023,
+          "roi": 0.3071
+        },
+        "2025": {
+          "bets": 44,
+          "clv": 0.0231,
+          "roi": 0.1273
+        }
+      }
+    },
+    "C4_ml_sharp_and_model|pin": {
+      "bets": 109,
+      "per_season": 54.5,
+      "roi": -0.0378,
+      "roi_se": 0.1752,
+      "clv": 0.0189,
+      "clv_t": 2.51,
+      "beat_close": 0.624,
+      "clv_close_all": {
+        "mean": 0.0308,
+        "t": 5.68,
+        "beat": 0.761,
+        "n": 109
+      },
+      "clv_close_sharp": {
+        "mean": 0.0269,
+        "t": 4.18,
+        "beat": 0.661,
+        "n": 109
+      },
+      "clv_close_pin": {
+        "mean": 0.0491,
+        "t": 8.8,
+        "beat": 0.835,
+        "n": 109
+      },
+      "snap_mix": {
+        "other": 52,
+        "t75": 33,
+        "fri2140": 24
+      },
+      "by_season": {
+        "2024": {
+          "bets": 48,
+          "clv": 0.0236,
+          "roi": -0.2543
+        },
+        "2025": {
+          "bets": 61,
+          "clv": 0.0151,
+          "roi": 0.1325
+        }
+      }
+    },
+    "C2_ml_sharp_dog|avg": {
+      "bets": 66,
+      "per_season": 33.0,
+      "roi": 0.4318,
+      "roi_se": 0.2467,
+      "clv": 0.0141,
+      "clv_t": 0.76,
+      "beat_close": 0.621,
+      "clv_close_all": {
+        "mean": 0.0223,
+        "t": 1.24,
+        "beat": 0.636,
+        "n": 66
+      },
+      "clv_close_sharp": {
+        "mean": 0.0217,
+        "t": 1.16,
+        "beat": 0.636,
+        "n": 66
+      },
+      "clv_close_pin": {
+        "mean": 0.0337,
+        "t": 1.92,
+        "beat": 0.667,
+        "n": 66
+      },
+      "snap_mix": {
+        "other": 53,
+        "t75": 7,
+        "fri2140": 6
+      },
+      "by_season": {
+        "2024": {
+          "bets": 25,
+          "clv": 0.0074,
+          "roi": 0.854
+        },
+        "2025": {
+          "bets": 41,
+          "clv": 0.0182,
+          "roi": 0.1744
+        }
+      }
+    },
+    "C4_ml_sharp_and_model|avg": {
+      "bets": 91,
+      "per_season": 45.5,
+      "roi": -0.0121,
+      "roi_se": 0.1997,
+      "clv": 0.0203,
+      "clv_t": 2.37,
+      "beat_close": 0.626,
+      "clv_close_all": {
+        "mean": 0.037,
+        "t": 6.13,
+        "beat": 0.758,
+        "n": 91
+      },
+      "clv_close_sharp": {
+        "mean": 0.0359,
+        "t": 5.06,
+        "beat": 0.692,
+        "n": 91
+      },
+      "clv_close_pin": {
+        "mean": 0.0551,
+        "t": 8.95,
+        "beat": 0.846,
+        "n": 91
+      },
+      "snap_mix": {
+        "other": 45,
+        "t75": 27,
+        "fri2140": 19
+      },
+      "by_season": {
+        "2024": {
+          "bets": 38,
+          "clv": 0.0255,
+          "roi": -0.1541
+        },
+        "2025": {
+          "bets": 53,
+          "clv": 0.0166,
+          "roi": 0.0896
+        }
+      }
+    },
+    "C2_ml_sharp_dog|sharp_all_snapshots": {
+      "bets": 119,
+      "per_season": 59.5,
+      "roi": 0.2385,
+      "roi_se": 0.1722,
+      "clv": 0.0235,
+      "clv_t": 1.81,
+      "beat_close": 0.639,
+      "clv_close_all": {
+        "mean": 0.0283,
+        "t": 2.27,
+        "beat": 0.639,
+        "n": 119
+      },
+      "clv_close_sharp": {
+        "mean": 0.0252,
+        "t": 1.95,
+        "beat": 0.605,
+        "n": 119
+      },
+      "clv_close_pin": {
+        "mean": 0.032,
+        "t": 2.56,
+        "beat": 0.647,
+        "n": 119
+      },
+      "snap_mix": {
+        "other": 111,
+        "t75": 5,
+        "fri2140": 3
+      },
+      "by_season": {
+        "2024": {
+          "bets": 51,
+          "clv": 0.0228,
+          "roi": 0.2931
+        },
+        "2025": {
+          "bets": 68,
+          "clv": 0.0241,
+          "roi": 0.1975
+        }
+      }
+    },
+    "C4_ml_sharp_and_model|sharp_all_snapshots": {
+      "bets": 109,
+      "per_season": 54.5,
+      "roi": -0.0881,
+      "roi_se": 0.1668,
+      "clv": 0.0119,
+      "clv_t": 1.46,
+      "beat_close": 0.569,
+      "clv_close_all": {
+        "mean": 0.024,
+        "t": 3.89,
+        "beat": 0.679,
+        "n": 109
+      },
+      "clv_close_sharp": {
+        "mean": 0.0266,
+        "t": 3.84,
+        "beat": 0.651,
+        "n": 109
+      },
+      "clv_close_pin": {
+        "mean": 0.0334,
+        "t": 4.77,
+        "beat": 0.706,
+        "n": 109
+      },
+      "snap_mix": {
+        "other": 87,
+        "t75": 13,
+        "fri2140": 9
+      },
+      "by_season": {
+        "2024": {
+          "bets": 47,
+          "clv": 0.0095,
+          "roi": -0.2278
+        },
+        "2025": {
+          "bets": 62,
+          "clv": 0.0137,
+          "roi": 0.0177
+        }
+      }
+    },
+    "C4_overlap": {
+      "sharp_only": 22,
+      "pin_only": 44,
+      "both": 65
+    },
+    "C4_sharp_only_bets": {
+      "bets": 22,
+      "per_season": 11.0,
+      "roi": -0.55,
+      "roi_se": 0.2551,
+      "clv": -0.0084,
+      "clv_t": -0.64,
+      "beat_close": 0.364,
+      "clv_close_all": {
+        "mean": 0.0026,
+        "t": 0.36,
+        "beat": 0.636,
+        "n": 22
+      },
+      "clv_close_sharp": {
+        "mean": 0.0039,
+        "t": 0.43,
+        "beat": 0.591,
+        "n": 22
+      },
+      "clv_close_pin": {
+        "mean": -0.0121,
+        "t": -1.38,
+        "beat": 0.455,
+        "n": 22
+      },
+      "snap_mix": {
+        "other": 9,
+        "t75": 7,
+        "fri2140": 6
+      },
+      "by_season": {
+        "2024": {
+          "bets": 12,
+          "clv": -0.0208,
+          "roi": -0.6333
+        },
+        "2025": {
+          "bets": 10,
+          "clv": 0.0064,
+          "roi": -0.45
+        }
+      }
+    },
+    "C4_pin_only_bets": {
+      "bets": 44,
+      "per_season": 22.0,
+      "roi": -0.297,
+      "roi_se": 0.2523,
+      "clv": 0.0094,
+      "clv_t": 1.0,
+      "beat_close": 0.545,
+      "clv_close_all": {
+        "mean": 0.0127,
+        "t": 2.33,
+        "beat": 0.773,
+        "n": 44
+      },
+      "clv_close_sharp": {
+        "mean": -0.006,
+        "t": -1.02,
+        "beat": 0.5,
+        "n": 44
+      },
+      "clv_close_pin": {
+        "mean": 0.0357,
+        "t": 5.56,
+        "beat": 0.886,
+        "n": 44
+      },
+      "snap_mix": {
+        "other": 19,
+        "t75": 17,
+        "fri2140": 8
+      },
+      "by_season": {
+        "2024": {
+          "bets": 27,
+          "clv": 0.0144,
+          "roi": -0.6593
+        },
+        "2025": {
+          "bets": 17,
+          "clv": 0.0014,
+          "roi": 0.2782
+        }
+      }
+    }
+  }
+}

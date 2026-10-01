@@ -249,7 +249,7 @@ function context(g){
 }
 const pt = x => `${x>0?'+':''}${x}`;
 const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
 const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE'};
 const niceReason = r => r.replace('best edge','edge').replace('below 3%','below the 3% bar').replace('injury report not out','waiting for the injury report').replace('starting QB not confirmed','waiting on a QB decision');
 function market(kind, g){
@@ -401,7 +401,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Totals · forecast-wind unders',P.totals_wind_bets],['Night games · western team (body clock)',P.night_west_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
+  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Moneyline v3 · soft vs Pinnacle + sharp',P.ml_v3_bets],['Totals · forecast-wind unders',P.totals_wind_bets],['Night games · western team (body clock)',P.night_west_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';

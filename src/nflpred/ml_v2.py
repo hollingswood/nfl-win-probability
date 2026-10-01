@@ -20,6 +20,7 @@ from . import grading as G
 
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "moneyline_v2_rules.json"
+V3_RULES_PATH = ROOT / "moneyline_v3_rules.json"
 
 
 def load_rules(path: Path = RULES_PATH) -> dict:
@@ -29,17 +30,18 @@ def load_rules(path: Path = RULES_PATH) -> dict:
 def evaluate(game: dict, r: dict) -> dict | None:
     q = r["qualify"]
     lo = (game.get("context") or {}).get("live_odds") or {}
-    reasons = game["ml_v2_check"] = []
+    reasons = game[r.get("game_key", "ml_v2") + "_check"] = []
     if not lo.get("best_home_ml") or not lo.get("best_away_ml"):
         reasons.append("no live odds")
         return None
-    if lo.get("sharp_home_prob") is None:
+    ref = r.get("reference_field", "sharp_home_prob")
+    if lo.get(ref) is None:
         reasons.append("no sharp-book price")
-        game["ml_v2"] = None
+        game[r.get("game_key", "ml_v2")] = None
         return None
     best = None
     for side, bk in (("home", lo["best_home_ml"]), ("away", lo["best_away_ml"])):
-        p_sharp = lo["sharp_home_prob"] if side == "home" else 1 - lo["sharp_home_prob"]
+        p_sharp = lo[ref] if side == "home" else 1 - lo[ref]
         p_model = game["home_win_prob"] if side == "home" else 1 - game["home_win_prob"]
         p_cons = lo["consensus_home_prob"] if side == "home" else 1 - lo["consensus_home_prob"]
         d = ML.decimal(bk["price"])
@@ -49,7 +51,7 @@ def evaluate(game: dict, r: dict) -> dict | None:
                 "ev_model": round(p_model * d - 1, 4), "gap": abs(1 / d - p_cons)}
         if best is None or cand["ev_sharp"] > best["ev_sharp"]:
             best = cand
-    game["ml_v2"] = best
+    game[r.get("game_key", "ml_v2")] = best
     if best["ev_sharp"] < q["min_ev_vs_sharp"]:
         reasons.append(f"best price only {best['ev_sharp']:+.1%} vs sharp books (need {q['min_ev_vs_sharp']:.0%})")
     if best["ev_model"] < q["min_ev_vs_model"]:
@@ -64,7 +66,7 @@ def evaluate(game: dict, r: dict) -> dict | None:
     if reasons:
         return None
     opp = game["away_team"] if best["side"] == "home" else game["home_team"]
-    return {"id": f"{game['game_id']}:ml_v2:{best['side']}", "track": "moneyline_v2", "rules_version": r["version"],
+    return {"id": f"{game['game_id']}:{r['track']}:{best['side']}", "track": r["track"], "rules_version": r["version"],
             "placed_at": datetime.now(timezone.utc).isoformat(timespec="minutes"),
             "game_id": game["game_id"], "season": game["season"], "week": game["week"], "gameday": game["gameday"],
             "side": best["side"], "team": best["team"], "opponent": opp, "price": best["price"], "book": best["book"],
@@ -76,7 +78,7 @@ def evaluate(game: dict, r: dict) -> dict | None:
 def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None = None) -> dict:
     r = r or load_rules()
     history_dir.mkdir(parents=True, exist_ok=True)
-    path = history_dir / "paper_bets_ml_v2.json"
+    path = history_dir / r.get("ledger", "paper_bets_ml_v2.json")
     ledger = json.loads(path.read_text()) if path.exists() else []
     ledger = [ML.grade(b, games) if b.get("status") == "open" else b for b in ledger]
     have = {b["game_id"] for b in ledger if b.get("status") != "void"}
@@ -90,18 +92,23 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
         used = sum(b["units"] for b in ledger + new
                    if b.get("status") != "void" and b["season"] == bet["season"] and b["week"] == bet["week"])
         if used + bet["units"] > cap + 1e-9:
-            g["ml_v2_check"].append(f"weekly exposure cap ({cap:g} units) reached")
+            g[r.get("game_key", "ml_v2") + "_check"].append(f"weekly exposure cap ({cap:g} units) reached")
             continue
         new.append(bet)
     ledger += new
     path.write_text(json.dumps(ledger, indent=2))
     rec = ML.record(ledger, r)
     for g in pred.get("upcoming", []):
-        v = g.get("ml_v2")
+        v = g.get(r.get("game_key", "ml_v2"))
         if v:
             logged = any(b["game_id"] == g["game_id"] and b.get("status") != "void" for b in ledger)
             v["verdict"] = "bet" if logged else ("lean" if v["ev_sharp"] > 0 else "pass")
-            v["reasons"] = [] if logged else list(g.get("ml_v2_check") or [])
-    return {"track": "moneyline_v2", "mode": "live" if rec["passed"] else "shadow", "rules_version": r["version"],
+            v["reasons"] = [] if logged else list(g.get(r.get("game_key", "ml_v2") + "_check") or [])
+    return {"track": r["track"], "mode": "live" if rec["passed"] else "shadow", "rules_version": r["version"],
             "by_grade": G.by_grade(ledger), "new": new, "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:], "record": rec}
+
+
+def process_v3(pred: dict, games: pd.DataFrame, history_dir: Path) -> dict:
+    """Moneyline v3: identical to v2 except the fair price comes from Pinnacle + LowVig + BetOnline."""
+    return process(pred, games, history_dir, load_rules(V3_RULES_PATH))
