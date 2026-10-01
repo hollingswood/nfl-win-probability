@@ -1,0 +1,65 @@
+name: Hourly odds watch
+
+# Re-checks prices every hour (no retraining) for the tracks whose edge depends on catching soft
+# prices before they move: moneyline v2 (soft vs sharp books) and forecast-wind unders.
+# Research: such prices last ~5-6 hours, so hourly is enough. Cost ~6 credits per check.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: predictions
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Refresh odds and run price-sensitive tracks
+        run: python -m nflpred.pipeline watch
+        env:
+          PYTHONPATH: src
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Build dashboard
+        run: python scripts/build_dashboard.py
+        env:
+          PYTHONPATH: src
+      - name: Commit
+        id: commit
+        run: |
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add history output/predictions.json
+          if git commit -m "Odds watch $(date -u +%FT%H%M)"; then
+            for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.commit.outputs.changed == 'true'
+        with:
+          path: site
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+
+  deploy:
+    needs: watch
+    if: needs.watch.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

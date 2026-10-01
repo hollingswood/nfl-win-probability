@@ -223,3 +223,37 @@ def fetch_live(upcoming: pd.DataFrame, players: pd.DataFrame,
         es = pd.concat(frames, ignore_index=True)
     report["espn"] = f"ok ({ok} games)" if ok else "failed or no games"
     return combine(sl, es), report
+
+
+def log_first_seen(live: pd.DataFrame, history_dir, now: datetime | None = None) -> int:
+    """Append every NEW status we see (injury status, practice status, QB depth order) to
+    history/news_log.jsonl with the time we first saw it. Later this is joined to the saved odds
+    snapshots to measure whether our news arrives before the line moves (the only way the
+    QB-timing gap found in research could be captured). Returns the number of new entries."""
+    import json as _json
+    from pathlib import Path as _P
+    if live is None or live.empty:
+        return 0
+    history_dir = _P(history_dir)
+    now = now or datetime.now(timezone.utc)
+    state_p, log_p = history_dir / "news_state.json", history_dir / "news_log.jsonl"
+    state = _json.loads(state_p.read_text()) if state_p.exists() else {}
+    new = []
+    for r in live.itertuples():
+        key = r.gsis_id if isinstance(r.gsis_id, str) and r.gsis_id else f"{str(r.full_name).lower()}|{r.team}"
+        depth = int(r.depth_order) if r.position == "QB" and pd.notna(getattr(r, "depth_order", None)) else None
+        cur = {"status": r.report_status if isinstance(r.report_status, str) else None,
+               "practice": r.practice_status if isinstance(r.practice_status, str) else None, "qb_depth": depth}
+        if cur == {"status": None, "practice": None, "qb_depth": None} and key not in state:
+            continue
+        if state.get(key) != cur:
+            new.append({"seen_at": now.isoformat(timespec="minutes"), "key": key, "name": r.full_name,
+                        "team": r.team, "position": r.position, "source": r.source, "before": state.get(key), "now": cur})
+            state[key] = cur
+    if new:
+        history_dir.mkdir(parents=True, exist_ok=True)
+        with log_p.open("a") as f:
+            for e in new:
+                f.write(_json.dumps(e, default=str) + "\n")
+        state_p.write_text(_json.dumps(state))
+    return len(new)

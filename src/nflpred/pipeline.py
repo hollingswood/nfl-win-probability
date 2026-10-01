@@ -59,6 +59,10 @@ def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: 
         gd = pd.to_datetime(games["gameday"]).dt.date
         up = games[games["home_score"].isna() & (gd >= today) & (gd <= today + dt.timedelta(days=horizon_days))]
         live, report = news_lib.fetch_live(up, players, news_sources)
+        try:
+            report["news_log_new_entries"] = news_lib.log_first_seen(live, ROOT / "history")
+        except Exception as e:
+            print("news log failed:", e)
         log = []
         if not live.empty:
             rows = news_lib.injury_rows(live, up)
@@ -140,6 +144,7 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
         out.append({
             "game_id": g["game_id"], "season": int(g["season"]), "week": int(g["week"]),
             "gameday": g["gameday"].date().isoformat(), "gametime": g.get("gametime"),
+            "kickoff_utc": weather_lib._kickoff_utc(g["gameday"], g.get("gametime")).isoformat(),
             "home_team": g["home_team"], "away_team": g["away_team"],
             "neutral_site": bool(g["location"] == "Neutral"),
             "home_qb": _s(g.get("home_qb_name")), "away_qb": _s(g.get("away_qb_name")),
@@ -288,6 +293,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["ml_v2_bets"] = {"error": str(e)}
         print("moneyline v2 bets: failed:", e)
+    try:
+        from . import totals as totals_lib
+        result["totals_wind_bets"] = totals_lib.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["totals_wind_bets"] = {"error": str(e)}
+        print("totals wind bets: failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     alert = OUT / "alert.md"
@@ -301,6 +312,10 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if sb.get("mode") == "live":
         lines += [f"- **{x['team']} {x['point']:+g}** ({x['price']:+d}) at {x['book']} vs {x['opponent']} "
                   f"({x['gameday']}): edge {x['edge']:+.1%}, stake {x['units']}u" for x in sb.get("new", [])]
+    tw = result.get("totals_wind_bets", {})
+    if tw.get("mode") == "live":
+        lines += [f"- **{x['team']} {x['point']}** ({x['price']:+d}) at {x['book']} ({x['gameday']}): "
+                  f"forecast wind {x['forecast_wind_mph']:.0f} mph, stake {x['units']}u" for x in tw.get("new", [])]
     v2 = result.get("ml_v2_bets", {})
     if v2.get("mode") == "live":
         lines += [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
@@ -319,14 +334,69 @@ def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
             for r in d.itertuples()]
 
 
+def cmd_watch(now: dt.datetime | None = None) -> dict | None:
+    """Hourly odds watch (no retraining): refresh live prices on the last published predictions and
+    run the tracks whose edge depends on catching prices quickly (moneyline v2, forecast-wind
+    unders). The v1 tracks only act on full runs, as pre-registered."""
+    from . import ml_v2, totals as totals_lib
+    path = OUT / "predictions.json"
+    if not path.exists():
+        print("watch: no predictions.json yet")
+        return None
+    pred = json.loads(path.read_text())
+    now = now or dt.datetime.now(dt.timezone.utc)
+    if not any(g.get("kickoff_utc") and dt.datetime.fromisoformat(g["kickoff_utc"]) > now
+               for g in pred.get("upcoming", [])):
+        print("watch: no upcoming games, skipping odds call (saves credits)")
+        return None
+    live = odds_lib.snapshot(ROOT / "history")
+    if not live:
+        print("watch: no odds")
+        return None
+    ups = []
+    for g in pred.get("upcoming", []):
+        if g.get("kickoff_utc") and dt.datetime.fromisoformat(g["kickoff_utc"]) <= now:
+            continue  # already kicked off
+        lo = odds_lib.match(live, g["home_team"], g["away_team"], dt.date.fromisoformat(g["gameday"]))
+        ctx = g.setdefault("context", {})
+        if lo:
+            w = bets_lib.load_rules()["probability"]
+            lo = dict(lo)
+            pb = bets_lib.blend_prob(g["home_win_prob"], lo["consensus_home_prob"], w)
+            lo["blend_home_prob"] = round(pb, 4)
+            for side, p in (("home", pb), ("away", 1 - pb)):
+                if lo.get(f"best_{side}_ml"):
+                    lo[f"{side}_ev_at_best"] = round(p * _dec(lo[f"best_{side}_ml"]["price"]) - 1, 4)
+            ctx["live_odds"] = lo
+        ups.append(g)
+    pred["upcoming"] = ups
+    pred["odds_checked_at"] = now.isoformat(timespec="minutes")
+    no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
+    for key, fn in (("ml_v2_bets", ml_v2.process), ("totals_wind_bets", totals_lib.process)):
+        try:
+            res = fn(pred, no_games, ROOT / "history")
+            prev = pred.get(key) or {}
+            res["recent_graded"] = prev.get("recent_graded", res.get("recent_graded", []))
+            pred[key] = res
+            for b in res.get("new", []):
+                print(f"watch: new {key} paper bet {b['id']} {b['price']:+d} at {b['book']}")
+        except Exception as e:
+            print(f"watch: {key} failed: {e}")
+    M.save_json(pred, path)
+    return pred
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["update", "backtest", "gate"])
+    ap.add_argument("cmd", choices=["update", "backtest", "gate", "watch"])
     ap.add_argument("--no-refresh", action="store_true", help="use cached data")
     ap.add_argument("--today", help="override date (YYYY-MM-DD)")
     ap.add_argument("--offline", action="store_true", help="skip live odds, weather and news APIs")
     ap.add_argument("--news-sources", default="sleeper,espn", help="comma list: sleeper,espn")
     a = ap.parse_args(argv)
+    if a.cmd == "watch":
+        cmd_watch()
+        return 0
     today = dt.date.fromisoformat(a.today) if a.today else dt.date.today()
     df = build(refresh=not a.no_refresh, today=today, live_news=(a.cmd == "update" and not a.offline),
                news_sources=tuple(x.strip() for x in a.news_sources.split(",") if x.strip()))

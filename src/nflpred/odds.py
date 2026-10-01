@@ -40,8 +40,8 @@ def fetch(api_key: str | None = None, timeout: float = 20) -> list[dict]:
     if not key:
         raise RuntimeError("ODDS_API_KEY not set")
     # us + us2 covers the regulated US books (us2 adds e.g. ESPN BET, Fanatics, Hard Rock);
-    # cost = markets x regions = 4 credits per call.
-    q = urllib.parse.urlencode({"apiKey": key, "regions": "us,us2", "markets": "h2h,spreads",
+    # cost = markets x regions = 6 credits per call (totals added 2026-09-30 for the wind track).
+    q = urllib.parse.urlencode({"apiKey": key, "regions": "us,us2", "markets": "h2h,spreads,totals",
                                 "oddsFormat": "american"})
     with urllib.request.urlopen(f"{URL}?{q}", timeout=timeout) as r:
         return json.load(r)
@@ -96,7 +96,13 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                                          "away_point": ao["point"], "away_price": ao["price"]})
         if not probs:
             continue
+        try:
+            from . import totals as _T
+            tot = _T.summarize_event(ev, allowed, SHARP_BOOKS, _T.default_dist())
+        except Exception:
+            tot = None
         out[(home, away, ev["commence_time"][:10])] = {
+            "totals": tot,
             "books": len(probs),
             "consensus_home_prob": round(statistics.median(probs), 4),
             "sharp_home_prob": round(statistics.median(sharp_probs), 4) if sharp_probs else None,
@@ -118,7 +124,9 @@ def snapshot(history_dir: Path) -> dict | None:
         return None
     history_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M")
-    (history_dir / f"odds_{ts}.json").write_text(json.dumps(events))
+    import gzip  # compressed: hourly snapshots would otherwise bloat the repo
+    with gzip.open(history_dir / f"odds_{ts}.json.gz", "wt") as f:
+        f.write(json.dumps(events))
     return summarize(events, load_allowed_books())
 
 

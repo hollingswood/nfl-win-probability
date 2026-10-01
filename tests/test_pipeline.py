@@ -555,3 +555,53 @@ def test_ml_v2_soft_vs_sharp(tmp_path):
     assert ml_v2.evaluate(game2, ml_v2.load_rules()) is None and "model disagrees" in game2["ml_v2_check"]
     game3 = dict(game, injury_report=False, context={"live_odds": lo})
     assert ml_v2.evaluate(game3, ml_v2.load_rules()) is None
+
+
+def test_totals_wind_track_and_closing(tmp_path):
+    """Wind-under track: bets the best under only with a >=15 mph outdoor forecast within 6 days;
+    CLV from our own closing totals snapshot (prices included)."""
+    import gzip, json as _j
+    from datetime import datetime, timezone
+    from nflpred import totals as T
+    d = T.default_dist()
+    w, pu = d.probs(44.0, 44.0, "under")
+    assert 0.02 < pu < 0.06 and abs(d.implied_mu(44.5, 0.5) - 44.5) < 1.5
+    tot = {"consensus_total": 44.5, "sharp_total": 44.4, "median_point": 44.5,
+           "totals_by_book": [{"book": "DraftKings", "point": 44.5, "over_price": -110, "under_price": -110},
+                              {"book": "FanDuel", "point": 45.5, "over_price": -105, "under_price": -115}]}
+    base = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "CHI", "away_team": "GB",
+            "kickoff_utc": "2026-10-04T17:00:00+00:00"}
+    r = T.load_rules()
+    now = datetime(2026, 9, 29, 14, 10, tzinfo=timezone.utc)
+    g = dict(base, context={"live_odds": {"totals": tot}, "weather": {"indoors": False, "wind_mph": 18}})
+    bet = T.evaluate(g, r, d, now)
+    assert bet and bet["point"] == 45.5 and bet["book"] == "FanDuel"            # best under = higher number
+    calm = dict(base, context={"live_odds": {"totals": tot}, "weather": {"indoors": False, "wind_mph": 8}})
+    assert T.evaluate(calm, r, d, now) is None
+    dome = dict(base, context={"live_odds": {"totals": tot}, "weather": {"indoors": True}})
+    assert T.evaluate(dome, r, d, now) is None
+    early = dict(base, context={"live_odds": {"totals": tot}, "weather": {"indoors": False, "wind_mph": 20}})
+    assert T.evaluate(early, r, d, datetime(2026, 9, 26, 14, 10, tzinfo=timezone.utc)) is None   # 8 days out
+    ev = [{"home_team": "Chicago Bears", "away_team": "Green Bay Packers", "commence_time": "2026-10-04T17:00:00Z",
+           "bookmakers": [{"key": "draftkings", "markets": [{"key": "totals", "outcomes": [
+               {"name": "Over", "point": 42.5, "price": -110}, {"name": "Under", "point": 42.5, "price": -110}]}]}]}]
+    with gzip.open(tmp_path / "odds_2026-10-04T1545.json.gz", "wt") as f:
+        f.write(_j.dumps(ev))
+    closes = T.closing_totals(tmp_path, d)
+    games = pd.DataFrame([{"game_id": "g", "completed": True, "home_score": 20, "away_score": 17,
+                           "home_team": "CHI", "away_team": "GB", "gameday": pd.Timestamp("2026-10-04")}])
+    out = T.grade(bet, games, d, closes)
+    assert out["result"] == "win" and out["clv"] > 0      # 45.5 under vs a 42.5 close = big CLV
+
+
+def test_news_first_seen_log(tmp_path):
+    from nflpred import news
+    from datetime import datetime, timezone
+    live = pd.DataFrame([{"gsis_id": "00-1", "full_name": "A QB", "team": "CHI", "position": "QB",
+                          "report_status": "Questionable", "practice_status": "Limited", "depth_order": 1, "source": "Sleeper"}])
+    t0 = datetime(2026, 10, 1, 14, tzinfo=timezone.utc)
+    assert news.log_first_seen(live, tmp_path, t0) == 1
+    assert news.log_first_seen(live, tmp_path, t0) == 0                     # unchanged -> nothing new
+    live.loc[0, "report_status"] = "Out"
+    assert news.log_first_seen(live, tmp_path, t0) == 1
+    assert len((tmp_path / "news_log.jsonl").read_text().splitlines()) == 2

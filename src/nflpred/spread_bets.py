@@ -135,12 +135,8 @@ def closing_margins(history_dir: Path, r: dict) -> dict[tuple[str, str], list[di
     from datetime import datetime as _dt
     from . import odds as O
     best: dict[tuple, dict] = {}
-    for f in sorted(history_dir.glob("odds_*.json")):
-        try:
-            ts = _dt.strptime(f.stem[5:], "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc)
-            events = json.loads(f.read_text())
-        except Exception:
-            continue
+    from .totals import _snapshots
+    for ts, events in _snapshots(history_dir):
         for ev in events:
             home, away = O.TEAM_ABBR.get(ev.get("home_team")), O.TEAM_ABBR.get(ev.get("away_team"))
             if not home or not away or not ev.get("commence_time"):

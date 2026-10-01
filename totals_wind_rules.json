@@ -1,0 +1,22 @@
+{
+  "track": "totals_wind",
+  "version": 1,
+  "frozen_on": "2026-09-30",
+  "note": "Pre-registered lead from research round 2 (output/research/totals.md): Tuesday unders with >=15 mph wind had CLV +7% on 2023-25 but used RECORDED wind (future information). This track uses the real Open-Meteo kickoff forecast at bet time, so 2026+ is the honest test. Do not edit to fit results; bump version instead.",
+  "market": "totals",
+  "qualify": {
+    "min_forecast_wind_mph": 15,
+    "outdoor_or_open_roof_only": true,
+    "max_days_before_kickoff": 6,
+    "min_american_odds": -150,
+    "max_american_odds": 130,
+    "bet": "UNDER at the allowed book with the best value (highest total / best price) vs the all-book fair total, at the first run where the forecast qualifies"
+  },
+  "sizing": {"units": 1.0, "max_units_per_week": 8.0},
+  "validation": {
+    "min_bets": 40,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "EV of our under at our point and price under the fair expected total implied by our own last pre-kickoff odds snapshot (points and prices, key-number total distribution)"
+  }
+}

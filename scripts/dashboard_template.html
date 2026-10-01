@@ -249,7 +249,7 @@ function context(g){
 }
 const pt = x => `${x>0?'+':''}${x}`;
 const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
-const ANY_LIVE = (P.spread_bets&&P.spread_bets.mode==='live')||(P.bets&&P.bets.mode==='live')||(P.ml_v2_bets&&P.ml_v2_bets.mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','totals_wind_bets'].some(k=>P[k]&&P[k].mode==='live');
 const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE'};
 const niceReason = r => r.replace('best edge','edge').replace('below 3%','below the 3% bar').replace('injury report not out','waiting for the injury report').replace('starting QB not confirmed','waiting on a QB decision');
 function market(kind, g){
@@ -401,7 +401,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
+  const tracks=[['Moneyline v2 · soft vs sharp books',P.ml_v2_bets],['Totals · forecast-wind unders',P.totals_wind_bets],['Spread',P.spread_bets],['Moneyline v1 (control)',P.bets]].filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
@@ -409,7 +409,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   const r0=tracks[0][1].record;
   document.getElementById('betintro').innerHTML = `Separate tracks, each with its own locked rules and record. <b>Moneyline v2</b> is the current lead: it bets only when one of your books offers a better price than the sharp books' fair price and the model agrees (positive closing line value on 2020–22 and on unseen 2023–25, not yet statistically conclusive). Spread v1 and moneyline v1 showed no edge on real 2020–25 early-week lines and are kept as controls. Each logs the bets it <em>would</em> make, at the best price available when it decided, and grades them after the game. A track switches to recommendations only if, after at least ${r0.min_bets} bets, the line has moved our way by more than luck explains <b>and</b> its paper record is profitable.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
   const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
-  const betLabel=(b,spread)=>spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
+  const betLabel=(b,spread)=>b.side==='under'?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   document.getElementById('tracks').innerHTML = tracks.map(([name,B])=>{
     const spread=name==='Spread', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
