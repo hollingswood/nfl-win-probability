@@ -133,10 +133,10 @@ EVENT_URL = "https://api.the-odds-api.com/v4/historical/sports/americanfootball_
 
 def backfill_props(seasons, key, market="player_reception_yds", regions="us", reserve=500, out_dir=None,
                    dry_run=False, fetcher=None):
-    """Player props via the per-EVENT historical endpoint (data from May 2023; 10 credits per market per
+    """Player props (or alternate_spreads: rows are team=player, point, price=over_price) via the per-EVENT historical endpoint (data from May 2023; 10 credits per market per
     region per event-snapshot). Two snapshots per game: Friday 21:40 UTC (or 24 h before a non-Sunday
     kickoff) and 75 min before kickoff (the close, for CLV). Event ids come from the side-odds files."""
-    out_dir = out_dir or OUT_DIR / "props"
+    out_dir = out_dir or OUT_DIR / ("alternates" if market.startswith("alternate") else "props")
     out_dir.mkdir(parents=True, exist_ok=True)
     total = {"snapshots": 0, "credits": 0, "fetched": 0, "rows": 0, "remaining": None, "stopped": None}
     for s in seasons:
@@ -193,6 +193,14 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
             rows = []
             for bk in d.get("bookmakers", []):
                 for m in bk.get("markets", []):
+                    if m.get("key", "").startswith("alternate_spreads"):
+                        # every alternate line: team, point, price (outcomes come in home/away pairs)
+                        for o in m.get("outcomes", []):
+                            rows.append({"requested_ts": t.isoformat(), "snapshot_ts": payload.get("timestamp"),
+                                         "event_id": r.event_id, "commence_time": r.commence_time, "home": r.home,
+                                         "away": r.away, "book": bk.get("key"), "market": m.get("key"),
+                                         "player": o.get("name"), "point": o.get("point"), "over_price": o.get("price")})
+                        continue
                     by_player = {}
                     for o in m.get("outcomes", []):
                         p = by_player.setdefault(o.get("description"), {})
