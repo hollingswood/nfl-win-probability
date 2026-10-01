@@ -1,0 +1,55 @@
+{
+ "frozen_at": "2026-10-01T15:55:09",
+ "developed_on": "distribution fit 2012-2019 nflverse closes; rules chosen on 2020-2022 snapshots only",
+ "dev_generated": "2026-10-01T15:45:03",
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "evaluate_once": true,
+ "distribution": {
+  "sigma": 13.4,
+  "smooth": 50.0,
+  "weights": "teasers_v2.json calib.chosen.weights (fit 2012-2019)"
+ },
+ "fixed_prices": {
+  "draftkings": -120,
+  "fanduel": -134,
+  "betmgm": -130,
+  "williamhill_us": -120
+ },
+ "grading": "tie_loses",
+ "candidates": [
+  {
+   "id": "V1_fri_ev_pos",
+   "window": "fri",
+   "fair": "sharp",
+   "legs": "any",
+   "ev_min": 0.0,
+   "max_pairs": 3,
+   "total_max": null,
+   "desc": "Friday 21:40 UTC snapshot: at DK/FD/MGM/CZR, any main-line legs teased 6 from THAT book's number; leg win prob from the sharp (lowvig/betonlineag) price-implied fair margin; take the highest-EV same-book pair if EV >= 0 at that book's fixed teaser price; up to 3 disjoint pairs per week."
+  },
+  {
+   "id": "V2_kick_ev_pos",
+   "window": "kick",
+   "fair": "sharp",
+   "legs": "any",
+   "ev_min": 0.0,
+   "max_pairs": 3,
+   "total_max": null,
+   "desc": "Same as V1 but at each game's last snapshot (~75 min pre-kick); pairs only among games sharing that snapshot (same kickoff window)."
+  },
+  {
+   "id": "V3_fri_wong_bestbook",
+   "window": "fri",
+   "fair": "sharp",
+   "legs": "wong",
+   "ev_min": -1.0,
+   "max_pairs": 3,
+   "total_max": null,
+   "desc": "Classic Wong, executed honestly: legs whose number AT THE BOOK is +1.5/+2/+2.5 or -7.5/-8/-8.5 at the Friday snapshot; best-EV same-book pairs (book number, juice and fixed price all count), NO EV threshold, up to 3 disjoint pairs per week. Baseline for what the model's pessimism costs."
+  }
+ ]
+}
