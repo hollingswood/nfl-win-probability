@@ -1,0 +1,28 @@
+{
+ "frozen_on": "2026-09-30",
+ "pass_bar": "mean price-based CLV > 0, one-sided p < 0.05/3",
+ "bet": "first snapshot <= 6.5 days (156 h) and > 3 h before kickoff with >= 3 allowed books posting; best allowed EV price on the rule's side; CLV = EV under the last pre-kick fair line (sharp if present)",
+ "rules": [
+  {
+   "id": "R1_monday_under",
+   "segment": "mon",
+   "market": "total",
+   "direction": "not_over",
+   "why": "dev CLV +0.66% (n=57, t=0.57); Monday totals drifted down most (-0.51 pts)"
+  },
+  {
+   "id": "R2_week1_2_under",
+   "segment": "wk12",
+   "market": "total",
+   "direction": "not_over",
+   "why": "dev CLV -0.38% (n=96); weeks 1-2 totals drifted down -0.48 pts (t=-3.6), early-season scoring priors"
+  },
+  {
+   "id": "R3_thursday_away_spread",
+   "segment": "thu",
+   "market": "spread",
+   "direction": "not_home",
+   "why": "dev CLV -0.89% (n=51); Thursday lines drifted toward the away side (-0.50 pts)"
+  }
+ ]
+}

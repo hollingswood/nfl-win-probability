@@ -1,0 +1,5992 @@
+{
+ "qa": {
+  "rows": 522258,
+  "spread_rows_dropped": 25071,
+  "ml_rows_dropped": 52623,
+  "ml_rows_dropped_off_consensus": 50,
+  "spread_rows_dropped_off_consensus": 23,
+  "totals_rows_dropped": 2049
+ },
+ "allowed_books": [
+  "betmgm",
+  "betrivers",
+  "draftkings",
+  "espnbet",
+  "fanatics",
+  "fanduel",
+  "hardrockbet",
+  "williamhill_us"
+ ],
+ "calibration_margin": {
+  "games": 1693,
+  "resid_sd": 12.62566,
+  "model_sigma": 12.77398,
+  "|margin|=1": {
+   "pred": 82.6872,
+   "actual": 80
+  },
+  "|margin|=2": {
+   "pred": 82.59551,
+   "actual": 83
+  },
+  "|margin|=3": {
+   "pred": 213.95672,
+   "actual": 257
+  },
+  "|margin|=4": {
+   "pred": 95.93012,
+   "actual": 85
+  },
+  "|margin|=6": {
+   "pred": 99.08481,
+   "actual": 113
+  },
+  "|margin|=7": {
+   "pred": 135.3082,
+   "actual": 131
+  },
+  "|margin|=10": {
+   "pred": 102.22025,
+   "actual": 83
+  },
+  "|margin|=14": {
+   "pred": 77.90922,
+   "actual": 80
+  }
+ },
+ "calibration_total": {
+  "games": 1693,
+  "resid_sd": 13.05882,
+  "sigma": 13.43141,
+  "T=37": {
+   "pred": 51.13256,
+   "actual": 64
+  },
+  "T=41": {
+   "pred": 56.3928,
+   "actual": 55
+  },
+  "T=43": {
+   "pred": 55.50912,
+   "actual": 64
+  },
+  "T=44": {
+   "pred": 61.04539,
+   "actual": 68
+  },
+  "T=47": {
+   "pred": 56.65806,
+   "actual": 55
+  },
+  "T=51": {
+   "pred": 61.94169,
+   "actual": 69
+  }
+ },
+ "q1_middles_spread": {
+  "all snapshots": {
+   "snapshots_with_allowed_lines": 43370,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.56825,
+   "share_snapshots_true_middle(both_can_win)": 0.12942,
+   "share_games_true_middle_some_snapshot": 0.5948,
+   "widest_gap_distribution": {
+    "0.5": 17969,
+    "1.0": 5158,
+    "1.5": 692,
+    "2.0": 260,
+    "2.5": 346,
+    "3.0": 142,
+    "3.5": 12,
+    "4.0": 66
+   },
+   "games_with_true_middle_per_week": 7.68702,
+   "games_with_posEV_package_per_week": 0.67939,
+   "games_with_posEV_package_per_season": {
+    "2020": 10,
+    "2021": 19,
+    "2022": 8,
+    "2023": 21,
+    "2024": 19,
+    "2025": 12
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.09026,
+    "0.25": -0.06987,
+    "0.5": -0.05606,
+    "0.75": -0.0374,
+    "0.95": -0.00825,
+    "0.99": 0.03423
+   },
+   "true_middle_mean_pkg_ev": -0.05126,
+   "true_middle_mean_p_middle": 0.029,
+   "share_snapshots_posEV_package": 0.00694,
+   "posEV_both_legs_pos": 0.12292,
+   "posEV_one_leg_carries": 0.87708,
+   "posEV_mean_better_leg_ev": 0.04465,
+   "posEV_mean_pkg_ev": 0.01885,
+   "posEV_max_leg_age_min_median": 2.01667,
+   "posEV_off_market_pts_median": 1.54945,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 17969,
+     "mean_pkg_ev": -0.0631,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.00328
+    },
+    "1.0": {
+     "n": 5158,
+     "mean_pkg_ev": -0.05455,
+     "mean_p_middle": 0.02172,
+     "realized_middle_rate": 0.02113,
+     "share_pos": 0.01764
+    },
+    "1.5": {
+     "n": 692,
+     "mean_pkg_ev": -0.03652,
+     "mean_p_middle": 0.02455,
+     "realized_middle_rate": 0.04191,
+     "share_pos": 0.08526
+    },
+    "2.0": {
+     "n": 260,
+     "mean_pkg_ev": -0.04271,
+     "mean_p_middle": 0.01879,
+     "realized_middle_rate": 0.01538,
+     "share_pos": 0.09615
+    },
+    "2.5": {
+     "n": 346,
+     "mean_pkg_ev": -0.0382,
+     "mean_p_middle": 0.03439,
+     "realized_middle_rate": 0.00867,
+     "share_pos": 0.10694
+    },
+    "3.0": {
+     "n": 220,
+     "mean_pkg_ev": -0.03924,
+     "mean_p_middle": 0.07714,
+     "realized_middle_rate": 0.11364,
+     "share_pos": 0.13636
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 1007,
+    "pred_hits": 29.61778,
+    "realized_hits": 30
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 5613,
+    "pred_rate": 0.029,
+    "realized_rate": 0.03029
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 89,
+    "per_season": 14.83333,
+    "share_true_middles": 0.66292,
+    "mean_ev_units_per_pkg": 0.01801,
+    "mean_clv_units_per_pkg": 0.01576,
+    "realized_units_per_pkg": -0.04478,
+    "realized_se": 0.02624,
+    "expected_units_per_season": 0.26721,
+    "clv_units_per_season": 0.23385,
+    "realized_units_per_season": -0.66422,
+    "middle_hits": 1,
+    "pred_middle_hits": 2.74847,
+    "by_season": {
+     "2020": {
+      "n": 10,
+      "ev": 0.39517,
+      "clv": 0.38586,
+      "pnl": -0.76573
+     },
+     "2021": {
+      "n": 19,
+      "ev": 0.28667,
+      "clv": 0.2578,
+      "pnl": -0.56539
+     },
+     "2022": {
+      "n": 8,
+      "ev": 0.16129,
+      "clv": 0.09831,
+      "pnl": -0.82009
+     },
+     "2023": {
+      "n": 21,
+      "ev": 0.43517,
+      "clv": 0.35795,
+      "pnl": -0.98814
+     },
+     "2024": {
+      "n": 19,
+      "ev": 0.21089,
+      "clv": 0.18415,
+      "pnl": -1.75377
+     },
+     "2025": {
+      "n": 12,
+      "ev": 0.1141,
+      "clv": 0.11899,
+      "pnl": 0.90783
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.04382,
+     "clv_units_per_game": 0.05441,
+     "pnl_units_per_game": 0.054
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 1007,
+    "mean_ev": -0.04929,
+    "mean_clv": -0.05025,
+    "realized": -0.05068,
+    "realized_se": 0.01019
+   }
+  },
+  "game week (<= 6.5 days)": {
+   "snapshots_with_allowed_lines": 21000,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.62757,
+   "share_snapshots_true_middle(both_can_win)": 0.12214,
+   "share_games_true_middle_some_snapshot": 0.50502,
+   "widest_gap_distribution": {
+    "0.5": 10315,
+    "1.0": 2212,
+    "1.5": 246,
+    "2.0": 110,
+    "2.5": 168,
+    "3.0": 66,
+    "3.5": 10,
+    "4.0": 52
+   },
+   "games_with_true_middle_per_week": 6.52672,
+   "games_with_posEV_package_per_week": 0.25954,
+   "games_with_posEV_package_per_season": {
+    "2020": 8,
+    "2021": 10,
+    "2022": 4,
+    "2023": 3,
+    "2024": 5,
+    "2025": 4
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.09026,
+    "0.25": -0.07029,
+    "0.5": -0.05824,
+    "0.75": -0.04225,
+    "0.95": -0.01981,
+    "0.99": -0.00021
+   },
+   "true_middle_mean_pkg_ev": -0.0565,
+   "true_middle_mean_p_middle": 0.0295,
+   "share_snapshots_posEV_package": 0.00176,
+   "posEV_both_legs_pos": 0.08108,
+   "posEV_one_leg_carries": 0.91892,
+   "posEV_mean_better_leg_ev": 0.04664,
+   "posEV_mean_pkg_ev": 0.01767,
+   "posEV_max_leg_age_min_median": 6.1,
+   "posEV_off_market_pts_median": 1.51772,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 10315,
+     "mean_pkg_ev": -0.0636,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.00107
+    },
+    "1.0": {
+     "n": 2212,
+     "mean_pkg_ev": -0.05753,
+     "mean_p_middle": 0.02307,
+     "realized_middle_rate": 0.02577,
+     "share_pos": 0.00316
+    },
+    "1.5": {
+     "n": 246,
+     "mean_pkg_ev": -0.04746,
+     "mean_p_middle": 0.02351,
+     "realized_middle_rate": 0.01626,
+     "share_pos": 0.03252
+    },
+    "2.0": {
+     "n": 110,
+     "mean_pkg_ev": -0.04406,
+     "mean_p_middle": 0.01332,
+     "realized_middle_rate": 0.01818,
+     "share_pos": 0.03636
+    },
+    "2.5": {
+     "n": 168,
+     "mean_pkg_ev": -0.04636,
+     "mean_p_middle": 0.0353,
+     "realized_middle_rate": 0.0119,
+     "share_pos": 0.02381
+    },
+    "3.0": {
+     "n": 128,
+     "mean_pkg_ev": -0.0656,
+     "mean_p_middle": 0.08943,
+     "realized_middle_rate": 0.17188,
+     "share_pos": 0.02344
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 855,
+    "pred_hits": 24.92009,
+    "realized_hits": 30
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 2565,
+    "pred_rate": 0.0295,
+    "realized_rate": 0.03392
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 34,
+    "per_season": 5.66667,
+    "share_true_middles": 0.67647,
+    "mean_ev_units_per_pkg": 0.01623,
+    "mean_clv_units_per_pkg": 0.01523,
+    "realized_units_per_pkg": 0.03641,
+    "realized_se": 0.06657,
+    "expected_units_per_season": 0.09199,
+    "clv_units_per_season": 0.08628,
+    "realized_units_per_season": 0.20634,
+    "middle_hits": 1,
+    "pred_middle_hits": 1.00155,
+    "by_season": {
+     "2020": {
+      "n": 8,
+      "ev": 0.12087,
+      "clv": 0.11181,
+      "pnl": -0.58392
+     },
+     "2021": {
+      "n": 10,
+      "ev": 0.1489,
+      "clv": 0.15277,
+      "pnl": 0.30671
+     },
+     "2022": {
+      "n": 4,
+      "ev": 0.0568,
+      "clv": 0.05296,
+      "pnl": -0.39482
+     },
+     "2023": {
+      "n": 3,
+      "ev": 0.06122,
+      "clv": 0.05539,
+      "pnl": -0.25589
+     },
+     "2024": {
+      "n": 5,
+      "ev": 0.13071,
+      "clv": 0.10929,
+      "pnl": 0.54545
+     },
+     "2025": {
+      "n": 4,
+      "ev": 0.03346,
+      "clv": 0.03546,
+      "pnl": 1.62052
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.04459,
+     "clv_units_per_game": 0.03863,
+     "pnl_units_per_game": 0.07318
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 855,
+    "mean_ev": -0.05439,
+    "mean_clv": -0.05494,
+    "realized": -0.04456,
+    "realized_se": 0.01192
+   }
+  },
+  "game week, no leg > 2.0 pts off fair": {
+   "snapshots_with_allowed_lines": 21000,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.62748,
+   "share_snapshots_true_middle(both_can_win)": 0.12195,
+   "share_games_true_middle_some_snapshot": 0.50502,
+   "widest_gap_distribution": {
+    "0.5": 10317,
+    "1.0": 2213,
+    "1.5": 246,
+    "2.0": 108,
+    "2.5": 166,
+    "3.0": 65,
+    "3.5": 10,
+    "4.0": 52
+   },
+   "games_with_true_middle_per_week": 6.52672,
+   "games_with_posEV_package_per_week": 0.24427,
+   "games_with_posEV_package_per_season": {
+    "2020": 8,
+    "2021": 9,
+    "2022": 4,
+    "2023": 2,
+    "2024": 5,
+    "2025": 4
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.09026,
+    "0.25": -0.07029,
+    "0.5": -0.05826,
+    "0.75": -0.04245,
+    "0.95": -0.02049,
+    "0.99": -0.00149
+   },
+   "true_middle_mean_pkg_ev": -0.05669,
+   "true_middle_mean_p_middle": 0.02949,
+   "share_snapshots_posEV_package": 0.00162,
+   "posEV_both_legs_pos": 0.08824,
+   "posEV_one_leg_carries": 0.91176,
+   "posEV_mean_better_leg_ev": 0.03907,
+   "posEV_mean_pkg_ev": 0.01151,
+   "posEV_max_leg_age_min_median": 6.025,
+   "posEV_off_market_pts_median": 1.42353,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 10317,
+     "mean_pkg_ev": -0.0636,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.00107
+    },
+    "1.0": {
+     "n": 2213,
+     "mean_pkg_ev": -0.0575,
+     "mean_p_middle": 0.02308,
+     "realized_middle_rate": 0.02621,
+     "share_pos": 0.00362
+    },
+    "1.5": {
+     "n": 246,
+     "mean_pkg_ev": -0.04787,
+     "mean_p_middle": 0.02353,
+     "realized_middle_rate": 0.01626,
+     "share_pos": 0.03252
+    },
+    "2.0": {
+     "n": 108,
+     "mean_pkg_ev": -0.04582,
+     "mean_p_middle": 0.01295,
+     "realized_middle_rate": 0.01852,
+     "share_pos": 0.01852
+    },
+    "2.5": {
+     "n": 166,
+     "mean_pkg_ev": -0.047,
+     "mean_p_middle": 0.0352,
+     "realized_middle_rate": 0.00602,
+     "share_pos": 0.01807
+    },
+    "3.0": {
+     "n": 127,
+     "mean_pkg_ev": -0.06641,
+     "mean_p_middle": 0.08987,
+     "realized_middle_rate": 0.17323,
+     "share_pos": 0.01575
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 855,
+    "pred_hits": 24.95944,
+    "realized_hits": 30
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 2561,
+    "pred_rate": 0.02949,
+    "realized_rate": 0.03397
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 32,
+    "per_season": 5.33333,
+    "share_true_middles": 0.65625,
+    "mean_ev_units_per_pkg": 0.01159,
+    "mean_clv_units_per_pkg": 0.01041,
+    "realized_units_per_pkg": -0.01865,
+    "realized_se": 0.05817,
+    "expected_units_per_season": 0.06182,
+    "clv_units_per_season": 0.05552,
+    "realized_units_per_season": -0.09949,
+    "middle_hits": 1,
+    "pred_middle_hits": 0.94033,
+    "by_season": {
+     "2020": {
+      "n": 8,
+      "ev": 0.12087,
+      "clv": 0.11181,
+      "pnl": -0.58392
+     },
+     "2021": {
+      "n": 9,
+      "ev": 0.077,
+      "clv": 0.07806,
+      "pnl": -0.60238
+     },
+     "2022": {
+      "n": 4,
+      "ev": 0.0568,
+      "clv": 0.05296,
+      "pnl": -0.39482
+     },
+     "2023": {
+      "n": 2,
+      "ev": 0.02405,
+      "clv": 0.01824,
+      "pnl": -0.18182
+     },
+     "2024": {
+      "n": 5,
+      "ev": 0.05876,
+      "clv": 0.03658,
+      "pnl": -0.45455
+     },
+     "2025": {
+      "n": 4,
+      "ev": 0.03346,
+      "clv": 0.03546,
+      "pnl": 1.62052
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.03892,
+     "clv_units_per_game": 0.03303,
+     "pnl_units_per_game": 0.01757
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 855,
+    "mean_ev": -0.05454,
+    "mean_clv": -0.0551,
+    "realized": -0.04577,
+    "realized_se": 0.01187
+   }
+  }
+ },
+ "q1_middles_total": {
+  "all snapshots": {
+   "snapshots_with_allowed_lines": 17955,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.6181,
+   "share_snapshots_true_middle(both_can_win)": 0.19454,
+   "share_games_true_middle_some_snapshot": 0.63438,
+   "widest_gap_distribution": {
+    "0.5": 7245,
+    "1.0": 3283,
+    "1.5": 336,
+    "2.0": 185,
+    "2.5": 12,
+    "3.0": 20,
+    "3.5": 12,
+    "4.0": 5
+   },
+   "games_with_true_middle_per_week": 8.19847,
+   "games_with_posEV_package_per_week": 1.00763,
+   "games_with_posEV_package_per_season": {
+    "2020": 7,
+    "2021": 13,
+    "2022": 26,
+    "2023": 8,
+    "2024": 33,
+    "2025": 45
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.08309,
+    "0.25": -0.06294,
+    "0.5": -0.0444,
+    "0.75": -0.02552,
+    "0.95": 0.00941,
+    "0.99": 0.06937
+   },
+   "true_middle_mean_pkg_ev": -0.0421,
+   "true_middle_mean_p_middle": 0.0321,
+   "share_snapshots_posEV_package": 0.01526,
+   "posEV_both_legs_pos": 0.22993,
+   "posEV_one_leg_carries": 0.77007,
+   "posEV_mean_better_leg_ev": 0.04281,
+   "posEV_mean_pkg_ev": 0.02761,
+   "posEV_max_leg_age_min_median": 1.15,
+   "posEV_off_market_pts_median": 1.31705,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 7245,
+     "mean_pkg_ev": -0.06562,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.0
+    },
+    "1.0": {
+     "n": 3283,
+     "mean_pkg_ev": -0.04861,
+     "mean_p_middle": 0.02657,
+     "realized_middle_rate": 0.02985,
+     "share_pos": 0.02071
+    },
+    "1.5": {
+     "n": 336,
+     "mean_pkg_ev": -0.02411,
+     "mean_p_middle": 0.03023,
+     "realized_middle_rate": 0.02083,
+     "share_pos": 0.13988
+    },
+    "2.0": {
+     "n": 185,
+     "mean_pkg_ev": 0.00466,
+     "mean_p_middle": 0.05723,
+     "realized_middle_rate": 0.07027,
+     "share_pos": 0.59459
+    },
+    "2.5": {
+     "n": 12,
+     "mean_pkg_ev": 0.03918,
+     "mean_p_middle": 0.06071,
+     "realized_middle_rate": 0.08333,
+     "share_pos": 1.0
+    },
+    "3.0": {
+     "n": 37,
+     "mean_pkg_ev": 0.09869,
+     "mean_p_middle": 0.09281,
+     "realized_middle_rate": 0.16216,
+     "share_pos": 0.94595
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 1074,
+    "pred_hits": 34.80475,
+    "realized_hits": 46
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 3493,
+    "pred_rate": 0.0321,
+    "realized_rate": 0.03579
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 131,
+    "per_season": 21.83333,
+    "share_true_middles": 0.98473,
+    "mean_ev_units_per_pkg": 0.0285,
+    "mean_clv_units_per_pkg": 0.02674,
+    "realized_units_per_pkg": 0.03294,
+    "realized_se": 0.03983,
+    "expected_units_per_season": 0.62222,
+    "clv_units_per_season": 0.58387,
+    "realized_units_per_season": 0.71922,
+    "middle_hits": 8,
+    "pred_middle_hits": 6.86936,
+    "by_season": {
+     "2020": {
+      "n": 7,
+      "ev": 0.10065,
+      "clv": 0.10105,
+      "pnl": 3.18821
+     },
+     "2021": {
+      "n": 13,
+      "ev": 0.27254,
+      "clv": 0.24095,
+      "pnl": -0.90091
+     },
+     "2022": {
+      "n": 26,
+      "ev": 1.72651,
+      "clv": 1.644,
+      "pnl": 3.51333
+     },
+     "2023": {
+      "n": 8,
+      "ev": 0.21256,
+      "clv": 0.19295,
+      "pnl": 1.22511
+     },
+     "2024": {
+      "n": 33,
+      "ev": 0.66611,
+      "clv": 0.60529,
+      "pnl": -0.93126
+     },
+     "2025": {
+      "n": 44,
+      "ev": 0.75496,
+      "clv": 0.71898,
+      "pnl": -1.77917
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.04514,
+     "clv_units_per_game": 0.02868,
+     "pnl_units_per_game": 0.02741
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 1074,
+    "mean_ev": -0.03923,
+    "mean_clv": -0.03999,
+    "realized": -0.02172,
+    "realized_se": 0.01177
+   }
+  },
+  "game week (<= 6.5 days)": {
+   "snapshots_with_allowed_lines": 11021,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.68034,
+   "share_snapshots_true_middle(both_can_win)": 0.15715,
+   "share_games_true_middle_some_snapshot": 0.4938,
+   "widest_gap_distribution": {
+    "0.5": 5567,
+    "1.0": 1777,
+    "1.5": 121,
+    "2.0": 27,
+    "2.5": 1,
+    "3.0": 3,
+    "3.5": 1,
+    "4.0": 1
+   },
+   "games_with_true_middle_per_week": 6.38168,
+   "games_with_posEV_package_per_week": 0.25954,
+   "games_with_posEV_package_per_season": {
+    "2020": 7,
+    "2021": 11,
+    "2022": 4,
+    "2023": 2,
+    "2024": 5,
+    "2025": 5
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.0842,
+    "0.25": -0.06471,
+    "0.5": -0.05221,
+    "0.75": -0.03834,
+    "0.95": -0.01211,
+    "0.99": 0.01134
+   },
+   "true_middle_mean_pkg_ev": -0.04996,
+   "true_middle_mean_p_middle": 0.03044,
+   "share_snapshots_posEV_package": 0.00372,
+   "posEV_both_legs_pos": 0.14634,
+   "posEV_one_leg_carries": 0.85366,
+   "posEV_mean_better_leg_ev": 0.04245,
+   "posEV_mean_pkg_ev": 0.01669,
+   "posEV_max_leg_age_min_median": 1.91667,
+   "posEV_off_market_pts_median": 1.51664,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 5567,
+     "mean_pkg_ev": -0.0646,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.0
+    },
+    "1.0": {
+     "n": 1777,
+     "mean_pkg_ev": -0.05123,
+     "mean_p_middle": 0.02654,
+     "realized_middle_rate": 0.02251,
+     "share_pos": 0.00394
+    },
+    "1.5": {
+     "n": 121,
+     "mean_pkg_ev": -0.02682,
+     "mean_p_middle": 0.02969,
+     "realized_middle_rate": 0.04132,
+     "share_pos": 0.13223
+    },
+    "2.0": {
+     "n": 27,
+     "mean_pkg_ev": -0.0045,
+     "mean_p_middle": 0.05356,
+     "realized_middle_rate": 0.11111,
+     "share_pos": 0.44444
+    },
+    "2.5": {
+     "n": 1,
+     "mean_pkg_ev": 0.07143,
+     "mean_p_middle": 0.05296,
+     "realized_middle_rate": 0.0,
+     "share_pos": 1.0
+    },
+    "3.0": {
+     "n": 5,
+     "mean_pkg_ev": 0.02367,
+     "mean_p_middle": 0.09081,
+     "realized_middle_rate": 0.2,
+     "share_pos": 0.6
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 836,
+    "pred_hits": 25.53524,
+    "realized_hits": 28
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 1732,
+    "pred_rate": 0.03044,
+    "realized_rate": 0.02829
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 34,
+    "per_season": 5.66667,
+    "share_true_middles": 0.94118,
+    "mean_ev_units_per_pkg": 0.01668,
+    "mean_clv_units_per_pkg": 0.01585,
+    "realized_units_per_pkg": 0.14731,
+    "realized_se": 0.1058,
+    "expected_units_per_season": 0.09454,
+    "clv_units_per_season": 0.08984,
+    "realized_units_per_season": 0.83478,
+    "middle_hits": 4,
+    "pred_middle_hits": 1.41963,
+    "by_season": {
+     "2020": {
+      "n": 7,
+      "ev": 0.10065,
+      "clv": 0.10105,
+      "pnl": 3.18821
+     },
+     "2021": {
+      "n": 11,
+      "ev": 0.23476,
+      "clv": 0.20355,
+      "pnl": -0.7191
+     },
+     "2022": {
+      "n": 4,
+      "ev": 0.04586,
+      "clv": 0.04697,
+      "pnl": 1.6947
+     },
+     "2023": {
+      "n": 2,
+      "ev": 0.01666,
+      "clv": 0.01643,
+      "pnl": 1.72727
+     },
+     "2024": {
+      "n": 5,
+      "ev": 0.08934,
+      "clv": 0.08993,
+      "pnl": -0.45078
+     },
+     "2025": {
+      "n": 5,
+      "ev": 0.07999,
+      "clv": 0.0811,
+      "pnl": -0.43163
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.0435,
+     "clv_units_per_game": 0.02621,
+     "pnl_units_per_game": 0.24185
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 836,
+    "mean_ev": -0.04792,
+    "mean_clv": -0.04806,
+    "realized": -0.04359,
+    "realized_se": 0.01179
+   }
+  },
+  "game week, no leg > 2.5 pts off fair": {
+   "snapshots_with_allowed_lines": 11021,
+   "games": 1693,
+   "share_snapshots_any_different_numbers": 0.68016,
+   "share_snapshots_true_middle(both_can_win)": 0.15697,
+   "share_games_true_middle_some_snapshot": 0.49321,
+   "widest_gap_distribution": {
+    "0.5": 5567,
+    "1.0": 1778,
+    "1.5": 121,
+    "2.0": 27,
+    "2.5": 1,
+    "3.5": 1,
+    "4.0": 1
+   },
+   "games_with_true_middle_per_week": 6.37405,
+   "games_with_posEV_package_per_week": 0.24427,
+   "games_with_posEV_package_per_season": {
+    "2020": 7,
+    "2021": 10,
+    "2022": 4,
+    "2023": 2,
+    "2024": 4,
+    "2025": 5
+   },
+   "true_middle_pkg_ev_quantiles_(units_per_2u_staked)": {
+    "0.05": -0.08421,
+    "0.25": -0.06471,
+    "0.5": -0.05223,
+    "0.75": -0.03834,
+    "0.95": -0.01287,
+    "0.99": 0.00697
+   },
+   "true_middle_mean_pkg_ev": -0.05015,
+   "true_middle_mean_p_middle": 0.03034,
+   "share_snapshots_posEV_package": 0.00345,
+   "posEV_both_legs_pos": 0.15789,
+   "posEV_one_leg_carries": 0.84211,
+   "posEV_mean_better_leg_ev": 0.03708,
+   "posEV_mean_pkg_ev": 0.01232,
+   "posEV_max_leg_age_min_median": 1.85833,
+   "posEV_off_market_pts_median": 1.44282,
+   "by_gap_widest_pkg": {
+    "0.5": {
+     "n": 5567,
+     "mean_pkg_ev": -0.0646,
+     "mean_p_middle": 0.0,
+     "realized_middle_rate": 0.0,
+     "share_pos": 0.0
+    },
+    "1.0": {
+     "n": 1778,
+     "mean_pkg_ev": -0.0512,
+     "mean_p_middle": 0.02655,
+     "realized_middle_rate": 0.0225,
+     "share_pos": 0.00394
+    },
+    "1.5": {
+     "n": 121,
+     "mean_pkg_ev": -0.02682,
+     "mean_p_middle": 0.02969,
+     "realized_middle_rate": 0.04132,
+     "share_pos": 0.13223
+    },
+    "2.0": {
+     "n": 27,
+     "mean_pkg_ev": -0.0045,
+     "mean_p_middle": 0.05356,
+     "realized_middle_rate": 0.11111,
+     "share_pos": 0.44444
+    },
+    "2.5": {
+     "n": 1,
+     "mean_pkg_ev": 0.07143,
+     "mean_p_middle": 0.05296,
+     "realized_middle_rate": 0.0,
+     "share_pos": 1.0
+    },
+    "3.0": {
+     "n": 2,
+     "mean_pkg_ev": -0.04891,
+     "mean_p_middle": 0.09897,
+     "realized_middle_rate": 0.5,
+     "share_pos": 0.0
+    }
+   },
+   "calibration_first_true_middle_per_game": {
+    "n": 835,
+    "pred_hits": 25.39183,
+    "realized_hits": 28
+   },
+   "calibration_all_true_middle_snapshots": {
+    "n": 1730,
+    "pred_rate": 0.03034,
+    "realized_rate": 0.02832
+   },
+   "policy_first_posEV_package_per_game": {
+    "games": 32,
+    "per_season": 5.33333,
+    "share_true_middles": 0.9375,
+    "mean_ev_units_per_pkg": 0.01314,
+    "mean_clv_units_per_pkg": 0.01246,
+    "realized_units_per_pkg": 0.1622,
+    "realized_se": 0.11197,
+    "expected_units_per_season": 0.07008,
+    "clv_units_per_season": 0.06645,
+    "realized_units_per_season": 0.86508,
+    "middle_hits": 4,
+    "pred_middle_hits": 1.2475,
+    "by_season": {
+     "2020": {
+      "n": 7,
+      "ev": 0.10065,
+      "clv": 0.10105,
+      "pnl": 3.18821
+     },
+     "2021": {
+      "n": 10,
+      "ev": 0.16539,
+      "clv": 0.14143,
+      "pnl": -0.62819
+     },
+     "2022": {
+      "n": 4,
+      "ev": 0.04586,
+      "clv": 0.04697,
+      "pnl": 1.6947
+     },
+     "2023": {
+      "n": 2,
+      "ev": 0.01666,
+      "clv": 0.01643,
+      "pnl": 1.72727
+     },
+     "2024": {
+      "n": 4,
+      "ev": 0.0119,
+      "clv": 0.01169,
+      "pnl": -0.35987
+     },
+     "2025": {
+      "n": 5,
+      "ev": 0.07999,
+      "clv": 0.0811,
+      "pnl": -0.43163
+     }
+    },
+    "same_games_bet_only_better_leg": {
+     "ev_units_per_game": 0.03946,
+     "clv_units_per_game": 0.01754,
+     "pnl_units_per_game": 0.20015
+    }
+   },
+   "policy_first_true_middle_any_EV_per_game": {
+    "games": 835,
+    "mean_ev": -0.04817,
+    "mean_clv": -0.0483,
+    "realized": -0.04348,
+    "realized_se": 0.01181
+   }
+  }
+ },
+ "q1_middles_spread_sensitivity_w3": {
+  "w3_multiplier": 1.23905,
+  "games_with_posEV_package_per_week": 0.38931,
+  "share_snapshots_posEV_package": 0.003,
+  "true_middle_mean_pkg_ev": -0.05766,
+  "policy_first_posEV_package_per_game": {
+   "games": 51,
+   "per_season": 8.5,
+   "share_true_middles": 0.47059,
+   "mean_ev_units_per_pkg": 0.01802,
+   "mean_clv_units_per_pkg": 0.01647,
+   "realized_units_per_pkg": -0.01062,
+   "realized_se": 0.03857,
+   "expected_units_per_season": 0.15316,
+   "clv_units_per_season": 0.14002,
+   "realized_units_per_season": -0.09027,
+   "middle_hits": 0,
+   "pred_middle_hits": 1.19157,
+   "by_season": {
+    "2020": {
+     "n": 10,
+     "ev": 0.20148,
+     "clv": 0.18851,
+     "pnl": -0.73206
+    },
+    "2021": {
+     "n": 16,
+     "ev": 0.31608,
+     "clv": 0.31803,
+     "pnl": -0.35829
+    },
+    "2022": {
+     "n": 8,
+     "ev": 0.11831,
+     "clv": 0.08978,
+     "pnl": -0.81175
+    },
+    "2023": {
+     "n": 5,
+     "ev": 0.05601,
+     "clv": 0.05012,
+     "pnl": 0.57912
+    },
+    "2024": {
+     "n": 6,
+     "ev": 0.17161,
+     "clv": 0.13606,
+     "pnl": 0.34689
+    },
+    "2025": {
+     "n": 6,
+     "ev": 0.05547,
+     "clv": 0.05761,
+     "pnl": 0.43446
+    }
+   },
+   "same_games_bet_only_better_leg": {
+    "ev_units_per_game": 0.04091,
+    "clv_units_per_game": 0.04172,
+    "pnl_units_per_game": 0.125
+   }
+  },
+  "calibration_all_true_middle_snapshots": {
+   "n": 2565,
+   "pred_rate": 0.02894,
+   "realized_rate": 0.03392
+  }
+ },
+ "q1_sequential_spread": {
+  "early_bets": 3386,
+  "early_bet_mean_ev": -0.03,
+  "early_bet_mean_clv": -0.03012,
+  "share_early_bets_later_gap>=0.5": 0.76491,
+  "share_early_bets_later_gap>=1": 0.48553,
+  "share_early_bets_later_gap>=1.5": 0.29947,
+  "share_early_bets_later_window contains 3 or 7": 0.08535,
+  "share_early_bets_later_middle & pkg EV>0": 0.31099,
+  "share_early_bets_later_middle & hedge leg EV>0": 0.13024,
+  "hedge_policy": {
+   "hedged_bets": 958,
+   "share_of_early_bets": 0.28293,
+   "early_leg_clv_mean_hedged_subset": 0.06554,
+   "hedge_leg_ev_now_mean": -0.03692,
+   "hedge_leg_clv_mean": -0.03868,
+   "hedge_leg_realized_mean": -0.05168,
+   "hedge_leg_realized_se": 0.03059,
+   "package_realized_mean_units": 0.05152,
+   "early_only_realized_mean_units_same_games": 0.1032,
+   "pred_p_middle_mean": 0.04245,
+   "gap_mean": 1.81837,
+   "per_season": 159.66667
+  },
+  "hedge_only_if_leg_posEV": {
+   "n": 441,
+   "per_season": 73.5,
+   "hedge_ev_mean": 0.00926,
+   "hedge_clv_mean": -0.00415,
+   "hedge_realized_mean": 0.05759
+  }
+ },
+ "q1_sequential_total": {
+  "early_bets": 3380,
+  "early_bet_mean_ev": -0.03138,
+  "early_bet_mean_clv": -0.03149,
+  "share_early_bets_later_gap>=0.5": 0.78994,
+  "share_early_bets_later_gap>=1": 0.54497,
+  "share_early_bets_later_gap>=1.5": 0.31598,
+  "share_early_bets_later_window contains 3 or 7": 0.0,
+  "share_early_bets_later_middle & pkg EV>0": 0.2426,
+  "share_early_bets_later_middle & hedge leg EV>0": 0.11272,
+  "hedge_policy": {
+   "hedged_bets": 819,
+   "share_of_early_bets": 0.24231,
+   "early_leg_clv_mean_hedged_subset": 0.06965,
+   "hedge_leg_ev_now_mean": -0.04055,
+   "hedge_leg_clv_mean": -0.04209,
+   "hedge_leg_realized_mean": -0.03808,
+   "hedge_leg_realized_se": 0.03318,
+   "package_realized_mean_units": 0.04143,
+   "early_only_realized_mean_units_same_games": 0.0795,
+   "pred_p_middle_mean": null,
+   "gap_mean": 1.9536,
+   "per_season": 136.5
+  },
+  "hedge_only_if_leg_posEV": {
+   "n": 381,
+   "per_season": 63.5,
+   "hedge_ev_mean": 0.01254,
+   "hedge_clv_mean": 0.00614,
+   "hedge_realized_mean": 0.06974
+  }
+ },
+ "q2_arbs_spread": {
+  "same_number": {
+   "snapshots": 0,
+   "share_snapshots": 0.0,
+   "games": 0,
+   "per_season": 0.0,
+   "arb_return_median": null,
+   "arb_return_p90": null,
+   "max_leg_age_min_median": null,
+   "share_with_leg_older_than_30min": null,
+   "off_market_leg_ev_median": null,
+   "pkg_clv_mean_units": null,
+   "book_pairs": {},
+   "by_hours_before": {}
+  },
+  "better_number_(middle+arb)": {
+   "snapshots": 0,
+   "share_snapshots": 0.0,
+   "games": 0,
+   "per_season": 0.0,
+   "arb_return_median": null,
+   "arb_return_p90": null,
+   "max_leg_age_min_median": null,
+   "share_with_leg_older_than_30min": null,
+   "off_market_leg_ev_median": null,
+   "pkg_clv_mean_units": null,
+   "book_pairs": {},
+   "by_hours_before": {}
+  }
+ },
+ "q2_arbs_total": {
+  "same_number": {
+   "snapshots": 0,
+   "share_snapshots": 0.0,
+   "games": 0,
+   "per_season": 0.0,
+   "arb_return_median": null,
+   "arb_return_p90": null,
+   "max_leg_age_min_median": null,
+   "share_with_leg_older_than_30min": null,
+   "off_market_leg_ev_median": null,
+   "pkg_clv_mean_units": null,
+   "book_pairs": {},
+   "by_hours_before": {}
+  },
+  "better_number_(middle+arb)": {
+   "snapshots": 0,
+   "share_snapshots": 0.0,
+   "games": 0,
+   "per_season": 0.0,
+   "arb_return_median": null,
+   "arb_return_p90": null,
+   "max_leg_age_min_median": null,
+   "share_with_leg_older_than_30min": null,
+   "off_market_leg_ev_median": null,
+   "pkg_clv_mean_units": null,
+   "book_pairs": {},
+   "by_hours_before": {}
+  }
+ },
+ "q2_arbs_ml": {
+  "snapshots": 148,
+  "share_snapshots": 0.00351,
+  "games": 105,
+  "per_season": 17.5,
+  "arb_return_median": 0.00549,
+  "arb_return_p90": 0.02115,
+  "max_leg_age_min_median": 4.475,
+  "share_with_leg_older_than_30min": 0.0,
+  "off_market_leg_ev_median": 0.03409,
+  "book_pairs": {
+   "draftkings/fanduel": 31,
+   "draftkings/williamhill_us": 23,
+   "fanduel/draftkings": 13,
+   "fanduel/betrivers": 10,
+   "betrivers/williamhill_us": 9
+  },
+  "by_season": {
+   "2020": 26,
+   "2021": 27,
+   "2022": 5,
+   "2023": 10,
+   "2024": 16,
+   "2025": 21
+  }
+ },
+ "q2_hourly_2025": {
+  "moneyline": {
+   "event_hours": 7263,
+   "share_with_arb": 0.00578,
+   "events_with_any_arb": 8,
+   "events": 161,
+   "arb_still_there_1h_later": 0.8
+  },
+  "spread_same_number": {
+   "event_hours": 7266,
+   "share_with_arb": 0.00014,
+   "events_with_any_arb": 1,
+   "events": 161,
+   "arb_still_there_1h_later": null
+  }
+ },
+ "q3_shopping_spread": {
+  "2020-2022": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "fanduel",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04429,
+      "betrivers": -0.04089,
+      "draftkings": -0.04451,
+      "fanduel": -0.04481,
+      "williamhill_us": -0.04401
+     },
+     "book_coverage": {
+      "betmgm": 0.77502,
+      "betrivers": 1.0,
+      "draftkings": 0.99752,
+      "fanduel": 0.98759,
+      "williamhill_us": 0.99917
+     },
+     "typical_book_mean": -0.04358,
+     "best_all_allowed_mean": -0.02981,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.04089
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03517
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.03236
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03074
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.02981
+      }
+     ],
+     "n_bets": 2418
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.0443,
+      "betrivers": -0.04089,
+      "draftkings": -0.04451,
+      "fanduel": -0.04481,
+      "williamhill_us": -0.04401
+     },
+     "book_coverage": {
+      "betmgm": 0.77502,
+      "betrivers": 1.0,
+      "draftkings": 0.99752,
+      "fanduel": 0.98759,
+      "williamhill_us": 0.99917
+     },
+     "typical_book_mean": -0.04358,
+     "best_all_allowed_mean": -0.0298,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.04089
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03517
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.03236
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03074
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.0298
+      }
+     ],
+     "n_bets": 2418
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04437,
+      "betrivers": -0.04596,
+      "draftkings": -0.0446,
+      "fanduel": -0.04472,
+      "williamhill_us": -0.04419
+     },
+     "book_coverage": {
+      "betmgm": 0.42105,
+      "betrivers": 0.90916,
+      "draftkings": 0.92,
+      "fanduel": 0.74461,
+      "williamhill_us": 0.77259
+     },
+     "typical_book_mean": -0.04485,
+     "best_all_allowed_mean": -0.03336,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04438
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03921
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.03586
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03425
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03336
+      }
+     ],
+     "n_bets": 16226
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04435,
+      "betrivers": -0.04597,
+      "draftkings": -0.04462,
+      "fanduel": -0.04465,
+      "williamhill_us": -0.04415
+     },
+     "book_coverage": {
+      "betmgm": 0.42105,
+      "betrivers": 0.90916,
+      "draftkings": 0.92,
+      "fanduel": 0.74461,
+      "williamhill_us": 0.77259
+     },
+     "typical_book_mean": -0.04486,
+     "best_all_allowed_mean": -0.0335,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04439
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03927
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.03595
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03437
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.0335
+      }
+     ],
+     "n_bets": 16226
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04433,
+      "betrivers": -0.04514,
+      "draftkings": -0.04461,
+      "fanduel": -0.04475,
+      "williamhill_us": -0.04411
+     },
+     "book_coverage": {
+      "betmgm": 0.58024,
+      "betrivers": 0.94641,
+      "draftkings": 0.95065,
+      "fanduel": 0.84562,
+      "williamhill_us": 0.86401
+     },
+     "typical_book_mean": -0.04464,
+     "best_all_allowed_mean": -0.03229,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04423
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03887
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.03554
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03361
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03229
+      }
+     ],
+     "n_bets": 27840
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04435,
+      "betrivers": -0.04515,
+      "draftkings": -0.04463,
+      "fanduel": -0.04471,
+      "williamhill_us": -0.04411
+     },
+     "book_coverage": {
+      "betmgm": 0.58024,
+      "betrivers": 0.94641,
+      "draftkings": 0.95065,
+      "fanduel": 0.84562,
+      "williamhill_us": 0.86401
+     },
+     "typical_book_mean": -0.04465,
+     "best_all_allowed_mean": -0.03238,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04425
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03892
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.0356
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03369
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03238
+      }
+     ],
+     "n_bets": 27840
+    }
+   }
+  },
+  "2023-2025": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "espnbet",
+    "fanatics",
+    "fanduel",
+    "hardrockbet",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04314,
+      "betrivers": -0.04914,
+      "draftkings": -0.04402,
+      "espnbet": -0.04304,
+      "fanatics": -0.04429,
+      "fanduel": -0.04546,
+      "hardrockbet": -0.04402,
+      "williamhill_us": -0.04406
+     },
+     "book_coverage": {
+      "betmgm": 0.94214,
+      "betrivers": 1.0,
+      "draftkings": 1.0,
+      "espnbet": 0.79381,
+      "fanatics": 0.33089,
+      "fanduel": 0.99511,
+      "hardrockbet": 0.74817,
+      "williamhill_us": 0.99022
+     },
+     "typical_book_mean": -0.04475,
+     "best_all_allowed_mean": -0.02868,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betmgm",
+       "mean": -0.04323
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03732
+      },
+      {
+       "k": 3,
+       "add": "espnbet",
+       "mean": -0.0337
+      },
+      {
+       "k": 4,
+       "add": "fanduel",
+       "mean": -0.03174
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.03024
+      },
+      {
+       "k": 6,
+       "add": "hardrockbet",
+       "mean": -0.02948
+      },
+      {
+       "k": 7,
+       "add": "betrivers",
+       "mean": -0.02879
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.02868
+      }
+     ],
+     "n_bets": 2454
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04313,
+      "betrivers": -0.04914,
+      "draftkings": -0.04401,
+      "espnbet": -0.04304,
+      "fanatics": -0.04429,
+      "fanduel": -0.04547,
+      "hardrockbet": -0.04403,
+      "williamhill_us": -0.04406
+     },
+     "book_coverage": {
+      "betmgm": 0.94214,
+      "betrivers": 1.0,
+      "draftkings": 1.0,
+      "espnbet": 0.79381,
+      "fanatics": 0.33089,
+      "fanduel": 0.99511,
+      "hardrockbet": 0.74817,
+      "williamhill_us": 0.99022
+     },
+     "typical_book_mean": -0.04475,
+     "best_all_allowed_mean": -0.02868,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betmgm",
+       "mean": -0.04323
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03731
+      },
+      {
+       "k": 3,
+       "add": "espnbet",
+       "mean": -0.0337
+      },
+      {
+       "k": 4,
+       "add": "fanduel",
+       "mean": -0.03174
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.03024
+      },
+      {
+       "k": 6,
+       "add": "hardrockbet",
+       "mean": -0.02948
+      },
+      {
+       "k": 7,
+       "add": "betrivers",
+       "mean": -0.02879
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.02868
+      }
+     ],
+     "n_bets": 2454
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04454,
+      "betrivers": -0.04928,
+      "draftkings": -0.04447,
+      "espnbet": -0.04395,
+      "fanatics": -0.0443,
+      "fanduel": -0.04533,
+      "hardrockbet": -0.04415,
+      "williamhill_us": -0.05222
+     },
+     "book_coverage": {
+      "betmgm": 0.21995,
+      "betrivers": 0.41892,
+      "draftkings": 0.97545,
+      "espnbet": 0.19028,
+      "fanatics": 0.07155,
+      "fanduel": 0.50187,
+      "hardrockbet": 0.15528,
+      "williamhill_us": 0.80477
+     },
+     "typical_book_mean": -0.04802,
+     "best_all_allowed_mean": -0.03367,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04449
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.03823
+      },
+      {
+       "k": 3,
+       "add": "fanduel",
+       "mean": -0.03527
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03464
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.0341
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.03383
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.03373
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.03367
+      }
+     ],
+     "n_bets": 46510
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.0445,
+      "betrivers": -0.04928,
+      "draftkings": -0.04453,
+      "espnbet": -0.04399,
+      "fanatics": -0.04427,
+      "fanduel": -0.04536,
+      "hardrockbet": -0.04404,
+      "williamhill_us": -0.05222
+     },
+     "book_coverage": {
+      "betmgm": 0.21995,
+      "betrivers": 0.41892,
+      "draftkings": 0.97545,
+      "espnbet": 0.19028,
+      "fanatics": 0.07155,
+      "fanduel": 0.50187,
+      "hardrockbet": 0.15528,
+      "williamhill_us": 0.80477
+     },
+     "typical_book_mean": -0.04807,
+     "best_all_allowed_mean": -0.03398,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04455
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.03852
+      },
+      {
+       "k": 3,
+       "add": "fanduel",
+       "mean": -0.03559
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03495
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.03441
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.03415
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.03404
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.03398
+      }
+     ],
+     "n_bets": 46510
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04426,
+      "betrivers": -0.04926,
+      "draftkings": -0.04438,
+      "espnbet": -0.04375,
+      "fanatics": -0.04428,
+      "fanduel": -0.04538,
+      "hardrockbet": -0.04407,
+      "williamhill_us": -0.05024
+     },
+     "book_coverage": {
+      "betmgm": 0.37379,
+      "betrivers": 0.54065,
+      "draftkings": 0.98061,
+      "espnbet": 0.32397,
+      "fanatics": 0.12693,
+      "fanduel": 0.60492,
+      "hardrockbet": 0.28591,
+      "williamhill_us": 0.84221
+     },
+     "typical_book_mean": -0.04737,
+     "best_all_allowed_mean": -0.03282,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.0444
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.03816
+      },
+      {
+       "k": 3,
+       "add": "fanduel",
+       "mean": -0.03516
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03412
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.03352
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.03311
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.0329
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.03282
+      }
+     ],
+     "n_bets": 58900
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04424,
+      "betrivers": -0.04926,
+      "draftkings": -0.04443,
+      "espnbet": -0.04377,
+      "fanatics": -0.04427,
+      "fanduel": -0.04541,
+      "hardrockbet": -0.04403,
+      "williamhill_us": -0.05025
+     },
+     "book_coverage": {
+      "betmgm": 0.37379,
+      "betrivers": 0.54065,
+      "draftkings": 0.98061,
+      "espnbet": 0.32397,
+      "fanatics": 0.12693,
+      "fanduel": 0.60492,
+      "hardrockbet": 0.28591,
+      "williamhill_us": 0.84221
+     },
+     "typical_book_mean": -0.04741,
+     "best_all_allowed_mean": -0.03307,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04445
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.0384
+      },
+      {
+       "k": 3,
+       "add": "fanduel",
+       "mean": -0.03541
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03437
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.03377
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.03336
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.03315
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.03307
+      }
+     ],
+     "n_bets": 58900
+    }
+   }
+  }
+ },
+ "q3_shopping_ml": {
+  "2020-2022": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "fanduel",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04289,
+      "betrivers": -0.03236,
+      "draftkings": -0.038,
+      "fanduel": -0.04018,
+      "williamhill_us": -0.03774
+     },
+     "book_coverage": {
+      "betmgm": 0.90323,
+      "betrivers": 1.0,
+      "draftkings": 0.99835,
+      "fanduel": 0.98759,
+      "williamhill_us": 0.99917
+     },
+     "typical_book_mean": -0.03804,
+     "best_all_allowed_mean": -0.01935,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.03236
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.02604
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.02293
+      },
+      {
+       "k": 4,
+       "add": "fanduel",
+       "mean": -0.02073
+      },
+      {
+       "k": 5,
+       "add": "draftkings",
+       "mean": -0.01935
+      }
+     ],
+     "n_bets": 2418
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04289,
+      "betrivers": -0.0323,
+      "draftkings": -0.03793,
+      "fanduel": -0.04014,
+      "williamhill_us": -0.0377
+     },
+     "book_coverage": {
+      "betmgm": 0.90323,
+      "betrivers": 1.0,
+      "draftkings": 0.99835,
+      "fanduel": 0.98759,
+      "williamhill_us": 0.99917
+     },
+     "typical_book_mean": -0.03799,
+     "best_all_allowed_mean": -0.0193,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.0323
+      },
+      {
+       "k": 2,
+       "add": "williamhill_us",
+       "mean": -0.026
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.02289
+      },
+      {
+       "k": 4,
+       "add": "fanduel",
+       "mean": -0.02068
+      },
+      {
+       "k": 5,
+       "add": "draftkings",
+       "mean": -0.0193
+      }
+     ],
+     "n_bets": 2418
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04286,
+      "betrivers": -0.04306,
+      "draftkings": -0.03975,
+      "fanduel": -0.03885,
+      "williamhill_us": -0.03807
+     },
+     "book_coverage": {
+      "betmgm": 0.54679,
+      "betrivers": 0.92509,
+      "draftkings": 0.89222,
+      "fanduel": 0.86768,
+      "williamhill_us": 0.76263
+     },
+     "typical_book_mean": -0.04056,
+     "best_all_allowed_mean": -0.02419,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.03885
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03211
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.02743
+      },
+      {
+       "k": 4,
+       "add": "betmgm",
+       "mean": -0.02556
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.02419
+      }
+     ],
+     "n_bets": 13936
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04418,
+      "betrivers": -0.04252,
+      "draftkings": -0.03855,
+      "fanduel": -0.03833,
+      "williamhill_us": -0.03816
+     },
+     "book_coverage": {
+      "betmgm": 0.54679,
+      "betrivers": 0.92509,
+      "draftkings": 0.89222,
+      "fanduel": 0.86768,
+      "williamhill_us": 0.76263
+     },
+     "typical_book_mean": -0.04008,
+     "best_all_allowed_mean": -0.02373,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.03832
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03165
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.02698
+      },
+      {
+       "k": 4,
+       "add": "betmgm",
+       "mean": -0.02512
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.02373
+      }
+     ],
+     "n_bets": 13936
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04285,
+      "betrivers": -0.03806,
+      "draftkings": -0.03915,
+      "fanduel": -0.03924,
+      "williamhill_us": -0.03792
+     },
+     "book_coverage": {
+      "betmgm": 0.7117,
+      "betrivers": 0.95796,
+      "draftkings": 0.93808,
+      "fanduel": 0.9218,
+      "williamhill_us": 0.86677
+     },
+     "typical_book_mean": -0.03944,
+     "best_all_allowed_mean": -0.02225,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.03809
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03023
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.0265
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.02404
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.02225
+      }
+     ],
+     "n_bets": 25550
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04406,
+      "betrivers": -0.03824,
+      "draftkings": -0.03899,
+      "fanduel": -0.03946,
+      "williamhill_us": -0.03848
+     },
+     "book_coverage": {
+      "betmgm": 0.7117,
+      "betrivers": 0.95796,
+      "draftkings": 0.93808,
+      "fanduel": 0.9218,
+      "williamhill_us": 0.86677
+     },
+     "typical_book_mean": -0.0396,
+     "best_all_allowed_mean": -0.02246,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.03823
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03044
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.02669
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.02423
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.02246
+      }
+     ],
+     "n_bets": 25550
+    }
+   }
+  },
+  "2023-2025": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "espnbet",
+    "fanatics",
+    "fanduel",
+    "hardrockbet",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.0434,
+      "betrivers": -0.0521,
+      "draftkings": -0.04316,
+      "espnbet": -0.04053,
+      "fanatics": -0.04417,
+      "fanduel": -0.03934,
+      "hardrockbet": -0.04451,
+      "williamhill_us": -0.04303
+     },
+     "book_coverage": {
+      "betmgm": 0.98696,
+      "betrivers": 1.0,
+      "draftkings": 1.0,
+      "espnbet": 0.79381,
+      "fanatics": 0.33089,
+      "fanduel": 0.99511,
+      "hardrockbet": 0.75061,
+      "williamhill_us": 0.99022
+     },
+     "typical_book_mean": -0.04377,
+     "best_all_allowed_mean": -0.02185,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.03936
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03135
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.02765
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.02539
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.02387
+      },
+      {
+       "k": 6,
+       "add": "betrivers",
+       "mean": -0.02301
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.02227
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.02185
+      }
+     ],
+     "n_bets": 2454
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04339,
+      "betrivers": -0.05209,
+      "draftkings": -0.04315,
+      "espnbet": -0.04054,
+      "fanatics": -0.04414,
+      "fanduel": -0.03934,
+      "hardrockbet": -0.04452,
+      "williamhill_us": -0.04302
+     },
+     "book_coverage": {
+      "betmgm": 0.98696,
+      "betrivers": 1.0,
+      "draftkings": 1.0,
+      "espnbet": 0.79381,
+      "fanatics": 0.33089,
+      "fanduel": 0.99511,
+      "hardrockbet": 0.75061,
+      "williamhill_us": 0.99022
+     },
+     "typical_book_mean": -0.04376,
+     "best_all_allowed_mean": -0.02184,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.03935
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03134
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.02765
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.02538
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.02386
+      },
+      {
+       "k": 6,
+       "add": "betrivers",
+       "mean": -0.023
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.02226
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.02184
+      }
+     ],
+     "n_bets": 2454
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04318,
+      "betrivers": -0.05225,
+      "draftkings": -0.04154,
+      "espnbet": -0.03815,
+      "fanatics": -0.04405,
+      "fanduel": -0.0353,
+      "hardrockbet": -0.04283,
+      "williamhill_us": -0.04566
+     },
+     "book_coverage": {
+      "betmgm": 0.227,
+      "betrivers": 0.41882,
+      "draftkings": 0.96976,
+      "espnbet": 0.18954,
+      "fanatics": 0.07157,
+      "fanduel": 0.50196,
+      "hardrockbet": 0.15556,
+      "williamhill_us": 0.51168
+     },
+     "typical_book_mean": -0.04257,
+     "best_all_allowed_mean": -0.02823,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.03923
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.0332
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.02997
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.0293
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.0288
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.02841
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.02827
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.02823
+      }
+     ],
+     "n_bets": 46502
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04536,
+      "betrivers": -0.05668,
+      "draftkings": -0.04361,
+      "espnbet": -0.0395,
+      "fanatics": -0.04615,
+      "fanduel": -0.04059,
+      "hardrockbet": -0.04615,
+      "williamhill_us": -0.04607
+     },
+     "book_coverage": {
+      "betmgm": 0.227,
+      "betrivers": 0.41882,
+      "draftkings": 0.96976,
+      "espnbet": 0.18954,
+      "fanatics": 0.07157,
+      "fanduel": 0.50196,
+      "hardrockbet": 0.15556,
+      "williamhill_us": 0.51168
+     },
+     "typical_book_mean": -0.04488,
+     "best_all_allowed_mean": -0.03069,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.04171
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03572
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03242
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03175
+      },
+      {
+       "k": 5,
+       "add": "betrivers",
+       "mean": -0.03126
+      },
+      {
+       "k": 6,
+       "add": "betmgm",
+       "mean": -0.03087
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.03073
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.03069
+      }
+     ],
+     "n_bets": 46502
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04348,
+      "betrivers": -0.05212,
+      "draftkings": -0.04187,
+      "espnbet": -0.03889,
+      "fanatics": -0.04387,
+      "fanduel": -0.03641,
+      "hardrockbet": -0.04361,
+      "williamhill_us": -0.04482
+     },
+     "book_coverage": {
+      "betmgm": 0.38691,
+      "betrivers": 0.54058,
+      "draftkings": 0.97613,
+      "espnbet": 0.32341,
+      "fanatics": 0.12694,
+      "fanduel": 0.60501,
+      "hardrockbet": 0.28625,
+      "williamhill_us": 0.61071
+     },
+     "typical_book_mean": -0.04278,
+     "best_all_allowed_mean": -0.0268,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.03908
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03258
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.02938
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.02831
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.02765
+      },
+      {
+       "k": 6,
+       "add": "betrivers",
+       "mean": -0.02713
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.02689
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.0268
+      }
+     ],
+     "n_bets": 58892
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04557,
+      "betrivers": -0.05561,
+      "draftkings": -0.04394,
+      "espnbet": -0.04074,
+      "fanatics": -0.04572,
+      "fanduel": -0.04061,
+      "hardrockbet": -0.04627,
+      "williamhill_us": -0.04578
+     },
+     "book_coverage": {
+      "betmgm": 0.38691,
+      "betrivers": 0.54058,
+      "draftkings": 0.97613,
+      "espnbet": 0.32341,
+      "fanatics": 0.12694,
+      "fanduel": 0.60501,
+      "hardrockbet": 0.28625,
+      "williamhill_us": 0.61071
+     },
+     "typical_book_mean": -0.04503,
+     "best_all_allowed_mean": -0.0292,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "fanduel",
+       "mean": -0.04149
+      },
+      {
+       "k": 2,
+       "add": "draftkings",
+       "mean": -0.03503
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03178
+      },
+      {
+       "k": 4,
+       "add": "espnbet",
+       "mean": -0.03071
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03005
+      },
+      {
+       "k": 6,
+       "add": "betrivers",
+       "mean": -0.02954
+      },
+      {
+       "k": 7,
+       "add": "hardrockbet",
+       "mean": -0.0293
+      },
+      {
+       "k": 8,
+       "add": "fanatics",
+       "mean": -0.0292
+      }
+     ],
+     "n_bets": 58892
+    }
+   }
+  }
+ },
+ "q3_shopping_total": {
+  "2020-2022": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "fanduel",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04494,
+      "betrivers": -0.04312,
+      "draftkings": -0.04484,
+      "fanduel": -0.04533,
+      "williamhill_us": -0.04479
+     },
+     "book_coverage": {
+      "betmgm": 0.78627,
+      "betrivers": 1.0,
+      "draftkings": 0.99804,
+      "fanduel": 0.99216,
+      "williamhill_us": 0.99902
+     },
+     "typical_book_mean": -0.04449,
+     "best_all_allowed_mean": -0.03134,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.04312
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03683
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.03384
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03192
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.03134
+      }
+     ],
+     "n_bets": 2040
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04494,
+      "betrivers": -0.04313,
+      "draftkings": -0.04484,
+      "fanduel": -0.04533,
+      "williamhill_us": -0.04479
+     },
+     "book_coverage": {
+      "betmgm": 0.78627,
+      "betrivers": 1.0,
+      "draftkings": 0.99804,
+      "fanduel": 0.99216,
+      "williamhill_us": 0.99902
+     },
+     "typical_book_mean": -0.04449,
+     "best_all_allowed_mean": -0.03134,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "betrivers",
+       "mean": -0.04313
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03684
+      },
+      {
+       "k": 3,
+       "add": "betmgm",
+       "mean": -0.03384
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03192
+      },
+      {
+       "k": 5,
+       "add": "williamhill_us",
+       "mean": -0.03134
+      }
+     ],
+     "n_bets": 2040
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04507,
+      "betrivers": -0.04614,
+      "draftkings": -0.04487,
+      "fanduel": -0.04517,
+      "williamhill_us": -0.04478
+     },
+     "book_coverage": {
+      "betmgm": 0.47828,
+      "betrivers": 0.89357,
+      "draftkings": 0.91378,
+      "fanduel": 0.68946,
+      "williamhill_us": 0.86561
+     },
+     "typical_book_mean": -0.04519,
+     "best_all_allowed_mean": -0.03281,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04485
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03913
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.03568
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03396
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03281
+      }
+     ],
+     "n_bets": 5938
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.0451,
+      "betrivers": -0.04612,
+      "draftkings": -0.04488,
+      "fanduel": -0.04519,
+      "williamhill_us": -0.0448
+     },
+     "book_coverage": {
+      "betmgm": 0.47828,
+      "betrivers": 0.89357,
+      "draftkings": 0.91378,
+      "fanduel": 0.68946,
+      "williamhill_us": 0.86561
+     },
+     "typical_book_mean": -0.0452,
+     "best_all_allowed_mean": -0.03297,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04487
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03923
+      },
+      {
+       "k": 3,
+       "add": "draftkings",
+       "mean": -0.03582
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.0341
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03297
+      }
+     ],
+     "n_bets": 5938
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.045,
+      "betrivers": -0.04546,
+      "draftkings": -0.0449,
+      "fanduel": -0.04519,
+      "williamhill_us": -0.04479
+     },
+     "book_coverage": {
+      "betmgm": 0.64862,
+      "betrivers": 0.94903,
+      "draftkings": 0.95442,
+      "fanduel": 0.84821,
+      "williamhill_us": 0.93194
+     },
+     "typical_book_mean": -0.04505,
+     "best_all_allowed_mean": -0.03247,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04482
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03915
+      },
+      {
+       "k": 3,
+       "add": "betrivers",
+       "mean": -0.0359
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03397
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03247
+      }
+     ],
+     "n_bets": 12636
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04501,
+      "betrivers": -0.04545,
+      "draftkings": -0.0449,
+      "fanduel": -0.0452,
+      "williamhill_us": -0.0448
+     },
+     "book_coverage": {
+      "betmgm": 0.64862,
+      "betrivers": 0.94903,
+      "draftkings": 0.95442,
+      "fanduel": 0.84821,
+      "williamhill_us": 0.93194
+     },
+     "typical_book_mean": -0.04505,
+     "best_all_allowed_mean": -0.03255,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "williamhill_us",
+       "mean": -0.04483
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.0392
+      },
+      {
+       "k": 3,
+       "add": "betrivers",
+       "mean": -0.03596
+      },
+      {
+       "k": 4,
+       "add": "draftkings",
+       "mean": -0.03405
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03255
+      }
+     ],
+     "n_bets": 12636
+    }
+   }
+  },
+  "2023-2025": {
+   "books_present": [
+    "betmgm",
+    "betrivers",
+    "draftkings",
+    "fanatics",
+    "fanduel",
+    "williamhill_us"
+   ],
+   "pre-kick close": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04512,
+      "betrivers": -0.04887,
+      "draftkings": -0.04479,
+      "fanatics": -0.04488,
+      "fanduel": -0.04549,
+      "williamhill_us": -0.04484
+     },
+     "book_coverage": {
+      "betmgm": 0.98559,
+      "betrivers": 0.9366,
+      "draftkings": 1.0,
+      "fanatics": 0.33045,
+      "fanduel": 0.99808,
+      "williamhill_us": 0.98751
+     },
+     "typical_book_mean": -0.04567,
+     "best_all_allowed_mean": -0.03236,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04479
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03793
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03523
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03365
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03264
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03236
+      }
+     ],
+     "n_bets": 2082
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04512,
+      "betrivers": -0.04887,
+      "draftkings": -0.04479,
+      "fanatics": -0.04488,
+      "fanduel": -0.04548,
+      "williamhill_us": -0.04484
+     },
+     "book_coverage": {
+      "betmgm": 0.98559,
+      "betrivers": 0.9366,
+      "draftkings": 1.0,
+      "fanatics": 0.33045,
+      "fanduel": 0.99808,
+      "williamhill_us": 0.98751
+     },
+     "typical_book_mean": -0.04567,
+     "best_all_allowed_mean": -0.03236,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04479
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03793
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03523
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03365
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03264
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03236
+      }
+     ],
+     "n_bets": 2082
+    }
+   },
+   "early (>= 3 days out)": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04511,
+      "betrivers": -0.04931,
+      "draftkings": -0.04497,
+      "fanatics": -0.0448,
+      "fanduel": -0.04523,
+      "williamhill_us": -0.05275
+     },
+     "book_coverage": {
+      "betmgm": 0.28455,
+      "betrivers": 0.54946,
+      "draftkings": 0.95079,
+      "fanatics": 0.092,
+      "fanduel": 0.65857,
+      "williamhill_us": 0.73257
+     },
+     "typical_book_mean": -0.04837,
+     "best_all_allowed_mean": -0.03313,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04499
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03719
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03449
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03356
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03323
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03313
+      }
+     ],
+     "n_bets": 15892
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04513,
+      "betrivers": -0.04931,
+      "draftkings": -0.045,
+      "fanatics": -0.04484,
+      "fanduel": -0.04525,
+      "williamhill_us": -0.05279
+     },
+     "book_coverage": {
+      "betmgm": 0.28455,
+      "betrivers": 0.54946,
+      "draftkings": 0.95079,
+      "fanatics": 0.092,
+      "fanduel": 0.65857,
+      "williamhill_us": 0.73257
+     },
+     "typical_book_mean": -0.0484,
+     "best_all_allowed_mean": -0.03332,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04502
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03729
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03468
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03375
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03342
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03332
+      }
+     ],
+     "n_bets": 15892
+    }
+   },
+   "all snapshots": {
+    "ev": {
+     "single_book_mean": {
+      "betmgm": -0.04501,
+      "betrivers": -0.04906,
+      "draftkings": -0.04491,
+      "fanatics": -0.04483,
+      "fanduel": -0.04533,
+      "williamhill_us": -0.04972
+     },
+     "book_coverage": {
+      "betmgm": 0.50924,
+      "betrivers": 0.66727,
+      "draftkings": 0.9664,
+      "fanatics": 0.16929,
+      "fanduel": 0.76643,
+      "williamhill_us": 0.81103
+     },
+     "typical_book_mean": -0.04749,
+     "best_all_allowed_mean": -0.03301,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04493
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03745
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.0348
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03372
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.03317
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03301
+      }
+     ],
+     "n_bets": 23274
+    },
+    "clv": {
+     "single_book_mean": {
+      "betmgm": -0.04502,
+      "betrivers": -0.04906,
+      "draftkings": -0.04492,
+      "fanatics": -0.04485,
+      "fanduel": -0.04533,
+      "williamhill_us": -0.04974
+     },
+     "book_coverage": {
+      "betmgm": 0.50924,
+      "betrivers": 0.66727,
+      "draftkings": 0.9664,
+      "fanatics": 0.16929,
+      "fanduel": 0.76643,
+      "williamhill_us": 0.81103
+     },
+     "typical_book_mean": -0.04751,
+     "best_all_allowed_mean": -0.03314,
+     "greedy_curve": [
+      {
+       "k": 1,
+       "add": "draftkings",
+       "mean": -0.04494
+      },
+      {
+       "k": 2,
+       "add": "fanduel",
+       "mean": -0.03751
+      },
+      {
+       "k": 3,
+       "add": "williamhill_us",
+       "mean": -0.03493
+      },
+      {
+       "k": 4,
+       "add": "betrivers",
+       "mean": -0.03385
+      },
+      {
+       "k": 5,
+       "add": "betmgm",
+       "mean": -0.0333
+      },
+      {
+       "k": 6,
+       "add": "fanatics",
+       "mean": -0.03314
+      }
+     ],
+     "n_bets": 23274
+    }
+   }
+  }
+ },
+ "q3_realized_blind": {
+  "spread": {
+   "best_price_roi": -0.02611,
+   "best_price_roi_se": 0.01362,
+   "all_books_roi": -0.04446,
+   "n_bets": 4872
+  },
+  "ml": {
+   "best_price_roi": -0.03215,
+   "best_price_roi_se": 0.01652,
+   "all_books_roi": -0.05345,
+   "n_bets": 4872
+  },
+  "total": {
+   "best_price_roi": -0.03151,
+   "best_price_roi_se": 0.01486,
+   "all_books_roi": -0.04515,
+   "n_bets": 4122
+  }
+ },
+ "q4_dev": {
+  "moves": {
+   "all": {
+    "games": 838,
+    "abs_move_pts": 1.28463,
+    "move_toward_fav_pts": {
+     "n": 838,
+     "mean": -0.16372,
+     "se": 0.06158,
+     "t": -2.65862,
+     "p_one_sided": 0.99608
+    },
+    "move_toward_home_pts": {
+     "n": 838,
+     "mean": -0.09995,
+     "se": 0.06174,
+     "t": -1.6187,
+     "p_one_sided": 0.94724
+    },
+    "move_toward_over_pts": {
+     "n": 835,
+     "mean": -0.36974,
+     "se": 0.05499,
+     "t": -6.72352,
+     "p_one_sided": 1.0
+    },
+    "abs_move_total_pts": 1.17777
+   },
+   "wk12": {
+    "games": 96,
+    "abs_move_pts": 0.98096,
+    "move_toward_fav_pts": {
+     "n": 96,
+     "mean": -0.18098,
+     "se": 0.12998,
+     "t": -1.39229,
+     "p_one_sided": 0.91808
+    },
+    "move_toward_home_pts": {
+     "n": 96,
+     "mean": 0.01134,
+     "se": 0.1313,
+     "t": 0.08636,
+     "p_one_sided": 0.46559
+    },
+    "move_toward_over_pts": {
+     "n": 96,
+     "mean": -0.48328,
+     "se": 0.13457,
+     "t": -3.5914,
+     "p_one_sided": 0.99984
+    },
+    "abs_move_total_pts": 1.05717
+   },
+   "wk3plus": {
+    "games": 742,
+    "abs_move_pts": 1.32392,
+    "move_toward_fav_pts": {
+     "n": 742,
+     "mean": -0.16149,
+     "se": 0.06751,
+     "t": -2.39211,
+     "p_one_sided": 0.99162
+    },
+    "move_toward_home_pts": {
+     "n": 742,
+     "mean": -0.11434,
+     "se": 0.06764,
+     "t": -1.6905,
+     "p_one_sided": 0.95453
+    },
+    "move_toward_over_pts": {
+     "n": 739,
+     "mean": -0.35499,
+     "se": 0.05963,
+     "t": -5.95293,
+     "p_one_sided": 1.0
+    },
+    "abs_move_total_pts": 1.19344
+   },
+   "thu": {
+    "games": 51,
+    "abs_move_pts": 1.67755,
+    "move_toward_fav_pts": {
+     "n": 51,
+     "mean": 0.22362,
+     "se": 0.3135,
+     "t": 0.7133,
+     "p_one_sided": 0.23783
+    },
+    "move_toward_home_pts": {
+     "n": 51,
+     "mean": -0.49846,
+     "se": 0.3071,
+     "t": -1.62312,
+     "p_one_sided": 0.94772
+    },
+    "move_toward_over_pts": {
+     "n": 50,
+     "mean": -0.36948,
+     "se": 0.24702,
+     "t": -1.49575,
+     "p_one_sided": 0.93264
+    },
+    "abs_move_total_pts": 1.36715
+   },
+   "mon": {
+    "games": 57,
+    "abs_move_pts": 1.44657,
+    "move_toward_fav_pts": {
+     "n": 57,
+     "mean": -0.24688,
+     "se": 0.27418,
+     "t": -0.90041,
+     "p_one_sided": 0.81605
+    },
+    "move_toward_home_pts": {
+     "n": 57,
+     "mean": -0.29201,
+     "se": 0.27339,
+     "t": -1.0681,
+     "p_one_sided": 0.85726
+    },
+    "move_toward_over_pts": {
+     "n": 57,
+     "mean": -0.511,
+     "se": 0.20939,
+     "t": -2.44038,
+     "p_one_sided": 0.99266
+    },
+    "abs_move_total_pts": 1.20055
+   },
+   "sat": {
+    "games": 39,
+    "abs_move_pts": 1.13015,
+    "move_toward_fav_pts": {
+     "n": 39,
+     "mean": -0.30587,
+     "se": 0.27323,
+     "t": -1.11947,
+     "p_one_sided": 0.86853
+    },
+    "move_toward_home_pts": {
+     "n": 39,
+     "mean": -0.00414,
+     "se": 0.27769,
+     "t": -0.01493,
+     "p_one_sided": 0.50595
+    },
+    "move_toward_over_pts": {
+     "n": 39,
+     "mean": -0.3465,
+     "se": 0.32306,
+     "t": -1.07255,
+     "p_one_sided": 0.85826
+    },
+    "abs_move_total_pts": 1.44847
+   },
+   "intl": {
+    "games": 7,
+    "abs_move_pts": 1.55492,
+    "move_toward_fav_pts": {
+     "n": 7,
+     "mean": 0.0412,
+     "se": 0.74108,
+     "t": 0.05559,
+     "p_one_sided": 0.47783
+    },
+    "move_toward_home_pts": {
+     "n": 7,
+     "mean": -0.87726,
+     "se": 0.64902,
+     "t": -1.35168,
+     "p_one_sided": 0.91176
+    },
+    "move_toward_over_pts": {
+     "n": 7,
+     "mean": 0.07146,
+     "se": 0.50607,
+     "t": 0.14121,
+     "p_one_sided": 0.44385
+    },
+    "abs_move_total_pts": 1.06427
+   },
+   "playoff": {
+    "games": 39,
+    "abs_move_pts": 0.75695,
+    "move_toward_fav_pts": {
+     "n": 39,
+     "mean": -0.01928,
+     "se": 0.15739,
+     "t": -0.12248,
+     "p_one_sided": 0.54874
+    },
+    "move_toward_home_pts": {
+     "n": 39,
+     "mean": -0.04694,
+     "se": 0.15724,
+     "t": -0.29849,
+     "p_one_sided": 0.61734
+    },
+    "move_toward_over_pts": {
+     "n": 39,
+     "mean": -0.27846,
+     "se": 0.17507,
+     "t": -1.59058,
+     "p_one_sided": 0.94415
+    },
+    "abs_move_total_pts": 0.81882
+   },
+   "one_elim": {
+    "games": 56,
+    "abs_move_pts": 1.72285,
+    "move_toward_fav_pts": {
+     "n": 56,
+     "mean": 0.13322,
+     "se": 0.33793,
+     "t": 0.39423,
+     "p_one_sided": 0.3467
+    },
+    "move_toward_home_pts": {
+     "n": 56,
+     "mean": -0.01019,
+     "se": 0.3384,
+     "t": -0.0301,
+     "p_one_sided": 0.51201
+    },
+    "move_toward_over_pts": {
+     "n": 56,
+     "mean": -0.35056,
+     "se": 0.23462,
+     "t": -1.49417,
+     "p_one_sided": 0.93243
+    },
+    "abs_move_total_pts": 1.19093
+   },
+   "one_clinch": {
+    "games": 41,
+    "abs_move_pts": 2.2051,
+    "move_toward_fav_pts": {
+     "n": 41,
+     "mean": 0.39894,
+     "se": 0.4925,
+     "t": 0.81004,
+     "p_one_sided": 0.20896
+    },
+    "move_toward_home_pts": {
+     "n": 41,
+     "mean": -0.48057,
+     "se": 0.49067,
+     "t": -0.97941,
+     "p_one_sided": 0.83631
+    },
+    "move_toward_over_pts": {
+     "n": 41,
+     "mean": -0.26637,
+     "se": 0.30599,
+     "t": -0.8705,
+     "p_one_sided": 0.80799
+    },
+    "abs_move_total_pts": 1.48714
+   },
+   "big_fav": {
+    "games": 100,
+    "abs_move_pts": 1.05372,
+    "move_toward_fav_pts": {
+     "n": 100,
+     "mean": 0.10736,
+     "se": 0.13236,
+     "t": 0.81114,
+     "p_one_sided": 0.20864
+    },
+    "move_toward_home_pts": {
+     "n": 100,
+     "mean": 0.01296,
+     "se": 0.1328,
+     "t": 0.09761,
+     "p_one_sided": 0.46112
+    },
+    "move_toward_over_pts": {
+     "n": 100,
+     "mean": -0.25033,
+     "se": 0.14621,
+     "t": -1.71212,
+     "p_one_sided": 0.95656
+    },
+    "abs_move_total_pts": 1.08935
+   },
+   "div_rematch": {
+    "games": 144,
+    "abs_move_pts": 1.72669,
+    "move_toward_fav_pts": {
+     "n": 144,
+     "mean": -0.27272,
+     "se": 0.20218,
+     "t": -1.34891,
+     "p_one_sided": 0.91132
+    },
+    "move_toward_home_pts": {
+     "n": 144,
+     "mean": 0.05221,
+     "se": 0.20342,
+     "t": 0.25668,
+     "p_one_sided": 0.39871
+    },
+    "move_toward_over_pts": {
+     "n": 144,
+     "mean": -0.39879,
+     "se": 0.14507,
+     "t": -2.74883,
+     "p_one_sided": 0.99701
+    },
+    "abs_move_total_pts": 1.21095
+   },
+   "late": {
+    "games": 309,
+    "abs_move_pts": 1.49021,
+    "move_toward_fav_pts": {
+     "n": 309,
+     "mean": 0.03889,
+     "se": 0.12198,
+     "t": 0.3188,
+     "p_one_sided": 0.37494
+    },
+    "move_toward_home_pts": {
+     "n": 309,
+     "mean": -0.17343,
+     "se": 0.1216,
+     "t": -1.42629,
+     "p_one_sided": 0.92311
+    },
+    "move_toward_over_pts": {
+     "n": 309,
+     "mean": -0.27163,
+     "se": 0.09432,
+     "t": -2.8799,
+     "p_one_sided": 0.99801
+    },
+    "abs_move_total_pts": 1.22453
+   }
+  },
+  "clv": {
+   "all|spread|is_fav": {
+    "n": 838,
+    "mean": -0.03856,
+    "se": 0.00357,
+    "t": -10.80599,
+    "p_one_sided": 1.0,
+    "roi": -0.0773,
+    "roi_se": 0.03278,
+    "ev_at_bet": -0.02925
+   },
+   "all|spread|not_fav": {
+    "n": 838,
+    "mean": -0.0235,
+    "se": 0.00355,
+    "t": -6.62534,
+    "p_one_sided": 1.0,
+    "roi": 0.02086,
+    "roi_se": 0.03269,
+    "ev_at_bet": -0.03261
+   },
+   "all|spread|is_home": {
+    "n": 838,
+    "mean": -0.03791,
+    "se": 0.00357,
+    "t": -10.62393,
+    "p_one_sided": 1.0,
+    "roi": -0.04092,
+    "roi_se": 0.03286,
+    "ev_at_bet": -0.03203
+   },
+   "all|spread|not_home": {
+    "n": 838,
+    "mean": -0.02415,
+    "se": 0.00355,
+    "t": -6.80254,
+    "p_one_sided": 1.0,
+    "roi": -0.01553,
+    "roi_se": 0.03269,
+    "ev_at_bet": -0.02983
+   },
+   "all|spread|is_revenge": {
+    "n": 142,
+    "mean": -0.02853,
+    "se": 0.01163,
+    "t": -2.45289,
+    "p_one_sided": 0.99291,
+    "roi": -0.00273,
+    "roi_se": 0.07929,
+    "ev_at_bet": -0.03379
+   },
+   "all|spread|is_motivated": {
+    "n": 56,
+    "mean": -0.03581,
+    "se": 0.01905,
+    "t": -1.88042,
+    "p_one_sided": 0.96997,
+    "roi": -0.1803,
+    "roi_se": 0.12508,
+    "ev_at_bet": -0.03034
+   },
+   "all|spread|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.0388,
+    "se": 0.02735,
+    "t": -1.41894,
+    "p_one_sided": 0.92204,
+    "roi": 0.11661,
+    "roi_se": 0.14864,
+    "ev_at_bet": -0.03477
+   },
+   "all|ml|is_fav": {
+    "n": 838,
+    "mean": -0.02864,
+    "se": 0.00281,
+    "t": -10.20221,
+    "p_one_sided": 1.0,
+    "roi": -0.04842,
+    "roi_se": 0.02484,
+    "ev_at_bet": -0.0234
+   },
+   "all|ml|not_fav": {
+    "n": 838,
+    "mean": -0.01404,
+    "se": 0.00495,
+    "t": -2.83388,
+    "p_one_sided": 0.9977,
+    "roi": 0.00627,
+    "roi_se": 0.05175,
+    "ev_at_bet": -0.01877
+   },
+   "all|ml|is_home": {
+    "n": 838,
+    "mean": -0.02964,
+    "se": 0.00385,
+    "t": -7.70242,
+    "p_one_sided": 1.0,
+    "roi": -0.04918,
+    "roi_se": 0.0379,
+    "ev_at_bet": -0.0231
+   },
+   "all|ml|not_home": {
+    "n": 838,
+    "mean": -0.01303,
+    "se": 0.00419,
+    "t": -3.10961,
+    "p_one_sided": 0.99906,
+    "roi": 0.00702,
+    "roi_se": 0.0431,
+    "ev_at_bet": -0.01907
+   },
+   "all|ml|is_revenge": {
+    "n": 142,
+    "mean": -0.02221,
+    "se": 0.01468,
+    "t": -1.51302,
+    "p_one_sided": 0.93486,
+    "roi": -0.06617,
+    "roi_se": 0.11489,
+    "ev_at_bet": -0.01742
+   },
+   "all|ml|is_motivated": {
+    "n": 56,
+    "mean": -0.0297,
+    "se": 0.01618,
+    "t": -1.8354,
+    "p_one_sided": 0.96678,
+    "roi": -0.07887,
+    "roi_se": 0.08552,
+    "ev_at_bet": -0.02899
+   },
+   "all|ml|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.04238,
+    "se": 0.03648,
+    "t": -1.16177,
+    "p_one_sided": 0.87734,
+    "roi": -0.18279,
+    "roi_se": 0.20117,
+    "ev_at_bet": -0.0049
+   },
+   "all|total|is_over": {
+    "n": 835,
+    "mean": -0.05389,
+    "se": 0.00315,
+    "t": -17.09408,
+    "p_one_sided": 1.0,
+    "roi": -0.11246,
+    "roi_se": 0.03286,
+    "ev_at_bet": -0.03288
+   },
+   "all|total|not_over": {
+    "n": 835,
+    "mean": -0.0098,
+    "se": 0.00316,
+    "t": -3.10544,
+    "p_one_sided": 0.99905,
+    "roi": 0.04816,
+    "roi_se": 0.03269,
+    "ev_at_bet": -0.03059
+   },
+   "wk12|spread|is_fav": {
+    "n": 96,
+    "mean": -0.0419,
+    "se": 0.00778,
+    "t": -5.38805,
+    "p_one_sided": 1.0,
+    "roi": -0.11286,
+    "roi_se": 0.09738,
+    "ev_at_bet": -0.03138
+   },
+   "wk12|spread|not_fav": {
+    "n": 96,
+    "mean": -0.023,
+    "se": 0.00757,
+    "t": -3.03588,
+    "p_one_sided": 0.9988,
+    "roi": 0.03789,
+    "roi_se": 0.09694,
+    "ev_at_bet": -0.03361
+   },
+   "wk12|spread|is_home": {
+    "n": 96,
+    "mean": -0.03375,
+    "se": 0.00778,
+    "t": -4.33705,
+    "p_one_sided": 0.99999,
+    "roi": -0.10032,
+    "roi_se": 0.09726,
+    "ev_at_bet": -0.03459
+   },
+   "wk12|spread|not_home": {
+    "n": 96,
+    "mean": -0.03115,
+    "se": 0.00769,
+    "t": -4.0502,
+    "p_one_sided": 0.99997,
+    "roi": 0.02534,
+    "roi_se": 0.09725,
+    "ev_at_bet": -0.0304
+   },
+   "wk12|ml|is_fav": {
+    "n": 96,
+    "mean": -0.03038,
+    "se": 0.00597,
+    "t": -5.08782,
+    "p_one_sided": 1.0,
+    "roi": 0.0021,
+    "roi_se": 0.07342,
+    "ev_at_bet": -0.02547
+   },
+   "wk12|ml|not_fav": {
+    "n": 96,
+    "mean": -0.00916,
+    "se": 0.01019,
+    "t": -0.89914,
+    "p_one_sided": 0.81571,
+    "roi": -0.06646,
+    "roi_se": 0.14001,
+    "ev_at_bet": -0.0172
+   },
+   "wk12|ml|is_home": {
+    "n": 96,
+    "mean": -0.02233,
+    "se": 0.00762,
+    "t": -2.9317,
+    "p_one_sided": 0.99831,
+    "roi": 0.00845,
+    "roi_se": 0.1094,
+    "ev_at_bet": -0.0245
+   },
+   "wk12|ml|not_home": {
+    "n": 96,
+    "mean": -0.01721,
+    "se": 0.00915,
+    "t": -1.8821,
+    "p_one_sided": 0.97009,
+    "roi": -0.0728,
+    "roi_se": 0.11408,
+    "ev_at_bet": -0.01817
+   },
+   "wk12|total|is_over": {
+    "n": 96,
+    "mean": -0.06107,
+    "se": 0.00777,
+    "t": -7.85979,
+    "p_one_sided": 1.0,
+    "roi": -0.12323,
+    "roi_se": 0.09782,
+    "ev_at_bet": -0.03367
+   },
+   "wk12|total|not_over": {
+    "n": 96,
+    "mean": -0.00376,
+    "se": 0.00769,
+    "t": -0.4883,
+    "p_one_sided": 0.68733,
+    "roi": 0.04435,
+    "roi_se": 0.09698,
+    "ev_at_bet": -0.03112
+   },
+   "wk3plus|spread|is_fav": {
+    "n": 742,
+    "mean": -0.03813,
+    "se": 0.0039,
+    "t": -9.76717,
+    "p_one_sided": 1.0,
+    "roi": -0.0727,
+    "roi_se": 0.03483,
+    "ev_at_bet": -0.02897
+   },
+   "wk3plus|spread|not_fav": {
+    "n": 742,
+    "mean": -0.02357,
+    "se": 0.00389,
+    "t": -6.06478,
+    "p_one_sided": 1.0,
+    "roi": 0.01866,
+    "roi_se": 0.03475,
+    "ev_at_bet": -0.03249
+   },
+   "wk3plus|spread|is_home": {
+    "n": 742,
+    "mean": -0.03845,
+    "se": 0.0039,
+    "t": -9.85024,
+    "p_one_sided": 1.0,
+    "roi": -0.03323,
+    "roi_se": 0.03493,
+    "ev_at_bet": -0.0317
+   },
+   "wk3plus|spread|not_home": {
+    "n": 742,
+    "mean": -0.02325,
+    "se": 0.00388,
+    "t": -5.98425,
+    "p_one_sided": 1.0,
+    "roi": -0.02081,
+    "roi_se": 0.03473,
+    "ev_at_bet": -0.02976
+   },
+   "wk3plus|spread|is_revenge": {
+    "n": 142,
+    "mean": -0.02853,
+    "se": 0.01163,
+    "t": -2.45289,
+    "p_one_sided": 0.99291,
+    "roi": -0.00273,
+    "roi_se": 0.07929,
+    "ev_at_bet": -0.03379
+   },
+   "wk3plus|spread|is_motivated": {
+    "n": 56,
+    "mean": -0.03581,
+    "se": 0.01905,
+    "t": -1.88042,
+    "p_one_sided": 0.96997,
+    "roi": -0.1803,
+    "roi_se": 0.12508,
+    "ev_at_bet": -0.03034
+   },
+   "wk3plus|spread|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.0388,
+    "se": 0.02735,
+    "t": -1.41894,
+    "p_one_sided": 0.92204,
+    "roi": 0.11661,
+    "roi_se": 0.14864,
+    "ev_at_bet": -0.03477
+   },
+   "wk3plus|ml|is_fav": {
+    "n": 742,
+    "mean": -0.02841,
+    "se": 0.00308,
+    "t": -9.23768,
+    "p_one_sided": 1.0,
+    "roi": -0.05496,
+    "roi_se": 0.0264,
+    "ev_at_bet": -0.02314
+   },
+   "wk3plus|ml|not_fav": {
+    "n": 742,
+    "mean": -0.01467,
+    "se": 0.00544,
+    "t": -2.69727,
+    "p_one_sided": 0.9965,
+    "roi": 0.01568,
+    "roi_se": 0.05559,
+    "ev_at_bet": -0.01898
+   },
+   "wk3plus|ml|is_home": {
+    "n": 742,
+    "mean": -0.03058,
+    "se": 0.00423,
+    "t": -7.22559,
+    "p_one_sided": 1.0,
+    "roi": -0.05663,
+    "roi_se": 0.04042,
+    "ev_at_bet": -0.02292
+   },
+   "wk3plus|ml|not_home": {
+    "n": 742,
+    "mean": -0.01249,
+    "se": 0.00459,
+    "t": -2.72489,
+    "p_one_sided": 0.99678,
+    "roi": 0.01735,
+    "roi_se": 0.0464,
+    "ev_at_bet": -0.01919
+   },
+   "wk3plus|ml|is_revenge": {
+    "n": 142,
+    "mean": -0.02221,
+    "se": 0.01468,
+    "t": -1.51302,
+    "p_one_sided": 0.93486,
+    "roi": -0.06617,
+    "roi_se": 0.11489,
+    "ev_at_bet": -0.01742
+   },
+   "wk3plus|ml|is_motivated": {
+    "n": 56,
+    "mean": -0.0297,
+    "se": 0.01618,
+    "t": -1.8354,
+    "p_one_sided": 0.96678,
+    "roi": -0.07887,
+    "roi_se": 0.08552,
+    "ev_at_bet": -0.02899
+   },
+   "wk3plus|ml|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.04238,
+    "se": 0.03648,
+    "t": -1.16177,
+    "p_one_sided": 0.87734,
+    "roi": -0.18279,
+    "roi_se": 0.20117,
+    "ev_at_bet": -0.0049
+   },
+   "wk3plus|total|is_over": {
+    "n": 739,
+    "mean": -0.05296,
+    "se": 0.00342,
+    "t": -15.50179,
+    "p_one_sided": 1.0,
+    "roi": -0.11106,
+    "roi_se": 0.03491,
+    "ev_at_bet": -0.03277
+   },
+   "wk3plus|total|not_over": {
+    "n": 739,
+    "mean": -0.01059,
+    "se": 0.00342,
+    "t": -3.09197,
+    "p_one_sided": 0.99901,
+    "roi": 0.04865,
+    "roi_se": 0.03475,
+    "ev_at_bet": -0.03053
+   },
+   "thu|spread|is_fav": {
+    "n": 51,
+    "mean": -0.01296,
+    "se": 0.01741,
+    "t": -0.74447,
+    "p_one_sided": 0.7717,
+    "roi": -0.09796,
+    "roi_se": 0.13539,
+    "ev_at_bet": -0.02547
+   },
+   "thu|spread|not_fav": {
+    "n": 51,
+    "mean": -0.04926,
+    "se": 0.01777,
+    "t": -2.77234,
+    "p_one_sided": 0.99722,
+    "roi": 0.03976,
+    "roi_se": 0.13452,
+    "ev_at_bet": -0.03587
+   },
+   "thu|spread|is_home": {
+    "n": 51,
+    "mean": -0.05327,
+    "se": 0.01763,
+    "t": -3.02118,
+    "p_one_sided": 0.99874,
+    "roi": -0.28719,
+    "roi_se": 0.13089,
+    "ev_at_bet": -0.02345
+   },
+   "thu|spread|not_home": {
+    "n": 51,
+    "mean": -0.00895,
+    "se": 0.01736,
+    "t": -0.51556,
+    "p_one_sided": 0.69692,
+    "roi": 0.22898,
+    "roi_se": 0.12969,
+    "ev_at_bet": -0.03789
+   },
+   "thu|spread|is_revenge": {
+    "n": 9,
+    "mean": -0.04944,
+    "se": 0.03619,
+    "t": -1.36589,
+    "p_one_sided": 0.91401,
+    "roi": 0.29041,
+    "roi_se": 0.32291,
+    "ev_at_bet": -0.02386
+   },
+   "thu|ml|is_fav": {
+    "n": 51,
+    "mean": -0.00752,
+    "se": 0.01387,
+    "t": -0.54255,
+    "p_one_sided": 0.70628,
+    "roi": -0.02887,
+    "roi_se": 0.10367,
+    "ev_at_bet": -0.02284
+   },
+   "thu|ml|not_fav": {
+    "n": 51,
+    "mean": -0.05615,
+    "se": 0.02261,
+    "t": -2.48391,
+    "p_one_sided": 0.9935,
+    "roi": -0.11668,
+    "roi_se": 0.17473,
+    "ev_at_bet": -0.02125
+   },
+   "thu|ml|is_home": {
+    "n": 51,
+    "mean": -0.05514,
+    "se": 0.01936,
+    "t": -2.8483,
+    "p_one_sided": 0.9978,
+    "roi": -0.22234,
+    "roi_se": 0.14046,
+    "ev_at_bet": -0.02466
+   },
+   "thu|ml|not_home": {
+    "n": 51,
+    "mean": -0.00854,
+    "se": 0.01818,
+    "t": -0.4698,
+    "p_one_sided": 0.68075,
+    "roi": 0.07678,
+    "roi_se": 0.14399,
+    "ev_at_bet": -0.01943
+   },
+   "thu|ml|is_revenge": {
+    "n": 9,
+    "mean": -0.05304,
+    "se": 0.04793,
+    "t": -1.10644,
+    "p_one_sided": 0.86573,
+    "roi": 0.14013,
+    "roi_se": 0.37653,
+    "ev_at_bet": -0.01525
+   },
+   "thu|total|is_over": {
+    "n": 50,
+    "mean": -0.05158,
+    "se": 0.01539,
+    "t": -3.35186,
+    "p_one_sided": 0.9996,
+    "roi": -0.19955,
+    "roi_se": 0.13439,
+    "ev_at_bet": -0.03
+   },
+   "thu|total|not_over": {
+    "n": 50,
+    "mean": -0.00745,
+    "se": 0.01552,
+    "t": -0.48006,
+    "p_one_sided": 0.68441,
+    "roi": 0.13107,
+    "roi_se": 0.13321,
+    "ev_at_bet": -0.02879
+   },
+   "mon|spread|is_fav": {
+    "n": 57,
+    "mean": -0.04173,
+    "se": 0.01508,
+    "t": -2.76701,
+    "p_one_sided": 0.99717,
+    "roi": -0.066,
+    "roi_se": 0.12704,
+    "ev_at_bet": -0.02901
+   },
+   "mon|spread|not_fav": {
+    "n": 57,
+    "mean": -0.0219,
+    "se": 0.01548,
+    "t": -1.41454,
+    "p_one_sided": 0.9214,
+    "roi": -0.02524,
+    "roi_se": 0.12807,
+    "ev_at_bet": -0.0348
+   },
+   "mon|spread|is_home": {
+    "n": 57,
+    "mean": -0.05055,
+    "se": 0.01489,
+    "t": -3.39385,
+    "p_one_sided": 0.99966,
+    "roi": -0.19579,
+    "roi_se": 0.12604,
+    "ev_at_bet": -0.03327
+   },
+   "mon|spread|not_home": {
+    "n": 57,
+    "mean": -0.01309,
+    "se": 0.01537,
+    "t": -0.85123,
+    "p_one_sided": 0.80268,
+    "roi": 0.10456,
+    "roi_se": 0.12596,
+    "ev_at_bet": -0.03054
+   },
+   "mon|spread|is_revenge": {
+    "n": 7,
+    "mean": -0.1196,
+    "se": 0.04717,
+    "t": -2.53524,
+    "p_one_sided": 0.99438,
+    "roi": 0.0819,
+    "roi_se": 0.38256,
+    "ev_at_bet": -0.03451
+   },
+   "mon|ml|is_fav": {
+    "n": 57,
+    "mean": -0.03123,
+    "se": 0.01181,
+    "t": -2.64439,
+    "p_one_sided": 0.99591,
+    "roi": -0.00297,
+    "roi_se": 0.09721,
+    "ev_at_bet": -0.02044
+   },
+   "mon|ml|not_fav": {
+    "n": 57,
+    "mean": -0.01958,
+    "se": 0.02051,
+    "t": -0.95429,
+    "p_one_sided": 0.83003,
+    "roi": 0.02561,
+    "roi_se": 0.21021,
+    "ev_at_bet": -0.02351
+   },
+   "mon|ml|is_home": {
+    "n": 57,
+    "mean": -0.04663,
+    "se": 0.01602,
+    "t": -2.9113,
+    "p_one_sided": 0.9982,
+    "roi": -0.0361,
+    "roi_se": 0.16419,
+    "ev_at_bet": -0.0266
+   },
+   "mon|ml|not_home": {
+    "n": 57,
+    "mean": -0.00418,
+    "se": 0.017,
+    "t": -0.24568,
+    "p_one_sided": 0.59703,
+    "roi": 0.05874,
+    "roi_se": 0.16312,
+    "ev_at_bet": -0.01736
+   },
+   "mon|ml|is_revenge": {
+    "n": 7,
+    "mean": -0.1382,
+    "se": 0.03818,
+    "t": -3.6201,
+    "p_one_sided": 0.99985,
+    "roi": 0.94143,
+    "roi_se": 1.01365,
+    "ev_at_bet": -0.03067
+   },
+   "mon|total|is_over": {
+    "n": 57,
+    "mean": -0.06833,
+    "se": 0.01187,
+    "t": -5.75604,
+    "p_one_sided": 1.0,
+    "roi": -0.26487,
+    "roi_se": 0.12394,
+    "ev_at_bet": -0.03979
+   },
+   "mon|total|not_over": {
+    "n": 57,
+    "mean": 0.0066,
+    "se": 0.01161,
+    "t": 0.56848,
+    "p_one_sided": 0.28486,
+    "roi": 0.17107,
+    "roi_se": 0.1241,
+    "ev_at_bet": -0.02174
+   },
+   "sat|spread|is_fav": {
+    "n": 39,
+    "mean": -0.05094,
+    "se": 0.01522,
+    "t": -3.34725,
+    "p_one_sided": 0.99959,
+    "roi": -0.03851,
+    "roi_se": 0.15386,
+    "ev_at_bet": -0.03276
+   },
+   "sat|spread|not_fav": {
+    "n": 39,
+    "mean": -0.01532,
+    "se": 0.01522,
+    "t": -1.00636,
+    "p_one_sided": 0.84288,
+    "roi": 0.02919,
+    "roi_se": 0.15465,
+    "ev_at_bet": -0.03335
+   },
+   "sat|spread|is_home": {
+    "n": 39,
+    "mean": -0.03452,
+    "se": 0.0157,
+    "t": -2.19931,
+    "p_one_sided": 0.98607,
+    "roi": -0.08549,
+    "roi_se": 0.15409,
+    "ev_at_bet": -0.03381
+   },
+   "sat|spread|not_home": {
+    "n": 39,
+    "mean": -0.03174,
+    "se": 0.01528,
+    "t": -2.07672,
+    "p_one_sided": 0.98109,
+    "roi": 0.07617,
+    "roi_se": 0.1535,
+    "ev_at_bet": -0.0323
+   },
+   "sat|spread|is_revenge": {
+    "n": 9,
+    "mean": 0.04426,
+    "se": 0.05099,
+    "t": 0.868,
+    "p_one_sided": 0.1927,
+    "roi": 0.26722,
+    "roi_se": 0.31696,
+    "ev_at_bet": -0.04488
+   },
+   "sat|spread|is_vs_clinched": {
+    "n": 10,
+    "mean": -0.01744,
+    "se": 0.04146,
+    "t": -0.42064,
+    "p_one_sided": 0.66299,
+    "roi": -0.05124,
+    "roi_se": 0.31637,
+    "ev_at_bet": -0.05346
+   },
+   "sat|ml|is_fav": {
+    "n": 39,
+    "mean": -0.02965,
+    "se": 0.01132,
+    "t": -2.61857,
+    "p_one_sided": 0.99559,
+    "roi": 0.04947,
+    "roi_se": 0.10364,
+    "ev_at_bet": -0.02575
+   },
+   "sat|ml|not_fav": {
+    "n": 39,
+    "mean": -0.00902,
+    "se": 0.02537,
+    "t": -0.35554,
+    "p_one_sided": 0.63891,
+    "roi": -0.319,
+    "roi_se": 0.19605,
+    "ev_at_bet": -0.01939
+   },
+   "sat|ml|is_home": {
+    "n": 39,
+    "mean": -0.01626,
+    "se": 0.01524,
+    "t": -1.06727,
+    "p_one_sided": 0.85707,
+    "roi": -0.10442,
+    "roi_se": 0.12675,
+    "ev_at_bet": -0.02061
+   },
+   "sat|ml|not_home": {
+    "n": 39,
+    "mean": -0.02241,
+    "se": 0.02334,
+    "t": -0.96001,
+    "p_one_sided": 0.83147,
+    "roi": -0.16511,
+    "roi_se": 0.18667,
+    "ev_at_bet": -0.02452
+   },
+   "sat|ml|is_revenge": {
+    "n": 9,
+    "mean": 0.0855,
+    "se": 0.09393,
+    "t": 0.91028,
+    "p_one_sided": 0.18134,
+    "roi": 0.33938,
+    "roi_se": 0.5116,
+    "ev_at_bet": -0.01598
+   },
+   "sat|ml|is_vs_clinched": {
+    "n": 10,
+    "mean": -0.01879,
+    "se": 0.05332,
+    "t": -0.35248,
+    "p_one_sided": 0.63776,
+    "roi": -0.80909,
+    "roi_se": 0.19091,
+    "ev_at_bet": -0.01165
+   },
+   "sat|total|is_over": {
+    "n": 39,
+    "mean": -0.05824,
+    "se": 0.01896,
+    "t": -3.07244,
+    "p_one_sided": 0.99894,
+    "roi": -0.06964,
+    "roi_se": 0.15485,
+    "ev_at_bet": -0.03775
+   },
+   "sat|total|not_over": {
+    "n": 39,
+    "mean": -0.00774,
+    "se": 0.01853,
+    "t": -0.41782,
+    "p_one_sided": 0.66196,
+    "roi": 0.00689,
+    "roi_se": 0.15299,
+    "ev_at_bet": -0.02796
+   },
+   "intl|spread|is_fav": {
+    "n": 7,
+    "mean": -0.03418,
+    "se": 0.04641,
+    "t": -0.73645,
+    "p_one_sided": 0.76927,
+    "roi": 0.08645,
+    "roi_se": 0.38416,
+    "ev_at_bet": -0.03661
+   },
+   "intl|spread|not_fav": {
+    "n": 7,
+    "mean": -0.02591,
+    "se": 0.04598,
+    "t": -0.56338,
+    "p_one_sided": 0.71341,
+    "roi": -0.03162,
+    "roi_se": 0.36435,
+    "ev_at_bet": -0.02287
+   },
+   "intl|spread|is_home": {
+    "n": 7,
+    "mean": -0.08462,
+    "se": 0.04038,
+    "t": -2.09576,
+    "p_one_sided": 0.98195,
+    "roi": -0.02478,
+    "roi_se": 0.36722,
+    "ev_at_bet": -0.03395
+   },
+   "intl|spread|not_home": {
+    "n": 7,
+    "mean": 0.02453,
+    "se": 0.04063,
+    "t": 0.60375,
+    "p_one_sided": 0.27301,
+    "roi": 0.07962,
+    "roi_se": 0.38175,
+    "ev_at_bet": -0.02553
+   },
+   "intl|ml|is_fav": {
+    "n": 7,
+    "mean": -0.02616,
+    "se": 0.04064,
+    "t": -0.64373,
+    "p_one_sided": 0.74013,
+    "roi": -0.08306,
+    "roi_se": 0.33076,
+    "ev_at_bet": -0.02429
+   },
+   "intl|ml|not_fav": {
+    "n": 7,
+    "mean": -0.00842,
+    "se": 0.07416,
+    "t": -0.11357,
+    "p_one_sided": 0.54521,
+    "roi": 0.32857,
+    "roi_se": 0.6498,
+    "ev_at_bet": -0.02137
+   },
+   "intl|ml|is_home": {
+    "n": 7,
+    "mean": -0.09655,
+    "se": 0.04397,
+    "t": -2.19567,
+    "p_one_sided": 0.98594,
+    "roi": -0.15886,
+    "roi_se": 0.41068,
+    "ev_at_bet": -0.03135
+   },
+   "intl|ml|not_home": {
+    "n": 7,
+    "mean": 0.06196,
+    "se": 0.05613,
+    "t": 1.10403,
+    "p_one_sided": 0.13479,
+    "roi": 0.40437,
+    "roi_se": 0.59217,
+    "ev_at_bet": -0.01431
+   },
+   "intl|total|is_over": {
+    "n": 7,
+    "mean": -0.02525,
+    "se": 0.02557,
+    "t": -0.98749,
+    "p_one_sided": 0.8383,
+    "roi": 0.09013,
+    "roi_se": 0.3855,
+    "ev_at_bet": -0.02987
+   },
+   "intl|total|not_over": {
+    "n": 7,
+    "mean": -0.04359,
+    "se": 0.02527,
+    "t": -1.72492,
+    "p_one_sided": 0.95773,
+    "roi": -0.18182,
+    "roi_se": 0.38569,
+    "ev_at_bet": -0.03917
+   },
+   "playoff|spread|is_fav": {
+    "n": 39,
+    "mean": -0.03608,
+    "se": 0.00889,
+    "t": -4.06012,
+    "p_one_sided": 0.99998,
+    "roi": -0.06444,
+    "roi_se": 0.15578,
+    "ev_at_bet": -0.03525
+   },
+   "playoff|spread|not_fav": {
+    "n": 39,
+    "mean": -0.03021,
+    "se": 0.00899,
+    "t": -3.3592,
+    "p_one_sided": 0.99961,
+    "roi": 0.02711,
+    "roi_se": 0.15433,
+    "ev_at_bet": -0.03113
+   },
+   "playoff|spread|is_home": {
+    "n": 39,
+    "mean": -0.03517,
+    "se": 0.00896,
+    "t": -3.92557,
+    "p_one_sided": 0.99996,
+    "roi": -0.01568,
+    "roi_se": 0.1557,
+    "ev_at_bet": -0.03272
+   },
+   "playoff|spread|not_home": {
+    "n": 39,
+    "mean": -0.03111,
+    "se": 0.00893,
+    "t": -3.48331,
+    "p_one_sided": 0.99975,
+    "roi": -0.02164,
+    "roi_se": 0.15476,
+    "ev_at_bet": -0.03366
+   },
+   "playoff|ml|is_fav": {
+    "n": 39,
+    "mean": -0.0205,
+    "se": 0.0064,
+    "t": -3.20442,
+    "p_one_sided": 0.99932,
+    "roi": -0.07426,
+    "roi_se": 0.11572,
+    "ev_at_bet": -0.02034
+   },
+   "playoff|ml|not_fav": {
+    "n": 39,
+    "mean": -0.03241,
+    "se": 0.01662,
+    "t": -1.95022,
+    "p_one_sided": 0.97442,
+    "roi": -0.05051,
+    "roi_se": 0.20968,
+    "ev_at_bet": -0.02696
+   },
+   "playoff|ml|is_home": {
+    "n": 39,
+    "mean": -0.02283,
+    "se": 0.00722,
+    "t": -3.164,
+    "p_one_sided": 0.99922,
+    "roi": -0.10846,
+    "roi_se": 0.12765,
+    "ev_at_bet": -0.02133
+   },
+   "playoff|ml|not_home": {
+    "n": 39,
+    "mean": -0.03008,
+    "se": 0.01632,
+    "t": -1.84362,
+    "p_one_sided": 0.96738,
+    "roi": -0.01631,
+    "roi_se": 0.20238,
+    "ev_at_bet": -0.02598
+   },
+   "playoff|total|is_over": {
+    "n": 39,
+    "mean": -0.04546,
+    "se": 0.01056,
+    "t": -4.3026,
+    "p_one_sided": 0.99999,
+    "roi": -0.26567,
+    "roi_se": 0.15069,
+    "ev_at_bet": -0.02931
+   },
+   "playoff|total|not_over": {
+    "n": 39,
+    "mean": -0.02159,
+    "se": 0.01009,
+    "t": -2.14073,
+    "p_one_sided": 0.98385,
+    "roi": 0.17892,
+    "roi_se": 0.15121,
+    "ev_at_bet": -0.03745
+   },
+   "one_elim|spread|is_fav": {
+    "n": 56,
+    "mean": -0.02039,
+    "se": 0.01905,
+    "t": -1.07041,
+    "p_one_sided": 0.85778,
+    "roi": -0.11134,
+    "roi_se": 0.12619,
+    "ev_at_bet": -0.02936
+   },
+   "one_elim|spread|not_fav": {
+    "n": 56,
+    "mean": -0.04544,
+    "se": 0.01851,
+    "t": -2.45539,
+    "p_one_sided": 0.99296,
+    "roi": 0.07452,
+    "roi_se": 0.12655,
+    "ev_at_bet": -0.03702
+   },
+   "one_elim|spread|is_home": {
+    "n": 56,
+    "mean": -0.03198,
+    "se": 0.01881,
+    "t": -1.70052,
+    "p_one_sided": 0.95548,
+    "roi": 0.02387,
+    "roi_se": 0.126,
+    "ev_at_bet": -0.03134
+   },
+   "one_elim|spread|not_home": {
+    "n": 56,
+    "mean": -0.03385,
+    "se": 0.0189,
+    "t": -1.79075,
+    "p_one_sided": 0.96333,
+    "roi": -0.06069,
+    "roi_se": 0.12771,
+    "ev_at_bet": -0.03504
+   },
+   "one_elim|spread|is_revenge": {
+    "n": 34,
+    "mean": -0.03992,
+    "se": 0.02689,
+    "t": -1.48441,
+    "p_one_sided": 0.93115,
+    "roi": 0.12863,
+    "roi_se": 0.15895,
+    "ev_at_bet": -0.0375
+   },
+   "one_elim|spread|is_motivated": {
+    "n": 56,
+    "mean": -0.03581,
+    "se": 0.01905,
+    "t": -1.88042,
+    "p_one_sided": 0.96997,
+    "roi": -0.1803,
+    "roi_se": 0.12508,
+    "ev_at_bet": -0.03034
+   },
+   "one_elim|spread|is_vs_clinched": {
+    "n": 17,
+    "mean": -0.04004,
+    "se": 0.04429,
+    "t": -0.90412,
+    "p_one_sided": 0.81703,
+    "roi": 0.12214,
+    "roi_se": 0.23478,
+    "ev_at_bet": -0.03805
+   },
+   "one_elim|ml|is_fav": {
+    "n": 56,
+    "mean": -0.0146,
+    "se": 0.015,
+    "t": -0.97318,
+    "p_one_sided": 0.83477,
+    "roi": -0.03318,
+    "roi_se": 0.08184,
+    "ev_at_bet": -0.02879
+   },
+   "one_elim|ml|not_fav": {
+    "n": 56,
+    "mean": -0.03977,
+    "se": 0.02867,
+    "t": -1.3872,
+    "p_one_sided": 0.91731,
+    "roi": 0.18786,
+    "roi_se": 0.3189,
+    "ev_at_bet": -0.00935
+   },
+   "one_elim|ml|is_home": {
+    "n": 56,
+    "mean": -0.03109,
+    "se": 0.02188,
+    "t": -1.42085,
+    "p_one_sided": 0.92232,
+    "roi": 0.22933,
+    "roi_se": 0.24083,
+    "ev_at_bet": -0.02225
+   },
+   "one_elim|ml|not_home": {
+    "n": 56,
+    "mean": -0.02328,
+    "se": 0.02394,
+    "t": -0.97213,
+    "p_one_sided": 0.83451,
+    "roi": -0.07465,
+    "roi_se": 0.2236,
+    "ev_at_bet": -0.01588
+   },
+   "one_elim|ml|is_revenge": {
+    "n": 34,
+    "mean": -0.02774,
+    "se": 0.04013,
+    "t": -0.69123,
+    "p_one_sided": 0.75529,
+    "roi": 0.21831,
+    "roi_se": 0.33299,
+    "ev_at_bet": -0.01352
+   },
+   "one_elim|ml|is_motivated": {
+    "n": 56,
+    "mean": -0.0297,
+    "se": 0.01618,
+    "t": -1.8354,
+    "p_one_sided": 0.96678,
+    "roi": -0.07887,
+    "roi_se": 0.08552,
+    "ev_at_bet": -0.02899
+   },
+   "one_elim|ml|is_vs_clinched": {
+    "n": 17,
+    "mean": -0.0385,
+    "se": 0.06037,
+    "t": -0.63778,
+    "p_one_sided": 0.73819,
+    "roi": -0.42302,
+    "roi_se": 0.27179,
+    "ev_at_bet": -0.00113
+   },
+   "one_elim|total|is_over": {
+    "n": 56,
+    "mean": -0.05465,
+    "se": 0.01274,
+    "t": -4.29083,
+    "p_one_sided": 0.99999,
+    "roi": -0.04532,
+    "roi_se": 0.12876,
+    "ev_at_bet": -0.03439
+   },
+   "one_elim|total|not_over": {
+    "n": 56,
+    "mean": -0.0041,
+    "se": 0.01341,
+    "t": -0.30541,
+    "p_one_sided": 0.61997,
+    "roi": -0.04497,
+    "roi_se": 0.12879,
+    "ev_at_bet": -0.02392
+   },
+   "one_clinch|spread|is_fav": {
+    "n": 41,
+    "mean": -0.00661,
+    "se": 0.02721,
+    "t": -0.24287,
+    "p_one_sided": 0.59595,
+    "roi": -0.1349,
+    "roi_se": 0.14885,
+    "ev_at_bet": -0.03083
+   },
+   "one_clinch|spread|not_fav": {
+    "n": 41,
+    "mean": -0.05762,
+    "se": 0.02712,
+    "t": -2.12475,
+    "p_one_sided": 0.9832,
+    "roi": 0.07101,
+    "roi_se": 0.14986,
+    "ev_at_bet": -0.03352
+   },
+   "one_clinch|spread|is_home": {
+    "n": 41,
+    "mean": -0.06247,
+    "se": 0.02682,
+    "t": -2.32943,
+    "p_one_sided": 0.99008,
+    "roi": 0.09694,
+    "roi_se": 0.14767,
+    "ev_at_bet": -0.0344
+   },
+   "one_clinch|spread|not_home": {
+    "n": 41,
+    "mean": -0.00176,
+    "se": 0.02726,
+    "t": -0.06472,
+    "p_one_sided": 0.5258,
+    "roi": -0.16082,
+    "roi_se": 0.15002,
+    "ev_at_bet": -0.02995
+   },
+   "one_clinch|spread|is_revenge": {
+    "n": 24,
+    "mean": 0.01437,
+    "se": 0.03877,
+    "t": 0.37063,
+    "p_one_sided": 0.35546,
+    "roi": -0.04443,
+    "roi_se": 0.19932,
+    "ev_at_bet": -0.03887
+   },
+   "one_clinch|spread|is_motivated": {
+    "n": 17,
+    "mean": -0.02742,
+    "se": 0.04535,
+    "t": -0.60458,
+    "p_one_sided": 0.72727,
+    "roi": -0.21461,
+    "roi_se": 0.23471,
+    "ev_at_bet": -0.03048
+   },
+   "one_clinch|spread|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.0388,
+    "se": 0.02735,
+    "t": -1.41894,
+    "p_one_sided": 0.92204,
+    "roi": 0.11661,
+    "roi_se": 0.14864,
+    "ev_at_bet": -0.03477
+   },
+   "one_clinch|ml|is_fav": {
+    "n": 41,
+    "mean": -0.01094,
+    "se": 0.02234,
+    "t": -0.4897,
+    "p_one_sided": 0.68783,
+    "roi": 0.036,
+    "roi_se": 0.09628,
+    "ev_at_bet": -0.03018
+   },
+   "one_clinch|ml|not_fav": {
+    "n": 41,
+    "mean": -0.06157,
+    "se": 0.03696,
+    "t": -1.6659,
+    "p_one_sided": 0.95213,
+    "roi": -0.29271,
+    "roi_se": 0.20127,
+    "ev_at_bet": -0.0023
+   },
+   "one_clinch|ml|is_home": {
+    "n": 41,
+    "mean": -0.06531,
+    "se": 0.03249,
+    "t": -2.01029,
+    "p_one_sided": 0.9778,
+    "roi": -0.07126,
+    "roi_se": 0.15818,
+    "ev_at_bet": -0.01951
+   },
+   "one_clinch|ml|not_home": {
+    "n": 41,
+    "mean": -0.0072,
+    "se": 0.02827,
+    "t": -0.25466,
+    "p_one_sided": 0.60051,
+    "roi": -0.18544,
+    "roi_se": 0.16108,
+    "ev_at_bet": -0.01297
+   },
+   "one_clinch|ml|is_revenge": {
+    "n": 24,
+    "mean": 0.0123,
+    "se": 0.04854,
+    "t": 0.25347,
+    "p_one_sided": 0.39995,
+    "roi": -0.0431,
+    "roi_se": 0.2396,
+    "ev_at_bet": -0.01258
+   },
+   "one_clinch|ml|is_motivated": {
+    "n": 17,
+    "mean": -0.02483,
+    "se": 0.04167,
+    "t": -0.59585,
+    "p_one_sided": 0.72436,
+    "roi": 4e-05,
+    "roi_se": 0.14507,
+    "ev_at_bet": -0.02745
+   },
+   "one_clinch|ml|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.04238,
+    "se": 0.03648,
+    "t": -1.16177,
+    "p_one_sided": 0.87734,
+    "roi": -0.18279,
+    "roi_se": 0.20117,
+    "ev_at_bet": -0.0049
+   },
+   "one_clinch|total|is_over": {
+    "n": 41,
+    "mean": -0.04789,
+    "se": 0.01792,
+    "t": -2.67197,
+    "p_one_sided": 0.99623,
+    "roi": 0.2313,
+    "roi_se": 0.14191,
+    "ev_at_bet": -0.03219
+   },
+   "one_clinch|total|not_over": {
+    "n": 41,
+    "mean": -0.01719,
+    "se": 0.01785,
+    "t": -0.96309,
+    "p_one_sided": 0.83225,
+    "roi": -0.2754,
+    "roi_se": 0.14488,
+    "ev_at_bet": -0.03256
+   },
+   "big_fav|spread|is_fav": {
+    "n": 100,
+    "mean": -0.02264,
+    "se": 0.00817,
+    "t": -2.77239,
+    "p_one_sided": 0.99722,
+    "roi": 0.04658,
+    "roi_se": 0.09561,
+    "ev_at_bet": -0.02964
+   },
+   "big_fav|spread|not_fav": {
+    "n": 100,
+    "mean": -0.04202,
+    "se": 0.00811,
+    "t": -5.1833,
+    "p_one_sided": 1.0,
+    "roi": -0.10489,
+    "roi_se": 0.09453,
+    "ev_at_bet": -0.03485
+   },
+   "big_fav|spread|is_home": {
+    "n": 100,
+    "mean": -0.03116,
+    "se": 0.00816,
+    "t": -3.81856,
+    "p_one_sided": 0.99993,
+    "roi": 0.12172,
+    "roi_se": 0.09445,
+    "ev_at_bet": -0.03231
+   },
+   "big_fav|spread|not_home": {
+    "n": 100,
+    "mean": -0.03351,
+    "se": 0.00823,
+    "t": -4.07161,
+    "p_one_sided": 0.99998,
+    "roi": -0.18003,
+    "roi_se": 0.09388,
+    "ev_at_bet": -0.03217
+   },
+   "big_fav|spread|is_revenge": {
+    "n": 24,
+    "mean": -0.02969,
+    "se": 0.0162,
+    "t": -1.83288,
+    "p_one_sided": 0.96659,
+    "roi": -0.20247,
+    "roi_se": 0.18741,
+    "ev_at_bet": -0.03626
+   },
+   "big_fav|spread|is_motivated": {
+    "n": 22,
+    "mean": -0.0122,
+    "se": 0.01614,
+    "t": -0.7557,
+    "p_one_sided": 0.77509,
+    "roi": -0.17009,
+    "roi_se": 0.20248,
+    "ev_at_bet": -0.03071
+   },
+   "big_fav|spread|is_vs_clinched": {
+    "n": 9,
+    "mean": -0.05965,
+    "se": 0.02001,
+    "t": -2.98068,
+    "p_one_sided": 0.99856,
+    "roi": 0.04937,
+    "roi_se": 0.33191,
+    "ev_at_bet": -0.04206
+   },
+   "big_fav|ml|is_fav": {
+    "n": 100,
+    "mean": -0.02409,
+    "se": 0.00316,
+    "t": -7.61094,
+    "p_one_sided": 1.0,
+    "roi": -0.01613,
+    "roi_se": 0.04338,
+    "ev_at_bet": -0.03063
+   },
+   "big_fav|ml|not_fav": {
+    "n": 100,
+    "mean": -0.03667,
+    "se": 0.01463,
+    "t": -2.50638,
+    "p_one_sided": 0.9939,
+    "roi": -0.038,
+    "roi_se": 0.23149,
+    "ev_at_bet": -0.00134
+   },
+   "big_fav|ml|is_home": {
+    "n": 100,
+    "mean": -0.03096,
+    "se": 0.00819,
+    "t": -3.77857,
+    "p_one_sided": 0.99992,
+    "roi": 0.27022,
+    "roi_se": 0.16025,
+    "ev_at_bet": -0.02329
+   },
+   "big_fav|ml|not_home": {
+    "n": 100,
+    "mean": -0.02979,
+    "se": 0.01256,
+    "t": -2.37255,
+    "p_one_sided": 0.99117,
+    "roi": -0.32435,
+    "roi_se": 0.16735,
+    "ev_at_bet": -0.00868
+   },
+   "big_fav|ml|is_revenge": {
+    "n": 24,
+    "mean": -0.0487,
+    "se": 0.02879,
+    "t": -1.69167,
+    "p_one_sided": 0.95465,
+    "roi": -0.03916,
+    "roi_se": 0.45625,
+    "ev_at_bet": -0.00646
+   },
+   "big_fav|ml|is_motivated": {
+    "n": 22,
+    "mean": -0.01745,
+    "se": 0.00599,
+    "t": -2.91092,
+    "p_one_sided": 0.9982,
+    "roi": -0.11188,
+    "roi_se": 0.10557,
+    "ev_at_bet": -0.03119
+   },
+   "big_fav|ml|is_vs_clinched": {
+    "n": 9,
+    "mean": -0.06038,
+    "se": 0.03813,
+    "t": -1.58365,
+    "p_one_sided": 0.94336,
+    "roi": -1.0,
+    "roi_se": 0.0,
+    "ev_at_bet": 0.0095
+   },
+   "big_fav|total|is_over": {
+    "n": 100,
+    "mean": -0.04824,
+    "se": 0.00812,
+    "t": -5.93986,
+    "p_one_sided": 1.0,
+    "roi": -0.17829,
+    "roi_se": 0.09509,
+    "ev_at_bet": -0.03399
+   },
+   "big_fav|total|not_over": {
+    "n": 100,
+    "mean": -0.01416,
+    "se": 0.00793,
+    "t": -1.78461,
+    "p_one_sided": 0.96284,
+    "roi": 0.08948,
+    "roi_se": 0.09511,
+    "ev_at_bet": -0.02836
+   },
+   "div_rematch|spread|is_fav": {
+    "n": 144,
+    "mean": -0.04346,
+    "se": 0.01153,
+    "t": -3.76763,
+    "p_one_sided": 0.99992,
+    "roi": -0.08165,
+    "roi_se": 0.07886,
+    "ev_at_bet": -0.02847
+   },
+   "div_rematch|spread|not_fav": {
+    "n": 144,
+    "mean": -0.01859,
+    "se": 0.01135,
+    "t": -1.6377,
+    "p_one_sided": 0.94926,
+    "roi": 0.0355,
+    "roi_se": 0.07846,
+    "ev_at_bet": -0.03325
+   },
+   "div_rematch|spread|is_home": {
+    "n": 144,
+    "mean": -0.0285,
+    "se": 0.01147,
+    "t": -2.48483,
+    "p_one_sided": 0.99352,
+    "roi": -0.02979,
+    "roi_se": 0.07882,
+    "ev_at_bet": -0.03123
+   },
+   "div_rematch|spread|not_home": {
+    "n": 144,
+    "mean": -0.03355,
+    "se": 0.01151,
+    "t": -2.91521,
+    "p_one_sided": 0.99822,
+    "roi": -0.01636,
+    "roi_se": 0.07881,
+    "ev_at_bet": -0.03049
+   },
+   "div_rematch|spread|is_revenge": {
+    "n": 142,
+    "mean": -0.02853,
+    "se": 0.01163,
+    "t": -2.45289,
+    "p_one_sided": 0.99291,
+    "roi": -0.00273,
+    "roi_se": 0.07929,
+    "ev_at_bet": -0.03379
+   },
+   "div_rematch|spread|is_motivated": {
+    "n": 34,
+    "mean": -0.05034,
+    "se": 0.02753,
+    "t": -1.82841,
+    "p_one_sided": 0.96626,
+    "roi": -0.0994,
+    "roi_se": 0.16088,
+    "ev_at_bet": -0.03011
+   },
+   "div_rematch|spread|is_vs_clinched": {
+    "n": 24,
+    "mean": 0.00175,
+    "se": 0.03919,
+    "t": 0.04473,
+    "p_one_sided": 0.48216,
+    "roi": 0.03614,
+    "roi_se": 0.1988,
+    "ev_at_bet": -0.03509
+   },
+   "div_rematch|ml|is_fav": {
+    "n": 144,
+    "mean": -0.0369,
+    "se": 0.00962,
+    "t": -3.83616,
+    "p_one_sided": 0.99994,
+    "roi": -0.05932,
+    "roi_se": 0.05922,
+    "ev_at_bet": -0.02558
+   },
+   "div_rematch|ml|not_fav": {
+    "n": 144,
+    "mean": -0.01288,
+    "se": 0.01578,
+    "t": -0.81644,
+    "p_one_sided": 0.79288,
+    "roi": -0.00784,
+    "roi_se": 0.12715,
+    "ev_at_bet": -0.0187
+   },
+   "div_rematch|ml|is_home": {
+    "n": 144,
+    "mean": -0.02341,
+    "se": 0.01232,
+    "t": -1.90021,
+    "p_one_sided": 0.9713,
+    "roi": -0.07136,
+    "roi_se": 0.09832,
+    "ev_at_bet": -0.02469
+   },
+   "div_rematch|ml|not_home": {
+    "n": 144,
+    "mean": -0.02637,
+    "se": 0.01385,
+    "t": -1.90459,
+    "p_one_sided": 0.97158,
+    "roi": 0.0042,
+    "roi_se": 0.09999,
+    "ev_at_bet": -0.01959
+   },
+   "div_rematch|ml|is_revenge": {
+    "n": 142,
+    "mean": -0.02221,
+    "se": 0.01468,
+    "t": -1.51302,
+    "p_one_sided": 0.93486,
+    "roi": -0.06617,
+    "roi_se": 0.11489,
+    "ev_at_bet": -0.01742
+   },
+   "div_rematch|ml|is_motivated": {
+    "n": 34,
+    "mean": -0.03854,
+    "se": 0.02441,
+    "t": -1.57911,
+    "p_one_sided": 0.94284,
+    "roi": -0.08314,
+    "roi_se": 0.11507,
+    "ev_at_bet": -0.02875
+   },
+   "div_rematch|ml|is_vs_clinched": {
+    "n": 24,
+    "mean": -0.00143,
+    "se": 0.05242,
+    "t": -0.02727,
+    "p_one_sided": 0.51088,
+    "roi": -0.02435,
+    "roi_se": 0.25734,
+    "ev_at_bet": -0.01407
+   },
+   "div_rematch|total|is_over": {
+    "n": 144,
+    "mean": -0.05669,
+    "se": 0.00837,
+    "t": -6.77621,
+    "p_one_sided": 1.0,
+    "roi": 0.03244,
+    "roi_se": 0.07943,
+    "ev_at_bet": -0.03395
+   },
+   "div_rematch|total|not_over": {
+    "n": 144,
+    "mean": -0.00479,
+    "se": 0.00865,
+    "t": -0.55381,
+    "p_one_sided": 0.71015,
+    "roi": -0.09591,
+    "roi_se": 0.07933,
+    "ev_at_bet": -0.02732
+   },
+   "late|spread|is_fav": {
+    "n": 309,
+    "mean": -0.02533,
+    "se": 0.007,
+    "t": -3.61709,
+    "p_one_sided": 0.99985,
+    "roi": -0.03309,
+    "roi_se": 0.054,
+    "ev_at_bet": -0.02807
+   },
+   "late|spread|not_fav": {
+    "n": 309,
+    "mean": -0.0364,
+    "se": 0.00692,
+    "t": -5.25895,
+    "p_one_sided": 1.0,
+    "roi": -0.02171,
+    "roi_se": 0.05393,
+    "ev_at_bet": -0.03356
+   },
+   "late|spread|is_home": {
+    "n": 309,
+    "mean": -0.04051,
+    "se": 0.00692,
+    "t": -5.85067,
+    "p_one_sided": 1.0,
+    "roi": 0.04963,
+    "roi_se": 0.05379,
+    "ev_at_bet": -0.03061
+   },
+   "late|spread|not_home": {
+    "n": 309,
+    "mean": -0.02122,
+    "se": 0.00697,
+    "t": -3.04363,
+    "p_one_sided": 0.99883,
+    "roi": -0.10443,
+    "roi_se": 0.05378,
+    "ev_at_bet": -0.03102
+   },
+   "late|spread|is_revenge": {
+    "n": 116,
+    "mean": -0.03274,
+    "se": 0.01337,
+    "t": -2.44828,
+    "p_one_sided": 0.99282,
+    "roi": 0.00638,
+    "roi_se": 0.08745,
+    "ev_at_bet": -0.0337
+   },
+   "late|spread|is_motivated": {
+    "n": 56,
+    "mean": -0.03581,
+    "se": 0.01905,
+    "t": -1.88042,
+    "p_one_sided": 0.96997,
+    "roi": -0.1803,
+    "roi_se": 0.12508,
+    "ev_at_bet": -0.03034
+   },
+   "late|spread|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.0388,
+    "se": 0.02735,
+    "t": -1.41894,
+    "p_one_sided": 0.92204,
+    "roi": 0.11661,
+    "roi_se": 0.14864,
+    "ev_at_bet": -0.03477
+   },
+   "late|ml|is_fav": {
+    "n": 309,
+    "mean": -0.02183,
+    "se": 0.00561,
+    "t": -3.89346,
+    "p_one_sided": 0.99995,
+    "roi": -0.04252,
+    "roi_se": 0.03989,
+    "ev_at_bet": -0.02471
+   },
+   "late|ml|not_fav": {
+    "n": 309,
+    "mean": -0.03435,
+    "se": 0.00954,
+    "t": -3.59966,
+    "p_one_sided": 0.99984,
+    "roi": -0.04486,
+    "roi_se": 0.08807,
+    "ev_at_bet": -0.01824
+   },
+   "late|ml|is_home": {
+    "n": 309,
+    "mean": -0.03945,
+    "se": 0.00755,
+    "t": -5.22699,
+    "p_one_sided": 1.0,
+    "roi": -0.03175,
+    "roi_se": 0.06487,
+    "ev_at_bet": -0.02378
+   },
+   "late|ml|not_home": {
+    "n": 309,
+    "mean": -0.01673,
+    "se": 0.00806,
+    "t": -2.0758,
+    "p_one_sided": 0.98104,
+    "roi": -0.05563,
+    "roi_se": 0.07168,
+    "ev_at_bet": -0.01917
+   },
+   "late|ml|is_revenge": {
+    "n": 116,
+    "mean": -0.03016,
+    "se": 0.01681,
+    "t": -1.79432,
+    "p_one_sided": 0.96362,
+    "roi": -0.06708,
+    "roi_se": 0.12736,
+    "ev_at_bet": -0.01667
+   },
+   "late|ml|is_motivated": {
+    "n": 56,
+    "mean": -0.0297,
+    "se": 0.01618,
+    "t": -1.8354,
+    "p_one_sided": 0.96678,
+    "roi": -0.07887,
+    "roi_se": 0.08552,
+    "ev_at_bet": -0.02899
+   },
+   "late|ml|is_vs_clinched": {
+    "n": 41,
+    "mean": -0.04238,
+    "se": 0.03648,
+    "t": -1.16177,
+    "p_one_sided": 0.87734,
+    "roi": -0.18279,
+    "roi_se": 0.20117,
+    "ev_at_bet": -0.0049
+   },
+   "late|total|is_over": {
+    "n": 309,
+    "mean": -0.04923,
+    "se": 0.00543,
+    "t": -9.06884,
+    "p_one_sided": 1.0,
+    "roi": -0.08292,
+    "roi_se": 0.05423,
+    "ev_at_bet": -0.03356
+   },
+   "late|total|not_over": {
+    "n": 309,
+    "mean": -0.01333,
+    "se": 0.0055,
+    "t": -2.42318,
+    "p_one_sided": 0.99231,
+    "roi": 0.01215,
+    "roi_se": 0.05412,
+    "ev_at_bet": -0.02874
+   }
+  },
+  "n_games": 838
+ },
+ "q4_dev_frozen_rules": {
+  "R1_monday_under": {
+   "n": 57,
+   "mean": 0.0066,
+   "se": 0.01161,
+   "t": 0.56848,
+   "p_one_sided": 0.28486,
+   "roi": 0.17107,
+   "roi_se": 0.1241,
+   "ev_at_bet": -0.02174,
+   "pass": false
+  },
+  "R2_week1_2_under": {
+   "n": 96,
+   "mean": -0.00376,
+   "se": 0.00769,
+   "t": -0.4883,
+   "p_one_sided": 0.68733,
+   "roi": 0.04435,
+   "roi_se": 0.09698,
+   "ev_at_bet": -0.03112,
+   "pass": false
+  },
+  "R3_thursday_away_spread": {
+   "n": 51,
+   "mean": -0.00895,
+   "se": 0.01736,
+   "t": -0.51556,
+   "p_one_sided": 0.69692,
+   "roi": 0.22898,
+   "roi_se": 0.12969,
+   "ev_at_bet": -0.03789,
+   "pass": false
+  }
+ },
+ "q4_holdout": {
+  "R1_monday_under": {
+   "n": 67,
+   "mean": -0.02909,
+   "se": 0.0087,
+   "t": -3.34565,
+   "p_one_sided": 0.99959,
+   "roi": 0.05134,
+   "roi_se": 0.11654,
+   "ev_at_bet": -0.03133,
+   "pass": false,
+   "by_season": {
+    "2023": {
+     "n": 23,
+     "mean": -0.01912,
+     "se": 0.01843,
+     "t": -1.03749,
+     "p_one_sided": 0.85025
+    },
+    "2024": {
+     "n": 22,
+     "mean": -0.03709,
+     "se": 0.01482,
+     "t": -2.50199,
+     "p_one_sided": 0.99383
+    },
+    "2025": {
+     "n": 22,
+     "mean": -0.03153,
+     "se": 0.01113,
+     "t": -2.8322,
+     "p_one_sided": 0.99769
+    }
+   }
+  },
+  "R2_week1_2_under": {
+   "n": 96,
+   "mean": -0.01418,
+   "se": 0.00695,
+   "t": -2.03969,
+   "p_one_sided": 0.97931,
+   "roi": 0.0568,
+   "roi_se": 0.09655,
+   "ev_at_bet": -0.02885,
+   "pass": false,
+   "by_season": {
+    "2023": {
+     "n": 32,
+     "mean": 0.00684,
+     "se": 0.01417,
+     "t": 0.48292,
+     "p_one_sided": 0.31457
+    },
+    "2024": {
+     "n": 32,
+     "mean": -0.0167,
+     "se": 0.01224,
+     "t": -1.36436,
+     "p_one_sided": 0.91377
+    },
+    "2025": {
+     "n": 32,
+     "mean": -0.0327,
+     "se": 0.00828,
+     "t": -3.94998,
+     "p_one_sided": 0.99996
+    }
+   }
+  },
+  "R3_thursday_away_spread": {
+   "n": 59,
+   "mean": -0.02513,
+   "se": 0.01753,
+   "t": -1.43345,
+   "p_one_sided": 0.92413,
+   "roi": -0.01397,
+   "roi_se": 0.12402,
+   "ev_at_bet": -0.03161,
+   "pass": false,
+   "by_season": {
+    "2023": {
+     "n": 19,
+     "mean": -0.06153,
+     "se": 0.03208,
+     "t": -1.91825,
+     "p_one_sided": 0.97246
+    },
+    "2024": {
+     "n": 19,
+     "mean": -0.0248,
+     "se": 0.02275,
+     "t": -1.09023,
+     "p_one_sided": 0.86219
+    },
+    "2025": {
+     "n": 21,
+     "mean": 0.0075,
+     "se": 0.03365,
+     "t": 0.22294,
+     "p_one_sided": 0.41179
+    }
+   }
+  }
+ },
+ "q4_holdout_moves": {
+  "all": {
+   "games": 855,
+   "abs_move_pts": 1.14561,
+   "move_toward_fav_pts": {
+    "n": 855,
+    "mean": -0.07279,
+    "se": 0.05531,
+    "t": -1.31607,
+    "p_one_sided": 0.90592
+   },
+   "move_toward_home_pts": {
+    "n": 855,
+    "mean": 0.16452,
+    "se": 0.05508,
+    "t": 2.98696,
+    "p_one_sided": 0.00141
+   },
+   "move_toward_over_pts": {
+    "n": 855,
+    "mean": -0.2164,
+    "se": 0.05032,
+    "t": -4.30035,
+    "p_one_sided": 0.99999
+   },
+   "abs_move_total_pts": 1.09511
+  },
+  "wk12": {
+   "games": 96,
+   "abs_move_pts": 0.92506,
+   "move_toward_fav_pts": {
+    "n": 96,
+    "mean": -0.22515,
+    "se": 0.13098,
+    "t": -1.71901,
+    "p_one_sided": 0.95719
+   },
+   "move_toward_home_pts": {
+    "n": 96,
+    "mean": 0.26158,
+    "se": 0.13026,
+    "t": 2.00809,
+    "p_one_sided": 0.02232
+   },
+   "move_toward_over_pts": {
+    "n": 96,
+    "mean": -0.26548,
+    "se": 0.12533,
+    "t": -2.11837,
+    "p_one_sided": 0.98293
+   },
+   "abs_move_total_pts": 0.91143
+  },
+  "wk3plus": {
+   "games": 759,
+   "abs_move_pts": 1.1735,
+   "move_toward_fav_pts": {
+    "n": 759,
+    "mean": -0.05352,
+    "se": 0.06005,
+    "t": -0.89124,
+    "p_one_sided": 0.8136
+   },
+   "move_toward_home_pts": {
+    "n": 759,
+    "mean": 0.15224,
+    "se": 0.05983,
+    "t": 2.54465,
+    "p_one_sided": 0.00547
+   },
+   "move_toward_over_pts": {
+    "n": 759,
+    "mean": -0.21019,
+    "se": 0.05445,
+    "t": -3.86055,
+    "p_one_sided": 0.99994
+   },
+   "abs_move_total_pts": 1.11834
+  },
+  "thu": {
+   "games": 59,
+   "abs_move_pts": 1.51172,
+   "move_toward_fav_pts": {
+    "n": 59,
+    "mean": 0.53464,
+    "se": 0.275,
+    "t": 1.94414,
+    "p_one_sided": 0.02594
+   },
+   "move_toward_home_pts": {
+    "n": 59,
+    "mean": -0.1172,
+    "se": 0.2834,
+    "t": -0.41355,
+    "p_one_sided": 0.6604
+   },
+   "move_toward_over_pts": {
+    "n": 59,
+    "mean": -0.37936,
+    "se": 0.2621,
+    "t": -1.44738,
+    "p_one_sided": 0.9261
+   },
+   "abs_move_total_pts": 1.47295
+  },
+  "mon": {
+   "games": 67,
+   "abs_move_pts": 0.78337,
+   "move_toward_fav_pts": {
+    "n": 67,
+    "mean": -0.14168,
+    "se": 0.1294,
+    "t": -1.09488,
+    "p_one_sided": 0.86322
+   },
+   "move_toward_home_pts": {
+    "n": 67,
+    "mean": 0.18015,
+    "se": 0.12867,
+    "t": 1.40004,
+    "p_one_sided": 0.08075
+   },
+   "move_toward_over_pts": {
+    "n": 67,
+    "mean": -0.04353,
+    "se": 0.15405,
+    "t": -0.28256,
+    "p_one_sided": 0.61124
+   },
+   "abs_move_total_pts": 0.96491
+  },
+  "sat": {
+   "games": 33,
+   "abs_move_pts": 1.33489,
+   "move_toward_fav_pts": {
+    "n": 33,
+    "mean": -0.2707,
+    "se": 0.31634,
+    "t": -0.85574,
+    "p_one_sided": 0.80393
+   },
+   "move_toward_home_pts": {
+    "n": 33,
+    "mean": 0.35713,
+    "se": 0.31365,
+    "t": 1.13862,
+    "p_one_sided": 0.12743
+   },
+   "move_toward_over_pts": {
+    "n": 33,
+    "mean": -0.25221,
+    "se": 0.24797,
+    "t": -1.01709,
+    "p_one_sided": 0.84545
+   },
+   "abs_move_total_pts": 1.11773
+  },
+  "intl": {
+   "games": 16,
+   "abs_move_pts": 0.89353,
+   "move_toward_fav_pts": {
+    "n": 16,
+    "mean": -0.18597,
+    "se": 0.29355,
+    "t": -0.63351,
+    "p_one_sided": 0.7368
+   },
+   "move_toward_home_pts": {
+    "n": 16,
+    "mean": -0.4496,
+    "se": 0.27386,
+    "t": -1.64174,
+    "p_one_sided": 0.94968
+   },
+   "move_toward_over_pts": {
+    "n": 16,
+    "mean": 0.13655,
+    "se": 0.31211,
+    "t": 0.43751,
+    "p_one_sided": 0.33087
+   },
+   "abs_move_total_pts": 0.96741
+  },
+  "playoff": {
+   "games": 39,
+   "abs_move_pts": 0.67023,
+   "move_toward_fav_pts": {
+    "n": 39,
+    "mean": -0.0677,
+    "se": 0.13769,
+    "t": -0.49168,
+    "p_one_sided": 0.68853
+   },
+   "move_toward_home_pts": {
+    "n": 39,
+    "mean": 0.14168,
+    "se": 0.1362,
+    "t": 1.04026,
+    "p_one_sided": 0.14911
+   },
+   "move_toward_over_pts": {
+    "n": 39,
+    "mean": 0.0318,
+    "se": 0.19717,
+    "t": 0.16126,
+    "p_one_sided": 0.43594
+   },
+   "abs_move_total_pts": 1.01797
+  },
+  "one_elim": {
+   "games": 78,
+   "abs_move_pts": 1.47194,
+   "move_toward_fav_pts": {
+    "n": 78,
+    "mean": 0.29957,
+    "se": 0.23573,
+    "t": 1.27079,
+    "p_one_sided": 0.1019
+   },
+   "move_toward_home_pts": {
+    "n": 78,
+    "mean": -0.09939,
+    "se": 0.23792,
+    "t": -0.41773,
+    "p_one_sided": 0.66193
+   },
+   "move_toward_over_pts": {
+    "n": 78,
+    "mean": -0.50481,
+    "se": 0.19592,
+    "t": -2.57657,
+    "p_one_sided": 0.99501
+   },
+   "abs_move_total_pts": 1.31079
+  },
+  "one_clinch": {
+   "games": 47,
+   "abs_move_pts": 1.69613,
+   "move_toward_fav_pts": {
+    "n": 47,
+    "mean": 0.5253,
+    "se": 0.33131,
+    "t": 1.58553,
+    "p_one_sided": 0.05642
+   },
+   "move_toward_home_pts": {
+    "n": 47,
+    "mean": 0.39743,
+    "se": 0.33516,
+    "t": 1.18579,
+    "p_one_sided": 0.11785
+   },
+   "move_toward_over_pts": {
+    "n": 47,
+    "mean": -0.54522,
+    "se": 0.25437,
+    "t": -2.14338,
+    "p_one_sided": 0.98396
+   },
+   "abs_move_total_pts": 1.44395
+  },
+  "big_fav": {
+   "games": 80,
+   "abs_move_pts": 0.92428,
+   "move_toward_fav_pts": {
+    "n": 80,
+    "mean": 0.1936,
+    "se": 0.13607,
+    "t": 1.42277,
+    "p_one_sided": 0.0774
+   },
+   "move_toward_home_pts": {
+    "n": 80,
+    "mean": 0.29715,
+    "se": 0.13369,
+    "t": 2.22271,
+    "p_one_sided": 0.01312
+   },
+   "move_toward_over_pts": {
+    "n": 80,
+    "mean": -0.21162,
+    "se": 0.1757,
+    "t": -1.20441,
+    "p_one_sided": 0.88578
+   },
+   "abs_move_total_pts": 1.13727
+  },
+  "div_rematch": {
+   "games": 144,
+   "abs_move_pts": 1.60239,
+   "move_toward_fav_pts": {
+    "n": 144,
+    "mean": 0.08326,
+    "se": 0.18536,
+    "t": 0.44918,
+    "p_one_sided": 0.32665
+   },
+   "move_toward_home_pts": {
+    "n": 144,
+    "mean": 0.20807,
+    "se": 0.18467,
+    "t": 1.12671,
+    "p_one_sided": 0.12993
+   },
+   "move_toward_over_pts": {
+    "n": 144,
+    "mean": -0.5488,
+    "se": 0.14695,
+    "t": -3.73466,
+    "p_one_sided": 0.99991
+   },
+   "abs_move_total_pts": 1.39737
+  },
+  "late": {
+   "games": 322,
+   "abs_move_pts": 1.3065,
+   "move_toward_fav_pts": {
+    "n": 322,
+    "mean": 0.01186,
+    "se": 0.10391,
+    "t": 0.11412,
+    "p_one_sided": 0.45457
+   },
+   "move_toward_home_pts": {
+    "n": 322,
+    "mean": 0.21372,
+    "se": 0.10322,
+    "t": 2.07046,
+    "p_one_sided": 0.0192
+   },
+   "move_toward_over_pts": {
+    "n": 322,
+    "mean": -0.22981,
+    "se": 0.09471,
+    "t": -2.42642,
+    "p_one_sided": 0.99238
+   },
+   "abs_move_total_pts": 1.27105
+  }
+ }
+}
