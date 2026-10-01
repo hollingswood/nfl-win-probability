@@ -1,0 +1,1502 @@
+{
+ "interpretations": [
+  "Team codes normalised to franchises (OAK->LV, SD->LAC, STL->LA); each team's home stadium/base per season = its most-used non-neutral home venue (travel.team_bases); STADIUMS lat/lon/tz for distances and zones.",
+  "Turf: team's home-turf type per season = majority of its non-neutral home games, grass/dessograss = grass, everything else artificial (blank surface -> nearest season of that team). Same type +1 visitor, opposite +1 home.",
+  "Prime-time slots: Thursday/Sunday/Monday with kickoff >= 7pm ET (Thanksgiving afternoon games are not TNF). 'Coming off MNF' requires the MNF game to be the team's previous game within 7 days (not across a bye).",
+  "Overtime: previous game (same season) went to OT and was <= 10 days ago (a bye in between cancels it); 'home' OT game = team was the non-neutral home team.",
+  "3rd away game in four: the visitor's current game plus its previous 3 games this season contain >= 3 non-home games (away or neutral).",
+  "Bye: regular-season game, week > 1, >= 13 days since the team's previous game this season. Quality = tercile of the team's pre-game Elo (src features.elo_ratings parameters, re-run to rank vs all teams' current Elo at that date): bottom third 'below-average' 4 (5 away), middle 'average' 5 (6), top 'great' 7 (8). Both teams can get it.",
+  "Playoff bye: Divisional-round team whose previous game was a regular-season game -> +1 home (bye teams host). Regular bye units are not applied in the playoffs; the 2-week Super Bowl gap is not a bye.",
+  "Super Bowl: previous season's SB winner gets +4 in its 1st game and +2 in games 2-4 of the next season; SB loser's opponent gets the same.",
+  "Travel: visitor's base-to-venue great-circle distance >= 2000 miles -> +1 home. Short-trip visitor bonuses (non-neutral games only): TB/JAX/MIA +1, DAL/HOU +1, ATL/CAR +1, IND/CIN +1, CHI/GB +1, LA metro pair (LA/LAC) +2 and Bay Area pair (SF/OAK, through 2019) +2 as the 'SF/LA area' analogue, LV vs LA/LAC +1, any pair of PHI/NYG/NYJ/WAS/NE/BAL/BUF +1 except NYG/NYJ +2 and BAL/WAS +2. Pairs keyed on bases, so e.g. SD-LA or OAK-LA pre-2020 are not bonused.",
+  "Zones from base tz: East = New_York/Detroit/Indianapolis/Toronto, Central = Chicago, Mountain = Denver/Phoenix (ARI as Mountain), Pacific = Los_Angeles (incl. LV).",
+  "10 a.m. games: kickoff before 2pm ET at a venue in the Eastern/Central zone (incl. Mexico City) for a Pacific-base team -> +2 opponent, Mountain-base team -> +1 opponent.",
+  "Night games (kickoff >= 7pm ET): penalties East 6, Central 3, Mountain 1, Pacific 0; net units = penalty(eastern team) - penalty(western team) to the more western team.",
+  "Second consecutive game >= 2 time zones from home: visitor's |tz shift| >= 2 in this game AND in its previous game this season -> +2 home.",
+  "Bounce back: previous game (same season, any rest) lost by >= 19 -> +2, >= 29 -> +4 (not cumulative).",
+  "Warm-weather team = base latitude < 34.5 or Las Vegas (MIA TB JAX HOU NO ATL DAL ARI LA LAC SD LV); cold-climate dome team = home roof mostly dome/closed/retractable and not warm (DET, MIN except 2014-15, IND, STL). Only the VISITOR can be 'visiting'; cold OUTDOOR = roof outdoors/open with nflverse temp (recorded at game time, i.e. not strictly ex-ante). Warm: <=35F .25, <=30 .50, <=25 .75, <=20 1.00, <=15 1.25, <=10 1.75 to home. Dome: 20<t<=30 .25, 10<t<=20 .50, t<=10 .75 to home.",
+  "Rain from play-by-play `weather` text (2012+ only; 2003-11 rain = 0): description before 'Temp:' mentions rain/showers/drizzle and not 'chance/possible/no rain/%' -> +0.25 visitor; heavy/hard/downpour/pouring -> +0.75. Outdoor/open roof only. Recorded conditions, not forecast.",
+  "W values: main H treats them as W units (x 0.2 pt); H_wpts treats them as points (reported side by side).",
+  "Skipped: 'Variable' items (matchups, snow, heavy wind), all E-factors (subjective) and QB-specific W-factors.",
+  "Neutral-site games keep the schedule's designated home team for all factors."
+ ],
+ "test1": {
+  "2003-2022": {
+   "games": 5377,
+   "H": {
+    "mean": 0.278,
+    "sd": 0.775,
+    "p05": -1.0,
+    "p50": 0.2,
+    "p95": 1.6,
+    "min": -2.45,
+    "max": 4.6,
+    "share_abs_ge_0.5": 0.432,
+    "share_abs_ge_1": 0.222,
+    "share_abs_ge_1.5": 0.082,
+    "share_abs_ge_2": 0.034
+   },
+   "H_wpts": {
+    "mean": 0.282,
+    "sd": 0.782,
+    "p05": -1.0,
+    "p50": 0.2,
+    "p95": 1.6,
+    "min": -2.65,
+    "max": 4.6,
+    "share_abs_ge_0.5": 0.435,
+    "share_abs_ge_1": 0.225,
+    "share_abs_ge_1.5": 0.084,
+    "share_abs_ge_2": 0.035
+   },
+   "active_share": {
+    "turf": 1.0,
+    "division": 0.362,
+    "conference": 0.248,
+    "home_tnf": 0.039,
+    "home_snf": 0.064,
+    "home_mnf": 0.055,
+    "home_off_mnf": 0.043,
+    "away_off_mnf": 0.04,
+    "three_away": 0.288,
+    "off_ot": 0.102,
+    "bye": 0.11,
+    "playoff_bye": 0.014,
+    "super_bowl": 0.029,
+    "travel_2000": 0.099,
+    "short_trip": 0.087,
+    "tz_10am": 0.09,
+    "night_tz": 0.093,
+    "two_tz": 0.026,
+    "bounce_back": 0.177,
+    "w_warm_cold": 0.018,
+    "w_dome_cold": 0.004,
+    "w_rain": 0.026
+   }
+  },
+  "2023-2025": {
+   "games": 855,
+   "H": {
+    "mean": 0.361,
+    "sd": 0.831,
+    "p05": -0.8,
+    "p50": 0.4,
+    "p95": 1.8,
+    "min": -2.6,
+    "max": 3.6,
+    "share_abs_ge_0.5": 0.477,
+    "share_abs_ge_1": 0.26,
+    "share_abs_ge_1.5": 0.116,
+    "share_abs_ge_2": 0.051
+   },
+   "H_wpts": {
+    "mean": 0.363,
+    "sd": 0.84,
+    "p05": -0.8,
+    "p50": 0.4,
+    "p95": 1.83,
+    "min": -2.6,
+    "max": 3.6,
+    "share_abs_ge_0.5": 0.477,
+    "share_abs_ge_1": 0.262,
+    "share_abs_ge_1.5": 0.122,
+    "share_abs_ge_2": 0.055
+   },
+   "active_share": {
+    "turf": 1.0,
+    "division": 0.343,
+    "conference": 0.284,
+    "home_tnf": 0.06,
+    "home_snf": 0.067,
+    "home_mnf": 0.075,
+    "home_off_mnf": 0.051,
+    "away_off_mnf": 0.063,
+    "three_away": 0.318,
+    "off_ot": 0.084,
+    "bye": 0.101,
+    "playoff_bye": 0.007,
+    "super_bowl": 0.027,
+    "travel_2000": 0.122,
+    "short_trip": 0.095,
+    "tz_10am": 0.106,
+    "night_tz": 0.132,
+    "two_tz": 0.03,
+    "bounce_back": 0.177,
+    "w_warm_cold": 0.023,
+    "w_dome_cold": 0.001,
+    "w_rain": 0.039
+   }
+  }
+ },
+ "test2": {
+  "slope_resid_on_H": {
+   "2003-2022 (Walters in-sample)": {
+    "n": 5377,
+    "slope": 0.961,
+    "se": 0.232,
+    "t": 4.14
+   },
+   "2003-2012": {
+    "n": 2670,
+    "slope": 1.245,
+    "se": 0.355,
+    "t": 3.5
+   },
+   "2013-2022": {
+    "n": 2707,
+    "slope": 0.728,
+    "se": 0.304,
+    "t": 2.4
+   },
+   "2020-2022": {
+    "n": 838,
+    "slope": -0.187,
+    "se": 0.54,
+    "t": -0.35
+   },
+   "2023-2025 (out-of-sample)": {
+    "n": 855,
+    "slope": 0.34,
+    "se": 0.483,
+    "t": 0.7
+   }
+  },
+  "slope_resid_on_H_wpts": {
+   "2003-2022 (Walters in-sample)": {
+    "n": 5377,
+    "slope": 0.933,
+    "se": 0.229,
+    "t": 4.08
+   },
+   "2003-2012": {
+    "n": 2670,
+    "slope": 1.225,
+    "se": 0.351,
+    "t": 3.49
+   },
+   "2013-2022": {
+    "n": 2707,
+    "slope": 0.692,
+    "se": 0.3,
+    "t": 2.31
+   },
+   "2020-2022": {
+    "n": 838,
+    "slope": -0.204,
+    "se": 0.532,
+    "t": -0.38
+   },
+   "2023-2025 (out-of-sample)": {
+    "n": 855,
+    "slope": 0.423,
+    "se": 0.477,
+    "t": 0.89
+   }
+  },
+  "raw_margin_on_H": {
+   "2003-2022 (Walters in-sample)": {
+    "n": 5377,
+    "slope": 0.708,
+    "se": 0.256,
+    "t": 2.77
+   },
+   "2003-2012": {
+    "n": 2670,
+    "slope": 0.715,
+    "se": 0.399,
+    "t": 1.79
+   },
+   "2013-2022": {
+    "n": 2707,
+    "slope": 0.725,
+    "se": 0.33,
+    "t": 2.19
+   },
+   "2020-2022": {
+    "n": 838,
+    "slope": -0.408,
+    "se": 0.596,
+    "t": -0.68
+   },
+   "2023-2025 (out-of-sample)": {
+    "n": 855,
+    "slope": -0.027,
+    "se": 0.55,
+    "t": -0.05
+   }
+  },
+  "H_given_line": {
+   "2003-2022 (Walters in-sample)": {
+    "b_line": 1.051,
+    "b_H": 0.973,
+    "se_H": 0.232
+   },
+   "2003-2012": {
+    "b_line": 1.095,
+    "b_H": 1.295,
+    "se_H": 0.355
+   },
+   "2013-2022": {
+    "b_line": 1.009,
+    "b_H": 0.728,
+    "se_H": 0.304
+   },
+   "2020-2022": {
+    "b_line": 0.949,
+    "b_H": -0.198,
+    "se_H": 0.539
+   },
+   "2023-2025 (out-of-sample)": {
+    "b_line": 1.152,
+    "b_H": 0.396,
+    "se_H": 0.484
+   }
+  },
+  "ats": {
+   "2003-2022": {
+    "0.5": {
+     "bets": 2322,
+     "per_season": 116.1,
+     "w": 1188,
+     "l": 1078,
+     "push": 56,
+     "cover": 0.524,
+     "cover_se": 0.01,
+     "z_vs_524": 0.04,
+     "roi": 0.001,
+     "roi_se": 0.02
+    },
+    "1.0": {
+     "bets": 1195,
+     "per_season": 59.8,
+     "w": 641,
+     "l": 526,
+     "push": 28,
+     "cover": 0.549,
+     "cover_se": 0.015,
+     "z_vs_524": 1.74,
+     "roi": 0.047,
+     "roi_se": 0.027
+    },
+    "1.5": {
+     "bets": 440,
+     "per_season": 22.0,
+     "w": 240,
+     "l": 188,
+     "push": 12,
+     "cover": 0.561,
+     "cover_se": 0.024,
+     "z_vs_524": 1.53,
+     "roi": 0.069,
+     "roi_se": 0.045
+    },
+    "2.0": {
+     "bets": 182,
+     "per_season": 9.1,
+     "w": 97,
+     "l": 83,
+     "push": 2,
+     "cover": 0.539,
+     "cover_se": 0.037,
+     "z_vs_524": 0.41,
+     "roi": 0.028,
+     "roi_se": 0.07
+    }
+   },
+   "2023-2025": {
+    "0.5": {
+     "bets": 408,
+     "per_season": 136.0,
+     "w": 206,
+     "l": 194,
+     "push": 8,
+     "cover": 0.515,
+     "cover_se": 0.025,
+     "z_vs_524": -0.35,
+     "roi": -0.016,
+     "roi_se": 0.047
+    },
+    "1.0": {
+     "bets": 222,
+     "per_season": 74.0,
+     "w": 118,
+     "l": 100,
+     "push": 4,
+     "cover": 0.541,
+     "cover_se": 0.034,
+     "z_vs_524": 0.52,
+     "roi": 0.033,
+     "roi_se": 0.063
+    },
+    "1.5": {
+     "bets": 99,
+     "per_season": 33.0,
+     "w": 49,
+     "l": 48,
+     "push": 2,
+     "cover": 0.505,
+     "cover_se": 0.051,
+     "z_vs_524": -0.37,
+     "roi": -0.035,
+     "roi_se": 0.095
+    },
+    "2.0": {
+     "bets": 44,
+     "per_season": 14.7,
+     "w": 22,
+     "l": 22,
+     "push": 0,
+     "cover": 0.5,
+     "cover_se": 0.075,
+     "z_vs_524": -0.32,
+     "roi": -0.045,
+     "roi_se": 0.146
+    }
+   }
+  },
+  "ats_wpts": {
+   "2003-2022": {
+    "1.0": {
+     "bets": 1210,
+     "per_season": 60.5,
+     "w": 647,
+     "l": 534,
+     "push": 29,
+     "cover": 0.548,
+     "cover_se": 0.014,
+     "z_vs_524": 1.65,
+     "roi": 0.045,
+     "roi_se": 0.027
+    },
+    "1.5": {
+     "bets": 449,
+     "per_season": 22.4,
+     "w": 244,
+     "l": 193,
+     "push": 12,
+     "cover": 0.558,
+     "cover_se": 0.024,
+     "z_vs_524": 1.45,
+     "roi": 0.064,
+     "roi_se": 0.044
+    },
+    "2.0": {
+     "bets": 186,
+     "per_season": 9.3,
+     "w": 98,
+     "l": 86,
+     "push": 2,
+     "cover": 0.533,
+     "cover_se": 0.037,
+     "z_vs_524": 0.24,
+     "roi": 0.017,
+     "roi_se": 0.07
+    }
+   },
+   "2023-2025": {
+    "1.0": {
+     "bets": 224,
+     "per_season": 74.7,
+     "w": 121,
+     "l": 99,
+     "push": 4,
+     "cover": 0.55,
+     "cover_se": 0.034,
+     "z_vs_524": 0.78,
+     "roi": 0.049,
+     "roi_se": 0.063
+    },
+    "1.5": {
+     "bets": 104,
+     "per_season": 34.7,
+     "w": 52,
+     "l": 50,
+     "push": 2,
+     "cover": 0.51,
+     "cover_se": 0.049,
+     "z_vs_524": -0.28,
+     "roi": -0.026,
+     "roi_se": 0.093
+    },
+    "2.0": {
+     "bets": 47,
+     "per_season": 15.7,
+     "w": 25,
+     "l": 22,
+     "push": 0,
+     "cover": 0.532,
+     "cover_se": 0.073,
+     "z_vs_524": 0.11,
+     "roi": 0.015,
+     "roi_se": 0.14
+    }
+   }
+  },
+  "price_close_2020_25": {
+   "2020-2022": {
+    "n": 834,
+    "slope": -0.216,
+    "se": 0.54,
+    "t": -0.4
+   },
+   "2023-2025": {
+    "n": 854,
+    "slope": 0.303,
+    "se": 0.482,
+    "t": 0.63
+   }
+  },
+  "slope_resid_on_H_ex_night": {
+   "2003-2022 (Walters in-sample)": {
+    "n": 5377,
+    "slope": 0.872,
+    "se": 0.244,
+    "t": 3.57
+   },
+   "2003-2012": {
+    "n": 2670,
+    "slope": 1.1,
+    "se": 0.37,
+    "t": 2.97
+   },
+   "2013-2022": {
+    "n": 2707,
+    "slope": 0.67,
+    "se": 0.323,
+    "t": 2.08
+   },
+   "2020-2022": {
+    "n": 838,
+    "slope": -0.379,
+    "se": 0.573,
+    "t": -0.66
+   },
+   "2023-2025 (out-of-sample)": {
+    "n": 855,
+    "slope": 0.082,
+    "se": 0.539,
+    "t": 0.15
+   }
+  }
+ },
+ "test3": {
+  "2020-2022": {
+   "games": 834,
+   "median_hours_before_first": 162.4,
+   "move_px_on_H": {
+    "n": 834,
+    "slope": 0.063,
+    "se": 0.08,
+    "t": 0.79
+   },
+   "move_raw_on_H": {
+    "n": 834,
+    "slope": 0.06,
+    "se": 0.082,
+    "t": 0.74
+   },
+   "move_px_on_H_wpts": {
+    "n": 834,
+    "slope": 0.068,
+    "se": 0.08,
+    "t": 0.85
+   },
+   "baseline_both_sides_best_price": {
+    "bets": 1664,
+    "clv": -0.0317,
+    "roi": -0.0317
+   },
+   "bet_H_side_early": {
+    "0.5": {
+     "bets": 366,
+     "clv": -0.0335,
+     "clv_t": -5.24,
+     "excess_clv": -0.0018,
+     "excess_t": -0.28,
+     "beat_close": 0.369,
+     "roi": -0.0225,
+     "roi_se": 0.0497
+    },
+    "1.0": {
+     "bets": 202,
+     "clv": -0.0335,
+     "clv_t": -4.08,
+     "excess_clv": -0.0022,
+     "excess_t": -0.27,
+     "beat_close": 0.371,
+     "roi": -0.0191,
+     "roi_se": 0.067
+    },
+    "1.5": {
+     "bets": 85,
+     "clv": -0.0157,
+     "clv_t": -1.39,
+     "excess_clv": 0.015,
+     "excess_t": 1.35,
+     "beat_close": 0.447,
+     "roi": -0.0078,
+     "roi_se": 0.1032
+    },
+    "2.0": {
+     "bets": 33,
+     "clv": -0.0097,
+     "clv_t": -0.52,
+     "excess_clv": 0.0227,
+     "excess_t": 1.22,
+     "beat_close": 0.424,
+     "roi": -0.022,
+     "roi_se": 0.1678
+    }
+   }
+  },
+  "2023-2025": {
+   "games": 854,
+   "median_hours_before_first": 211.3,
+   "move_px_on_H": {
+    "n": 854,
+    "slope": 0.109,
+    "se": 0.086,
+    "t": 1.27
+   },
+   "move_raw_on_H": {
+    "n": 854,
+    "slope": 0.036,
+    "se": 0.086,
+    "t": 0.42
+   },
+   "move_px_on_H_wpts": {
+    "n": 854,
+    "slope": 0.118,
+    "se": 0.085,
+    "t": 1.4
+   },
+   "baseline_both_sides_best_price": {
+    "bets": 1708,
+    "clv": -0.0305,
+    "roi": -0.0319
+   },
+   "bet_H_side_early": {
+    "0.5": {
+     "bets": 407,
+     "clv": -0.0189,
+     "clv_t": -3.43,
+     "excess_clv": 0.012,
+     "excess_t": 2.17,
+     "beat_close": 0.408,
+     "roi": 0.032,
+     "roi_se": 0.0471
+    },
+    "1.0": {
+     "bets": 221,
+     "clv": -0.0226,
+     "clv_t": -3.03,
+     "excess_clv": 0.0088,
+     "excess_t": 1.19,
+     "beat_close": 0.398,
+     "roi": 0.0286,
+     "roi_se": 0.0637
+    },
+    "1.5": {
+     "bets": 99,
+     "clv": -0.0223,
+     "clv_t": -1.89,
+     "excess_clv": 0.0081,
+     "excess_t": 0.69,
+     "beat_close": 0.475,
+     "roi": -0.0692,
+     "roi_se": 0.0959
+    },
+    "2.0": {
+     "bets": 44,
+     "clv": -0.0253,
+     "clv_t": -1.31,
+     "excess_clv": 0.0052,
+     "excess_t": 0.27,
+     "beat_close": 0.477,
+     "roi": -0.0878,
+     "roi_se": 0.1456
+    }
+   }
+  }
+ },
+ "test4": {
+  "model_resid_on_H": {
+   "2020-2022": {
+    "n": 834,
+    "slope": -0.267,
+    "se": 0.543,
+    "t": -0.49
+   },
+   "2023-2025": {
+    "n": 854,
+    "slope": 0.503,
+    "se": 0.493,
+    "t": 1.02
+   }
+  },
+  "model_resid_components_2023_25": {
+   "turf": {
+    "n": 854,
+    "slope": -1.404,
+    "se": 2.211,
+    "t": -0.64
+   },
+   "division": {
+    "n": 854,
+    "slope": -1.443,
+    "se": 4.602,
+    "t": -0.31
+   },
+   "conference": {
+    "n": 854,
+    "slope": -3.611,
+    "se": 4.891,
+    "t": -0.74
+   },
+   "home_tnf": {
+    "n": 854,
+    "slope": -0.807,
+    "se": 4.51,
+    "t": -0.18
+   },
+   "home_snf": {
+    "n": 854,
+    "slope": -0.916,
+    "se": 2.153,
+    "t": -0.43
+   },
+   "home_mnf": {
+    "n": 854,
+    "slope": -3.022,
+    "se": 3.845,
+    "t": -0.79
+   },
+   "home_off_mnf": {
+    "n": 854,
+    "slope": 0.101,
+    "se": 2.696,
+    "t": 0.04
+   },
+   "away_off_mnf": {
+    "n": 854,
+    "slope": 0.688,
+    "se": 1.275,
+    "t": 0.54
+   },
+   "three_away": {
+    "n": 854,
+    "slope": -0.204,
+    "se": 2.346,
+    "t": -0.09
+   },
+   "off_ot": {
+    "n": 854,
+    "slope": 0.019,
+    "se": 2.526,
+    "t": 0.01
+   },
+   "bye": {
+    "n": 854,
+    "slope": 2.274,
+    "se": 1.048,
+    "t": 2.17
+   },
+   "playoff_bye": {
+    "n": 854,
+    "slope": 17.501,
+    "se": 33.082,
+    "t": 0.53
+   },
+   "super_bowl": {
+    "n": 854,
+    "slope": 0.082,
+    "se": 2.72,
+    "t": 0.03
+   },
+   "travel_2000": {
+    "n": 854,
+    "slope": -13.545,
+    "se": 7.042,
+    "t": -1.92
+   },
+   "short_trip": {
+    "n": 854,
+    "slope": -3.8,
+    "se": 7.142,
+    "t": -0.53
+   },
+   "tz_10am": {
+    "n": 854,
+    "slope": -2.767,
+    "se": 4.408,
+    "t": -0.63
+   },
+   "night_tz": {
+    "n": 854,
+    "slope": 2.416,
+    "se": 1.351,
+    "t": 1.79
+   },
+   "two_tz": {
+    "n": 854,
+    "slope": -0.643,
+    "se": 5.033,
+    "t": -0.13
+   },
+   "bounce_back": {
+    "n": 854,
+    "slope": 0.578,
+    "se": 1.888,
+    "t": 0.31
+   },
+   "w_warm_cold": {
+    "n": 854,
+    "slope": 43.322,
+    "se": 14.326,
+    "t": 3.02
+   },
+   "w_rain": {
+    "n": 854,
+    "slope": 23.793,
+    "se": 50.362,
+    "t": 0.47
+   }
+  },
+  "fixed_add_H_to_model_2023_25": {
+   "n": 854,
+   "mse_base": 166.19,
+   "mse_alt": 166.11,
+   "delta": -0.075,
+   "delta_se": 0.73
+  },
+  "fixed_add_H_to_close_2023_25": {
+   "n": 854,
+   "mse_base": 161.9,
+   "mse_alt": 161.68,
+   "delta": -0.215,
+   "delta_se": 0.722
+  },
+  "fixed_add_H_to_close_2023_25_all_games": {
+   "n": 855,
+   "mse_base": 161.77,
+   "mse_alt": 161.54,
+   "delta": -0.23,
+   "delta_se": 0.721
+  },
+  "fitted_model_plus_H_2023_25": {
+   "n": 854,
+   "mse_base": 167.91,
+   "mse_alt": 168.17,
+   "delta": 0.258,
+   "delta_se": 0.194,
+   "coef_H": -0.285
+  },
+  "fitted_model_line_plus_H_2023_25": {
+   "n": 854,
+   "mse_base": 162.43,
+   "mse_alt": 162.59,
+   "delta": 0.169,
+   "delta_se": 0.15,
+   "coef_H": -0.224
+  },
+  "fitted_close_plus_H_2023_25": {
+   "n": 855,
+   "mse_base": 161.54,
+   "mse_alt": 161.55,
+   "delta": 0.009,
+   "delta_se": 0.646,
+   "coef_H": 0.973
+  },
+  "fitted_close_plus_all_components_2023_25": {
+   "n": 855,
+   "mse_base": 161.54,
+   "mse_alt": 162.3,
+   "delta": 0.76,
+   "delta_se": 1.056
+  }
+ },
+ "test5": {
+  "turf": {
+   "2003-2022": {
+    "n": 5377,
+    "walters_pts": 0.2,
+    "resid_toward": 0.47,
+    "se": 0.18,
+    "t": 2.58,
+    "cover": 0.513,
+    "raw_margin_toward": 0.49,
+    "line_toward": 0.02
+   },
+   "2023-2025": {
+    "n": 855,
+    "walters_pts": 0.2,
+    "resid_toward": -0.26,
+    "se": 0.44,
+    "t": -0.6,
+    "cover": 0.475,
+    "raw_margin_toward": -0.26,
+    "line_toward": -0.0
+   }
+  },
+  "division": {
+   "2003-2022": {
+    "n": 1949,
+    "walters_pts": 0.2,
+    "resid_toward": 0.49,
+    "se": 0.29,
+    "t": 1.67,
+    "cover": 0.53,
+    "raw_margin_toward": -1.7,
+    "line_toward": -2.2
+   },
+   "2023-2025": {
+    "n": 293,
+    "walters_pts": 0.2,
+    "resid_toward": -0.88,
+    "se": 0.72,
+    "t": -1.21,
+    "cover": 0.503,
+    "raw_margin_toward": -2.59,
+    "line_toward": -1.71
+   }
+  },
+  "conference": {
+   "2003-2022": {
+    "n": 1332,
+    "walters_pts": 0.2,
+    "resid_toward": -0.2,
+    "se": 0.37,
+    "t": -0.53,
+    "cover": 0.48,
+    "raw_margin_toward": 2.02,
+    "line_toward": 2.22
+   },
+   "2023-2025": {
+    "n": 243,
+    "walters_pts": 0.2,
+    "resid_toward": 0.38,
+    "se": 0.82,
+    "t": 0.46,
+    "cover": 0.481,
+    "raw_margin_toward": 2.0,
+    "line_toward": 1.62
+   }
+  },
+  "home_tnf": {
+   "2003-2022": {
+    "n": 210,
+    "walters_pts": 0.4,
+    "resid_toward": 0.6,
+    "se": 0.86,
+    "t": 0.7,
+    "cover": 0.527,
+    "raw_margin_toward": 2.43,
+    "line_toward": 1.83
+   },
+   "2023-2025": {
+    "n": 51,
+    "walters_pts": 0.4,
+    "resid_toward": 0.15,
+    "se": 1.69,
+    "t": 0.09,
+    "cover": 0.542,
+    "raw_margin_toward": 2.76,
+    "line_toward": 2.62
+   }
+  },
+  "home_snf": {
+   "2003-2022": {
+    "n": 342,
+    "walters_pts": 0.8,
+    "resid_toward": 0.93,
+    "se": 0.76,
+    "t": 1.22,
+    "cover": 0.52,
+    "raw_margin_toward": 3.49,
+    "line_toward": 2.55
+   },
+   "2023-2025": {
+    "n": 57,
+    "walters_pts": 0.8,
+    "resid_toward": 0.21,
+    "se": 1.67,
+    "t": 0.13,
+    "cover": 0.536,
+    "raw_margin_toward": 1.33,
+    "line_toward": 1.12
+   }
+  },
+  "home_mnf": {
+   "2003-2022": {
+    "n": 294,
+    "walters_pts": 0.4,
+    "resid_toward": -0.02,
+    "se": 0.79,
+    "t": -0.02,
+    "cover": 0.488,
+    "raw_margin_toward": 1.75,
+    "line_toward": 1.77
+   },
+   "2023-2025": {
+    "n": 64,
+    "walters_pts": 0.4,
+    "resid_toward": -0.02,
+    "se": 1.47,
+    "t": -0.02,
+    "cover": 0.5,
+    "raw_margin_toward": 1.34,
+    "line_toward": 1.37
+   }
+  },
+  "home_off_mnf": {
+   "2003-2022": {
+    "n": 232,
+    "walters_pts": 0.8,
+    "resid_toward": 0.08,
+    "se": 0.87,
+    "t": 0.09,
+    "cover": 0.533,
+    "raw_margin_toward": -2.35,
+    "line_toward": -2.43
+   },
+   "2023-2025": {
+    "n": 44,
+    "walters_pts": 0.8,
+    "resid_toward": -1.12,
+    "se": 2.1,
+    "t": -0.54,
+    "cover": 0.477,
+    "raw_margin_toward": -3.86,
+    "line_toward": -2.74
+   }
+  },
+  "away_off_mnf": {
+   "2003-2022": {
+    "n": 213,
+    "walters_pts": 1.27,
+    "resid_toward": 0.99,
+    "se": 0.91,
+    "t": 1.1,
+    "cover": 0.493,
+    "raw_margin_toward": 2.71,
+    "line_toward": 1.72
+   },
+   "2023-2025": {
+    "n": 54,
+    "walters_pts": 1.29,
+    "resid_toward": 1.73,
+    "se": 1.69,
+    "t": 1.03,
+    "cover": 0.528,
+    "raw_margin_toward": 2.56,
+    "line_toward": 0.82
+   }
+  },
+  "three_away": {
+   "2003-2022": {
+    "n": 1548,
+    "walters_pts": 0.4,
+    "resid_toward": -0.21,
+    "se": 0.33,
+    "t": -0.62,
+    "cover": 0.485,
+    "raw_margin_toward": 2.18,
+    "line_toward": 2.38
+   },
+   "2023-2025": {
+    "n": 272,
+    "walters_pts": 0.4,
+    "resid_toward": 0.56,
+    "se": 0.77,
+    "t": 0.74,
+    "cover": 0.513,
+    "raw_margin_toward": 2.58,
+    "line_toward": 2.02
+   }
+  },
+  "off_ot": {
+   "2003-2022": {
+    "n": 548,
+    "walters_pts": 0.6,
+    "resid_toward": 1.13,
+    "se": 0.6,
+    "t": 1.87,
+    "cover": 0.538,
+    "raw_margin_toward": 1.55,
+    "line_toward": 0.42
+   },
+   "2023-2025": {
+    "n": 72,
+    "walters_pts": 0.61,
+    "resid_toward": 1.21,
+    "se": 1.61,
+    "t": 0.75,
+    "cover": 0.535,
+    "raw_margin_toward": 1.04,
+    "line_toward": -0.17
+   }
+  },
+  "bye": {
+   "2003-2022": {
+    "n": 594,
+    "walters_pts": 1.11,
+    "resid_toward": 0.41,
+    "se": 0.53,
+    "t": 0.78,
+    "cover": 0.531,
+    "raw_margin_toward": 1.23,
+    "line_toward": 0.82
+   },
+   "2023-2025": {
+    "n": 86,
+    "walters_pts": 1.08,
+    "resid_toward": 1.72,
+    "se": 1.1,
+    "t": 1.57,
+    "cover": 0.464,
+    "raw_margin_toward": 2.81,
+    "line_toward": 1.09
+   }
+  },
+  "playoff_bye": {
+   "2003-2022": {
+    "n": 74,
+    "walters_pts": 0.2,
+    "resid_toward": -0.86,
+    "se": 1.4,
+    "t": -0.62,
+    "cover": 0.438,
+    "raw_margin_toward": 5.68,
+    "line_toward": 6.54
+   },
+   "2023-2025": {
+    "n": 6,
+    "walters_pts": 0.2,
+    "resid_toward": 2.25,
+    "se": 7.17,
+    "t": 0.31,
+    "cover": 0.5,
+    "raw_margin_toward": 10.0,
+    "line_toward": 7.75
+   }
+  },
+  "super_bowl": {
+   "2003-2022": {
+    "n": 158,
+    "walters_pts": 0.51,
+    "resid_toward": 2.22,
+    "se": 1.05,
+    "t": 2.1,
+    "cover": 0.541,
+    "raw_margin_toward": 2.53,
+    "line_toward": 0.32
+   },
+   "2023-2025": {
+    "n": 23,
+    "walters_pts": 0.52,
+    "resid_toward": -0.13,
+    "se": 1.69,
+    "t": -0.08,
+    "cover": 0.5,
+    "raw_margin_toward": 0.35,
+    "line_toward": 0.48
+   }
+  },
+  "travel_2000": {
+   "2003-2022": {
+    "n": 534,
+    "walters_pts": 0.2,
+    "resid_toward": -0.32,
+    "se": 0.59,
+    "t": -0.54,
+    "cover": 0.483,
+    "raw_margin_toward": 1.93,
+    "line_toward": 2.25
+   },
+   "2023-2025": {
+    "n": 104,
+    "walters_pts": 0.2,
+    "resid_toward": -1.37,
+    "se": 1.32,
+    "t": -1.04,
+    "cover": 0.476,
+    "raw_margin_toward": -0.74,
+    "line_toward": 0.63
+   }
+  },
+  "short_trip": {
+   "2003-2022": {
+    "n": 469,
+    "walters_pts": 0.21,
+    "resid_toward": 0.45,
+    "se": 0.61,
+    "t": 0.73,
+    "cover": 0.524,
+    "raw_margin_toward": -1.64,
+    "line_toward": -2.08
+   },
+   "2023-2025": {
+    "n": 81,
+    "walters_pts": 0.2,
+    "resid_toward": -1.48,
+    "se": 1.41,
+    "t": -1.05,
+    "cover": 0.474,
+    "raw_margin_toward": -2.89,
+    "line_toward": -1.41
+   }
+  },
+  "tz_10am": {
+   "2003-2022": {
+    "n": 486,
+    "walters_pts": 0.34,
+    "resid_toward": 0.73,
+    "se": 0.6,
+    "t": 1.22,
+    "cover": 0.497,
+    "raw_margin_toward": 2.9,
+    "line_toward": 2.17
+   },
+   "2023-2025": {
+    "n": 91,
+    "walters_pts": 0.34,
+    "resid_toward": 0.01,
+    "se": 1.45,
+    "t": 0.0,
+    "cover": 0.449,
+    "raw_margin_toward": 1.25,
+    "line_toward": 1.25
+   }
+  },
+  "night_tz": {
+   "2003-2022": {
+    "n": 498,
+    "walters_pts": 0.67,
+    "resid_toward": 1.98,
+    "se": 0.59,
+    "t": 3.36,
+    "cover": 0.56,
+    "raw_margin_toward": 2.17,
+    "line_toward": 0.18
+   },
+   "2023-2025": {
+    "n": 113,
+    "walters_pts": 0.76,
+    "resid_toward": 2.2,
+    "se": 1.05,
+    "t": 2.1,
+    "cover": 0.565,
+    "raw_margin_toward": 2.87,
+    "line_toward": 0.67
+   }
+  },
+  "two_tz": {
+   "2003-2022": {
+    "n": 139,
+    "walters_pts": 0.4,
+    "resid_toward": -1.25,
+    "se": 1.05,
+    "t": -1.19,
+    "cover": 0.426,
+    "raw_margin_toward": 0.91,
+    "line_toward": 2.15
+   },
+   "2023-2025": {
+    "n": 26,
+    "walters_pts": 0.4,
+    "resid_toward": 0.52,
+    "se": 2.0,
+    "t": 0.26,
+    "cover": 0.577,
+    "raw_margin_toward": 2.92,
+    "line_toward": 2.4
+   }
+  },
+  "bounce_back": {
+   "2003-2022": {
+    "n": 951,
+    "walters_pts": 0.51,
+    "resid_toward": 0.58,
+    "se": 0.41,
+    "t": 1.41,
+    "cover": 0.537,
+    "raw_margin_toward": -2.53,
+    "line_toward": -3.1
+   },
+   "2023-2025": {
+    "n": 151,
+    "walters_pts": 0.51,
+    "resid_toward": -0.15,
+    "se": 1.0,
+    "t": -0.15,
+    "cover": 0.48,
+    "raw_margin_toward": -3.67,
+    "line_toward": -3.52
+   }
+  },
+  "w_warm_cold": {
+   "2003-2022": {
+    "n": 95,
+    "walters_pts": 0.12,
+    "resid_toward": 0.5,
+    "se": 1.16,
+    "t": 0.43,
+    "cover": 0.511,
+    "raw_margin_toward": 3.6,
+    "line_toward": 3.1
+   },
+   "2023-2025": {
+    "n": 20,
+    "walters_pts": 0.11,
+    "resid_toward": 5.8,
+    "se": 2.66,
+    "t": 2.18,
+    "cover": 0.7,
+    "raw_margin_toward": 10.15,
+    "line_toward": 4.35
+   }
+  },
+  "w_dome_cold": {
+   "2003-2022": {
+    "n": 22,
+    "walters_pts": 0.07,
+    "resid_toward": 1.84,
+    "se": 3.23,
+    "t": 0.57,
+    "cover": 0.591,
+    "raw_margin_toward": 6.86,
+    "line_toward": 5.02
+   },
+   "2023-2025": {
+    "n": 1
+   }
+  },
+  "w_rain": {
+   "2003-2022": {
+    "n": 139,
+    "walters_pts": 0.05,
+    "resid_toward": -2.37,
+    "se": 1.04,
+    "t": -2.28,
+    "cover": 0.481,
+    "raw_margin_toward": -5.19,
+    "line_toward": -2.81
+   },
+   "2023-2025": {
+    "n": 33,
+    "walters_pts": 0.05,
+    "resid_toward": 0.74,
+    "se": 2.37,
+    "t": 0.31,
+    "cover": 0.625,
+    "raw_margin_toward": 0.21,
+    "line_toward": -0.53
+   }
+  }
+ },
+ "test6_night_tz_posthoc": {
+  "by_period": {
+   "2003-2022 (Walters in-sample)": {
+    "n": 498,
+    "resid_toward": 1.98,
+    "se": 0.59,
+    "cover": 0.56
+   },
+   "2003-2012": {
+    "n": 187,
+    "resid_toward": 2.47,
+    "se": 1.05,
+    "cover": 0.578
+   },
+   "2013-2022": {
+    "n": 311,
+    "resid_toward": 1.69,
+    "se": 0.7,
+    "cover": 0.548
+   },
+   "2020-2022": {
+    "n": 100,
+    "resid_toward": 1.87,
+    "se": 1.23,
+    "cover": 0.56
+   },
+   "2023-2025 (out-of-sample)": {
+    "n": 113,
+    "resid_toward": 2.2,
+    "se": 1.05,
+    "cover": 0.565
+   }
+  },
+  "cuts_2003_22": {
+   "west_home": {
+    "n": 283,
+    "resid_toward": 2.09,
+    "se": 0.77,
+    "cover": 0.564
+   },
+   "west_away": {
+    "n": 215,
+    "resid_toward": 1.85,
+    "se": 0.92,
+    "cover": 0.555
+   },
+   "kick_ge_20:00": {
+    "n": 490,
+    "resid_toward": 1.91,
+    "se": 0.59,
+    "cover": 0.556
+   },
+   "units<=2": {
+    "n": 73,
+    "resid_toward": 3.43,
+    "se": 1.38,
+    "cover": 0.614
+   },
+   "units_3": {
+    "n": 313,
+    "resid_toward": 1.95,
+    "se": 0.76,
+    "cover": 0.552
+   },
+   "units>=5": {
+    "n": 112,
+    "resid_toward": 1.15,
+    "se": 1.27,
+    "cover": 0.545
+   },
+   "excl_SEA": {
+    "n": 453,
+    "resid_toward": 1.79,
+    "se": 0.63,
+    "cover": 0.546
+   },
+   "regular_season": {
+    "n": 468,
+    "resid_toward": 1.84,
+    "se": 0.61,
+    "cover": 0.554
+   }
+  },
+  "cuts_2023_25": {
+   "west_home": {
+    "n": 63,
+    "resid_toward": 1.9,
+    "se": 1.32,
+    "cover": 0.597
+   },
+   "west_away": {
+    "n": 50,
+    "resid_toward": 2.57,
+    "se": 1.7,
+    "cover": 0.522
+   },
+   "kick_ge_20:00": {
+    "n": 110,
+    "resid_toward": 2.1,
+    "se": 1.06,
+    "cover": 0.566
+   },
+   "units<=2": {
+    "n": 10,
+    "resid_toward": 3.2,
+    "se": 2.63,
+    "cover": 0.5
+   },
+   "units_3": {
+    "n": 66,
+    "resid_toward": 2.56,
+    "se": 1.4,
+    "cover": 0.581
+   },
+   "units>=5": {
+    "n": 37,
+    "resid_toward": 1.28,
+    "se": 1.9,
+    "cover": 0.556
+   },
+   "excl_SEA": {
+    "n": 104,
+    "resid_toward": 2.06,
+    "se": 1.09,
+    "cover": 0.556
+   },
+   "regular_season": {
+    "n": 107,
+    "resid_toward": 1.93,
+    "se": 1.06,
+    "cover": 0.559
+   }
+  },
+  "by_season_2020_25": {
+   "2020": {
+    "n": 30,
+    "resid_toward": 4.52,
+    "se": 2.3,
+    "cover": 0.667
+   },
+   "2021": {
+    "n": 35,
+    "resid_toward": 0.47,
+    "se": 2.17,
+    "cover": 0.486
+   },
+   "2022": {
+    "n": 35,
+    "resid_toward": 1.0,
+    "se": 1.92,
+    "cover": 0.543
+   },
+   "2023": {
+    "n": 42,
+    "resid_toward": 2.2,
+    "se": 1.88,
+    "cover": 0.5
+   },
+   "2024": {
+    "n": 36,
+    "resid_toward": 0.54,
+    "se": 1.59,
+    "cover": 0.514
+   },
+   "2025": {
+    "n": 35,
+    "resid_toward": 3.9,
+    "se": 1.92,
+    "cover": 0.686
+   }
+  },
+  "early": {
+   "2020-2022": {
+    "games": 100,
+    "move_toward_west_pts": -0.212,
+    "move_se": 0.219,
+    "bet_west_early": {
+     "bets": 100,
+     "clv": -0.0444,
+     "clv_t": -3.54,
+     "excess_clv": -0.0125,
+     "excess_t": -1.01,
+     "beat_close": 0.32,
+     "roi": 0.075,
+     "roi_se": 0.0948
+    }
+   },
+   "2023-2025": {
+    "games": 113,
+    "move_toward_west_pts": 0.211,
+    "move_se": 0.166,
+    "bet_west_early": {
+     "bets": 113,
+     "clv": -0.0208,
+     "clv_t": -2.12,
+     "excess_clv": 0.01,
+     "excess_t": 1.01,
+     "beat_close": 0.381,
+     "roi": 0.1292,
+     "roi_se": 0.0888
+    }
+   }
+  }
+ },
+ "verdict": "**Mostly priced, at least by now.** On 2003-2022, the period the published values were built on, the residual slope on H is +0.96 \u00b1 0.23. Back then the market ignored these factors almost completely, and the effect was strongest in 2003-12 (+1.25). The slope falls to +0.73 in 2013-22 and to \u22120.19 \u00b1 0.54 in 2020-22. Out of sample (2023-25) it is +0.34 \u00b1 0.48. That is too noisy to rule out either 0 or 1, but it is +0.08 once the night-game factor is removed. Using \u2212110 at the close, betting the H side covers 54.1% \u00b1 3.4 (|H| \u2265 1), 50.5% (\u2265 1.5) and 50.0% (\u2265 2) in 2023-25. None of these beats 52.4%. The early-week line drifts slightly toward H (6-11% of H, t \u2264 1.3). Betting the H side early at the best allowed-book price loses 1.9-3.4% CLV against the honest close. Its directional excess over the two-side baseline is about +1% in 2023-25 (t \u2264 2.2 at |H| \u2265 0.5) and about 0 in 2020-22. Adding H at its published weight changes the 2023-25 MSE by \u22120.08 \u00b1 0.73 for our model and \u22120.22 \u00b1 0.72 for the close; with a fitted weight the change is \u2248 0 or worse. **Do not add the composite H, or the components as a block, to the system.**\n\n**One lead: night-game time zones (post-hoc).** night_tz is the only factor that passes a Bonferroni-style bar in sample (t +3.4). It replicates out of sample: the more western team in night games beats the closing spread by +2.20 \u00b1 1.05 points (n 113, 56.5% cover). The effect is positive in every season from 2020 to 2025, for both home and away western teams, and with SEA excluded. However, it does not follow Walters' unit scale: the 1-2 unit gaps show the largest effect and the 5-6 unit gaps the smallest. The early line does not move toward it either (excess CLV t \u00b11.0). The only evidence is results-based, about 37 bets a season, so it is still unproven. If pursued, freeze a simple rule (back the more western team in \u2265 7pm ET games between different zones, at the best price) as a paper track and judge it on 2026+ results. The repo's earlier \"body clock\" test was a model log-loss test, not this ATS interaction.\n\n**Other factors.** These are noise or failed to replicate: turf (in sample t +2.6, OOS \u22120.26), super_bowl (in sample t +2.1, OOS \u22120.13), off_ot, bye, and warm-weather-in-cold (OOS +5.8 \u00b1 2.7 on only 20 games, in sample +0.5). Rain points the wrong way in sample (\u22122.37, t \u22122.3).\n"
+}
