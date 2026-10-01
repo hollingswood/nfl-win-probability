@@ -151,6 +151,10 @@ The pipeline now measures **closing line value** instead: every run saves the li
 `history/`, and `clv_report` checks whether the market later moved toward the model's side. Positive
 CLV over a few hundred picks is the standard evidence of a real edge against earlier (softer) lines.
 
+**Totals model (display only, `totals_model.py`):** ridge on each team's EWMA points scored/allowed, EPA per play
+and league scoring level, walk-forward. Mean absolute error vs the actual total, 2020–2025 holdout: model 10.62,
+closing total 10.31 (1,693 games); over/under calls vs the closing total hit 50.0%. Shown on cards; not a bet track.
+
 ## Features (all computed from games before kickoff)
 Elo rating · starting QB EPA/dropback (shrunk toward replacement level, decays over ~20 games) ·
 offensive and defensive EPA/play and success rate · passing and rushing EPA · turnover margin ·

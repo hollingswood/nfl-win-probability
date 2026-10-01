@@ -677,3 +677,117 @@ def test_news_llm_scan_dedupes_and_logs(tmp_path):
     assert r["signals"] == 1 and r["qb_signals"] == ["J. Smith (CHI): out"]
     r2 = NL.scan(tmp_path, "k", t, fetcher=lambda u: items, llm=fake_llm)
     assert r2["new_items"] == 0 and len(calls) == 1                     # nothing re-sent to the model
+
+
+# ---------------------------------------------------------------- totals model (display only)
+def test_totals_model_no_future_leakage(raw, feats):
+    """Totals features and walk-forward predictions for games on the cutoff date must not change
+    when every result from the cutoff onward is erased."""
+    from nflpred import totals_model as T
+    g, p, (inj, snaps, players) = raw
+    cut = pd.Timestamp("2023-12-24")
+    g2 = g.copy()
+    future = pd.to_datetime(g2["gameday"]) >= cut
+    g2.loc[future, ["home_score", "away_score", "result", "total", "overtime"]] = np.nan
+    future_ids = set(g2.loc[future, "game_id"])
+    wk = g2.loc[pd.to_datetime(g2["gameday"]) == cut, ["season", "week"]].drop_duplicates()
+    later = set(map(tuple, g2.loc[pd.to_datetime(g2["gameday"]) > cut, ["season", "week"]].drop_duplicates().values)) \
+        - set(map(tuple, wk.values))
+    inj2 = inj[~inj[["season", "week"]].apply(tuple, axis=1).isin(later)]
+    masked = T.add_features(F.build_features(g2, p[~p["game_id"].isin(future_ids)],
+                                             (inj2, snaps[~snaps["game_id"].isin(future_ids)], players)))
+    full = T.add_features(feats)
+    ids = full.loc[full["gameday"] == cut, "game_id"]
+    assert len(ids) > 0
+    a, b = full.set_index("game_id").loc[ids], masked.set_index("game_id").loc[ids]
+    pd.testing.assert_frame_equal(a[T.TOTAL_FEATURES], b[T.TOTAL_FEATURES], check_exact=False, atol=1e-9)
+    pa = T.predict(T.fit(full, before_date=cut), a.reset_index())
+    pb = T.predict(T.fit(masked, before_date=cut), b.reset_index())
+    np.testing.assert_allclose(pa, pb, atol=1e-9)
+
+
+def test_totals_model_predictions_finite_and_sane(feats):
+    from nflpred import totals_model as T
+    t = T.add_features(feats)
+    m = T.fit(t, before_season=2024)
+    assert T.train_rows(t, before_season=2024)["season"].max() < 2024
+    test = t[t["season"] == 2024]
+    pred = T.predict(m, test)
+    assert np.isfinite(pred).all() and 30 < pred.mean() < 55 and pred.std() > 1
+    wf = T.walk_forward(t, 2024)
+    assert np.isfinite(wf.values).all() and set(wf.index) <= set(test["game_id"])
+    rep = T.holdout_report(t, range(2023, 2025))
+    assert rep["games"] > 400 and 8 < rep["mae_model"] < 14 and 8 < rep["mae_market"] < 14
+
+
+# ---------------------------------------------------------------- dashboard
+def _load_build_dashboard():
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[1] / "scripts" / "build_dashboard.py"
+    spec = importlib.util.spec_from_file_location("build_dashboard", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _dash_predictions(with_totals: bool) -> dict:
+    up = {"game_id": "2026_05_AAA_BBB", "season": 2026, "week": 5, "gameday": "2026-10-04", "gametime": "13:00",
+          "home_team": "BBB", "away_team": "AAA", "home_win_prob": 0.6, "away_win_prob": 0.4,
+          "model_home_margin": 3.1, "vegas_home_margin": 2.5, "vegas_home_prob": 0.58, "injury_report": True,
+          "top_factors": [], "context": {"weather": {"indoors": False, "temp_f": 50, "wind_mph": 18, "gust_mph": 25}}}
+    std = {"game_id": "2026_01_AAA_BBB", "week": 1, "home_team": "BBB", "away_team": "AAA",
+           "home_win_prob": 0.6, "vegas_home_prob": 0.55, "home_score": 24, "away_score": 20, "correct": True}
+    if with_totals:
+        up["model_total"] = 44.5
+        up["context"]["live_odds"] = {"consensus_home_prob": 0.58, "totals": {
+            "consensus_total": 45.0, "sharp_total": 44.5,
+            "totals_by_book": [{"book": "FanDuel", "point": 44.5, "over_price": -110, "under_price": -110}]}}
+        up["totals_view"] = {"forecast_wind_mph": 18, "consensus_total": 45.0, "verdict": "pass",
+                             "best_under": {"book": "FanDuel", "point": 44.5, "price": -110, "ev": 0.01},
+                             "reasons": ["injury report not out"]}
+        up["ml_v2"] = {"team": "AAA", "price": 150, "book": "FanDuel", "p_sharp": 0.41, "p_needed": 0.4,
+                       "ev_sharp": 0.025, "verdict": "lean", "reasons": ["model disagrees"]}
+        up["night_west"] = {"team": "AAA", "point": 2.5, "price": -110, "book": "FanDuel", "zones": "AAA P @ BBB E",
+                            "verdict": "pending", "reasons": ["bets only in the last 3 h before kickoff"]}
+        std.update(model_home_margin=3.0, spread_line=2.5, model_total=44.0, total_line=45.5)
+    return {"generated_at": "2026-10-01T12:00:00+00:00", "season": 2026, "upcoming": [up],
+            "season_to_date": {"model": {"n": 1, "log_loss": 0.5, "accuracy": 1.0},
+                               "vegas": {"n": 1, "log_loss": 0.6, "accuracy": 1.0}, "games": [std]},
+            "clv": {"games": 0}, "trained_on_games": 3000, "live_odds_available": with_totals}
+
+
+@pytest.mark.parametrize("present", [True, False])
+def test_dashboard_renders_with_and_without_news_and_totals(tmp_path, present):
+    import datetime as dt
+    import json
+    import re
+    bd = _load_build_dashboard()
+    now = dt.datetime(2026, 10, 1, 12, tzinfo=dt.timezone.utc)
+    news = tmp_path / "news_llm.jsonl"
+    rows = [
+        {"seen_at": "2026-09-30T10:00+00:00", "team": "AAA", "player": "QB One", "position": "QB", "signal": "out",
+         "is_starting_qb_news": True, "game_week_relevant": True, "certainty": 0.9, "source": "cbs",
+         "link": "https://example.com/a", "title": "QB One out"},
+        {"seen_at": "2026-09-30T11:00+00:00", "team": "BBB", "player": "WR Two", "signal": "questionable",
+         "is_starting_qb_news": False, "game_week_relevant": True, "certainty": 0.6, "source": "yahoo",
+         "link": "javascript:alert(1)", "title": "</script><script>x</script>"},
+        {"seen_at": "2026-09-01T11:00+00:00", "team": "BBB", "player": "Old News", "signal": "out", "certainty": 1.0},
+        {"seen_at": "2026-09-30T11:00+00:00", "team": "ZZZ", "player": "Other Team", "signal": "out"},
+    ]
+    news.write_text("\n".join(json.dumps(r) for r in rows) + "\nnot json\n" if present else "")
+    signals = bd.load_news_signals(news if present else tmp_path / "missing.jsonl")
+    pred = _dash_predictions(present)
+    backtest = {"overall": {"margin": {"accuracy": 0.66, "n": 2000}, "vegas": {"accuracy": 0.67, "n": 2000}},
+                "seasons": "2018-2025", "calibration": [], "by_season": []}
+    payload = bd.build_payload(pred, backtest, None, signals, now=now)
+    if present:
+        got = payload["news_ai"]["2026_05_AAA_BBB"]
+        assert [s["player"] for s in got] == ["QB One", "WR Two"]  # QB news first; old and other-team news dropped
+    else:
+        assert payload["news_ai"] == {}
+    body = bd.render(payload)
+    assert "__DATA__" not in body and "</script><script>x" not in body
+    data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
+    assert data["predictions"]["upcoming"][0]["game_id"] == "2026_05_AAA_BBB"
+    assert bd.write_site(body, tmp_path / "site").exists()

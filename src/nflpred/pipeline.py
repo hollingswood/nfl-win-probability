@@ -185,8 +185,33 @@ def season_to_date(df: pd.DataFrame, season: int) -> pd.DataFrame:
         m = M.fit(df, before_date=d["gameday"].min())
         d = d.copy()
         d["p_model"] = M.predict(m, d)
+        d["margin_model"] = m.predict_margin(d)
         parts.append(d)
-    return pd.concat(parts) if parts else done.assign(p_model=[])
+    out = pd.concat(parts) if parts else done.assign(p_model=[], margin_model=[])
+    try:  # display-only totals model, same walk-forward protocol
+        from . import totals_model
+        out["total_model"] = out["game_id"].map(totals_model.walk_forward(df, season)) if len(out) else []
+    except Exception as e:
+        print("totals model (season to date) failed:", e)
+        out["total_model"] = np.nan
+    return out
+
+
+def attach_model_totals(upcoming_preds: list[dict], df: pd.DataFrame, upcoming: pd.DataFrame) -> None:
+    """Add `model_total` (display-only totals model, totals_model.py) to each upcoming game."""
+    if not upcoming_preds:
+        return
+    try:
+        from . import totals_model
+        t = totals_model.add_features(df)
+        tm = totals_model.fit(t)
+        rows = t[t["game_id"].isin(set(upcoming["game_id"]))]
+        pred = dict(zip(rows["game_id"], totals_model.predict(tm, rows)))
+        for g in upcoming_preds:
+            v = pred.get(g["game_id"])
+            g["model_total"] = None if v is None or not np.isfinite(v) else round(float(v), 1)
+    except Exception as e:  # never block predictions
+        print("totals model failed:", e)
 
 
 def clv_report(df: pd.DataFrame, history_dir: Path = ROOT / "history") -> dict:
@@ -265,10 +290,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     std = season_to_date(df, season)
     std_score = M.score(std["home_win"], std["p_model"]) if len(std) else {}
     vegas_score = M.score(std["home_win"], std["vegas_home_prob"]) if len(std) else {}
+    ups = predict_games(model, upcoming, forecasts, live)
+    attach_model_totals(ups, df, upcoming)
     result = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "season": season,
-        "upcoming": predict_games(model, upcoming, forecasts, live),
+        "upcoming": ups,
         "live_odds_available": bool(live),
         "news": dict(LAST_NEWS),
         "season_to_date": {"model": std_score, "vegas": vegas_score,
@@ -345,11 +372,18 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
 
 
 def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
+    """Season-to-date rows. Spreads as home margin (+3 = home favored by 3); `spread_line` and
+    `total_line` are the closing lines in the nflverse schedule."""
+    def g(r, c, nd=1):
+        v = getattr(r, c, None)
+        return None if v is None or pd.isna(v) else round(float(v), nd)
     return [{"game_id": r.game_id, "week": int(r.week), "home_team": r.home_team, "away_team": r.away_team,
              "home_win_prob": round(float(r.p_model), 4),
              "vegas_home_prob": None if pd.isna(r.vegas_home_prob) else round(float(r.vegas_home_prob), 4),
              "home_score": int(r.home_score), "away_score": int(r.away_score),
-             "correct": bool((r.p_model > 0.5) == (r.home_win == 1))}
+             "correct": bool((r.p_model > 0.5) == (r.home_win == 1)),
+             "model_home_margin": g(r, "margin_model"), "spread_line": g(r, "spread_line"),
+             "model_total": g(r, "total_model"), "total_line": g(r, "total_line")}
             for r in d.itertuples()]
 
 

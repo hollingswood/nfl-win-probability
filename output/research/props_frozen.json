@@ -1,0 +1,28 @@
+{
+ "frozen_on": "2026-10-01",
+ "developed_on": "2023 season only (REG+POST); 2024-2025 evaluated once afterwards",
+ "market": "player_reception_yds",
+ "snapshot": "early (Fri 21:40 UTC for Sunday games, kickoff-24h otherwise)",
+ "model": "scripts/research/props.py GBM, mode=early (final injury report Out/Doubtful only), conditional-empirical distribution (400 NN, previous 4 seasons)",
+ "conventions": {
+  "quotes": "main-line only: both American prices in [-200, +170]",
+  "books_for_betting": "my_books.json allowed_books present in the feed (draftkings, fanduel, betmgm, williamhill_us, betrivers; fanatics in 2025)",
+  "consensus": "all us books in the feed (incl. betonlineag, bovada, unibet_us, pointsbetus, barstool)",
+  "blend": "probabilities from model distribution S shifted by (1-w)*c_early, c_early = median over books of the shift making S price each book at its no-vig P(over)",
+  "selection": "one bet per player-game: max EV over {over, under} x allowed books; bet if EV >= thr; flat 1 unit",
+  "ev": "p*decimal + p_push - 1",
+  "clv": "P_close(side at bet point)*decimal - 1; P_close = median close no-vig of books quoting the same point, else anchored: p*_close + K_OFF*(P_{S+c_close}(>L) - P_{S+c_close}(>L*_close))",
+  "K_OFF": 0.55,
+  "void": "player took no offensive snap -> no bet",
+  "pass_bar": "mean CLV > 0 with one-sided game-clustered p < 0.05/3"
+ },
+ "rules": [
+  {"name": "blend25_t03", "w": 0.25, "thr": 0.03, "side": "both",
+   "why": "model+market blend; w=0.25 matches the 2023 logistic weight on the model (~0.25) and the location-regression slope (0.27). Dev 2023: n=588, CLV -3.75% (t -19.6), ROI +5.8% +/- 3.9%, 26.7 bets/wk."},
+  {"name": "model_t12", "w": 1.0, "thr": 0.12, "side": "both",
+   "why": "pure model, high threshold. Dev 2023: n=1012, CLV -4.4%, ROI +4.6% +/- 2.9%, 46 bets/wk (80% unders)."},
+  {"name": "shop_t02", "w": 0.0, "thr": 0.02, "side": "both",
+   "why": "pure line shopping vs the all-book consensus (model only supplies the distribution shape for off-point prices). Dev 2023: n=146, CLV -1.95%, ROI -9.6% +/- 8.4%, 7 bets/wk. Best dev CLV among rules with >100 bets."}
+ ],
+ "dev_verdict": "No 2023 configuration with >=100 bets had CLV > 0. The close moves toward the model's side by 1-2.5 pp, which is less than the ~5% vig at the best allowed price. These rules are frozen to measure that out of sample, not because dev passed."
+}
