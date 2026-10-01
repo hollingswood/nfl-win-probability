@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "main = sides 2020-25 (done); extras = totals + openers + hourly sample (~21k credits)"
+        description: "pinnacle = Pinnacle moneylines 2024-25 (~2k credits); main/extras already done"
         type: choice
-        options: [extras, totals, openers, hourly, main]
-        default: extras
+        options: [pinnacle, extras, totals, openers, hourly, main]
+        default: pinnacle
       seasons:
         description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
         default: "2020-2025"

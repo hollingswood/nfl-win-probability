@@ -605,3 +605,19 @@ def test_news_first_seen_log(tmp_path):
     live.loc[0, "report_status"] = "Out"
     assert news.log_first_seen(live, tmp_path, t0) == 1
     assert len((tmp_path / "news_log.jsonl").read_text().splitlines()) == 2
+
+
+def test_summary_pinnacle_exchanges_and_all_book_consensus():
+    from nflpred import odds as O
+    def bk(key, mh, ma, sh):
+        return {"key": key, "title": key, "markets": [
+            {"key": "h2h", "outcomes": [{"name": "Kansas City Chiefs", "price": mh}, {"name": "Denver Broncos", "price": ma}]},
+            {"key": "spreads", "outcomes": [{"name": "Kansas City Chiefs", "point": sh, "price": -110},
+                                            {"name": "Denver Broncos", "point": -sh, "price": -110}]}]}
+    ev = [{"home_team": "Kansas City Chiefs", "away_team": "Denver Broncos", "commence_time": "2026-10-04T20:25:00Z",
+           "bookmakers": [bk("draftkings", -200, 170, -4.5), bk("pinnacle", -190, 175, -3.5),
+                          bk("kalshi", -185, 180, -3.5), bk("lowvig", -190, 172, -3.5)]}]
+    lo = next(iter(O.summarize(ev, {"draftkings"}).values()))
+    assert lo["pinnacle_home_prob"] is not None and lo["best_exchange_away_ml"]["price"] == 180
+    assert lo["best_away_ml"]["book"] == "draftkings"          # best price only from allowed books
+    assert lo["consensus_home_margin"] == 3.5                   # consensus spread uses ALL books

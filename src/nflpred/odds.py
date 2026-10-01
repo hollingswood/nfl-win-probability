@@ -35,16 +35,33 @@ def _implied(american: float) -> float:
     return -american / (-american + 100) if american < 0 else 100 / (american + 100)
 
 
+# Pinnacle (sharpest book; via its public site, may lag slightly) and US exchanges / prediction
+# markets. Requested by bookmaker key: up to 10 books cost the same as one region.
+EXTRA_BOOKS = "pinnacle,kalshi,prophetx,polymarket,novig,betopenly"
+EXCHANGES = {"kalshi", "prophetx", "polymarket", "novig", "betopenly"}
+
+
+def _get(params: dict, timeout: float):
+    with urllib.request.urlopen(f"{URL}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
+        return json.load(r)
+
+
 def fetch(api_key: str | None = None, timeout: float = 20) -> list[dict]:
     key = api_key or os.environ.get("ODDS_API_KEY")
     if not key:
         raise RuntimeError("ODDS_API_KEY not set")
-    # us + us2 covers the regulated US books (us2 adds e.g. ESPN BET, Fanatics, Hard Rock);
-    # cost = markets x regions = 6 credits per call (totals added 2026-09-30 for the wind track).
-    q = urllib.parse.urlencode({"apiKey": key, "regions": "us,us2", "markets": "h2h,spreads,totals",
-                                "oddsFormat": "american"})
-    with urllib.request.urlopen(f"{URL}?{q}", timeout=timeout) as r:
-        return json.load(r)
+    base = {"apiKey": key, "markets": "h2h,spreads,totals", "oddsFormat": "american"}
+    # us + us2 = regulated US books (us2 adds e.g. ESPN BET, Fanatics, Hard Rock): 6 credits.
+    events = _get({**base, "regions": "us,us2"}, timeout)
+    # + Pinnacle and exchanges: 3 credits. Merged into the same events so snapshots keep everything.
+    try:
+        extra = {e["id"]: e for e in _get({**base, "bookmakers": EXTRA_BOOKS}, timeout)}
+        for e in events:
+            if e.get("id") in extra:
+                e["bookmakers"] = e.get("bookmakers", []) + extra[e["id"]].get("bookmakers", [])
+    except Exception as ex:
+        print(f"odds: pinnacle/exchanges skipped ({ex})")
+    return events
 
 
 def load_allowed_books(path=None) -> set | None:
@@ -68,7 +85,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         if not home or not away:
             continue
         probs, spreads, best = [], [], {"home": None, "away": None}
-        sharp_probs = []
+        sharp_probs, pin_probs, best_ex = [], [], {"home": None, "away": None}
         book_spreads = []
         for bk in ev.get("bookmakers", []):
             mk = {m["key"]: m for m in bk.get("markets", [])}
@@ -79,11 +96,17 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                     probs.append(h / (h + a))
                     if bk.get("key") in SHARP_BOOKS:
                         sharp_probs.append(h / (h + a))
-                    if allowed is not None and bk.get("key") not in allowed:
-                        continue
-                    for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
-                        if best[side] is None or px[name] > best[side]["price"]:
-                            best[side] = {"price": px[name], "book": bk.get("title", bk.get("key"))}
+                    if bk.get("key") == "pinnacle":
+                        pin_probs.append(h / (h + a))
+                    if bk.get("key") in EXCHANGES:
+                        for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
+                            if best_ex[side] is None or px[name] > best_ex[side]["price"]:
+                                best_ex[side] = {"price": px[name], "book": bk.get("title", bk.get("key"))}
+                    if allowed is None or bk.get("key") in allowed:  # (was a `continue` that also
+                        # dropped non-allowed books from the consensus SPREAD; consensus = all books)
+                        for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
+                            if best[side] is None or px[name] > best[side]["price"]:
+                                best[side] = {"price": px[name], "book": bk.get("title", bk.get("key"))}
             if "spreads" in mk:
                 sp = {o["name"]: o for o in mk["spreads"]["outcomes"]}
                 ho, ao = sp.get(ev["home_team"]), sp.get(ev["away_team"])
@@ -107,6 +130,8 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
             "consensus_home_prob": round(statistics.median(probs), 4),
             "sharp_home_prob": round(statistics.median(sharp_probs), 4) if sharp_probs else None,
             "sharp_books": len(sharp_probs),
+            "pinnacle_home_prob": round(pin_probs[0], 4) if pin_probs else None,
+            "best_exchange_home_ml": best_ex["home"], "best_exchange_away_ml": best_ex["away"],
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],
             "spreads_by_book": book_spreads,

@@ -116,11 +116,22 @@ def plan_hourly(games, season, horizon_days=9):
     return _keep(times, kicks, horizon_days)
 
 
+def plan_pinnacle(games, season, horizon_days=9):
+    """Pinnacle check (is it a better 'sharp' reference than LowVig/BetOnline?): 2024-2025 only,
+    Friday report run + 75 min before each kickoff (the snapshots where moneyline v2 can bet)."""
+    if season not in (2024, 2025):
+        return []
+    times, kicks = _daily(games, season, horizon_days, lambda b: (
+        [b + timedelta(hours=21, minutes=40)] if b.weekday() == 4 else []))
+    return _keep(set(times) | {k - timedelta(minutes=75) for k in kicks}, kicks, horizon_days)
+
+
 PLANS = {  # name: (planner, markets, regions, subdirectory, fields)
     "main": (None, "h2h,spreads", "us,us2", "", FIELDS),
     "totals": (plan_totals, "totals", "us", "totals", TOTAL_FIELDS),
     "openers": (plan_openers, "h2h,spreads", "us", "openers", FIELDS),
     "hourly": (plan_hourly, "h2h,spreads", "us", "hourly", FIELDS),
+    "pinnacle": (plan_pinnacle, "h2h", "bookmakers:pinnacle", "pinnacle", FIELDS),
 }
 
 
@@ -153,8 +164,12 @@ def rows_from_snapshot(payload: dict, requested: datetime) -> list[dict]:
 
 
 def fetch(key: str, when: datetime, regions: str, markets: str, timeout: float = 30):
-    q = urllib.parse.urlencode({"apiKey": key, "regions": regions, "markets": markets, "oddsFormat": "american",
-                                "date": when.strftime("%Y-%m-%dT%H:%M:%SZ")})
+    p = {"apiKey": key, "markets": markets, "oddsFormat": "american", "date": when.strftime("%Y-%m-%dT%H:%M:%SZ")}
+    if regions.startswith("bookmakers:"):
+        p["bookmakers"] = regions.split(":", 1)[1]     # up to 10 books cost the same as one region
+    else:
+        p["regions"] = regions
+    q = urllib.parse.urlencode(p)
     for attempt in range(4):
         try:
             with urllib.request.urlopen(f"{URL}?{q}", timeout=timeout) as r:
@@ -192,7 +207,8 @@ def _append(path: Path, rows: list[dict], fields=FIELDS):
 def backfill(games, seasons, key, regions="us,us2", markets="h2h,spreads", reserve=1000, out_dir=OUT_DIR,
              dry_run=False, fetcher=fetch, planner=None, fields=FIELDS):
     planner = planner or plan_snapshots
-    cost = 10 * len(markets.split(",")) * len(regions.split(","))
+    n_reg = 1 if regions.startswith("bookmakers:") else len(regions.split(","))
+    cost = 10 * len(markets.split(",")) * n_reg
     out_dir.mkdir(parents=True, exist_ok=True)
     total = {"snapshots": 0, "credits": 0, "fetched": 0, "rows": 0, "remaining": None, "stopped": None}
     for s in seasons:
