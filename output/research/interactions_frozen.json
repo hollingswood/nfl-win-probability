@@ -1,0 +1,824 @@
+{
+ "frozen_at": "2026-10-01T01:31:10+00:00",
+ "hypotheses_hash": "d85d222f33a32770",
+ "A": {
+  "y_side": {
+   "gbm": {
+    "spec": {
+     "kind": "gbm",
+     "params": {
+      "max_depth": 2,
+      "lr": 0.02,
+      "n": 100,
+      "leaf": 100,
+      "l2": 10.0
+     }
+    },
+    "features": [
+     "turf",
+     "division",
+     "conference",
+     "home_tnf",
+     "home_snf",
+     "home_mnf",
+     "home_off_mnf",
+     "away_off_mnf",
+     "three_away",
+     "off_ot",
+     "bye",
+     "playoff_bye",
+     "super_bowl",
+     "travel_2000",
+     "short_trip",
+     "tz_10am",
+     "night_tz",
+     "two_tz",
+     "bounce_back",
+     "w_warm_cold",
+     "w_dome_cold",
+     "w_rain",
+     "home_rest",
+     "away_rest",
+     "rest_diff",
+     "home_km",
+     "away_km",
+     "home_tz_shift",
+     "away_tz_shift",
+     "home_body_hour",
+     "away_body_hour",
+     "week",
+     "playoff",
+     "neutral",
+     "div_game",
+     "home_qb_change",
+     "away_qb_change",
+     "home_qb_irreg",
+     "away_qb_irreg",
+     "home_new_qb",
+     "away_new_qb",
+     "home_new_coach",
+     "away_new_coach",
+     "outdoor",
+     "temp_o",
+     "wind_o",
+     "rain",
+     "art_turf",
+     "home_dome_team",
+     "away_dome_team",
+     "home_warm",
+     "away_warm",
+     "home_pf_ewm",
+     "home_pa_ewm",
+     "away_pf_ewm",
+     "away_pa_ewm",
+     "home_pass_rate_ewm",
+     "away_pass_rate_ewm",
+     "home_spp_ewm",
+     "away_spp_ewm",
+     "home_off_epa_ewm",
+     "home_def_epa_ewm",
+     "away_off_epa_ewm",
+     "away_def_epa_ewm",
+     "home_wpct",
+     "away_wpct",
+     "home_low_stakes",
+     "away_low_stakes",
+     "home_elim",
+     "away_elim",
+     "spread_line",
+     "total_line"
+    ],
+    "train_seasons": [
+     2003,
+     2019
+    ],
+    "target_clip": 21.0,
+    "thresholds_from_2020_22_preds": {
+     "top10": 1.1186207138760929,
+     "top5": 1.3533350836846494
+    },
+    "pred_hash_2020_22": "a40ae0b6b03323ed"
+   },
+   "ridge2": {
+    "spec": {
+     "kind": "ridge2",
+     "params": {
+      "alpha": 300000.0
+     }
+    },
+    "features": [
+     "turf",
+     "division",
+     "conference",
+     "home_tnf",
+     "home_snf",
+     "home_mnf",
+     "home_off_mnf",
+     "away_off_mnf",
+     "three_away",
+     "off_ot",
+     "bye",
+     "playoff_bye",
+     "super_bowl",
+     "travel_2000",
+     "short_trip",
+     "tz_10am",
+     "night_tz",
+     "two_tz",
+     "bounce_back",
+     "w_warm_cold",
+     "w_dome_cold",
+     "w_rain",
+     "home_rest",
+     "away_rest",
+     "rest_diff",
+     "home_km",
+     "away_km",
+     "home_tz_shift",
+     "away_tz_shift",
+     "home_body_hour",
+     "away_body_hour",
+     "week",
+     "playoff",
+     "neutral",
+     "div_game",
+     "home_qb_change",
+     "away_qb_change",
+     "home_qb_irreg",
+     "away_qb_irreg",
+     "home_new_qb",
+     "away_new_qb",
+     "home_new_coach",
+     "away_new_coach",
+     "outdoor",
+     "temp_o",
+     "wind_o",
+     "rain",
+     "art_turf",
+     "home_dome_team",
+     "away_dome_team",
+     "home_warm",
+     "away_warm",
+     "home_pf_ewm",
+     "home_pa_ewm",
+     "away_pf_ewm",
+     "away_pa_ewm",
+     "home_pass_rate_ewm",
+     "away_pass_rate_ewm",
+     "home_spp_ewm",
+     "away_spp_ewm",
+     "home_off_epa_ewm",
+     "home_def_epa_ewm",
+     "away_off_epa_ewm",
+     "away_def_epa_ewm",
+     "home_wpct",
+     "away_wpct",
+     "home_low_stakes",
+     "away_low_stakes",
+     "home_elim",
+     "away_elim",
+     "spread_line",
+     "total_line"
+    ],
+    "train_seasons": [
+     2003,
+     2019
+    ],
+    "target_clip": 21.0,
+    "thresholds_from_2020_22_preds": {
+     "top10": 0.49887187547634904,
+     "top5": 0.607133179761001
+    },
+    "pred_hash_2020_22": "0ffe96727372caf2"
+   }
+  },
+  "y_tot": {
+   "gbm": {
+    "spec": {
+     "kind": "gbm",
+     "params": {
+      "max_depth": 2,
+      "lr": 0.02,
+      "n": 100,
+      "leaf": 100,
+      "l2": 10.0
+     }
+    },
+    "features": [
+     "turf",
+     "division",
+     "conference",
+     "home_tnf",
+     "home_snf",
+     "home_mnf",
+     "home_off_mnf",
+     "away_off_mnf",
+     "three_away",
+     "off_ot",
+     "bye",
+     "playoff_bye",
+     "super_bowl",
+     "travel_2000",
+     "short_trip",
+     "tz_10am",
+     "night_tz",
+     "two_tz",
+     "bounce_back",
+     "w_warm_cold",
+     "w_dome_cold",
+     "w_rain",
+     "home_rest",
+     "away_rest",
+     "rest_diff",
+     "home_km",
+     "away_km",
+     "home_tz_shift",
+     "away_tz_shift",
+     "home_body_hour",
+     "away_body_hour",
+     "week",
+     "playoff",
+     "neutral",
+     "div_game",
+     "home_qb_change",
+     "away_qb_change",
+     "home_qb_irreg",
+     "away_qb_irreg",
+     "home_new_qb",
+     "away_new_qb",
+     "home_new_coach",
+     "away_new_coach",
+     "outdoor",
+     "temp_o",
+     "wind_o",
+     "rain",
+     "art_turf",
+     "home_dome_team",
+     "away_dome_team",
+     "home_warm",
+     "away_warm",
+     "home_pf_ewm",
+     "home_pa_ewm",
+     "away_pf_ewm",
+     "away_pa_ewm",
+     "home_pass_rate_ewm",
+     "away_pass_rate_ewm",
+     "home_spp_ewm",
+     "away_spp_ewm",
+     "home_off_epa_ewm",
+     "home_def_epa_ewm",
+     "away_off_epa_ewm",
+     "away_def_epa_ewm",
+     "home_wpct",
+     "away_wpct",
+     "home_low_stakes",
+     "away_low_stakes",
+     "home_elim",
+     "away_elim",
+     "spread_line",
+     "total_line"
+    ],
+    "train_seasons": [
+     2003,
+     2019
+    ],
+    "target_clip": 24.0,
+    "thresholds_from_2020_22_preds": {
+     "top10": 1.4474711320790528,
+     "top5": 1.6561525778897608
+    },
+    "pred_hash_2020_22": "90fde355b4c6cfdf"
+   },
+   "ridge2": {
+    "spec": {
+     "kind": "ridge2",
+     "params": {
+      "alpha": 300000.0
+     }
+    },
+    "features": [
+     "turf",
+     "division",
+     "conference",
+     "home_tnf",
+     "home_snf",
+     "home_mnf",
+     "home_off_mnf",
+     "away_off_mnf",
+     "three_away",
+     "off_ot",
+     "bye",
+     "playoff_bye",
+     "super_bowl",
+     "travel_2000",
+     "short_trip",
+     "tz_10am",
+     "night_tz",
+     "two_tz",
+     "bounce_back",
+     "w_warm_cold",
+     "w_dome_cold",
+     "w_rain",
+     "home_rest",
+     "away_rest",
+     "rest_diff",
+     "home_km",
+     "away_km",
+     "home_tz_shift",
+     "away_tz_shift",
+     "home_body_hour",
+     "away_body_hour",
+     "week",
+     "playoff",
+     "neutral",
+     "div_game",
+     "home_qb_change",
+     "away_qb_change",
+     "home_qb_irreg",
+     "away_qb_irreg",
+     "home_new_qb",
+     "away_new_qb",
+     "home_new_coach",
+     "away_new_coach",
+     "outdoor",
+     "temp_o",
+     "wind_o",
+     "rain",
+     "art_turf",
+     "home_dome_team",
+     "away_dome_team",
+     "home_warm",
+     "away_warm",
+     "home_pf_ewm",
+     "home_pa_ewm",
+     "away_pf_ewm",
+     "away_pa_ewm",
+     "home_pass_rate_ewm",
+     "away_pass_rate_ewm",
+     "home_spp_ewm",
+     "away_spp_ewm",
+     "home_off_epa_ewm",
+     "home_def_epa_ewm",
+     "away_off_epa_ewm",
+     "away_def_epa_ewm",
+     "home_wpct",
+     "away_wpct",
+     "home_low_stakes",
+     "away_low_stakes",
+     "home_elim",
+     "away_elim",
+     "spread_line",
+     "total_line"
+    ],
+    "train_seasons": [
+     2003,
+     2019
+    ],
+    "target_clip": 24.0,
+    "thresholds_from_2020_22_preds": {
+     "top10": 0.7030447599647497,
+     "top5": 0.803055417104955
+    },
+    "pred_hash_2020_22": "0313c9088e57b1cf"
+   }
+  }
+ },
+ "A_holdout_rule": "refit frozen spec on 2003-2019 (deterministic), assert 2020-22 prediction hash, score 2023-2025 once: R^2 vs market, ATS/O-U at the close for |pred| >= frozen top10/top5 thresholds, early-line price-based CLV at the same thresholds",
+ "B": {
+  "bar_dev": "n>=40, one-sided t>=2.576, cover>0.5238",
+  "survivors": [],
+  "holdout_bar": "one-sided p < 0.05/#survivors on mean residual toward; ATS cover reported with SE",
+  "all_hypotheses": [
+   {
+    "id": "H1_wind_passheavy_under",
+    "target": "y_tot",
+    "definition": "outdoor/open roof, wind >= 15 mph, and the two teams' mean pre-game neutral-situation pass rate >= its 2012-19 median (pbp seasons only) -> UNDER",
+    "rationale": "the market lowers totals for wind on average, but wind should hurt pass-dependent offenses more than a generic adjustment allows"
+   },
+   {
+    "id": "H2_tnf_long_travel_home",
+    "target": "y_side",
+    "definition": "Thursday game with both teams on <= 5 days rest and the visitor travelling >= 1600 km (~1000 mi) base-to-venue -> HOME",
+    "rationale": "short preparation plus a long trip compounds fatigue/logistics for the road team"
+   },
+   {
+    "id": "H3_backup_qb_road_weather_home",
+    "target": "y_side",
+    "definition": "road team's starter started < 50% of its previous 8 games (>= 4 prior games), outdoor game with temp <= 40F or wind >= 15 mph -> HOME",
+    "rationale": "the market prices the backup, but an inexperienced QB on the road in bad weather is worse than either adjustment alone"
+   },
+   {
+    "id": "H4_bye_vs_off_mnf_rested",
+    "target": "y_side",
+    "definition": "regular season, one team has >= 13 days rest (off bye) and the other <= 6 days (off MNF) -> the RESTED team",
+    "rationale": "largest regular-season rest gap; bye and MNF are each priced individually"
+   },
+   {
+    "id": "H5_tnf_night_west",
+    "target": "y_side",
+    "definition": "Thursday game, kickoff >= 7pm ET, both teams on <= 5 days rest, team base zones differ by >= 2 (E vs M/P, or C vs P) -> the more WESTERN team",
+    "rationale": "night-game body-clock edge of the western team should be larger with no time to adjust"
+   },
+   {
+    "id": "H6_div_big_road_fav_dog",
+    "target": "y_side",
+    "definition": "divisional game with the road team favoured by >= 7 at the close -> HOME (the dog)",
+    "rationale": "division familiarity compresses margins; big road favourites are popular with the public"
+   },
+   {
+    "id": "H7_warm_team_cold_late",
+    "target": "y_side",
+    "definition": "road warm-weather team (Walters' definition), outdoor game, temp <= 35F, week >= 13 or postseason -> HOME",
+    "rationale": "cold-weather effect on warm-climate teams should be largest late in the season"
+   },
+   {
+    "id": "H8_low_stakes_late_over",
+    "target": "y_tot",
+    "definition": "regular season week >= 15 and BOTH teams eliminated or clinched (conservative mathematical rules from prior results only) -> OVER",
+    "rationale": "reduced defensive intensity / backups in games with nothing at stake"
+   },
+   {
+    "id": "H9_dome_team_outdoor_wind_under",
+    "target": "y_tot",
+    "definition": "at least one team with a dome/retractable home plays at an outdoor/open venue with wind >= 15 mph -> UNDER",
+    "rationale": "dome offenses (built for and used to calm conditions) suffer more in wind"
+   },
+   {
+    "id": "H10_early_new_qb_or_coach_fade",
+    "target": "y_side",
+    "definition": "weeks 1-3 of the regular season, exactly one team has a new starting QB (not its most frequent starter of the previous season) or a new head coach -> FADE that team",
+    "rationale": "the market may overrate new-QB/new-coach teams before evidence accumulates"
+   }
+  ]
+ },
+ "C": {
+  "sweep_dev_nominal_winners": [
+   {
+    "a": "art_turf",
+    "b": "away_3rd_road_in_4",
+    "target": "y_tot",
+    "n": 533,
+    "t_cell": 2.45
+   },
+   {
+    "a": "art_turf",
+    "b": "away_off_bye",
+    "target": "y_side",
+    "n": 119,
+    "t_cell": -2.046
+   },
+   {
+    "a": "art_turf",
+    "b": "away_qb_change",
+    "target": "y_tot",
+    "n": 183,
+    "t_cell": 2.707
+   },
+   {
+    "a": "art_turf",
+    "b": "away_qb_irreg",
+    "target": "y_side",
+    "n": 374,
+    "t_cell": 1.998
+   },
+   {
+    "a": "art_turf",
+    "b": "away_qb_irreg",
+    "target": "y_tot",
+    "n": 374,
+    "t_cell": 1.982
+   },
+   {
+    "a": "art_turf",
+    "b": "high_total48",
+    "target": "y_tot",
+    "n": 432,
+    "t_cell": 2.094
+   },
+   {
+    "a": "art_turf",
+    "b": "home_fav7",
+    "target": "y_tot",
+    "n": 524,
+    "t_cell": 1.961
+   },
+   {
+    "a": "art_turf",
+    "b": "home_off_mnf",
+    "target": "y_tot",
+    "n": 98,
+    "t_cell": 2.399
+   },
+   {
+    "a": "art_turf",
+    "b": "low_total40",
+    "target": "y_tot",
+    "n": 386,
+    "t_cell": 3.991
+   },
+   {
+    "a": "art_turf",
+    "b": "nonconf",
+    "target": "y_tot",
+    "n": 461,
+    "t_cell": 2.043
+   },
+   {
+    "a": "art_turf",
+    "b": "snf",
+    "target": "y_tot",
+    "n": 130,
+    "t_cell": 2.004
+   },
+   {
+    "a": "art_turf",
+    "b": "tz_10am",
+    "target": "y_side",
+    "n": 190,
+    "t_cell": 2.015
+   },
+   {
+    "a": "away_3rd_road_in_4",
+    "b": "away_qb_change",
+    "target": "y_side",
+    "n": 124,
+    "t_cell": 2.09
+   },
+   {
+    "a": "away_3rd_road_in_4",
+    "b": "high_total48",
+    "target": "y_side",
+    "n": 235,
+    "t_cell": 1.988
+   },
+   {
+    "a": "away_3rd_road_in_4",
+    "b": "home_off_mnf",
+    "target": "y_tot",
+    "n": 54,
+    "t_cell": 2.496
+   },
+   {
+    "a": "away_3rd_road_in_4",
+    "b": "home_qb_irreg",
+    "target": "y_side",
+    "n": 226,
+    "t_cell": -2.0
+   },
+   {
+    "a": "away_3rd_road_in_4",
+    "b": "wind15",
+    "target": "y_tot",
+    "n": 146,
+    "t_cell": -2.507
+   },
+   {
+    "a": "away_bounce",
+    "b": "away_fav",
+    "target": "y_side",
+    "n": 54,
+    "t_cell": -2.493
+   },
+   {
+    "a": "away_bounce",
+    "b": "home_new_coach",
+    "target": "y_side",
+    "n": 69,
+    "t_cell": -2.002
+   },
+   {
+    "a": "away_fav",
+    "b": "away_off_bye",
+    "target": "y_side",
+    "n": 103,
+    "t_cell": -2.575
+   },
+   {
+    "a": "away_fav",
+    "b": "div",
+    "target": "y_side",
+    "n": 587,
+    "t_cell": -2.268
+   },
+   {
+    "a": "away_new_coach",
+    "b": "away_off_bye",
+    "target": "y_tot",
+    "n": 57,
+    "t_cell": 2.283
+   },
+   {
+    "a": "away_new_coach",
+    "b": "home_new_coach",
+    "target": "y_side",
+    "n": 196,
+    "t_cell": -2.629
+   },
+   {
+    "a": "away_new_coach",
+    "b": "tz_10am",
+    "target": "y_side",
+    "n": 139,
+    "t_cell": 2.586
+   },
+   {
+    "a": "away_off_mnf",
+    "b": "nonconf",
+    "target": "y_tot",
+    "n": 52,
+    "t_cell": 2.991
+   },
+   {
+    "a": "away_qb_change",
+    "b": "away_qb_irreg",
+    "target": "y_tot",
+    "n": 358,
+    "t_cell": 2.274
+   },
+   {
+    "a": "away_qb_change",
+    "b": "div",
+    "target": "y_side",
+    "n": 167,
+    "t_cell": 2.034
+   },
+   {
+    "a": "cold35",
+    "b": "home_fav7",
+    "target": "y_side",
+    "n": 99,
+    "t_cell": 2.005
+   },
+   {
+    "a": "cold35",
+    "b": "home_qb_irreg",
+    "target": "y_side",
+    "n": 56,
+    "t_cell": -2.15
+   },
+   {
+    "a": "div",
+    "b": "home_new_coach",
+    "target": "y_side",
+    "n": 367,
+    "t_cell": -2.262
+   },
+   {
+    "a": "div",
+    "b": "home_qb_irreg",
+    "target": "y_side",
+    "n": 352,
+    "t_cell": -2.624
+   },
+   {
+    "a": "div",
+    "b": "late_wk13",
+    "target": "y_tot",
+    "n": 644,
+    "t_cell": -2.003
+   },
+   {
+    "a": "div",
+    "b": "low_total40",
+    "target": "y_tot",
+    "n": 415,
+    "t_cell": 2.347
+   },
+   {
+    "a": "div",
+    "b": "wind15",
+    "target": "y_tot",
+    "n": 169,
+    "t_cell": -2.623
+   },
+   {
+    "a": "high_total48",
+    "b": "night_tz",
+    "target": "y_side",
+    "n": 127,
+    "t_cell": 2.509
+   },
+   {
+    "a": "high_total48",
+    "b": "snf",
+    "target": "y_side",
+    "n": 89,
+    "t_cell": 2.292
+   },
+   {
+    "a": "home_bounce",
+    "b": "wind15",
+    "target": "y_side",
+    "n": 57,
+    "t_cell": -2.324
+   },
+   {
+    "a": "home_bounce",
+    "b": "wind15",
+    "target": "y_tot",
+    "n": 57,
+    "t_cell": -1.971
+   },
+   {
+    "a": "home_fav7",
+    "b": "late_wk13",
+    "target": "y_side",
+    "n": 367,
+    "t_cell": 2.467
+   },
+   {
+    "a": "home_fav7",
+    "b": "low_total40",
+    "target": "y_side",
+    "n": 243,
+    "t_cell": 2.481
+   },
+   {
+    "a": "home_fav7",
+    "b": "tz_10am",
+    "target": "y_side",
+    "n": 104,
+    "t_cell": 2.733
+   },
+   {
+    "a": "home_fav7",
+    "b": "wind15",
+    "target": "y_tot",
+    "n": 101,
+    "t_cell": -1.977
+   },
+   {
+    "a": "home_new_coach",
+    "b": "home_qb_irreg",
+    "target": "y_side",
+    "n": 267,
+    "t_cell": -2.556
+   },
+   {
+    "a": "home_off_mnf",
+    "b": "late_wk13",
+    "target": "y_tot",
+    "n": 59,
+    "t_cell": 2.877
+   },
+   {
+    "a": "home_qb_irreg",
+    "b": "late_wk13",
+    "target": "y_side",
+    "n": 242,
+    "t_cell": -1.981
+   },
+   {
+    "a": "home_qb_irreg",
+    "b": "night_tz",
+    "target": "y_tot",
+    "n": 59,
+    "t_cell": -2.388
+   },
+   {
+    "a": "home_qb_irreg",
+    "b": "wind15",
+    "target": "y_tot",
+    "n": 94,
+    "t_cell": -2.002
+   },
+   {
+    "a": "late_wk13",
+    "b": "nonconf",
+    "target": "y_tot",
+    "n": 278,
+    "t_cell": 2.186
+   },
+   {
+    "a": "low_total40",
+    "b": "nonconf",
+    "target": "y_tot",
+    "n": 260,
+    "t_cell": 2.334
+   },
+   {
+    "a": "low_total40",
+    "b": "travel_2000mi",
+    "target": "y_tot",
+    "n": 101,
+    "t_cell": 2.063
+   },
+   {
+    "a": "nonconf",
+    "b": "tz_10am",
+    "target": "y_side",
+    "n": 122,
+    "t_cell": 2.338
+   }
+  ],
+  "sweep_dev_bonferroni_winners": [
+   {
+    "a": "art_turf",
+    "b": "low_total40",
+    "target": "y_tot",
+    "n": 386,
+    "t_cell": 3.991
+   }
+  ]
+ }
+}
