@@ -381,7 +381,7 @@ def test_dashboard_renders_totals_grade_and_new_tracks():
             "props_receptions_bets": {"mode": "shadow", "record": dict(rec, min_bets=150), "open": [pr_bet], "recent_graded": []}}
     backtest = {"overall": {}, "seasons": "2018-2025", "calibration": [], "by_season": []}
     body = bd.render(bd.build_payload(pred, backtest, None, []))
-    for s in ('id="tgrec"', "totals_early_under_bets", "props_receptions_bets", "Totals grade record", "Rec props"):
+    for s in ('id="tgrec"', "totals_early_under_bets", "props_receptions_bets", "Totals grades — paper record", "Rec props"):
         assert s in body
     assert "NO GRADE YET" not in body and "no grade yet" not in body.lower()
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))

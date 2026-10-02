@@ -988,7 +988,7 @@ def test_dashboard_renders_grade_v2(tmp_path):
     backtest = {"overall": {"margin": {"accuracy": 0.66, "n": 2000}, "vegas": {"accuracy": 0.67, "n": 2000}},
                 "seasons": "2018-2025", "calibration": [], "by_season": []}
     body = bd.render(bd.build_payload(pred, backtest, None, []))
-    assert 'id="g2rec"' in body and 'id="g2games"' in body and "Grade v2 record" in body
+    assert 'id="g2rec"' in body and 'id="g2games"' in body and "Moneyline grades — paper record" in body
     assert "only A+ has shown an edge (2023-25: +2.3% CLV)" in body
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
     assert data["predictions"]["upcoming"][0]["grade_v2"]["grade"] == "A+"
