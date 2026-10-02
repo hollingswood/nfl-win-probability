@@ -24,6 +24,18 @@ NEWS_FIELDS = ("seen_at", "published", "source", "link", "title", "player", "tea
                "signal", "is_starting_qb_news", "game_week_relevant", "certainty")
 
 
+def news_team(s: dict) -> str | None:
+    """Team a signal belongs to on the dashboard: the roster-checked team when there is one (roster.py),
+    else the AI's team (unchecked, or team unclear)."""
+    return s.get("team_verified") or s.get("team")
+
+
+def news_check(s: dict) -> str:
+    """'verified' (roster match), 'unclear' (team mismatch / not found / ambiguous) or 'unchecked'."""
+    st = (s.get("verify") or {}).get("roster")
+    return "unchecked" if st is None else "verified" if st == "match" else "unclear"
+
+
 def _ts(s: str | None) -> dt.datetime | None:
     try:
         t = dt.datetime.fromisoformat(str(s))
@@ -63,18 +75,30 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
         teams = {g.get("home_team"), g.get("away_team")}
         latest: dict[tuple, dict] = {}
         for s in recent:
-            if s.get("team") not in teams:
+            if news_team(s) not in teams:
                 continue
-            k = (s.get("team"), s.get("player") or s.get("title"))
+            k = (news_team(s), (s.get("verify") or {}).get("gsis_id") or s.get("player") or s.get("title"))
             rank = (_ts(s["seen_at"]), float(s.get("certainty") or 0))
             if k not in latest or rank > (_ts(latest[k]["seen_at"]), float(latest[k].get("certainty") or 0)):
                 latest[k] = s
         ranked = sorted(latest.values(), key=lambda s: (
-            bool(s.get("is_starting_qb_news")), bool(s.get("game_week_relevant")),
+            news_check(s) != "unclear", bool(s.get("is_starting_qb_news")), bool(s.get("game_week_relevant")),
             float(s.get("certainty") or 0), _ts(s["seen_at"])), reverse=True)[:per_game]
         if ranked:
-            out[g["game_id"]] = [{k: s.get(k) for k in NEWS_FIELDS} for s in ranked]
+            out[g["game_id"]] = [{**{k: s.get(k) for k in NEWS_FIELDS}, "team": news_team(s), "check": news_check(s),
+                                  "team_ai": s.get("team") if news_team(s) != s.get("team") else None}
+                                 for s in ranked]
     return out
+
+
+def load_news_audit(path: Path) -> dict | None:
+    """Compact accuracy summary of the AI news reader (history/news_audit.json, written by full runs)."""
+    try:
+        a = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+    return {k: a.get(k) for k in ("generated_at", "overall", "qb", "rule_population", "promotion",
+                                  "lead_vs_report_hours", "roster_check")}
 
 
 RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",
@@ -112,9 +136,10 @@ def load_rule_limits(root: Path = ROOT) -> dict:
 
 def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
                   news_signals: list[dict] | None, now: dt.datetime | None = None,
-                  rules: dict | None = None) -> dict:
+                  rules: dict | None = None, news_audit: dict | None = None) -> dict:
     return {"predictions": predictions, "backtest": backtest, "vs_vegas": vs_vegas,
             "news_ai": news_by_game(news_signals or [], predictions.get("upcoming", []), now),
+            "news_audit": news_audit,
             "rules": load_rule_limits() if rules is None else rules}
 
 
@@ -144,7 +169,8 @@ def main(argv=None) -> int:
         json.loads(Path(a.predictions).read_text()),
         json.loads((ROOT / "output" / "backtest.json").read_text()),
         json.loads(vv.read_text()) if vv.exists() else None,
-        load_news_signals(Path(a.news)))
+        load_news_signals(Path(a.news)),
+        news_audit=load_news_audit(Path(a.news).with_name("news_audit.json")))
     print("wrote", write_site(render(payload), Path(a.out)))
     return 0
 

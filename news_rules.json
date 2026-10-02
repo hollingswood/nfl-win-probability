@@ -1,0 +1,27 @@
+{
+ "track": "news_ai_qb_promotion",
+ "version": 1,
+ "frozen_on": "2026-10-02",
+ "note": "Pre-registered before any AI news signal was audited. Do not edit to fit results; bump version instead. Until `promotion` passes, AI-read news is display only and nothing feeds the model. Checked by news_audit.promotion_check on every full run (history/news_audit.json).",
+ "population": {
+  "description": "AI signals that would be allowed to act as QB-availability overrides, and the ones precision is measured on",
+  "is_starting_qb_news": true,
+  "position": "QB (or blank)",
+  "min_certainty": 0.8,
+  "roster": "match",
+  "game_week_relevant": true,
+  "gradable_signals": ["will_start", "expected_to_play", "returning", "out", "injured_reserve", "doubtful", "suspended", "benched"],
+  "unit": "one per (game, player, signal), timed at first seen; in the population if any copy of it met these conditions"
+ },
+ "promotion": {
+  "min_audited_qb_signals": 25,
+  "min_precision": 0.95,
+  "ground_truth": "actual starting QB (nflverse schedule home_qb_id/away_qb_id): positive signals correct if he started, negative signals if he did not"
+ },
+ "override_when_promoted": {
+  "description": "How an eligible signal would act once promoted, like an overrides.json entry {game_id: {side_qb_play_prob}}; overrides.json (manual) keeps precedence. NOT wired into predictions while eligible is false.",
+  "applies_to": "the game assigned by team_verified (the team's next game within 10 days)",
+  "play_prob": {"out": 0.0, "injured_reserve": 0.0, "suspended": 0.0, "benched": 0.0, "doubtful": 0.05},
+  "starter_named": "will_start / expected_to_play / returning for a QB other than the listed starter: listed starter's play prob 0.0 and the named QB is the replacement"
+ }
+}

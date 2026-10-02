@@ -110,13 +110,18 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
 
 
 def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = None, fetcher=fetch_feed,
-         llm=call_claude, max_items: int = 150) -> dict:
+         llm=call_claude, max_items: int = 150, roster: dict | None = None) -> dict:
+    """New feed items -> AI signals appended to history/news_llm.jsonl. Each signal is checked against the
+    latest roster snapshot (history/roster.json, saved by full runs; roster.py): `verify` + `team_verified`
+    are added, the AI's own fields are kept unchanged. Without a snapshot the check is left to roster.backfill."""
+    from . import roster as roster_lib
     api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     report = {"feeds": {}, "new_items": 0, "signals": 0}
     if not api_key:
         report["skipped"] = "ANTHROPIC_API_KEY not set"
         return report
     now = now or datetime.now(timezone.utc)
+    roster = roster if roster is not None else roster_lib.load(history_dir)
     seen_p, log_p = history_dir / "news_seen.json", history_dir / "news_llm.jsonl"
     seen = set(json.loads(seen_p.read_text())) if seen_p.exists() else set()
     new = []
@@ -143,10 +148,11 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                     continue
                 idx = s.get("item")
                 src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
-                signals.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
-                                "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
-                                **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
-                                                         "game_week_relevant", "certainty", "quote")}})
+                signals.append(roster_lib.attach({
+                    "seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
+                    "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
+                    **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
+                                             "game_week_relevant", "certainty", "quote")}}, roster))
             seen.update(x["key"] for x in batch)
         except Exception as e:
             report.setdefault("errors", []).append(str(e)[:160])
@@ -158,6 +164,8 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
     seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
     report["signals"] = len(signals)
     report["qb_signals"] = [f"{s['player']} ({s['team']}): {s['signal']}" for s in signals if s.get("is_starting_qb_news")][:20]
+    report["roster_check"] = {st: sum((s.get("verify") or {}).get("roster") == st for s in signals)
+                              for st in ("match", "team_mismatch", "not_found", "ambiguous")} if roster else "no roster snapshot yet"
     return report
 
 
@@ -172,6 +180,11 @@ def main():
         print(json.dumps(res, indent=2))
         return
     print(json.dumps(scan(root / "history"), indent=2))
+    try:  # rows logged before a roster snapshot existed
+        from . import roster as roster_lib
+        print("roster backfill:", roster_lib.backfill(root / "history", roster_lib.load(root / "history")))
+    except Exception as e:
+        print("roster backfill failed:", e)
 
 
 if __name__ == "__main__":

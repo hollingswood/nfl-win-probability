@@ -60,6 +60,7 @@ def parse_sleeper(players: dict) -> pd.DataFrame:
         rows.append({
             "gsis_id": (p.get("gsis_id") or "").strip() or None,
             "full_name": p.get("full_name") or f"{p.get('first_name', '')} {p.get('last_name', '')}".strip(),
+            "first_name": p.get("first_name"), "last_name": p.get("last_name"),  # roster.py name variants
             "team": TEAM_MAP.get(p["team"], p["team"]),
             "position": p.get("position"),
             "status_raw": p.get("injury_status"),

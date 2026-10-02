@@ -146,6 +146,9 @@ tr.empty td{font-family:var(--body);text-align:left;color:var(--muted);white-spa
 .ainews .an{color:var(--muted)}
 .ainews .an b{color:var(--ink);font-weight:600}
 .ainews a{color:var(--accent)}
+.ainews .vf{font:600 9px var(--mono);color:var(--accent);margin-left:4px;white-space:nowrap}
+.ainews .tu{font:600 9px var(--mono);color:var(--muted);border:1px dashed var(--line);padding:0 3px;border-radius:2px;margin-left:4px;white-space:nowrap}
+.ainews .an.unclear{opacity:.7}
 .ainews .qb{font:600 9px var(--mono);color:var(--vegas);border:1px solid var(--vegas);padding:0 3px;border-radius:2px;margin-right:4px;vertical-align:1px}
 /* grade badges, status pills, track chips (board + cards) */
 .gb{display:inline-grid;place-items:center;min-width:30px;height:24px;padding:0 5px;font:700 14px/1 var(--mono);border-radius:3px;border:1.5px solid var(--line);color:var(--muted);cursor:help;white-space:nowrap}
@@ -325,6 +328,7 @@ section[id]{scroll-margin-top:12px}
       <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
     </div>
     <p class="g2note" id="g2games"></p>
+    <p class="g2note" id="ainewsacc"></p>
     <div class="games" id="games"></div>
   </section>
 
@@ -450,7 +454,7 @@ section[id]{scroll-margin-top:12px}
     <p><b>Edge vs. factors.</b> The factor bars explain how the model arrived at its own line, in points. They are not edges: Vegas sees most of the same things. The edge comes only from the gap between the model's line and Vegas's line, and the bet math deliberately shrinks that gap toward Vegas before calculating our chance. A game can have big factors and zero edge.</p>
     <p><b>Moneyline grades</b> are the predicted closing-line value of the best price for each side, from a model frozen on 2020–22 lines (A+ ≥ 2.5%, A ≥ 1.5%, B ≥ 0.5%, else C). On unseen 2023–25 lines the realized CLV rose with the letter, but only <b>A+</b> showed an edge (+2.3% CLV); A and B were about zero. The grade is a label: it never decides or sizes a track's bet. Games with no grade have no price that is positive against any fair reference. <b>Spread grades</b> are the original points scheme: they start from the edge and subtract for warning signs (the model far from the market, a QB change, the wrong side of 3 or 7, the line moving against us). In 2020–25 tests they ranked spread bets in the right order; spread A+ showed +2.2% CLV, a borderline result. <b>Totals grades</b> are the predicted closing-line value of each over/under offer at your books, from a model frozen on 2020–22 lines (A+ ≥ 0.0%, A ≥ −1%, B ≥ −2%, else C; a −110 bet at the consensus number is about −4.5%). On 2023–25 lines A+ gained +1.5% CLV and A, B and C all lost value; A+ is mostly early-week unders. Totals are graded within 7 days of kickoff. Also a label only.</p>
     <p>Factor bars show how many points of predicted margin each input is worth and which team it favors. Home field is about 2 points, and near zero at neutral sites. Injuries count every non-QB player listed Out or Doubtful, weighted by their recent share of snaps; reports come out Wednesday to Friday, so early-week numbers assume everyone is healthy.</p>
-    <p><b>Model total</b> comes from a simple display-only model (each team's recent points scored and allowed, offensive and defensive efficiency, league scoring level, dome). On 2020–25 it missed the actual total by 10.6 points on average, against 10.3 for the closing Vegas total, so it is context, not an edge, and no track bets on it. <b>AI-read news</b> is pulled from public feeds by an AI reader and is not verified; it is not used by the model or any track.</p>
+    <p><b>Model total</b> comes from a simple display-only model (each team's recent points scored and allowed, offensive and defensive efficiency, league scoring level, dome). On 2020–25 it missed the actual total by 10.6 points on average, against 10.3 for the closing Vegas total, so it is context, not an edge, and no track bets on it. <b>AI-read news</b> is pulled from public feeds by an AI reader; it is not used by the model or any track. ✓ verified means the player is on that team's roster (Sleeper); "team unclear" means the AI's team did not match. After games, each signal is checked against who actually played and started; AI QB news may feed the model's QB availability only after 25 such QB signals are at least 95% right (rule frozen 2026-10-02).</p>
     <p>Travel, time zones, body clock, weather and Next Gen Stats were each tested as model inputs and did not improve out-of-sample accuracy, so they appear on the cards as context and are not part of the prediction. Live odds come from multiple sportsbooks when an Odds API key is set; "edge" is the expected return at the best available price using the model blended with the market (the same probability the paper bets use), and the backtest above shows those edges have not been profitable against closing lines.</p>
     <p>Vegas is a very strong benchmark. Matching it over a full season would be a good result; a large disagreement usually means the market knows something the model doesn't, like an injury announced after the data refresh.</p>
   </section>
@@ -754,8 +758,17 @@ function aiNews(g){
   const N=(D.news_ai||{})[g.game_id]; if(!N||!N.length) return '';
   const src=n=>{ const name=SRC[n.source]||String(n.source||'source').replace(/_/g,' ');
     return /^https?:\/\//.test(n.link||'') ? `<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer" title="${esc(n.title||'')}">${esc(name)}</a>` : esc(name); };
-  return `<div class="ainews"><span class="subh">AI-read news (unverified)</span>${N.map(n=>`<div class="an">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.team)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b> · ${src(n)} · seen ${ago(n.seen_at)}</div>`).join('')}</div>`;
+  const chk=n=> n.check==='verified' ? '<span class="vf" title="Player found on this team\'s roster">✓ verified</span>'
+    : n.check==='unclear' ? `<span class="tu" title="The AI's team did not match the roster${n.team_ai?` (AI said ${esc(n.team_ai)})`:''}">team unclear</span>` : '';
+  return `<div class="ainews"><span class="subh" title="Read from public feeds by an AI; not used by the model or any track">AI-read news (not used by the model)</span>${N.map(n=>`<div class="an${n.check==='unclear'?' unclear':''}">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.team)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${chk(n)} · ${src(n)} · seen ${ago(n.seen_at)}</div>`).join('')}</div>`;
 }
+(function(){
+  const el=document.getElementById('ainewsacc'), A=D.news_audit;
+  if(!A||!A.overall){el.hidden=true;return;}
+  const o=A.overall, q=A.qb||{}, p=A.promotion||{}, pct=x=>x.n?` (${Math.round(100*x.correct/x.n)}%)`:'';
+  const rule = p.eligible ? 'promotion rule met' : `promotes to the model after ${p.min_n||25} QB signals at ≥${Math.round((p.min_precision||0.95)*100)}% (${p.n||0} so far)`;
+  el.innerHTML = `<b>AI news accuracy so far:</b> ${o.n?`${o.correct}/${o.n} correct${pct(o)}`:'no finished games yet'}; QB signals ${q.n?`${q.correct}/${q.n}`:'0 graded'}; ${esc(rule)}. ✓ verified = player is on that team's roster.`;
+})();
 const allRows=[];
 document.getElementById('g2games').innerHTML = `<b>Grade</b> on each box: moneyline and total grades predict closing-line value; spread grades are the original points scheme. Only <b>A+</b> has shown an edge. Hover a grade for the reason.`;
 // receptions-props track on a game card: when it checks this game, and what it logged

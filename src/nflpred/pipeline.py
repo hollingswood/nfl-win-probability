@@ -63,6 +63,10 @@ def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: 
             report["news_log_new_entries"] = news_lib.log_first_seen(live, ROOT / "history")
         except Exception as e:
             print("news log failed:", e)
+        try:
+            report["roster"] = save_roster_and_check(live, report, players, season)
+        except Exception as e:
+            print("roster snapshot failed:", e)
         log = []
         if not live.empty:
             rows = news_lib.injury_rows(live, up)
@@ -84,6 +88,25 @@ def build(refresh: bool, today: dt.date, live_news: bool = False, horizon_days: 
         keys = list(zip(df["season"], df["week"], df[f"{side}_team"]))
         df[f"{side}_inj_reported"] = [1.0 if k in rep else 0.0 for k in keys]
     return df
+
+
+def save_roster_and_check(live: pd.DataFrame, report: dict, players: pd.DataFrame, season: int,
+                          history_dir: Path = ROOT / "history") -> dict:
+    """Full runs: save the Sleeper roster snapshot (history/roster.json) and check the AI news log's teams
+    against it (roster.py). Without Sleeper this run and no snapshot yet, the nflverse players file stands in
+    (marked source 'nflverse'; re-checked once a Sleeper snapshot exists)."""
+    from . import roster as roster_lib
+    sl = live[live["source"] == "Sleeper"] if live is not None and "source" in live else None
+    if str(report.get("sleeper", "")).startswith("ok") and sl is not None and len(sl) >= 1000:
+        ros = roster_lib.build(sl, source="sleeper")
+        roster_lib.save(ros, history_dir)
+    else:
+        ros = roster_lib.load(history_dir)
+        if ros is None:
+            ros = roster_lib.from_nflverse(players, season)
+            roster_lib.save(ros, history_dir)
+    return {"source": ros["source"], "as_of": ros["as_of"], "players": ros["n_players"],
+            "news_check": roster_lib.backfill(history_dir, ros)}
 
 
 def _pts_to_prob_points(pts: float, sigma: float) -> float:
@@ -362,6 +385,13 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     _aplus_tracks(result, df)
     _grade_v2_record(result)
     _totals_grade_record(result)
+    try:  # AI news outcome audit + pre-registered promotion check (display only; nothing feeds the model)
+        from . import news_audit
+        a = news_audit.run(ROOT / "history", season)
+        result["news_audit"] = {k: a[k] for k in ("overall", "qb", "rule_population", "promotion")}
+        print("news audit:", json.dumps(result["news_audit"]))
+    except Exception as e:
+        print("news audit failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     write_alert(result)
