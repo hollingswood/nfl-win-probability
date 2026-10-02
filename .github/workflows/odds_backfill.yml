@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "alternates = alternate spread lines 2023-25 for buying points (~18k credits); others already done"
+        description: "derivatives = 1st-half spreads/totals + team totals 2023-25 (~54k credits); others already done"
         type: choice
-        options: [alternates, props, pinnacle, extras, totals, openers, hourly, main]
-        default: alternates
+        options: [derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
+        default: derivatives
       seasons:
         description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
         default: "2020-2025"
@@ -46,6 +46,7 @@ jobs:
           PLANS="${{ inputs.plan }}"
           if [ "$PLANS" = "extras" ]; then PLANS="totals openers hourly"; fi
           if [ "$PLANS" = "alternates" ]; then PLANS="props:alternate_spreads"; fi
+          if [ "$PLANS" = "derivatives" ]; then PLANS="props:spreads_h1,totals_h1,team_totals"; fi
           for P in $PLANS; do python -m nflpred.odds_history --plan $P $ARGS; done
         env:
           PYTHONPATH: src

@@ -136,7 +136,8 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
     """Player props (or alternate_spreads: rows are team=player, point, price=over_price) via the per-EVENT historical endpoint (data from May 2023; 10 credits per market per
     region per event-snapshot). Two snapshots per game: Friday 21:40 UTC (or 24 h before a non-Sunday
     kickoff) and 75 min before kickoff (the close, for CLV). Event ids come from the side-odds files."""
-    out_dir = out_dir or OUT_DIR / ("alternates" if market.startswith("alternate") else "props")
+    out_dir = out_dir or OUT_DIR / ("alternates" if market.startswith("alternate") else
+                                    "derivatives" if ("_h1" in market or "team_totals" in market) else "props")
     out_dir.mkdir(parents=True, exist_ok=True)
     total = {"snapshots": 0, "credits": 0, "fetched": 0, "rows": 0, "remaining": None, "stopped": None}
     for s in seasons:
@@ -151,7 +152,7 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
         ev["day"] = pd.to_datetime(ev.commence_time, utc=True).dt.tz_convert("America/New_York").dt.date
         ev = ev.sort_values("n").drop_duplicates(["home", "away", "day"], keep="last")
         ev = ev[pd.to_datetime(ev.commence_time, utc=True) >= pd.Timestamp("2023-05-03", tz="UTC")]
-        done_path = out_dir / f"done_{market}_{s}.txt"
+        done_path = out_dir / f"done_{market.replace(',', '+')}_{s}.txt"
         done = set(done_path.read_text().split()) if done_path.exists() else set()
         todo = []
         for r in ev.itertuples():
@@ -164,7 +165,7 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
                 tag = f"{r.event_id}|{t.isoformat()}"
                 if tag not in done:
                     todo.append((r, t, tag))
-        cost = 10 * len(regions.split(","))
+        cost = 10 * len(regions.split(",")) * len(market.split(","))
         total["snapshots"] += len(todo)
         total["credits"] += len(todo) * cost
         print(f"{s}: {len(todo)} event-snapshots for {market} (~{len(todo) * cost:,} credits)")
@@ -193,7 +194,7 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
             rows = []
             for bk in d.get("bookmakers", []):
                 for m in bk.get("markets", []):
-                    if m.get("key", "").startswith("alternate_spreads"):
+                    if m.get("key", "").startswith(("alternate_spreads", "spreads")):
                         # every alternate line: team, point, price (outcomes come in home/away pairs)
                         for o in m.get("outcomes", []):
                             rows.append({"requested_ts": t.isoformat(), "snapshot_ts": payload.get("timestamp"),
@@ -211,7 +212,7 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
                                      "event_id": r.event_id, "commence_time": r.commence_time, "home": r.home,
                                      "away": r.away, "book": bk.get("key"), "market": m.get("key"), "player": player, **p})
             if rows:
-                _append(out_dir / f"{market}_{s}.csv.gz", rows, PROP_FIELDS)
+                _append(out_dir / f"{market.replace(',', '+')}_{s}.csv.gz", rows, PROP_FIELDS)
             with done_path.open("a") as fh:
                 fh.write(tag + "\n")
             total["fetched"] += 1
