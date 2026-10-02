@@ -1,0 +1,79 @@
+{
+ "frozen_on": "2026-10-02T09:40:07",
+ "dev_seasons": [
+  2023
+ ],
+ "holdout_seasons": [
+  2024,
+  2025
+ ],
+ "allowed_books": [
+  "betmgm",
+  "betrivers",
+  "draftkings",
+  "espnbet",
+  "fanatics",
+  "fanduel",
+  "hardrockbet",
+  "williamhill_us"
+ ],
+ "k": 3,
+ "pass_bar": "pooled CLV > 0 with one-sided p < 0.05/k (game-clustered SE) AND CLV > 0 in 2024 and in 2025",
+ "rules": [
+  {
+   "id": "O1_h1tot_model_open",
+   "test": "deriv",
+   "fair": "fair_anch",
+   "snap": "open",
+   "markets": [
+    "totals_h1"
+   ],
+   "ev_min": 0.04,
+   "mname": "totals_h1",
+   "dev_2023": {
+    "n": 17,
+    "clv": 0.0318,
+    "clv_se": 0.0175,
+    "roi": 0.24
+   },
+   "desc": "Tuesday 14:10 UTC: allowed-book 1H total (over/under) with EV >= 4% vs Fair(sharp FG S,T at the same snapshot) + rolling market level offset; one bet per game. Motivation: 1H totals close 69% of the open gap to the FG-implied fair by kickoff (largest of the three markets)."
+  },
+  {
+   "id": "O2_xbook_open",
+   "test": "deriv",
+   "fair": "fair_consq",
+   "snap": "open",
+   "markets": [
+    "spreads_h1",
+    "totals_h1",
+    "team_totals"
+   ],
+   "ev_min": 0.01,
+   "min_ref_books": 3,
+   "mname": "all",
+   "dev_2023": {
+    "n": 11,
+    "clv": 0.0266,
+    "clv_se": 0.0223,
+    "roi": 0.077
+   },
+   "desc": "Tuesday 14:10 UTC: derivatives_v2 R1 moved to the open -- best allowed-book price on a 1H spread / 1H total / team total with EV >= 1% vs the leave-one-out median no-vig of >= 3 other books quoting the SAME point; one bet per game-market."
+  },
+  {
+   "id": "O3_alt_model_open",
+   "test": "alt",
+   "window": "open",
+   "ev_col": "ev_mt",
+   "ev_min": 0.03,
+   "max_adist": 7.0,
+   "dev_2023": {
+    "n": 56,
+    "clv": 0.0189,
+    "clv_se": 0.0147,
+    "clv_model": 0.0408,
+    "roi": -0.154
+   },
+   "desc": "Tuesday 14:10 UTC: any alternate spread (bought or sold, within 7 pts of that book's main line, price -300..+300) at an allowed book with EV >= 3% under margin_total at the sharp main spread+juice and the median posted total of the same snapshot; one bet per game (highest EV)."
+  }
+ ]
+}

@@ -1,0 +1,5803 @@
+{
+ "definitions": "PLAYER PROPS vs THE MARKET at three snapshots (Tue open / Fri early / close): accuracy, line moves, model-vs-market,\ncross-book shopping, systematic biases, anytime-TD pricing. Dev 2023, freeze <=4 rules, 2024-25 run ONCE.\n\nStages (cache in the scratch dir; holdout refuses to run without output/research/props_full_frozen.json):\n  PYTHONPATH=src:scripts python scripts/research/props_full.py build    # props.py build (player/team-game tables)\n  PYTHONPATH=src:scripts python scripts/research/props_full.py fit      # projections per snapshot mode + TD model\n  PYTHONPATH=src:scripts python scripts/research/props_full.py prep     # load/match props, consensus per snapshot\n  PYTHONPATH=src:scripts python scripts/research/props_full.py dev      # 2023 analyses + rule grids (scratch json)\n  PYTHONPATH=src:scripts python scripts/research/props_full.py holdout  # frozen rules on 2024-25 + all descriptives\n  output/research/props_full.md is written by hand from output/research/props_full.json.\n\nData: data/historical_odds/props/*.csv.gz (Odds API, regions=us). Snapshots (requested_ts):\n  open  = Tuesday 14:10 UTC of game week (props are posted for only a minority of games by then: 14%/29%/65% of\n          events in 2023/24/25 for the 5-market file), early = Fri 21:40 UTC (Sunday games; kickoff-24h otherwise),\n  close = kickoff-75 min.\nMarkets: pass_yds, pass_att(empts), rush_yds, receptions, rec_yds (O/U) and anytime TD (only the 'Yes' price is\n  in the feed; it is stored in the under_price column; there is no 'No' side, so no per-book de-vig).\nO/U main-line filter (props_backtest): both prices within [-200, +170] (drops Kambi milestone/alt quotes).\n\nProjections (scripts/research/props.py pipeline, refit here per information set; train = seasons < S):\n  open  = no injury report: teammate shares renormalised over the whole recent rotation (players listed Out later\n          are still counted), no questionable flag; game lines = the Tuesday snapshot (team totals + spread).\n  early = props.py \"early\" (final Out/Doubtful report) with Friday-snapshot game lines.\n  late  = props.py \"late\" (actual actives; valid at close, inactives come out at T-90) with close-snapshot lines.\n  Training rows use nflverse closing lines (2014-22 have no snapshot lines); prediction rows for 2023-25 use the\n  snapshot lines. Weather is still RECORDED weather (optimistic, as in props.py).\n  Distribution = props.py conditional-empirical (400 nearest out-of-sample (mu,y) pairs, previous 4 seasons).\nTD model: LightGBM binary on prior-only red-zone (inside-10/20) carry & target shares, decayed TD rate, overall\n  shares, implied team total (snapshot), position; same three information sets.\n\nConventions (as props_backtest): per-book no-vig P(over) multiplicative; per-quote shift c = L - Q_S(1-p) moves the\nmodel distribution S to price that quote; consensus line L* = modal point, p* = median no-vig at L*.\nMarket-implied (price-adjusted) median = model median + median_b c_b.\nCLV (O/U): P_close(side at bet point) x decimal - 1; P_close = median no-vig of close books quoting the same point\n  (\"direct\") else the close consensus probability moved along the late-model distribution shifted to the close,\n  damped by k=0.55 (\"anchored\", k from props_backtest 2023).\nCLV (TD Yes): p_fair_close x decimal - 1 where p_fair_close = calibration map (fit on 2023 close quotes vs outcomes)\n  applied to the median close implied probability across books (all us books). Vig-free by construction of the map.\nSettlement: player must take >=1 offensive snap, else void (no CLV, no PnL). Outcomes = pbp official-style stats.\n",
+ "frozen": {
+  "frozen_on": "2026-10-02",
+  "developed_on": "2023 season only (scripts/research/props_full.py dev); 2024-25 run once with these rules",
+  "pass_bar": "holdout 2024-25 mean CLV > 0 with one-sided game-clustered p < 0.05/3 = 0.0167, AND mean CLV > 0 in 2024 and in 2025 separately",
+  "k": 3,
+  "rules": [
+   {
+    "name": "td_shop_early",
+    "market": "td",
+    "snap": "early",
+    "kind": "shop",
+    "thr": 0.1,
+    "ev_max": 0.6,
+    "desc": "Anytime-TD Yes at the Friday snapshot, allowed books only. p = 2023 early calibration map applied to the leave-one-out median implied prob of >=3 OTHER us books; bet the best-EV allowed book per player if 0.10 <= EV < 0.60 (EV >= 0.6 treated as stale/erroneous quotes). CLV = 2023 close calibration map on the close median implied prob.",
+    "dev_2023": {
+     "n": 411,
+     "clv": 0.0406,
+     "clv_t": 3.8,
+     "roi": -0.027,
+     "roi_se": 0.155,
+     "bets_per_week": 19.6
+    }
+   },
+   {
+    "name": "rec_shop_early",
+    "market": "receptions",
+    "snap": "early",
+    "kind": "shop",
+    "thr": 0.02,
+    "side": "both",
+    "ev_max": 0.5,
+    "desc": "Player receptions O/U at the Friday snapshot, allowed books. p = leave-one-out median no-vig P of >=3 OTHER us books quoting the same point; best-EV side/book per player if EV >= 0.02.",
+    "dev_2023": {
+     "n": 87,
+     "clv": 0.013,
+     "clv_t": 2.33,
+     "roi": -0.028,
+     "roi_se": 0.128,
+     "bets_per_week": 4.1
+    },
+    "selection_note": "picked from 5 markets x 2 snapshots x 3 sides x 5 thresholds of shop rules; the other markets were ~-1% CLV in dev"
+   },
+   {
+    "name": "open_model_thesis",
+    "market": [
+     "pass_yds",
+     "pass_att",
+     "rush_yds",
+     "receptions",
+     "rec_yds"
+    ],
+    "snap": "open",
+    "kind": "model",
+    "w": 0.2,
+    "thr": 0.12,
+    "side": "both",
+    "ev_max": 0.5,
+    "desc": "Pros' thesis test: Tuesday-open O/U, all five markets pooled, open-information projection blended with the market (w=0.2 on the model, shift (1-w)c), best-EV allowed book/side per player-market if 0.12 <= EV < 0.5.",
+    "dev_2023": {
+     "n": 34,
+     "clv": -0.0031,
+     "clv_t": -0.29,
+     "roi": 0.057,
+     "roi_se": 0.15,
+     "bets_per_week": 4.3
+    },
+    "note": "2023 open coverage is only 39 of 276 events, so dev power is very low; frozen as an explicit hypothesis test (best open config in dev, still not positive)."
+   }
+  ]
+ },
+ "markets": {
+  "pass_yds": {
+   "2023": {
+    "accuracy": {
+     "all_three": {
+      "n": 50,
+      "line_mae_open": 61.42,
+      "mktmed_mae_open": 61.6607,
+      "model_mae_open": 61.264,
+      "over_rate_open": 0.52,
+      "mean_pnv_over_open": 0.5004,
+      "line_mae_early": 58.38,
+      "mktmed_mae_early": 58.4104,
+      "model_mae_early": 61.586,
+      "over_rate_early": 0.54,
+      "mean_pnv_over_early": 0.4991,
+      "line_mae_close": 56.98,
+      "mktmed_mae_close": 57.2427,
+      "model_mae_close": 61.4832,
+      "over_rate_close": 0.52,
+      "mean_pnv_over_close": 0.4974,
+      "open_minus_close_mae": [
+       4.44,
+       1.4478
+      ],
+      "early_minus_close_mae": [
+       1.4,
+       0.525
+      ],
+      "open_line_minus_open_model_mae": [
+       0.156,
+       2.9497
+      ]
+     },
+     "early_close": {
+      "n": 520,
+      "line_mae_early": 57.9865,
+      "mktmed_mae_early": 58.0355,
+      "model_mae_early": 59.4628,
+      "over_rate_early": 0.5173,
+      "mean_pnv_over_early": 0.4979,
+      "line_mae_close": 57.6192,
+      "mktmed_mae_close": 57.7622,
+      "model_mae_close": 59.0208,
+      "over_rate_close": 0.5154,
+      "mean_pnv_over_close": 0.4976
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 52,
+      "over_rate": 0.5385,
+      "se": 0.0789,
+      "by_team_spread": {}
+     },
+     "early": {
+      "n_50pct_lines": 518,
+      "over_rate": 0.5174,
+      "se": 0.0227,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        81,
+        0.5432,
+        0.0553
+       ],
+       "dog(-6,-1]": [
+        173,
+        0.4971,
+        0.038
+       ],
+       "fav[1,6)": [
+        178,
+        0.5112,
+        0.0375
+       ],
+       "big_fav(>=6)": [
+        86,
+        0.5465,
+        0.0537
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 530,
+      "over_rate": 0.5057,
+      "se": 0.0222,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        83,
+        0.5181,
+        0.0548
+       ],
+       "dog(-6,-1]": [
+        180,
+        0.4889,
+        0.0373
+       ],
+       "fav[1,6)": [
+        183,
+        0.5137,
+        0.0369
+       ],
+       "big_fav(>=6)": [
+        84,
+        0.5119,
+        0.0545
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 52,
+      "0.0": -0.6961,
+      "0.1": -0.693,
+      "0.2": -0.6897,
+      "0.3": -0.6862,
+      "0.5": -0.6819,
+      "0.75": -0.6797,
+      "1.0": -0.6781,
+      "market_nv": -0.6945
+     },
+     "early": {
+      "n": 520,
+      "0.0": -0.6935,
+      "0.1": -0.6932,
+      "0.2": -0.6937,
+      "0.3": -0.6953,
+      "0.5": -0.6985,
+      "0.75": -0.7065,
+      "1.0": -0.7163,
+      "market_nv": -0.6933
+     }
+    },
+    "coverage": {
+     "open": 52,
+     "early": 520,
+     "close": 538
+    },
+    "always_under": {
+     "open": {
+      "n": 49,
+      "n_clv": 47,
+      "clv": -0.0564,
+      "clv_se": 0.0113,
+      "clv_t": -4.9775,
+      "clv_p": 1.0,
+      "roi": -0.1196,
+      "roi_se": 0.1488,
+      "hit": 0.4694,
+      "bets_per_week": 2.88,
+      "weeks": 17,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.8776,
+      "under_share": 1.0,
+      "direct_share": 0.2857
+     },
+     "early": {
+      "n": 515,
+      "n_clv": 515,
+      "clv": -0.0523,
+      "clv_se": 0.0014,
+      "clv_t": -38.6358,
+      "clv_p": 1.0,
+      "roi": -0.0912,
+      "roi_se": 0.0423,
+      "hit": 0.4854,
+      "bets_per_week": 23.41,
+      "weeks": 22,
+      "mean_ev": -0.0638,
+      "mean_dec": 1.8728,
+      "under_share": 1.0,
+      "direct_share": 0.4311
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 49,
+      "n_clv": 47,
+      "clv": -0.051,
+      "clv_se": 0.0122,
+      "clv_t": -4.19,
+      "clv_p": 1.0,
+      "roi": -0.0024,
+      "roi_se": 0.1493,
+      "hit": 0.5306,
+      "bets_per_week": 2.88,
+      "weeks": 17,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8783,
+      "under_share": 0.0,
+      "direct_share": 0.2653
+     },
+     "early": {
+      "n": 515,
+      "n_clv": 515,
+      "clv": -0.0498,
+      "clv_se": 0.0014,
+      "clv_t": -36.7889,
+      "clv_p": 1.0,
+      "roi": 0.0006,
+      "roi_se": 0.0419,
+      "hit": 0.532,
+      "bets_per_week": 23.41,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8799,
+      "under_share": 0.0,
+      "direct_share": 0.4194
+     }
+    }
+   },
+   "2024_25": {
+    "accuracy": {
+     "all_three": {
+      "n": 292,
+      "line_mae_open": 59.0925,
+      "mktmed_mae_open": 59.0868,
+      "model_mae_open": 58.6237,
+      "over_rate_open": 0.476,
+      "mean_pnv_over_open": 0.5002,
+      "line_mae_early": 58.5925,
+      "mktmed_mae_early": 58.5869,
+      "model_mae_early": 58.4293,
+      "over_rate_early": 0.476,
+      "mean_pnv_over_early": 0.5007,
+      "line_mae_close": 58.5925,
+      "mktmed_mae_close": 58.4405,
+      "model_mae_close": 58.9989,
+      "over_rate_close": 0.4795,
+      "mean_pnv_over_close": 0.5008,
+      "open_minus_close_mae": [
+       0.5,
+       0.4246
+      ],
+      "early_minus_close_mae": [
+       0.0,
+       0.2258
+      ],
+      "open_line_minus_open_model_mae": [
+       0.4688,
+       0.9929
+      ]
+     },
+     "early_close": {
+      "n": 1042,
+      "line_mae_early": 57.0643,
+      "mktmed_mae_early": 57.0539,
+      "model_mae_early": 56.9391,
+      "over_rate_early": 0.501,
+      "mean_pnv_over_early": 0.5004,
+      "line_mae_close": 56.8704,
+      "mktmed_mae_close": 56.8024,
+      "model_mae_close": 56.7718,
+      "over_rate_close": 0.5038,
+      "mean_pnv_over_close": 0.5006
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 291,
+      "over_rate": 0.4777,
+      "se": 0.0314,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        40,
+        0.425,
+        0.0782
+       ],
+       "dog(-6,-1]": [
+        101,
+        0.5149,
+        0.0497
+       ],
+       "fav[1,6)": [
+        103,
+        0.4369,
+        0.0489
+       ],
+       "big_fav(>=6)": [
+        47,
+        0.5319,
+        0.0728
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 1039,
+      "over_rate": 0.5014,
+      "se": 0.0162,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        169,
+        0.4379,
+        0.0382
+       ],
+       "dog(-6,-1]": [
+        332,
+        0.5211,
+        0.0274
+       ],
+       "fav[1,6)": [
+        335,
+        0.4985,
+        0.0273
+       ],
+       "big_fav(>=6)": [
+        203,
+        0.5271,
+        0.035
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 1075,
+      "over_rate": 0.5042,
+      "se": 0.0159,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        179,
+        0.4413,
+        0.0371
+       ],
+       "dog(-6,-1]": [
+        344,
+        0.5233,
+        0.0269
+       ],
+       "fav[1,6)": [
+        345,
+        0.5014,
+        0.0269
+       ],
+       "big_fav(>=6)": [
+        207,
+        0.5314,
+        0.0347
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 292,
+      "0.0": -0.6934,
+      "0.1": -0.6918,
+      "0.2": -0.6899,
+      "0.3": -0.6897,
+      "0.5": -0.6904,
+      "0.75": -0.6922,
+      "1.0": -0.6972,
+      "market_nv": -0.6931
+     },
+     "early": {
+      "n": 1042,
+      "0.0": -0.6932,
+      "0.1": -0.6919,
+      "0.2": -0.6909,
+      "0.3": -0.6901,
+      "0.5": -0.6896,
+      "0.75": -0.691,
+      "1.0": -0.6955,
+      "market_nv": -0.6938
+     }
+    },
+    "coverage": {
+     "open": 292,
+     "early": 1042,
+     "close": 1075
+    },
+    "always_under": {
+     "open": {
+      "n": 292,
+      "n_clv": 292,
+      "clv": -0.0604,
+      "clv_se": 0.0036,
+      "clv_t": -16.707,
+      "clv_p": 1.0,
+      "roi": -0.0169,
+      "roi_se": 0.0586,
+      "hit": 0.524,
+      "bets_per_week": 6.64,
+      "weeks": 44,
+      "mean_ev": -0.061,
+      "mean_dec": 1.8777,
+      "under_share": 1.0,
+      "direct_share": 0.3185
+     },
+     "early": {
+      "n": 1042,
+      "n_clv": 1042,
+      "clv": -0.054,
+      "clv_se": 0.001,
+      "clv_t": -52.0319,
+      "clv_p": 1.0,
+      "roi": -0.0531,
+      "roi_se": 0.0304,
+      "hit": 0.5067,
+      "bets_per_week": 23.68,
+      "weeks": 44,
+      "mean_ev": -0.0625,
+      "mean_dec": 1.8705,
+      "under_share": 1.0,
+      "direct_share": 0.3983
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 292,
+      "n_clv": 292,
+      "clv": -0.0389,
+      "clv_se": 0.0034,
+      "clv_t": -11.3329,
+      "clv_p": 1.0,
+      "roi": -0.0953,
+      "roi_se": 0.0593,
+      "hit": 0.4829,
+      "bets_per_week": 6.64,
+      "weeks": 44,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8692,
+      "under_share": 0.0,
+      "direct_share": 0.2363
+     },
+     "early": {
+      "n": 1042,
+      "n_clv": 1042,
+      "clv": -0.0438,
+      "clv_se": 0.0011,
+      "clv_t": -40.4514,
+      "clv_p": 1.0,
+      "roi": -0.0367,
+      "roi_se": 0.0303,
+      "hit": 0.5154,
+      "bets_per_week": 23.68,
+      "weeks": 44,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.869,
+      "under_share": 0.0,
+      "direct_share": 0.3455
+     }
+    }
+   },
+   "2024": {
+    "accuracy": {
+     "all_three": {
+      "n": 106,
+      "line_mae_open": 56.8491,
+      "mktmed_mae_open": 56.8358,
+      "model_mae_open": 57.3495,
+      "over_rate_open": 0.4245,
+      "mean_pnv_over_open": 0.5005,
+      "line_mae_early": 56.5755,
+      "mktmed_mae_early": 56.5449,
+      "model_mae_early": 56.8985,
+      "over_rate_early": 0.4151,
+      "mean_pnv_over_early": 0.501,
+      "line_mae_close": 57.1698,
+      "mktmed_mae_close": 56.8445,
+      "model_mae_close": 58.3537,
+      "over_rate_close": 0.4151,
+      "mean_pnv_over_close": 0.501,
+      "open_minus_close_mae": [
+       -0.3208,
+       0.6677
+      ],
+      "early_minus_close_mae": [
+       -0.5943,
+       0.3562
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.5004,
+       1.4363
+      ]
+     },
+     "early_close": {
+      "n": 505,
+      "line_mae_early": 58.1396,
+      "mktmed_mae_early": 58.1522,
+      "model_mae_early": 57.0423,
+      "over_rate_early": 0.497,
+      "mean_pnv_over_early": 0.5007,
+      "line_mae_close": 57.9871,
+      "mktmed_mae_close": 57.8626,
+      "model_mae_close": 57.0314,
+      "over_rate_close": 0.4931,
+      "mean_pnv_over_close": 0.5007
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 105,
+      "over_rate": 0.4286,
+      "se": 0.055,
+      "by_team_spread": {
+       "dog(-6,-1]": [
+        38,
+        0.4211,
+        0.0801
+       ],
+       "fav[1,6)": [
+        42,
+        0.3571,
+        0.0739
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 505,
+      "over_rate": 0.497,
+      "se": 0.0237,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        79,
+        0.5063,
+        0.0562
+       ],
+       "dog(-6,-1]": [
+        161,
+        0.4658,
+        0.0393
+       ],
+       "fav[1,6)": [
+        165,
+        0.503,
+        0.0389
+       ],
+       "big_fav(>=6)": [
+        100,
+        0.53,
+        0.0499
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 524,
+      "over_rate": 0.4962,
+      "se": 0.0234,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        84,
+        0.5119,
+        0.0545
+       ],
+       "dog(-6,-1]": [
+        168,
+        0.4583,
+        0.0384
+       ],
+       "fav[1,6)": [
+        170,
+        0.5059,
+        0.0383
+       ],
+       "big_fav(>=6)": [
+        102,
+        0.5294,
+        0.0494
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 106,
+      "0.0": -0.6936,
+      "0.1": -0.6922,
+      "0.2": -0.6907,
+      "0.3": -0.6906,
+      "0.5": -0.6937,
+      "0.75": -0.6976,
+      "1.0": -0.7023,
+      "market_nv": -0.6939
+     },
+     "early": {
+      "n": 505,
+      "0.0": -0.693,
+      "0.1": -0.6904,
+      "0.2": -0.6881,
+      "0.3": -0.6859,
+      "0.5": -0.6823,
+      "0.75": -0.6793,
+      "1.0": -0.6792,
+      "market_nv": -0.6935
+     }
+    },
+    "coverage": {
+     "open": 106,
+     "early": 505,
+     "close": 524
+    },
+    "always_under": {
+     "open": {
+      "n": 106,
+      "n_clv": 106,
+      "clv": -0.0739,
+      "clv_se": 0.0049,
+      "clv_t": -14.9929,
+      "clv_p": 1.0,
+      "roi": 0.0781,
+      "roi_se": 0.1016,
+      "hit": 0.5755,
+      "bets_per_week": 4.82,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8748,
+      "under_share": 1.0,
+      "direct_share": 0.2358
+     },
+     "early": {
+      "n": 505,
+      "n_clv": 505,
+      "clv": -0.0596,
+      "clv_se": 0.0014,
+      "clv_t": -42.5511,
+      "clv_p": 1.0,
+      "roi": -0.0419,
+      "roi_se": 0.0449,
+      "hit": 0.5129,
+      "bets_per_week": 22.95,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8705,
+      "under_share": 1.0,
+      "direct_share": 0.3762
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 106,
+      "n_clv": 106,
+      "clv": -0.0356,
+      "clv_se": 0.0051,
+      "clv_t": -7.0263,
+      "clv_p": 1.0,
+      "roi": -0.2037,
+      "roi_se": 0.1018,
+      "hit": 0.4245,
+      "bets_per_week": 4.82,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8634,
+      "under_share": 0.0,
+      "direct_share": 0.1509
+     },
+     "early": {
+      "n": 505,
+      "n_clv": 505,
+      "clv": -0.0441,
+      "clv_se": 0.0015,
+      "clv_t": -29.0857,
+      "clv_p": 1.0,
+      "roi": -0.0451,
+      "roi_se": 0.0445,
+      "hit": 0.5109,
+      "bets_per_week": 22.95,
+      "weeks": 22,
+      "mean_ev": -0.0617,
+      "mean_dec": 1.8699,
+      "under_share": 0.0,
+      "direct_share": 0.3485
+     }
+    }
+   },
+   "2025": {
+    "accuracy": {
+     "all_three": {
+      "n": 186,
+      "line_mae_open": 60.371,
+      "mktmed_mae_open": 60.3696,
+      "model_mae_open": 59.3498,
+      "over_rate_open": 0.5054,
+      "mean_pnv_over_open": 0.5,
+      "line_mae_early": 59.7419,
+      "mktmed_mae_early": 59.7507,
+      "model_mae_early": 59.3017,
+      "over_rate_early": 0.5108,
+      "mean_pnv_over_early": 0.5005,
+      "line_mae_close": 59.4032,
+      "mktmed_mae_close": 59.3501,
+      "model_mae_close": 59.3665,
+      "over_rate_close": 0.5161,
+      "mean_pnv_over_close": 0.5007,
+      "open_minus_close_mae": [
+       0.9677,
+       0.5412
+      ],
+      "early_minus_close_mae": [
+       0.3387,
+       0.2842
+      ],
+      "open_line_minus_open_model_mae": [
+       1.0212,
+       1.3242
+      ]
+     },
+     "early_close": {
+      "n": 537,
+      "line_mae_early": 56.0531,
+      "mktmed_mae_early": 56.021,
+      "model_mae_early": 56.8422,
+      "over_rate_early": 0.5047,
+      "mean_pnv_over_early": 0.5002,
+      "line_mae_close": 55.8203,
+      "mktmed_mae_close": 55.8054,
+      "model_mae_close": 56.5276,
+      "over_rate_close": 0.514,
+      "mean_pnv_over_close": 0.5005
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 186,
+      "over_rate": 0.5054,
+      "se": 0.0378,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        28,
+        0.3571,
+        0.0906
+       ],
+       "dog(-6,-1]": [
+        63,
+        0.5714,
+        0.0623
+       ],
+       "fav[1,6)": [
+        61,
+        0.4918,
+        0.064
+       ],
+       "big_fav(>=6)": [
+        34,
+        0.5294,
+        0.0856
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 534,
+      "over_rate": 0.5056,
+      "se": 0.0221,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        90,
+        0.3778,
+        0.0511
+       ],
+       "dog(-6,-1]": [
+        171,
+        0.5731,
+        0.0378
+       ],
+       "fav[1,6)": [
+        170,
+        0.4941,
+        0.0383
+       ],
+       "big_fav(>=6)": [
+        103,
+        0.5243,
+        0.0492
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 551,
+      "over_rate": 0.5118,
+      "se": 0.0216,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        95,
+        0.3789,
+        0.0498
+       ],
+       "dog(-6,-1]": [
+        176,
+        0.5852,
+        0.0371
+       ],
+       "fav[1,6)": [
+        175,
+        0.4971,
+        0.0378
+       ],
+       "big_fav(>=6)": [
+        105,
+        0.5333,
+        0.0487
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 186,
+      "0.0": -0.6932,
+      "0.1": -0.6916,
+      "0.2": -0.6895,
+      "0.3": -0.6891,
+      "0.5": -0.6884,
+      "0.75": -0.6891,
+      "1.0": -0.6943,
+      "market_nv": -0.6927
+     },
+     "early": {
+      "n": 537,
+      "0.0": -0.6934,
+      "0.1": -0.6932,
+      "0.2": -0.6935,
+      "0.3": -0.694,
+      "0.5": -0.6965,
+      "0.75": -0.7019,
+      "1.0": -0.7109,
+      "market_nv": -0.694
+     }
+    },
+    "coverage": {
+     "open": 186,
+     "early": 537,
+     "close": 551
+    },
+    "always_under": {
+     "open": {
+      "n": 186,
+      "n_clv": 186,
+      "clv": -0.0527,
+      "clv_se": 0.0048,
+      "clv_t": -11.0661,
+      "clv_p": 1.0,
+      "roi": -0.071,
+      "roi_se": 0.071,
+      "hit": 0.4946,
+      "bets_per_week": 8.45,
+      "weeks": 22,
+      "mean_ev": -0.06,
+      "mean_dec": 1.8793,
+      "under_share": 1.0,
+      "direct_share": 0.3656
+     },
+     "early": {
+      "n": 537,
+      "n_clv": 537,
+      "clv": -0.0488,
+      "clv_se": 0.0015,
+      "clv_t": -33.6184,
+      "clv_p": 1.0,
+      "roi": -0.0636,
+      "roi_se": 0.0411,
+      "hit": 0.5009,
+      "bets_per_week": 24.41,
+      "weeks": 22,
+      "mean_ev": -0.0623,
+      "mean_dec": 1.8705,
+      "under_share": 1.0,
+      "direct_share": 0.419
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 186,
+      "n_clv": 186,
+      "clv": -0.0408,
+      "clv_se": 0.0045,
+      "clv_t": -8.9839,
+      "clv_p": 1.0,
+      "roi": -0.0335,
+      "roi_se": 0.0722,
+      "hit": 0.5161,
+      "bets_per_week": 8.45,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8725,
+      "under_share": 0.0,
+      "direct_share": 0.2849
+     },
+     "early": {
+      "n": 537,
+      "n_clv": 537,
+      "clv": -0.0434,
+      "clv_se": 0.0015,
+      "clv_t": -28.2022,
+      "clv_p": 1.0,
+      "roi": -0.0288,
+      "roi_se": 0.0415,
+      "hit": 0.5196,
+      "bets_per_week": 24.41,
+      "weeks": 22,
+      "mean_ev": -0.0639,
+      "mean_dec": 1.8683,
+      "under_share": 0.0,
+      "direct_share": 0.3426
+     }
+    }
+   },
+   "moves": {
+    "n": {
+     "2023": 50,
+     "2024": 106,
+     "2025": 186
+    },
+    "2023": {
+     "mean_abs_move_open_close": 7.8272,
+     "share_line_moved": 0.9,
+     "mean_abs_open_early": 6.4099,
+     "mean_abs_early_close": 2.5443,
+     "corr_move_with_open_residual": 0.4715,
+     "corr_move_gap_open": 0.4946,
+     "corr_move_fri_info": -0.1004
+    },
+    "2024": {
+     "mean_abs_move_open_close": 5.5963,
+     "share_line_moved": 0.934,
+     "mean_abs_open_early": 4.1128,
+     "mean_abs_early_close": 2.6704,
+     "corr_move_with_open_residual": 0.1066,
+     "corr_move_gap_open": 0.3612,
+     "corr_move_fri_info": -0.0505
+    },
+    "2025": {
+     "mean_abs_move_open_close": 5.5866,
+     "share_line_moved": 0.9086,
+     "mean_abs_open_early": 3.7208,
+     "mean_abs_early_close": 2.7061,
+     "corr_move_with_open_residual": 0.2157,
+     "corr_move_gap_open": 0.3096,
+     "corr_move_fri_info": 0.231
+    },
+    "regression": {
+     "gap_open": {
+      "coef": [
+       0.3127
+      ],
+      "r2_fit": 0.2447,
+      "n_fit": 50,
+      "r2_test": -0.1636,
+      "dir_acc_test_when_|pred|>sd/4": 0.6339,
+      "n_test": 292
+     },
+     "gap_open+fri": {
+      "coef": [
+       0.3558,
+       0.2282
+      ],
+      "r2_fit": 0.2631,
+      "n_fit": 50,
+      "r2_test": -0.2056,
+      "dir_acc_test_when_|pred|>sd/4": 0.6797,
+      "n_test": 292
+     },
+     "gap_open+fri+late": {
+      "coef": [
+       0.3987,
+       0.4251,
+       0.4321
+      ],
+      "r2_fit": 0.3835,
+      "n_fit": 50,
+      "r2_test": -0.2134,
+      "dir_acc_test_when_|pred|>sd/4": 0.6722,
+      "n_test": 292
+     }
+    }
+   },
+   "moves_fit2024_test2025": {
+    "gap_open": {
+     "coef": [
+      0.1397
+     ],
+     "r2_fit": 0.1305,
+     "n_fit": 106,
+     "r2_test": -0.0627,
+     "dir_acc_test_when_|pred|>sd/4": 0.5986,
+     "n_test": 186
+    },
+    "gap_open+fri": {
+     "coef": [
+      0.1539,
+      0.08
+     ],
+     "r2_fit": 0.1388,
+     "n_fit": 106,
+     "r2_test": -0.0185,
+     "dir_acc_test_when_|pred|>sd/4": 0.6259,
+     "n_test": 186
+    },
+    "gap_open+fri+late": {
+     "coef": [
+      0.1572,
+      0.1138,
+      0.0801
+     ],
+     "r2_fit": 0.1483,
+     "n_fit": 106,
+     "r2_test": 0.0317,
+     "dir_acc_test_when_|pred|>sd/4": 0.6224,
+     "n_test": 186
+    }
+   }
+  },
+  "pass_att": {
+   "2023": {
+    "accuracy": {
+     "all_three": {
+      "n": 22,
+      "line_mae_open": 6.5455,
+      "mktmed_mae_open": 6.4329,
+      "model_mae_open": 6.2273,
+      "over_rate_open": 0.5455,
+      "mean_pnv_over_open": 0.4995,
+      "line_mae_early": 6.4545,
+      "mktmed_mae_early": 6.4318,
+      "model_mae_early": 6.0,
+      "over_rate_early": 0.5455,
+      "mean_pnv_over_early": 0.498,
+      "line_mae_close": 6.4091,
+      "mktmed_mae_close": 6.4104,
+      "model_mae_close": 6.1136,
+      "over_rate_close": 0.5455,
+      "mean_pnv_over_close": 0.5039,
+      "open_minus_close_mae": [
+       0.1364,
+       0.1617
+      ],
+      "early_minus_close_mae": [
+       0.0455,
+       0.1016
+      ],
+      "open_line_minus_open_model_mae": [
+       0.3182,
+       0.5248
+      ]
+     },
+     "early_close": {
+      "n": 472,
+      "line_mae_early": 6.5593,
+      "mktmed_mae_early": 6.5883,
+      "model_mae_early": 6.5657,
+      "over_rate_early": 0.5127,
+      "mean_pnv_over_early": 0.5018,
+      "line_mae_close": 6.553,
+      "mktmed_mae_close": 6.5421,
+      "model_mae_close": 6.59,
+      "over_rate_close": 0.5106,
+      "mean_pnv_over_close": 0.5041
+     }
+    },
+    "biases": {
+     "early": {
+      "n_50pct_lines": 461,
+      "over_rate": 0.5141,
+      "se": 0.0227,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        70,
+        0.5571,
+        0.0594
+       ],
+       "dog(-6,-1]": [
+        150,
+        0.5267,
+        0.0408
+       ],
+       "fav[1,6)": [
+        159,
+        0.478,
+        0.0396
+       ],
+       "big_fav(>=6)": [
+        82,
+        0.5244,
+        0.0552
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 498,
+      "over_rate": 0.498,
+      "se": 0.0215,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        78,
+        0.4872,
+        0.0566
+       ],
+       "dog(-6,-1]": [
+        168,
+        0.494,
+        0.0386
+       ],
+       "fav[1,6)": [
+        175,
+        0.4971,
+        0.0378
+       ],
+       "big_fav(>=6)": [
+        77,
+        0.5195,
+        0.0569
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 24,
+      "0.0": -0.6883,
+      "0.1": -0.6692,
+      "0.2": -0.6674,
+      "0.3": -0.6589,
+      "0.5": -0.6485,
+      "0.75": -0.6374,
+      "1.0": -0.6288,
+      "market_nv": -0.6806
+     },
+     "early": {
+      "n": 473,
+      "0.0": -0.6968,
+      "0.1": -0.6906,
+      "0.2": -0.6912,
+      "0.3": -0.6898,
+      "0.5": -0.6899,
+      "0.75": -0.6878,
+      "1.0": -0.6896,
+      "market_nv": -0.6934
+     }
+    },
+    "coverage": {
+     "open": 24,
+     "early": 473,
+     "close": 526
+    },
+    "always_under": {
+     "open": {
+      "n": 24,
+      "n_clv": 22,
+      "clv": -0.0603,
+      "clv_se": 0.0115,
+      "clv_t": -5.2654,
+      "clv_p": 1.0,
+      "roi": -0.1443,
+      "roi_se": 0.1883,
+      "hit": 0.4583,
+      "bets_per_week": 3.0,
+      "weeks": 8,
+      "mean_ev": -0.0636,
+      "mean_dec": 1.8799,
+      "under_share": 1.0,
+      "direct_share": 0.5417
+     },
+     "early": {
+      "n": 471,
+      "n_clv": 470,
+      "clv": -0.0566,
+      "clv_se": 0.0019,
+      "clv_t": -30.161,
+      "clv_p": 1.0,
+      "roi": -0.058,
+      "roi_se": 0.0417,
+      "hit": 0.5032,
+      "bets_per_week": 21.41,
+      "weeks": 22,
+      "mean_ev": -0.064,
+      "mean_dec": 1.878,
+      "under_share": 1.0,
+      "direct_share": 0.8917
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 24,
+      "n_clv": 22,
+      "clv": -0.0463,
+      "clv_se": 0.0123,
+      "clv_t": -3.7809,
+      "clv_p": 0.9999,
+      "roi": 0.0077,
+      "roi_se": 0.1922,
+      "hit": 0.5417,
+      "bets_per_week": 3.0,
+      "weeks": 8,
+      "mean_ev": -0.0642,
+      "mean_dec": 1.8724,
+      "under_share": 0.0,
+      "direct_share": 0.625
+     },
+     "early": {
+      "n": 471,
+      "n_clv": 470,
+      "clv": -0.0376,
+      "clv_se": 0.0019,
+      "clv_t": -19.9027,
+      "clv_p": 1.0,
+      "roi": -0.0155,
+      "roi_se": 0.0413,
+      "hit": 0.5244,
+      "bets_per_week": 21.41,
+      "weeks": 22,
+      "mean_ev": -0.0648,
+      "mean_dec": 1.877,
+      "under_share": 0.0,
+      "direct_share": 0.8556
+     }
+    }
+   },
+   "2024_25": {
+    "accuracy": {
+     "all_three": {
+      "n": 257,
+      "line_mae_open": 6.3794,
+      "mktmed_mae_open": 6.3775,
+      "model_mae_open": 6.4591,
+      "over_rate_open": 0.463,
+      "mean_pnv_over_open": 0.4967,
+      "line_mae_early": 6.3716,
+      "mktmed_mae_early": 6.3787,
+      "model_mae_early": 6.4572,
+      "over_rate_early": 0.4553,
+      "mean_pnv_over_early": 0.4976,
+      "line_mae_close": 6.3327,
+      "mktmed_mae_close": 6.322,
+      "model_mae_close": 6.43,
+      "over_rate_close": 0.4475,
+      "mean_pnv_over_close": 0.4982,
+      "open_minus_close_mae": [
+       0.0467,
+       0.0508
+      ],
+      "early_minus_close_mae": [
+       0.0389,
+       0.0328
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.0798,
+       0.1086
+      ]
+     },
+     "early_close": {
+      "n": 1017,
+      "line_mae_early": 6.56,
+      "mktmed_mae_early": 6.5488,
+      "model_mae_early": 6.6367,
+      "over_rate_early": 0.4612,
+      "mean_pnv_over_early": 0.4983,
+      "line_mae_close": 6.5305,
+      "mktmed_mae_close": 6.523,
+      "model_mae_close": 6.6077,
+      "over_rate_close": 0.4631,
+      "mean_pnv_over_close": 0.4981
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 249,
+      "over_rate": 0.4659,
+      "se": 0.0308,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        34,
+        0.4706,
+        0.0856
+       ],
+       "dog(-6,-1]": [
+        87,
+        0.5402,
+        0.0534
+       ],
+       "fav[1,6)": [
+        87,
+        0.4023,
+        0.0526
+       ],
+       "big_fav(>=6)": [
+        41,
+        0.439,
+        0.0775
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 1008,
+      "over_rate": 0.4623,
+      "se": 0.0149,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        162,
+        0.4074,
+        0.0386
+       ],
+       "dog(-6,-1]": [
+        324,
+        0.5,
+        0.0278
+       ],
+       "fav[1,6)": [
+        330,
+        0.4667,
+        0.0275
+       ],
+       "big_fav(>=6)": [
+        192,
+        0.4375,
+        0.0358
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 1060,
+      "over_rate": 0.4679,
+      "se": 0.0146,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        176,
+        0.4091,
+        0.0371
+       ],
+       "dog(-6,-1]": [
+        341,
+        0.4985,
+        0.0271
+       ],
+       "fav[1,6)": [
+        343,
+        0.4665,
+        0.0269
+       ],
+       "big_fav(>=6)": [
+        200,
+        0.47,
+        0.0353
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 257,
+      "0.0": -0.6913,
+      "0.1": -0.6929,
+      "0.2": -0.6936,
+      "0.3": -0.6919,
+      "0.5": -0.6944,
+      "0.75": -0.6908,
+      "1.0": -0.6984,
+      "market_nv": -0.6941
+     },
+     "early": {
+      "n": 1017,
+      "0.0": -0.6892,
+      "0.1": -0.6929,
+      "0.2": -0.6935,
+      "0.3": -0.6937,
+      "0.5": -0.6931,
+      "0.75": -0.6998,
+      "1.0": -0.7025,
+      "market_nv": -0.6917
+     }
+    },
+    "coverage": {
+     "open": 257,
+     "early": 1017,
+     "close": 1068
+    },
+    "always_under": {
+     "open": {
+      "n": 257,
+      "n_clv": 257,
+      "clv": -0.0483,
+      "clv_se": 0.0043,
+      "clv_t": -11.2545,
+      "clv_p": 1.0,
+      "roi": 0.0287,
+      "roi_se": 0.0568,
+      "hit": 0.5486,
+      "bets_per_week": 6.95,
+      "weeks": 37,
+      "mean_ev": -0.0607,
+      "mean_dec": 1.8717,
+      "under_share": 1.0,
+      "direct_share": 0.7704
+     },
+     "early": {
+      "n": 1017,
+      "n_clv": 1017,
+      "clv": -0.042,
+      "clv_se": 0.0013,
+      "clv_t": -33.4066,
+      "clv_p": 1.0,
+      "roi": 0.0277,
+      "roi_se": 0.0277,
+      "hit": 0.5487,
+      "bets_per_week": 23.11,
+      "weeks": 44,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8729,
+      "under_share": 1.0,
+      "direct_share": 0.8466
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 257,
+      "n_clv": 257,
+      "clv": -0.043,
+      "clv_se": 0.0041,
+      "clv_t": -10.4328,
+      "clv_p": 1.0,
+      "roi": -0.1125,
+      "roi_se": 0.0576,
+      "hit": 0.4708,
+      "bets_per_week": 6.95,
+      "weeks": 37,
+      "mean_ev": -0.0625,
+      "mean_dec": 1.8873,
+      "under_share": 0.0,
+      "direct_share": 0.7821
+     },
+     "early": {
+      "n": 1017,
+      "n_clv": 1017,
+      "clv": -0.0422,
+      "clv_se": 0.0013,
+      "clv_t": -31.4447,
+      "clv_p": 1.0,
+      "roi": -0.109,
+      "roi_se": 0.0277,
+      "hit": 0.473,
+      "bets_per_week": 23.11,
+      "weeks": 44,
+      "mean_ev": -0.0635,
+      "mean_dec": 1.8837,
+      "under_share": 0.0,
+      "direct_share": 0.8643
+     }
+    }
+   },
+   "2024": {
+    "accuracy": {
+     "all_three": {
+      "n": 80,
+      "line_mae_open": 6.575,
+      "mktmed_mae_open": 6.6347,
+      "model_mae_open": 6.7938,
+      "over_rate_open": 0.35,
+      "mean_pnv_over_open": 0.5031,
+      "line_mae_early": 6.675,
+      "mktmed_mae_early": 6.7309,
+      "model_mae_early": 6.8438,
+      "over_rate_early": 0.35,
+      "mean_pnv_over_early": 0.5007,
+      "line_mae_close": 6.6625,
+      "mktmed_mae_close": 6.6346,
+      "model_mae_close": 6.825,
+      "over_rate_close": 0.3375,
+      "mean_pnv_over_close": 0.5008,
+      "open_minus_close_mae": [
+       -0.0875,
+       0.0902
+      ],
+      "early_minus_close_mae": [
+       0.0125,
+       0.0625
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.2188,
+       0.2141
+      ]
+     },
+     "early_close": {
+      "n": 484,
+      "line_mae_early": 6.5186,
+      "mktmed_mae_early": 6.5112,
+      "model_mae_early": 6.6519,
+      "over_rate_early": 0.4628,
+      "mean_pnv_over_early": 0.4987,
+      "line_mae_close": 6.5145,
+      "mktmed_mae_close": 6.518,
+      "model_mae_close": 6.6446,
+      "over_rate_close": 0.4628,
+      "mean_pnv_over_close": 0.499
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 78,
+      "over_rate": 0.3462,
+      "se": 0.0462,
+      "by_team_spread": {
+       "dog(-6,-1]": [
+        28,
+        0.3929,
+        0.0923
+       ],
+       "fav[1,6)": [
+        29,
+        0.2759,
+        0.083
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 481,
+      "over_rate": 0.4636,
+      "se": 0.0206,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        74,
+        0.4189,
+        0.0574
+       ],
+       "dog(-6,-1]": [
+        153,
+        0.451,
+        0.0402
+       ],
+       "fav[1,6)": [
+        161,
+        0.472,
+        0.0393
+       ],
+       "big_fav(>=6)": [
+        93,
+        0.5054,
+        0.0518
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 513,
+      "over_rate": 0.4756,
+      "se": 0.0205,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        83,
+        0.4217,
+        0.0542
+       ],
+       "dog(-6,-1]": [
+        165,
+        0.4485,
+        0.0387
+       ],
+       "fav[1,6)": [
+        168,
+        0.4881,
+        0.0386
+       ],
+       "big_fav(>=6)": [
+        97,
+        0.5464,
+        0.0505
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 80,
+      "0.0": -0.687,
+      "0.1": -0.6999,
+      "0.2": -0.7,
+      "0.3": -0.6944,
+      "0.5": -0.6995,
+      "0.75": -0.6958,
+      "1.0": -0.7071,
+      "market_nv": -0.6997
+     },
+     "early": {
+      "n": 484,
+      "0.0": -0.6904,
+      "0.1": -0.6939,
+      "0.2": -0.6953,
+      "0.3": -0.6956,
+      "0.5": -0.6924,
+      "0.75": -0.7019,
+      "1.0": -0.7057,
+      "market_nv": -0.6918
+     }
+    },
+    "coverage": {
+     "open": 80,
+     "early": 484,
+     "close": 518
+    },
+    "always_under": {
+     "open": {
+      "n": 80,
+      "n_clv": 80,
+      "clv": -0.0538,
+      "clv_se": 0.0073,
+      "clv_t": -7.3462,
+      "clv_p": 1.0,
+      "roi": 0.2539,
+      "roi_se": 0.0859,
+      "hit": 0.6625,
+      "bets_per_week": 5.0,
+      "weeks": 16,
+      "mean_ev": -0.0613,
+      "mean_dec": 1.8877,
+      "under_share": 1.0,
+      "direct_share": 0.775
+     },
+     "early": {
+      "n": 484,
+      "n_clv": 484,
+      "clv": -0.0445,
+      "clv_se": 0.0017,
+      "clv_t": -26.3755,
+      "clv_p": 1.0,
+      "roi": 0.0259,
+      "roi_se": 0.0386,
+      "hit": 0.5455,
+      "bets_per_week": 22.0,
+      "weeks": 22,
+      "mean_ev": -0.0637,
+      "mean_dec": 1.8815,
+      "under_share": 1.0,
+      "direct_share": 0.8657
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 80,
+      "n_clv": 80,
+      "clv": -0.0438,
+      "clv_se": 0.0079,
+      "clv_t": -5.5674,
+      "clv_p": 1.0,
+      "roi": -0.3399,
+      "roi_se": 0.0859,
+      "hit": 0.35,
+      "bets_per_week": 5.0,
+      "weeks": 16,
+      "mean_ev": -0.0623,
+      "mean_dec": 1.8747,
+      "under_share": 0.0,
+      "direct_share": 0.775
+     },
+     "early": {
+      "n": 484,
+      "n_clv": 484,
+      "clv": -0.045,
+      "clv_se": 0.0018,
+      "clv_t": -24.461,
+      "clv_p": 1.0,
+      "roi": -0.1137,
+      "roi_se": 0.0384,
+      "hit": 0.4711,
+      "bets_per_week": 22.0,
+      "weeks": 22,
+      "mean_ev": -0.0635,
+      "mean_dec": 1.8826,
+      "under_share": 0.0,
+      "direct_share": 0.8595
+     }
+    }
+   },
+   "2025": {
+    "accuracy": {
+     "all_three": {
+      "n": 177,
+      "line_mae_open": 6.291,
+      "mktmed_mae_open": 6.2613,
+      "model_mae_open": 6.3079,
+      "over_rate_open": 0.5141,
+      "mean_pnv_over_open": 0.4939,
+      "line_mae_early": 6.2345,
+      "mktmed_mae_early": 6.2195,
+      "model_mae_early": 6.2825,
+      "over_rate_early": 0.5028,
+      "mean_pnv_over_early": 0.4963,
+      "line_mae_close": 6.1836,
+      "mktmed_mae_close": 6.1807,
+      "model_mae_close": 6.2514,
+      "over_rate_close": 0.4972,
+      "mean_pnv_over_close": 0.4969,
+      "open_minus_close_mae": [
+       0.1073,
+       0.0605
+      ],
+      "early_minus_close_mae": [
+       0.0508,
+       0.0383
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.0169,
+       0.1241
+      ]
+     },
+     "early_close": {
+      "n": 533,
+      "line_mae_early": 6.5976,
+      "mktmed_mae_early": 6.5829,
+      "model_mae_early": 6.6229,
+      "over_rate_early": 0.4597,
+      "mean_pnv_over_early": 0.498,
+      "line_mae_close": 6.545,
+      "mktmed_mae_close": 6.5275,
+      "model_mae_close": 6.5741,
+      "over_rate_close": 0.4634,
+      "mean_pnv_over_close": 0.4973
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 171,
+      "over_rate": 0.5205,
+      "se": 0.0381,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        24,
+        0.5417,
+        0.1017
+       ],
+       "dog(-6,-1]": [
+        59,
+        0.6102,
+        0.0635
+       ],
+       "fav[1,6)": [
+        58,
+        0.4655,
+        0.0655
+       ],
+       "big_fav(>=6)": [
+        30,
+        0.4333,
+        0.0905
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 527,
+      "over_rate": 0.4611,
+      "se": 0.0213,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        88,
+        0.3977,
+        0.0522
+       ],
+       "dog(-6,-1]": [
+        171,
+        0.5439,
+        0.0381
+       ],
+       "fav[1,6)": [
+        169,
+        0.4615,
+        0.0383
+       ],
+       "big_fav(>=6)": [
+        99,
+        0.3737,
+        0.0486
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 547,
+      "over_rate": 0.4607,
+      "se": 0.0208,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        93,
+        0.3978,
+        0.0508
+       ],
+       "dog(-6,-1]": [
+        176,
+        0.5455,
+        0.0375
+       ],
+       "fav[1,6)": [
+        175,
+        0.4457,
+        0.0376
+       ],
+       "big_fav(>=6)": [
+        103,
+        0.3981,
+        0.0482
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 177,
+      "0.0": -0.6932,
+      "0.1": -0.6898,
+      "0.2": -0.6907,
+      "0.3": -0.6908,
+      "0.5": -0.6921,
+      "0.75": -0.6886,
+      "1.0": -0.6945,
+      "market_nv": -0.6915
+     },
+     "early": {
+      "n": 533,
+      "0.0": -0.6881,
+      "0.1": -0.6921,
+      "0.2": -0.6919,
+      "0.3": -0.6921,
+      "0.5": -0.6938,
+      "0.75": -0.6979,
+      "1.0": -0.6996,
+      "market_nv": -0.6917
+     }
+    },
+    "coverage": {
+     "open": 177,
+     "early": 533,
+     "close": 550
+    },
+    "always_under": {
+     "open": {
+      "n": 177,
+      "n_clv": 177,
+      "clv": -0.0458,
+      "clv_se": 0.0053,
+      "clv_t": -8.6953,
+      "clv_p": 1.0,
+      "roi": -0.0731,
+      "roi_se": 0.0704,
+      "hit": 0.4972,
+      "bets_per_week": 8.43,
+      "weeks": 21,
+      "mean_ev": -0.0605,
+      "mean_dec": 1.8644,
+      "under_share": 1.0,
+      "direct_share": 0.7684
+     },
+     "early": {
+      "n": 533,
+      "n_clv": 533,
+      "clv": -0.0397,
+      "clv_se": 0.0018,
+      "clv_t": -21.6826,
+      "clv_p": 1.0,
+      "roi": 0.0293,
+      "roi_se": 0.0395,
+      "hit": 0.5516,
+      "bets_per_week": 24.23,
+      "weeks": 22,
+      "mean_ev": -0.0619,
+      "mean_dec": 1.8652,
+      "under_share": 1.0,
+      "direct_share": 0.8293
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 177,
+      "n_clv": 177,
+      "clv": -0.0427,
+      "clv_se": 0.0048,
+      "clv_t": -8.8597,
+      "clv_p": 1.0,
+      "roi": -0.0097,
+      "roi_se": 0.0717,
+      "hit": 0.5254,
+      "bets_per_week": 8.43,
+      "weeks": 21,
+      "mean_ev": -0.0626,
+      "mean_dec": 1.8931,
+      "under_share": 0.0,
+      "direct_share": 0.7853
+     },
+     "early": {
+      "n": 533,
+      "n_clv": 533,
+      "clv": -0.0397,
+      "clv_se": 0.0019,
+      "clv_t": -20.532,
+      "clv_p": 1.0,
+      "roi": -0.1048,
+      "roi_se": 0.0396,
+      "hit": 0.4747,
+      "bets_per_week": 24.23,
+      "weeks": 22,
+      "mean_ev": -0.0636,
+      "mean_dec": 1.8847,
+      "under_share": 0.0,
+      "direct_share": 0.8687
+     }
+    }
+   },
+   "moves": {
+    "n": {
+     "2023": 22,
+     "2024": 80,
+     "2025": 177
+    },
+    "2024": {
+     "mean_abs_move_open_close": 0.7813,
+     "share_line_moved": 0.5125,
+     "mean_abs_open_early": 0.6092,
+     "mean_abs_early_close": 0.4037,
+     "corr_move_with_open_residual": 0.1563,
+     "corr_move_gap_open": 0.2806,
+     "corr_move_fri_info": 0.0517
+    },
+    "2025": {
+     "mean_abs_move_open_close": 0.7126,
+     "share_line_moved": 0.4576,
+     "mean_abs_open_early": 0.5759,
+     "mean_abs_early_close": 0.4517,
+     "corr_move_with_open_residual": 0.1613,
+     "corr_move_gap_open": 0.2944,
+     "corr_move_fri_info": -0.0158
+    },
+    "regression": {}
+   },
+   "moves_fit2024_test2025": {
+    "gap_open": {
+     "coef": [
+      0.1261
+     ],
+     "r2_fit": 0.0787,
+     "n_fit": 80,
+     "r2_test": 0.0824,
+     "dir_acc_test_when_|pred|>sd/4": 0.7667,
+     "n_test": 177
+    },
+    "gap_open+fri": {
+     "coef": [
+      0.1298,
+      0.1062
+     ],
+     "r2_fit": 0.0852,
+     "n_fit": 80,
+     "r2_test": 0.0902,
+     "dir_acc_test_when_|pred|>sd/4": 0.6923,
+     "n_test": 177
+    },
+    "gap_open+fri+late": {
+     "coef": [
+      0.1295,
+      0.2943,
+      0.3285
+     ],
+     "r2_fit": 0.1488,
+     "n_fit": 80,
+     "r2_test": 0.1129,
+     "dir_acc_test_when_|pred|>sd/4": 0.7059,
+     "n_test": 177
+    }
+   }
+  },
+  "rush_yds": {
+   "2023": {
+    "accuracy": {
+     "all_three": {
+      "n": 48,
+      "line_mae_open": 17.625,
+      "mktmed_mae_open": 17.6019,
+      "model_mae_open": 21.0657,
+      "over_rate_open": 0.4792,
+      "mean_pnv_over_open": 0.5021,
+      "line_mae_early": 17.8958,
+      "mktmed_mae_early": 18.1694,
+      "model_mae_early": 21.4976,
+      "over_rate_early": 0.4583,
+      "mean_pnv_over_early": 0.4998,
+      "line_mae_close": 17.9583,
+      "mktmed_mae_close": 17.9292,
+      "model_mae_close": 20.0059,
+      "over_rate_close": 0.4583,
+      "mean_pnv_over_close": 0.5013,
+      "open_minus_close_mae": [
+       -0.3333,
+       0.4559
+      ],
+      "early_minus_close_mae": [
+       -0.0625,
+       0.2309
+      ],
+      "open_line_minus_open_model_mae": [
+       -3.4407,
+       1.9414
+      ]
+     },
+     "early_close": {
+      "n": 719,
+      "line_mae_early": 22.0535,
+      "mktmed_mae_early": 22.0349,
+      "model_mae_early": 23.6793,
+      "over_rate_early": 0.4701,
+      "mean_pnv_over_early": 0.5003,
+      "line_mae_close": 22.0702,
+      "mktmed_mae_close": 22.0597,
+      "model_mae_close": 23.7515,
+      "over_rate_close": 0.4562,
+      "mean_pnv_over_close": 0.5005
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 51,
+      "over_rate": 0.4706,
+      "se": 0.0621,
+      "by_team_spread": {}
+     },
+     "early": {
+      "n_50pct_lines": 714,
+      "over_rate": 0.4678,
+      "se": 0.0181,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        102,
+        0.4608,
+        0.0481
+       ],
+       "dog(-6,-1]": [
+        249,
+        0.4096,
+        0.0324
+       ],
+       "fav[1,6)": [
+        252,
+        0.4921,
+        0.0321
+       ],
+       "big_fav(>=6)": [
+        111,
+        0.5495,
+        0.0485
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 849,
+      "over_rate": 0.4653,
+      "se": 0.0162,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        129,
+        0.4729,
+        0.0423
+       ],
+       "dog(-6,-1]": [
+        302,
+        0.4139,
+        0.0298
+       ],
+       "fav[1,6)": [
+        281,
+        0.4804,
+        0.0299
+       ],
+       "big_fav(>=6)": [
+        137,
+        0.5401,
+        0.0441
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 51,
+      "0.0": -0.6939,
+      "0.1": -0.6926,
+      "0.2": -0.6956,
+      "0.3": -0.6981,
+      "0.5": -0.7029,
+      "0.75": -0.7242,
+      "1.0": -0.7426,
+      "market_nv": -0.6944
+     },
+     "early": {
+      "n": 720,
+      "0.0": -0.6925,
+      "0.1": -0.6927,
+      "0.2": -0.6946,
+      "0.3": -0.6965,
+      "0.5": -0.7028,
+      "0.75": -0.7165,
+      "1.0": -0.735,
+      "market_nv": -0.693
+     }
+    },
+    "coverage": {
+     "open": 51,
+     "early": 720,
+     "close": 864
+    },
+    "always_under": {
+     "open": {
+      "n": 49,
+      "n_clv": 46,
+      "clv": -0.0671,
+      "clv_se": 0.0074,
+      "clv_t": -9.093,
+      "clv_p": 1.0,
+      "roi": -0.0086,
+      "roi_se": 0.1114,
+      "hit": 0.5306,
+      "bets_per_week": 3.5,
+      "weeks": 14,
+      "mean_ev": -0.0632,
+      "mean_dec": 1.8729,
+      "under_share": 1.0,
+      "direct_share": 0.2449
+     },
+     "early": {
+      "n": 715,
+      "n_clv": 714,
+      "clv": -0.0582,
+      "clv_se": 0.0014,
+      "clv_t": -41.3932,
+      "clv_p": 1.0,
+      "roi": 0.0261,
+      "roi_se": 0.0338,
+      "hit": 0.5455,
+      "bets_per_week": 32.5,
+      "weeks": 22,
+      "mean_ev": -0.0642,
+      "mean_dec": 1.8804,
+      "under_share": 1.0,
+      "direct_share": 0.5902
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 49,
+      "n_clv": 46,
+      "clv": -0.0405,
+      "clv_se": 0.0067,
+      "clv_t": -6.0429,
+      "clv_p": 1.0,
+      "roi": -0.0796,
+      "roi_se": 0.1198,
+      "hit": 0.4898,
+      "bets_per_week": 3.5,
+      "weeks": 14,
+      "mean_ev": -0.0634,
+      "mean_dec": 1.8805,
+      "under_share": 0.0,
+      "direct_share": 0.2449
+     },
+     "early": {
+      "n": 715,
+      "n_clv": 714,
+      "clv": -0.0434,
+      "clv_se": 0.0015,
+      "clv_t": -28.6291,
+      "clv_p": 1.0,
+      "roi": -0.0945,
+      "roi_se": 0.0343,
+      "hit": 0.4811,
+      "bets_per_week": 32.5,
+      "weeks": 22,
+      "mean_ev": -0.064,
+      "mean_dec": 1.8799,
+      "under_share": 0.0,
+      "direct_share": 0.4965
+     }
+    }
+   },
+   "2024_25": {
+    "accuracy": {
+     "all_three": {
+      "n": 295,
+      "line_mae_open": 23.5373,
+      "mktmed_mae_open": 23.5437,
+      "model_mae_open": 23.4575,
+      "over_rate_open": 0.4034,
+      "mean_pnv_over_open": 0.5001,
+      "line_mae_early": 23.4559,
+      "mktmed_mae_early": 23.4499,
+      "model_mae_early": 23.4876,
+      "over_rate_early": 0.4136,
+      "mean_pnv_over_early": 0.5004,
+      "line_mae_close": 23.4559,
+      "mktmed_mae_close": 23.4852,
+      "model_mae_close": 23.3951,
+      "over_rate_close": 0.4034,
+      "mean_pnv_over_close": 0.5018,
+      "open_minus_close_mae": [
+       0.0814,
+       0.2085
+      ],
+      "early_minus_close_mae": [
+       0.0,
+       0.1188
+      ],
+      "open_line_minus_open_model_mae": [
+       0.0798,
+       0.6587
+      ]
+     },
+     "early_close": {
+      "n": 1645,
+      "line_mae_early": 24.5973,
+      "mktmed_mae_early": 24.5787,
+      "model_mae_early": 25.7065,
+      "over_rate_early": 0.4802,
+      "mean_pnv_over_early": 0.5003,
+      "line_mae_close": 24.5426,
+      "mktmed_mae_close": 24.5372,
+      "model_mae_close": 25.3433,
+      "over_rate_close": 0.4772,
+      "mean_pnv_over_close": 0.5011
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 295,
+      "over_rate": 0.4034,
+      "se": 0.0268,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        39,
+        0.359,
+        0.0758
+       ],
+       "dog(-6,-1]": [
+        97,
+        0.3814,
+        0.0514
+       ],
+       "fav[1,6)": [
+        113,
+        0.4425,
+        0.0426
+       ],
+       "big_fav(>=6)": [
+        46,
+        0.3913,
+        0.0678
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 1643,
+      "over_rate": 0.4814,
+      "se": 0.011,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        285,
+        0.4632,
+        0.0299
+       ],
+       "dog(-6,-1]": [
+        521,
+        0.4722,
+        0.0221
+       ],
+       "fav[1,6)": [
+        526,
+        0.4829,
+        0.0209
+       ],
+       "big_fav(>=6)": [
+        311,
+        0.5113,
+        0.0283
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 1939,
+      "over_rate": 0.4724,
+      "se": 0.0102,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        342,
+        0.4474,
+        0.0276
+       ],
+       "dog(-6,-1]": [
+        612,
+        0.4657,
+        0.0205
+       ],
+       "fav[1,6)": [
+        611,
+        0.4763,
+        0.0192
+       ],
+       "big_fav(>=6)": [
+        374,
+        0.5,
+        0.0262
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 295,
+      "0.0": -0.6927,
+      "0.1": -0.6857,
+      "0.2": -0.6812,
+      "0.3": -0.6781,
+      "0.5": -0.6734,
+      "0.75": -0.6719,
+      "1.0": -0.6752,
+      "market_nv": -0.6932
+     },
+     "early": {
+      "n": 1649,
+      "0.0": -0.6926,
+      "0.1": -0.6916,
+      "0.2": -0.6918,
+      "0.3": -0.6928,
+      "0.5": -0.6974,
+      "0.75": -0.7078,
+      "1.0": -0.723,
+      "market_nv": -0.6929
+     }
+    },
+    "coverage": {
+     "open": 295,
+     "early": 1649,
+     "close": 1949
+    },
+    "always_under": {
+     "open": {
+      "n": 293,
+      "n_clv": 293,
+      "clv": -0.0541,
+      "clv_se": 0.0031,
+      "clv_t": -17.4432,
+      "clv_p": 1.0,
+      "roi": 0.1381,
+      "roi_se": 0.0505,
+      "hit": 0.6075,
+      "bets_per_week": 6.81,
+      "weeks": 43,
+      "mean_ev": -0.0613,
+      "mean_dec": 1.8742,
+      "under_share": 1.0,
+      "direct_share": 0.3959
+     },
+     "early": {
+      "n": 1649,
+      "n_clv": 1645,
+      "clv": -0.0565,
+      "clv_se": 0.0012,
+      "clv_t": -48.8989,
+      "clv_p": 1.0,
+      "roi": 0.0035,
+      "roi_se": 0.0207,
+      "hit": 0.5355,
+      "bets_per_week": 37.48,
+      "weeks": 44,
+      "mean_ev": -0.0622,
+      "mean_dec": 1.8743,
+      "under_share": 1.0,
+      "direct_share": 0.5706
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 293,
+      "n_clv": 293,
+      "clv": -0.0462,
+      "clv_se": 0.0027,
+      "clv_t": -17.4072,
+      "clv_p": 1.0,
+      "roi": -0.2126,
+      "roi_se": 0.0505,
+      "hit": 0.4232,
+      "bets_per_week": 6.81,
+      "weeks": 43,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.8667,
+      "under_share": 0.0,
+      "direct_share": 0.4437
+     },
+     "early": {
+      "n": 1649,
+      "n_clv": 1645,
+      "clv": -0.0423,
+      "clv_se": 0.0012,
+      "clv_t": -34.171,
+      "clv_p": 1.0,
+      "roi": -0.0766,
+      "roi_se": 0.0203,
+      "hit": 0.4955,
+      "bets_per_week": 37.48,
+      "weeks": 44,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.8637,
+      "under_share": 0.0,
+      "direct_share": 0.4973
+     }
+    }
+   },
+   "2024": {
+    "accuracy": {
+     "all_three": {
+      "n": 126,
+      "line_mae_open": 25.6111,
+      "mktmed_mae_open": 25.6276,
+      "model_mae_open": 27.3381,
+      "over_rate_open": 0.4286,
+      "mean_pnv_over_open": 0.4998,
+      "line_mae_early": 25.6667,
+      "mktmed_mae_early": 25.679,
+      "model_mae_early": 27.3493,
+      "over_rate_early": 0.4206,
+      "mean_pnv_over_early": 0.5002,
+      "line_mae_close": 25.7302,
+      "mktmed_mae_close": 25.6907,
+      "model_mae_close": 27.359,
+      "over_rate_close": 0.4127,
+      "mean_pnv_over_close": 0.5022,
+      "open_minus_close_mae": [
+       -0.119,
+       0.333
+      ],
+      "early_minus_close_mae": [
+       -0.0635,
+       0.2106
+      ],
+      "open_line_minus_open_model_mae": [
+       -1.727,
+       1.1858
+      ]
+     },
+     "early_close": {
+      "n": 756,
+      "line_mae_early": 24.8426,
+      "mktmed_mae_early": 24.814,
+      "model_mae_early": 26.311,
+      "over_rate_early": 0.4894,
+      "mean_pnv_over_early": 0.5006,
+      "line_mae_close": 24.7606,
+      "mktmed_mae_close": 24.7662,
+      "model_mae_close": 25.844,
+      "over_rate_close": 0.4815,
+      "mean_pnv_over_close": 0.5016
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 126,
+      "over_rate": 0.4286,
+      "se": 0.0448,
+      "by_team_spread": {
+       "dog(-6,-1]": [
+        45,
+        0.4222,
+        0.0798
+       ],
+       "fav[1,6)": [
+        52,
+        0.4423,
+        0.063
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 756,
+      "over_rate": 0.4894,
+      "se": 0.0162,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        126,
+        0.4286,
+        0.0453
+       ],
+       "dog(-6,-1]": [
+        240,
+        0.4875,
+        0.0312
+       ],
+       "fav[1,6)": [
+        244,
+        0.4918,
+        0.0287
+       ],
+       "big_fav(>=6)": [
+        146,
+        0.5411,
+        0.0416
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 956,
+      "over_rate": 0.4759,
+      "se": 0.0146,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        168,
+        0.4167,
+        0.0392
+       ],
+       "dog(-6,-1]": [
+        300,
+        0.48,
+        0.0274
+       ],
+       "fav[1,6)": [
+        301,
+        0.4784,
+        0.0263
+       ],
+       "big_fav(>=6)": [
+        187,
+        0.5187,
+        0.0383
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 126,
+      "0.0": -0.6929,
+      "0.1": -0.6894,
+      "0.2": -0.6888,
+      "0.3": -0.69,
+      "0.5": -0.6927,
+      "0.75": -0.7001,
+      "1.0": -0.7114,
+      "market_nv": -0.693
+     },
+     "early": {
+      "n": 756,
+      "0.0": -0.6922,
+      "0.1": -0.6913,
+      "0.2": -0.6922,
+      "0.3": -0.6935,
+      "0.5": -0.6983,
+      "0.75": -0.7094,
+      "1.0": -0.7263,
+      "market_nv": -0.6926
+     }
+    },
+    "coverage": {
+     "open": 126,
+     "early": 756,
+     "close": 958
+    },
+    "always_under": {
+     "open": {
+      "n": 124,
+      "n_clv": 124,
+      "clv": -0.0637,
+      "clv_se": 0.0041,
+      "clv_t": -15.6396,
+      "clv_p": 1.0,
+      "roi": 0.0869,
+      "roi_se": 0.0839,
+      "hit": 0.5806,
+      "bets_per_week": 5.64,
+      "weeks": 22,
+      "mean_ev": -0.063,
+      "mean_dec": 1.8743,
+      "under_share": 1.0,
+      "direct_share": 0.3629
+     },
+     "early": {
+      "n": 756,
+      "n_clv": 756,
+      "clv": -0.0593,
+      "clv_se": 0.0016,
+      "clv_t": -37.1152,
+      "clv_p": 1.0,
+      "roi": -0.0104,
+      "roi_se": 0.031,
+      "hit": 0.5265,
+      "bets_per_week": 34.36,
+      "weeks": 22,
+      "mean_ev": -0.063,
+      "mean_dec": 1.8812,
+      "under_share": 1.0,
+      "direct_share": 0.5608
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 124,
+      "n_clv": 124,
+      "clv": -0.038,
+      "clv_se": 0.0042,
+      "clv_t": -9.102,
+      "clv_p": 1.0,
+      "roi": -0.1717,
+      "roi_se": 0.0808,
+      "hit": 0.4435,
+      "bets_per_week": 5.64,
+      "weeks": 22,
+      "mean_ev": -0.0632,
+      "mean_dec": 1.8719,
+      "under_share": 0.0,
+      "direct_share": 0.3468
+     },
+     "early": {
+      "n": 756,
+      "n_clv": 756,
+      "clv": -0.0375,
+      "clv_se": 0.0017,
+      "clv_t": -22.14,
+      "clv_p": 1.0,
+      "roi": -0.0618,
+      "roi_se": 0.0307,
+      "hit": 0.5,
+      "bets_per_week": 34.36,
+      "weeks": 22,
+      "mean_ev": -0.0626,
+      "mean_dec": 1.8755,
+      "under_share": 0.0,
+      "direct_share": 0.422
+     }
+    }
+   },
+   "2025": {
+    "accuracy": {
+     "all_three": {
+      "n": 169,
+      "line_mae_open": 21.9911,
+      "mktmed_mae_open": 21.99,
+      "model_mae_open": 20.5642,
+      "over_rate_open": 0.3846,
+      "mean_pnv_over_open": 0.5004,
+      "line_mae_early": 21.8077,
+      "mktmed_mae_early": 21.788,
+      "model_mae_early": 20.6084,
+      "over_rate_early": 0.4083,
+      "mean_pnv_over_early": 0.5006,
+      "line_mae_close": 21.7604,
+      "mktmed_mae_close": 21.8408,
+      "model_mae_close": 20.4397,
+      "over_rate_close": 0.3964,
+      "mean_pnv_over_close": 0.5015,
+      "open_minus_close_mae": [
+       0.2308,
+       0.2644
+      ],
+      "early_minus_close_mae": [
+       0.0473,
+       0.1348
+      ],
+      "open_line_minus_open_model_mae": [
+       1.4269,
+       0.7047
+      ]
+     },
+     "early_close": {
+      "n": 889,
+      "line_mae_early": 24.3886,
+      "mktmed_mae_early": 24.3785,
+      "model_mae_early": 25.1924,
+      "over_rate_early": 0.4724,
+      "mean_pnv_over_early": 0.5001,
+      "line_mae_close": 24.3571,
+      "mktmed_mae_close": 24.3424,
+      "model_mae_close": 24.9174,
+      "over_rate_close": 0.4736,
+      "mean_pnv_over_close": 0.5007
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 169,
+      "over_rate": 0.3846,
+      "se": 0.0327,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        24,
+        0.375,
+        0.0837
+       ],
+       "dog(-6,-1]": [
+        52,
+        0.3462,
+        0.066
+       ],
+       "fav[1,6)": [
+        61,
+        0.4426,
+        0.0579
+       ],
+       "big_fav(>=6)": [
+        32,
+        0.3438,
+        0.0699
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 887,
+      "over_rate": 0.4746,
+      "se": 0.0149,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        159,
+        0.4906,
+        0.0394
+       ],
+       "dog(-6,-1]": [
+        281,
+        0.4591,
+        0.031
+       ],
+       "fav[1,6)": [
+        282,
+        0.4752,
+        0.03
+       ],
+       "big_fav(>=6)": [
+        165,
+        0.4848,
+        0.0384
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 983,
+      "over_rate": 0.469,
+      "se": 0.0143,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        174,
+        0.477,
+        0.0385
+       ],
+       "dog(-6,-1]": [
+        312,
+        0.4519,
+        0.0302
+       ],
+       "fav[1,6)": [
+        310,
+        0.4742,
+        0.0279
+       ],
+       "big_fav(>=6)": [
+        187,
+        0.4813,
+        0.0357
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 169,
+      "0.0": -0.6925,
+      "0.1": -0.6829,
+      "0.2": -0.6755,
+      "0.3": -0.6693,
+      "0.5": -0.6589,
+      "0.75": -0.6509,
+      "1.0": -0.6483,
+      "market_nv": -0.6933
+     },
+     "early": {
+      "n": 893,
+      "0.0": -0.693,
+      "0.1": -0.6918,
+      "0.2": -0.6914,
+      "0.3": -0.6922,
+      "0.5": -0.6966,
+      "0.75": -0.7064,
+      "1.0": -0.7202,
+      "market_nv": -0.6932
+     }
+    },
+    "coverage": {
+     "open": 169,
+     "early": 893,
+     "close": 991
+    },
+    "always_under": {
+     "open": {
+      "n": 169,
+      "n_clv": 169,
+      "clv": -0.047,
+      "clv_se": 0.0042,
+      "clv_t": -11.1682,
+      "clv_p": 1.0,
+      "roi": 0.1757,
+      "roi_se": 0.0625,
+      "hit": 0.6272,
+      "bets_per_week": 8.05,
+      "weeks": 21,
+      "mean_ev": -0.06,
+      "mean_dec": 1.8741,
+      "under_share": 1.0,
+      "direct_share": 0.4201
+     },
+     "early": {
+      "n": 893,
+      "n_clv": 889,
+      "clv": -0.054,
+      "clv_se": 0.0016,
+      "clv_t": -33.0224,
+      "clv_p": 1.0,
+      "roi": 0.0152,
+      "roi_se": 0.0278,
+      "hit": 0.5431,
+      "bets_per_week": 40.59,
+      "weeks": 22,
+      "mean_ev": -0.0616,
+      "mean_dec": 1.8685,
+      "under_share": 1.0,
+      "direct_share": 0.5789
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 169,
+      "n_clv": 169,
+      "clv": -0.0522,
+      "clv_se": 0.0032,
+      "clv_t": -16.5046,
+      "clv_p": 1.0,
+      "roi": -0.2426,
+      "roi_se": 0.0646,
+      "hit": 0.4083,
+      "bets_per_week": 8.05,
+      "weeks": 21,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.863,
+      "under_share": 0.0,
+      "direct_share": 0.5148
+     },
+     "early": {
+      "n": 893,
+      "n_clv": 889,
+      "clv": -0.0463,
+      "clv_se": 0.0017,
+      "clv_t": -26.5419,
+      "clv_p": 1.0,
+      "roi": -0.0891,
+      "roi_se": 0.027,
+      "hit": 0.4916,
+      "bets_per_week": 40.59,
+      "weeks": 22,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8537,
+      "under_share": 0.0,
+      "direct_share": 0.561
+     }
+    }
+   },
+   "moves": {
+    "n": {
+     "2023": 48,
+     "2024": 126,
+     "2025": 169
+    },
+    "2023": {
+     "mean_abs_move_open_close": 2.7059,
+     "share_line_moved": 0.8958,
+     "mean_abs_open_early": 2.3732,
+     "mean_abs_early_close": 1.0224,
+     "corr_move_with_open_residual": -0.0675,
+     "corr_move_gap_open": 0.2194,
+     "corr_move_fri_info": 0.138
+    },
+    "2024": {
+     "mean_abs_move_open_close": 2.6315,
+     "share_line_moved": 0.881,
+     "mean_abs_open_early": 1.9022,
+     "mean_abs_early_close": 1.5133,
+     "corr_move_with_open_residual": 0.1801,
+     "corr_move_gap_open": 0.0018,
+     "corr_move_fri_info": 0.0073
+    },
+    "2025": {
+     "mean_abs_move_open_close": 2.6994,
+     "share_line_moved": 0.8107,
+     "mean_abs_open_early": 2.0503,
+     "mean_abs_early_close": 1.4478,
+     "corr_move_with_open_residual": 0.0744,
+     "corr_move_gap_open": 0.1539,
+     "corr_move_fri_info": 0.0043
+    },
+    "regression": {
+     "gap_open": {
+      "coef": [
+       0.0545
+      ],
+      "r2_fit": 0.0481,
+      "n_fit": 48,
+      "r2_test": -0.0685,
+      "dir_acc_test_when_|pred|>sd/4": 0.5487,
+      "n_test": 295
+     },
+     "gap_open+fri": {
+      "coef": [
+       0.059,
+       0.1165
+      ],
+      "r2_fit": 0.0747,
+      "n_fit": 48,
+      "r2_test": -0.0667,
+      "dir_acc_test_when_|pred|>sd/4": 0.5298,
+      "n_test": 295
+     },
+     "gap_open+fri+late": {
+      "coef": [
+       0.1133,
+       0.1719,
+       0.1671
+      ],
+      "r2_fit": 0.2173,
+      "n_fit": 48,
+      "r2_test": -0.0684,
+      "dir_acc_test_when_|pred|>sd/4": 0.5906,
+      "n_test": 295
+     }
+    }
+   },
+   "moves_fit2024_test2025": {
+    "gap_open": {
+     "coef": [
+      0.0005
+     ],
+     "r2_fit": 0.0,
+     "n_fit": 126,
+     "r2_test": -0.0778,
+     "dir_acc_test_when_|pred|>sd/4": null,
+     "n_test": 169
+    },
+    "gap_open+fri": {
+     "coef": [
+      0.0012,
+      0.0068
+     ],
+     "r2_fit": 0.0001,
+     "n_fit": 126,
+     "r2_test": -0.0779,
+     "dir_acc_test_when_|pred|>sd/4": null,
+     "n_test": 169
+    },
+    "gap_open+fri+late": {
+     "coef": [
+      0.0127,
+      0.0462,
+      0.0997
+     ],
+     "r2_fit": 0.0252,
+     "n_fit": 126,
+     "r2_test": -0.0827,
+     "dir_acc_test_when_|pred|>sd/4": 0.4714,
+     "n_test": 169
+    }
+   }
+  },
+  "receptions": {
+   "2023": {
+    "accuracy": {
+     "all_three": {
+      "n": 88,
+      "line_mae_open": 1.6705,
+      "mktmed_mae_open": 1.6307,
+      "model_mae_open": 1.6761,
+      "over_rate_open": 0.5341,
+      "mean_pnv_over_open": 0.4852,
+      "line_mae_early": 1.625,
+      "mktmed_mae_early": 1.6348,
+      "model_mae_early": 1.7273,
+      "over_rate_early": 0.5455,
+      "mean_pnv_over_early": 0.4897,
+      "line_mae_close": 1.6023,
+      "mktmed_mae_close": 1.6617,
+      "model_mae_close": 1.7102,
+      "over_rate_close": 0.5568,
+      "mean_pnv_over_close": 0.4946,
+      "open_minus_close_mae": [
+       0.0682,
+       0.0315
+      ],
+      "early_minus_close_mae": [
+       0.0227,
+       0.0265
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.0057,
+       0.0845
+      ]
+     },
+     "early_close": {
+      "n": 2134,
+      "line_mae_early": 1.6757,
+      "mktmed_mae_early": 1.6846,
+      "model_mae_early": 1.6813,
+      "over_rate_early": 0.4859,
+      "mean_pnv_over_early": 0.4971,
+      "line_mae_close": 1.6696,
+      "mktmed_mae_close": 1.6881,
+      "model_mae_close": 1.6724,
+      "over_rate_close": 0.4845,
+      "mean_pnv_over_close": 0.4982
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 30,
+      "over_rate": 0.4667,
+      "se": 0.0846,
+      "by_team_spread": {}
+     },
+     "early": {
+      "n_50pct_lines": 737,
+      "over_rate": 0.4722,
+      "se": 0.0186,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        115,
+        0.4609,
+        0.0407
+       ],
+       "dog(-6,-1]": [
+        235,
+        0.434,
+        0.0355
+       ],
+       "fav[1,6)": [
+        251,
+        0.49,
+        0.0315
+       ],
+       "big_fav(>=6)": [
+        136,
+        0.5147,
+        0.041
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 959,
+      "over_rate": 0.4859,
+      "se": 0.0159,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        142,
+        0.5211,
+        0.0445
+       ],
+       "dog(-6,-1]": [
+        326,
+        0.454,
+        0.029
+       ],
+       "fav[1,6)": [
+        328,
+        0.4878,
+        0.0272
+       ],
+       "big_fav(>=6)": [
+        163,
+        0.5153,
+        0.0354
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 94,
+      "0.0": -0.7333,
+      "0.1": -0.6973,
+      "0.2": -0.6973,
+      "0.3": -0.6973,
+      "0.5": -0.6973,
+      "0.75": -0.7063,
+      "1.0": -0.7063,
+      "market_nv": -0.6869
+     },
+     "early": {
+      "n": 2143,
+      "0.0": -0.7052,
+      "0.1": -0.696,
+      "0.2": -0.696,
+      "0.3": -0.696,
+      "0.5": -0.6967,
+      "0.75": -0.7056,
+      "1.0": -0.7064,
+      "market_nv": -0.6864
+     }
+    },
+    "coverage": {
+     "open": 94,
+     "early": 2143,
+     "close": 2780
+    },
+    "always_under": {
+     "open": {
+      "n": 94,
+      "n_clv": 90,
+      "clv": -0.0564,
+      "clv_se": 0.0079,
+      "clv_t": -7.1595,
+      "clv_p": 1.0,
+      "roi": -0.1181,
+      "roi_se": 0.1164,
+      "hit": 0.4787,
+      "bets_per_week": 9.4,
+      "weeks": 10,
+      "mean_ev": -0.062,
+      "mean_dec": 1.8537,
+      "under_share": 1.0,
+      "direct_share": 0.9043
+     },
+     "early": {
+      "n": 2126,
+      "n_clv": 2118,
+      "clv": -0.0513,
+      "clv_se": 0.0014,
+      "clv_t": -36.6934,
+      "clv_p": 1.0,
+      "roi": -0.0194,
+      "roi_se": 0.0208,
+      "hit": 0.5216,
+      "bets_per_week": 96.64,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.9025,
+      "under_share": 1.0,
+      "direct_share": 0.9638
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 94,
+      "n_clv": 90,
+      "clv": -0.0364,
+      "clv_se": 0.0094,
+      "clv_t": -3.8888,
+      "clv_p": 0.9999,
+      "roi": 0.068,
+      "roi_se": 0.1239,
+      "hit": 0.5532,
+      "bets_per_week": 9.4,
+      "weeks": 10,
+      "mean_ev": -0.062,
+      "mean_dec": 1.9599,
+      "under_share": 0.0,
+      "direct_share": 0.883
+     },
+     "early": {
+      "n": 2126,
+      "n_clv": 2118,
+      "clv": -0.0369,
+      "clv_se": 0.0015,
+      "clv_t": -24.307,
+      "clv_p": 1.0,
+      "roi": -0.0629,
+      "roi_se": 0.0206,
+      "hit": 0.4944,
+      "bets_per_week": 96.64,
+      "weeks": 22,
+      "mean_ev": -0.0628,
+      "mean_dec": 1.9263,
+      "under_share": 0.0,
+      "direct_share": 0.952
+     }
+    }
+   },
+   "2024_25": {
+    "accuracy": {
+     "all_three": {
+      "n": 811,
+      "line_mae_open": 1.6517,
+      "mktmed_mae_open": 1.6435,
+      "model_mae_open": 1.6344,
+      "over_rate_open": 0.4377,
+      "mean_pnv_over_open": 0.4923,
+      "line_mae_early": 1.6369,
+      "mktmed_mae_early": 1.6457,
+      "model_mae_early": 1.6332,
+      "over_rate_early": 0.439,
+      "mean_pnv_over_early": 0.4937,
+      "line_mae_close": 1.6221,
+      "mktmed_mae_close": 1.6371,
+      "model_mae_close": 1.6387,
+      "over_rate_close": 0.4353,
+      "mean_pnv_over_close": 0.4951,
+      "open_minus_close_mae": [
+       0.0296,
+       0.0132
+      ],
+      "early_minus_close_mae": [
+       0.0148,
+       0.0094
+      ],
+      "open_line_minus_open_model_mae": [
+       0.0173,
+       0.0249
+      ]
+     },
+     "early_close": {
+      "n": 5015,
+      "line_mae_early": 1.6155,
+      "mktmed_mae_early": 1.6215,
+      "model_mae_early": 1.6077,
+      "over_rate_early": 0.463,
+      "mean_pnv_over_early": 0.4943,
+      "line_mae_close": 1.6087,
+      "mktmed_mae_close": 1.6158,
+      "model_mae_close": 1.6089,
+      "over_rate_close": 0.4628,
+      "mean_pnv_over_close": 0.4941
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 322,
+      "over_rate": 0.3975,
+      "se": 0.0283,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        39,
+        0.4103,
+        0.0687
+       ],
+       "dog(-6,-1]": [
+        117,
+        0.4017,
+        0.0405
+       ],
+       "fav[1,6)": [
+        117,
+        0.3675,
+        0.0483
+       ],
+       "big_fav(>=6)": [
+        49,
+        0.449,
+        0.073
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 1914,
+      "over_rate": 0.4749,
+      "se": 0.0117,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        334,
+        0.482,
+        0.0276
+       ],
+       "dog(-6,-1]": [
+        611,
+        0.4779,
+        0.021
+       ],
+       "fav[1,6)": [
+        634,
+        0.4416,
+        0.0204
+       ],
+       "big_fav(>=6)": [
+        335,
+        0.5254,
+        0.0283
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 2188,
+      "over_rate": 0.4662,
+      "se": 0.0106,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        419,
+        0.4487,
+        0.0252
+       ],
+       "dog(-6,-1]": [
+        672,
+        0.4598,
+        0.0189
+       ],
+       "fav[1,6)": [
+        695,
+        0.4576,
+        0.0199
+       ],
+       "big_fav(>=6)": [
+        402,
+        0.51,
+        0.0225
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 818,
+      "0.0": -0.6846,
+      "0.1": -0.6908,
+      "0.2": -0.6905,
+      "0.3": -0.6905,
+      "0.5": -0.6936,
+      "0.75": -0.701,
+      "1.0": -0.7025,
+      "market_nv": -0.6848
+     },
+     "early": {
+      "n": 5051,
+      "0.0": -0.6954,
+      "0.1": -0.6936,
+      "0.2": -0.6936,
+      "0.3": -0.6937,
+      "0.5": -0.6938,
+      "0.75": -0.6997,
+      "1.0": -0.7003,
+      "market_nv": -0.6843
+     }
+    },
+    "coverage": {
+     "open": 818,
+     "early": 5051,
+     "close": 6030
+    },
+    "always_under": {
+     "open": {
+      "n": 818,
+      "n_clv": 815,
+      "clv": -0.0558,
+      "clv_se": 0.0035,
+      "clv_t": -16.0062,
+      "clv_p": 1.0,
+      "roi": 0.0597,
+      "roi_se": 0.0293,
+      "hit": 0.5697,
+      "bets_per_week": 19.48,
+      "weeks": 42,
+      "mean_ev": -0.0614,
+      "mean_dec": 1.88,
+      "under_share": 1.0,
+      "direct_share": 0.9132
+     },
+     "early": {
+      "n": 5047,
+      "n_clv": 5013,
+      "clv": -0.0437,
+      "clv_se": 0.001,
+      "clv_t": -43.1407,
+      "clv_p": 1.0,
+      "roi": 0.0125,
+      "roi_se": 0.0128,
+      "hit": 0.55,
+      "bets_per_week": 114.7,
+      "weeks": 44,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8716,
+      "under_share": 1.0,
+      "direct_share": 0.9394
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 818,
+      "n_clv": 815,
+      "clv": -0.0331,
+      "clv_se": 0.0033,
+      "clv_t": -10.1359,
+      "clv_p": 1.0,
+      "roi": -0.1479,
+      "roi_se": 0.0311,
+      "hit": 0.4523,
+      "bets_per_week": 19.48,
+      "weeks": 42,
+      "mean_ev": -0.0621,
+      "mean_dec": 1.91,
+      "under_share": 0.0,
+      "direct_share": 0.9034
+     },
+     "early": {
+      "n": 5047,
+      "n_clv": 5013,
+      "clv": -0.0413,
+      "clv_se": 0.001,
+      "clv_t": -41.7656,
+      "clv_p": 1.0,
+      "roi": -0.0917,
+      "roi_se": 0.0132,
+      "hit": 0.4807,
+      "bets_per_week": 114.7,
+      "weeks": 44,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.9207,
+      "under_share": 0.0,
+      "direct_share": 0.9392
+     }
+    }
+   },
+   "2024": {
+    "accuracy": {
+     "all_three": {
+      "n": 343,
+      "line_mae_open": 1.7012,
+      "mktmed_mae_open": 1.6973,
+      "model_mae_open": 1.6603,
+      "over_rate_open": 0.3994,
+      "mean_pnv_over_open": 0.4933,
+      "line_mae_early": 1.6808,
+      "mktmed_mae_early": 1.6928,
+      "model_mae_early": 1.6706,
+      "over_rate_early": 0.4023,
+      "mean_pnv_over_early": 0.4941,
+      "line_mae_close": 1.6603,
+      "mktmed_mae_close": 1.7102,
+      "model_mae_close": 1.6822,
+      "over_rate_close": 0.3965,
+      "mean_pnv_over_close": 0.4953,
+      "open_minus_close_mae": [
+       0.0408,
+       0.0206
+      ],
+      "early_minus_close_mae": [
+       0.0204,
+       0.0143
+      ],
+      "open_line_minus_open_model_mae": [
+       0.0408,
+       0.0377
+      ]
+     },
+     "early_close": {
+      "n": 2342,
+      "line_mae_early": 1.6682,
+      "mktmed_mae_early": 1.6818,
+      "model_mae_early": 1.6704,
+      "over_rate_early": 0.4701,
+      "mean_pnv_over_early": 0.4954,
+      "line_mae_close": 1.6584,
+      "mktmed_mae_close": 1.6736,
+      "model_mae_close": 1.6644,
+      "over_rate_close": 0.4705,
+      "mean_pnv_over_close": 0.4961
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 139,
+      "over_rate": 0.3741,
+      "se": 0.043,
+      "by_team_spread": {
+       "dog(-6,-1]": [
+        54,
+        0.3333,
+        0.0501
+       ],
+       "fav[1,6)": [
+        54,
+        0.4074,
+        0.0777
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 899,
+      "over_rate": 0.4828,
+      "se": 0.0164,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        157,
+        0.4713,
+        0.0395
+       ],
+       "dog(-6,-1]": [
+        295,
+        0.4915,
+        0.029
+       ],
+       "fav[1,6)": [
+        288,
+        0.441,
+        0.0292
+       ],
+       "big_fav(>=6)": [
+        159,
+        0.5535,
+        0.039
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 1073,
+      "over_rate": 0.48,
+      "se": 0.0146,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        214,
+        0.4907,
+        0.0364
+       ],
+       "dog(-6,-1]": [
+        333,
+        0.4595,
+        0.0256
+       ],
+       "fav[1,6)": [
+        330,
+        0.4758,
+        0.0288
+       ],
+       "big_fav(>=6)": [
+        196,
+        0.5102,
+        0.0296
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 345,
+      "0.0": -0.6721,
+      "0.1": -0.686,
+      "0.2": -0.6853,
+      "0.3": -0.6853,
+      "0.5": -0.6858,
+      "0.75": -0.6884,
+      "1.0": -0.689,
+      "market_nv": -0.6816
+     },
+     "early": {
+      "n": 2352,
+      "0.0": -0.6939,
+      "0.1": -0.6935,
+      "0.2": -0.6935,
+      "0.3": -0.6935,
+      "0.5": -0.6935,
+      "0.75": -0.6973,
+      "1.0": -0.6974,
+      "market_nv": -0.6842
+     }
+    },
+    "coverage": {
+     "open": 345,
+     "early": 2352,
+     "close": 2954
+    },
+    "always_under": {
+     "open": {
+      "n": 345,
+      "n_clv": 343,
+      "clv": -0.0624,
+      "clv_se": 0.0052,
+      "clv_t": -12.1117,
+      "clv_p": 1.0,
+      "roi": 0.1113,
+      "roi_se": 0.0432,
+      "hit": 0.5971,
+      "bets_per_week": 16.43,
+      "weeks": 21,
+      "mean_ev": -0.061,
+      "mean_dec": 1.8886,
+      "under_share": 1.0,
+      "direct_share": 0.9275
+     },
+     "early": {
+      "n": 2350,
+      "n_clv": 2341,
+      "clv": -0.0441,
+      "clv_se": 0.0015,
+      "clv_t": -28.7096,
+      "clv_p": 1.0,
+      "roi": 0.0041,
+      "roi_se": 0.0186,
+      "hit": 0.5387,
+      "bets_per_week": 106.82,
+      "weeks": 22,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8953,
+      "under_share": 1.0,
+      "direct_share": 0.9515
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 345,
+      "n_clv": 343,
+      "clv": -0.0264,
+      "clv_se": 0.0055,
+      "clv_t": -4.7882,
+      "clv_p": 1.0,
+      "roi": -0.2183,
+      "roi_se": 0.0448,
+      "hit": 0.4116,
+      "bets_per_week": 16.43,
+      "weeks": 21,
+      "mean_ev": -0.0608,
+      "mean_dec": 1.9281,
+      "under_share": 0.0,
+      "direct_share": 0.9159
+     },
+     "early": {
+      "n": 2350,
+      "n_clv": 2341,
+      "clv": -0.0405,
+      "clv_se": 0.0015,
+      "clv_t": -27.3346,
+      "clv_p": 1.0,
+      "roi": -0.0765,
+      "roi_se": 0.0185,
+      "hit": 0.4889,
+      "bets_per_week": 106.82,
+      "weeks": 22,
+      "mean_ev": -0.0626,
+      "mean_dec": 1.922,
+      "under_share": 0.0,
+      "direct_share": 0.9383
+     }
+    }
+   },
+   "2025": {
+    "accuracy": {
+     "all_three": {
+      "n": 468,
+      "line_mae_open": 1.6154,
+      "mktmed_mae_open": 1.6041,
+      "model_mae_open": 1.6154,
+      "over_rate_open": 0.4658,
+      "mean_pnv_over_open": 0.4916,
+      "line_mae_early": 1.6047,
+      "mktmed_mae_early": 1.6112,
+      "model_mae_early": 1.6058,
+      "over_rate_early": 0.4658,
+      "mean_pnv_over_early": 0.4934,
+      "line_mae_close": 1.594,
+      "mktmed_mae_close": 1.5836,
+      "model_mae_close": 1.6068,
+      "over_rate_close": 0.4637,
+      "mean_pnv_over_close": 0.4949,
+      "open_minus_close_mae": [
+       0.0214,
+       0.0172
+      ],
+      "early_minus_close_mae": [
+       0.0107,
+       0.0125
+      ],
+      "open_line_minus_open_model_mae": [
+       0.0,
+       0.033
+      ]
+     },
+     "early_close": {
+      "n": 2673,
+      "line_mae_early": 1.5692,
+      "mktmed_mae_early": 1.5687,
+      "model_mae_early": 1.5527,
+      "over_rate_early": 0.4568,
+      "mean_pnv_over_early": 0.4934,
+      "line_mae_close": 1.5651,
+      "mktmed_mae_close": 1.5651,
+      "model_mae_close": 1.5602,
+      "over_rate_close": 0.456,
+      "mean_pnv_over_close": 0.4924
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 183,
+      "over_rate": 0.4153,
+      "se": 0.0373,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        23,
+        0.3913,
+        0.0899
+       ],
+       "dog(-6,-1]": [
+        63,
+        0.4603,
+        0.0597
+       ],
+       "fav[1,6)": [
+        63,
+        0.3333,
+        0.0594
+       ],
+       "big_fav(>=6)": [
+        34,
+        0.5,
+        0.0832
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 1015,
+      "over_rate": 0.468,
+      "se": 0.0166,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        177,
+        0.4915,
+        0.0383
+       ],
+       "dog(-6,-1]": [
+        316,
+        0.4652,
+        0.0303
+       ],
+       "fav[1,6)": [
+        346,
+        0.4422,
+        0.0284
+       ],
+       "big_fav(>=6)": [
+        176,
+        0.5,
+        0.0404
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 1115,
+      "over_rate": 0.4529,
+      "se": 0.0151,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        205,
+        0.4049,
+        0.0343
+       ],
+       "dog(-6,-1]": [
+        339,
+        0.4602,
+        0.0277
+       ],
+       "fav[1,6)": [
+        365,
+        0.4411,
+        0.0276
+       ],
+       "big_fav(>=6)": [
+        206,
+        0.5097,
+        0.0335
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 473,
+      "0.0": -0.6938,
+      "0.1": -0.6943,
+      "0.2": -0.6943,
+      "0.3": -0.6943,
+      "0.5": -0.6994,
+      "0.75": -0.7102,
+      "1.0": -0.7123,
+      "market_nv": -0.6871
+     },
+     "early": {
+      "n": 2699,
+      "0.0": -0.6967,
+      "0.1": -0.6937,
+      "0.2": -0.6937,
+      "0.3": -0.6938,
+      "0.5": -0.6941,
+      "0.75": -0.7018,
+      "1.0": -0.7028,
+      "market_nv": -0.6845
+     }
+    },
+    "coverage": {
+     "open": 473,
+     "early": 2699,
+     "close": 3076
+    },
+    "always_under": {
+     "open": {
+      "n": 473,
+      "n_clv": 472,
+      "clv": -0.051,
+      "clv_se": 0.0046,
+      "clv_t": -11.0834,
+      "clv_p": 1.0,
+      "roi": 0.0221,
+      "roi_se": 0.0396,
+      "hit": 0.5497,
+      "bets_per_week": 22.52,
+      "weeks": 21,
+      "mean_ev": -0.0618,
+      "mean_dec": 1.8738,
+      "under_share": 1.0,
+      "direct_share": 0.9027
+     },
+     "early": {
+      "n": 2697,
+      "n_clv": 2672,
+      "clv": -0.0433,
+      "clv_se": 0.0013,
+      "clv_t": -32.3153,
+      "clv_p": 1.0,
+      "roi": 0.0197,
+      "roi_se": 0.0177,
+      "hit": 0.5599,
+      "bets_per_week": 122.59,
+      "weeks": 22,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8509,
+      "under_share": 1.0,
+      "direct_share": 0.9288
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 473,
+      "n_clv": 472,
+      "clv": -0.0379,
+      "clv_se": 0.0038,
+      "clv_t": -9.8883,
+      "clv_p": 1.0,
+      "roi": -0.0966,
+      "roi_se": 0.0421,
+      "hit": 0.482,
+      "bets_per_week": 22.52,
+      "weeks": 21,
+      "mean_ev": -0.0631,
+      "mean_dec": 1.8969,
+      "under_share": 0.0,
+      "direct_share": 0.8943
+     },
+     "early": {
+      "n": 2697,
+      "n_clv": 2672,
+      "clv": -0.042,
+      "clv_se": 0.0013,
+      "clv_t": -31.7632,
+      "clv_p": 1.0,
+      "roi": -0.105,
+      "roi_se": 0.0187,
+      "hit": 0.4735,
+      "bets_per_week": 122.59,
+      "weeks": 22,
+      "mean_ev": -0.0635,
+      "mean_dec": 1.9197,
+      "under_share": 0.0,
+      "direct_share": 0.9399
+     }
+    }
+   },
+   "moves": {
+    "n": {
+     "2023": 88,
+     "2024": 343,
+     "2025": 468
+    },
+    "2023": {
+     "mean_abs_move_open_close": 0.2129,
+     "share_line_moved": 0.1364,
+     "mean_abs_open_early": 0.1788,
+     "mean_abs_early_close": 0.1616,
+     "corr_move_with_open_residual": 0.0604,
+     "corr_move_gap_open": 0.193,
+     "corr_move_fri_info": 0.3255
+    },
+    "2024": {
+     "mean_abs_move_open_close": 0.3704,
+     "share_line_moved": 0.1662,
+     "mean_abs_open_early": 0.2775,
+     "mean_abs_early_close": 0.2983,
+     "corr_move_with_open_residual": 0.1542,
+     "corr_move_gap_open": 0.3596,
+     "corr_move_fri_info": 0.0743
+    },
+    "2025": {
+     "mean_abs_move_open_close": 0.3644,
+     "share_line_moved": 0.1581,
+     "mean_abs_open_early": 0.2371,
+     "mean_abs_early_close": 0.3067,
+     "corr_move_with_open_residual": 0.2003,
+     "corr_move_gap_open": 0.2918,
+     "corr_move_fri_info": 0.1361
+    },
+    "regression": {
+     "gap_open": {
+      "coef": [
+       0.139
+      ],
+      "r2_fit": 0.0373,
+      "n_fit": 88,
+      "r2_test": 0.0519,
+      "dir_acc_test_when_|pred|>sd/4": 0.814,
+      "n_test": 811
+     },
+     "gap_open+fri": {
+      "coef": [
+       0.1297,
+       0.5109
+      ],
+      "r2_fit": 0.1383,
+      "n_fit": 88,
+      "r2_test": 0.0599,
+      "dir_acc_test_when_|pred|>sd/4": 0.75,
+      "n_test": 811
+     },
+     "gap_open+fri+late": {
+      "coef": [
+       0.1462,
+       0.7995,
+       0.754
+      ],
+      "r2_fit": 0.3983,
+      "n_fit": 88,
+      "r2_test": 0.2805,
+      "dir_acc_test_when_|pred|>sd/4": 0.9356,
+      "n_test": 811
+     }
+    }
+   },
+   "moves_fit2024_test2025": {
+    "gap_open": {
+     "coef": [
+      0.3173
+     ],
+     "r2_fit": 0.1293,
+     "n_fit": 343,
+     "r2_test": 0.0548,
+     "dir_acc_test_when_|pred|>sd/4": 0.7938,
+     "n_test": 468
+    },
+    "gap_open+fri": {
+     "coef": [
+      0.3435,
+      0.2557
+     ],
+     "r2_fit": 0.1512,
+     "n_fit": 343,
+     "r2_test": 0.0847,
+     "dir_acc_test_when_|pred|>sd/4": 0.81,
+     "n_test": 468
+    },
+    "gap_open+fri+late": {
+     "coef": [
+      0.4372,
+      0.6874,
+      0.7289
+     ],
+     "r2_fit": 0.3981,
+     "n_fit": 343,
+     "r2_test": 0.2901,
+     "dir_acc_test_when_|pred|>sd/4": 0.9077,
+     "n_test": 468
+    }
+   }
+  },
+  "rec_yds": {
+   "2023": {
+    "accuracy": {
+     "all_three": {
+      "n": 153,
+      "line_mae_open": 22.7222,
+      "mktmed_mae_open": 22.7145,
+      "model_mae_open": 22.8928,
+      "over_rate_open": 0.4575,
+      "mean_pnv_over_open": 0.5004,
+      "line_mae_early": 22.4869,
+      "mktmed_mae_early": 22.4389,
+      "model_mae_early": 22.9655,
+      "over_rate_early": 0.4641,
+      "mean_pnv_over_early": 0.5017,
+      "line_mae_close": 22.5,
+      "mktmed_mae_close": 22.5036,
+      "model_mae_close": 22.302,
+      "over_rate_close": 0.451,
+      "mean_pnv_over_close": 0.5034,
+      "open_minus_close_mae": [
+       0.2222,
+       0.2603
+      ],
+      "early_minus_close_mae": [
+       -0.0131,
+       0.1133
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.1706,
+       0.5016
+      ]
+     },
+     "early_close": {
+      "n": 2463,
+      "line_mae_early": 21.9673,
+      "mktmed_mae_early": 21.9325,
+      "model_mae_early": 22.5656,
+      "over_rate_early": 0.4872,
+      "mean_pnv_over_early": 0.4999,
+      "line_mae_close": 21.9425,
+      "mktmed_mae_close": 21.9145,
+      "model_mae_close": 22.4233,
+      "over_rate_close": 0.4905,
+      "mean_pnv_over_close": 0.5003
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 165,
+      "over_rate": 0.4667,
+      "se": 0.0357,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        42,
+        0.4762,
+        0.0837
+       ],
+       "dog(-6,-1]": [
+        35,
+        0.4571,
+        0.0705
+       ],
+       "fav[1,6)": [
+        44,
+        0.5227,
+        0.0595
+       ],
+       "big_fav(>=6)": [
+        44,
+        0.4091,
+        0.0714
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 2454,
+      "over_rate": 0.4874,
+      "se": 0.0093,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        393,
+        0.4707,
+        0.0257
+       ],
+       "dog(-6,-1]": [
+        809,
+        0.4932,
+        0.0159
+       ],
+       "fav[1,6)": [
+        853,
+        0.4889,
+        0.0162
+       ],
+       "big_fav(>=6)": [
+        399,
+        0.4887,
+        0.0206
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 2939,
+      "over_rate": 0.4893,
+      "se": 0.0089,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        478,
+        0.4644,
+        0.0238
+       ],
+       "dog(-6,-1]": [
+        982,
+        0.4949,
+        0.0146
+       ],
+       "fav[1,6)": [
+        1012,
+        0.4941,
+        0.0145
+       ],
+       "big_fav(>=6)": [
+        467,
+        0.4925,
+        0.0197
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 166,
+      "0.0": -0.6916,
+      "0.1": -0.6909,
+      "0.2": -0.6909,
+      "0.3": -0.69,
+      "0.5": -0.6899,
+      "0.75": -0.6938,
+      "1.0": -0.7002,
+      "market_nv": -0.6915
+     },
+     "early": {
+      "n": 2466,
+      "0.0": -0.6923,
+      "0.1": -0.6914,
+      "0.2": -0.6913,
+      "0.3": -0.6917,
+      "0.5": -0.694,
+      "0.75": -0.6997,
+      "1.0": -0.7073,
+      "market_nv": -0.6927
+     }
+    },
+    "coverage": {
+     "open": 166,
+     "early": 2466,
+     "close": 2978
+    },
+    "always_under": {
+     "open": {
+      "n": 160,
+      "n_clv": 151,
+      "clv": -0.0634,
+      "clv_se": 0.0069,
+      "clv_t": -9.1277,
+      "clv_p": 1.0,
+      "roi": 0.0101,
+      "roi_se": 0.0659,
+      "hit": 0.5375,
+      "bets_per_week": 10.0,
+      "weeks": 16,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.8792,
+      "under_share": 1.0,
+      "direct_share": 0.375
+     },
+     "early": {
+      "n": 2437,
+      "n_clv": 2434,
+      "clv": -0.0553,
+      "clv_se": 0.0008,
+      "clv_t": -66.2723,
+      "clv_p": 1.0,
+      "roi": -0.0232,
+      "roi_se": 0.0177,
+      "hit": 0.5195,
+      "bets_per_week": 110.77,
+      "weeks": 22,
+      "mean_ev": -0.064,
+      "mean_dec": 1.8803,
+      "under_share": 1.0,
+      "direct_share": 0.6574
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 160,
+      "n_clv": 151,
+      "clv": -0.0442,
+      "clv_se": 0.0057,
+      "clv_t": -7.7643,
+      "clv_p": 1.0,
+      "roi": -0.089,
+      "roi_se": 0.0653,
+      "hit": 0.4875,
+      "bets_per_week": 10.0,
+      "weeks": 16,
+      "mean_ev": -0.063,
+      "mean_dec": 1.8731,
+      "under_share": 0.0,
+      "direct_share": 0.3375
+     },
+     "early": {
+      "n": 2437,
+      "n_clv": 2434,
+      "clv": -0.048,
+      "clv_se": 0.0008,
+      "clv_t": -57.7706,
+      "clv_p": 1.0,
+      "roi": -0.0667,
+      "roi_se": 0.0181,
+      "hit": 0.4965,
+      "bets_per_week": 110.77,
+      "weeks": 22,
+      "mean_ev": -0.064,
+      "mean_dec": 1.8794,
+      "under_share": 0.0,
+      "direct_share": 0.5876
+     }
+    }
+   },
+   "2024_25": {
+    "accuracy": {
+     "all_three": {
+      "n": 936,
+      "line_mae_open": 22.437,
+      "mktmed_mae_open": 22.4275,
+      "model_mae_open": 22.8519,
+      "over_rate_open": 0.4573,
+      "mean_pnv_over_open": 0.501,
+      "line_mae_early": 22.3878,
+      "mktmed_mae_early": 22.3907,
+      "model_mae_early": 22.648,
+      "over_rate_early": 0.4434,
+      "mean_pnv_over_early": 0.501,
+      "line_mae_close": 22.3654,
+      "mktmed_mae_close": 22.4073,
+      "model_mae_close": 22.624,
+      "over_rate_close": 0.4434,
+      "mean_pnv_over_close": 0.5019,
+      "open_minus_close_mae": [
+       0.0716,
+       0.0968
+      ],
+      "early_minus_close_mae": [
+       0.0224,
+       0.0616
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.4149,
+       0.2724
+      ]
+     },
+     "early_close": {
+      "n": 5492,
+      "line_mae_early": 20.8019,
+      "mktmed_mae_early": 20.7857,
+      "model_mae_early": 21.4264,
+      "over_rate_early": 0.4803,
+      "mean_pnv_over_early": 0.5006,
+      "line_mae_close": 20.7396,
+      "mktmed_mae_close": 20.7343,
+      "model_mae_close": 21.364,
+      "over_rate_close": 0.478,
+      "mean_pnv_over_close": 0.5014
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 934,
+      "over_rate": 0.4561,
+      "se": 0.017,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        125,
+        0.448,
+        0.0416
+       ],
+       "dog(-6,-1]": [
+        327,
+        0.474,
+        0.0308
+       ],
+       "fav[1,6)": [
+        346,
+        0.4566,
+        0.0256
+       ],
+       "big_fav(>=6)": [
+        136,
+        0.4191,
+        0.043
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 5477,
+      "over_rate": 0.4804,
+      "se": 0.0067,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        966,
+        0.4337,
+        0.016
+       ],
+       "dog(-6,-1]": [
+        1741,
+        0.5026,
+        0.0122
+       ],
+       "fav[1,6)": [
+        1743,
+        0.4693,
+        0.0111
+       ],
+       "big_fav(>=6)": [
+        1027,
+        0.5054,
+        0.0143
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 6418,
+      "over_rate": 0.4718,
+      "se": 0.0062,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        1163,
+        0.4256,
+        0.0155
+       ],
+       "dog(-6,-1]": [
+        2004,
+        0.4825,
+        0.0113
+       ],
+       "fav[1,6)": [
+        2035,
+        0.4727,
+        0.01
+       ],
+       "big_fav(>=6)": [
+        1216,
+        0.4967,
+        0.013
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 938,
+      "0.0": -0.6929,
+      "0.1": -0.6927,
+      "0.2": -0.6928,
+      "0.3": -0.6937,
+      "0.5": -0.6952,
+      "0.75": -0.7007,
+      "1.0": -0.7087,
+      "market_nv": -0.6936
+     },
+     "early": {
+      "n": 5510,
+      "0.0": -0.6926,
+      "0.1": -0.6925,
+      "0.2": -0.6931,
+      "0.3": -0.6941,
+      "0.5": -0.6973,
+      "0.75": -0.7031,
+      "1.0": -0.7114,
+      "market_nv": -0.6929
+     }
+    },
+    "coverage": {
+     "open": 938,
+     "early": 5510,
+     "close": 6473
+    },
+    "always_under": {
+     "open": {
+      "n": 934,
+      "n_clv": 934,
+      "clv": -0.065,
+      "clv_se": 0.0021,
+      "clv_t": -31.7073,
+      "clv_p": 1.0,
+      "roi": 0.0417,
+      "roi_se": 0.0317,
+      "hit": 0.5557,
+      "bets_per_week": 21.23,
+      "weeks": 44,
+      "mean_ev": -0.0615,
+      "mean_dec": 1.8753,
+      "under_share": 1.0,
+      "direct_share": 0.5118
+     },
+     "early": {
+      "n": 5506,
+      "n_clv": 5490,
+      "clv": -0.0564,
+      "clv_se": 0.0007,
+      "clv_t": -82.4224,
+      "clv_p": 1.0,
+      "roi": -0.0028,
+      "roi_se": 0.0126,
+      "hit": 0.5332,
+      "bets_per_week": 125.14,
+      "weeks": 44,
+      "mean_ev": -0.0624,
+      "mean_dec": 1.8702,
+      "under_share": 1.0,
+      "direct_share": 0.6211
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 934,
+      "n_clv": 934,
+      "clv": -0.0365,
+      "clv_se": 0.0018,
+      "clv_t": -19.9417,
+      "clv_p": 1.0,
+      "roi": -0.1281,
+      "roi_se": 0.0316,
+      "hit": 0.4668,
+      "bets_per_week": 21.23,
+      "weeks": 44,
+      "mean_ev": -0.062,
+      "mean_dec": 1.8675,
+      "under_share": 0.0,
+      "direct_share": 0.4593
+     },
+     "early": {
+      "n": 5506,
+      "n_clv": 5490,
+      "clv": -0.0471,
+      "clv_se": 0.0007,
+      "clv_t": -65.8878,
+      "clv_p": 1.0,
+      "roi": -0.0707,
+      "roi_se": 0.0126,
+      "hit": 0.4984,
+      "bets_per_week": 125.14,
+      "weeks": 44,
+      "mean_ev": -0.0629,
+      "mean_dec": 1.865,
+      "under_share": 0.0,
+      "direct_share": 0.5719
+     }
+    }
+   },
+   "2024": {
+    "accuracy": {
+     "all_three": {
+      "n": 429,
+      "line_mae_open": 22.6259,
+      "mktmed_mae_open": 22.6534,
+      "model_mae_open": 23.2118,
+      "over_rate_open": 0.4359,
+      "mean_pnv_over_open": 0.501,
+      "line_mae_early": 22.5769,
+      "mktmed_mae_early": 22.604,
+      "model_mae_early": 23.066,
+      "over_rate_early": 0.4242,
+      "mean_pnv_over_early": 0.5011,
+      "line_mae_close": 22.4837,
+      "mktmed_mae_close": 22.5736,
+      "model_mae_close": 22.9605,
+      "over_rate_close": 0.4266,
+      "mean_pnv_over_close": 0.503,
+      "open_minus_close_mae": [
+       0.1422,
+       0.1276
+      ],
+      "early_minus_close_mae": [
+       0.0932,
+       0.0709
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.5859,
+       0.3959
+      ]
+     },
+     "early_close": {
+      "n": 2609,
+      "line_mae_early": 21.3153,
+      "mktmed_mae_early": 21.2945,
+      "model_mae_early": 22.1055,
+      "over_rate_early": 0.4872,
+      "mean_pnv_over_early": 0.501,
+      "line_mae_close": 21.2206,
+      "mktmed_mae_close": 21.2148,
+      "model_mae_close": 22.0185,
+      "over_rate_close": 0.4829,
+      "mean_pnv_over_close": 0.5018
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 427,
+      "over_rate": 0.4379,
+      "se": 0.0217,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        58,
+        0.4828,
+        0.0544
+       ],
+       "dog(-6,-1]": [
+        160,
+        0.4062,
+        0.035
+       ],
+       "fav[1,6)": [
+        163,
+        0.4724,
+        0.0365
+       ],
+       "big_fav(>=6)": [
+        46,
+        0.3696,
+        0.0714
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 2609,
+      "over_rate": 0.4868,
+      "se": 0.0094,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        446,
+        0.4731,
+        0.0229
+       ],
+       "dog(-6,-1]": [
+        837,
+        0.497,
+        0.0163
+       ],
+       "fav[1,6)": [
+        828,
+        0.4722,
+        0.0158
+       ],
+       "big_fav(>=6)": [
+        498,
+        0.506,
+        0.0211
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 3191,
+      "over_rate": 0.4767,
+      "se": 0.0086,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        582,
+        0.4605,
+        0.0204
+       ],
+       "dog(-6,-1]": [
+        1001,
+        0.4745,
+        0.0156
+       ],
+       "fav[1,6)": [
+        1007,
+        0.4727,
+        0.0139
+       ],
+       "big_fav(>=6)": [
+        601,
+        0.5025,
+        0.0191
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 429,
+      "0.0": -0.6935,
+      "0.1": -0.6938,
+      "0.2": -0.6938,
+      "0.3": -0.6952,
+      "0.5": -0.6968,
+      "0.75": -0.7039,
+      "1.0": -0.7131,
+      "market_nv": -0.6947
+     },
+     "early": {
+      "n": 2613,
+      "0.0": -0.6926,
+      "0.1": -0.6926,
+      "0.2": -0.6933,
+      "0.3": -0.6947,
+      "0.5": -0.6984,
+      "0.75": -0.705,
+      "1.0": -0.7141,
+      "market_nv": -0.6928
+     }
+    },
+    "coverage": {
+     "open": 429,
+     "early": 2613,
+     "close": 3202
+    },
+    "always_under": {
+     "open": {
+      "n": 425,
+      "n_clv": 425,
+      "clv": -0.0696,
+      "clv_se": 0.0027,
+      "clv_t": -25.7487,
+      "clv_p": 1.0,
+      "roi": 0.0681,
+      "roi_se": 0.0413,
+      "hit": 0.5694,
+      "bets_per_week": 19.32,
+      "weeks": 22,
+      "mean_ev": -0.0625,
+      "mean_dec": 1.8765,
+      "under_share": 1.0,
+      "direct_share": 0.5012
+     },
+     "early": {
+      "n": 2610,
+      "n_clv": 2608,
+      "clv": -0.0585,
+      "clv_se": 0.001,
+      "clv_t": -61.3852,
+      "clv_p": 1.0,
+      "roi": -0.0228,
+      "roi_se": 0.0176,
+      "hit": 0.5215,
+      "bets_per_week": 118.64,
+      "weeks": 22,
+      "mean_ev": -0.0632,
+      "mean_dec": 1.8744,
+      "under_share": 1.0,
+      "direct_share": 0.6115
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 425,
+      "n_clv": 425,
+      "clv": -0.0339,
+      "clv_se": 0.0026,
+      "clv_t": -12.833,
+      "clv_p": 1.0,
+      "roi": -0.1632,
+      "roi_se": 0.0399,
+      "hit": 0.4471,
+      "bets_per_week": 19.32,
+      "weeks": 22,
+      "mean_ev": -0.0622,
+      "mean_dec": 1.8729,
+      "under_share": 0.0,
+      "direct_share": 0.4447
+     },
+     "early": {
+      "n": 2610,
+      "n_clv": 2608,
+      "clv": -0.0456,
+      "clv_se": 0.0009,
+      "clv_t": -48.4956,
+      "clv_p": 1.0,
+      "roi": -0.0659,
+      "roi_se": 0.0177,
+      "hit": 0.4989,
+      "bets_per_week": 118.64,
+      "weeks": 22,
+      "mean_ev": -0.0627,
+      "mean_dec": 1.8733,
+      "under_share": 0.0,
+      "direct_share": 0.5437
+     }
+    }
+   },
+   "2025": {
+    "accuracy": {
+     "all_three": {
+      "n": 507,
+      "line_mae_open": 22.2771,
+      "mktmed_mae_open": 22.2364,
+      "model_mae_open": 22.5474,
+      "over_rate_open": 0.4753,
+      "mean_pnv_over_open": 0.501,
+      "line_mae_early": 22.2278,
+      "mktmed_mae_early": 22.2102,
+      "model_mae_early": 22.2943,
+      "over_rate_early": 0.4596,
+      "mean_pnv_over_early": 0.5008,
+      "line_mae_close": 22.2653,
+      "mktmed_mae_close": 22.2666,
+      "model_mae_close": 22.3393,
+      "over_rate_close": 0.4576,
+      "mean_pnv_over_close": 0.501,
+      "open_minus_close_mae": [
+       0.0118,
+       0.142
+      ],
+      "early_minus_close_mae": [
+       -0.0375,
+       0.0966
+      ],
+      "open_line_minus_open_model_mae": [
+       -0.2703,
+       0.3734
+      ]
+     },
+     "early_close": {
+      "n": 2883,
+      "line_mae_early": 20.3373,
+      "mktmed_mae_early": 20.3253,
+      "model_mae_early": 20.8118,
+      "over_rate_early": 0.4742,
+      "mean_pnv_over_early": 0.5002,
+      "line_mae_close": 20.3044,
+      "mktmed_mae_close": 20.2993,
+      "model_mae_close": 20.7718,
+      "over_rate_close": 0.4735,
+      "mean_pnv_over_close": 0.5011
+     }
+    },
+    "biases": {
+     "open": {
+      "n_50pct_lines": 507,
+      "over_rate": 0.4714,
+      "se": 0.0253,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        67,
+        0.4179,
+        0.0608
+       ],
+       "dog(-6,-1]": [
+        167,
+        0.5389,
+        0.0472
+       ],
+       "fav[1,6)": [
+        183,
+        0.4426,
+        0.0357
+       ],
+       "big_fav(>=6)": [
+        90,
+        0.4444,
+        0.0521
+       ]
+      }
+     },
+     "early": {
+      "n_50pct_lines": 2868,
+      "over_rate": 0.4745,
+      "se": 0.0096,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        520,
+        0.4,
+        0.0219
+       ],
+       "dog(-6,-1]": [
+        904,
+        0.5077,
+        0.0179
+       ],
+       "fav[1,6)": [
+        915,
+        0.4667,
+        0.0156
+       ],
+       "big_fav(>=6)": [
+        529,
+        0.5047,
+        0.0195
+       ]
+      }
+     },
+     "close": {
+      "n_50pct_lines": 3227,
+      "over_rate": 0.467,
+      "se": 0.0091,
+      "by_team_spread": {
+       "big_dog(<=-6)": [
+        581,
+        0.3907,
+        0.0229
+       ],
+       "dog(-6,-1]": [
+        1003,
+        0.4905,
+        0.0163
+       ],
+       "fav[1,6)": [
+        1028,
+        0.4728,
+        0.0144
+       ],
+       "big_fav(>=6)": [
+        615,
+        0.4911,
+        0.0175
+       ]
+      }
+     }
+    },
+    "blend_ll": {
+     "open": {
+      "n": 509,
+      "0.0": -0.6924,
+      "0.1": -0.6917,
+      "0.2": -0.692,
+      "0.3": -0.6924,
+      "0.5": -0.6938,
+      "0.75": -0.698,
+      "1.0": -0.705,
+      "market_nv": -0.6926
+     },
+     "early": {
+      "n": 2897,
+      "0.0": -0.6926,
+      "0.1": -0.6924,
+      "0.2": -0.6928,
+      "0.3": -0.6935,
+      "0.5": -0.6963,
+      "0.75": -0.7014,
+      "1.0": -0.709,
+      "market_nv": -0.6929
+     }
+    },
+    "coverage": {
+     "open": 509,
+     "early": 2897,
+     "close": 3271
+    },
+    "always_under": {
+     "open": {
+      "n": 509,
+      "n_clv": 509,
+      "clv": -0.0612,
+      "clv_se": 0.0029,
+      "clv_t": -21.2753,
+      "clv_p": 1.0,
+      "roi": 0.0196,
+      "roi_se": 0.0466,
+      "hit": 0.5442,
+      "bets_per_week": 23.14,
+      "weeks": 22,
+      "mean_ev": -0.0607,
+      "mean_dec": 1.8744,
+      "under_share": 1.0,
+      "direct_share": 0.5206
+     },
+     "early": {
+      "n": 2896,
+      "n_clv": 2882,
+      "clv": -0.0545,
+      "clv_se": 0.001,
+      "clv_t": -56.5848,
+      "clv_p": 1.0,
+      "roi": 0.0151,
+      "roi_se": 0.0179,
+      "hit": 0.5439,
+      "bets_per_week": 131.64,
+      "weeks": 22,
+      "mean_ev": -0.0617,
+      "mean_dec": 1.8665,
+      "under_share": 1.0,
+      "direct_share": 0.6298
+     }
+    },
+    "always_over": {
+     "open": {
+      "n": 509,
+      "n_clv": 509,
+      "clv": -0.0386,
+      "clv_se": 0.0025,
+      "clv_t": -15.7385,
+      "clv_p": 1.0,
+      "roi": -0.0988,
+      "roi_se": 0.0472,
+      "hit": 0.4833,
+      "bets_per_week": 23.14,
+      "weeks": 22,
+      "mean_ev": -0.0618,
+      "mean_dec": 1.863,
+      "under_share": 0.0,
+      "direct_share": 0.4715
+     },
+     "early": {
+      "n": 2896,
+      "n_clv": 2882,
+      "clv": -0.0486,
+      "clv_se": 0.0011,
+      "clv_t": -46.0181,
+      "clv_p": 1.0,
+      "roi": -0.0749,
+      "roi_se": 0.0179,
+      "hit": 0.4979,
+      "bets_per_week": 131.64,
+      "weeks": 22,
+      "mean_ev": -0.063,
+      "mean_dec": 1.8575,
+      "under_share": 0.0,
+      "direct_share": 0.5974
+     }
+    }
+   },
+   "moves": {
+    "n": {
+     "2023": 153,
+     "2024": 429,
+     "2025": 507
+    },
+    "2023": {
+     "mean_abs_move_open_close": 2.3984,
+     "share_line_moved": 0.8366,
+     "mean_abs_open_early": 1.9119,
+     "mean_abs_early_close": 1.1212,
+     "corr_move_with_open_residual": 0.144,
+     "corr_move_gap_open": 0.221,
+     "corr_move_fri_info": 0.0657
+    },
+    "2024": {
+     "mean_abs_move_open_close": 2.3867,
+     "share_line_moved": 0.8065,
+     "mean_abs_open_early": 1.6204,
+     "mean_abs_early_close": 1.3581,
+     "corr_move_with_open_residual": 0.1508,
+     "corr_move_gap_open": 0.1869,
+     "corr_move_fri_info": 0.1108
+    },
+    "2025": {
+     "mean_abs_move_open_close": 2.2488,
+     "share_line_moved": 0.7811,
+     "mean_abs_open_early": 1.5507,
+     "mean_abs_early_close": 1.2007,
+     "corr_move_with_open_residual": 0.0832,
+     "corr_move_gap_open": 0.1023,
+     "corr_move_fri_info": -0.032
+    },
+    "regression": {
+     "gap_open": {
+      "coef": [
+       0.0948
+      ],
+      "r2_fit": 0.0488,
+      "n_fit": 153,
+      "r2_test": -0.0207,
+      "dir_acc_test_when_|pred|>sd/4": 0.6412,
+      "n_test": 936
+     },
+     "gap_open+fri": {
+      "coef": [
+       0.1044,
+       0.1023
+      ],
+      "r2_fit": 0.0612,
+      "n_fit": 153,
+      "r2_test": -0.0148,
+      "dir_acc_test_when_|pred|>sd/4": 0.6604,
+      "n_test": 936
+     },
+     "gap_open+fri+late": {
+      "coef": [
+       0.1211,
+       0.1441,
+       0.1076
+      ],
+      "r2_fit": 0.0778,
+      "n_fit": 153,
+      "r2_test": 0.0288,
+      "dir_acc_test_when_|pred|>sd/4": 0.7032,
+      "n_test": 936
+     }
+    }
+   },
+   "moves_fit2024_test2025": {
+    "gap_open": {
+     "coef": [
+      0.0733
+     ],
+     "r2_fit": 0.0349,
+     "n_fit": 429,
+     "r2_test": -0.0251,
+     "dir_acc_test_when_|pred|>sd/4": 0.6043,
+     "n_test": 507
+    },
+    "gap_open+fri": {
+     "coef": [
+      0.0981,
+      0.1573
+     ],
+     "r2_fit": 0.0681,
+     "n_fit": 429,
+     "r2_test": -0.0527,
+     "dir_acc_test_when_|pred|>sd/4": 0.6132,
+     "n_test": 507
+    },
+    "gap_open+fri+late": {
+     "coef": [
+      0.1112,
+      0.2095,
+      0.1242
+     ],
+     "r2_fit": 0.0923,
+     "n_fit": 429,
+     "r2_test": -0.0155,
+     "dir_acc_test_when_|pred|>sd/4": 0.6211,
+     "n_test": 507
+    }
+   }
+  }
+ },
+ "rules": {
+  "td_shop_early": {
+   "dev_2023": {
+    "n": 411,
+    "n_clv": 410,
+    "clv": 0.0406,
+    "clv_se": 0.0107,
+    "clv_t": 3.7956,
+    "clv_p": 0.0001,
+    "roi": -0.0274,
+    "roi_se": 0.1549,
+    "hit": 0.1533,
+    "bets_per_week": 19.57,
+    "weeks": 21,
+    "mean_ev": 0.2125,
+    "mean_dec": 11.3992,
+    "under_share": 0.0,
+    "direct_share": 0.0
+   },
+   "holdout_2024_25": {
+    "n": 351,
+    "n_clv": 351,
+    "clv": -0.0628,
+    "clv_se": 0.016,
+    "clv_t": -3.9144,
+    "clv_p": 1.0,
+    "roi": 0.0273,
+    "roi_se": 0.2267,
+    "hit": 0.0912,
+    "bets_per_week": 9.24,
+    "weeks": 38,
+    "mean_ev": 0.2452,
+    "mean_dec": 17.4338,
+    "under_share": 0.0,
+    "direct_share": 0.0
+   },
+   "2024": {
+    "n": 272,
+    "n_clv": 272,
+    "clv": -0.0212,
+    "clv_se": 0.0171,
+    "clv_t": -1.2425,
+    "clv_p": 0.893,
+    "roi": -0.037,
+    "roi_se": 0.2449,
+    "hit": 0.0846,
+    "bets_per_week": 13.6,
+    "weeks": 20,
+    "mean_ev": 0.2475,
+    "mean_dec": 16.868,
+    "under_share": 0.0,
+    "direct_share": 0.0
+   },
+   "2025": {
+    "n": 79,
+    "n_clv": 79,
+    "clv": -0.206,
+    "clv_se": 0.032,
+    "clv_t": -6.4362,
+    "clv_p": 1.0,
+    "roi": 0.2487,
+    "roi_se": 0.5486,
+    "hit": 0.1139,
+    "bets_per_week": 4.39,
+    "weeks": 18,
+    "mean_ev": 0.2372,
+    "mean_dec": 19.3819,
+    "under_share": 0.0,
+    "direct_share": 0.0
+   },
+   "pass": false
+  },
+  "rec_shop_early": {
+   "dev_2023": {
+    "n": 87,
+    "n_clv": 87,
+    "clv": 0.013,
+    "clv_se": 0.0056,
+    "clv_t": 2.3261,
+    "clv_p": 0.01,
+    "roi": -0.0282,
+    "roi_se": 0.1281,
+    "hit": 0.4483,
+    "bets_per_week": 4.14,
+    "weeks": 21,
+    "mean_ev": 0.0365,
+    "mean_dec": 2.1618,
+    "under_share": 0.4598,
+    "direct_share": 0.9885
+   },
+   "holdout_2024_25": {
+    "n": 278,
+    "n_clv": 278,
+    "clv": 0.0274,
+    "clv_se": 0.004,
+    "clv_t": 6.9257,
+    "clv_p": 0.0,
+    "roi": -0.0599,
+    "roi_se": 0.0646,
+    "hit": 0.4424,
+    "bets_per_week": 6.47,
+    "weeks": 43,
+    "mean_ev": 0.035,
+    "mean_dec": 2.13,
+    "under_share": 0.4245,
+    "direct_share": 0.9784
+   },
+   "2024": {
+    "n": 124,
+    "n_clv": 124,
+    "clv": 0.0159,
+    "clv_se": 0.0057,
+    "clv_t": 2.7879,
+    "clv_p": 0.0027,
+    "roi": -0.0248,
+    "roi_se": 0.1005,
+    "hit": 0.4597,
+    "bets_per_week": 5.64,
+    "weeks": 22,
+    "mean_ev": 0.0341,
+    "mean_dec": 2.1093,
+    "under_share": 0.4113,
+    "direct_share": 0.9839
+   },
+   "2025": {
+    "n": 154,
+    "n_clv": 154,
+    "clv": 0.0367,
+    "clv_se": 0.0054,
+    "clv_t": 6.8555,
+    "clv_p": 0.0,
+    "roi": -0.0882,
+    "roi_se": 0.0838,
+    "hit": 0.4286,
+    "bets_per_week": 7.33,
+    "weeks": 21,
+    "mean_ev": 0.0358,
+    "mean_dec": 2.1467,
+    "under_share": 0.4351,
+    "direct_share": 0.974
+   },
+   "pass": true
+  },
+  "open_model_thesis": {
+   "dev_2023": {
+    "n": 34,
+    "n_clv": 33,
+    "clv": -0.0031,
+    "clv_se": 0.0107,
+    "clv_t": -0.2911,
+    "clv_p": 0.6145,
+    "roi": 0.0565,
+    "roi_se": 0.1498,
+    "hit": 0.5294,
+    "bets_per_week": 4.25,
+    "weeks": 8,
+    "mean_ev": 0.1981,
+    "mean_dec": 2.026,
+    "under_share": 0.7647,
+    "direct_share": 0.8824
+   },
+   "holdout_2024_25": {
+    "n": 293,
+    "n_clv": 293,
+    "clv": -0.0131,
+    "clv_se": 0.0054,
+    "clv_t": -2.4177,
+    "clv_p": 0.9922,
+    "roi": 0.0869,
+    "roi_se": 0.062,
+    "hit": 0.5392,
+    "bets_per_week": 7.33,
+    "weeks": 40,
+    "mean_ev": 0.2049,
+    "mean_dec": 2.0224,
+    "under_share": 0.7201,
+    "direct_share": 0.8532
+   },
+   "2024": {
+    "n": 109,
+    "n_clv": 109,
+    "clv": -0.0038,
+    "clv_se": 0.0104,
+    "clv_t": -0.371,
+    "clv_p": 0.6447,
+    "roi": 0.0229,
+    "roi_se": 0.0962,
+    "hit": 0.5138,
+    "bets_per_week": 5.19,
+    "weeks": 21,
+    "mean_ev": 0.2015,
+    "mean_dec": 1.996,
+    "under_share": 0.7431,
+    "direct_share": 0.8807
+   },
+   "2025": {
+    "n": 184,
+    "n_clv": 184,
+    "clv": -0.0186,
+    "clv_se": 0.0061,
+    "clv_t": -3.0692,
+    "clv_p": 0.9989,
+    "roi": 0.1249,
+    "roi_se": 0.0795,
+    "hit": 0.5543,
+    "bets_per_week": 9.68,
+    "weeks": 19,
+    "mean_ev": 0.2069,
+    "mean_dec": 2.038,
+    "under_share": 0.7065,
+    "direct_share": 0.837
+   },
+   "pass": false
+  }
+ },
+ "match": {
+  "2023_pass_att": {
+   "played": 601,
+   "did_not_play": 3,
+   "no_game": 2
+  },
+  "2023_pass_yds": {
+   "played": 618,
+   "did_not_play": 4,
+   "no_game": 2
+  },
+  "2023_rec_yds": {
+   "played": 3727,
+   "did_not_play": 39,
+   "no_game": 13,
+   "unmatched": 2
+  },
+  "2023_receptions": {
+   "played": 3341,
+   "did_not_play": 25,
+   "no_game": 12,
+   "unmatched": 1
+  },
+  "2023_rush_yds": {
+   "played": 1652,
+   "did_not_play": 14,
+   "no_game": 5,
+   "unmatched": 2
+  },
+  "2023_td": {
+   "unmatched": 8344,
+   "played": 7638,
+   "did_not_play": 1745,
+   "no_game": 64
+  },
+  "2024_pass_att": {
+   "played": 556,
+   "did_not_play": 5
+  },
+  "2024_pass_yds": {
+   "played": 562,
+   "did_not_play": 7
+  },
+  "2024_rec_yds": {
+   "played": 3459,
+   "did_not_play": 43
+  },
+  "2024_receptions": {
+   "played": 3128,
+   "did_not_play": 28
+  },
+  "2024_rush_yds": {
+   "played": 1600,
+   "did_not_play": 20
+  },
+  "2024_td": {
+   "played": 6744,
+   "unmatched": 3318,
+   "did_not_play": 1484
+  },
+  "2025_pass_att": {
+   "played": 574,
+   "did_not_play": 5
+  },
+  "2025_pass_yds": {
+   "played": 575,
+   "did_not_play": 7
+  },
+  "2025_rec_yds": {
+   "played": 3725,
+   "did_not_play": 54,
+   "unmatched": 7
+  },
+  "2025_receptions": {
+   "played": 3471,
+   "did_not_play": 47,
+   "unmatched": 7
+  },
+  "2025_rush_yds": {
+   "played": 1750,
+   "did_not_play": 18
+  },
+  "2025_td": {
+   "played": 6658,
+   "unmatched": 1519,
+   "did_not_play": 1426
+  }
+ },
+ "events_by_snap": {
+  "2023_pass_att": {
+   "close": 272,
+   "early": 260,
+   "open": 15
+  },
+  "2023_pass_yds": {
+   "close": 273,
+   "early": 274,
+   "open": 29
+  },
+  "2023_rec_yds": {
+   "close": 273,
+   "early": 273,
+   "open": 27
+  },
+  "2023_receptions": {
+   "close": 274,
+   "early": 267,
+   "open": 18
+  },
+  "2023_rush_yds": {
+   "close": 274,
+   "early": 273,
+   "open": 25
+  },
+  "2023_td": {
+   "close": 276,
+   "early": 275,
+   "open": 35
+  },
+  "2024_pass_att": {
+   "close": 281,
+   "early": 275,
+   "open": 43
+  },
+  "2024_pass_yds": {
+   "close": 283,
+   "early": 283,
+   "open": 57
+  },
+  "2024_rec_yds": {
+   "close": 285,
+   "early": 284,
+   "open": 56
+  },
+  "2024_receptions": {
+   "close": 285,
+   "early": 282,
+   "open": 49
+  },
+  "2024_rush_yds": {
+   "close": 284,
+   "early": 283,
+   "open": 56
+  },
+  "2024_td": {
+   "close": 285,
+   "early": 284,
+   "open": 80
+  },
+  "2025_pass_att": {
+   "close": 284,
+   "early": 283,
+   "open": 93
+  },
+  "2025_pass_yds": {
+   "close": 285,
+   "early": 283,
+   "open": 98
+  },
+  "2025_rec_yds": {
+   "close": 285,
+   "early": 281,
+   "open": 64
+  },
+  "2025_receptions": {
+   "close": 284,
+   "early": 281,
+   "open": 63
+  },
+  "2025_rush_yds": {
+   "close": 283,
+   "early": 282,
+   "open": 65
+  },
+  "2025_td": {
+   "close": 285,
+   "early": 280,
+   "open": 186
+  }
+ },
+ "quotes_by_snap_book": {
+  "2023_close": {
+   "betonlineag": 8206,
+   "draftkings": 8163,
+   "williamhill_us": 7878,
+   "fanduel": 7112,
+   "bovada": 6046,
+   "betmgm": 5675,
+   "pointsbetus": 4522,
+   "barstool": 3709,
+   "unibet_us": 3394,
+   "betrivers": 3394
+  },
+  "2023_early": {
+   "williamhill_us": 6564,
+   "draftkings": 6318,
+   "betonlineag": 6309,
+   "bovada": 5564,
+   "betmgm": 4742,
+   "betrivers": 4701,
+   "unibet_us": 4700,
+   "fanduel": 4490,
+   "pointsbetus": 3115,
+   "barstool": 3058,
+   "wynnbet": 58
+  },
+  "2023_open": {
+   "draftkings": 334,
+   "williamhill_us": 324,
+   "fanduel": 312,
+   "bovada": 246,
+   "betonlineag": 205,
+   "betmgm": 202,
+   "pointsbetus": 151,
+   "unibet_us": 133,
+   "betrivers": 133,
+   "barstool": 106,
+   "wynnbet": 54
+  },
+  "2024_close": {
+   "betonlineag": 8755,
+   "betmgm": 8725,
+   "draftkings": 8585,
+   "fanduel": 8159,
+   "williamhill_us": 7831,
+   "bovada": 6957,
+   "betrivers": 4736
+  },
+  "2024_early": {
+   "betmgm": 7145,
+   "betonlineag": 6961,
+   "draftkings": 6725,
+   "williamhill_us": 6465,
+   "fanduel": 5696,
+   "bovada": 5648,
+   "betrivers": 5391
+  },
+  "2024_open": {
+   "draftkings": 1086,
+   "fanduel": 1009,
+   "betmgm": 758,
+   "betrivers": 712,
+   "williamhill_us": 566,
+   "bovada": 541,
+   "betonlineag": 532
+  },
+  "2025_close": {
+   "betmgm": 8975,
+   "draftkings": 8564,
+   "betonlineag": 8419,
+   "fanduel": 8334,
+   "williamhill_us": 7845,
+   "betrivers": 7128,
+   "bovada": 6946,
+   "fanatics": 6146
+  },
+  "2025_early": {
+   "betmgm": 8355,
+   "draftkings": 7061,
+   "fanduel": 6963,
+   "betonlineag": 6853,
+   "williamhill_us": 6535,
+   "betrivers": 5823,
+   "fanatics": 5115,
+   "bovada": 4195
+  },
+  "2025_open": {
+   "fanduel": 1526,
+   "draftkings": 1442,
+   "betmgm": 1153,
+   "williamhill_us": 1109,
+   "betonlineag": 1036,
+   "betrivers": 1018,
+   "fanatics": 758,
+   "bovada": 22
+  }
+ },
+ "td": {
+  "calib_2023": {
+   "open": [
+    -0.6910383056466928,
+    0.7027653093655981
+   ],
+   "early": [
+    -0.24363789076711526,
+    1.1523736402276044
+   ],
+   "close": [
+    -0.17182784493859188,
+    1.180327047663457
+   ]
+  },
+  "2023": {
+   "open": {
+    "n": 701,
+    "td_rate": 0.1926,
+    "mkt_implied_mean": 0.2589,
+    "mkt_fair_mean": 0.1926,
+    "model_mean": 0.1786,
+    "auc_market": 0.7149,
+    "auc_model": 0.7671,
+    "ll_market_calib": 0.4498,
+    "ll_model": 0.4191,
+    "ll_blend_half": 0.4268
+   },
+   "early": {
+    "n": 6373,
+    "td_rate": 0.1666,
+    "mkt_implied_mean": 0.2205,
+    "mkt_fair_mean": 0.1666,
+    "model_mean": 0.1662,
+    "auc_market": 0.7616,
+    "auc_model": 0.7515,
+    "ll_market_calib": 0.3878,
+    "ll_model": 0.3927,
+    "ll_blend_half": 0.3879
+   },
+   "close": {
+    "n": 6516,
+    "td_rate": 0.1641,
+    "mkt_implied_mean": 0.2119,
+    "mkt_fair_mean": 0.1641,
+    "model_mean": 0.1636,
+    "auc_market": 0.7662,
+    "auc_model": 0.7539,
+    "ll_market_calib": 0.3817,
+    "ll_model": 0.3881,
+    "ll_blend_half": 0.3825
+   },
+   "close_buckets": {
+    "(0.0, 0.1]": {
+     "n": 1832,
+     "implied": 0.0693,
+     "rate": 0.0437
+    },
+    "(0.1, 0.2]": {
+     "n": 1822,
+     "implied": 0.1479,
+     "rate": 0.0889
+    },
+    "(0.2, 0.3]": {
+     "n": 1267,
+     "implied": 0.2477,
+     "rate": 0.18
+    },
+    "(0.3, 0.4]": {
+     "n": 809,
+     "implied": 0.3505,
+     "rate": 0.3103
+    },
+    "(0.4, 0.5]": {
+     "n": 493,
+     "implied": 0.4489,
+     "rate": 0.3935
+    },
+    "(0.5, 0.7]": {
+     "n": 283,
+     "implied": 0.5594,
+     "rate": 0.5194
+    },
+    "(0.7, 1.0]": {
+     "n": 10,
+     "implied": 0.7466,
+     "rate": 0.7
+    }
+   },
+   "by_position_close": {
+    "QB": {
+     "n": 555,
+     "implied": 0.2011,
+     "rate": 0.1604,
+     "model": 0.1499
+    },
+    "RB": {
+     "n": 1671,
+     "implied": 0.2696,
+     "rate": 0.2101,
+     "model": 0.2092
+    },
+    "TE": {
+     "n": 1593,
+     "implied": 0.1525,
+     "rate": 0.1048,
+     "model": 0.1141
+    },
+    "WR": {
+     "n": 2697,
+     "implied": 0.2135,
+     "rate": 0.1713,
+     "model": 0.1674
+    }
+   }
+  },
+  "2024_25": {
+   "open": {
+    "n": 3946,
+    "td_rate": 0.201,
+    "mkt_implied_mean": 0.2474,
+    "mkt_fair_mean": 0.1845,
+    "model_mean": 0.2035,
+    "auc_market": 0.7577,
+    "auc_model": 0.7537,
+    "ll_market_calib": 0.4393,
+    "ll_model": 0.434,
+    "ll_blend_half": 0.4336
+   },
+   "early": {
+    "n": 12707,
+    "td_rate": 0.1802,
+    "mkt_implied_mean": 0.2191,
+    "mkt_fair_mean": 0.1667,
+    "model_mean": 0.1774,
+    "auc_market": 0.7617,
+    "auc_model": 0.7535,
+    "ll_market_calib": 0.4067,
+    "ll_model": 0.4097,
+    "ll_blend_half": 0.4054
+   },
+   "close": {
+    "n": 13168,
+    "td_rate": 0.1766,
+    "mkt_implied_mean": 0.2089,
+    "mkt_fair_mean": 0.163,
+    "model_mean": 0.1733,
+    "auc_market": 0.7655,
+    "auc_model": 0.7555,
+    "ll_market_calib": 0.4004,
+    "ll_model": 0.4044,
+    "ll_blend_half": 0.3996
+   },
+   "close_buckets": {
+    "(0.0, 0.1]": {
+     "n": 4168,
+     "implied": 0.0644,
+     "rate": 0.0437
+    },
+    "(0.1, 0.2]": {
+     "n": 3486,
+     "implied": 0.1489,
+     "rate": 0.1139
+    },
+    "(0.2, 0.3]": {
+     "n": 2257,
+     "implied": 0.2479,
+     "rate": 0.214
+    },
+    "(0.3, 0.4]": {
+     "n": 1611,
+     "implied": 0.3488,
+     "rate": 0.3222
+    },
+    "(0.4, 0.5]": {
+     "n": 884,
+     "implied": 0.4468,
+     "rate": 0.4027
+    },
+    "(0.5, 0.7]": {
+     "n": 723,
+     "implied": 0.5783,
+     "rate": 0.4965
+    },
+    "(0.7, 1.0]": {
+     "n": 39,
+     "implied": 0.73,
+     "rate": 0.7692
+    }
+   },
+   "by_position_close": {
+    "QB": {
+     "n": 1135,
+     "implied": 0.1951,
+     "rate": 0.1612,
+     "model": 0.1602
+    },
+    "RB": {
+     "n": 3296,
+     "implied": 0.2792,
+     "rate": 0.2397,
+     "model": 0.2311
+    },
+    "TE": {
+     "n": 3367,
+     "implied": 0.1486,
+     "rate": 0.1167,
+     "model": 0.1169
+    },
+    "WR": {
+     "n": 5370,
+     "implied": 0.2065,
+     "rate": 0.1788,
+     "model": 0.1759
+    }
+   }
+  },
+  "info_test": {
+   "open": {
+    "n_fit": 701,
+    "coef_mkt_plus_model": [
+     0.3361,
+     0.0583,
+     1.1399
+    ],
+    "n_test": 3946,
+    "ll_gain_model": [
+     0.0035,
+     0.0032
+    ]
+   },
+   "early": {
+    "n_fit": 6373,
+    "coef_mkt_plus_model": [
+     -0.0858,
+     0.8556,
+     0.3198
+    ],
+    "n_test": 12707,
+    "ll_gain_model": [
+     0.0013,
+     0.0004
+    ]
+   },
+   "close": {
+    "n_fit": 6516,
+    "coef_mkt_plus_model": [
+     -0.0793,
+     0.9771,
+     0.2126
+    ],
+    "n_test": 13168,
+    "ll_gain_model": [
+     0.0007,
+     0.0002
+    ]
+   }
+  }
+ }
+}

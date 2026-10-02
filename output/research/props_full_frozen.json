@@ -1,0 +1,19 @@
+{
+ "frozen_on": "2026-10-02",
+ "developed_on": "2023 season only (scripts/research/props_full.py dev); 2024-25 run once with these rules",
+ "pass_bar": "holdout 2024-25 mean CLV > 0 with one-sided game-clustered p < 0.05/3 = 0.0167, AND mean CLV > 0 in 2024 and in 2025 separately",
+ "k": 3,
+ "rules": [
+  {"name": "td_shop_early", "market": "td", "snap": "early", "kind": "shop", "thr": 0.10, "ev_max": 0.6,
+   "desc": "Anytime-TD Yes at the Friday snapshot, allowed books only. p = 2023 early calibration map applied to the leave-one-out median implied prob of >=3 OTHER us books; bet the best-EV allowed book per player if 0.10 <= EV < 0.60 (EV >= 0.6 treated as stale/erroneous quotes). CLV = 2023 close calibration map on the close median implied prob.",
+   "dev_2023": {"n": 411, "clv": 0.0406, "clv_t": 3.80, "roi": -0.027, "roi_se": 0.155, "bets_per_week": 19.6}},
+  {"name": "rec_shop_early", "market": "receptions", "snap": "early", "kind": "shop", "thr": 0.02, "side": "both", "ev_max": 0.5,
+   "desc": "Player receptions O/U at the Friday snapshot, allowed books. p = leave-one-out median no-vig P of >=3 OTHER us books quoting the same point; best-EV side/book per player if EV >= 0.02.",
+   "dev_2023": {"n": 87, "clv": 0.0130, "clv_t": 2.33, "roi": -0.028, "roi_se": 0.128, "bets_per_week": 4.1},
+   "selection_note": "picked from 5 markets x 2 snapshots x 3 sides x 5 thresholds of shop rules; the other markets were ~-1% CLV in dev"},
+  {"name": "open_model_thesis", "market": ["pass_yds", "pass_att", "rush_yds", "receptions", "rec_yds"], "snap": "open", "kind": "model", "w": 0.2, "thr": 0.12, "side": "both", "ev_max": 0.5,
+   "desc": "Pros' thesis test: Tuesday-open O/U, all five markets pooled, open-information projection blended with the market (w=0.2 on the model, shift (1-w)c), best-EV allowed book/side per player-market if 0.12 <= EV < 0.5.",
+   "dev_2023": {"n": 34, "clv": -0.0031, "clv_t": -0.29, "roi": 0.057, "roi_se": 0.150, "bets_per_week": 4.3},
+   "note": "2023 open coverage is only 39 of 276 events, so dev power is very low; frozen as an explicit hypothesis test (best open config in dev, still not positive)."}
+ ]
+}
