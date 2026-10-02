@@ -327,6 +327,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         result["ml_v3_bets"] = {"error": str(e)}
         print("moneyline v3 bets: failed:", e)
     try:
+        from . import ml_v4
+        result["ml_v4_bets"] = ml_v4.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["ml_v4_bets"] = {"error": str(e)}
+        print("moneyline v4 bets: failed:", e)
+    try:
         from . import night_west
         result["night_west_bets"] = night_west.process(result, df, ROOT / "history")
     except Exception as e:
@@ -359,6 +365,9 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if tw.get("mode") == "live":
         lines += [f"- **{x['team']} {x['point']}** ({x['price']:+d}) at {x['book']} ({x['gameday']}): "
                   f"forecast wind {x['forecast_wind_mph']:.0f} mph, stake {x['units']}u" for x in tw.get("new", [])]
+    for x in (result.get("ml_v4_bets", {}).get("new", []) if result.get("ml_v4_bets", {}).get("mode") == "live" else []):
+        lines.append(f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} ({x['gameday']}): "
+                     f"{x['edge']:+.1%} vs sharp spread, stake {x['units']}u")
     for x in (result.get("ml_v3_bets", {}).get("new", []) if result.get("ml_v3_bets", {}).get("mode") == "live" else []):
         lines.append(f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} ({x['gameday']}): "
                      f"{x['edge']:+.1%} vs Pinnacle/sharp fair, stake {x['units']}u")
@@ -391,7 +400,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     """Hourly odds watch (no retraining): refresh live prices on the last published predictions and
     run the tracks whose edge depends on catching prices quickly (moneyline v2, forecast-wind
     unders). The v1 tracks only act on full runs, as pre-registered."""
-    from . import ml_v2, night_west, totals as totals_lib
+    from . import ml_v2, ml_v4, night_west, totals as totals_lib
     path = OUT / "predictions.json"
     if not path.exists():
         print("watch: no predictions.json yet")
@@ -425,7 +434,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     pred["upcoming"] = ups
     pred["odds_checked_at"] = now.isoformat(timespec="minutes")
     no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
-    for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("totals_wind_bets", totals_lib.process),
+    for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
                     ("night_west_bets", night_west.process)):
         try:
             res = fn(pred, no_games, ROOT / "history")

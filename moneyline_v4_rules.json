@@ -1,0 +1,23 @@
+{
+  "track": "moneyline_v4",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "Rule ML3 from output/research/ml_spread_consistency_frozen.json (developed 2020-22; one-shot holdout 2023-25: 163 bets, CLV +1.6% ± 0.7 vs closing sharp no-vig ML, +2.0% vs Pinnacle close, ROI +11% ± 13). Idea: when the sharp books' SPREAD (with juice, through the total-aware margin model) implies a higher win probability than an allowed book's MONEYLINE, the moneyline tends to move toward the spread by the close. Do not edit to fit results; bump version instead.",
+  "market": "moneyline",
+  "qualify": {
+    "windows_utc": [["Tue", "14:10"], ["Fri", "21:40"], ["Sun", "14:10"]],
+    "window_tolerance_minutes": 50,
+    "min_ev_vs_sharp_spread_implied": 0.02,
+    "min_ev_vs_sharp_moneyline": 0.0,
+    "min_american_odds": -1000,
+    "max_american_odds": 400,
+    "sharp_spread_books": ["lowvig", "betonlineag"],
+    "max_spread_point_gap_vs_consensus": 2.5
+  },
+  "sizing": {"unit_pct_of_bankroll": 1.0, "kelly_fraction": 0.25, "max_units": 2.0, "min_units": 0.25,
+             "max_units_per_week": 8.0},
+  "validation": {"min_bets": 150, "avg_clv_positive_with_p_below": 0.05, "realized_roi_above": 0.0,
+                 "clv_definition": "bet decimal odds x nflverse closing no-vig probability of that side - 1 (same as v1/v2)"},
+  "ledger": "paper_bets_ml_v4.json",
+  "game_key": "ml_v4"
+}

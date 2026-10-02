@@ -1,0 +1,163 @@
+{
+ "frozen_at": "2026-10-01T20:53:57",
+ "margin_model": "total_aware_2012 (ml_spread_consistency.json part1/part1b), chosen on 2020-2022 exact-margin log loss",
+ "moneyline": {
+  "developed_on": [
+   2020,
+   2021,
+   2022
+  ],
+  "holdout": [
+   2023,
+   2024,
+   2025
+  ],
+  "rules": [
+   {
+    "id": "ML1_sun_dog_blend1",
+    "window": "sun",
+    "seg": "dog",
+    "ref": "blend",
+    "th": 0.01,
+    "tot": null,
+    "desc": "Sunday 14:10 UTC snapshot. Dog (consensus spread > 0) moneyline at an allowed book, price <= +400, with EV >= +1% vs fair = mean(sharp spread-implied P(win) [lowvig/betonlineag spread + juice through the total-aware margin model], sharp no-vig ML) (fallback: consensus spread-implied). Best-EV book, one bet per game.",
+    "dev": {
+     "bets": 68,
+     "clv": 0.0236,
+     "clv_se": 0.0068,
+     "roi": 0.0012,
+     "roi_se": 0.1812
+    }
+   },
+   {
+    "id": "ML2_early_dog_blend1_tot44",
+    "window": "early",
+    "seg": "dog",
+    "ref": "blend",
+    "th": 0.01,
+    "tot": [
+     44,
+     80
+    ],
+    "desc": "Same bet at the FIRST of the Tue 14:10 / Fri 21:40 / Sun 14:10 UTC snapshots where it qualifies, only when the consensus total at the snapshot is >= 44 (dog ML value in higher-scoring games).",
+    "dev": {
+     "bets": 135,
+     "clv": 0.0309,
+     "clv_se": 0.0073,
+     "roi": 0.0801,
+     "roi_se": 0.1248
+    }
+   },
+   {
+    "id": "ML3_early_spread_gap2",
+    "window": "early",
+    "seg": "all",
+    "ref": "p_sp_sharp",
+    "th": 0.02,
+    "confirm": [
+     "p_ml_sharp",
+     0.0
+    ],
+    "tot": null,
+    "desc": "Pure ML-vs-spread inconsistency: first Tue/Fri/Sun snapshot where an allowed book's ML (either side) has EV >= +2% vs the SHARP SPREAD-implied P(win) (total-aware model) AND EV >= 0 vs the sharp no-vig ML.",
+    "dev": {
+     "bets": 102,
+     "clv": 0.0243,
+     "clv_se": 0.0077,
+     "roi": -0.0149,
+     "roi_se": 0.1394
+    }
+   }
+  ],
+  "clv": "dec * closing sharp no-vig P(side) (edge_lab.closing_fair p_close_sharp, fallback p_close_all) - 1; also reported: vs closing sharp spread-implied P, vs last Pinnacle ML",
+  "pass_if": "CLV - 2*SE > 0 AND ROI > 0 (edge); CLV t >= 2 alone -> paper-track"
+ },
+ "teasers_buys": {
+  "teasers_developed_on": [
+   2020,
+   2021,
+   2022
+  ],
+  "teasers_holdout": [
+   2023,
+   2024,
+   2025
+  ],
+  "buys_developed_on": [
+   2023
+  ],
+  "buys_holdout": [
+   2024,
+   2025
+  ],
+  "rules": [
+   {
+    "id": "T1_fri_wong_le44",
+    "kind": "teaser",
+    "window": "fri",
+    "fair": "sharp",
+    "legs": "wong",
+    "ev_min": -1.0,
+    "max_pairs": 3,
+    "tot": "le44",
+    "desc": "Friday 21:40 UTC: Wong legs AT THE BOOK's number (+1.5..+2.5 / -7.5..-8.5) at DK/FD/MGM/CZR, consensus total <= 44; best-EV same-book pairs (total-aware leg probs) at the book's fixed 2-team price, no EV threshold, up to 3 disjoint pairs per week.",
+    "dev": {
+     "teasers": 33,
+     "roi": 0.0471,
+     "roi_se": 0.1589,
+     "ev_close": -0.0275
+    }
+   },
+   {
+    "id": "T2_kick_wong_le44",
+    "kind": "teaser",
+    "window": "kick",
+    "fair": "sharp",
+    "legs": "wong",
+    "ev_min": -1.0,
+    "max_pairs": 3,
+    "tot": "le44",
+    "desc": "As T1 at each game's last snapshot (~75 min pre-kick).",
+    "dev": {
+     "teasers": 16,
+     "roi": 0.3507,
+     "roi_se": 0.2015,
+     "ev_close": -0.0327
+    }
+   },
+   {
+    "id": "B1_close_buy_onto_3or7_tot_le43_5",
+    "kind": "buy",
+    "window": "close",
+    "transitions": [
+     [
+      2.5,
+      3.0
+     ],
+     [
+      -3.5,
+      -3.0
+     ],
+     [
+      6.5,
+      7.0
+     ],
+     [
+      -7.5,
+      -7.0
+     ]
+    ],
+    "tot_max": 43.5,
+    "desc": "~75-min close: buy onto 3 or 7 (+2.5->+3, -3.5->-3, +6.5->+7, -7.5->-7) at the same book's alt price, consensus total <= 43.5; best allowed book by total-aware EV; no EV filter; one per game.",
+    "dev_2023": {
+     "bets": 60,
+     "roi": 0.0389,
+     "roi_se": 0.1102,
+     "ev_total_aware": -0.0418
+    }
+   }
+  ],
+  "pass_if": "ROI - 1.64*SE > 0 (model EV at close is negative for all three: expected fail)"
+ },
+ "evaluate_once": true
+}

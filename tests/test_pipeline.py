@@ -791,3 +791,22 @@ def test_dashboard_renders_with_and_without_news_and_totals(tmp_path, present):
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
     assert data["predictions"]["upcoming"][0]["game_id"] == "2026_05_AAA_BBB"
     assert bd.write_site(body, tmp_path / "site").exists()
+
+
+def test_ml_v4_spread_vs_moneyline(tmp_path):
+    from datetime import datetime, timezone
+    from nflpred import ml_v4
+    r = ml_v4.load_rules()
+    lo = {"consensus_home_margin": 3.0, "sharp_home_prob": 0.60, "totals": {"median_point": 44.5},
+          "sharp_spreads": [[-3.0, -120, 100], [-3.0, -118, -102]],          # sharp spread says home > 3 pts
+          "best_home_ml": {"price": -135, "book": "DraftKings"}, "best_away_ml": {"price": 120, "book": "FanDuel"}}
+    g = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "KC", "away_team": "DEN",
+         "context": {"live_odds": lo}}
+    p_sp = ml_v4.spread_implied_home(lo, r)
+    assert 0.6 < p_sp < 0.7
+    tue = datetime(2026, 9, 29, 14, 15, tzinfo=timezone.utc)
+    bet = ml_v4.evaluate(g, r, tue)
+    assert bet and bet["team"] == "KC" and bet["edge"] >= 0.02
+    wed = datetime(2026, 9, 30, 14, 15, tzinfo=timezone.utc)
+    g2 = dict(g, context={"live_odds": lo})
+    assert ml_v4.evaluate(g2, r, wed) is None and any("only bets" in x for x in g2["ml_v4_check"])

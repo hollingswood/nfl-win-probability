@@ -1,0 +1,38 @@
+{
+ "frozen_on": "2026-10-01",
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "alpha_each": 0.0167,
+ "disclosure": "During development a per-season table of the coefficient of next-game ATS residual on the raw line adjustment (close - rating-implied prior) was printed for ALL seasons incl. 2023-25 (+0.33, +0.47, +0.12 vs dev about -0.1/-0.26). The 'fade the line adjustment' rule is therefore NOT frozen and its 2023-25 numbers are contaminated/descriptive only. No other holdout quantity was looked at before this freeze.",
+ "rules": {
+  "R1_prime_underreaction": {
+   "market": "spread, closing line (nflverse spread_line), actual closing juice",
+   "rule": "REG game, both teams' starting QB unchanged from their previous game. For each team s_T = (margin - closing spread) of its previous game this season if that game was primetime (Thu, Mon, or Sun kick >= 19:00 ET) else 0. S = s_home - s_away. Bet home if S >= 12, away if S <= -12.",
+   "thr": 12.0,
+   "pass": "cover rate > 52.38% with one-sided binomial p < 0.0167 vs 52.38%"
+  },
+  "R2_bounce_after_ats_blowout": {
+   "market": "spread, closing line, actual closing juice",
+   "rule": "REG game, no QB change either team. Back the team whose previous game (this season) missed the closing spread by >= 21 points, unless both did.",
+   "thr": 21.0,
+   "pass": "cover rate > 52.38% with one-sided binomial p < 0.0167"
+  },
+  "R3_lookahead_reversion_early_clv": {
+   "market": "spread at the early snapshot (first snapshot after both teams' previous games ended +4h), best allowed-book offer (my_books.json), point within 2.5 of consensus, price in [-200, 200]",
+   "rule": "la_adj = look-ahead consensus price-implied mu (last snapshot before either team's previous kickoff, within 4 days of the early snapshot) - Kalman rating-implied prior. pred_close = early_mu + const + b*la_adj. Bet the allowed offer with max EV at pred_close if EV >= 0.01 (one per game).",
+   "coef": {
+    "const": -0.118,
+    "la_adj": -0.1262
+   },
+   "coef_se": {
+    "const": 0.0835,
+    "la_adj": 0.0305
+   },
+   "thr": 0.01,
+   "pass": "mean price-based CLV (vs closing_fair mu_close_all) > 0 with one-sided p < 0.0167"
+  }
+ }
+}

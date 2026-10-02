@@ -277,12 +277,13 @@ function context(g){
 }
 const pt = x => `${x>0?'+':''}${x}`;
 const gradeCls = gr => !gr ? '' : gr.startsWith('A') ? 'g-a' : gr.startsWith('B') ? 'g-b' : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
 const VERDICT = {bet: ANY_LIVE ? 'BET' : 'PAPER BET', lean:'LEAN', pass:'NO EDGE', pending:'WAITING'};
 const TVERDICT = {...VERDICT, pass:'PASS'};  // current tracks: BET / LEAN / WAITING / PASS
 const TRACKS = {
   ml_v2:{name:'Moneyline v2 · your books vs sharp books (current lead)', key:'ml_v2_bets', short:'ML v2'},
   ml_v3:{name:'Moneyline v3 · vs Pinnacle + sharp', key:'ml_v3_bets', short:'ML v3'},
+  ml_v4:{name:'Moneyline v4 · vs the sharp spread', key:'ml_v4_bets', short:'ML v4'},
   totals:{name:'Totals · forecast-wind unders', key:'totals_wind_bets', short:'Wind under'},
   night:{name:'Night games · western team', key:'night_west_bets', short:'Night game'},
   spread:{name:'Spread v1 (original model rules · no edge in backtest)', key:'spread_bets', short:'Spread v1'},
@@ -352,6 +353,8 @@ function trackLines(g){
     if(v2) L.push(line('ML v2', v2, `${mlTxt(v2)} vs sharp`));
     if(v3) L.push(line('ML v3', v3, `${mlTxt(v3)} vs Pinnacle+sharp`));
   }
+  const v4=g.ml_v4;
+  if(v4) L.push(line('ML v4', v4, `${esc(v4.team)} ${fmtML(v4.price)} ${esc(v4.book)} · ${sgn(v4.ev_spread)} vs sharp spread`));
   const n=g.night_west;
   if(n) L.push(line('Night', n, `${esc(n.team)} ${pt(n.point)} (${fmtML(n.price)}) ${esc(n.book)} · ${esc(n.zones||'')}`));
   return L.length ? `<div class="trk"><span class="subh">Current tracks</span>${L.join('')}</div>` : '';
@@ -374,6 +377,7 @@ function currentRows(g){
     if(ok(g.ml_v2)) R.push(mlRow(g.ml_v2,'Moneyline v2','vs sharp'));
     if(ok(g.ml_v3)) R.push(mlRow(g.ml_v3,'Moneyline v3','vs Pinnacle+sharp'));
   }
+  if(ok(g.ml_v4)) R.push({g, market:'Moneyline v4', pick:`${g.ml_v4.team} ${fmtML(g.ml_v4.price)}`, book:g.ml_v4.book, edge:g.ml_v4.ev_spread, edgeNote:'vs sharp spread', ours:g.ml_v4.p_spread, needed:g.ml_v4.p_needed, verdict:g.ml_v4.verdict, reasons:g.ml_v4.reasons});
   const t=g.totals_view;
   if(t&&t.best_under&&(t.verdict==='bet'||t.forecast_wind_mph>=15))
     R.push({g, market:'Totals · wind under', pick:`Under ${t.best_under.point} (${fmtML(t.best_under.price)})`, book:t.best_under.book, edge:t.best_under.ev, verdict:t.verdict==='bet'?'bet':'lean', reasons:t.reasons, note:`forecast wind ${Math.round(t.forecast_wind_mph)} mph`});
@@ -559,7 +563,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=['ml_v2','ml_v3','totals','night','spread','ml_v1'].map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
+  const tracks=['ml_v2','ml_v3','ml_v4','totals','night','spread','ml_v1'].map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
