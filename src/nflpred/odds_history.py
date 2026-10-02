@@ -132,7 +132,7 @@ EVENT_URL = "https://api.the-odds-api.com/v4/historical/sports/americanfootball_
 
 
 def backfill_props(seasons, key, market="player_reception_yds", regions="us", reserve=500, out_dir=None,
-                   dry_run=False, fetcher=None):
+                   dry_run=False, fetcher=None, times=("early", "close")):
     """Player props (or alternate_spreads: rows are team=player, point, price=over_price) via the per-EVENT historical endpoint (data from May 2023; 10 credits per market per
     region per event-snapshot). Two snapshots per game: Friday 21:40 UTC (or 24 h before a non-Sunday
     kickoff) and 75 min before kickoff (the close, for CLV). Event ids come from the side-odds files."""
@@ -161,7 +161,11 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
                 early = datetime(kick.year, kick.month, kick.day, 21, 40, tzinfo=timezone.utc) - timedelta(days=2)
             else:
                 early = kick - timedelta(hours=24)
-            for t in (early, kick - timedelta(minutes=75)):
+            # "open": Tuesday 14:10 UTC of game week (soft opening prices, before injury news settles)
+            tue = datetime(kick.year, kick.month, kick.day, 14, 10, tzinfo=timezone.utc) - timedelta(
+                days=(kick.weekday() - 1) % 7 or 7)
+            opts = {"open": tue, "early": early, "close": kick - timedelta(minutes=75)}
+            for t in (opts[x] for x in times if opts[x] < kick):
                 tag = f"{r.event_id}|{t.isoformat()}"
                 if tag not in done:
                     todo.append((r, t, tag))
@@ -358,9 +362,11 @@ def main(argv=None):
     if key:
         print(f"credits remaining before this run: {remaining_credits(key)}")
     if a.plan.startswith("props"):
-        market = a.plan.split(":", 1)[1] if ":" in a.plan else "player_reception_yds"
+        parts = a.plan.split(":")
+        market = parts[1] if len(parts) > 1 else "player_reception_yds"
+        times = tuple(parts[2].split("+")) if len(parts) > 2 else ("early", "close")
         res = backfill_props(sorted(_seasons(a.seasons), reverse=True), key, market=market, reserve=a.reserve,
-                             dry_run=a.dry_run)
+                             dry_run=a.dry_run, times=times)
         res["plan"] = a.plan
         print(json.dumps(res))
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
