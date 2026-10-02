@@ -51,17 +51,30 @@ def _shift_price(price: int, cents: int) -> int:
     return q if q >= 100 else -(200 - q)
 
 
-def buy_point_options(mu, point, price, side, r):
-    """Estimated EV of buying 0.5 and 1.0 points at typical costs (informational)."""
-    c = r["buy_points_estimate"]
+BUY_COSTS_PATH = ROOT / "buy_costs.json"
+
+
+def _buy_costs() -> dict:
+    try:
+        return json.loads(BUY_COSTS_PATH.read_text())
+    except Exception:
+        return {"books": {}, "default": {"3": 25, "7": 20, "other": 15}}
+
+
+def buy_point_options(mu, point, price, side, r, book: str | None = None):
+    """EV of buying 0.5 and 1.0 points at this book's MEASURED cost (buy_costs.json, 2023-25 alt lines).
+    Informational only; buys are never bet. Research: buying is never +EV at these books."""
+    costs = _buy_costs()
+    c = next((v for k, v in costs["books"].items() if book and k.lower() in str(book).lower()), costs["default"])
     out, cur_point, cur_price = [], point, price
     for _ in range(2):
         nxt = cur_point + 0.5
         crosses = {abs(cur_point), abs(nxt)}
-        cost = c["onto_or_off_3"] if 3 in crosses else c["onto_or_off_7"] if 7 in crosses else c["default_cents"]
-        cur_point, cur_price = nxt, _shift_price(cur_price, cost)
+        key = "3" if 3 in crosses else "7" if 7 in crosses else "other"
+        cur_point, cur_price = nxt, _shift_price(cur_price, c[key])
         ev, _, _ = side_ev(mu, cur_point, cur_price, side, r)
-        out.append({"point": cur_point, "est_price": cur_price, "ev": round(ev, 4)})
+        out.append({"point": cur_point, "est_price": cur_price, "ev": round(ev, 4), "crosses": key,
+                    "cost_cents": c[key]})
     return out
 
 
@@ -80,7 +93,7 @@ def analyze(game: dict, r: dict) -> dict | None:
             if best is None or ev > best["ev"]:
                 best = {"side": side, "team": game[f"{side}_team"], "point": point, "price": price, "book": b["book"],
                         "ev": round(ev, 4), "p_cover": round(pw, 4), "p_push": round(pu, 4)}
-    best["buy_options"] = buy_point_options(mu, best["point"], best["price"], best["side"], r)
+    best["buy_options"] = buy_point_options(mu, best["point"], best["price"], best["side"], r, best["book"])
     best["p_needed"] = round((1 - best["p_push"]) / ml.decimal(best["price"]), 4)  # break-even cover chance
     return {"expected_home_margin": round(mu, 2), "model_home_margin": game["model_home_margin"],
             "market_home_margin": lo["consensus_home_margin"], "best": best, "books": len(books)}

@@ -1,0 +1,14 @@
+{
+  "note": "Measured cost (cents of American odds) of buying the first half point at each book, 2023-25 real alternate-spread prices (output/research/buy_points.md). Display only: buys are never bet. Buying was never +EV; only onto 3/7 at BetRivers or Fanatics costs less than the half point is worth, and even then the bet stays -EV.",
+  "measured_on": "2023-2025",
+  "books": {
+    "BetMGM": {"3": 25, "7": 20, "other": 15},
+    "Caesars": {"3": 36, "7": 21, "other": 20},
+    "DraftKings": {"3": 22, "7": 18, "other": 11},
+    "FanDuel": {"3": 23, "7": 18, "other": 12},
+    "BetRivers": {"3": 17, "7": 14, "other": 6},
+    "Fanatics": {"3": 20, "7": 15, "other": 5}
+  },
+  "default": {"3": 25, "7": 20, "other": 15},
+  "show_only": "onto 3 or 7 at BetRivers or Fanatics"
+}

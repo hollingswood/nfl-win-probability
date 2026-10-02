@@ -13,6 +13,7 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/travel.py`, `weather.py`, `odds.py`, `ngs.py` — context sources (travel/tz/body clock, Open-Meteo forecast, The Odds API multi-book lines, Next Gen Stats). Shown on picks; NOT model inputs (tested, no gain).
 - `src/nflpred/news.py` — live injury/depth-chart news (Sleeper + ESPN public feeds) applied to upcoming games; tested offline with fixtures in tests
 - `src/nflpred/bets.py` + `betting_rules.json` — paper-bet ledger (`history/paper_bets.json`), grading, CLV, pre-registered switch to live recommendations. NEVER edit rules or the validation test in place to fit results: bump `version` instead.
+- `buy_costs.json` — measured per-book cost of buying half points (2023-25 alt lines); display only, buys never bet (research: never +EV)
 - `src/nflpred/margins.py` — key-number-aware margin distribution (cover/push/win probabilities)
 - `src/nflpred/spread_bets.py` + `spread_rules.json` — spread paper-bet track (separate ledger `history/paper_bets_spread.json`); `my_books.json` = books allowed for line shopping
 - `src/nflpred/odds_history.py` + workflow `odds_backfill.yml` — one-time resumable download of 2020-25 historical lines (paid Odds API plan) into `data/historical_odds/` (committed), at the same moments the live pipeline runs
