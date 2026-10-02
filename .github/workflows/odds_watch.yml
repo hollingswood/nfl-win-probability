@@ -1,8 +1,10 @@
 name: Hourly odds watch
 
 # Re-checks prices every hour (no retraining) for the tracks whose edge depends on catching soft
-# prices before they move: moneyline v2 (soft vs sharp books) and forecast-wind unders.
-# Research: such prices last ~5-6 hours, so hourly is enough. Cost ~6 credits per check.
+# prices before they move: moneyline v2 (soft vs sharp books) and forecast-wind unders, and for the
+# window-based tracks (moneyline v4, Tuesday early unders, Friday receptions props).
+# Research: such prices last ~5-6 hours, so hourly is enough. Cost ~9 credits per check, plus ~1 credit
+# per game for receptions props (once at its window, again near kickoff if it has open paper bets).
 on:
   schedule:
     - cron: "23 * * * *"
@@ -14,6 +16,7 @@ concurrency:
 
 permissions:
   contents: write
+  issues: write
   pages: write
   id-token: write
 
@@ -32,6 +35,12 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Alert on new bets (only tracks that have passed validation write this file)
+        if: hashFiles('output/alert_watch.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "New bets $(date -u +%FT%H%M)" --body-file output/alert_watch.md
       - name: AI news reader (logs injury/QB signals with first-seen time; no bets)
         continue-on-error: true
         run: |

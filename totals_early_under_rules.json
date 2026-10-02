@@ -1,0 +1,29 @@
+{
+  "track": "totals_early_under",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "NEW pre-registered hypothesis for 2026 (not a validated result). Source: output/research/grade_granular.md (Q2, post-hoc and descriptive, found after the one-shot totals-grade holdout): an early-week UNDER at an allowed book whose point+price is worth >= 0 EV under the SHARP books' fair expected total made CLV +2.3% on 118 bets (2020-22) and +2.6% +- 0.9 on 122 bets (2023-25); blind early unders at the best price were -1.2%; every such bet was totals-grade A+. Because it was found inside the grade study after looking at 2023-25, only 2026+ paper results count. Research bets were placed at the FIRST snapshot 96 h..7 days before kickoff (often Mon/Tue 00:00 UTC snapshots); this track bets only at the Tuesday 14:10 UTC (7:10am AZ) run. Descriptive numbers for that Tuesday-only subset (same research cache, computed when freezing): 2020-22 59 bets CLV +2.3% +- 0.9, 2023-25 58 bets +0.8% +- 1.2, so expect fewer bets and possibly a weaker edge than the headline. Do not edit to fit results; bump version instead.",
+  "market": "totals",
+  "qualify": {
+    "windows_utc": [["Tue", "14:10"]],
+    "window_tolerance_minutes": 50,
+    "min_hours_before_kickoff": 96,
+    "max_hours_before_kickoff": 168,
+    "sharp_books": ["lowvig", "betonlineag", "circasports", "bookmaker"],
+    "min_ev_vs_sharp_fair_total": 0.0,
+    "min_american_odds": -250,
+    "max_american_odds": 200,
+    "quote_filters": "research load_totals: both prices -250..+200 with |price| >= 100, point 25..80, overround 1.00..1.12, point within 5 of the snapshot median point (Pinnacle and exchanges left out)",
+    "sharp_fair_total": "median over the sharp books quoting the total of each book's implied expected total (point + no-vig over price, key-number distribution totals_dist.json); no sharp quote = no bet",
+    "bet": "UNDER at the allowed book (my_books.json) with the highest EV vs the sharp fair total, if that EV >= 0; one bet per game"
+  },
+  "sizing": {"units": 1.0},
+  "validation": {
+    "min_bets": 40,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "EV of our under at our point and price under the fair expected total implied by our own last pre-kickoff odds snapshot (all-book median, totals.closing_totals; same as totals_wind). clv_sharp_close (vs the sharp books' close, the research reference) is recorded for information"
+  },
+  "ledger": "paper_bets_totals_early_under.json",
+  "game_key": "early_under"
+}

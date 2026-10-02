@@ -44,8 +44,8 @@ EXCHANGES = {"kalshi", "prophetx", "polymarket", "novig", "betopenly"}
 CREDITS: dict = {}
 
 
-def _get(params: dict, timeout: float):
-    with urllib.request.urlopen(f"{URL}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
+def _get(params: dict, timeout: float, url: str = URL):
+    with urllib.request.urlopen(f"{url}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
         for h in ("x-requests-remaining", "x-requests-used", "x-requests-last"):
             if r.headers.get(h) is not None:
                 CREDITS[h] = r.headers.get(h)
@@ -162,6 +162,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         except Exception:
             tot = None
         out[(home, away, ev["commence_time"][:10])] = {
+            "event_id": ev.get("id"),  # Odds API event id (per-event player-prop calls)
             "totals": tot,
             "books": len(probs),
             "consensus_home_prob": round(statistics.median(probs), 4),
@@ -180,6 +181,48 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
     return out
 
 
+# ------------------------------------------------------------------------------- player props (per event)
+PROPS_URL = "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/events/{event_id}/odds"
+
+
+def fetch_event_props(event_id: str, markets: str = "player_receptions", api_key: str | None = None,
+                      timeout: float = 20) -> dict:
+    """One event's player props (regions=us, the research feed). Cost: markets x regions = ~1 credit per call
+    for player_receptions. Raises if no key / the request fails."""
+    key = api_key or os.environ.get("ODDS_API_KEY")
+    if not key:
+        raise RuntimeError("ODDS_API_KEY not set")
+    params = {"apiKey": key, "regions": "us", "markets": markets, "oddsFormat": "american"}
+    return _get(params, timeout, PROPS_URL.format(event_id=urllib.parse.quote(str(event_id))))
+
+
+def _write_credits(history_dir: Path) -> None:
+    if CREDITS:  # Odds API balance after the last call, readable in the repo
+        (history_dir / "odds_credits.json").write_text(json.dumps(
+            {"checked_at": datetime.now(timezone.utc).isoformat(timespec="minutes"), **CREDITS}, indent=1))
+
+
+def save_props_snapshot(history_dir: Path, entries: list[dict], now: datetime | None = None) -> Path | None:
+    """Raw per-event prop responses of one run -> history/props_<UTC timestamp>.json.gz (list of
+    {event_id, game_id, kind, fetched_at, commence_time, response})."""
+    if not entries:
+        return None
+    import gzip
+    history_dir.mkdir(parents=True, exist_ok=True)
+    ts = (now or datetime.now(timezone.utc)).strftime("%Y-%m-%dT%H%M")
+    path = history_dir / f"props_{ts}.json.gz"
+    old = []
+    if path.exists():  # two runs in the same minute: keep both
+        try:
+            old = json.loads(gzip.open(path, "rt").read())
+        except Exception:
+            old = []
+    with gzip.open(path, "wt") as f:
+        f.write(json.dumps(old + entries))
+    _write_credits(history_dir)
+    return path
+
+
 def snapshot(history_dir: Path) -> dict | None:
     """Fetch, save raw snapshot, return summary. Returns None if no key / request fails."""
     try:
@@ -189,9 +232,7 @@ def snapshot(history_dir: Path) -> dict | None:
         return None
     history_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M")
-    if CREDITS:  # Odds API balance after this call, readable in the repo
-        (history_dir / "odds_credits.json").write_text(json.dumps(
-            {"checked_at": datetime.now(timezone.utc).isoformat(timespec="minutes"), **CREDITS}, indent=1))
+    _write_credits(history_dir)
     import gzip  # compressed: hourly snapshots would otherwise bloat the repo
     with gzip.open(history_dir / f"odds_{ts}.json.gz", "wt") as f:
         f.write(json.dumps(events))

@@ -1,0 +1,37 @@
+{
+  "track": "props_receptions",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "Rule rec_shop_early from output/research/props_full.md / props_full_frozen.json (developed on 2023: 87 bets, CLV +1.3%; one-shot holdout 2024-25: 278 bets, CLV +2.74% +- 0.40 (game-clustered, t 6.9), +1.6% in 2024 and +3.7% in 2025; realized ROI -6.0% +- 6.5, hit 44%, ~6.5 bets/week; 98% of CLV measured at the same point at the close). Caveats from the study: picked from 5 markets x thresholds of shop rules (other markets ~-1% CLV in dev); the no-vig close overrates overs (shading by the 2023 under bias leaves +2.3%); prop limits/account restrictions are not modelled. Production has no projection model, so it also bets players outside the research's modelled universe (replaying 2023-25 research quotes with the production code: the same 365 bets, same book/point/side, plus 16 such player-games, ~4%). Paper track only. Do not edit to fit results; bump version instead.",
+  "market": "player_receptions",
+  "qualify": {
+    "snapshot": "Friday 21:40 UTC run for games kicking off on a Sunday (UTC date); kickoff - 24 h for every other game (research 'early' snapshot)",
+    "friday_window_utc": ["Fri", "21:40"],
+    "other_games_hours_before_kickoff": 24,
+    "window_tolerance_minutes": 50,
+    "regions": "us",
+    "main_line_price_range": [-200, 170],
+    "min_other_books_same_point": 3,
+    "fair_probability": "leave-one-out median no-vig probability (multiplicative) of the OTHER books (regions=us, allowed or not) quoting the SAME player and point at this snapshot",
+    "min_ev": 0.02,
+    "max_ev": 0.5,
+    "one_bet_per_player": "best-EV side/book/point among the allowed books (my_books.json); if that best quote's EV is outside [min_ev, max_ev) there is no bet",
+    "bet": "the side (over/under) at the allowed book whose price beats the fair probability by EV >= 2%"
+  },
+  "sizing": {"units": 1.0},
+  "grading": {
+    "close": "our last props snapshot of the event taken 10-90 min before kickoff (fetched only for games with open bets), <= 3 h before kickoff",
+    "clv": "decimal price x median no-vig probability of our side among close books quoting the SAME point - 1 (research 'direct' CLV); no same-point close quote = no CLV (the research's model-anchored fallback, 2% of bets, needs the projection model and is not used)",
+    "result": "nflverse weekly player stats (stats_player release) receptions vs the point; a player without a stat line who took >= 1 offensive snap (snap counts) has 0; no offensive snap = void"
+  },
+  "validation": {
+    "min_bets": 150,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "see grading.clv"
+  },
+  "cost": "Odds API per-event call (markets=player_receptions, regions=us) = ~1 credit per event: one per game at its early window, plus ~1-2 per game with open bets near kickoff",
+  "ledger": "paper_bets_props_receptions.json",
+  "state": "props_receptions_state.json",
+  "game_key": "props_receptions"
+}

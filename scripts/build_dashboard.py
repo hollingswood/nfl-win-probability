@@ -79,12 +79,14 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
 
 RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",
               "ml_v3": "moneyline_v3_rules.json", "ml_v4": "moneyline_v4_rules.json",
-              "totals": "totals_wind_rules.json", "night": "night_west_rules.json"}
+              "totals": "totals_wind_rules.json", "night": "night_west_rules.json",
+              "totals_eu": "totals_early_under_rules.json", "props_rec": "props_receptions_rules.json"}
 
 
 def load_rule_limits(root: Path = ROOT) -> dict:
     """Display-only facts from the (read-only) rules files: each track's allowed price range and,
-    for moneyline v4, its betting windows (UTC). Missing/bad files are skipped."""
+    for window-based tracks, their betting windows (UTC) and hours-before-kickoff limits. Missing/bad files
+    are skipped."""
     out = {}
     for key, name in RULE_FILES.items():
         try:
@@ -97,6 +99,11 @@ def load_rule_limits(root: Path = ROOT) -> dict:
             r["window_tolerance_minutes"] = q.get("window_tolerance_minutes", 0)
         if q.get("bet_within_hours_of_kickoff") is not None:
             r["bet_within_hours"] = q["bet_within_hours_of_kickoff"]
+        if q.get("min_hours_before_kickoff") is not None:
+            r["min_hours_before"] = q["min_hours_before_kickoff"]
+            r["max_hours_before"] = q.get("max_hours_before_kickoff")
+        if q.get("friday_window_utc"):
+            r["window_tolerance_minutes"] = q.get("window_tolerance_minutes", 0)
         out[key] = r
     return out
 

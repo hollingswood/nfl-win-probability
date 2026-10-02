@@ -97,6 +97,33 @@ listed in the module docstring (first-seen line from weekly `predictions_*.json`
 confirmed, Pinnacle/exchanges excluded from the consensus). If `lightgbm` or the model file is missing, grades are null
 and nothing else changes. The dashboard shows a "Grade v2 record" table (paper record by grade across moneyline tracks).
 
+## Totals grade (`grade_totals.py`, totals GRADING_VERSION 2)
+Over/under offers are graded by **predicted closing-line value** with the LightGBM model frozen on 2020–22 lines in
+`grade_totals_model.json` (verbatim copy of `output/research/grade_totals_frozen.json`; research
+`output/research/grade_granular.md`, Q2). A+ ≥ 0.0%, A ≥ −1%, B ≥ −2%, else C. On 2023–25 only **A+** showed an edge
+(+1.5% ± 0.7 CLV); A, B and C lost value, and A+ is mostly early-week unders. Features are rebuilt at bet time exactly
+as in the research (every book's quote in `live_odds.totals.all_quotes`, research filters, sharp/consensus fair totals,
+hours to kickoff, move since our first saved snapshot within 7 days); a parity check against the research table matched
+features and predictions exactly. Graded within 7 days of kickoff; `game["totals_grade"]` = best offer,
+`totals_grade_sides` = best per side; recorded on new totals paper bets. **Label only.**
+
+## New paper tracks (frozen 2026-10-02, judged on CLV)
+* **Early-week unders** (`totals_early_under.py`, `totals_early_under_rules.json`, ledger
+  `history/paper_bets_totals_early_under.json`): at the Tuesday 7:10am AZ run (14:10 UTC ± 50 min), for games 96 h–7
+  days out, bet the under at your book with the best EV vs the sharp books' fair total if EV ≥ 0. A post-hoc finding of
+  the totals-grade study (+2.6% ± 0.9 CLV on 122 bets 2023–25 at the first early snapshot; the Tuesday-only subset was
+  +2.3% / +0.8%), so 2026 is a new pre-registered test. CLV vs our own closing totals snapshot.
+* **Receptions props line shopping** (`props_receptions.py`, `props_receptions_rules.json`, ledger
+  `history/paper_bets_props_receptions.json`): at Friday 21:40 UTC (kickoff − 24 h for non-Sunday games), bet the
+  side/book whose receptions price beats the leave-one-out median no-vig price of ≥ 3 other books at the same point by
+  EV ≥ 2% (main lines only, one bet per player, 1 unit). Research `output/research/props_full.md`: CLV +2.7% ± 0.4 on 278
+  bets 2024–25, realized ROI −6% ± 6.5. Raw prop responses are saved as `history/props_*.json.gz`; results come from
+  nflverse weekly player stats (`player_stats.py`). **Cost: ~1 Odds API credit per event call**: one per game at its
+  window, plus 1–2 near kickoff for games with open bets (closing prices for CLV).
+
+Both run in `update` and the hourly `watch`; when a track passes validation its new bets go to `output/alert.md`
+(full runs) or `output/alert_watch.md` (watch), which the workflows turn into GitHub issues.
+
 ## Paper bets → recommendations (`bets.py`, rules in `betting_rules.json`)
 Two independent tracks with their own locked rules and records: **moneyline** (`betting_rules.json`, v1) and
 **spread** (`spread_rules.json`, v1, same thresholds, sizing and validation test). A track switches to live

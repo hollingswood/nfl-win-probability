@@ -116,7 +116,7 @@ def market_total(rows, dist: TotalDist) -> float | None:
 
 
 def summarize_event(ev: dict, allowed: set | None, sharp: set, dist: TotalDist) -> dict | None:
-    rows, sharp_rows, by_book = [], [], []
+    rows, sharp_rows, by_book, all_q = [], [], [], []
     for bk in ev.get("bookmakers", []):
         for m in bk.get("markets", []):
             if m.get("key") != "totals":
@@ -127,15 +127,17 @@ def summarize_event(ev: dict, allowed: set | None, sharp: set, dist: TotalDist) 
                 continue
             r = (ov["point"], ov["price"], un["price"])
             rows.append(r)
+            # every book's raw quote (totals grade / early-under track apply the research filters themselves)
+            all_q.append([bk.get("key"), bk.get("title", bk.get("key")), ov["point"], ov["price"], un["price"]])
             if bk.get("key") in sharp:
                 sharp_rows.append(r)
             if allowed is None or bk.get("key") in allowed:
-                by_book.append({"book": bk.get("title", bk.get("key")), "point": ov["point"],
+                by_book.append({"book": bk.get("title", bk.get("key")), "key": bk.get("key"), "point": ov["point"],
                                 "over_price": ov["price"], "under_price": un["price"]})
     if not rows:
         return None
     return {"consensus_total": market_total(rows, dist), "sharp_total": market_total(sharp_rows, dist),
-            "median_point": statistics.median(r[0] for r in rows), "totals_by_book": by_book}
+            "median_point": statistics.median(r[0] for r in rows), "totals_by_book": by_book, "all_quotes": all_q}
 
 
 # ---------------------------------------------------------------- forecast-wind under track
@@ -159,7 +161,8 @@ def evaluate(game: dict, r: dict, dist: TotalDist, now: datetime | None = None) 
     for b in tot["totals_by_book"]:
         ev = dist.ev(mu, b["point"], b["under_price"], "under")
         if best is None or ev > best["ev"]:
-            best = {"book": b["book"], "point": b["point"], "price": b["under_price"], "ev": round(ev, 4)}
+            best = {"book": b["book"], "book_key": b.get("key"), "point": b["point"], "price": b["under_price"],
+                    "ev": round(ev, 4)}
     game["totals_view"] = {"forecast_wind_mph": wx["wind_mph"], "consensus_total": mu, "best_under": best}
     kick = pd.Timestamp(game["kickoff_utc"]) if game.get("kickoff_utc") else None
     now = now or datetime.now(timezone.utc)
@@ -176,7 +179,16 @@ def evaluate(game: dict, r: dict, dist: TotalDist, now: datetime | None = None) 
             "week": game["week"], "gameday": game["gameday"], "side": "under",
             "team": f"{game['away_team']}@{game['home_team']} UNDER", "opponent": "",
             "point": best["point"], "price": best["price"], "book": best["book"], "edge": best["ev"],
-            "forecast_wind_mph": wx["wind_mph"], "consensus_total": mu, "units": r["sizing"]["units"], "status": "open"}
+            "forecast_wind_mph": wx["wind_mph"], "consensus_total": mu, "units": r["sizing"]["units"], "status": "open",
+            **_totals_grade_label(game, best)}  # totals grade: label only, never qualifies
+
+
+def _totals_grade_label(game: dict, best: dict) -> dict:
+    try:
+        from . import grade_totals
+        return grade_totals.bet_fields(game, "under", best.get("book_key"), best["point"], best["price"])
+    except Exception:
+        return {"totals_grade": None, "predicted_clv": None}
 
 
 def _snapshots(history_dir: Path):
@@ -191,7 +203,9 @@ def _snapshots(history_dir: Path):
 
 
 def closing_totals(history_dir: Path, dist: TotalDist) -> dict[tuple[str, str], list[dict]]:
-    """Fair closing expected total from our last odds snapshot before each kickoff (prices included)."""
+    """Fair closing expected total from our last odds snapshot before each kickoff (prices included).
+    `mu` = all-book median (the CLV reference of the totals tracks); `mu_sharp` = LowVig/BetOnline/... median
+    (informational, None if no sharp book quoted)."""
     from . import odds as O
     best = {}
     for ts, events in _snapshots(history_dir):
@@ -200,15 +214,16 @@ def closing_totals(history_dir: Path, dist: TotalDist) -> dict[tuple[str, str], 
             if not home or not ev.get("commence_time"):
                 continue
             kick = datetime.fromisoformat(ev["commence_time"].replace("Z", "+00:00"))
-            s = summarize_event(ev, None, set(), dist) if ts < kick else None
+            s = summarize_event(ev, None, O.SHARP_BOOKS, dist) if ts < kick else None
             if not s or s["consensus_total"] is None:
                 continue
             k = (home, away, ev["commence_time"])
             if k not in best or ts > best[k]["ts"]:
-                best[k] = {"ts": ts, "mu": s["consensus_total"]}
+                best[k] = {"ts": ts, "mu": s["consensus_total"], "mu_sharp": s.get("sharp_total")}
     out = {}
     for (h, a, c), v in best.items():
-        out.setdefault((h, a), []).append({"commence": c, "mu": v["mu"], "ts": v["ts"].isoformat(timespec="minutes")})
+        out.setdefault((h, a), []).append({"commence": c, "mu": v["mu"], "mu_sharp": v["mu_sharp"],
+                                           "ts": v["ts"].isoformat(timespec="minutes")})
     return out
 
 
@@ -226,6 +241,8 @@ def grade(bet: dict, games: pd.DataFrame, dist: TotalDist, closes: dict) -> dict
             out["clv"] = round(dist.ev(c["mu"], bet["point"], bet["price"], "under"), 4)
             out["closing_total"] = c["mu"]
             out["clv_source"] = f"own closing snapshot {c['ts']}, prices included"
+            if c.get("mu_sharp") is not None:  # informational: vs the sharp books' close (research CLV reference)
+                out["clv_sharp_close"] = round(dist.ev(c["mu_sharp"], bet["point"], bet["price"], "under"), 4)
     return out
 
 
@@ -252,6 +269,11 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
             logged = any(b["game_id"] == g["game_id"] and b.get("status") != "void" for b in ledger)
             v["verdict"] = "bet" if logged else "pass"
             v["reasons"] = [] if logged else list(g.get("wind_check") or [])
+    try:
+        from . import grade_totals
+        btg = grade_totals.by_grade(ledger)
+    except Exception:
+        btg = []
     return {"track": "totals_wind", "mode": "live" if rec["passed"] else "shadow", "rules_version": r["version"],
-            "by_grade": [], "new": new, "open": [b for b in ledger if b.get("status") == "open"],
+            "by_grade": [], "by_totals_grade": btg, "new": new, "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:], "record": rec}

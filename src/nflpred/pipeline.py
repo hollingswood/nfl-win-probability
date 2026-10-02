@@ -305,6 +305,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         "trained_on_games": int(len(M.train_rows(df))),
     }
     result["grade_v2"] = _grade_v2_attach(result)  # label for moneyline offers; before the tracks record it
+    result["totals_grade"] = _totals_grade_attach(result)  # label for over/under offers (label only)
     try:
         result["bets"] = bets_lib.process(result, df, ROOT / "history")
     except Exception as e:  # paper betting must never block predictions
@@ -345,11 +346,29 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["totals_wind_bets"] = {"error": str(e)}
         print("totals wind bets: failed:", e)
+    try:
+        from . import totals_early_under
+        result["totals_early_under_bets"] = totals_early_under.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["totals_early_under_bets"] = {"error": str(e)}
+        print("totals early-under bets: failed:", e)
+    try:
+        from . import props_receptions
+        result["props_receptions_bets"] = props_receptions.process(
+            result, df, ROOT / "history", fetch=None if offline else odds_lib.fetch_event_props)
+    except Exception as e:
+        result["props_receptions_bets"] = {"error": str(e)}
+        print("props receptions bets: failed:", e)
     _grade_v2_record(result)
+    _totals_grade_record(result)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
-    alert = OUT / "alert.md"
-    alert.unlink(missing_ok=True)
+    write_alert(result)
+    return result
+
+
+def alert_lines(result: dict) -> list[str]:
+    """One line per NEW bet of every track that has passed its validation (mode 'live'); paper tracks stay silent."""
     lines = []
     b = result.get("bets", {})
     if b.get("mode") == "live":
@@ -377,9 +396,25 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if v2.get("mode") == "live":
         lines += [f"- **{x['team']}** moneyline {x['price']:+d} at {x['book']} vs {x['opponent']} "
                   f"({x['gameday']}): {x['edge']:+.1%} vs sharp books, stake {x['units']}u" for x in v2.get("new", [])]
+    eu = result.get("totals_early_under_bets", {})
+    if eu.get("mode") == "live":
+        lines += [f"- **{x['team']} {x['point']}** ({x['price']:+d}) at {x['book']} ({x['gameday']}): early-week under, "
+                  f"{x['edge']:+.1%} vs the sharp fair total, stake {x['units']}u" for x in eu.get("new", [])]
+    pr = result.get("props_receptions_bets", {})
+    if pr.get("mode") == "live":
+        lines += [f"- **{x['player']} {x['side']} {x['point']:g} receptions** ({x['price']:+d}) at {x['book']} "
+                  f"({x['opponent']}, {x['gameday']}): {x['edge']:+.1%} vs other books, stake {x['units']}u"
+                  for x in pr.get("new", [])]
+    return lines
+
+
+def write_alert(result: dict, path: Path | None = None) -> list[str]:
+    alert = path or OUT / "alert.md"
+    alert.unlink(missing_ok=True)
+    lines = alert_lines(result)
     if lines:
         alert.write_text("New qualifying bets (validated track):\n\n" + "\n".join(lines))
-    return result
+    return lines
 
 
 def _grade_v2_attach(pred: dict, now: dt.datetime | None = None) -> dict:
@@ -392,6 +427,26 @@ def _grade_v2_attach(pred: dict, now: dt.datetime | None = None) -> dict:
         for g in pred.get("upcoming", []):
             g["grade_v2"], g["grade_v2_sides"] = None, {}
         return {"version": 2, "available": False, "error": str(e)}
+
+
+def _totals_grade_attach(pred: dict, now: dt.datetime | None = None) -> dict:
+    """Totals grade (grade_totals.py) on every upcoming game; never blocks the pipeline."""
+    try:
+        from . import grade_totals
+        return grade_totals.attach(pred, ROOT / "history", now)
+    except Exception as e:
+        print("totals grade: failed:", e)
+        for g in pred.get("upcoming", []):
+            g["totals_grade"], g["totals_grade_sides"], g["totals_grade_offers"] = None, {}, []
+        return {"version": 2, "available": False, "error": str(e)}
+
+
+def _totals_grade_record(pred: dict) -> None:
+    try:
+        from . import grade_totals
+        pred.setdefault("totals_grade", {})["record"] = grade_totals.record(ROOT / "history")
+    except Exception as e:
+        print("totals grade record: failed:", e)
 
 
 def _grade_v2_record(pred: dict) -> None:
@@ -420,9 +475,10 @@ def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
 
 def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     """Hourly odds watch (no retraining): refresh live prices on the last published predictions and
-    run the tracks whose edge depends on catching prices quickly (moneyline v2, forecast-wind
-    unders). The v1 tracks only act on full runs, as pre-registered."""
-    from . import ml_v2, ml_v4, night_west, totals as totals_lib
+    run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
+    forecast-wind and early-week unders, night games, receptions props). The v1 tracks only act on full
+    runs, as pre-registered. Grading happens on full runs."""
+    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions
     path = OUT / "predictions.json"
     if not path.exists():
         print("watch: no predictions.json yet")
@@ -456,9 +512,14 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     pred["upcoming"] = ups
     pred["odds_checked_at"] = now.isoformat(timespec="minutes")
     pred["grade_v2"] = _grade_v2_attach(pred, now)
+    pred["totals_grade"] = _totals_grade_attach(pred, now)
     no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
+
+    def props_fn(p, g, h):
+        return props_receptions.process(p, g, h, now=now, fetch=odds_lib.fetch_event_props)
     for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
-                    ("night_west_bets", night_west.process)):
+                    ("totals_early_under_bets", lambda p, g, h: totals_early_under.process(p, g, h, now=now)),
+                    ("props_receptions_bets", props_fn), ("night_west_bets", night_west.process)):
         try:
             res = fn(pred, no_games, ROOT / "history")
             prev = pred.get(key) or {}
@@ -469,7 +530,10 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
         except Exception as e:
             print(f"watch: {key} failed: {e}")
     _grade_v2_record(pred)
+    _totals_grade_record(pred)
     M.save_json(pred, path)
+    if write_alert(pred, OUT / "alert_watch.md"):
+        print("watch: new bets on a validated track, see output/alert_watch.md")
     return pred
 
 

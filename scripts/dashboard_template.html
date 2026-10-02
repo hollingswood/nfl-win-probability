@@ -312,6 +312,7 @@ section[id]{scroll-margin-top:12px}
     <div class="sechead"><h2 id="betsh">Paper bets</h2><span class="pill" id="betmode"></span></div>
     <p class="edge" id="betintro"></p>
     <div class="track" id="g2rec"></div>
+    <div class="track" id="tgrec"></div>
     <div id="tracks"></div>
   </section>
 
@@ -425,7 +426,7 @@ section[id]{scroll-margin-top:12px}
   <section class="notes" id="sec-notes">
     <h2 style="color:var(--ink)">How to read this</h2>
     <p><b>Edge vs. factors.</b> The factor bars explain how the model arrived at its own line, in points. They are not edges: Vegas sees most of the same things. The edge comes only from the gap between the model's line and Vegas's line, and the bet math deliberately shrinks that gap toward Vegas before calculating our chance. A game can have big factors and zero edge.</p>
-    <p><b>Moneyline grades (grade v2)</b> are the predicted closing-line value of the best price for each side, from a model frozen on 2020–22 lines (A+ ≥ 2.5%, A ≥ 1.5%, B ≥ 0.5%, else C). On unseen 2023–25 lines the realized CLV rose with the letter, but only <b>A+</b> showed an edge (+2.3% CLV); A and B were about zero. The grade is a label: it never decides or sizes a track's bet. Games with no grade have no price that is positive against any fair reference. <b>Spread grades</b> are the original points scheme: they start from the edge and subtract for warning signs (the model far from the market, a QB change, the wrong side of 3 or 7, the line moving against us). In 2020–25 tests they ranked spread bets in the right order; spread A+ showed +2.2% CLV, a borderline result. Totals have no grade yet.</p>
+    <p><b>Moneyline grades (grade v2)</b> are the predicted closing-line value of the best price for each side, from a model frozen on 2020–22 lines (A+ ≥ 2.5%, A ≥ 1.5%, B ≥ 0.5%, else C). On unseen 2023–25 lines the realized CLV rose with the letter, but only <b>A+</b> showed an edge (+2.3% CLV); A and B were about zero. The grade is a label: it never decides or sizes a track's bet. Games with no grade have no price that is positive against any fair reference. <b>Spread grades</b> are the original points scheme: they start from the edge and subtract for warning signs (the model far from the market, a QB change, the wrong side of 3 or 7, the line moving against us). In 2020–25 tests they ranked spread bets in the right order; spread A+ showed +2.2% CLV, a borderline result. <b>Totals grades</b> are the predicted closing-line value of each over/under offer at your books, from a model frozen on 2020–22 lines (A+ ≥ 0.0%, A ≥ −1%, B ≥ −2%, else C; a −110 bet at the consensus number is about −4.5%). On 2023–25 lines A+ gained +1.5% CLV and A, B and C all lost value; A+ is mostly early-week unders. Totals are graded within 7 days of kickoff. Also a label only.</p>
     <p>Factor bars show how many points of predicted margin each input is worth and which team it favors. Home field is about 2 points, and near zero at neutral sites. Injuries count every non-QB player listed Out or Doubtful, weighted by their recent share of snaps; reports come out Wednesday to Friday, so early-week numbers assume everyone is healthy.</p>
     <p><b>Model total</b> comes from a simple display-only model (each team's recent points scored and allowed, offensive and defensive efficiency, league scoring level, dome). On 2020–25 it missed the actual total by 10.6 points on average, against 10.3 for the closing Vegas total, so it is context, not an edge, and no track bets on it. <b>AI-read news</b> is pulled from public feeds by an AI reader and is not verified; it is not used by the model or any track.</p>
     <p>Travel, time zones, body clock, weather and Next Gen Stats were each tested as model inputs and did not improve out-of-sample accuracy, so they appear on the cards as context and are not part of the prediction. Live odds come from multiple sportsbooks when an Odds API key is set; "edge" is the expected return at the best available price using the model blended with the market (the same probability the paper bets use), and the backtest above shows those edges have not been profitable against closing lines.</p>
@@ -479,12 +480,19 @@ const v1Badge = (gr, why) => gr ? `<span class="grade ${gradeCls(gr)}" title="Sp
 // grade v2 of the offer a track or box is showing (same side at the same best price), else null
 const sideG2 = (g, side, price) => { const x=((g.grade_v2_sides)||{})[side]; return x && (price==null || x.price===price) ? x : null; };
 const g2Inline = x => x ? `${g2Badge(x.grade, x.predicted_clv)} <span class="g2c">pred CLV ${pcv(x.predicted_clv)}</span>` : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','totals_early_under_bets','props_receptions_bets','night_west_bets'].some(k=>P[k]&&P[k].mode==='live');
+// totals grade: predicted CLV of an over/under offer; only A+ has shown an edge (A/B/C were negative)
+const TG = P.totals_grade || {};
+const TGNOTE = TG.note || 'Totals grade = predicted closing-line value; only A+ has shown an edge (2023-25: +1.5% CLV)';
+const tgTip = x => `Totals grade ${x.grade}: predicted closing-line value ${pcv(x.predicted_clv)} for ${cap1(x.side)} ${x.point} ${od(x.price)} at ${x.book}. A+ ≥ 0.0%, A ≥ −1%, B ≥ −2%, else C (a −110 bet at the consensus number is about −4.5%). Only A+ has shown an edge (+1.5% CLV on 2023–25 lines); A, B and C lost value.`;
+const tgTier = gr => gr==='A+' ? 'top' : gr ? 'low' : 'none';
 const TRACKS = {
   ml_v2:{name:'Moneyline v2 · your books vs sharp books (current lead)', key:'ml_v2_bets', short:'ML v2'},
   ml_v3:{name:'Moneyline v3 · vs Pinnacle + sharp', key:'ml_v3_bets', short:'ML v3'},
   ml_v4:{name:'Moneyline v4 · vs the sharp spread', key:'ml_v4_bets', short:'ML v4'},
   totals:{name:'Totals · forecast-wind unders', key:'totals_wind_bets', short:'Wind under'},
+  totals_eu:{name:'Totals · early-week unders (Tuesday, new 2026 test)', key:'totals_early_under_bets', short:'Early under'},
+  props_rec:{name:'Props · receptions line shopping (Friday)', key:'props_receptions_bets', short:'Rec props'},
   night:{name:'Night games · western team', key:'night_west_bets', short:'Night game'},
   spread:{name:'Spread v1 (original model rules · no edge in backtest)', key:'spread_bets', short:'Spread v1'},
   ml_v1:{name:'Moneyline v1 (original model rules · no edge in backtest)', key:'bets', short:'Moneyline v1'},
@@ -494,8 +502,8 @@ const od = x => x==null ? '' : x>0 ? `+${x}` : `−${Math.abs(x)}`;          // 
 const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
-const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets'};
+const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
@@ -505,7 +513,12 @@ function plain(r, s){
   let m; const neg = x => x.replace('-','−');
   if(/injury report not out/.test(r)) return 'waiting for the injury report (out Wed–Fri)';
   if(/starting QB not confirmed/.test(r)) return 'waiting for the starting QB to be confirmed';
+  if(/only bets at the Tue 7:10am/.test(r)) return 'only bets at the Tuesday 7:10am AZ check, 4–7 days before kickoff';
   if(/only bets at the/.test(r)) return 'only bets at set check times (Tue & Sun morning, Fri afternoon)';
+  if((m=r.match(/less than (\d+) h before kickoff/))) return `kickoff is less than ${m[1]} hours away (rule: 4–7 days before)`;
+  if((m=r.match(/best under only ([-+]?[\d.]+%) vs the sharp fair total/))) return `best under is ${neg(m[1])} vs the sharp books' fair total (needs ≥ 0)`;
+  if(/no sharp-book total/.test(r)) return "no sharp-book total to compare with";
+  if(/no live totals/.test(r)) return 'no live totals yet';
   if((m=r.match(/bets only in the last (\d+) h/))) return `only bets in the last ${m[1]} hours before kickoff`;
   if((m=r.match(/best price only ([-+]?[\d.]+%) vs sharp books \(need ([\d.]+%)\)/))) return `price beats the sharp books' fair price by only ${neg(m[1])} (needs +${m[2]})`;
   if((m=r.match(/moneyline only ([-+]?[\d.]+%) vs sharp spread \(need ([\d.]+%)\)/))) return `price is only ${neg(m[1])} better than the sharp point spread implies (needs +${m[2]})`;
@@ -518,14 +531,16 @@ function plain(r, s){
   return r;
 }
 // next moneyline-v4 betting window (UTC rules) before kickoff, ms or null
-function nextWindow(g){
-  const R=RULES.ml_v4; if(!R||!R.windows_utc) return null;
+function nextWindow(g, key='ml_v4'){
+  const R=RULES[key]||RULES.ml_v4; if(!R||!R.windows_utc) return null;
+  const minH=R.min_hours_before??null, maxH=R.max_hours_before??null;
   const tol=(R.window_tolerance_minutes||0)*60000, ko=Date.parse(g.kickoff_utc||''), now=Date.now();
   const DAY={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}; let best=null;
   for(let d=0; d<9; d++) for(const [dn,hm] of R.windows_utc){
     const t0=new Date(now); t0.setUTCDate(t0.getUTCDate()+d); if(t0.getUTCDay()!==DAY[dn]) continue;
     const [h,mi]=hm.split(':').map(Number); t0.setUTCHours(h,mi,0,0); const t=t0.getTime();
     if(t+tol<now || (Number.isFinite(ko)&&t>=ko)) continue;
+    if(Number.isFinite(ko) && ((minH!=null&&ko-t<minH*3600e3) || (maxH!=null&&ko-t>maxH*3600e3))) continue;
     if(best==null||t<best) best=t;
   }
   return best;
@@ -533,10 +548,12 @@ function nextWindow(g){
 // open ledger bets by track+game, so a logged paper bet always shows as PAPER BET
 const OPEN = {};
 for(const [k,lk] of Object.entries(LEDGER)) for(const b of ((P[lk]||{}).open||[])) OPEN[`${k}|${b.game_id}|${b.team}`] = b;
+const OPEN_PROPS = {};
+for(const b of ((P.props_receptions_bets||{}).open||[])) (OPEN_PROPS[b.game_id] ??= []).push(b);
 // every track's view of a game, normalized: {key, mkt, team, price, point, book, verdict, reasons, edge, why, current, active}
 function signals(g){
   const S=[], v2=g.ml_v2, v3=g.ml_v3;
-  const add=o=>{ if(!o.team) return; o.reasons=o.reasons||[]; o.open=OPEN[`${o.key==='ml_v23'?'ml_v2':o.key}|${g.game_id}|${o.team}`]||(o.key==='ml_v23'?OPEN[`ml_v3|${g.game_id}|${o.team}`]:null)||(o.mkt==='tot'?OPEN[`totals|${g.game_id}|${o.ledgerTeam||''}`]:null); S.push(o); };
+  const add=o=>{ if(!o.team) return; o.reasons=o.reasons||[]; o.open=OPEN[`${o.key==='ml_v23'?'ml_v2':o.key}|${g.game_id}|${o.team}`]||(o.key==='ml_v23'?OPEN[`ml_v3|${g.game_id}|${o.team}`]:null)||(o.mkt==='tot'?OPEN[`${o.key}|${g.game_id}|${o.ledgerTeam||''}`]:null); S.push(o); };
   const mlv = (key,v,edge,why) => v && add({key, mkt:'ml', side:v.side, team:v.team, price:v.price, book:v.book, verdict:v.verdict, reasons:v.reasons, edge, why, current:true, active:['bet','lean','pending'].includes(v.verdict)});
   if(v2 && v3 && sameML(v2,v3)) mlv('ml_v23', v2, v2.ev_sharp, `beats the sharp books' fair price by ${sgn(v2.ev_sharp)}`);
   else { mlv('ml_v2', v2, v2&&v2.ev_sharp, v2&&`beats the sharp books' fair price by ${sgn(v2.ev_sharp)}`);
@@ -552,8 +569,12 @@ function signals(g){
   if(n) add({key:'night', mkt:'sp', team:n.team, point:n.point, price:n.price, book:n.book, verdict:n.verdict, reasons:n.reasons, edge:null,
     why:'western team in a night game (body-clock angle)', current:true, active:['bet','pending','lean'].includes(n.verdict)});
   const t=g.totals_view, u=t&&t.best_under;
-  if(u) add({key:'totals', mkt:'tot', team:'Under', ledgerTeam:'Under', point:u.point, price:u.price, book:u.book, verdict:t.verdict, reasons:t.reasons, edge:u.ev,
+  const UL=`${g.away_team}@${g.home_team} UNDER`;
+  if(u) add({key:'totals', mkt:'tot', side:'under', team:'Under', ledgerTeam:UL, point:u.point, price:u.price, book:u.book, verdict:t.verdict, reasons:t.reasons, edge:u.ev,
     why:`forecast wind ${Math.round(t.forecast_wind_mph)} mph`, current:true, active:t.verdict==='bet'||t.forecast_wind_mph>=15});
+  const e=g.early_under;
+  if(e) add({key:'totals_eu', mkt:'tot', side:'under', team:'Under', ledgerTeam:UL, point:e.point, price:e.price, book:e.book, verdict:e.verdict, reasons:e.reasons||[], edge:e.ev_sharp,
+    why:`${sgn(e.ev_sharp)} vs the sharp books' fair total ${e.sharp_total}`, current:true, active:e.verdict==='bet'||e.ev_sharp>=0});
   return S;
 }
 // status of one track signal: {k:'bet'|'watch'|'no', t, d}
@@ -566,7 +587,7 @@ function sigStatus(s, g){
   }
   const parts=[]; let at=null, night=false;
   for(const r of s.reasons){
-    if(/only bets at the/.test(r)){ at=nextWindow(g); if(at==null) return {k:'no', t:'NO', d:'no betting window left before kickoff'}; }
+    if(/only bets at the/.test(r)){ at=nextWindow(g, s.key); if(at==null) return {k:'no', t:'NO', d:'no betting window left before kickoff'}; }
     else if(/bets only in the last/.test(r)){ const h=+(r.match(/(\d+) h/)||[0,3])[1], ko=Date.parse(g.kickoff_utc||''); night=true; if(Number.isFinite(ko)) at=ko-h*3600e3; else parts.push(`in the last ${h} hours before kickoff`); }
     else if(/injury report/.test(r)) parts.push('the injury report is out');
     else if(/QB/.test(r)) parts.push('the starting QB is confirmed');
@@ -579,10 +600,12 @@ function sigStatus(s, g){
 const SORD = {bet:0, watch:1, no:2};
 const GORD = {'A+':0, 'A':1, 'B+':2, 'B':3, 'C+':4, 'C':5};
 const gTier = gr => !gr ? 'none' : gr==='A+' ? 'top' : /^[AB]/.test(gr) ? 'mid' : 'low';
-const gradeBadge = (gr, tip, big) => `<span class="gb gb-${gTier(gr)}${big?' big':''}" title="${esc(tip||'Not graded')}">${gr||'—'}</span>`;
+const gradeBadge = (gr, tip, big, tier) => `<span class="gb gb-${tier||gTier(gr)}${big?' big':''}" title="${esc(tip||'Not graded')}">${gr||'—'}</span>`;
 const stPill = st => `<span class="st st-${st.k}">${st.t}</span>`;
 const chip = key => `<span class="chip ${key==='ml_v1'||key==='spread'?'orig':''}">${CHIP[key]}</span>`;
-const pickOf = s => s.mkt==='ml' ? `${s.team} ${od(s.price)}` : s.mkt==='sp' ? `${s.team} ${ptd(s.point)} (${od(s.price)})` : `Under ${s.point} (${od(s.price)})`;
+const pickOf = s => s.mkt==='ml' ? `${s.team} ${od(s.price)}` : s.mkt==='sp' ? `${s.team} ${ptd(s.point)} (${od(s.price)})` : s.mkt==='prop' ? `${s.team} (${od(s.price)})` : `${s.team||'Under'} ${s.point} (${od(s.price)})`;
+// totals grade of the offer a track or box is showing (same side, number and price), else null
+const sideTG = (g, side, point, price) => { const x=((g.totals_grade_sides)||{})[side]; return x && (point==null || (x.point===point && x.price===price)) ? x : null; };
 const g2Tip = x => `Grade ${x.grade}: predicted closing-line value ${pcv(x.predicted_clv)} for ${x.team} ${od(x.price)} at ${x.book}. A+ ≥ +2.5%, A ≥ +1.5%, B ≥ +0.5%, else C. Only A+ has shown an edge (+2.3% CLV on 2023–25 lines); A and B were about break-even.`;
 const spTip = b => `Grade ${b.grade}: starts from the edge and subtracts for warning signs${b.why&&b.why.length?` (${b.why.map(w=>w.replace(/^-/,'−')).join('; ')})`:''}. Ranked spread bets correctly in 2020–25 tests; A+ was +2.2% CLV (borderline).`;
 // one row per game × market × side, merging every track that points there
@@ -591,17 +614,22 @@ function gameRows(g){
   const row = (mkt, team) => rows[`${mkt}|${team}`] ??= {g, mkt, team, sigs:[], checks:[]};
   for(const s of S) (s.active||s.open ? row(s.mkt,s.team).sigs : row(s.mkt,s.team).checks).push(s);
   for(const x of Object.values(g.grade_v2_sides||{})) if(x&&x.grade) row('ml', x.team).g2 = x;
+  // totals grade: the best offer per side; only an A+ adds a board row on its own (A/B/C have lost value)
+  for(const x of Object.values(g.totals_grade_sides||{})) if(x&&x.grade){
+    const k=`tot|${cap1(x.side)}`; if((rows[k]&&rows[k].sigs.length)||x.grade==='A+') row('tot', cap1(x.side)).tg = x; }
   const sb=g.spread&&g.spread.best;
-  return Object.values(rows).filter(r=>r.sigs.length||r.g2).map(r=>{
+  return Object.values(rows).filter(r=>r.sigs.length||r.g2||r.tg).map(r=>{
     const sigs=r.sigs.sort((a,b)=>(b.current-a.current)||((b.edge??-1)-(a.edge??-1)));
     const st=sigs.map(s=>({s, st:sigStatus(s,g)}));
     const lead = st.find(x=>x.st.k==='bet') || null;
     // display price: logged bet > graded best price > current tracks > original model
-    const disp = lead ? lead.s : r.g2 ? {mkt:'ml', team:r.team, price:r.g2.price, book:r.g2.book} : sigs[0];
+    const disp = lead ? lead.s : r.g2 ? {mkt:'ml', team:r.team, price:r.g2.price, book:r.g2.book}
+      : (r.tg && !sigs.length) ? {mkt:'tot', team:r.team, point:r.tg.point, price:r.tg.price, book:r.tg.book} : sigs[0];
     r.pick = pickOf(disp); r.book = disp.book;
     if(r.mkt==='ml' && r.g2){ r.grade=r.g2.grade; r.gtip=g2Tip(r.g2); r.pclv=r.g2.predicted_clv; }
     else if(r.mkt==='sp' && sb && sb.team===r.team && sb.ev>0){ r.grade=sb.grade; r.gtip=spTip(sb); }
-    else r.gtip = r.mkt==='tot' ? 'Totals have no grade yet' : r.mkt==='ml' ? 'Not graded: no price on this side beats any fair reference' : 'Not graded: no positive spread edge';
+    else if(r.mkt==='tot' && r.tg){ const x=sideTG(g, r.tg.side, disp.point, disp.price)||r.tg; r.grade=x.grade; r.gtip=tgTip(x); r.pclv=x.predicted_clv; r.tier=tgTier(x.grade); }
+    else r.gtip = r.mkt==='tot' ? 'Totals: not graded (graded within 7 days of kickoff when live totals exist)' : r.mkt==='ml' ? 'Not graded: no price on this side beats any fair reference' : 'Not graded: no positive spread edge';
     // status: logged bet, else a watch (current tracks first), else the main reason it doesn't qualify
     const lab = s => `${CHIP[s.key]}${sigStatus(s,g).k==='no'?':':''} `;
     const w = st.filter(x=>x.st.k==='watch').sort((a,b)=>b.s.current-a.s.current)[0];
@@ -612,6 +640,7 @@ function gameRows(g){
       r.st = {k:'no', t:'NO', d: c ? `No track picks this side (${CHIP[c.key]}: ${sigStatus(c,g).d})` : 'No track picks this side yet'}; }
     r.why = [];
     if(r.g2) r.why.push(`<span class="wl"><span class="chip grd">Grade</span>predicted closing-line value ${pcv(r.g2.predicted_clv)}</span>`);
+    if(r.tg) r.why.push(`<span class="wl"><span class="chip grd">Totals grade</span>predicted closing-line value ${pcv(r.tg.predicted_clv)} for ${esc(cap1(r.tg.side))} ${r.tg.point} ${od(r.tg.price)} at ${esc(r.tg.book)}</span>`);
     for(const s of sigs) r.why.push(`<span class="wl">${chip(s.key)}${esc(s.why)}${s.price!==disp.price||s.point!==disp.point?` <span style="color:var(--muted)">at ${esc(s.mkt==='ml'?od(s.price):ptd(s.point)+' '+od(s.price))}</span>`:''}</span>`);
     if(!sigs.length) r.why.push('<span class="wl" style="color:var(--muted)">Grade only: no track picks this side</span>');
     r.current = sigs.some(s=>s.current);
@@ -623,7 +652,7 @@ const rowSort = (a,b) => (GORD[a.grade]??9)-(GORD[b.grade]??9) || (b.current-a.c
 function mktBox(label, rows, emptyHtml, extra=''){
   if(!rows.length) return `<div class="mkt"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(null, label==='MONEYLINE'?'Not graded: no price beats any fair reference':'Not graded: no positive spread edge')}</span></div>${emptyHtml}</div>`;
   const r=rows[0];
-  return `<div class="mkt is-${r.st.k}"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(r.grade, r.gtip)}${stPill(r.st)}</span></div>
+  return `<div class="mkt is-${r.st.k}"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(r.grade, r.gtip, false, r.tier)}${stPill(r.st)}</span></div>
     <span class="pick">${esc(r.pick)}</span><span class="odds">best price at ${esc(r.book)}</span>
     ${r.why.join('')}<span class="why">${esc(r.st.d)}</span>${extra}
     ${rows.slice(1).map(o=>`<span class="why">Other side: <b>${esc(o.pick)}</b> · grade ${o.grade||'—'} · ${o.st.t}</span>`).join('')}</div>`;
@@ -642,8 +671,16 @@ function totalBox(g){
   const books=(T&&T.totals_by_book)||[];
   const bo=books.filter(b=>b.over_price!=null).sort((a,b)=>a.point-b.point||b.over_price-a.over_price)[0];
   const bu=books.filter(b=>b.under_price!=null).sort((a,b)=>b.point-a.point||b.under_price-a.under_price)[0];
-  const v=tv?tv.verdict:null, ts=signals(g).find(s=>s.key==='totals'), st=ts?sigStatus(ts,g):null;
-  const pill=st?stPill(st):'';
+  const v=tv?tv.verdict:null, SG=signals(g), ts=SG.find(s=>s.key==='totals'), st=ts?sigStatus(ts,g):null;
+  const es=SG.find(s=>s.key==='totals_eu'), est=es?sigStatus(es,g):null;
+  const best1=[st,est].filter(Boolean).sort((a,b)=>SORD[a.k]-SORD[b.k])[0];
+  const pill=best1?stPill(best1):'';
+  const tg=g.totals_grade;
+  const gradeHtml = tg ? `<span class="gl">GRADE</span>${gradeBadge(tg.grade, tgTip(tg), false, tgTier(tg.grade))}`
+    : `<span class="gl">GRADE</span>${gradeBadge(null, (g.totals_grade_check||[])[0] ? 'Not graded: '+(g.totals_grade_check||[])[0] : 'Not graded')}`;
+  const tgLine = tg ? `<span class="cmp">Graded offer: <b>${esc(cap1(tg.side))} ${tg.point}</b> ${fmtML(tg.price)} ${esc(tg.book)} · pred CLV ${pcv(tg.predicted_clv)}${tg.grade==='A+'?' · the only grade with an edge so far':''}</span>` : '';
+  const e=g.early_under;
+  const eTxt = est ? est.d : e ? cap1((e.reasons||[]).map(niceReason).join('; ')||'logged') : (g.early_under_check||[]).length ? cap1(g.early_under_check.map(niceReason).join('; ')) : 'not evaluated';
   const left = vt!=null
     ? `<span class="big">Vegas ${vt.toFixed(1)}</span><span class="odds">consensus${T.sharp_total!=null?` · sharp books ${T.sharp_total.toFixed(1)}`:''}</span>`
     : `<span class="odds">No live totals yet</span>`;
@@ -651,9 +688,10 @@ function totalBox(g){
   const best = (bo||bu) ? `<span class="cmp">${bo?`Best over <b>${bo.point}</b> ${fmtML(bo.over_price)} ${esc(bo.book)}`:''}</span><span class="cmp">${bu?`Best under <b>${bu.point}</b> ${fmtML(bu.under_price)} ${esc(bu.book)}`:''}</span>` : '';
   const reasons = tv ? (tv.reasons||[]) : (g.wind_check||[]);
   const wtxt = st ? st.d : reasons.length ? cap1(reasons.map(niceReason).join('; ')) : 'not evaluated';
-  return `<div class="mkt tot ${st?'is-'+st.k:''}"><div class="mh"><span>TOTAL</span><span class="mhr"><span class="gl" title="Totals have no grade yet">NO GRADE YET</span>${pill}</span></div>
-    <div class="tg"><div style="display:grid;gap:2px">${left}${model}</div><div style="display:grid;gap:2px">${best}</div></div>
-    <span class="why"><span class="${windy?'warn':''}">${weatherText(g)}</span> · Wind-under track: ${esc(wtxt)}</span></div>`;
+  return `<div class="mkt tot ${best1?'is-'+best1.k:''}"><div class="mh"><span>TOTAL</span><span class="mhr">${gradeHtml}${pill}</span></div>
+    <div class="tg"><div style="display:grid;gap:2px">${left}${model}</div><div style="display:grid;gap:2px">${best}</div></div>${tgLine}
+    <span class="why"><span class="${windy?'warn':''}">${weatherText(g)}</span> · Wind-under track: ${esc(wtxt)}</span>
+    <span class="why">Early-under track${e?` (${esc(`Under ${e.point} ${od(e.price)} ${e.book}`)}, sharp fair ${e.sharp_total})`:''}: ${esc(eTxt)}</span></div>`;
 }
 const sameML = (a,b) => a&&b&&a.team===b.team&&a.price===b.price&&a.book===b.book&&a.verdict===b.verdict&&Math.abs((a.ev_sharp??0)-(b.ev_sharp??0))<0.001;
 // per-track detail on a game card: every current track, its status and the grade of the offer it points at
@@ -664,7 +702,8 @@ function trackLines(g){
   const L=S.map(s=>{
     const st=sigStatus(s,g); if(st.k!=='no') hot++;
     const x = s.mkt==='ml' ? sideG2(g, s.side, s.price) : null;
-    const gr = x ? gradeBadge(x.grade, g2Tip(x)) : s.mkt==='sp'&&sb&&sb.team===s.team&&sb.ev>0 ? gradeBadge(sb.grade, spTip(sb)) : '';
+    const t = s.mkt==='tot' ? sideTG(g, s.side||'under', s.point, s.price) : null;
+    const gr = x ? gradeBadge(x.grade, g2Tip(x)) : t ? gradeBadge(t.grade, tgTip(t), false, tgTier(t.grade)) : s.mkt==='sp'&&sb&&sb.team===s.team&&sb.ev>0 ? gradeBadge(sb.grade, spTip(sb)) : '';
     return `<div class="tk"><span class="tn">${CHIP[s.key]}</span>${stPill(st)}<span class="td">${gr?gr+' ':''}${esc(pickOf(s))} ${esc(s.book||'')}</span><span class="why">${st.k==='no'?'':esc(s.why)+'. '}${esc(cap1(st.d))}</span></div>`;
   });
   return `<details class="trk"${hot?' open':''}><summary class="subh">Track by track · ${hot?`${hot} of ${S.length} active`:`all ${S.length} say no`}</summary>${L.join('')}</details>`;
@@ -678,7 +717,18 @@ function aiNews(g){
   return `<div class="ainews"><span class="subh">AI-read news (unverified)</span>${N.map(n=>`<div class="an">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.team)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b> · ${src(n)} · seen ${ago(n.seen_at)}</div>`).join('')}</div>`;
 }
 const allRows=[];
-document.getElementById('g2games').innerHTML = `<b>Grade</b> on each box: moneyline grades predict closing-line value; spread grades are the original points scheme. Only <b>A+</b> has shown an edge. Hover a grade for the reason.`;
+document.getElementById('g2games').innerHTML = `<b>Grade</b> on each box: moneyline and total grades predict closing-line value; spread grades are the original points scheme. Only <b>A+</b> has shown an edge. Hover a grade for the reason.`;
+// receptions-props track on a game card: when it checks this game, and what it logged
+function propsLine(g){
+  const v=g.props_receptions; if(!v) return '';
+  const R=RULES.props_rec||{}, when=Date.parse(v.early_check_at||''), lg=OPEN_PROPS[g.game_id]||[];
+  let d;
+  if(lg.length) d = `${lg.length} paper bet${lg.length===1?'':'s'}: ${lg.slice(0,6).map(b=>esc(`${b.player} ${cap1(b.side)} ${b.point} ${od(b.price)} ${b.book}`)).join(' · ')}${lg.length>6?' …':''}`;
+  else if(v.checked_at) d = `checked ${fmtWhen(Date.parse(v.checked_at))}${v.quoted_players!=null?` (${v.quoted_players} players quoted)`:''}: no price beat the other books by 2%+`;
+  else if(Number.isFinite(when) && when > Date.now()-((R.window_tolerance_minutes||50)*60000)) d = `checks prices at ${fmtWhen(when)}`;
+  else d = 'no check (window passed or no live odds)';
+  return `<div class="ctx"><span><span class="chip">${CHIP.props_rec}</span>Receptions props: ${d}</span></div>`;
+}
 document.getElementById('games').innerHTML = P.upcoming.map(g => {
   const R=gameRows(g).sort(rowSort); allRows.push(...R);
   const hp = g.home_win_prob, homeFav = hp >= .5;
@@ -713,6 +763,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     </div>
     <div class="markets">${mktBox('MONEYLINE', R.filter(r=>r.mkt==='ml').sort((a,b)=>SORD[a.st.k]-SORD[b.st.k]||rowSort(a,b)), mlEmpty)}${mktBox('SPREAD', spRows, spEmpty, buyTxt)}${totalBox(g)}</div>
     ${trackLines(g)}
+    ${propsLine(g)}
     <div class="gap">${gap}</div>
     ${aiNews(g)}
     <div class="factors"><span class="subh">What drives the model's number (Vegas sees most of these too)</span>${factors}</div>
@@ -728,22 +779,27 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   const m=document.getElementById('boardmode'); m.textContent = live ? 'Live' : 'Shadow mode · paper only'; if(live) m.classList.add('live');
   document.getElementById('boardintro').innerHTML = `<p style="margin:0">Every pick any track likes, one row per bet, best first. <b>Grade</b> says how good the price looks: only <b>A+</b> has shown an edge in testing. <b>Status</b> says whether a paper track logged it. ${live?'':'<b>Everything is paper (logged and scored, not recommended) until a track passes validation.</b>'}</p>
     <div class="keyrow"><span><span class="st st-bet">${live?'BET':'PAPER BET'}</span> logged</span> <span><span class="st st-watch">WATCH</span> would qualify later (time shown)</span> <span><span class="st st-no">NO</span> doesn't qualify (main reason shown)</span> <span><span class="chip">ML v4</span>tracks that agree</span> <span><span class="chip orig">Original model</span>first model's rules, no edge on real lines</span></div>`;
+  // receptions-props paper bets (one row each; props have no grade)
+  for(const g of P.upcoming) for(const b of (OPEN_PROPS[g.game_id]||[])) allRows.push({g, mkt:'prop', team:b.team, pick:`${b.player} ${cap1(b.side)} ${b.point} rec (${od(b.price)})`, book:b.book,
+    grade:null, gtip:'Props are not graded', st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.props_rec}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${od(b.price)}`},
+    why:[`<span class="wl">${chip('props_rec')}${esc(`${sgn(b.edge)} vs the other books' fair price (${b.n_other} books)`)}</span>`], current:true, sortEdge:b.edge});
   allRows.sort(rowSort);
-  const top=allRows.filter(r=>r.grade==='A+'), mid=allRows.filter(r=>/^[AB]/.test(r.grade||'')&&r.grade!=='A+'), rest=allRows.filter(r=>!/^[AB]/.test(r.grade||''));
+  // totals A/B/C have lost value (unlike moneyline A/B), so they never go to the watchlist
+  const top=allRows.filter(r=>r.grade==='A+'), mid=allRows.filter(r=>/^[AB]/.test(r.grade||'')&&r.grade!=='A+'&&r.mkt!=='tot'), rest=allRows.filter(r=>!top.includes(r)&&!mid.includes(r));
   const restBets = rest.filter(r=>r.st.k==='bet').length;
   const gt = g => `${g.away_team} @ ${g.home_team} · ${fmtDay(g.gameday)}${g.gametime?` ${esc(g.gametime)} ET`:''}`;
-  const MK = {ml:'Moneyline', sp:'Spread', tot:'Total'};
+  const MK = {ml:'Moneyline', sp:'Spread', tot:'Total', prop:'Player prop'};
   const head = `<div class="brow bh"><span>Grade</span><span>Pick</span><span>Why</span><span>Status</span></div>`;
-  const row = r => `<div class="brow"><span>${gradeBadge(r.grade, r.gtip, true)}</span>
+  const row = r => `<div class="brow"><span>${gradeBadge(r.grade, r.gtip, true, r.tier)}</span>
     <span class="bpk"><b>${esc(r.pick)}</b><small>${MK[r.mkt]} · ${esc(r.book)}</small><small>${gt(r.g)}</small></span>
     <span class="bwhy">${r.why.join('')}</span>
     <span class="bst">${stPill(r.st)}<small>${esc(r.st.d)}</small></span></div>`;
   const list = (rows, cls, empty) => `<div class="blist ${cls}">${rows.length ? head + rows.map(row).join('') : `<div class="bempty">${empty}</div>`}</div>`;
   const n = x => `${x} pick${x===1?'':'s'}`;
   document.getElementById('board').innerHTML = `
-    <section class="bgroup"><div class="bgh"><h3>Bet-worthy · A+</h3><span class="cnt">${n(top.length)}</span></div><p class="gi">The only grade that has shown an edge: moneyline A+ prices gained +2.3% on the closing line in 2023–25; spread A+ +2.2% (borderline). An A+ with status NO means no paper track has its rules met yet.</p>
+    <section class="bgroup"><div class="bgh"><h3>Bet-worthy · A+</h3><span class="cnt">${n(top.length)}</span></div><p class="gi">The only grade that has shown an edge: moneyline A+ prices gained +2.3% on the closing line in 2023–25; totals A+ +1.5% (mostly early-week unders); spread A+ +2.2% (borderline). An A+ with status NO means no paper track has its rules met yet.</p>
       ${list(top, 'top', 'Nothing graded A+ right now. Prices are re-checked hourly.')}</section>
-    <section class="bgroup"><div class="bgh"><h3>Watchlist · A / B</h3><span class="cnt">${n(mid.length)}</span></div><p class="gi">Positive but unproven: A and B grades were about break-even in testing. Worth watching in case the price improves to A+.</p>
+    <section class="bgroup"><div class="bgh"><h3>Watchlist · A / B</h3><span class="cnt">${n(mid.length)}</span></div><p class="gi">Positive but unproven: moneyline and spread A and B grades were about break-even in testing. Worth watching in case the price improves to A+. (Totals A/B lost value, so they are listed under Everything else.)</p>
       ${list(mid, '', 'No A or B grades right now.')}</section>
     <details class="bgroup"${restBets?' open':''}><summary><div class="bgh"><h3>Everything else</h3><span class="cnt">${n(rest.length)} · C grades and ungraded${restBets?` · ${restBets} paper bet${restBets===1?'':'s'} logged`:''} · click to ${restBets?'hide':'show'}</span></div><p class="gi">Includes picks only the original model makes. Its big “edges” come from the model disagreeing with Vegas, and they showed no profit on real early-week lines.</p></summary>
       ${list(rest, '', 'Nothing else.')}</details>`;
@@ -877,39 +933,50 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 (function(){
-  const tracks=['ml_v2','ml_v3','ml_v4','totals','night','spread','ml_v1'].map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
+  const tracks=['ml_v2','ml_v3','ml_v4','totals','totals_eu','props_rec','night','spread','ml_v1'].map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
   const m=document.getElementById('betmode'); m.textContent = anyLive ? 'A track is live · validated' : 'Shadow mode · not recommendations'; if(anyLive) m.classList.add('live');
-  document.getElementById('betintro').innerHTML = `Each track has its own locked rules and record. <b>Moneyline v2</b> is the current lead: it bets only when one of your books beats the sharp books' fair price and the model agrees (positive closing line value on 2020–22 and on unseen 2023–25, not yet conclusive). <b>v3</b> is the same idea priced against Pinnacle. The totals and night-game tracks test forecast wind and body clock. Spread v1 and moneyline v1 are the original model rules, which showed no edge on real 2020–25 early-week lines. Every track logs the bets it would make at the best price when it decided, grades them after the game, and becomes a recommendation only after enough bets show the line moving our way more than luck explains <b>and</b> a profit.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  document.getElementById('betintro').innerHTML = `Each track has its own locked rules and record. <b>Moneyline v2</b> is the current lead: it bets only when one of your books beats the sharp books' fair price and the model agrees (positive closing line value on 2020–22 and on unseen 2023–25, not yet conclusive). <b>v3</b> is the same idea priced against Pinnacle. The totals and night-game tracks test forecast wind and body clock; <b>early-week unders</b> (Tuesday, an under priced at or better than the sharp books' fair total) and <b>receptions props</b> (Friday, a book's price beating the other books by 2%+) are new 2026 tests, judged on closing line value. Spread v1 and moneyline v1 are the original model rules, which showed no edge on real 2020–25 early-week lines. Every track logs the bets it would make at the best price when it decided, grades them after the game, and becomes a recommendation only after enough bets show the line moving our way more than luck explains <b>and</b> a profit.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
   const ck=(ok,t)=>`<span class="chk ${ok?'ok':'no'}">${ok?'✓':'○'} ${t}</span>`;
-  const gradeTable=(rows, v2, withTrack)=>`<thead><tr><th style="text-align:left">Grade</th>${withTrack?'<th style="text-align:left">Track</th>':''}<th>Bets</th><th>W–L</th><th>Units</th><th>ROI</th><th>Avg. CLV</th>${v2?'<th>Pred. CLV</th>':''}</tr></thead><tbody>`+
-    rows.map(x=>`<tr><td style="text-align:left">${v2?g2Badge(x.grade,x.avg_predicted_clv):v1Badge(x.grade)}</td>${withTrack?`<td style="text-align:left;font-family:var(--body)">${esc(x.track||'All ML tracks')}</td>`:''}<td>${x.bets}</td><td>${x.wins}–${x.losses}</td><td>${x.profit_units>0?'+':''}${x.profit_units}</td><td class="${x.roi>=0?'win':'loss'}">${(x.roi*100).toFixed(1)}%</td><td>${x.avg_clv==null?'—':pcv(x.avg_clv)}</td>${v2?`<td>${x.avg_predicted_clv==null?'—':pcv(x.avg_predicted_clv)}</td>`:''}</tr>`).join('')+'</tbody>';
+  const tgBadge=(gr,clv)=>gr?`<span class="grade ${gr==='A+'?'g2-top':''}" title="Totals grade · predicted CLV ${pcv(clv)}">${gr}</span>`:'';
+  const gradeTable=(rows, v2, withTrack, badge)=>`<thead><tr><th style="text-align:left">Grade</th>${withTrack?'<th style="text-align:left">Track</th>':''}<th>Bets</th><th>W–L</th><th>Units</th><th>ROI</th><th>Avg. CLV</th>${v2?'<th>Pred. CLV</th>':''}</tr></thead><tbody>`+
+    rows.map(x=>`<tr><td style="text-align:left">${badge?badge(x.grade,x.avg_predicted_clv):v2?g2Badge(x.grade,x.avg_predicted_clv):v1Badge(x.grade)}</td>${withTrack?`<td style="text-align:left;font-family:var(--body)">${esc(x.track||'All tracks')}</td>`:''}<td>${x.bets}</td><td>${x.wins}–${x.losses}</td><td>${x.profit_units>0?'+':''}${x.profit_units}</td><td class="${x.roi>=0?'win':'loss'}">${(x.roi*100).toFixed(1)}%</td><td>${x.avg_clv==null?'—':pcv(x.avg_clv)}</td>${v2?`<td>${x.avg_predicted_clv==null?'—':pcv(x.avg_predicted_clv)}</td>`:''}</tr>`).join('')+'</tbody>';
   (function(){ // grade v2 record across the moneyline tracks
     const R=(P.grade_v2&&P.grade_v2.record)||{}, all=R.all||[], per=R.by_track||[], el=document.getElementById('g2rec');
     const tbl = all.length ? gradeTable([...all.map(x=>({...x, track:'All ML tracks'})), ...per], true, true)
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">Appears once graded moneyline paper bets carry a grade v2 (recorded on new bets from 2026-10-02${R.open_bets_with_grade?`; ${R.open_bets_with_grade} open`:''}).</td></tr></tbody>`;
     el.innerHTML=`<h3>Grade v2 record <span class="pill">moneyline tracks</span></h3><p class="g2note">${esc(G2NOTE)}. The grade is a label; it never decides or sizes a bet.</p><div class="scroll"><table>${tbl}</table></div>`;
   })();
-  const betLabel=(b,spread)=>b.side==='under'?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
+  (function(){ // totals grade record across the totals tracks
+    const R=TG.record||{}, all=R.all||[], per=R.by_track||[], el=document.getElementById('tgrec');
+    const tbl = all.length ? gradeTable([...all.map(x=>({...x, track:'All totals tracks'})), ...per], true, true, tgBadge)
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">Appears once graded totals paper bets carry a totals grade (recorded on new bets from 2026-10-02${R.open_bets_with_grade?`; ${R.open_bets_with_grade} open`:''}).</td></tr></tbody>`;
+    el.innerHTML=`<h3>Totals grade record <span class="pill">totals tracks</span></h3><p class="g2note">${esc(TGNOTE)}. A label only; it never decides or sizes a bet.</p><div class="scroll"><table>${tbl}</table></div>`;
+  })();
+  const betLabel=(b,spread)=>b.player?`<b>${esc(b.player)} ${cap1(b.side)} ${b.point}</b> receptions · ${esc(b.opponent)}`:b.side==='under'?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   document.getElementById('tracks').innerHTML = tracks.map(([name,B,key])=>{
-    const mlT=key.startsWith('ml_');
+    const mlT=key.startsWith('ml_'), tgT=key==='totals'||key==='totals_eu';
     const spread=key==='spread'||key==='night', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(r.checks.enough_bets,'graded bets')],
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(r.checks.roi_positive,'')}`],
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(r.checks.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
       gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
-    for (const b of open) { const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`); if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:fmtP(b.price)}</span>`); }
-    const bg=(mlT?B.by_grade_v2:B.by_grade)||[];
-    const gradeT = bg.length ? gradeTable(bg, mlT)
-      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by grade v2 appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
-    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div><span class="subh">${mlT?'Paper record by grade v2':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div></div>`;
+    const flagged=new Set();
+    for (const b of open) { if(b.player){ if(flagged.has(b.game_id)) continue; flagged.add(b.game_id); }
+      const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`);
+      const what = b.player ? `${open.filter(x=>x.game_id===b.game_id).length} rec prop${open.filter(x=>x.game_id===b.game_id).length===1?'':'s'}` : `${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:b.side==='under'?b.point:fmtP(b.price)}`;
+      if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${what}</span>`); }
+    const bg=(mlT?B.by_grade_v2:tgT?B.by_totals_grade:B.by_grade)||[];
+    const gradeT = key==='props_rec' ? '' : bg.length ? gradeTable(bg, mlT||tgT, false, tgT?tgBadge:null)
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by grade v2 appears here once graded paper bets carry one.':tgT?'Performance by totals grade appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
+    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div>${gradeT?`<span class="subh">${mlT?'Paper record by grade v2':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
   }).join('');
 })();
 
