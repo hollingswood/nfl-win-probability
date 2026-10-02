@@ -1,0 +1,64 @@
+{
+ "frozen_on": "2026-10-02T14:51:20.497565+00:00",
+ "dev_seasons": [
+  2023
+ ],
+ "holdout_seasons": [
+  2024,
+  2025
+ ],
+ "allowed_books": [
+  "betmgm",
+  "betrivers",
+  "draftkings",
+  "espnbet",
+  "fanatics",
+  "fanduel",
+  "hardrockbet",
+  "williamhill_us"
+ ],
+ "note": "Selected on 2023 only. R1/R2 = soft-book outliers vs the derivative consensus (R2 also needs the full-game model to agree); R3 = pure full-game-model pricing, kept as an out-of-sample test of the core hypothesis although its 2023 CLV was ~0.",
+ "rules": [
+  {
+   "id": "R1_consq_close",
+   "fair": "fair_consq",
+   "snap": "close",
+   "markets": [
+    "spreads_h1",
+    "totals_h1",
+    "team_totals"
+   ],
+   "ev_min": 0.01,
+   "min_ref_books": 3,
+   "mname": "all",
+   "desc": "75 min pre-kick: best allowed-book price with EV >= 1% vs the leave-one-out median no-vig of >= 3 other books quoting the SAME point (any derivative market); one bet per game-market"
+  },
+  {
+   "id": "R2_consq_early_agree",
+   "fair": "fair_consq",
+   "snap": "early",
+   "markets": [
+    "spreads_h1",
+    "totals_h1",
+    "team_totals"
+   ],
+   "ev_min": 0.01,
+   "agree": "anch",
+   "mname": "all",
+   "desc": "early snapshot (Fri 21:40 UTC / kick-24h): EV >= 1% vs same-point other-book no-vig (pmf fallback when no other book has that point) AND EV >= 0 vs the sharp-full-game-implied anchored fair"
+  },
+  {
+   "id": "R3_model_early",
+   "fair": "fair_anch",
+   "snap": "early",
+   "markets": [
+    "spreads_h1",
+    "totals_h1",
+    "team_totals"
+   ],
+   "ev_min": 0.08,
+   "mname": "all",
+   "desc": "hypothesis test of 'derivatives priced off the sharp full-game line': early snapshot, EV >= 8% vs Fair(sharp S,T) + rolling market level offset (key-number pmfs fit 2012-22)"
+  }
+ ]
+}
