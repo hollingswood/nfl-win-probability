@@ -77,10 +77,36 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
     return out
 
 
+RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",
+              "ml_v3": "moneyline_v3_rules.json", "ml_v4": "moneyline_v4_rules.json",
+              "totals": "totals_wind_rules.json", "night": "night_west_rules.json"}
+
+
+def load_rule_limits(root: Path = ROOT) -> dict:
+    """Display-only facts from the (read-only) rules files: each track's allowed price range and,
+    for moneyline v4, its betting windows (UTC). Missing/bad files are skipped."""
+    out = {}
+    for key, name in RULE_FILES.items():
+        try:
+            q = json.loads((root / name).read_text()).get("qualify") or {}
+        except (OSError, json.JSONDecodeError):
+            continue
+        r = {"min_odds": q.get("min_american_odds"), "max_odds": q.get("max_american_odds")}
+        if q.get("windows_utc"):
+            r["windows_utc"] = q["windows_utc"]
+            r["window_tolerance_minutes"] = q.get("window_tolerance_minutes", 0)
+        if q.get("bet_within_hours_of_kickoff") is not None:
+            r["bet_within_hours"] = q["bet_within_hours_of_kickoff"]
+        out[key] = r
+    return out
+
+
 def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
-                  news_signals: list[dict] | None, now: dt.datetime | None = None) -> dict:
+                  news_signals: list[dict] | None, now: dt.datetime | None = None,
+                  rules: dict | None = None) -> dict:
     return {"predictions": predictions, "backtest": backtest, "vs_vegas": vs_vegas,
-            "news_ai": news_by_game(news_signals or [], predictions.get("upcoming", []), now)}
+            "news_ai": news_by_game(news_signals or [], predictions.get("upcoming", []), now),
+            "rules": load_rule_limits() if rules is None else rules}
 
 
 def render(payload: dict, template: str | None = None) -> str:

@@ -992,3 +992,29 @@ def test_dashboard_renders_grade_v2(tmp_path):
     assert "only A+ has shown an edge (2023-25: +2.3% CLV)" in body
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
     assert data["predictions"]["upcoming"][0]["grade_v2"]["grade"] == "A+"
+
+
+def test_dashboard_rule_limits_and_board_layout(tmp_path):
+    """The page gets each track's allowed price range and the v4 betting windows (display only, read from
+    the rules files), and the template has the grouped board, grade labels without a v1 tag, and the
+    per-week season layout."""
+    import json
+    import re
+    bd = _load_build_dashboard()
+    lim = bd.load_rule_limits()
+    assert lim["ml_v1"]["min_odds"] == -400 and lim["ml_v1"]["max_odds"] == 400
+    assert lim["ml_v4"]["max_odds"] == 400 and lim["ml_v4"]["windows_utc"]
+    assert lim["night"]["bet_within_hours"] == 3 and "spread" in lim and "totals" in lim
+    assert bd.load_rule_limits(tmp_path) == {}                                   # missing files are skipped
+    (tmp_path / "betting_rules.json").write_text("not json")
+    assert bd.load_rule_limits(tmp_path) == {}
+    pred = _dash_predictions(True)
+    backtest = {"overall": {"margin": {"accuracy": 0.66, "n": 2000}, "vegas": {"accuracy": 0.67, "n": 2000}},
+                "seasons": "2018-2025", "calibration": [], "by_season": []}
+    body = bd.render(bd.build_payload(pred, backtest, None, []))
+    data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
+    assert data["rules"]["ml_v4"]["windows_utc"] == lim["ml_v4"]["windows_utc"]
+    assert bd.build_payload(pred, backtest, None, [], rules={"x": 1})["rules"] == {"x": 1}
+    for s in ("Bet-worthy · A+", "Watchlist · A / B", "Everything else", 'id="std"', "beat the spread by", "WATCH"):
+        assert s in body
+    assert 'class="gv"' not in body and ">v1<" not in body                       # no v1 tag on grade labels

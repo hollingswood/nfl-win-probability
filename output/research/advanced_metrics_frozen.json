@@ -1,0 +1,42 @@
+{
+ "frozen_at": "2026-10-02T15:36:23+00:00",
+ "n_rules": 3,
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "pass_bar": "primary metric > 0 with one-sided p < 0.05/3",
+ "rules": {
+  "R1_ats_close_fade_fumble_luck": {
+   "kind": "ats_close_fade",
+   "market": "spread",
+   "feature": "m_fumrec",
+   "threshold": 1.5,
+   "snapshot": "closing line (nflverse spread_line) at its actual closing juice",
+   "rule": "bet AGAINST the team with the better walk-forward fumble-recovery luck (own-fumble recovery rate minus opponents' recovery rate vs it, shrunk, home-minus-away) when |z| >= 1.5 (2013-19 SD scale)",
+   "metric": "ATS ROI at closing juice; one-sided t on per-bet profit",
+   "dev": "2012-19: 312 bets, ROI +2.8% (t 0.52); 2020-22: 141 bets, ROI +9.7% (t 1.21); pre-specified luck hypothesis; rating has ~zero persistence (pre-game vs game corr 0.02)"
+  },
+  "R2_total_close_slow_pace_under": {
+   "kind": "ou_close_under",
+   "market": "total",
+   "feature": "t_npace",
+   "threshold": 1.0,
+   "snapshot": "closing line (nflverse total_line) at its actual closing juice",
+   "rule": "bet UNDER when the game's combined neutral-situation seconds-per-snap rating (both offenses and the pace both defenses allow) is >= +1.0 SD (slow game)",
+   "metric": "O/U ROI at closing juice; one-sided t on per-bet profit",
+   "dev": "2012-19: 317 bets, ROI +10.1% (t 1.86); 2020-22: 94 bets, ROI +7.3% (t 0.74); Tue CLV 2020-22 -0.9% (vs -1.2% for any best-price under)"
+  },
+  "R3_spread_tue_back_early_down_epa": {
+   "kind": "spread_tue_back",
+   "market": "spread",
+   "feature": "m_ed_epa",
+   "threshold": 2.0,
+   "snapshot": "Tue 14:10 UTC (<= 7 days before kickoff), best allowed-book price, one bet per game",
+   "rule": "back the side with the better net early-down (1st/2nd down) EPA rating when |z| >= 2.0: the Tuesday line under-reacts to it (+0.37 pt/SD move to the close, t 6.3, 2020-22)",
+   "metric": "price-based CLV vs edge_lab.closing_fair (mu_close_sharp, else all books)",
+   "dev": "2020-22: 44 bets, CLV +0.3% (t 0.17); thresholds 1.0/1.5 were -2.5%/-1.8%"
+  }
+ }
+}
