@@ -1,0 +1,40 @@
+{
+ "frozen_at": "2026-10-02T15:20:54+00:00",
+ "n_rules": 3,
+ "pass_bar": "holdout CLV > 0 (R3: ROI > 0) with one-sided p < 0.05/3",
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "rules": {
+  "R1_spread_tue_unit_index": {
+   "market": "spread",
+   "snapshot": "Tue 14:10 UTC (<=7 days before kickoff)",
+   "rule": "bet the side favoured by the equal-weight unit-strength index (pass EPA, explosive-play, pressure, rush success: offense vs opposing defense, additive) when |index| >= 2.5; best allowed-book price (highest EV vs the snapshot's sharp fair line); one bet per game",
+   "index_feats": [
+    "m_pass_epa_add",
+    "m_expl_add",
+    "m_press_add",
+    "m_rush_sr_add"
+   ],
+   "threshold": 2.5,
+   "metric": "price-based CLV vs edge_lab.closing_fair"
+  },
+  "R2_total_close_low_penalty_crew_under": {
+   "market": "total",
+   "snapshot": "closing line (nflverse total_line, actual closing juice); referee known",
+   "rule": "bet UNDER when the referee's shrunk penalties-per-game rating (z, 2013-19 scale) <= -1.0",
+   "threshold": -1.0,
+   "metric": "O/U ROI at actual closing juice vs break-even (one-sided t on per-bet profit)",
+   "secondary": "same games at the Friday 21:40 snapshot (non-Thursday games): price-based CLV, informational"
+  },
+  "R3_total_close_sack_interaction_under": {
+   "market": "total",
+   "snapshot": "closing line (nflverse total_line, actual closing juice)",
+   "rule": "bet UNDER at the close when t_sack_int (sum over both offense-vs-defense pairings of z(off sack-avoidance) x z(def sack-allowance)) z-score >= 1.0 (2013-19 scale)",
+   "threshold": 1.0,
+   "metric": "O/U ROI at actual closing juice vs break-even (one-sided t on per-bet profit)"
+  }
+ }
+}

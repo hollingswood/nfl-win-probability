@@ -1,0 +1,2776 @@
+{
+ "dev": {
+  "generated": "2026-10-02T08:17:58",
+  "seasons": [
+   2020,
+   2021,
+   2022
+  ],
+  "rows_all_offers": 94652,
+  "candidate_rows": 20610,
+  "games": 802,
+  "clv_all_offers_mean": -0.0445,
+  "clv_candidates_mean": -0.0299,
+  "corr_clv_vs_clv_old": 0.9955,
+  "cv": {
+   "base_ev_sp_sharp": {
+    "wmse": 0.003481081771819997,
+    "r2_vs_const": 0.067
+   },
+   "ridge_core_a1": {
+    "wmse": 0.0034590809643729684,
+    "r2_vs_const": 0.0729
+   },
+   "ridge_core_a300": {
+    "wmse": 0.0034592247765689007,
+    "r2_vs_const": 0.0729
+   },
+   "ridge_core_a3000": {
+    "wmse": 0.003464721647950028,
+    "r2_vs_const": 0.0714
+   },
+   "ridge_market_a1": {
+    "wmse": 0.003466879390875997,
+    "r2_vs_const": 0.0708
+   },
+   "ridge_market_a300": {
+    "wmse": 0.0034664813922425895,
+    "r2_vs_const": 0.0709
+   },
+   "ridge_market_a3000": {
+    "wmse": 0.003471979064504523,
+    "r2_vs_const": 0.0695
+   },
+   "ridge_small_a1": {
+    "wmse": 0.0034688549344015695,
+    "r2_vs_const": 0.0703
+   },
+   "ridge_small_a300": {
+    "wmse": 0.0034666183214929792,
+    "r2_vs_const": 0.0709
+   },
+   "ridge_small_a3000": {
+    "wmse": 0.0034618603800027885,
+    "r2_vs_const": 0.0722
+   },
+   "ridge_all_a1": {
+    "wmse": 0.0035227511868675624,
+    "r2_vs_const": 0.0559
+   },
+   "ridge_all_a300": {
+    "wmse": 0.003512758288020022,
+    "r2_vs_const": 0.0585
+   },
+   "ridge_all_a3000": {
+    "wmse": 0.00349109102604333,
+    "r2_vs_const": 0.0643
+   },
+   "lgbm_small_100x4": {
+    "wmse": 0.003495175279099603,
+    "r2_vs_const": 0.0633
+   },
+   "lgbm_small_200x4": {
+    "wmse": 0.0035033441087496454,
+    "r2_vs_const": 0.0611
+   },
+   "lgbm_all_100x4": {
+    "wmse": 0.003510814900326711,
+    "r2_vs_const": 0.0591
+   },
+   "lgbm_all_200x4": {
+    "wmse": 0.0035326248581078706,
+    "r2_vs_const": 0.0532
+   }
+  },
+  "chosen_model": "ridge_core_a1",
+  "choice_rule": "complexity tiers base < ridge core < ridge market < ridge small < ridge all < lgbm small < lgbm all; start from the base (raw EV vs sharp spread); move to the best model of a higher tier only if its LOSO game-weighted MSE beats the current choice by > 0.5% relative (moneyline grade v2 rule, generalized)",
+  "oof_pred_quantiles": {
+   "0.5": -0.0364,
+   "0.75": -0.0264,
+   "0.9": -0.0149,
+   "0.95": -0.0067,
+   "0.98": 0.0011,
+   "0.99": 0.0067
+  },
+  "oof_eval_chosen": {
+   "games": 802,
+   "candidate_rows": 20610,
+   "snapshot_best_offers": 5378,
+   "by_grade_first_appearance": {
+    "A+": {
+     "bets": 84,
+     "per_season": 28.0,
+     "pred_clv": 0.0211,
+     "clv": 0.0256,
+     "clv_se": 0.0097,
+     "clv_t": 2.6496,
+     "clv_p_one_sided": 0.004,
+     "beat_close": 0.6786,
+     "roi": 0.0971,
+     "roi_se": 0.1029,
+     "cover_rate": 0.5732,
+     "clv_old": 0.0222,
+     "clv_old_se": 0.0094,
+     "clv_pts": 0.7708,
+     "dog_share": 0.4286,
+     "avg_price": -110
+    },
+    "A": {
+     "bets": 173,
+     "per_season": 57.7,
+     "pred_clv": 0.0043,
+     "clv": 0.0004,
+     "clv_se": 0.0068,
+     "clv_t": 0.058,
+     "clv_p_one_sided": 0.4769,
+     "beat_close": 0.5723,
+     "roi": 0.0842,
+     "roi_se": 0.0712,
+     "cover_rate": 0.5663,
+     "clv_old": -0.0013,
+     "clv_old_se": 0.0068,
+     "clv_pts": 0.4205,
+     "dog_share": 0.578,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 399,
+     "per_season": 133.0,
+     "pred_clv": -0.0055,
+     "clv": -0.0065,
+     "clv_se": 0.0042,
+     "clv_t": -1.5415,
+     "clv_p_one_sided": 0.9384,
+     "beat_close": 0.4511,
+     "roi": -0.0577,
+     "roi_se": 0.0476,
+     "cover_rate": 0.491,
+     "clv_old": -0.0073,
+     "clv_old_se": 0.0042,
+     "clv_pts": 0.4398,
+     "dog_share": 0.5263,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 756,
+     "per_season": 252.0,
+     "pred_clv": -0.0256,
+     "clv": -0.0235,
+     "clv_se": 0.0029,
+     "clv_t": -8.1285,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3254,
+     "roi": -0.0697,
+     "roi_se": 0.0346,
+     "cover_rate": 0.4838,
+     "clv_old": -0.0246,
+     "clv_old_se": 0.0029,
+     "clv_pts": 0.1796,
+     "dog_share": 0.6085,
+     "avg_price": -110
+    }
+   },
+   "letters_spearman": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "top_minus_bottom": {
+    "diff": 0.0491,
+    "se_game_boot": 0.0099,
+    "z": 4.9339
+   },
+   "bet_level_spearman_pred_vs_clv": {
+    "rho": 0.2379,
+    "p": 0.0
+   },
+   "by_grade_snapshot_best_offers": {
+    "A+": {
+     "offers": 105,
+     "games": 84,
+     "clv": 0.021,
+     "clv_se_game_boot": 0.0093,
+     "pred": 0.021
+    },
+    "A": {
+     "offers": 240,
+     "games": 173,
+     "clv": -0.0008,
+     "clv_se_game_boot": 0.006,
+     "pred": 0.0042
+    },
+    "B": {
+     "offers": 718,
+     "games": 399,
+     "clv": -0.0061,
+     "clv_se_game_boot": 0.0036,
+     "pred": -0.0057
+    },
+    "C": {
+     "offers": 4315,
+     "games": 756,
+     "clv": -0.0266,
+     "clv_se_game_boot": 0.0016,
+     "pred": -0.0282
+    }
+   },
+   "deciles": [
+    {
+     "dec_bin": 0,
+     "pred": -0.0448,
+     "clv": -0.0429,
+     "n": 538
+    },
+    {
+     "dec_bin": 1,
+     "pred": -0.0375,
+     "clv": -0.0428,
+     "n": 538
+    },
+    {
+     "dec_bin": 2,
+     "pred": -0.0336,
+     "clv": -0.0295,
+     "n": 538
+    },
+    {
+     "dec_bin": 3,
+     "pred": -0.0299,
+     "clv": -0.0282,
+     "n": 537
+    },
+    {
+     "dec_bin": 4,
+     "pred": -0.0261,
+     "clv": -0.0236,
+     "n": 538
+    },
+    {
+     "dec_bin": 5,
+     "pred": -0.0226,
+     "clv": -0.0198,
+     "n": 538
+    },
+    {
+     "dec_bin": 6,
+     "pred": -0.0185,
+     "clv": -0.0166,
+     "n": 537
+    },
+    {
+     "dec_bin": 7,
+     "pred": -0.0132,
+     "clv": -0.0107,
+     "n": 538
+    },
+    {
+     "dec_bin": 8,
+     "pred": -0.0071,
+     "clv": -0.0065,
+     "n": 538
+    },
+    {
+     "dec_bin": 9,
+     "pred": 0.0052,
+     "clv": 0.0026,
+     "n": 538
+    }
+   ],
+   "deciles_spearman": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "offer_spearman_pred_vs_clv": 0.3822,
+   "calibration_slope": 0.9586,
+   "strategies": {
+    "S1_Aplus_flat": {
+     "bets": 84,
+     "per_season": 28.0,
+     "pred_clv": 0.0211,
+     "clv": 0.0256,
+     "clv_se": 0.0097,
+     "clv_t": 2.6496,
+     "clv_p_one_sided": 0.004,
+     "beat_close": 0.6786,
+     "roi": 0.0971,
+     "roi_se": 0.1029,
+     "cover_rate": 0.5732,
+     "clv_old": 0.0222,
+     "clv_old_se": 0.0094,
+     "clv_pts": 0.7708,
+     "dog_share": 0.4286,
+     "avg_price": -110,
+     "by_season": {
+      "2020": 0.0462,
+      "2021": 0.0126,
+      "2022": 0.0105
+     }
+    },
+    "S2_A_and_up_flat": {
+     "bets": 238,
+     "per_season": 79.3,
+     "pred_clv": 0.0092,
+     "clv": 0.0069,
+     "clv_se": 0.0058,
+     "clv_t": 1.1885,
+     "clv_p_one_sided": 0.1173,
+     "beat_close": 0.6008,
+     "roi": 0.0901,
+     "roi_se": 0.0607,
+     "cover_rate": 0.5696,
+     "clv_old": 0.005,
+     "clv_old_se": 0.0058,
+     "clv_pts": 0.521,
+     "dog_share": 0.5252,
+     "avg_price": -110,
+     "by_season": {
+      "2020": 0.0199,
+      "2021": 0.0122,
+      "2022": -0.0117
+     }
+    }
+   }
+  },
+  "oof_eval_base": {
+   "games": 802,
+   "candidate_rows": 20610,
+   "snapshot_best_offers": 5378,
+   "by_grade_first_appearance": {
+    "A+": {
+     "bets": 249,
+     "per_season": 83.0,
+     "pred_clv": 0.0235,
+     "clv": 0.0094,
+     "clv_se": 0.0057,
+     "clv_t": 1.6532,
+     "clv_p_one_sided": 0.0491,
+     "beat_close": 0.6104,
+     "roi": 0.0518,
+     "roi_se": 0.06,
+     "cover_rate": 0.5492,
+     "clv_old": 0.0073,
+     "clv_old_se": 0.0057,
+     "clv_pts": 0.5582,
+     "dog_share": 0.5462,
+     "avg_price": -110
+    },
+    "A": {
+     "bets": 319,
+     "per_season": 106.3,
+     "pred_clv": 0.0043,
+     "clv": -0.0111,
+     "clv_se": 0.0049,
+     "clv_t": -2.2623,
+     "clv_p_one_sided": 0.9882,
+     "beat_close": 0.5016,
+     "roi": -0.0258,
+     "roi_se": 0.0531,
+     "cover_rate": 0.508,
+     "clv_old": -0.0121,
+     "clv_old_se": 0.0049,
+     "clv_pts": 0.3589,
+     "dog_share": 0.558,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 339,
+     "per_season": 113.0,
+     "pred_clv": -0.0053,
+     "clv": -0.0023,
+     "clv_se": 0.0042,
+     "clv_t": -0.5551,
+     "clv_p_one_sided": 0.7106,
+     "beat_close": 0.3923,
+     "roi": -0.0687,
+     "roi_se": 0.0518,
+     "cover_rate": 0.485,
+     "clv_old": -0.0039,
+     "clv_old_se": 0.0042,
+     "clv_pts": 0.4093,
+     "dog_share": 0.5664,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 736,
+     "per_season": 245.3,
+     "pred_clv": -0.0294,
+     "clv": -0.0264,
+     "clv_se": 0.0027,
+     "clv_t": -9.8537,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3084,
+     "roi": -0.0357,
+     "roi_se": 0.0351,
+     "cover_rate": 0.5021,
+     "clv_old": -0.0273,
+     "clv_old_se": 0.0027,
+     "clv_pts": 0.1389,
+     "dog_share": 0.6413,
+     "avg_price": -110
+    }
+   },
+   "letters_spearman": {
+    "rho": 0.8,
+    "p": 0.2
+   },
+   "top_minus_bottom": {
+    "diff": 0.0358,
+    "se_game_boot": 0.0063,
+    "z": 5.6889
+   },
+   "bet_level_spearman_pred_vs_clv": {
+    "rho": 0.2381,
+    "p": 0.0
+   },
+   "by_grade_snapshot_best_offers": {
+    "A+": {
+     "offers": 363,
+     "games": 249,
+     "clv": 0.0098,
+     "clv_se_game_boot": 0.0048,
+     "pred": 0.0238
+    },
+    "A": {
+     "offers": 501,
+     "games": 319,
+     "clv": -0.0106,
+     "clv_se_game_boot": 0.0046,
+     "pred": 0.0043
+    },
+    "B": {
+     "offers": 550,
+     "games": 339,
+     "clv": -0.0057,
+     "clv_se_game_boot": 0.0038,
+     "pred": -0.0052
+    },
+    "C": {
+     "offers": 3964,
+     "games": 736,
+     "clv": -0.0288,
+     "clv_se_game_boot": 0.0017,
+     "pred": -0.0314
+    }
+   },
+   "deciles": [
+    {
+     "dec_bin": 0,
+     "pred": -0.0509,
+     "clv": -0.0436,
+     "n": 538
+    },
+    {
+     "dec_bin": 1,
+     "pred": -0.043,
+     "clv": -0.0419,
+     "n": 538
+    },
+    {
+     "dec_bin": 2,
+     "pred": -0.0373,
+     "clv": -0.0298,
+     "n": 538
+    },
+    {
+     "dec_bin": 3,
+     "pred": -0.0316,
+     "clv": -0.029,
+     "n": 537
+    },
+    {
+     "dec_bin": 4,
+     "pred": -0.0261,
+     "clv": -0.0231,
+     "n": 538
+    },
+    {
+     "dec_bin": 5,
+     "pred": -0.0222,
+     "clv": -0.0201,
+     "n": 538
+    },
+    {
+     "dec_bin": 6,
+     "pred": -0.0165,
+     "clv": -0.0191,
+     "n": 537
+    },
+    {
+     "dec_bin": 7,
+     "pred": -0.0087,
+     "clv": -0.0118,
+     "n": 538
+    },
+    {
+     "dec_bin": 8,
+     "pred": 0.0007,
+     "clv": -0.0062,
+     "n": 538
+    },
+    {
+     "dec_bin": 9,
+     "pred": 0.0185,
+     "clv": 0.0035,
+     "n": 538
+    }
+   ],
+   "deciles_spearman": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "offer_spearman_pred_vs_clv": 0.3925,
+   "calibration_slope": 0.7268,
+   "strategies": {
+    "S1_Aplus_flat": {
+     "bets": 249,
+     "per_season": 83.0,
+     "pred_clv": 0.0235,
+     "clv": 0.0094,
+     "clv_se": 0.0057,
+     "clv_t": 1.6532,
+     "clv_p_one_sided": 0.0491,
+     "beat_close": 0.6104,
+     "roi": 0.0518,
+     "roi_se": 0.06,
+     "cover_rate": 0.5492,
+     "clv_old": 0.0073,
+     "clv_old_se": 0.0057,
+     "clv_pts": 0.5582,
+     "dog_share": 0.5462,
+     "avg_price": -110,
+     "by_season": {
+      "2020": 0.0212,
+      "2021": 0.0064,
+      "2022": -0.0044
+     }
+    },
+    "S2_A_and_up_flat": {
+     "bets": 450,
+     "per_season": 150.0,
+     "pred_clv": 0.0127,
+     "clv": -0.0035,
+     "clv_se": 0.0043,
+     "clv_t": -0.8024,
+     "clv_p_one_sided": 0.7888,
+     "beat_close": 0.5422,
+     "roi": -0.0209,
+     "roi_se": 0.0448,
+     "cover_rate": 0.5102,
+     "clv_old": -0.0051,
+     "clv_old_se": 0.0043,
+     "clv_pts": 0.4228,
+     "dog_share": 0.5422,
+     "avg_price": -110,
+     "by_season": {
+      "2020": -0.001,
+      "2021": -0.0009,
+      "2022": -0.0106
+     }
+    }
+   }
+  },
+  "oof_threshold_scan": [
+   {
+    "cut": -0.01,
+    "bets": 506,
+    "per_season": 168.7,
+    "pred_clv": -0.0004,
+    "clv": -0.0035,
+    "clv_se": 0.0039,
+    "roi": -0.0263,
+    "roi_se": 0.0423,
+    "beat_close": 0.498,
+    "clv_old": -0.005
+   },
+   {
+    "cut": -0.005,
+    "bets": 374,
+    "per_season": 124.7,
+    "pred_clv": 0.004,
+    "clv": -0.002,
+    "clv_se": 0.0046,
+    "roi": -0.0051,
+    "roi_se": 0.0491,
+    "beat_close": 0.5695,
+    "clv_old": -0.0038
+   },
+   {
+    "cut": 0.0,
+    "bets": 238,
+    "per_season": 79.3,
+    "pred_clv": 0.0092,
+    "clv": 0.0069,
+    "clv_se": 0.0058,
+    "roi": 0.0901,
+    "roi_se": 0.0607,
+    "beat_close": 0.6008,
+    "clv_old": 0.005
+   },
+   {
+    "cut": 0.005,
+    "bets": 151,
+    "per_season": 50.3,
+    "pred_clv": 0.0145,
+    "clv": 0.018,
+    "clv_se": 0.007,
+    "roi": 0.1255,
+    "roi_se": 0.0764,
+    "beat_close": 0.649,
+    "clv_old": 0.0154
+   },
+   {
+    "cut": 0.01,
+    "bets": 84,
+    "per_season": 28.0,
+    "pred_clv": 0.0211,
+    "clv": 0.0256,
+    "clv_se": 0.0097,
+    "roi": 0.0971,
+    "roi_se": 0.1029,
+    "beat_close": 0.6786,
+    "clv_old": 0.0222
+   },
+   {
+    "cut": 0.015,
+    "bets": 51,
+    "per_season": 17.0,
+    "pred_clv": 0.0275,
+    "clv": 0.0339,
+    "clv_se": 0.0141,
+    "roi": 0.1855,
+    "roi_se": 0.1274,
+    "beat_close": 0.6667,
+    "clv_old": 0.0296
+   },
+   {
+    "cut": 0.02,
+    "bets": 29,
+    "per_season": 9.7,
+    "pred_clv": 0.0353,
+    "clv": 0.049,
+    "clv_se": 0.0198,
+    "roi": 0.1903,
+    "roi_se": 0.1688,
+    "beat_close": 0.6897,
+    "clv_old": 0.0441
+   },
+   {
+    "cut": 0.025,
+    "bets": 21,
+    "per_season": 7.0,
+    "pred_clv": 0.0404,
+    "clv": 0.0555,
+    "clv_se": 0.0219,
+    "roi": 0.0978,
+    "roi_se": 0.2012,
+    "beat_close": 0.7619,
+    "clv_old": 0.0502
+   },
+   {
+    "cut": 0.03,
+    "bets": 18,
+    "per_season": 6.0,
+    "pred_clv": 0.0426,
+    "clv": 0.0693,
+    "clv_se": 0.0221,
+    "roi": 0.1192,
+    "roi_se": 0.2223,
+    "beat_close": 0.7778,
+    "clv_old": 0.0629
+   },
+   {
+    "cut": 0.04,
+    "bets": 12,
+    "per_season": 4.0,
+    "pred_clv": 0.0471,
+    "clv": 0.0877,
+    "clv_se": 0.0266,
+    "roi": 0.0485,
+    "roi_se": 0.2776,
+    "beat_close": 0.8333,
+    "clv_old": 0.0783
+   }
+  ],
+  "fit_all_dev_importance": {
+   "ev_sp_sharp": 0.0137,
+   "ev_mlimp": 0.0036
+  },
+  "fit_all_dev_model": {
+   "kind": "ridge",
+   "alpha": 1.0,
+   "intercept": -0.0348556681987197,
+   "feature_order": [
+    "ev_sp_sharp",
+    "ev_mlimp"
+   ],
+   "features": {
+    "ev_sp_sharp": {
+     "mean": -0.03774358249804243,
+     "sd": 0.02089812644668318,
+     "coef_std": 0.013698549698220524,
+     "coef_raw": 0.6554917606211859
+    },
+    "ev_mlimp": {
+     "mean": -0.03532055578538259,
+     "sd": 0.034049917994278575,
+     "coef_std": 0.003614384484114571,
+     "coef_raw": 0.10614957970594519
+    }
+   },
+   "formula": "pred_clv = intercept + sum_f coef_std[f] * (x_f - mean[f]) / sd[f]"
+  },
+  "fit_all_dev_ridge_all": {
+   "kind": "ridge",
+   "alpha": 3000.0,
+   "intercept": -0.0345673167751164,
+   "feature_order": [
+    "ev_sp_sharp",
+    "ev_sp_cons",
+    "ev_mlimp",
+    "ml_sp_gap",
+    "ev_model",
+    "model_elig",
+    "sharp_missing",
+    "pt_off_cons",
+    "pt_off_sharp",
+    "key_pos",
+    "key_pos_cons",
+    "on3",
+    "on7",
+    "key_cross",
+    "p_imp",
+    "overround",
+    "log_hours",
+    "is_last",
+    "move_pts",
+    "move_mu",
+    "disp",
+    "best_gap",
+    "is_dog",
+    "abs_pt",
+    "week",
+    "bk_fanduel",
+    "bk_betmgm",
+    "bk_williamhill_us",
+    "bk_betrivers",
+    "bk_espnbet",
+    "bk_fanatics",
+    "bk_hardrockbet"
+   ],
+   "features": {
+    "ev_sp_sharp": {
+     "mean": -0.03774358249804243,
+     "sd": 0.02089812644668318,
+     "coef_std": 0.010489810924158311,
+     "coef_raw": 0.501949825546356
+    },
+    "ev_sp_cons": {
+     "mean": -0.03977977486718564,
+     "sd": 0.0159962157748537,
+     "coef_std": 0.0006846002438788813,
+     "coef_raw": 0.042797637485928616
+    },
+    "ev_mlimp": {
+     "mean": -0.03532055578538259,
+     "sd": 0.034049917994278575,
+     "coef_std": 0.00581197672335673,
+     "coef_raw": 0.17068988901333976
+    },
+    "ml_sp_gap": {
+     "mean": 0.04001528044236618,
+     "sd": 0.6120670653913237,
+     "coef_std": -0.00032259370291283095,
+     "coef_raw": -0.0005270561367430894
+    },
+    "ev_model": {
+     "mean": 0.03573712431069345,
+     "sd": 0.05559335548525203,
+     "coef_std": 0.0003634285768732486,
+     "coef_raw": 0.006537266435908155
+    },
+    "model_elig": {
+     "mean": 0.9008733624454148,
+     "sd": 0.29883922160023624,
+     "coef_std": 0.0021912880613638554,
+     "coef_raw": 0.007332665537106737
+    },
+    "sharp_missing": {
+     "mean": 0.020184376516254245,
+     "sd": 0.14063401824812383,
+     "coef_std": 0.00011278836199311574,
+     "coef_raw": 0.0008019991421572031
+    },
+    "pt_off_cons": {
+     "mean": 0.048459485686559924,
+     "sd": 0.288306951159324,
+     "coef_std": 0.00229678145305514,
+     "coef_raw": 0.007966444942861937
+    },
+    "pt_off_sharp": {
+     "mean": 0.030058224163027655,
+     "sd": 0.4019928841579539,
+     "coef_std": -0.0029577506845828785,
+     "coef_raw": -0.007357719007336204
+    },
+    "key_pos": {
+     "mean": 0.24546336729742843,
+     "sd": 0.6260398530911724,
+     "coef_std": 0.0006019245704601134,
+     "coef_raw": 0.0009614796366205987
+    },
+    "key_pos_cons": {
+     "mean": 0.23818534691897136,
+     "sd": 0.6245867431644337,
+     "coef_std": 0.0001042458543361225,
+     "coef_raw": 0.00016690372550651127
+    },
+    "on3": {
+     "mean": 0.24196991751576905,
+     "sd": 0.42828655891990264,
+     "coef_std": 0.0033075233107884203,
+     "coef_raw": 0.0077226876302858415
+    },
+    "on7": {
+     "mean": 0.21018922852983987,
+     "sd": 0.40745278492694087,
+     "coef_std": -0.0004698187086036986,
+     "coef_raw": -0.0011530629461470987
+    },
+    "key_cross": {
+     "mean": 0.029742843279961184,
+     "sd": 0.25620236996887663,
+     "coef_std": -0.000839237502204803,
+     "coef_raw": -0.0032756820411409667
+    },
+    "p_imp": {
+     "mean": 0.5231234774306995,
+     "sd": 0.008617519804419034,
+     "coef_std": 0.0006669610120704248,
+     "coef_raw": 0.07739593609386422
+    },
+    "overround": {
+     "mean": 0.04740177491956459,
+     "sd": 0.0029704443678992276,
+     "coef_std": -0.0003333112956688479,
+     "coef_raw": -0.11220923686396926
+    },
+    "log_hours": {
+     "mean": 3.0381334017567303,
+     "sd": 1.3523032225773364,
+     "coef_std": 0.001429955793068358,
+     "coef_raw": 0.0010574224546644388
+    },
+    "is_last": {
+     "mean": 0.13871906841339154,
+     "sd": 0.3456615190460767,
+     "coef_std": -0.00034157686934613486,
+     "coef_raw": -0.0009881830939376351
+    },
+    "move_pts": {
+     "mean": -0.13387918486171763,
+     "sd": 1.7553669372910161,
+     "coef_std": -0.0001845352353648408,
+     "coef_raw": -0.0001051263023386018
+    },
+    "move_mu": {
+     "mean": -0.2286825732217225,
+     "sd": 1.6707473160061443,
+     "coef_std": 0.0013716038606530225,
+     "coef_raw": 0.0008209523053023885
+    },
+    "disp": {
+     "mean": 0.24581457340554744,
+     "sd": 0.11233800695733698,
+     "coef_std": 0.0004229407625705628,
+     "coef_raw": 0.0037648946605504992
+    },
+    "best_gap": {
+     "mean": 0.010256316568640568,
+     "sd": 0.013302584421805373,
+     "coef_std": -0.0032866336231307624,
+     "coef_raw": -0.24706730052720943
+    },
+    "is_dog": {
+     "mean": 0.7775351770984958,
+     "sd": 0.4159117918658503,
+     "coef_std": 0.0039461551178854555,
+     "coef_raw": 0.009487961618453613
+    },
+    "abs_pt": {
+     "mean": 6.561559922367783,
+     "sd": 3.724593416159901,
+     "coef_std": -6.725557784133741e-05,
+     "coef_raw": -1.8057159621647694e-05
+    },
+    "week": {
+     "mean": 10.18913148956817,
+     "sd": 5.620690090132489,
+     "coef_std": -8.845376818072307e-05,
+     "coef_raw": -1.5737172262176452e-05
+    },
+    "bk_fanduel": {
+     "mean": 0.20873362445414848,
+     "sd": 0.4064134749734855,
+     "coef_std": -0.001817408974351511,
+     "coef_raw": -0.00447182262957713
+    },
+    "bk_betmgm": {
+     "mean": 0.17200388161086852,
+     "sd": 0.37739297399948685,
+     "coef_std": -0.0005055570062101159,
+     "coef_raw": -0.0013396036520033447
+    },
+    "bk_williamhill_us": {
+     "mean": 0.20262008733624454,
+     "sd": 0.4019614746332319,
+     "coef_std": -0.0016277069114679621,
+     "coef_raw": -0.0040494102400065995
+    },
+    "bk_betrivers": {
+     "mean": 0.211353711790393,
+     "sd": 0.4082785913963505,
+     "coef_std": 0.0002684320799338124,
+     "coef_raw": 0.0006574728275997768
+    },
+    "bk_espnbet": {
+     "mean": 0.0,
+     "sd": 1.0,
+     "coef_std": 0.0,
+     "coef_raw": 0.0
+    },
+    "bk_fanatics": {
+     "mean": 0.0,
+     "sd": 1.0,
+     "coef_std": 0.0,
+     "coef_raw": 0.0
+    },
+    "bk_hardrockbet": {
+     "mean": 0.0,
+     "sd": 1.0,
+     "coef_std": 0.0,
+     "coef_raw": 0.0
+    }
+   },
+   "formula": "pred_clv = intercept + sum_f coef_std[f] * (x_f - mean[f]) / sd[f]"
+  },
+  "fit_all_dev_lgbm_all_gain": {
+   "ev_sp_sharp": 0.594,
+   "ev_sp_cons": 0.088,
+   "ev_mlimp": 0.0651,
+   "ml_sp_gap": 0.0185,
+   "ev_model": 0.0049,
+   "model_elig": 0.0024,
+   "sharp_missing": 0.0,
+   "pt_off_cons": 0.0,
+   "pt_off_sharp": 0.0017,
+   "key_pos": 0.0047,
+   "key_pos_cons": 0.0,
+   "on3": 0.0248,
+   "on7": 0.0,
+   "key_cross": 0.0,
+   "p_imp": 0.0036,
+   "overround": 0.0,
+   "log_hours": 0.0562,
+   "is_last": 0.0,
+   "move_pts": 0.0063,
+   "move_mu": 0.0113,
+   "disp": 0.0034,
+   "best_gap": 0.0236,
+   "is_dog": 0.0393,
+   "abs_pt": 0.0168,
+   "week": 0.027,
+   "bk_fanduel": 0.0085,
+   "bk_betmgm": 0.0,
+   "bk_williamhill_us": 0.0,
+   "bk_betrivers": 0.0,
+   "bk_espnbet": 0.0,
+   "bk_fanatics": 0.0,
+   "bk_hardrockbet": 0.0
+  },
+  "grade_v1_dev": {
+   "production_v1_by_letter": {
+    "A+": {
+     "bets": 49,
+     "per_season": 16.3,
+     "pred_clv": null,
+     "clv": 0.0297,
+     "clv_se": 0.0124,
+     "clv_t": 2.3994,
+     "clv_p_one_sided": 0.0082,
+     "beat_close": 0.5714,
+     "roi": 0.2618,
+     "roi_se": 0.1329,
+     "cover_rate": 0.6531,
+     "clv_old": 0.0246,
+     "clv_old_se": 0.0119,
+     "clv_pts": 0.6633,
+     "dog_share": 0.7347,
+     "avg_price": -110
+    },
+    "A": {
+     "bets": 189,
+     "per_season": 63.0,
+     "pred_clv": null,
+     "clv": 0.0162,
+     "clv_se": 0.0074,
+     "clv_t": 2.1971,
+     "clv_p_one_sided": 0.014,
+     "beat_close": 0.5767,
+     "roi": 0.0942,
+     "roi_se": 0.0681,
+     "cover_rate": 0.5714,
+     "clv_old": 0.0137,
+     "clv_old_se": 0.0074,
+     "clv_pts": 0.5939,
+     "dog_share": 0.5714,
+     "avg_price": -110
+    },
+    "B+": {
+     "bets": 450,
+     "per_season": 150.0,
+     "pred_clv": null,
+     "clv": -0.004,
+     "clv_se": 0.0042,
+     "clv_t": -0.9349,
+     "clv_p_one_sided": 0.8251,
+     "beat_close": 0.4178,
+     "roi": 0.0249,
+     "roi_se": 0.0447,
+     "cover_rate": 0.5341,
+     "clv_old": -0.0053,
+     "clv_old_se": 0.0042,
+     "clv_pts": 0.4028,
+     "dog_share": 0.5489,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 611,
+     "per_season": 203.7,
+     "pred_clv": null,
+     "clv": -0.0117,
+     "clv_se": 0.0036,
+     "clv_t": -3.216,
+     "clv_p_one_sided": 0.9993,
+     "beat_close": 0.3797,
+     "roi": 0.0199,
+     "roi_se": 0.0381,
+     "cover_rate": 0.5337,
+     "clv_old": -0.0125,
+     "clv_old_se": 0.0037,
+     "clv_pts": 0.4063,
+     "dog_share": 0.5679,
+     "avg_price": -110
+    },
+    "C+": {
+     "bets": 582,
+     "per_season": 194.0,
+     "pred_clv": null,
+     "clv": -0.0196,
+     "clv_se": 0.0038,
+     "clv_t": -5.1975,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.378,
+     "roi": 0.0196,
+     "roi_se": 0.0394,
+     "cover_rate": 0.5323,
+     "clv_old": -0.019,
+     "clv_old_se": 0.0038,
+     "clv_pts": 0.2869,
+     "dog_share": 0.6151,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 402,
+     "per_season": 134.0,
+     "pred_clv": null,
+     "clv": -0.0309,
+     "clv_se": 0.0042,
+     "clv_t": -7.3772,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3109,
+     "roi": -0.0302,
+     "roi_se": 0.048,
+     "cover_rate": 0.5037,
+     "clv_old": -0.0286,
+     "clv_old_se": 0.0042,
+     "clv_pts": 0.2481,
+     "dog_share": 0.6493,
+     "avg_price": -110
+    }
+   },
+   "v1_letters_spearman": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "v1_top_minus_bottom": {
+    "diff": 0.0606,
+    "se_game_boot": 0.0129,
+    "z": 4.6852
+   },
+   "same_bets_n": 1412,
+   "same_bets_spearman_v1score_vs_clv": {
+    "rho": 0.1109,
+    "p": 0.0
+   },
+   "same_bets_spearman_v2pred_vs_clv": {
+    "rho": 0.2379,
+    "p": 0.0
+   },
+   "same_bets_by_v1": {
+    "A": {
+     "bets": 97,
+     "per_season": 32.3,
+     "pred_clv": -0.0096,
+     "clv": 0.0231,
+     "clv_se": 0.0079,
+     "clv_t": 2.9269,
+     "clv_p_one_sided": 0.0017,
+     "beat_close": 0.6598,
+     "roi": 0.1777,
+     "roi_se": 0.0926,
+     "cover_rate": 0.6196,
+     "clv_old": 0.0198,
+     "clv_old_se": 0.0078,
+     "clv_pts": 0.6856,
+     "dog_share": 0.567,
+     "avg_price": -110
+    },
+    "A+": {
+     "bets": 23,
+     "per_season": 7.7,
+     "pred_clv": -0.0053,
+     "clv": 0.0417,
+     "clv_se": 0.0207,
+     "clv_t": 2.0147,
+     "clv_p_one_sided": 0.022,
+     "beat_close": 0.6957,
+     "roi": 0.0032,
+     "roi_se": 0.2049,
+     "cover_rate": 0.5217,
+     "clv_old": 0.0368,
+     "clv_old_se": 0.02,
+     "clv_pts": 0.8478,
+     "dog_share": 0.6522,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 417,
+     "per_season": 139.0,
+     "pred_clv": -0.0137,
+     "clv": -0.0181,
+     "clv_se": 0.004,
+     "clv_t": -4.5224,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3621,
+     "roi": -0.0854,
+     "roi_se": 0.046,
+     "cover_rate": 0.4763,
+     "clv_old": -0.0198,
+     "clv_old_se": 0.004,
+     "clv_pts": 0.2548,
+     "dog_share": 0.5492,
+     "avg_price": -110
+    },
+    "B+": {
+     "bets": 296,
+     "per_season": 98.7,
+     "pred_clv": -0.0113,
+     "clv": -0.0108,
+     "clv_se": 0.0045,
+     "clv_t": -2.3987,
+     "clv_p_one_sided": 0.9918,
+     "beat_close": 0.402,
+     "roi": -0.0849,
+     "roi_se": 0.0552,
+     "cover_rate": 0.4777,
+     "clv_old": -0.0126,
+     "clv_old_se": 0.0045,
+     "clv_pts": 0.2627,
+     "dog_share": 0.4932,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 231,
+     "per_season": 77.0,
+     "pred_clv": -0.0181,
+     "clv": -0.0278,
+     "clv_se": 0.0059,
+     "clv_t": -4.7434,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3247,
+     "roi": 0.0381,
+     "roi_se": 0.0632,
+     "cover_rate": 0.5391,
+     "clv_old": -0.0261,
+     "clv_old_se": 0.0059,
+     "clv_pts": 0.2208,
+     "dog_share": 0.7056,
+     "avg_price": -110
+    },
+    "C+": {
+     "bets": 348,
+     "per_season": 116.0,
+     "pred_clv": -0.0136,
+     "clv": -0.012,
+     "clv_se": 0.0045,
+     "clv_t": -2.6552,
+     "clv_p_one_sided": 0.996,
+     "beat_close": 0.4511,
+     "roi": -0.0529,
+     "roi_se": 0.0513,
+     "cover_rate": 0.4912,
+     "clv_old": -0.0134,
+     "clv_old_se": 0.0045,
+     "clv_pts": 0.3671,
+     "dog_share": 0.569,
+     "avg_price": -110
+    }
+   },
+   "same_bets_crosstab": {
+    "A|A": 16,
+    "A|A+": 6,
+    "A|B": 47,
+    "A|B+": 48,
+    "A|C": 20,
+    "A|C+": 36,
+    "A+|A": 12,
+    "A+|A+": 3,
+    "A+|B": 25,
+    "A+|B+": 18,
+    "A+|C": 8,
+    "A+|C+": 18,
+    "B|A": 28,
+    "B|A+": 5,
+    "B|B": 124,
+    "B|B+": 80,
+    "B|C": 57,
+    "B|C+": 105,
+    "C|A": 41,
+    "C|A+": 9,
+    "C|B": 221,
+    "C|B+": 150,
+    "C|C": 146,
+    "C|C+": 189
+   },
+   "offer_spearman_v1score_vs_clv": 0.1711
+  },
+  "spread_rule_v1_dev": {
+   "bets": 323,
+   "per_season": 107.7,
+   "pred_clv": null,
+   "clv": -0.0137,
+   "clv_se": 0.0034,
+   "clv_t": -3.9871,
+   "clv_p_one_sided": 1.0,
+   "beat_close": 0.3746,
+   "roi": -0.029,
+   "roi_se": 0.0532,
+   "cover_rate": 0.5032,
+   "clv_old": -0.0138,
+   "clv_old_se": 0.0035,
+   "clv_pts": 0.2848,
+   "dog_share": 0.6099,
+   "avg_price": -110
+  },
+  "feature_spearman_dev": {
+   "ev_sp_sharp": 0.3925,
+   "ev_sp_cons": 0.3085,
+   "ev_mlimp": 0.2462,
+   "ml_sp_gap": -0.0141,
+   "ev_model": -0.0132,
+   "model_elig": -0.0916,
+   "sharp_missing": 0.0312,
+   "pt_off_cons": 0.1692,
+   "pt_off_sharp": 0.1534,
+   "key_pos": 0.1129,
+   "key_pos_cons": 0.1085,
+   "on3": 0.1028,
+   "on7": -0.0238,
+   "key_cross": 0.0996,
+   "p_imp": -0.0378,
+   "overround": -0.0524,
+   "log_hours": 0.0668,
+   "is_last": -0.0169,
+   "move_pts": 0.0923,
+   "move_mu": 0.1395,
+   "disp": 0.1107,
+   "best_gap": -0.25,
+   "is_dog": -0.0827,
+   "abs_pt": -0.0925,
+   "week": -0.0223,
+   "bk_fanduel": -0.014,
+   "bk_betmgm": 0.0181,
+   "bk_williamhill_us": -0.0265,
+   "bk_betrivers": 0.0248
+  }
+ },
+ "holdout": {
+  "generated": "2026-10-02T08:18:28",
+  "frozen_at": "2026-10-02T08:18:09",
+  "seasons": [
+   2023,
+   2024,
+   2025
+  ],
+  "rows_all_offers": 148548,
+  "clv_all_offers_mean": -0.045,
+  "eval": {
+   "games": 826,
+   "candidate_rows": 33938,
+   "snapshot_best_offers": 6209,
+   "by_grade_first_appearance": {
+    "A+": {
+     "bets": 80,
+     "per_season": 26.7,
+     "pred_clv": 0.0196,
+     "clv": -0.0196,
+     "clv_se": 0.013,
+     "clv_t": -1.4996,
+     "clv_p_one_sided": 0.9331,
+     "beat_close": 0.4625,
+     "roi": 0.1903,
+     "roi_se": 0.1029,
+     "cover_rate": 0.6234,
+     "clv_old": -0.0229,
+     "clv_old_se": 0.013,
+     "clv_pts": 0.1062,
+     "dog_share": 0.3625,
+     "avg_price": -110
+    },
+    "A": {
+     "bets": 180,
+     "per_season": 60.0,
+     "pred_clv": 0.0037,
+     "clv": 0.001,
+     "clv_se": 0.0058,
+     "clv_t": 0.1815,
+     "clv_p_one_sided": 0.428,
+     "beat_close": 0.5778,
+     "roi": 0.0823,
+     "roi_se": 0.0705,
+     "cover_rate": 0.5607,
+     "clv_old": 0.0,
+     "clv_old_se": 0.0057,
+     "clv_pts": 0.4278,
+     "dog_share": 0.4167,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 473,
+     "per_season": 157.7,
+     "pred_clv": -0.0057,
+     "clv": 0.0011,
+     "clv_se": 0.0033,
+     "clv_t": 0.3157,
+     "clv_p_one_sided": 0.3761,
+     "beat_close": 0.5264,
+     "roi": 0.0973,
+     "roi_se": 0.0436,
+     "cover_rate": 0.5683,
+     "clv_old": 0.001,
+     "clv_old_se": 0.0034,
+     "clv_pts": 0.4905,
+     "dog_share": 0.4693,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 772,
+     "per_season": 257.3,
+     "pred_clv": -0.0244,
+     "clv": -0.0238,
+     "clv_se": 0.0024,
+     "clv_t": -9.7415,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.2953,
+     "roi": -0.0322,
+     "roi_se": 0.0344,
+     "cover_rate": 0.5026,
+     "clv_old": -0.0242,
+     "clv_old_se": 0.0024,
+     "clv_pts": 0.1901,
+     "dog_share": 0.4443,
+     "avg_price": -110
+    }
+   },
+   "letters_spearman": {
+    "rho": 0.2,
+    "p": 0.8
+   },
+   "top_minus_bottom": {
+    "diff": 0.0042,
+    "se_game_boot": 0.0124,
+    "z": 0.34
+   },
+   "bet_level_spearman_pred_vs_clv": {
+    "rho": 0.2288,
+    "p": 0.0
+   },
+   "by_grade_snapshot_best_offers": {
+    "A+": {
+     "offers": 93,
+     "games": 80,
+     "clv": -0.0098,
+     "clv_se_game_boot": 0.013,
+     "pred": 0.0192
+    },
+    "A": {
+     "offers": 244,
+     "games": 180,
+     "clv": 0.007,
+     "clv_se_game_boot": 0.0054,
+     "pred": 0.0037
+    },
+    "B": {
+     "offers": 970,
+     "games": 473,
+     "clv": -0.0024,
+     "clv_se_game_boot": 0.0028,
+     "pred": -0.0058
+    },
+    "C": {
+     "offers": 4902,
+     "games": 772,
+     "clv": -0.0248,
+     "clv_se_game_boot": 0.0013,
+     "pred": -0.026
+    }
+   },
+   "deciles": [
+    {
+     "dec_bin": 0,
+     "pred": -0.0424,
+     "clv": -0.0426,
+     "n": 621
+    },
+    {
+     "dec_bin": 1,
+     "pred": -0.0346,
+     "clv": -0.0369,
+     "n": 621
+    },
+    {
+     "dec_bin": 2,
+     "pred": -0.0303,
+     "clv": -0.0264,
+     "n": 621
+    },
+    {
+     "dec_bin": 3,
+     "pred": -0.0266,
+     "clv": -0.0254,
+     "n": 621
+    },
+    {
+     "dec_bin": 4,
+     "pred": -0.0235,
+     "clv": -0.0255,
+     "n": 621
+    },
+    {
+     "dec_bin": 5,
+     "pred": -0.0202,
+     "clv": -0.0203,
+     "n": 620
+    },
+    {
+     "dec_bin": 6,
+     "pred": -0.0166,
+     "clv": -0.0108,
+     "n": 621
+    },
+    {
+     "dec_bin": 7,
+     "pred": -0.0121,
+     "clv": -0.009,
+     "n": 621
+    },
+    {
+     "dec_bin": 8,
+     "pred": -0.007,
+     "clv": -0.0042,
+     "n": 621
+    },
+    {
+     "dec_bin": 9,
+     "pred": 0.0032,
+     "clv": 0.003,
+     "n": 621
+    }
+   ],
+   "deciles_spearman": {
+    "rho": 0.9879,
+    "p": 0.0
+   },
+   "offer_spearman_pred_vs_clv": 0.4355,
+   "calibration_slope": 0.9382,
+   "strategies": {
+    "S1_Aplus_flat": {
+     "bets": 80,
+     "per_season": 26.7,
+     "pred_clv": 0.0196,
+     "clv": -0.0196,
+     "clv_se": 0.013,
+     "clv_t": -1.4996,
+     "clv_p_one_sided": 0.9331,
+     "beat_close": 0.4625,
+     "roi": 0.1903,
+     "roi_se": 0.1029,
+     "cover_rate": 0.6234,
+     "clv_old": -0.0229,
+     "clv_old_se": 0.013,
+     "clv_pts": 0.1062,
+     "dog_share": 0.3625,
+     "avg_price": -110,
+     "by_season": {
+      "2023": -0.0493,
+      "2024": 0.0176,
+      "2025": -0.026
+     }
+    },
+    "S2_A_and_up_flat": {
+     "bets": 230,
+     "per_season": 76.7,
+     "pred_clv": 0.0085,
+     "clv": -0.0096,
+     "clv_se": 0.006,
+     "clv_t": -1.6092,
+     "clv_p_one_sided": 0.9462,
+     "beat_close": 0.5174,
+     "roi": 0.0967,
+     "roi_se": 0.062,
+     "cover_rate": 0.5701,
+     "clv_old": -0.0114,
+     "clv_old_se": 0.006,
+     "clv_pts": 0.275,
+     "dog_share": 0.4,
+     "avg_price": -110,
+     "by_season": {
+      "2023": -0.0191,
+      "2024": -0.0,
+      "2025": -0.009
+     }
+    }
+   }
+  },
+  "eval_base_ev_sp_sharp": {
+   "games": 826,
+   "candidate_rows": 33938,
+   "snapshot_best_offers": 6209,
+   "by_grade_first_appearance": {
+    "A+": {
+     "bets": 224,
+     "per_season": 74.7,
+     "pred_clv": 0.0225,
+     "clv": -0.0106,
+     "clv_se": 0.0062,
+     "clv_t": -1.6972,
+     "clv_p_one_sided": 0.9552,
+     "beat_close": 0.5089,
+     "roi": 0.1562,
+     "roi_se": 0.0622,
+     "cover_rate": 0.6019,
+     "clv_old": -0.0123,
+     "clv_old_se": 0.0062,
+     "clv_pts": 0.2835,
+     "dog_share": 0.5223,
+     "avg_price": -110
+    },
+    "A": {
+     "bets": 356,
+     "per_season": 118.7,
+     "pred_clv": 0.0039,
+     "clv": -0.0033,
+     "clv_se": 0.0039,
+     "clv_t": -0.8521,
+     "clv_p_one_sided": 0.8029,
+     "beat_close": 0.5646,
+     "roi": -0.0133,
+     "roi_se": 0.0505,
+     "cover_rate": 0.5101,
+     "clv_old": -0.003,
+     "clv_old_se": 0.004,
+     "clv_pts": 0.4038,
+     "dog_share": 0.5562,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 378,
+     "per_season": 126.0,
+     "pred_clv": -0.005,
+     "clv": -0.004,
+     "clv_se": 0.0029,
+     "clv_t": -1.3707,
+     "clv_p_one_sided": 0.9148,
+     "beat_close": 0.3942,
+     "roi": 0.0386,
+     "roi_se": 0.0493,
+     "cover_rate": 0.5353,
+     "clv_old": -0.0045,
+     "clv_old_se": 0.0028,
+     "clv_pts": 0.3022,
+     "dog_share": 0.463,
+     "avg_price": -105
+    },
+    "C": {
+     "bets": 753,
+     "per_season": 251.0,
+     "pred_clv": -0.0279,
+     "clv": -0.0242,
+     "clv_se": 0.0024,
+     "clv_t": -9.8964,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.2855,
+     "roi": -0.0285,
+     "roi_se": 0.0348,
+     "cover_rate": 0.5047,
+     "clv_old": -0.0248,
+     "clv_old_se": 0.0025,
+     "clv_pts": 0.1942,
+     "dog_share": 0.4595,
+     "avg_price": -110
+    }
+   },
+   "letters_spearman": {
+    "rho": 0.4,
+    "p": 0.6
+   },
+   "top_minus_bottom": {
+    "diff": 0.0136,
+    "se_game_boot": 0.0066,
+    "z": 2.0597
+   },
+   "bet_level_spearman_pred_vs_clv": {
+    "rho": 0.2127,
+    "p": 0.0
+   },
+   "by_grade_snapshot_best_offers": {
+    "A+": {
+     "offers": 363,
+     "games": 224,
+     "clv": 0.0039,
+     "clv_se_game_boot": 0.0055,
+     "pred": 0.0212
+    },
+    "A": {
+     "offers": 645,
+     "games": 356,
+     "clv": -0.0044,
+     "clv_se_game_boot": 0.0035,
+     "pred": 0.0039
+    },
+    "B": {
+     "offers": 750,
+     "games": 378,
+     "clv": -0.0041,
+     "clv_se_game_boot": 0.0026,
+     "pred": -0.0052
+    },
+    "C": {
+     "offers": 4451,
+     "games": 753,
+     "clv": -0.0262,
+     "clv_se_game_boot": 0.0013,
+     "pred": -0.0289
+    }
+   },
+   "deciles": [
+    {
+     "dec_bin": 0,
+     "pred": -0.0486,
+     "clv": -0.0435,
+     "n": 621
+    },
+    {
+     "dec_bin": 1,
+     "pred": -0.039,
+     "clv": -0.0345,
+     "n": 621
+    },
+    {
+     "dec_bin": 2,
+     "pred": -0.0325,
+     "clv": -0.0277,
+     "n": 621
+    },
+    {
+     "dec_bin": 3,
+     "pred": -0.0275,
+     "clv": -0.0291,
+     "n": 621
+    },
+    {
+     "dec_bin": 4,
+     "pred": -0.0234,
+     "clv": -0.0214,
+     "n": 621
+    },
+    {
+     "dec_bin": 5,
+     "pred": -0.0197,
+     "clv": -0.0167,
+     "n": 620
+    },
+    {
+     "dec_bin": 6,
+     "pred": -0.0145,
+     "clv": -0.0142,
+     "n": 621
+    },
+    {
+     "dec_bin": 7,
+     "pred": -0.0075,
+     "clv": -0.0024,
+     "n": 621
+    },
+    {
+     "dec_bin": 8,
+     "pred": 0.0006,
+     "clv": -0.0069,
+     "n": 621
+    },
+    {
+     "dec_bin": 9,
+     "pred": 0.0154,
+     "clv": 0.0011,
+     "n": 621
+    }
+   ],
+   "deciles_spearman": {
+    "rho": 0.9758,
+    "p": 0.0
+   },
+   "offer_spearman_pred_vs_clv": 0.4691,
+   "calibration_slope": 0.707,
+   "strategies": {
+    "S1_Aplus_flat": {
+     "bets": 224,
+     "per_season": 74.7,
+     "pred_clv": 0.0225,
+     "clv": -0.0106,
+     "clv_se": 0.0062,
+     "clv_t": -1.6972,
+     "clv_p_one_sided": 0.9552,
+     "beat_close": 0.5089,
+     "roi": 0.1562,
+     "roi_se": 0.0622,
+     "cover_rate": 0.6019,
+     "clv_old": -0.0123,
+     "clv_old_se": 0.0062,
+     "clv_pts": 0.2835,
+     "dog_share": 0.5223,
+     "avg_price": -110,
+     "by_season": {
+      "2023": -0.022,
+      "2024": -0.0028,
+      "2025": -0.0075
+     }
+    },
+    "S2_A_and_up_flat": {
+     "bets": 464,
+     "per_season": 154.7,
+     "pred_clv": 0.0113,
+     "clv": -0.0075,
+     "clv_se": 0.004,
+     "clv_t": -1.8907,
+     "clv_p_one_sided": 0.9707,
+     "beat_close": 0.5237,
+     "roi": 0.039,
+     "roi_se": 0.044,
+     "cover_rate": 0.539,
+     "clv_old": -0.008,
+     "clv_old_se": 0.004,
+     "clv_pts": 0.3728,
+     "dog_share": 0.528,
+     "avg_price": -110,
+     "by_season": {
+      "2023": -0.0121,
+      "2024": -0.0015,
+      "2025": -0.0081
+     }
+    }
+   }
+  },
+  "grade_v1": {
+   "production_v1_by_letter": {
+    "A+": {
+     "bets": 49,
+     "per_season": 16.3,
+     "pred_clv": null,
+     "clv": 0.022,
+     "clv_se": 0.0134,
+     "clv_t": 1.6487,
+     "clv_p_one_sided": 0.0496,
+     "beat_close": 0.4694,
+     "roi": 0.0661,
+     "roi_se": 0.1359,
+     "cover_rate": 0.5532,
+     "clv_old": 0.0195,
+     "clv_old_se": 0.0132,
+     "clv_pts": 0.6633,
+     "dog_share": 0.5918,
+     "avg_price": -105
+    },
+    "A": {
+     "bets": 168,
+     "per_season": 56.0,
+     "pred_clv": null,
+     "clv": -0.004,
+     "clv_se": 0.0062,
+     "clv_t": -0.6463,
+     "clv_p_one_sided": 0.7409,
+     "beat_close": 0.3929,
+     "roi": 0.0175,
+     "roi_se": 0.0739,
+     "cover_rate": 0.5273,
+     "clv_old": -0.0057,
+     "clv_old_se": 0.0062,
+     "clv_pts": 0.3824,
+     "dog_share": 0.5119,
+     "avg_price": -110
+    },
+    "B+": {
+     "bets": 443,
+     "per_season": 147.7,
+     "pred_clv": null,
+     "clv": -0.0074,
+     "clv_se": 0.0037,
+     "clv_t": -1.9845,
+     "clv_p_one_sided": 0.9764,
+     "beat_close": 0.395,
+     "roi": 0.0028,
+     "roi_se": 0.0452,
+     "cover_rate": 0.5219,
+     "clv_old": -0.0085,
+     "clv_old_se": 0.0037,
+     "clv_pts": 0.3679,
+     "dog_share": 0.5395,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 634,
+     "per_season": 211.3,
+     "pred_clv": null,
+     "clv": -0.0103,
+     "clv_se": 0.0033,
+     "clv_t": -3.1675,
+     "clv_p_one_sided": 0.9992,
+     "beat_close": 0.3912,
+     "roi": 0.0118,
+     "roi_se": 0.0374,
+     "cover_rate": 0.5285,
+     "clv_old": -0.0108,
+     "clv_old_se": 0.0033,
+     "clv_pts": 0.4677,
+     "dog_share": 0.5457,
+     "avg_price": -110
+    },
+    "C+": {
+     "bets": 552,
+     "per_season": 184.0,
+     "pred_clv": null,
+     "clv": -0.0166,
+     "clv_se": 0.0036,
+     "clv_t": -4.6114,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3841,
+     "roi": 0.0195,
+     "roi_se": 0.0404,
+     "cover_rate": 0.5322,
+     "clv_old": -0.016,
+     "clv_old_se": 0.0036,
+     "clv_pts": 0.3759,
+     "dog_share": 0.6178,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 442,
+     "per_season": 147.3,
+     "pred_clv": null,
+     "clv": -0.0198,
+     "clv_se": 0.004,
+     "clv_t": -5.008,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.319,
+     "roi": 0.0347,
+     "roi_se": 0.0457,
+     "cover_rate": 0.5355,
+     "clv_old": -0.0173,
+     "clv_old_se": 0.0041,
+     "clv_pts": 0.3937,
+     "dog_share": 0.6584,
+     "avg_price": -110
+    }
+   },
+   "v1_letters_spearman": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "v1_top_minus_bottom": {
+    "diff": 0.0418,
+    "se_game_boot": 0.0137,
+    "z": 3.0588
+   },
+   "same_bets_n": 1505,
+   "same_bets_spearman_v1score_vs_clv": {
+    "rho": 0.0852,
+    "p": 0.0009
+   },
+   "same_bets_spearman_v2pred_vs_clv": {
+    "rho": 0.2288,
+    "p": 0.0
+   },
+   "same_bets_by_v1": {
+    "A": {
+     "bets": 91,
+     "per_season": 30.3,
+     "pred_clv": -0.013,
+     "clv": 0.002,
+     "clv_se": 0.0083,
+     "clv_t": 0.2376,
+     "clv_p_one_sided": 0.4061,
+     "beat_close": 0.4066,
+     "roi": 0.065,
+     "roi_se": 0.1005,
+     "cover_rate": 0.5506,
+     "clv_old": 0.0001,
+     "clv_old_se": 0.0082,
+     "clv_pts": 0.4835,
+     "dog_share": 0.4286,
+     "avg_price": -110
+    },
+    "A+": {
+     "bets": 28,
+     "per_season": 9.3,
+     "pred_clv": -0.0095,
+     "clv": 0.0386,
+     "clv_se": 0.0207,
+     "clv_t": 1.8695,
+     "clv_p_one_sided": 0.0308,
+     "beat_close": 0.5714,
+     "roi": 0.0575,
+     "roi_se": 0.1793,
+     "cover_rate": 0.5556,
+     "clv_old": 0.0353,
+     "clv_old_se": 0.0201,
+     "clv_pts": 0.8929,
+     "dog_share": 0.6429,
+     "avg_price": -110
+    },
+    "B": {
+     "bets": 483,
+     "per_season": 161.0,
+     "pred_clv": -0.0112,
+     "clv": -0.01,
+     "clv_se": 0.0033,
+     "clv_t": -3.0306,
+     "clv_p_one_sided": 0.9988,
+     "beat_close": 0.4327,
+     "roi": 0.0535,
+     "roi_se": 0.0429,
+     "cover_rate": 0.5499,
+     "clv_old": -0.0105,
+     "clv_old_se": 0.0033,
+     "clv_pts": 0.4084,
+     "dog_share": 0.323,
+     "avg_price": -110
+    },
+    "B+": {
+     "bets": 278,
+     "per_season": 92.7,
+     "pred_clv": -0.0111,
+     "clv": -0.0116,
+     "clv_se": 0.0043,
+     "clv_t": -2.7171,
+     "clv_p_one_sided": 0.9967,
+     "beat_close": 0.4281,
+     "roi": -0.0554,
+     "roi_se": 0.0566,
+     "cover_rate": 0.4906,
+     "clv_old": -0.0131,
+     "clv_old_se": 0.0043,
+     "clv_pts": 0.2221,
+     "dog_share": 0.4173,
+     "avg_price": -110
+    },
+    "C": {
+     "bets": 289,
+     "per_season": 96.3,
+     "pred_clv": -0.0149,
+     "clv": -0.0235,
+     "clv_se": 0.0045,
+     "clv_t": -5.2384,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3668,
+     "roi": 0.0178,
+     "roi_se": 0.057,
+     "cover_rate": 0.5228,
+     "clv_old": -0.0226,
+     "clv_old_se": 0.0045,
+     "clv_pts": 0.1747,
+     "dog_share": 0.5813,
+     "avg_price": -105
+    },
+    "C+": {
+     "bets": 336,
+     "per_season": 112.0,
+     "pred_clv": -0.015,
+     "clv": -0.0167,
+     "clv_se": 0.004,
+     "clv_t": -4.2255,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3899,
+     "roi": 0.0835,
+     "roi_se": 0.0522,
+     "cover_rate": 0.5602,
+     "clv_old": -0.0172,
+     "clv_old_se": 0.004,
+     "clv_pts": 0.2552,
+     "dog_share": 0.5119,
+     "avg_price": -110
+    }
+   },
+   "same_bets_crosstab": {
+    "A|A": 8,
+    "A|A+": 4,
+    "A|B": 68,
+    "A|B+": 39,
+    "A|C": 23,
+    "A|C+": 38,
+    "A+|A": 7,
+    "A+|A+": 2,
+    "A+|B": 28,
+    "A+|B+": 19,
+    "A+|C": 12,
+    "A+|C+": 12,
+    "B|A": 30,
+    "B|A+": 10,
+    "B|B": 153,
+    "B|B+": 83,
+    "B|C": 98,
+    "B|C+": 99,
+    "C|A": 46,
+    "C|A+": 12,
+    "C|B": 234,
+    "C|B+": 137,
+    "C|C": 156,
+    "C|C+": 187
+   },
+   "offer_spearman_v1score_vs_clv": 0.0454
+  },
+  "spread_rule_v1": {
+   "bets": 306,
+   "per_season": 102.0,
+   "pred_clv": null,
+   "clv": -0.0213,
+   "clv_se": 0.0025,
+   "clv_t": -8.3575,
+   "clv_p_one_sided": 1.0,
+   "beat_close": 0.2582,
+   "roi": 0.0599,
+   "roi_se": 0.0545,
+   "cover_rate": 0.5485,
+   "clv_old": -0.0213,
+   "clv_old_se": 0.0025,
+   "clv_pts": 0.1495,
+   "dog_share": 0.6046,
+   "avg_price": -108
+  },
+  "by_grade_by_season": {
+   "A+": {
+    "2023": {
+     "bets": 19,
+     "per_season": 19.0,
+     "pred_clv": 0.0234,
+     "clv": -0.0493,
+     "clv_se": 0.0293,
+     "clv_t": -1.6789,
+     "clv_p_one_sided": 0.9534,
+     "beat_close": 0.2632,
+     "roi": 0.4622,
+     "roi_se": 0.1843,
+     "cover_rate": 0.7778,
+     "clv_old": -0.0501,
+     "clv_old_se": 0.0295,
+     "clv_pts": 0.0263,
+     "dog_share": 0.4211,
+     "avg_price": -110
+    },
+    "2024": {
+     "bets": 22,
+     "per_season": 22.0,
+     "pred_clv": 0.023,
+     "clv": 0.0176,
+     "clv_se": 0.0257,
+     "clv_t": 0.6874,
+     "clv_p_one_sided": 0.2459,
+     "beat_close": 0.5909,
+     "roi": -0.0049,
+     "roi_se": 0.2023,
+     "cover_rate": 0.5238,
+     "clv_old": 0.0128,
+     "clv_old_se": 0.0254,
+     "clv_pts": 0.5682,
+     "dog_share": 0.2727,
+     "avg_price": -110
+    },
+    "2025": {
+     "bets": 39,
+     "per_season": 39.0,
+     "pred_clv": 0.0158,
+     "clv": -0.026,
+     "clv_se": 0.017,
+     "clv_t": -1.5355,
+     "clv_p_one_sided": 0.9377,
+     "beat_close": 0.4872,
+     "roi": 0.1679,
+     "roi_se": 0.1518,
+     "cover_rate": 0.6053,
+     "clv_old": -0.0297,
+     "clv_old_se": 0.0169,
+     "clv_pts": -0.1154,
+     "dog_share": 0.3846,
+     "avg_price": -108
+    }
+   },
+   "A": {
+    "2023": {
+     "bets": 54,
+     "per_season": 54.0,
+     "pred_clv": 0.003,
+     "clv": -0.0047,
+     "clv_se": 0.0104,
+     "clv_t": -0.4505,
+     "clv_p_one_sided": 0.6738,
+     "beat_close": 0.5185,
+     "roi": 0.1143,
+     "roi_se": 0.1254,
+     "cover_rate": 0.5882,
+     "clv_old": -0.0053,
+     "clv_old_se": 0.0103,
+     "clv_pts": 0.5926,
+     "dog_share": 0.4259,
+     "avg_price": -110
+    },
+    "2024": {
+     "bets": 46,
+     "per_season": 46.0,
+     "pred_clv": 0.0037,
+     "clv": -0.0001,
+     "clv_se": 0.0135,
+     "clv_t": -0.0086,
+     "clv_p_one_sided": 0.5034,
+     "beat_close": 0.6522,
+     "roi": 0.2412,
+     "roi_se": 0.1367,
+     "cover_rate": 0.6444,
+     "clv_old": -0.0038,
+     "clv_old_se": 0.0135,
+     "clv_pts": 0.3913,
+     "dog_share": 0.5217,
+     "avg_price": -110
+    },
+    "2025": {
+     "bets": 80,
+     "per_season": 80.0,
+     "pred_clv": 0.004,
+     "clv": 0.0056,
+     "clv_se": 0.0077,
+     "clv_t": 0.7223,
+     "clv_p_one_sided": 0.2351,
+     "beat_close": 0.575,
+     "roi": -0.0306,
+     "roi_se": 0.1084,
+     "cover_rate": 0.4935,
+     "clv_old": 0.0058,
+     "clv_old_se": 0.0077,
+     "clv_pts": 0.3375,
+     "dog_share": 0.35,
+     "avg_price": -105
+    }
+   },
+   "B": {
+    "2023": {
+     "bets": 146,
+     "per_season": 146.0,
+     "pred_clv": -0.0053,
+     "clv": -0.0067,
+     "clv_se": 0.006,
+     "clv_t": -1.1207,
+     "clv_p_one_sided": 0.8688,
+     "beat_close": 0.4726,
+     "roi": 0.074,
+     "roi_se": 0.0785,
+     "cover_rate": 0.5594,
+     "clv_old": -0.0067,
+     "clv_old_se": 0.006,
+     "clv_pts": 0.4144,
+     "dog_share": 0.3836,
+     "avg_price": -110
+    },
+    "2024": {
+     "bets": 131,
+     "per_season": 131.0,
+     "pred_clv": -0.0059,
+     "clv": 0.007,
+     "clv_se": 0.006,
+     "clv_t": 1.1644,
+     "clv_p_one_sided": 0.1221,
+     "beat_close": 0.5649,
+     "roi": 0.1287,
+     "roi_se": 0.0819,
+     "cover_rate": 0.5873,
+     "clv_old": 0.0072,
+     "clv_old_se": 0.006,
+     "clv_pts": 0.6908,
+     "dog_share": 0.6031,
+     "avg_price": -110
+    },
+    "2025": {
+     "bets": 196,
+     "per_season": 196.0,
+     "pred_clv": -0.0058,
+     "clv": 0.0029,
+     "clv_se": 0.0054,
+     "clv_t": 0.5339,
+     "clv_p_one_sided": 0.2967,
+     "beat_close": 0.5408,
+     "roi": 0.0937,
+     "roi_se": 0.0686,
+     "cover_rate": 0.5625,
+     "clv_old": 0.0026,
+     "clv_old_se": 0.0055,
+     "clv_pts": 0.4133,
+     "dog_share": 0.4439,
+     "avg_price": -105
+    }
+   },
+   "C": {
+    "2023": {
+     "bets": 251,
+     "per_season": 251.0,
+     "pred_clv": -0.0254,
+     "clv": -0.019,
+     "clv_se": 0.0042,
+     "clv_t": -4.5318,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.2988,
+     "roi": -0.0356,
+     "roi_se": 0.06,
+     "cover_rate": 0.502,
+     "clv_old": -0.0201,
+     "clv_old_se": 0.0042,
+     "clv_pts": 0.2799,
+     "dog_share": 0.5657,
+     "avg_price": -110
+    },
+    "2024": {
+     "bets": 247,
+     "per_season": 247.0,
+     "pred_clv": -0.026,
+     "clv": -0.0239,
+     "clv_se": 0.0036,
+     "clv_t": -6.6441,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.3117,
+     "roi": 0.0163,
+     "roi_se": 0.061,
+     "cover_rate": 0.5267,
+     "clv_old": -0.0246,
+     "clv_old_se": 0.0036,
+     "clv_pts": 0.1468,
+     "dog_share": 0.5263,
+     "avg_price": -110
+    },
+    "2025": {
+     "bets": 274,
+     "per_season": 274.0,
+     "pred_clv": -0.022,
+     "clv": -0.0279,
+     "clv_se": 0.0047,
+     "clv_t": -5.9763,
+     "clv_p_one_sided": 1.0,
+     "beat_close": 0.2774,
+     "roi": -0.0728,
+     "roi_se": 0.058,
+     "cover_rate": 0.4816,
+     "clv_old": -0.0276,
+     "clv_old_se": 0.0047,
+     "clv_pts": 0.1469,
+     "dog_share": 0.2591,
+     "avg_price": -110
+    }
+   }
+  },
+  "pass": {
+   "monotone": false,
+   "top_grade": false,
+   "adopt": false
+  }
+ },
+ "posthoc": {
+  "note": "post-hoc, descriptive; not part of the pre-registered test",
+  "dev_2020_22_in_sample_fit": {
+   "Aplus_by_hours_before": {
+    "<3h": {
+     "bets": 21,
+     "per_season": 7.0,
+     "pred_clv": 0.0213,
+     "clv": 0.0209,
+     "clv_se": 0.0077,
+     "clv_t": 2.7137,
+     "clv_p_one_sided": 0.0033,
+     "beat_close": 0.8095,
+     "roi": 0.1019,
+     "roi_se": 0.2134,
+     "cover_rate": 0.5714,
+     "clv_old": 0.019,
+     "clv_old_se": 0.0072,
+     "clv_pts": 0.5,
+     "dog_share": 0.4762,
+     "avg_price": -109
+    },
+    "3-30h": {
+     "bets": 11,
+     "per_season": 3.7,
+     "pred_clv": 0.0187,
+     "clv": 0.0094,
+     "clv_se": 0.0153,
+     "clv_t": 0.6153,
+     "clv_p_one_sided": 0.2692,
+     "beat_close": 0.6364,
+     "roi": 0.3073,
+     "roi_se": 0.2659,
+     "cover_rate": 0.7,
+     "clv_old": 0.0084,
+     "clv_old_se": 0.0146,
+     "clv_pts": 0.6591,
+     "dog_share": 0.2727,
+     "avg_price": -110
+    },
+    "30-80h": {
+     "bets": 22,
+     "per_season": 7.3,
+     "pred_clv": 0.017,
+     "clv": 0.0545,
+     "clv_se": 0.0228,
+     "clv_t": 2.3908,
+     "clv_p_one_sided": 0.0084,
+     "beat_close": 0.8182,
+     "roi": 0.2202,
+     "roi_se": 0.2014,
+     "cover_rate": 0.6364,
+     "clv_old": 0.053,
+     "clv_old_se": 0.0222,
+     "clv_pts": 1.3182,
+     "dog_share": 0.6364,
+     "avg_price": -110
+    },
+    ">80h": {
+     "bets": 44,
+     "per_season": 14.7,
+     "pred_clv": 0.0208,
+     "clv": 0.0126,
+     "clv_se": 0.0151,
+     "clv_t": 0.8383,
+     "clv_p_one_sided": 0.2009,
+     "beat_close": 0.5,
+     "roi": 0.0452,
+     "roi_se": 0.1456,
+     "cover_rate": 0.5455,
+     "clv_old": 0.0081,
+     "clv_old_se": 0.0147,
+     "clv_pts": 0.5227,
+     "dog_share": 0.4318,
+     "avg_price": -110
+    }
+   },
+   "Aplus_sharp_spread_missing": {
+    "False": {
+     "bets": 91,
+     "per_season": 30.3,
+     "pred_clv": 0.02,
+     "clv": 0.022,
+     "clv_se": 0.009,
+     "clv_t": 2.4514,
+     "clv_p_one_sided": 0.0071,
+     "beat_close": 0.6593,
+     "roi": 0.1278,
+     "roi_se": 0.099,
+     "cover_rate": 0.5889,
+     "clv_old": 0.0191,
+     "clv_old_se": 0.0088,
+     "clv_pts": 0.6786,
+     "dog_share": 0.4725,
+     "avg_price": -110
+    },
+    "True": {
+     "bets": 7,
+     "per_season": 2.3,
+     "pred_clv": 0.0182,
+     "clv": 0.0422,
+     "clv_se": 0.0457,
+     "clv_t": 0.922,
+     "clv_p_one_sided": 0.1783,
+     "beat_close": 0.5714,
+     "roi": 0.1033,
+     "roi_se": 0.3901,
+     "cover_rate": 0.5714,
+     "clv_old": 0.0388,
+     "clv_old_se": 0.0434,
+     "clv_pts": 1.1429,
+     "dog_share": 0.4286,
+     "avg_price": -110
+    }
+   },
+   "Aplus_by_book": {
+    "betmgm": {
+     "bets": 37,
+     "per_season": 12.3,
+     "pred_clv": 0.0187,
+     "clv": 0.0407,
+     "clv_se": 0.0152,
+     "clv_t": 2.6745,
+     "clv_p_one_sided": 0.0037,
+     "beat_close": 0.7838,
+     "roi": 0.3196,
+     "roi_se": 0.1452,
+     "cover_rate": 0.6944,
+     "clv_old": 0.0385,
+     "clv_old_se": 0.0146,
+     "clv_pts": 1.0811,
+     "dog_share": 0.5135,
+     "avg_price": -110
+    },
+    "betrivers": {
+     "bets": 22,
+     "per_season": 7.3,
+     "pred_clv": 0.0201,
+     "clv": 0.0253,
+     "clv_se": 0.0185,
+     "clv_t": 1.3654,
+     "clv_p_one_sided": 0.0861,
+     "beat_close": 0.7273,
+     "roi": 0.2199,
+     "roi_se": 0.2013,
+     "cover_rate": 0.6364,
+     "clv_old": 0.0224,
+     "clv_old_se": 0.0183,
+     "clv_pts": 0.5682,
+     "dog_share": 0.6364,
+     "avg_price": -108
+    },
+    "draftkings": {
+     "bets": 5,
+     "per_season": 1.7,
+     "pred_clv": 0.011,
+     "clv": -0.0002,
+     "clv_se": 0.0244,
+     "clv_t": -0.0093,
+     "clv_p_one_sided": 0.5037,
+     "beat_close": 0.4,
+     "roi": 0.5458,
+     "roi_se": 0.3879,
+     "cover_rate": 0.8,
+     "clv_old": 0.0016,
+     "clv_old_se": 0.0243,
+     "clv_pts": 0.3,
+     "dog_share": 0.2,
+     "avg_price": -105
+    },
+    "fanduel": {
+     "bets": 23,
+     "per_season": 7.7,
+     "pred_clv": 0.0193,
+     "clv": -0.0008,
+     "clv_se": 0.0185,
+     "clv_t": -0.0446,
+     "clv_p_one_sided": 0.5178,
+     "beat_close": 0.4783,
+     "roi": -0.3296,
+     "roi_se": 0.1958,
+     "cover_rate": 0.3478,
+     "clv_old": -0.0045,
+     "clv_old_se": 0.0178,
+     "clv_pts": 0.3261,
+     "dog_share": 0.5217,
+     "avg_price": -110
+    },
+    "williamhill_us": {
+     "bets": 11,
+     "per_season": 3.7,
+     "pred_clv": 0.0283,
+     "clv": 0.0231,
+     "clv_se": 0.0252,
+     "clv_t": 0.9155,
+     "clv_p_one_sided": 0.18,
+     "beat_close": 0.5455,
+     "roi": 0.0496,
+     "roi_se": 0.3031,
+     "cover_rate": 0.5455,
+     "clv_old": 0.0176,
+     "clv_old_se": 0.0259,
+     "clv_pts": 0.75,
+     "dog_share": 0.0,
+     "avg_price": -110
+    }
+   },
+   "offer_spearman_with_clv": {
+    "ev_sp_sharp": 0.4005,
+    "ev_mlimp": 0.2461,
+    "ev_model_eligible": 0.0403,
+    "v1_edge_blend": 0.1325,
+    "move_mu": 0.1395,
+    "pt_off_cons": 0.1692
+   }
+  },
+  "holdout_2023_25": {
+   "Aplus_by_hours_before": {
+    "<3h": {
+     "bets": 2,
+     "per_season": 0.7,
+     "pred_clv": 0.0201,
+     "clv": 0.0334,
+     "clv_se": 0.005,
+     "clv_t": 6.6781,
+     "clv_p_one_sided": 0.0,
+     "beat_close": 1.0,
+     "roi": -0.0455,
+     "roi_se": 0.9545,
+     "cover_rate": 0.5,
+     "clv_old": 0.0297,
+     "clv_old_se": 0.001,
+     "clv_pts": 0.25,
+     "dog_share": 0.5,
+     "avg_price": -106
+    },
+    "3-30h": {
+     "bets": 3,
+     "per_season": 1.0,
+     "pred_clv": 0.013,
+     "clv": 0.0198,
+     "clv_se": 0.0043,
+     "clv_t": 4.6099,
+     "clv_p_one_sided": 0.0,
+     "beat_close": 1.0,
+     "roi": 0.9134,
+     "roi_se": 0.0452,
+     "cover_rate": 1.0,
+     "clv_old": 0.0144,
+     "clv_old_se": 0.0069,
+     "clv_pts": 0.5,
+     "dog_share": 0.3333,
+     "avg_price": -112
+    },
+    "30-80h": {
+     "bets": 8,
+     "per_season": 2.7,
+     "pred_clv": 0.0138,
+     "clv": -0.0129,
+     "clv_se": 0.0201,
+     "clv_t": -0.6419,
+     "clv_p_one_sided": 0.7395,
+     "beat_close": 0.625,
+     "roi": -0.2372,
+     "roi_se": 0.3725,
+     "cover_rate": 0.375,
+     "clv_old": -0.0177,
+     "clv_old_se": 0.0216,
+     "clv_pts": -0.5625,
+     "dog_share": 0.125,
+     "avg_price": 102
+    },
+    ">80h": {
+     "bets": 67,
+     "per_season": 22.3,
+     "pred_clv": 0.0206,
+     "clv": -0.0237,
+     "clv_se": 0.0153,
+     "clv_t": -1.545,
+     "clv_p_one_sided": 0.9388,
+     "beat_close": 0.403,
+     "roi": 0.216,
+     "roi_se": 0.1107,
+     "cover_rate": 0.6406,
+     "clv_old": -0.0267,
+     "clv_old_se": 0.0152,
+     "clv_pts": 0.1642,
+     "dog_share": 0.3881,
+     "avg_price": -110
+    }
+   },
+   "Aplus_sharp_spread_missing": {
+    "False": {
+     "bets": 60,
+     "per_season": 20.0,
+     "pred_clv": 0.0174,
+     "clv": -0.0126,
+     "clv_se": 0.0152,
+     "clv_t": -0.8347,
+     "clv_p_one_sided": 0.7981,
+     "beat_close": 0.5167,
+     "roi": 0.2512,
+     "roi_se": 0.1196,
+     "cover_rate": 0.65,
+     "clv_old": -0.0155,
+     "clv_old_se": 0.0153,
+     "clv_pts": 0.1875,
+     "dog_share": 0.3333,
+     "avg_price": -110
+    },
+    "True": {
+     "bets": 20,
+     "per_season": 6.7,
+     "pred_clv": 0.0264,
+     "clv": -0.0403,
+     "clv_se": 0.0256,
+     "clv_t": -1.5697,
+     "clv_p_one_sided": 0.9418,
+     "beat_close": 0.3,
+     "roi": 0.0075,
+     "roi_se": 0.2012,
+     "cover_rate": 0.5294,
+     "clv_old": -0.045,
+     "clv_old_se": 0.0241,
+     "clv_pts": -0.1375,
+     "dog_share": 0.45,
+     "avg_price": -110
+    }
+   },
+   "Aplus_by_book": {
+    "betmgm": {
+     "bets": 6,
+     "per_season": 2.0,
+     "pred_clv": 0.0158,
+     "clv": 0.0118,
+     "clv_se": 0.0445,
+     "clv_t": 0.2662,
+     "clv_p_one_sided": 0.395,
+     "beat_close": 0.1667,
+     "roi": -0.1851,
+     "roi_se": 0.3908,
+     "cover_rate": 0.4,
+     "clv_old": 0.0056,
+     "clv_old_se": 0.0399,
+     "clv_pts": 0.625,
+     "dog_share": 0.6667,
+     "avg_price": -110
+    },
+    "betrivers": {
+     "bets": 4,
+     "per_season": 1.3,
+     "pred_clv": 0.0206,
+     "clv": -0.0161,
+     "clv_se": 0.1203,
+     "clv_t": -0.1341,
+     "clv_p_one_sided": 0.5533,
+     "beat_close": 0.75,
+     "roi": 0.4298,
+     "roi_se": 0.4766,
+     "cover_rate": 0.75,
+     "clv_old": -0.0156,
+     "clv_old_se": 0.1158,
+     "clv_pts": 0.5625,
+     "dog_share": 0.25,
+     "avg_price": -109
+    },
+    "draftkings": {
+     "bets": 35,
+     "per_season": 11.7,
+     "pred_clv": 0.0208,
+     "clv": 0.0147,
+     "clv_se": 0.0148,
+     "clv_t": 0.9909,
+     "clv_p_one_sided": 0.1609,
+     "beat_close": 0.6286,
+     "roi": 0.3143,
+     "roi_se": 0.1471,
+     "cover_rate": 0.697,
+     "clv_old": 0.0126,
+     "clv_old_se": 0.0144,
+     "clv_pts": 0.6429,
+     "dog_share": 0.3714,
+     "avg_price": -110
+    },
+    "espnbet": {
+     "bets": 9,
+     "per_season": 3.0,
+     "pred_clv": 0.0154,
+     "clv": -0.0371,
+     "clv_se": 0.0232,
+     "clv_t": -1.5998,
+     "clv_p_one_sided": 0.9452,
+     "beat_close": 0.4444,
+     "roi": 0.1023,
+     "roi_se": 0.3492,
+     "cover_rate": 0.5556,
+     "clv_old": -0.0401,
+     "clv_old_se": 0.0225,
+     "clv_pts": -0.4444,
+     "dog_share": 0.2222,
+     "avg_price": 100
+    },
+    "fanatics": {
+     "bets": 2,
+     "per_season": 0.7,
+     "pred_clv": 0.0143,
+     "clv": 0.0016,
+     "clv_se": 0.031,
+     "clv_t": 0.0509,
+     "clv_p_one_sided": 0.4797,
+     "beat_close": 0.5,
+     "roi": -0.0652,
+     "roi_se": 0.9348,
+     "cover_rate": 0.5,
+     "clv_old": -0.0015,
+     "clv_old_se": 0.0267,
+     "clv_pts": 0.0,
+     "dog_share": 0.0,
+     "avg_price": -7
+    },
+    "fanduel": {
+     "bets": 21,
+     "per_season": 7.0,
+     "pred_clv": 0.0216,
+     "clv": -0.0783,
+     "clv_se": 0.0223,
+     "clv_t": -3.5096,
+     "clv_p_one_sided": 0.9998,
+     "beat_close": 0.2381,
+     "roi": 0.0933,
+     "roi_se": 0.2118,
+     "cover_rate": 0.5714,
+     "clv_old": -0.0829,
+     "clv_old_se": 0.0229,
+     "clv_pts": -0.6905,
+     "dog_share": 0.381,
+     "avg_price": -110
+    },
+    "hardrockbet": {
+     "bets": 3,
+     "per_season": 1.0,
+     "pred_clv": 0.014,
+     "clv": -0.0359,
+     "clv_se": 0.1857,
+     "clv_t": -0.1931,
+     "clv_p_one_sided": 0.5766,
+     "beat_close": 0.3333,
+     "roi": 0.2872,
+     "roi_se": 0.6437,
+     "cover_rate": 0.6667,
+     "clv_old": -0.0456,
+     "clv_old_se": 0.191,
+     "clv_pts": -0.5,
+     "dog_share": 0.3333,
+     "avg_price": -110
+    }
+   },
+   "offer_spearman_with_clv": {
+    "ev_sp_sharp": 0.4749,
+    "ev_mlimp": 0.1071,
+    "ev_model_eligible": 0.1081,
+    "v1_edge_blend": 0.1268,
+    "move_mu": 0.0717,
+    "pt_off_cons": 0.1066
+   }
+  }
+ }
+}

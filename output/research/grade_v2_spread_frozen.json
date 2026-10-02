@@ -1,0 +1,95 @@
+{
+ "frozen_at": "2026-10-02T08:18:09",
+ "grading_version": 2,
+ "market": "spread",
+ "what": "SPREAD GRADE v2 = predicted honest spread CLV of an offer: EV of our point+price under the closing sharp (LowVig/BetOnline; fallback all books) spread+juice implied margin, total-aware key-number model (margin_total_model.json), at the closing consensus total.",
+ "margin_model": "margin_total_model.json (src/nflpred/margin_total.py MarginModel; mode abs, no ref total)",
+ "fit_seasons": [
+  2020,
+  2021,
+  2022
+ ],
+ "holdout": [
+  2023,
+  2024,
+  2025
+ ],
+ "model_choice": {
+  "chosen": "ridge_core_a1",
+  "rule": "complexity tiers base < ridge core < ridge market < ridge small < ridge all < lgbm small < lgbm all; start from the base (raw EV vs sharp spread); move to the best model of a higher tier only if its LOSO game-weighted MSE beats the current choice by > 0.5% relative (moneyline grade v2 rule, generalized)"
+ },
+ "model": {
+  "kind": "ridge",
+  "alpha": 1.0,
+  "intercept": -0.0348556681987197,
+  "feature_order": [
+   "ev_sp_sharp",
+   "ev_mlimp"
+  ],
+  "features": {
+   "ev_sp_sharp": {
+    "mean": -0.03774358249804243,
+    "sd": 0.02089812644668318,
+    "coef_std": 0.013698549698220524,
+    "coef_raw": 0.6554917606211859
+   },
+   "ev_mlimp": {
+    "mean": -0.03532055578538259,
+    "sd": 0.034049917994278575,
+    "coef_std": 0.003614384484114571,
+    "coef_raw": 0.10614957970594519
+   }
+  },
+  "formula": "pred_clv = intercept + sum_f coef_std[f] * (x_f - mean[f]) / sd[f]"
+ },
+ "feature_order": [
+  "ev_sp_sharp",
+  "ev_mlimp"
+ ],
+ "feature_definitions": {
+  "ev_sp_sharp": "EV of our point+price under the sharp (LowVig/BetOnline median) spread+juice implied margin, total-aware model at the snapshot consensus total; fallback ev_sp_cons; clipped",
+  "ev_mlimp": "EV under the margin implied by the sharp no-vig MONEYLINE (inverted through the total-aware model); fallback all-book ML; else ev_sp_cons; clipped"
+ },
+ "ev_clip": [
+  -0.15,
+  0.25
+ ],
+ "fair_reference_definitions": {
+  "sharp_books": [
+   "betonlineag",
+   "bookmaker",
+   "circasports",
+   "lowvig"
+  ],
+  "consensus": "median over ALL books in the feed (incl. exchanges) of each book's spread+juice implied margin (books passing the main-line filter)",
+  "implied_margin": "MarginModel.implied_mu(home_point, no-vig home cover share, snapshot median total)",
+  "ml_implied_margin": "mu with P(home win)/(1-P(tie)) = no-vig ML home prob (total-aware model)",
+  "model_blend": "spread_rules.json margin weights: model*mu_model + market*(-consensus home point) + intercept; used only at eligible snapshots"
+ },
+ "candidate_filter": "allowed book; main line (price -145..+125 both sides, half-point number, overround -1%..12%, number within 2.5 of the snapshot median); EV >= 0 vs at least one of sharp spread / consensus spread / sharp ML-implied / model blend (eligible)",
+ "thresholds_pred_clv": {
+  "A+": 0.01,
+  "A": 0.0,
+  "B": -0.01
+ },
+ "letters": "A+ >= A+ cut; A >= A cut; B >= B cut; else C",
+ "one_bet_per_game": "first snapshot where the game's best predicted-CLV spread offer reaches the grade; that offer (book, side, point, price) is the bet",
+ "strategies": [
+  {
+   "id": "S1_Aplus_flat",
+   "min_grade": "A+",
+   "desc": "One bet per game at the first snapshot where the best spread offer is A+; 1 unit."
+  },
+  {
+   "id": "S2_A_and_up_flat",
+   "min_grade": "A",
+   "desc": "One bet per game at the first snapshot where the best spread offer is A or A+; 1 unit."
+  }
+ ],
+ "pass_bar": {
+  "monotone": "mean realized CLV of first-appearance bets increases with grade: Spearman rho across the 4 letters >= 0.8 and A+ highest",
+  "top_grade": "A+ realized CLV > 0 with one-sided p < 0.05 (t on bet-level CLV)",
+  "adopt_if": "both hold"
+ },
+ "evaluate_once": true
+}
