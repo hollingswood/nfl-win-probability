@@ -25,7 +25,8 @@ and benchmarks against Vegas. Runs weekly on GitHub Actions and publishes to Git
 - `src/nflpred/news_llm.py` — AI news reader (free RSS feeds → Claude Haiku → history/news_llm.jsonl with first-seen time); runs in the hourly watch when ANTHROPIC_API_KEY is set, else probes feed reachability. Logging only, no bets
 - `pipeline watch` + `.github/workflows/odds_watch.yml` — hourly odds-only refresh for the price-sensitive tracks (no retraining; v1 tracks act only on full runs). Odds snapshots are saved as history/odds_*.json.gz
 - `news.log_first_seen` → history/news_log.jsonl: when we first saw each injury/QB status (to measure news-vs-line timing)
-- `src/nflpred/grading.py` — bet grades A+..C (GRADING_VERSION 1) and performance-by-grade tables; bump the version to change the scheme
+- `src/nflpred/grading.py` — v1 points grades A+..C (GRADING_VERSION 1): now shown only on SPREAD offers (labeled v1); bump the version to change the scheme
+- `src/nflpred/grade_v2.py` + `grade_v2_model.json` — MONEYLINE grade v2 (GRADING_VERSION 2): frozen LightGBM predicted CLV of each side's best allowed-book price (research output/research/grade_v2.md; A+ >= 2.5%, A >= 1.5%, B >= 0.5%). Runs in `update` and `watch` (game['grade_v2'], grade_v2/predicted_clv on new ML paper bets). LABEL ONLY: never use it to qualify, veto or size v1-v4 bets; only A+ showed an edge. Never edit/refit grade_v2_model.json (verbatim copy of the frozen research model); a new model = new research + new version. Fail-safe: null grade if lightgbm/model missing
 - `src/nflpred/qb_availability.py` — sit-probability blend for upcoming games with a hurt listed QB; `overrides.json` for late news
 - `scripts/build_dashboard.py` — renders `output/*.json` into `site/`
 - `model_baseline.json` — backtest log loss that CI must not regress past

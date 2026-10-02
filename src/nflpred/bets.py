@@ -117,7 +117,16 @@ def evaluate(game: dict, rules: dict, first_market: float | None) -> dict | None
         "p_market": round(best["market"], 4), "p_blend": round(best["p"], 4), "edge": round(best["edge"], 4),
         "units": kelly_units(best["p"], best["price"], rules["sizing"]), "status": "open",
         "grade": gr["grade"], "grade_why": gr["why"], "grading_version": gr["grading_version"],
+        **_grade_v2_fields(game, best["side"], best["price"]),  # moneyline grade v2: label only
     }
+
+
+def _grade_v2_fields(game: dict, side: str, price) -> dict:
+    try:
+        from . import grade_v2
+        return grade_v2.bet_fields(game, side, price)
+    except Exception:
+        return {"grade_v2": None, "predicted_clv": None}
 
 
 def grade(bet: dict, games: pd.DataFrame) -> dict:
@@ -203,7 +212,13 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, rules: dict | No
             logged = any(b["game_id"] == g["game_id"] and b.get("status") != "void" for b in ledger)
             v["verdict"] = "bet" if logged else ("lean" if v["edge"] > 0 else "pass")
             v["reasons"] = [] if logged else list(g.get("bet_check") or [])
+    try:
+        from . import grade_v2 as _gv2
+        bg2 = _gv2.by_grade(ledger)
+    except Exception:
+        bg2 = []
     return {"mode": mode, "rules_version": rules["version"], "new": new, "by_grade": G.by_grade(ledger),
+            "by_grade_v2": bg2,
             "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:],
             "record": rec}

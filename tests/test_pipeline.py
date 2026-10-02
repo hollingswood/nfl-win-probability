@@ -839,3 +839,156 @@ def test_dashboard_promo_calculator_section(live):
         assert f'id="{el}"' in body
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
     assert ("live_odds" in data["predictions"]["upcoming"][0]["context"]) == live
+
+
+# ---------------------------------------------------------------- grade v2 (moneyline predicted CLV)
+def _g2_event(fd_away=150):
+    def bk(key, mh, ma, hp, hpr, apr):
+        return {"key": key, "title": key.title(), "markets": [
+            {"key": "h2h", "outcomes": [{"name": "Kansas City Chiefs", "price": mh}, {"name": "Denver Broncos", "price": ma}]},
+            {"key": "spreads", "outcomes": [{"name": "Kansas City Chiefs", "point": hp, "price": hpr},
+                                            {"name": "Denver Broncos", "point": -hp, "price": apr}]},
+            {"key": "totals", "outcomes": [{"name": "Over", "point": 44.5, "price": -110},
+                                           {"name": "Under", "point": 44.5, "price": -110}]}]}
+    return [{"home_team": "Kansas City Chiefs", "away_team": "Denver Broncos", "commence_time": "2026-10-04T20:25:00Z",
+             "bookmakers": [bk("lowvig", -150, 140, -3.0, -110, -110), bk("betonlineag", -152, 138, -3.0, -112, -108),
+                            bk("draftkings", -160, 145, -3.0, -115, -105), bk("fanduel", -165, fd_away, -3.0, -110, -110),
+                            bk("kalshi", -140, 160, -3.0, -110, -110)]}]
+
+
+def _g2_game(lo, **kw):
+    g = {"game_id": "g", "season": 2026, "week": 5, "gameday": "2026-10-04", "home_team": "KC", "away_team": "DEN",
+         "kickoff_utc": "2026-10-04T20:25:00+00:00", "home_win_prob": 0.62, "injury_report": True,
+         "qb_status": {"home": {"play_prob": 1.0}, "away": {"play_prob": 1.0}}, "context": {"live_odds": lo}}
+    g.update(kw)
+    return g
+
+
+def test_grade_v2_features_match_research_definitions():
+    import math
+    from datetime import datetime, timezone
+    from nflpred import odds as O, grade_v2 as GV
+    lo = next(iter(O.summarize(_g2_event(), {"draftkings", "fanduel"}).values()))
+    assert lo["best_away_ml"] == {"price": 150, "book": "Fanduel", "key": "fanduel"}
+    assert "kalshi" not in lo["by_book"]                                      # exchanges left out, as in research
+    ref = GV.market_refs(lo)
+    nv = lambda h, a: GV._imp(h) / (GV._imp(h) + GV._imp(a))  # noqa: E731
+    assert abs(ref["p_sharp"] - (nv(-150, 140) + nv(-152, 138)) / 2) < 1e-9   # median of LowVig/BetOnline
+    assert ref["pt_cons"] == -3.0 and 0.001 < ref["p_tie"] < 0.02 and ref["disp"] > 0
+    assert 0.55 < ref["p_sp_sharp"] < 0.7
+    now = datetime(2026, 10, 1, 20, 25, tzinfo=timezone.utc)                  # 72 h before kickoff
+    o = GV.offer_features(_g2_game(lo), "away", 150, "fanduel", ref, now, first_p=0.62, first_m=2.0)
+    F, pt = o["features"], ref["p_tie"]
+    assert abs(F["ev_ml_sharp"] - ((1 - ref["p_sharp"]) * 2.5 - 1) * (1 - pt)) < 1e-9
+    assert abs(F["ev_model"] - (0.38 * 2.5 - 1)) < 1e-9 and F["model_elig"] == 1.0   # no tie factor on ev_model
+    assert F["p_imp"] == 0.4 and F["is_dog"] == 1 and F["longshot"] == 0 and F["best_gap"] == 0
+    assert F["bk_fanduel"] == 1 and F["bk_betmgm"] == 0 and F["sharp_missing"] == 0
+    assert abs(F["log_hours"] - math.log1p(72)) < 1e-9 and F["is_last"] == 0
+    assert F["key_pos"] == 1 and F["on3"] == 1                               # DEN +3 = right side of 3
+    assert abs(F["move_p"] - (-(lo["consensus_home_prob"] - 0.62))) < 1e-9   # + = toward DEN
+    assert abs(F["move_pts"] - (-(lo["consensus_home_margin"] - 2.0))) < 1e-9
+    assert o["candidate"]
+    no_rep = GV.offer_features(_g2_game(lo, injury_report=False), "away", 150, "fanduel", ref, now)
+    assert no_rep["features"]["model_elig"] == 0 and no_rep["features"]["ev_model"] == 0
+    assert set(F) == set(json_load_frozen()["feature_order"])
+
+
+def json_load_frozen():
+    import json
+    from nflpred import grade_v2 as GV
+    return json.loads(GV.MODEL_PATH.read_text())
+
+
+def test_grade_v2_letters_and_frozen_copy():
+    import json
+    from pathlib import Path
+    from nflpred import grade_v2 as GV
+    th = json_load_frozen()["thresholds_pred_clv"]
+    assert th == {"A+": 0.025, "A": 0.015, "B": 0.005}
+    assert [GV.letter(x, th) for x in (0.03, 0.025, 0.02, 0.015, 0.01, 0.005, 0.0, -0.05)] == \
+        ["A+", "A+", "A", "A", "B", "B", "C", "C"]
+    assert GV.letter(None, th) is None and GV.letter(float("nan"), th) is None
+    research = Path(__file__).resolve().parents[1] / "output" / "research" / "grade_v2_frozen.json"
+    if research.exists():   # production model is a verbatim copy of the frozen research model
+        assert json.loads(research.read_text())["model"] == json_load_frozen()["model"]
+
+
+def test_grade_v2_attach_and_bet_label(tmp_path):
+    pytest.importorskip("lightgbm")
+    from datetime import datetime, timezone
+    from nflpred import odds as O, grade_v2 as GV, ml_v2
+    lo = next(iter(O.summarize(_g2_event(fd_away=165), {"draftkings", "fanduel"}).values()))
+    g = _g2_game(lo, home_win_prob=0.58)
+    pred = {"upcoming": [g]}
+    s = GV.attach(pred, tmp_path, datetime(2026, 10, 1, 20, 25, tzinfo=timezone.utc))
+    assert s["available"] and s["graded_games"] == 1
+    G = g["grade_v2"]
+    assert G["grade"] in GV.ORDER and G["grade"] == GV.letter(G["predicted_clv"], s["thresholds"])
+    assert G["side"] in ("home", "away") and G["price"] == lo[f"best_{G['side']}_ml"]["price"]
+    assert all(x["predicted_clv"] <= G["predicted_clv"] for x in g["grade_v2_sides"].values())
+    # recorded on a new v2 paper bet as a label; qualification unchanged
+    before = ml_v2.evaluate(_g2_game(lo, home_win_prob=0.58), ml_v2.load_rules())
+    bet = ml_v2.evaluate(g, ml_v2.load_rules())
+    assert before and bet and {k: v for k, v in bet.items() if k != "placed_at"} == \
+        {**{k: v for k, v in before.items() if k != "placed_at"}, "grade_v2": bet["grade_v2"],
+         "predicted_clv": bet["predicted_clv"]}
+    side = g["grade_v2_sides"][bet["side"]]
+    assert bet["grade_v2"] == side["grade"] and bet["predicted_clv"] == side["predicted_clv"]
+    assert before["grade_v2"] is None                                           # ungraded game: label null
+    assert GV.bet_fields(g, "away", 999) == {"grade_v2": None, "predicted_clv": None}   # different price: no label
+    rows = GV.by_grade([{"status": "graded", "grade_v2": "A+", "units": 1, "result": "win", "profit_units": 1.5,
+                         "clv": 0.03, "predicted_clv": 0.028}])
+    assert rows[0]["grade"] == "A+" and rows[0]["avg_clv"] == 0.03 and rows[0]["roi"] == 1.5
+
+
+def test_grade_v2_fail_safe(tmp_path, monkeypatch):
+    import sys
+    from nflpred import odds as O, grade_v2 as GV
+    lo = next(iter(O.summarize(_g2_event(), {"draftkings", "fanduel"}).values()))
+    assert GV.load_model(tmp_path / "missing.json") is None                     # model file missing
+    monkeypatch.setitem(sys.modules, "lightgbm", None)                          # lightgbm not installed
+    (tmp_path / "m.json").write_text(GV.MODEL_PATH.read_text())
+    assert GV.load_model(tmp_path / "m.json") is None
+    g = _g2_game(lo)
+    s = GV.attach({"upcoming": [g]}, tmp_path, model=False)
+    assert s["available"] is False and g["grade_v2"] is None
+    class Boom:
+        def predict(self, *a, **k):
+            raise RuntimeError("boom")
+    bad = {"booster": Boom(), "feature_order": json_load_frozen()["feature_order"], "thresholds": {"A+": .025, "A": .015, "B": .005}}
+    g2 = _g2_game(lo)
+    s = GV.attach({"upcoming": [g2]}, tmp_path, model=bad)                      # any error -> null, no raise
+    assert s["errors"] == 1 and g2["grade_v2"] is None
+    from nflpred import ml_v2
+    ml_v2.evaluate(g2, ml_v2.load_rules())                                       # tracks still run on ungraded games
+
+
+def test_dashboard_renders_grade_v2(tmp_path):
+    import json
+    import re
+    bd = _load_build_dashboard()
+    pred = _dash_predictions(True)
+    up = pred["upcoming"][0]
+    up["ml_v2"].update(side="away")
+    up["grade_v2"] = {"side": "away", "team": "AAA", "price": 150, "book": "FanDuel", "predicted_clv": 0.031,
+                      "grade": "A+", "grading_version": 2}
+    up["grade_v2_sides"] = {"away": up["grade_v2"]}
+    up["moneyline"] = {"side": "away", "team": "AAA", "price": 150, "book": "FanDuel", "p_ours": 0.45, "p_market": 0.41,
+                       "p_needed": 0.4, "edge": 0.12, "grade": "B", "why": [], "verdict": "lean", "reasons": []}
+    pred["grade_v2"] = {"version": 2, "available": True, "note": "Grade = predicted closing-line value; only A+ has shown an edge (2023-25: +2.3% CLV)",
+                        "record": {"all": [{"grade": "A+", "bets": 2, "wins": 1, "losses": 1, "profit_units": 0.5,
+                                            "roi": 0.25, "avg_clv": 0.02, "avg_predicted_clv": 0.03}], "by_track": []}}
+    pred["ml_v2_bets"] = {"mode": "shadow", "record": {"graded": 0, "min_bets": 150, "wins": 0, "losses": 0,
+                          "profit_units": 0.0, "roi": 0.0, "avg_clv": 0.0, "clv_p_value": 1.0,
+                          "checks": {"enough_bets": False, "roi_positive": False, "clv_positive_and_significant": False}},
+                          "open": [{"game_id": up["game_id"], "gameday": "2026-10-04", "team": "AAA", "opponent": "BBB",
+                                    "side": "away", "price": 150, "book": "FanDuel", "edge": 0.03, "units": 1,
+                                    "placed_at": "2026-10-01T12:00+00:00", "grade_v2": "A+", "predicted_clv": 0.031}],
+                          "recent_graded": [], "by_grade": [], "by_grade_v2": []}
+    backtest = {"overall": {"margin": {"accuracy": 0.66, "n": 2000}, "vegas": {"accuracy": 0.67, "n": 2000}},
+                "seasons": "2018-2025", "calibration": [], "by_season": []}
+    body = bd.render(bd.build_payload(pred, backtest, None, []))
+    assert 'id="g2rec"' in body and 'id="g2games"' in body and "Grade v2 record" in body
+    assert "only A+ has shown an edge (2023-25: +2.3% CLV)" in body
+    data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
+    assert data["predictions"]["upcoming"][0]["grade_v2"]["grade"] == "A+"

@@ -82,6 +82,25 @@ def load_allowed_books(path=None) -> set | None:
 SHARP_BOOKS = {"lowvig", "betonlineag", "circasports", "bookmaker"}
 
 
+def _book_detail(mk: dict, home: str, away: str) -> dict:
+    """One book's moneyline [home, away] and main spread [home_point, home_price, away_price] (None if missing)."""
+    out = {"ml": None, "sp": None}
+    try:
+        if "h2h" in mk:
+            px = {o["name"]: o["price"] for o in mk["h2h"]["outcomes"]}
+            if px.get(home) is not None and px.get(away) is not None:
+                out["ml"] = [px[home], px[away]]
+        if "spreads" in mk:
+            sp = {o["name"]: o for o in mk["spreads"]["outcomes"]}
+            ho, ao = sp.get(home), sp.get(away)
+            if (ho and ao and ho.get("point") is not None and ho.get("price") is not None
+                    and ao.get("price") is not None):
+                out["sp"] = [ho["point"], ho["price"], ao["price"]]
+    except Exception:
+        pass
+    return out
+
+
 def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str, str, str], dict]:
     """(home_abbr, away_abbr, kickoff date UTC) -> consensus + best prices.
     Consensus uses every book; best prices and per-book spreads only books in `allowed` (if given)."""
@@ -95,8 +114,11 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         ref3 = []  # moneyline v3 reference: Pinnacle + LowVig + BetOnline
         sharp_spreads = []  # moneyline v4: sharp books' spread + juice
         book_spreads = []
+        by_book = {}  # grade v2 (grade_v2.py): raw ML / spread per book (exchanges left out, as in the research feed)
         for bk in ev.get("bookmakers", []):
             mk = {m["key"]: m for m in bk.get("markets", [])}
+            if bk.get("key") and bk.get("key") not in EXCHANGES:
+                by_book[bk["key"]] = _book_detail(mk, ev["home_team"], ev["away_team"])
             if "h2h" in mk:
                 px = {o["name"]: o["price"] for o in mk["h2h"]["outcomes"]}
                 if ev["home_team"] in px and ev["away_team"] in px:
@@ -117,6 +139,8 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                         for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
                             if best[side] is None or px[name] > best[side]["price"]:
                                 best[side] = {"price": px[name], "book": bk.get("title", bk.get("key"))}
+                                if bk.get("key"):
+                                    best[side]["key"] = bk["key"]  # Odds API key (grade v2 book feature)
             if "spreads" in mk:
                 sp = {o["name"]: o for o in mk["spreads"]["outcomes"]}
                 ho, ao = sp.get(ev["home_team"]), sp.get(ev["away_team"])
@@ -150,6 +174,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],
             "spreads_by_book": book_spreads,
+            "by_book": by_book,
             "commence_time": ev["commence_time"],
         }
     return out

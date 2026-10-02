@@ -17,6 +17,7 @@ import pandas as pd
 
 from . import bets as ML
 from . import grading as G
+from . import grade_v2 as GV2
 
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "moneyline_v2_rules.json"
@@ -72,7 +73,8 @@ def evaluate(game: dict, r: dict) -> dict | None:
             "side": best["side"], "team": best["team"], "opponent": opp, "price": best["price"], "book": best["book"],
             "p_sharp": best["p_sharp"], "p_model": best["p_model"], "p_market": best["p_market"],
             "edge": best["ev_sharp"], "ev_model": best["ev_model"],
-            "units": ML.kelly_units(best["p_sharp"], best["price"], r["sizing"]), "status": "open"}
+            "units": ML.kelly_units(best["p_sharp"], best["price"], r["sizing"]), "status": "open",
+            **GV2.bet_fields(game, best["side"], best["price"])}  # grade v2: label only, never qualifies
 
 
 def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None = None) -> dict:
@@ -105,7 +107,7 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
             v["verdict"] = "bet" if logged else ("lean" if v["ev_sharp"] > 0 else "pass")
             v["reasons"] = [] if logged else list(g.get(r.get("game_key", "ml_v2") + "_check") or [])
     return {"track": r["track"], "mode": "live" if rec["passed"] else "shadow", "rules_version": r["version"],
-            "by_grade": G.by_grade(ledger), "new": new, "open": [b for b in ledger if b.get("status") == "open"],
+            "by_grade": G.by_grade(ledger), "by_grade_v2": GV2.by_grade(ledger), "new": new, "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-20:], "record": rec}
 
 

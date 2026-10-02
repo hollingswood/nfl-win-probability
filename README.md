@@ -84,6 +84,19 @@ Spread backtest 2020–25 by grade (no line-movement data historically): A +15.2
 B +2.1% (226), C+ +1.8% (101), C −1.4% (14): ordered at the extremes, flat in the middle, small samples.
 The paper record reports performance by grade for each track; that is the real test of whether grades mean anything.
 
+## Moneyline grade v2 (`grade_v2.py`, GRADING_VERSION 2)
+Moneyline offers are graded by their **predicted closing-line value**: a LightGBM model frozen on 2020–22 lines
+(`grade_v2_model.json`, a verbatim copy of `output/research/grade_v2_frozen.json`; research `output/research/grade_v2.md`).
+A+ ≥ 2.5%, A ≥ 1.5%, B ≥ 0.5%, else C. On the one-shot 2023–25 holdout realized CLV rose with the letter, but only
+**A+** showed an edge (+2.3% ± 1.0 CLV); A and B were about zero. Each run (`update` and hourly `watch`) grades the best
+allowed-book price for each side of every upcoming game (`game["grade_v2"]` = best side, `grade_v2_sides` = both) and
+stores `grade_v2` / `predicted_clv` on new moneyline v1–v4 paper bets. It is a **label only**: it never qualifies,
+vetoes or sizes a bet, and spread offers keep the v1 grade (shown as "v1"). Games where no price is +EV against any fair
+reference are outside the model's training set and stay ungraded. Live approximations of the research features are
+listed in the module docstring (first-seen line from weekly `predictions_*.json`, eligibility = injury report + QBs
+confirmed, Pinnacle/exchanges excluded from the consensus). If `lightgbm` or the model file is missing, grades are null
+and nothing else changes. The dashboard shows a "Grade v2 record" table (paper record by grade across moneyline tracks).
+
 ## Paper bets → recommendations (`bets.py`, rules in `betting_rules.json`)
 Two independent tracks with their own locked rules and records: **moneyline** (`betting_rules.json`, v1) and
 **spread** (`spread_rules.json`, v1, same thresholds, sizing and validation test). A track switches to live

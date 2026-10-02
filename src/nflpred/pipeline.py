@@ -304,6 +304,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         "coefficients": M.coefficients(model),
         "trained_on_games": int(len(M.train_rows(df))),
     }
+    result["grade_v2"] = _grade_v2_attach(result)  # label for moneyline offers; before the tracks record it
     try:
         result["bets"] = bets_lib.process(result, df, ROOT / "history")
     except Exception as e:  # paper betting must never block predictions
@@ -344,6 +345,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["totals_wind_bets"] = {"error": str(e)}
         print("totals wind bets: failed:", e)
+    _grade_v2_record(result)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     alert = OUT / "alert.md"
@@ -378,6 +380,26 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     if lines:
         alert.write_text("New qualifying bets (validated track):\n\n" + "\n".join(lines))
     return result
+
+
+def _grade_v2_attach(pred: dict, now: dt.datetime | None = None) -> dict:
+    """Grade v2 (grade_v2.py) on every upcoming game; never blocks the pipeline."""
+    try:
+        from . import grade_v2
+        return grade_v2.attach(pred, ROOT / "history", now)
+    except Exception as e:
+        print("grade v2: failed:", e)
+        for g in pred.get("upcoming", []):
+            g["grade_v2"], g["grade_v2_sides"] = None, {}
+        return {"version": 2, "available": False, "error": str(e)}
+
+
+def _grade_v2_record(pred: dict) -> None:
+    try:
+        from . import grade_v2
+        pred.setdefault("grade_v2", {})["record"] = grade_v2.record(ROOT / "history")
+    except Exception as e:
+        print("grade v2 record: failed:", e)
 
 
 def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
@@ -433,6 +455,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
         ups.append(g)
     pred["upcoming"] = ups
     pred["odds_checked_at"] = now.isoformat(timespec="minutes")
+    pred["grade_v2"] = _grade_v2_attach(pred, now)
     no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
     for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
                     ("night_west_bets", night_west.process)):
@@ -445,6 +468,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
                 print(f"watch: new {key} paper bet {b['id']} {b['price']:+d} at {b['book']}")
         except Exception as e:
             print(f"watch: {key} failed: {e}")
+    _grade_v2_record(pred)
     M.save_json(pred, path)
     return pred
 

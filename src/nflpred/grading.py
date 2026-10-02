@@ -14,12 +14,17 @@ Points (each with a stated reason; nothing here was tuned to results):
   -1  either starting QB differs from his team's usual starter (the model's weakest spot)
 
 Score -> grade: >=4 A+, 3 A, 2 B+, 1 B, 0 C+, <=-1 C.
+
+2026-10-02: for MONEYLINE offers the displayed grade is now grade v2 (GRADING_VERSION 2, src/nflpred/grade_v2.py:
+predicted CLV from a frozen LightGBM model; research output/research/grade_v2.md). This v1 points scheme never ranked
+bets on 2020-25 lines; it is kept for SPREAD offers (shown as 'v1') and is still stored on v1 bets for continuity.
 Whether grades mean anything is measured on the paper record (performance by grade) and shown
 on the dashboard; changing this scheme means bumping GRADING_VERSION.
 """
 from __future__ import annotations
 
-GRADING_VERSION = 1
+GRADING_VERSION = 1            # this module's points scheme (spread rows, v1 bets)
+MONEYLINE_GRADING_VERSION = 2  # moneyline display: grade_v2.py
 LETTERS = [(4, "A+"), (3, "A"), (2, "B+"), (1, "B"), (0, "C+")]
 QB_CHANGE_FLAG = 0.05  # EPA/dropback gap between today's starter and the team's usual QBs
 
