@@ -1,0 +1,26 @@
+{
+  "track": "aplus_ml",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "Bets EVERY moneyline grade v2 A+ offer to verify the grade's ongoing profitability (until now the grade was a label and its record only covered bets other tracks placed). Basis: output/research/grade_v2.md, strategy S1_Aplus_flat (frozen before the holdout): 2023-25 one-shot holdout A+ CLV +2.34% +- 0.98 (p 0.009), 163 bets (~54/season), ROI +22% +- 15; dev 2020-22 +4.16% +- 0.92 on 89. 2023-25 was also the holdout of earlier studies, so the 2026 season is the clean test. Do not edit to fit results; bump version instead.",
+  "market": "moneyline",
+  "grade": "grade_v2.py (GRADING_VERSION 2, frozen grade_v2_model.json): A+ = predicted CLV >= +2.5% of the best allowed-book price of the side with the highest predicted CLV (game['grade_v2'])",
+  "qualify": {
+    "grade": "A+",
+    "min_hours_before_kickoff": 0.1667,
+    "max_hours_before_kickoff": 168,
+    "window_note": "research candidate table (ml_spread_consistency.build_ml): snapshots 10 min .. 7 days before kickoff",
+    "lock": "One bet per game at the FIRST snapshot where the game's best offer is A+, at that offer's book and price; later snapshots never change it. Snapshots = every full run (pipeline update) AND every hourly odds watch (pipeline watch). The research looked only at our historical run times (sparser), so more looks can only find more A+ moments: expect somewhat more bets than the research rate and judge the result on 2026 lines.",
+    "bet": "the graded side at the book and price that were graded A+; no other conditions (no QB/injury-report eligibility, no price range beyond the grade's own candidate filter)"
+  },
+  "sizing": {
+    "units": 1.0
+  },
+  "validation": {
+    "min_bets": 100,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "bets.grade: bet decimal odds x nflverse closing no-vig probability of that side - 1 (as moneyline v1/v2)"
+  },
+  "ledger": "paper_bets_aplus_ml.json"
+}

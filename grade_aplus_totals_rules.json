@@ -1,0 +1,26 @@
+{
+  "track": "aplus_totals",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "Bets EVERY totals grade A+ offer to verify the grade on 2026 lines. Basis: output/research/grade_granular.md Q2 (frozen model grade_totals_model.json): 2023-25 one-shot holdout A+ CLV +1.48% +- 0.66 (p 0.012), 243 bets (~81/season), ROI +7.5% +- 6.1; dev 2020-22 +2.26% +- 0.61 on 218. Post-hoc ~95% of A+ bets were early-week unders (median 139 h before kick). 2023-25 was also the holdout of earlier studies, so the 2026 season is the clean test. Overlaps the early-week under track by design (separate ledger and record). Do not edit to fit results; bump version instead.",
+  "market": "totals",
+  "grade": "grade_totals.py (GRADING_VERSION 2): A+ = predicted CLV >= 0.0% of the allowed-book over/under quote with the highest predicted CLV (game['totals_grade']); graded only 10 min .. 7 days before kickoff",
+  "qualify": {
+    "grade": "A+",
+    "min_hours_before_kickoff": 0.1667,
+    "max_hours_before_kickoff": 168,
+    "window_note": "research: graded within 7 days of kickoff (first snapshot <= 7 days)",
+    "lock": "One bet per game at the FIRST snapshot where the game's best offer is A+, at that offer's book and price; later snapshots never change it. Snapshots = every full run (pipeline update) AND every hourly odds watch (pipeline watch). The research looked only at our historical run times (sparser), so more looks can only find more A+ moments: expect somewhat more bets than the research rate and judge the result on 2026 lines.",
+    "bet": "the graded side (over or under) at the book, number and price that were graded A+"
+  },
+  "sizing": {
+    "units": 1.0
+  },
+  "validation": {
+    "min_bets": 100,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "totals.grade: EV of our side at our point and price under the fair expected total of our own last pre-kickoff odds snapshot (closing_totals, all-book median, prices included); clv_sharp_close recorded for information"
+  },
+  "ledger": "paper_bets_aplus_totals.json"
+}

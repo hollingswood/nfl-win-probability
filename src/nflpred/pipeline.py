@@ -359,6 +359,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["props_receptions_bets"] = {"error": str(e)}
         print("props receptions bets: failed:", e)
+    _aplus_tracks(result, df)
     _grade_v2_record(result)
     _totals_grade_record(result)
     OUT.mkdir(exist_ok=True)
@@ -405,7 +406,33 @@ def alert_lines(result: dict) -> list[str]:
         lines += [f"- **{x['player']} {x['side']} {x['point']:g} receptions** ({x['price']:+d}) at {x['book']} "
                   f"({x['opponent']}, {x['gameday']}): {x['edge']:+.1%} vs other books, stake {x['units']}u"
                   for x in pr.get("new", [])]
+    try:
+        from . import grade_aplus
+        lines += grade_aplus.alert_lines(result)
+    except Exception as e:
+        print("A+ alerts: failed:", e)
     return lines
+
+
+def _aplus_tracks(pred: dict, games: pd.DataFrame, now: dt.datetime | None = None) -> None:
+    """A+ grade paper tracks (grade_aplus.py): bet every A+ offer of the moneyline, spread v1 and totals grades.
+    Runs on full runs and the hourly watch, after the grades are attached; never blocks the pipeline."""
+    try:
+        from . import grade_aplus
+    except Exception as e:
+        print("A+ tracks: unavailable:", e)
+        return
+    for market, key in grade_aplus.RESULT_KEYS.items():
+        try:
+            res = grade_aplus.process(market, pred, games, ROOT / "history", now=now)
+            if not len(games):  # watch: no grading, keep the last full run's graded list
+                res["recent_graded"] = (pred.get(key) or {}).get("recent_graded", res.get("recent_graded", []))
+            pred[key] = res
+            for b in res.get("new", []):
+                print(f"A+ {market}: new paper bet {b['id']} {b['price']:+d} at {b['book']}")
+        except Exception as e:
+            pred[key] = {"error": str(e)}
+            print(f"A+ {market} bets: failed:", e)
 
 
 def write_alert(result: dict, path: Path | None = None) -> list[str]:
@@ -476,8 +503,8 @@ def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
 def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     """Hourly odds watch (no retraining): refresh live prices on the last published predictions and
     run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
-    forecast-wind and early-week unders, night games, receptions props). The v1 tracks only act on full
-    runs, as pre-registered. Grading happens on full runs."""
+    forecast-wind and early-week unders, night games, receptions props, the A+ grade tracks). The v1 tracks only
+    act on full runs, as pre-registered. Grading happens on full runs."""
     from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions
     path = OUT / "predictions.json"
     if not path.exists():
@@ -529,6 +556,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
                 print(f"watch: new {key} paper bet {b['id']} {b['price']:+d} at {b['book']}")
         except Exception as e:
             print(f"watch: {key} failed: {e}")
+    _aplus_tracks(pred, no_games, now)
     _grade_v2_record(pred)
     _totals_grade_record(pred)
     M.save_json(pred, path)

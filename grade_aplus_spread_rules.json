@@ -1,0 +1,33 @@
+{
+  "track": "aplus_spread",
+  "version": 1,
+  "frozen_on": "2026-10-02",
+  "note": "Bets EVERY original spread grade (grading.py v1) A+ offer to verify the grade on 2026 lines. Basis: output/research/grade_v2_spread.md, 'Grade v1 (production use)' rows (scripts/research/grade_v2_spread.py v1_eval): 2023-25 v1 A+ CLV +2.20% +- 1.34 (p 0.0496), 49 bets (~16/season) -- BORDERLINE; dev 2020-22 +2.97% +- 1.24 on 49. The v1 points scheme was never fit to data, but 2023-25 was the holdout of earlier studies, so the 2026 season is the clean test. Do not edit to fit results; bump version instead.",
+  "market": "spread",
+  "grade": "grading.grade('spread', ...) exactly as spread_bets.evaluate calls it (blend-EV points, model-vs-market gap, line move since first seen, side of 3/7, QB-change flag): A+ = score >= 4",
+  "qualify": {
+    "grade": "A+",
+    "candidate": "copied from v1_eval: at ANY snapshot (no injury-report / QB-confirmed eligibility; the research applied v1 to every snapshot), take the allowed-book (my_books.json) offer with the highest blend EV among offers passing the research spread filter, and bet it if its v1 grade is A+",
+    "min_american_odds": -145,
+    "max_american_odds": 125,
+    "max_points_from_median": 2.5,
+    "min_overround": -0.01,
+    "max_overround": 0.12,
+    "quote_filters": "research sp_ok (ml_spread_consistency.build_ml): both prices -145..+125, home point = -away point, half points, point within 2.5 of the median valid point of all books at the snapshot (Pinnacle/exchanges left out, as in the research feed), overround -1%..12%",
+    "min_hours_before_kickoff": 0.1667,
+    "max_hours_before_kickoff": 168,
+    "window_note": "research candidate table: snapshots 10 min .. 7 days before kickoff",
+    "lock": "One bet per game at the FIRST snapshot where the game's best offer is A+, at that offer's book and price; later snapshots never change it. Snapshots = every full run (pipeline update) AND every hourly odds watch (pipeline watch). The research looked only at our historical run times (sparser), so more looks can only find more A+ moments: expect somewhat more bets than the research rate and judge the result on 2026 lines.",
+    "known_differences": "the research set the QB-change flag to False (the historical flag would leak the actual starter); live the flag is applied as in production, which can only turn an A+ into an A"
+  },
+  "sizing": {
+    "units": 1.0
+  },
+  "validation": {
+    "min_bets": 60,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0,
+    "clv_definition": "spread_bets.grade: EV of our point and price under the closing market's price-implied expected margin from our own last pre-kickoff odds snapshot (closing_margins, prices included; never spread_line alone)"
+  },
+  "ledger": "paper_bets_aplus_spread.json"
+}

@@ -233,16 +233,18 @@ def grade(bet: dict, games: pd.DataFrame, dist: TotalDist, closes: dict) -> dict
         return bet
     x = g.iloc[0]
     total = x["home_score"] + x["away_score"]
-    res = "win" if total < bet["point"] else "push" if total == bet["point"] else "loss"
+    side = bet.get("side", "under")  # the A+ totals track (grade_aplus.py) also bets overs
+    won = total < bet["point"] if side == "under" else total > bet["point"]
+    res = "win" if won else "push" if total == bet["point"] else "loss"
     out = dict(bet, status="graded", result=res, final=f"{int(total)} pts")
     out["profit_units"] = round(bet["units"] * (ML.decimal(bet["price"]) - 1), 3) if res == "win" else (0.0 if res == "push" else -bet["units"])
     for c in closes.get((x.get("home_team"), x.get("away_team")), []):
         if abs((pd.Timestamp(c["commence"]).tz_convert(None).normalize() - pd.Timestamp(x["gameday"])).days) <= 1:
-            out["clv"] = round(dist.ev(c["mu"], bet["point"], bet["price"], "under"), 4)
+            out["clv"] = round(dist.ev(c["mu"], bet["point"], bet["price"], side), 4)
             out["closing_total"] = c["mu"]
             out["clv_source"] = f"own closing snapshot {c['ts']}, prices included"
             if c.get("mu_sharp") is not None:  # informational: vs the sharp books' close (research CLV reference)
-                out["clv_sharp_close"] = round(dist.ev(c["mu_sharp"], bet["point"], bet["price"], "under"), 4)
+                out["clv_sharp_close"] = round(dist.ev(c["mu_sharp"], bet["point"], bet["price"], side), 4)
     return out
 
 

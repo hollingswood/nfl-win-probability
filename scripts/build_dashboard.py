@@ -80,7 +80,9 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
 RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",
               "ml_v3": "moneyline_v3_rules.json", "ml_v4": "moneyline_v4_rules.json",
               "totals": "totals_wind_rules.json", "night": "night_west_rules.json",
-              "totals_eu": "totals_early_under_rules.json", "props_rec": "props_receptions_rules.json"}
+              "totals_eu": "totals_early_under_rules.json", "props_rec": "props_receptions_rules.json",
+              "aplus_ml": "grade_aplus_ml_rules.json", "aplus_sp": "grade_aplus_spread_rules.json",
+              "aplus_tot": "grade_aplus_totals_rules.json"}
 
 
 def load_rule_limits(root: Path = ROOT) -> dict:
