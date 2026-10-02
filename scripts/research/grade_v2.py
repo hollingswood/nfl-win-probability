@@ -516,11 +516,6 @@ def run_freeze():
 
 def load_frozen_model(fz):
     md = fz["model"]
-    if md["kind"] != "ridge" and "gain" in Dv.get("fit_all_dev", {}):
-        L += ["Feature importance (share of total split gain, fit on 2020-22): " + ", ".join(
-            f"{f} {100 * g:.1f}%" for f, g in sorted(Dv["fit_all_dev"]["gain"].items(), key=lambda kv: -kv[1]) if g > 0)
-            + "; all other features 0. Production: `lightgbm.Booster(model_str=frozen['model']['model_string'])`, "
-              "features in `feature_order`.", ""]
     if md["kind"] == "ridge":
         r = Ridge(md["alpha"])
         r.mu = np.array([md["features"][f]["mean"] for f in FEATS])
