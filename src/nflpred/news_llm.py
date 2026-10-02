@@ -37,7 +37,14 @@ FEEDS = {
         "NFL (injury OR quarterback OR \"ruled out\" OR questionable OR \"will start\") when:1d") + "&hl=en-US&gl=US&ceid=US:en",
     "google_qb": "https://news.google.com/rss/search?q=" + urllib.parse.quote(
         "NFL quarterback start OR benched OR concussion OR \"injured reserve\" when:1d") + "&hl=en-US&gl=US&ceid=US:en",
+    "google_context": "https://news.google.com/rss/search?q=" + urllib.parse.quote(
+        "NFL (\"play-caller\" OR \"play calling\" OR fired OR \"snap count\" OR illness OR flu OR \"rest starters\" "
+        "OR holdout OR \"offensive line\" OR kicker) when:1d") + "&hl=en-US&gl=US&ceid=US:en",
 }
+
+CONTEXT_CATEGORIES = ["play_caller_change", "coach_fired_or_hired", "scheme_or_role_change", "snap_limit",
+                      "illness_outbreak", "travel_or_weather_disruption", "resting_starters", "motivation_or_locker_room",
+                      "contract_holdout", "kicker_or_special_teams", "offensive_line_shuffle", "other"]
 
 TEAMS = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
          "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
@@ -45,8 +52,10 @@ TEAMS = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "
 SYSTEM = ("You extract NFL injury and depth-chart news for a betting model. Only report facts stated in the "
           "items; never guess. Teams must use these abbreviations: " + ", ".join(TEAMS) + ".")
 
-INSTRUCTIONS = """For each news item below, extract every concrete player-availability or starter signal.
-Return ONLY a JSON array (possibly empty). Each element:
+INSTRUCTIONS = """For each news item below, extract (A) every concrete player-availability or starter signal and
+(B) team-level context that could change how a team plays this week.
+Return ONLY a JSON object {"availability": [...], "context": [...]} (lists may be empty).
+(A) availability element:
 {"item": <item number>, "player": str, "team": str, "position": str or null,
  "signal": one of ["out", "doubtful", "questionable", "game_time_decision", "expected_to_play", "will_start",
                    "benched", "injured_reserve", "returning", "limited_practice", "full_practice", "did_not_practice",
@@ -54,7 +63,15 @@ Return ONLY a JSON array (possibly empty). Each element:
  "is_starting_qb_news": true/false, "game_week_relevant": true/false,
  "certainty": number 0-1 (how definite the wording is: "ruled out" 1.0, "expected to" 0.7, "could" 0.4),
  "quote": short exact phrase supporting it}
-Skip items with no availability information (trade rumors, game recaps, fantasy advice without news)."""
+(B) context element:
+{"item": <item number>, "team": str, "category": one of """ + json.dumps(CONTEXT_CATEGORIES) + """,
+ "summary": one short factual sentence, "player": str or null, "game_week_relevant": true/false,
+ "direction": "helps" | "hurts" | "unclear" (for that team this week, only if the item itself implies it),
+ "certainty": number 0-1, "quote": short exact phrase supporting it}
+Examples of context: new offensive play-caller, coordinator fired, starter on a snap count / limited workload,
+illness going through the locker room, travel delay or relocated game, team expected to rest starters,
+contract holdout, kicker injured/released, multiple offensive-line starters changed.
+Skip items with neither (trade rumors, game recaps, fantasy advice without news). Never guess."""
 
 
 def fetch_feed(url: str, timeout: float = 20) -> list[dict]:
@@ -101,12 +118,24 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
     with urllib.request.urlopen(req, timeout=timeout) as r:
         resp = json.load(r)
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
-    m = re.search(r"\[.*\]", text, re.S)
+    out, ctx = [], []
+    m = re.search(r"\{.*\}", text, re.S)
     try:
-        out = json.loads(m.group(0)) if m else []
+        obj = json.loads(m.group(0)) if m else {}
+        if isinstance(obj, dict):
+            out, ctx = obj.get("availability") or [], obj.get("context") or []
     except Exception:
-        out = []
+        m = re.search(r"\[.*\]", text, re.S)   # older array-only answers
+        try:
+            out = json.loads(m.group(0)) if m else []
+        except Exception:
+            out = []
+    LAST_CONTEXT[:] = [x for x in ctx if isinstance(x, dict) and x.get("team") in TEAMS
+                       and x.get("category") in CONTEXT_CATEGORIES]
     return [x for x in out if isinstance(x, dict) and x.get("team") in TEAMS and x.get("player")]
+
+
+LAST_CONTEXT: list = []   # context items from the most recent call_claude (read by scan)
 
 
 def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = None, fetcher=fetch_feed,
@@ -137,7 +166,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
             if k not in seen and k not in {x["key"] for x in new}:
                 new.append(dict(it, source=name, key=k))
     report["new_items"] = len(new)
-    signals = []
+    signals, contexts = [], []
     # newest first; only items actually sent to the model are marked seen (the rest wait for next run)
     new.sort(key=lambda x: x.get("published") or "", reverse=True)
     for i in range(0, min(len(new), max_items), 30):  # batches of 30 items
@@ -153,6 +182,14 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                     "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
                     **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
                                              "game_week_relevant", "certainty", "quote")}}, roster))
+            for c in LAST_CONTEXT:
+                idx = c.get("item")
+                src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
+                contexts.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
+                                 "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
+                                 **{k: c.get(k) for k in ("team", "category", "summary", "player", "direction",
+                                                          "game_week_relevant", "certainty", "quote")}})
+            LAST_CONTEXT.clear()
             seen.update(x["key"] for x in batch)
         except Exception as e:
             report.setdefault("errors", []).append(str(e)[:160])
@@ -161,8 +198,13 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
         with log_p.open("a") as f:
             for s in signals:
                 f.write(json.dumps(s) + "\n")
+    if contexts:  # team-level context (play-caller changes, snap limits, illness...): logged for later testing
+        with (history_dir / "news_context.jsonl").open("a") as f:
+            for c in contexts:
+                f.write(json.dumps(c) + "\n")
     seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
     report["signals"] = len(signals)
+    report["context_items"] = len(contexts)
     report["qb_signals"] = [f"{s['player']} ({s['team']}): {s['signal']}" for s in signals if s.get("is_starting_qb_news")][:20]
     report["roster_check"] = {st: sum((s.get("verify") or {}).get("roster") == st for s in signals)
                               for st in ("match", "team_mismatch", "not_found", "ambiguous")} if roster else "no roster snapshot yet"

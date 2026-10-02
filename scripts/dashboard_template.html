@@ -755,12 +755,12 @@ function trackLines(g){
 const SRC = {google_injury:'Google News', google:'Google News', yahoo:'Yahoo', cbs:'CBS', espn:'ESPN', pft:'PFT', nfl:'NFL.com', rotowire:'RotoWire'};
 const ago = iso => { const m=(Date.now()-new Date(iso).getTime())/60000; return m<60?`${Math.max(1,Math.round(m))}m ago`:m<1440?`${Math.round(m/60)}h ago`:`${Math.round(m/1440)}d ago`; };
 function aiNews(g){
-  const N=(D.news_ai||{})[g.game_id]; if(!N||!N.length) return '';
+  const N=(D.news_ai||{})[g.game_id]||[], C=(D.news_context||{})[g.game_id]||[]; if(!N.length&&!C.length) return '';
   const src=n=>{ const name=SRC[n.source]||String(n.source||'source').replace(/_/g,' ');
     return /^https?:\/\//.test(n.link||'') ? `<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer" title="${esc(n.title||'')}">${esc(name)}</a>` : esc(name); };
   const chk=n=> n.check==='verified' ? '<span class="vf" title="Player found on this team\'s roster">✓ verified</span>'
     : n.check==='unclear' ? `<span class="tu" title="The AI's team did not match the roster${n.team_ai?` (AI said ${esc(n.team_ai)})`:''}">team unclear</span>` : '';
-  return `<div class="ainews"><span class="subh" title="Read from public feeds by an AI; not used by the model or any track">AI-read news (not used by the model)</span>${N.map(n=>`<div class="an${n.check==='unclear'?' unclear':''}">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.team)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${chk(n)} · ${src(n)} · seen ${ago(n.seen_at)}</div>`).join('')}</div>`;
+  return `<div class="ainews"><span class="subh" title="Read from public feeds by an AI; not used by the model or any track">AI-read news (not used by the model)</span>${N.map(n=>`<div class="an${n.check==='unclear'?' unclear':''}">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.team)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${chk(n)} · ${src(n)} · seen ${ago(n.seen_at)}</div>`).join('')}${C.map(c=>`<div class="an"><span class="qb" title="Team context, logged for testing">CTX</span><b>${esc(c.team)}</b> ${esc(String(c.category||'').replace(/_/g,' '))}: ${esc(c.summary||'')} · ${src(c)} · seen ${ago(c.seen_at)}</div>`).join('')}</div>`;
 }
 (function(){
   const el=document.getElementById('ainewsacc'), A=D.news_audit;

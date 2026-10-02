@@ -287,3 +287,20 @@ def test_pipeline_saves_sleeper_roster_or_falls_back(tmp_path):
     assert r["source"] == "sleeper" and R.load(tmp_path)["source"] == "sleeper" and r["news_check"]["checked"] == 1
     row = json.loads((tmp_path / "news_llm.jsonl").read_text())
     assert row["team_verified"] == "TB" and row["verify"]["roster_source"] == "sleeper"
+
+
+def test_news_context_extraction_logged(tmp_path):
+    from datetime import datetime, timezone
+    from nflpred import news_llm as NL
+    items = [{"title": "Bears hand play-calling to OC", "link": "u9", "published": None, "summary": "..."}]
+    def fake(batch, key):
+        NL.LAST_CONTEXT[:] = [{"item": 0, "team": "CHI", "category": "play_caller_change", "summary": "OC calls plays",
+                               "direction": "unclear", "game_week_relevant": True, "certainty": 0.9, "quote": "hand play-calling"},
+                              {"item": 0, "team": "XXX", "category": "other"}]
+        NL.LAST_CONTEXT[:] = [c for c in NL.LAST_CONTEXT if c.get("team") in NL.TEAMS]
+        return []
+    r = NL.scan(tmp_path, "k", datetime(2026, 10, 2, tzinfo=timezone.utc), fetcher=lambda u: items, llm=fake, roster={})
+    assert r["context_items"] == 1
+    import json
+    row = json.loads((tmp_path / "news_context.jsonl").read_text().splitlines()[0])
+    assert row["category"] == "play_caller_change" and row["team"] == "CHI"

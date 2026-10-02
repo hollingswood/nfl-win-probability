@@ -91,6 +91,30 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
     return out
 
 
+def context_by_game(items: list[dict], upcoming: list[dict], now: dt.datetime | None = None,
+                    days: int = 7, per_game: int = 2) -> dict[str, list[dict]]:
+    """Team-level AI context (history/news_context.jsonl): play-caller changes, snap limits, illness...
+    Up to 2 per game from the last 7 days, game-week relevant and most certain first."""
+    now = now or dt.datetime.now(dt.timezone.utc)
+    cutoff = now - dt.timedelta(days=days)
+    recent = [c for c in items if c.get("team") and _ts(c.get("seen_at")) and cutoff <= _ts(c["seen_at"]) <= now + dt.timedelta(hours=1)]
+    out = {}
+    for g in upcoming:
+        teams = {g.get("home_team"), g.get("away_team")}
+        cs = sorted((c for c in recent if c["team"] in teams), key=lambda c: (
+            bool(c.get("game_week_relevant")), float(c.get("certainty") or 0), _ts(c["seen_at"])), reverse=True)
+        seen, keep = set(), []
+        for c in cs:
+            k = (c["team"], c.get("category"), c.get("player"))
+            if k not in seen:
+                seen.add(k)
+                keep.append({k2: c.get(k2) for k2 in ("team", "category", "summary", "player", "direction", "source",
+                                                       "link", "seen_at", "certainty")})
+        if keep:
+            out[g["game_id"]] = keep[:per_game]
+    return out
+
+
 def load_news_audit(path: Path) -> dict | None:
     """Compact accuracy summary of the AI news reader (history/news_audit.json, written by full runs)."""
     try:
@@ -136,10 +160,12 @@ def load_rule_limits(root: Path = ROOT) -> dict:
 
 def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
                   news_signals: list[dict] | None, now: dt.datetime | None = None,
-                  rules: dict | None = None, news_audit: dict | None = None) -> dict:
+                  rules: dict | None = None, news_audit: dict | None = None,
+                  news_context: list[dict] | None = None) -> dict:
     return {"predictions": predictions, "backtest": backtest, "vs_vegas": vs_vegas,
             "news_ai": news_by_game(news_signals or [], predictions.get("upcoming", []), now),
             "news_audit": news_audit,
+            "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules}
 
 
@@ -170,7 +196,8 @@ def main(argv=None) -> int:
         json.loads((ROOT / "output" / "backtest.json").read_text()),
         json.loads(vv.read_text()) if vv.exists() else None,
         load_news_signals(Path(a.news)),
-        news_audit=load_news_audit(Path(a.news).with_name("news_audit.json")))
+        news_audit=load_news_audit(Path(a.news).with_name("news_audit.json")),
+        news_context=load_news_signals(Path(a.news).with_name("news_context.jsonl")))
     print("wrote", write_site(render(payload), Path(a.out)))
     return 0
 
