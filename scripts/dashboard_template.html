@@ -160,6 +160,52 @@ svg text{fill:var(--muted);font:11px var(--mono)}
 .notes{display:grid;gap:8px;font-size:14px;color:var(--muted);max-width:75ch}
 .notes p{margin:0}
 footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
+/* section jump links */
+.jump{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.jump a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+.jump a:hover,.jump a:focus-visible{color:var(--accent);border-color:var(--accent)}
+section[id]{scroll-margin-top:12px}
+/* promo & boost calculator */
+.pch{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:0}
+.pcgrid{align-items:start}
+.pc .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:10px}
+.pc label{display:grid;gap:4px;align-content:start;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:0}
+.pc .wide{grid-column:1/-1}
+.pc input,.pc select{font:400 14px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:7px 8px;width:100%;min-width:0;letter-spacing:0;text-transform:none}
+.pc input:focus,.pc select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.pc .hint{font:400 11px var(--body);letter-spacing:0;text-transform:none;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;border:0;padding:0;margin:0;min-width:0}
+.seg legend{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:6px}
+.pc .seg label{display:inline-flex;position:relative;font:inherit;letter-spacing:0;text-transform:none}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{font:600 12px var(--mono);padding:6px 10px;border:1px solid var(--line);border-radius:2px;cursor:pointer;color:var(--muted);background:var(--surface)}
+.seg input:checked+span{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:1px}
+.pcres .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bu td.val{white-space:nowrap}
+.pcchk{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer;width:fit-content}
+.pcchk input{accent-color:var(--accent);margin:0}
+.pcres .stat b{font-size:26px}
+.pcres .stat b.pos{color:var(--good)} .pcres .stat b.neg{color:var(--bad)}
+.pcv{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.pcv .verdict{font-size:13px;padding:4px 10px}
+.pcv .pick{font:700 20px var(--display);letter-spacing:.02em}
+.pcres .say{margin:0;font-size:15px;color:var(--ink)}
+.pcres ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.pcres ul b{color:var(--ink);font-weight:600}
+.bestgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:12px}
+.bu{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:10px;align-content:start;min-width:0}
+.bu p{margin:0;font-size:13px;color:var(--muted)}
+.bu td{vertical-align:top}
+.bu td small{display:block;font:11px var(--body);color:var(--muted);white-space:normal}
+.bu td:first-child{white-space:normal}
+.usebtn{font:600 11px var(--mono);letter-spacing:.04em;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:2px;padding:2px 7px;cursor:pointer}
+.usebtn:hover{background:var(--accent-soft)}
+.pcnote{font-size:14px;color:var(--muted);max-width:80ch}
+.pcnote summary{cursor:pointer;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.pcnote ul{padding-left:18px;display:grid;gap:6px;margin:10px 0 0}
+.pcnote code{font:12px var(--mono);color:var(--ink);white-space:normal}
+.pcwarn{font-size:13px;color:var(--vegas);margin:0}
 </style>
 
 <div class="wrap">
@@ -168,17 +214,18 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
     <h1>NFL Edge Board</h1>
     <p>A bet is only worth making when <b>our chance</b> of winning it beats the chance the <b>price requires</b>; that gap is the <b>edge</b>. Separate paper-betting tracks test different ideas under locked rules. <b>Moneyline v2</b> (your books vs the sharp books) is the current lead. The original model rules are still shown, but they showed no edge in backtests. Nothing here is a recommendation until a track passes its test.</p>
     <div class="keyrow"><span class="verdict bet" id="betkey">PAPER BET</span> qualifies under the locked rules (a real bet only after the track is validated) <span class="verdict lean">LEAN</span> positive edge, but too small or waiting on something <span class="verdict pass">NO EDGE</span> the price is fair or worse</div>
+    <nav class="jump" id="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#betswrap">Paper bets</a><a href="#promos">Promo calculator</a><a href="#sec-season">Season so far</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
 
-  <section>
+  <section id="sec-board">
     <div class="sechead"><h2 id="boardh">This week's board</h2><span class="pill" id="boardmode"></span></div>
     <p class="edge" id="boardintro"></p>
     <div class="scroll"><table id="board" class="board"></table></div>
   </section>
 
-  <section>
+  <section id="sec-games">
     <div class="sechead"><h2>Games</h2>
       <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
     </div>
@@ -189,6 +236,75 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
     <div class="sechead"><h2 id="betsh">Paper bets</h2><span class="pill" id="betmode"></span></div>
     <p class="edge" id="betintro"></p>
     <div id="tracks"></div>
+  </section>
+
+  <section id="promos">
+    <div class="sechead"><h2>Promo &amp; boost calculator</h2><span class="pill">Not financial advice</span></div>
+    <p class="edge">Sportsbook promos are the most reliable edge most bettors get. This values a promo against the <b>fair (no-vig) price from the sharpest books we track</b>, not against the promo book's own odds. Prices below are the best among your books at the last odds refresh (<span id="pcasof"></span>); type in what your book shows. <b>Not financial advice. Promo terms vary by book and state; check the terms.</b></p>
+    <div class="two pcgrid">
+      <form class="panel pc" id="pcform" autocomplete="off">
+        <h3 class="pch">Value a promo</h3>
+        <div class="fields">
+          <label class="wide">Game<select id="pc-game"></select></label>
+          <label id="pc-mktw">Bet<select id="pc-mkt"></select></label>
+          <label id="pc-linew">Line<select id="pc-line"></select></label>
+          <label id="pc-fairw">Your fair win %<input id="pc-fair" type="text" value="50"><span class="hint">no sharp price for this bet; use your own estimate</span></label>
+          <label>Posted odds<input id="pc-odds" type="text" placeholder="+150"><span class="hint" id="pc-oddshint"></span></label>
+        </div>
+        <fieldset class="seg" id="pc-type"><legend>Promo type</legend>
+          <label><input type="radio" name="pctype" value="boost" checked><span>Odds / profit boost</span></label>
+          <label><input type="radio" name="pctype" value="bonus"><span>Bonus bet</span></label>
+          <label><input type="radio" name="pctype" value="nosweat"><span>No-sweat</span></label>
+          <label><input type="radio" name="pctype" value="match"><span>Deposit / bet match</span></label>
+        </fieldset>
+        <div class="fields">
+          <label data-for="boost">Boost as<select id="pc-bmode"><option value="pct">Profit boost %</option><option value="odds">Boosted odds</option></select></label>
+          <label data-for="boost" id="pc-bpctw">Profit boost %<input id="pc-bpct" type="text" value="50"></label>
+          <label data-for="boost" id="pc-boddsw">Boosted odds<input id="pc-bodds" type="text" placeholder="+200"></label>
+          <label><span id="pc-stakel">Stake $</span><input id="pc-stake" type="text" value="25"></label>
+          <label>Max winnings $<input id="pc-cap" type="text" placeholder="no cap"></label>
+          <label data-for="nosweat match">Bonus-bet conversion %<input id="pc-conv" type="text" value="70"><span class="hint">cash you expect per $1 of bonus bet</span></label>
+          <label data-for="match">Match %<input id="pc-mpct" type="text" value="100"></label>
+          <label data-for="match">Max bonus $<input id="pc-mmax" type="text" placeholder="no max"></label>
+          <label data-for="match">Rollover × bonus<input id="pc-roll" type="text" value="0"><span class="hint">extra wagering required, at this price</span></label>
+        </div>
+      </form>
+      <div class="panel pcres" id="pcout" aria-live="polite"></div>
+    </div>
+    <h3 class="pch">Best uses on this slate</h3>
+    <p class="edge" id="pcbestintro">Moneylines only, at the best price among your books, valued at the sharp fair price. Games that have started are left out. <b>Use</b> loads a row into the calculator.</p>
+    <label class="pcchk"><input type="checkbox" id="pc-sharponly" checked> Only sides with a sharp fair price (Pinnacle / LowVig / BetOnline); unchecked adds games priced only by the all-book consensus</label>
+    <div class="bestgrid">
+      <div class="bu pc"><h3 class="pch">Bonus bet</h3>
+        <div class="fields"><label>Bonus $<input id="bb-amt" type="text" value="100"></label>
+          <label>Prices<select id="bb-range"><option value="typ">+200 to +500</option><option value="any">Any price</option></select></label></div>
+        <p>Expected cash per bonus bet. Longer prices keep more of it, until the vig on longshots takes it back.</p>
+        <div class="scroll"><table id="bb-t"></table></div></div>
+      <div class="bu pc"><h3 class="pch">No-sweat bet</h3>
+        <div class="fields"><label>Stake $<input id="ns-amt" type="text" value="50"></label>
+          <label>Conversion %<input id="ns-conv" type="text" value="70"></label></div>
+        <p>Refunded as a bonus bet if it loses. EV counts the refund at your conversion rate.</p>
+        <div class="scroll"><table id="ns-t"></table></div></div>
+      <div class="bu pc"><h3 class="pch">Profit boost</h3>
+        <div class="fields"><label>Boost %<input id="pb-pct" type="text" value="50"></label>
+          <label>Stake $<input id="pb-amt" type="text" value="25"></label>
+          <label>Max win $<input id="pb-cap" type="text" placeholder="no cap"></label></div>
+        <p>The boost multiplies the profit only; a max-winnings cap limits it.</p>
+        <div class="scroll"><table id="pb-t"></table></div></div>
+    </div>
+    <details class="pcnote">
+      <summary>How this is computed</summary>
+      <ul>
+        <li><b>d</b> = decimal odds (+150 → 2.50, −120 → 1.833), <b>S</b> = stake, <b>p</b> = fair win probability, <b>win</b> = profit if it wins = <code>min((d−1)·S, max winnings)</code>.</li>
+        <li><b>Fair p, moneyline:</b> median no-vig of Pinnacle, LowVig and BetOnline; if missing, Pinnacle alone, then LowVig/BetOnline, then the all-book consensus. The result always names the source. <b>Spreads and totals:</b> your books' own no-vig at the exact number you pick (median across the books posting it). That is less sharp than the moneyline source. Whole-number lines can push; a push usually refunds the stake or token, which pulls EV toward zero.</li>
+        <li><b>Profit boost b:</b> <code>d′ = 1 + (d−1)(1+b)</code>, capped by max winnings; <code>EV = p·win − (1−p)·S</code>; break-even <code>p = S / (S + win)</code>.</li>
+        <li><b>Bonus bet</b> (stake not returned): <code>EV = p·(d−1)·S</code>, shown as a share of the bonus, <code>p·(d−1)</code>.</li>
+        <li><b>No-sweat</b> (refund as a bonus bet if it loses, conversion c): <code>EV = p·(d−1)·S − (1−p)·S + (1−p)·c·S</code>; break-even <code>p = (1−c)·S / (win + (1−c)·S)</code>.</li>
+        <li><b>Deposit / bet match</b> (bonus B = match % × S up to the max, paid as bonus bets worth c each, rollover R × B wagered at this price): <code>EV = p·win − (1−p)·S + c·B − R·B·(1 − p·d)</code>.</li>
+        <li><b>Hedge to lock a bonus bet:</b> bet <code>H = win / d₂</code> in cash on the other side at its best price d₂. Either result then pays <code>win·(d₂−1)/d₂</code>: that amount is locked, with no risk.</li>
+        <li><b>Verdict:</b> Take it at EV ≥ +3% of stake (bonus bets: ≥ 70% of face value); Marginal from 0 to 3% (60–70%); Pass below that.</li>
+      </ul>
+    </details>
   </section>
 
   <section id="newswrap">
@@ -222,14 +338,14 @@ footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
     </div>
   </section>
 
-  <section>
+  <section id="sec-season">
     <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
     <div class="strip" id="stdstrip"></div>
     <p class="stdnote" id="stdnote"></p>
     <div class="scroll"><table id="std" class="std"></table></div>
   </section>
 
-  <section class="notes">
+  <section class="notes" id="sec-notes">
     <h2 style="color:var(--ink)">How to read this</h2>
     <p><b>Edge vs. factors.</b> The factor bars explain how the model arrived at its own line, in points. They are not edges: Vegas sees most of the same things. The edge comes only from the gap between the model's line and Vegas's line, and the bet math deliberately shrinks that gap toward Vegas before calculating our chance. A game can have big factors and zero edge.</p>
     <p><b>Grades</b> (A+ to C) start from the edge and subtract for warning signs: the model far from the market, a QB change, the wrong side of 3 or 7, or the line moving against us. They add for the line moving our way or the right side of a key number.</p>
@@ -590,6 +706,227 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
     return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div><div class="scroll"><table>${grT}</table></div><span class="subh">Do the grades work? Paper record by grade</span><div class="scroll"><table>${gradeT}</table></div></div>`;
   }).join('');
 })();
+
+// promo & boost calculator: values promos against the sharp no-vig price
+(function(){
+  const $ = id => document.getElementById(id);
+  const dec = a => a>0 ? 1+a/100 : 1+100/(-a);
+  const okOdds = a => Number.isFinite(a) && Math.abs(a)>=100;
+  const amer = d => d>=2 ? Math.round((d-1)*100) : Math.round(-100/(d-1));
+  const usd = x => { const v=Math.abs(x); return `${x<-0.005?'−':''}$${v>=1000?Math.round(v).toLocaleString():v.toFixed(2)}`; };
+  const sUsd = x => `${x>=0.005?'+':''}${usd(x)}`;
+  const p1 = x => `${(x*100).toFixed(1)}%`;
+  const numOf = el => { const v=parseFloat(String(el.value).replace(/[+$,%\s]/g,'')); return Number.isFinite(v)?v:null; };
+  const num = id => numOf($(id));
+  const median = a => { const s=[...a].sort((x,y)=>x-y), n=s.length; return n ? (n%2 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2) : null; };
+  const noVig = (a,b) => { const x=1/dec(a), y=1/dec(b); return x/(x+y); };
+  const SRC = {pin_sharp:'Pinnacle + LowVig + BetOnline (no-vig median)', pinnacle:'Pinnacle no-vig', sharp:'LowVig / BetOnline no-vig', consensus:'all-book consensus no-vig (less sharp)'};
+  const mlFair = lo => {
+    for (const [k,src] of [['pin_sharp_home_prob','pin_sharp'],['pinnacle_home_prob','pinnacle'],['sharp_home_prob','sharp'],['consensus_home_prob','consensus']])
+      if (lo[k]!=null && lo[k]>0 && lo[k]<1) return {home:lo[k], src};
+    return null;
+  };
+  const okPrice = o => o && okOdds(o.price) ? o : null;
+  const now = Date.now();
+  const started = (g,lo) => { const t=Date.parse(lo.commence_time||g.kickoff_utc||''); return Number.isFinite(t) && t<now; };
+  const games = P.upcoming.filter(g => { const lo=(g.context||{}).live_odds; return lo && !started(g,lo); });
+  const GM = Object.fromEntries(games.map(g=>[g.game_id,g]));
+  const gLabel = g => `${g.away_team} @ ${g.home_team} · ${fmtDay(g.gameday)}`;
+  $('pcasof').textContent = new Date(P.generated_at).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+
+  // spread / total numbers posted at your books: per number, the books' own median no-vig and best prices
+  function lineOpts(g, mkt){
+    const lo=g.context.live_odds, by={};
+    const add=(pt, mine, other, book) => {
+      if(!okOdds(mine)||!okOdds(other)) return;
+      const r = by[pt] ??= {point:pt, fairs:[], best:null, opp:null};
+      r.fairs.push(noVig(mine, other));
+      if(!r.best||mine>r.best.price) r.best={price:mine, book};
+      if(!r.opp||other>r.opp.price) r.opp={price:other, book};
+    };
+    let ref;
+    if(mkt==='sp_home'||mkt==='sp_away'){
+      const home=mkt==='sp_home';
+      for(const r of lo.spreads_by_book||[]) if(r.home_point!=null)
+        add(home?r.home_point:-r.home_point, home?r.home_price:r.away_price, home?r.away_price:r.home_price, r.book);
+      ref = lo.consensus_home_margin!=null ? (home?-lo.consensus_home_margin:lo.consensus_home_margin) : null;
+    } else {
+      const over=mkt==='tot_over', T=lo.totals||{};
+      for(const r of T.totals_by_book||[]) if(r.point!=null)
+        add(r.point, over?r.over_price:r.under_price, over?r.under_price:r.over_price, r.book);
+      ref = T.consensus_total ?? null;
+    }
+    return Object.values(by).map(r=>({...r, n:r.fairs.length, p:median(r.fairs), off: ref!=null && Math.abs(r.point-ref)>0.75}))
+      .sort((a,b)=>b.n-a.n || (ref==null?0:Math.abs(a.point-ref)-Math.abs(b.point-ref)));
+  }
+  function mktOpts(g){
+    const lo=g.context.live_odds, O=[];
+    if(mlFair(lo)||lo.best_away_ml||lo.best_home_ml) O.push(['ml_away',`Moneyline · ${g.away_team}`],['ml_home',`Moneyline · ${g.home_team}`]);
+    if((lo.spreads_by_book||[]).length) O.push(['sp_away',`Spread · ${g.away_team}`],['sp_home',`Spread · ${g.home_team}`]);
+    if(((lo.totals||{}).totals_by_book||[]).length) O.push(['tot_over','Total · Over'],['tot_under','Total · Under']);
+    return O;
+  }
+  const opt = (v,t) => `<option value="${esc(v)}">${esc(t)}</option>`;
+  $('pc-game').innerHTML = games.map(g=>opt(g.game_id, gLabel(g))).join('') + opt('custom','Another bet (enter your own fair %)');
+  let oddsTouched=false;
+  function fillMarkets(){
+    const g=GM[$('pc-game').value], custom=!g;
+    $('pc-mktw').hidden=custom; $('pc-fairw').hidden=!custom;
+    if(!custom){ const keep=$('pc-mkt').value, O=mktOpts(g); $('pc-mkt').innerHTML=O.map(([v,t])=>opt(v,t)).join(''); if(O.some(([v])=>v===keep)) $('pc-mkt').value=keep; }
+    fillLines();
+  }
+  function fillLines(){
+    const g=GM[$('pc-game').value], m=$('pc-mkt').value, isLine=!!g&&/^(sp|tot)_/.test(m);
+    $('pc-linew').hidden=!isLine;
+    if(isLine){
+      const L=lineOpts(g,m), sp=m.startsWith('sp'), team=m==='sp_home'?g.home_team:g.away_team;
+      $('pc-line').innerHTML=L.map((r,i)=>opt(r.point, `${sp?`${team} ${pt(r.point)}`:`${m==='tot_over'?'Over':'Under'} ${r.point}`} · ${r.n} book${r.n>1?'s':''}${i===0?' · most common':''}${r.off?' · off consensus':''}`)).join('');
+    }
+    oddsTouched=false; fillOdds();
+  }
+  function selected(){
+    const g=GM[$('pc-game').value];
+    if(!g){ const f=num('pc-fair'); return {custom:true, label:'Your bet', p:f!=null?f/100:null, src:'your own estimate', sharp:false}; }
+    const lo=g.context.live_odds, m=$('pc-mkt').value;
+    if(m.startsWith('ml')){
+      const home=m==='ml_home', f=mlFair(lo);
+      return {g, m, team:home?g.home_team:g.away_team, label:`${home?g.home_team:g.away_team} moneyline`, p:f?(home?f.home:1-f.home):null, src:f?SRC[f.src]:'no fair price', sharp:!!f&&f.src!=='consensus',
+        best:okPrice(home?lo.best_home_ml:lo.best_away_ml), opp:okPrice(home?lo.best_away_ml:lo.best_home_ml), oppLabel:`${home?g.away_team:g.home_team} moneyline`};
+    }
+    const r=lineOpts(g,m).find(x=>String(x.point)===$('pc-line').value);
+    if(!r) return {g, m, label:'—', p:null, src:'no line'};
+    const sp=m.startsWith('sp'), home=m==='sp_home', over=m==='tot_over';
+    return {g, m, label: sp?`${home?g.home_team:g.away_team} ${pt(r.point)}`:`${over?'Over':'Under'} ${r.point}`, p:r.p,
+      src:`book's own no-vig at this number, median of ${r.n} of your books (less sharp)`, sharp:false, off:r.off,
+      push:Number.isInteger(r.point), best:r.best, opp:r.opp,
+      oppLabel: sp?`${home?g.away_team:g.home_team} ${pt(-r.point)}`:`${over?'Under':'Over'} ${r.point}`};
+  }
+  function fillOdds(){
+    if(oddsTouched) return;
+    const s=selected();
+    $('pc-odds').value = s.best ? fmtML(s.best.price) : ($('pc-odds').value || '');
+    $('pc-oddshint').textContent = s.best ? `best at ${s.best.book}` : 'type the price your book shows';
+  }
+  const type = () => (document.querySelector('input[name="pctype"]:checked')||{}).value || 'boost';
+  function showFields(){
+    const t=type();
+    document.querySelectorAll('#pcform [data-for]').forEach(el=>{ el.hidden=!el.dataset.for.split(' ').includes(t); });
+    if(t==='boost'){ const pc=$('pc-bmode').value==='pct'; $('pc-bpctw').hidden=!pc; $('pc-boddsw').hidden=pc; }
+    $('pc-stakel').textContent = t==='bonus' ? 'Bonus bet $' : t==='match' ? 'Qualifying bet $' : 'Stake $';
+  }
+  const VCLS = {take:'bet', marginal:'lean', pass:'pass'}, VTXT = {take:'TAKE IT', marginal:'MARGINAL', pass:'PASS'};
+  const stat = (b,s,cls='') => `<div class="stat"><b class="num ${cls}">${b}</b><span>${s}</span></div>`;
+  function calc(){
+    showFields();
+    const out=$('pcout'), s=selected(), t=type();
+    const a=num('pc-odds'), S=num('pc-stake'), capIn=num('pc-cap'), cap=capIn!=null&&capIn>0?capIn:null;
+    const conv=num('pc-conv'), c=Math.min(Math.max((conv==null?70:conv)/100,0),1);
+    const fail = msg => { out.innerHTML=`<h3 class="pch">Result</h3><p>${msg}</p>`; };
+    if(s.p==null||!(s.p>0&&s.p<1)) return fail(s.custom?'Enter your fair win chance, between 0 and 100%.':'No fair price for this bet yet. Pick another, or choose “Another bet” and enter your own estimate.');
+    if(!okOdds(a)) return fail('Enter the posted American odds, like +150 or −120.');
+    if(!(S>0)) return fail('Enter a stake above $0.');
+    const p=s.p, d=dec(a);
+    let dEff=d, boostTxt='';
+    if(t==='boost'){
+      if($('pc-bmode').value==='pct'){ const b=num('pc-bpct'); if(b==null||b<0) return fail('Enter the profit boost %, like 50.'); dEff=1+(d-1)*(1+b/100); boostTxt=`${b}% profit boost`; }
+      else { const ba=num('pc-bodds'); if(!okOdds(ba)) return fail('Enter the boosted American odds, like +200.'); dEff=dec(ba); boostTxt='boosted odds'; }
+    }
+    const raw=(dEff-1)*S, win=cap!=null?Math.min(raw,cap):raw, capped=cap!=null&&raw>cap;
+    const priceTxt = t==='boost' ? `${fmtML(a)} → ${fmtML(amer(dEff))}${capped?` (cap: ${fmtML(amer(1+win/S))} effective)`:''}` : `${fmtML(a)}${capped?` (cap: ${fmtML(amer(1+win/S))} effective)`:''}`;
+    let ev, be, base=S, verdict, say, evLabel='EV, % of stake', extra=[];
+    if(t==='boost'){
+      ev=p*win-(1-p)*S; be=S/(S+win);
+      const evNo=p*(d-1)*S-(1-p)*S;
+      extra.push(`Without the boost this bet is worth <b>${sUsd(evNo)}</b> (${sgn(evNo/S)}); the boost adds <b>${usd(ev-evNo)}</b>.`);
+    } else if(t==='bonus'){
+      ev=p*win; be=null; evLabel='Kept, % of bonus';
+      const opp=s.opp;
+      if(opp){ const d2=dec(opp.price), H=win/d2, lock=win*(d2-1)/d2;
+        extra.push(`Hedge to lock ≈ <b>${usd(lock)}</b> (${pct(lock/S)} of the bonus): bet <b>${usd(H)}</b> cash on ${esc(s.oppLabel)} ${fmtML(opp.price)} at ${esc(opp.book)}. Either result then pays about ${usd(lock)}.`); }
+      else extra.push('No opposite price on file to hedge against.');
+    } else if(t==='nosweat'){
+      ev=p*win-(1-p)*S+(1-p)*c*S; be=(1-c)*S/(win+(1-c)*S);
+      extra.push(`If it loses (${pct(1-p)} of the time) you get a ${usd(S)} bonus bet, valued at ${usd(c*S)} (${pct(c)} conversion).`);
+    } else {
+      const m=num('pc-mpct'), mmax=num('pc-mmax'), R=Math.max(num('pc-roll')||0,0);
+      if(m==null||m<0) return fail('Enter the match %, like 100.');
+      const B=Math.min(m/100*S, mmax!=null&&mmax>0?mmax:Infinity);
+      ev=p*win-(1-p)*S+c*B-R*B*(1-p*d);
+      be=Math.min(Math.max((S-c*B+R*B)/(win+S+R*B*d),0),1);
+      extra.push(`Bonus ${usd(B)} in bonus bets, valued at ${usd(c*B)} (${pct(c)} conversion)${R>0?`; rollover of ${usd(R*B)} at this price costs ${usd(R*B*(1-p*d))}`:''}. The qualifying bet itself is worth ${sUsd(p*(d-1)*S-(1-p)*S)}.`);
+    }
+    const r=ev/base;
+    if(t==='bonus'){
+      verdict = r>=0.70?'take':r>=0.60?'marginal':'pass';
+      say = verdict==='take' ? `Good use: you keep about ${pct(r)} of the bonus on average.`
+        : verdict==='marginal' ? `Fine, but a longer price usually keeps more than ${pct(r)} of the bonus (see Best uses).`
+        : `Poor use: only ${pct(r)} of the bonus is kept on average. A +200 to +500 price usually does better.`;
+    } else {
+      verdict = r>=0.03?'take':r>=0?'marginal':'pass';
+      say = verdict==='take' ? `Worth taking: expected profit ${sUsd(ev)} on ${usd(S)}, at the fair price.`
+        : verdict==='marginal' ? `Thin: positive but small (${sgn(r)}). Fine if you would bet this side anyway.`
+        : `Pass: worth ${sUsd(ev)} at the fair price. ${t==='boost'?'Try the boost on a different side (see Best uses).':'The price gives back more than the promo adds.'}`;
+    }
+    const cav=[];
+    if(!s.sharp&&!s.custom) cav.push('That fair price is softer than the sharp-book moneyline; treat the result as rough.');
+    if(s.off) cav.push('This number is off the all-book consensus line; its no-vig comes only from the books posting it.');
+    if(s.push) cav.push('Whole-number line: a push usually refunds the stake or token, so the real EV is a bit closer to zero.');
+    if(capped) cav.push(`The ${usd(cap)} max winnings cap binds: ${usd(raw-win)} of potential profit is cut off.`);
+    out.innerHTML = `<h3 class="pch">Result</h3>
+      <div class="pcv"><span class="verdict ${VCLS[verdict]}">${VTXT[verdict]}</span><span class="pick">${esc(s.label)} ${priceTxt}</span></div>
+      <p class="say">${say}</p>
+      <div class="strip">${stat(p1(p),'Fair win chance')}${stat(be==null?'any':p1(be), be==null?'Break-even: a bonus bet never costs cash':'Break-even win chance')}${stat(sUsd(ev),'Expected value', ev>=0?'pos':'neg')}${stat(t==='bonus'?pct(r):sgn(r),evLabel, t==='bonus'?'':(r>=0?'pos':'neg'))}</div>
+      <ul><li>Fair price: <b>${esc(s.src)}</b>.</li>${[...extra.map(x=>`<li>${x}</li>`), ...cav.map(x=>`<li>${x}</li>`)].join('')}${t==='boost'&&boostTxt?`<li>Price used: ${esc(boostTxt)}, decimal ${dEff.toFixed(3)}${capped?`, capped at ${usd(cap)} profit`:''}.</li>`:''}</ul>`;
+  }
+
+  // best uses: every moneyline side at the best price among your books
+  const CALL=[];
+  for(const g of games){
+    const lo=g.context.live_odds, f=mlFair(lo); if(!f) continue;
+    for(const home of [false,true]){
+      const b=okPrice(home?lo.best_home_ml:lo.best_away_ml); if(!b) continue;
+      CALL.push({g, home, team:home?g.home_team:g.away_team, price:b.price, book:b.book, d:dec(b.price), p:home?f.home:1-f.home, src:f.src, opp:okPrice(home?lo.best_away_ml:lo.best_home_ml)});
+    }
+  }
+  const sideCell = (x,extra='') => `<span class="bpick"><b>${esc(x.team)} ${fmtML(x.price)}</b><small>${esc(x.book)} · ${esc(x.g.away_team)} @ ${esc(x.g.home_team)} · ${fmtDay(x.g.gameday)} · fair ${p1(x.p)}${x.src==='consensus'?' (consensus)':''}${extra}</small></span>`;
+  const useBtn = (x,t) => `<button type="button" class="usebtn" data-gid="${esc(x.g.game_id)}" data-mkt="${x.home?'ml_home':'ml_away'}" data-type="${t}">Use</button>`;
+  const empty = (cols,msg) => `<tbody><tr class="empty"><td colspan="${cols}">${msg}</td></tr></tbody>`;
+  const NOODDS = P.live_odds_available===false||!games.length ? 'Needs live odds for upcoming games. The calculator above still works with your own fair %.' : 'No side fits these settings.';
+  function best(){
+    const C=$('pc-sharponly').checked ? CALL.filter(x=>x.src!=='consensus') : CALL;
+    const amt=num('bb-amt')||0, typ=$('bb-range').value==='typ';
+    const bb=C.filter(x=>!typ||(x.price>=200&&x.price<=500)).map(x=>({...x, v:x.p*(x.d-1), lock:x.opp?(x.d-1)*(dec(x.opp.price)-1)/dec(x.opp.price):null}))
+      .sort((a,b)=>b.v-a.v).slice(0,5);
+    $('bb-t').innerHTML = bb.length ? `<thead><tr><th>Side</th><th>Kept of bonus</th><th></th></tr></thead><tbody>`+bb.map(x=>`<tr><td>${sideCell(x, x.lock!=null?` · hedge locks ≈ ${pct(x.lock)}`:'')}</td><td class="val"><b>≈ ${pct(x.v)}</b><small>${usd(x.v*amt)}</small></td><td>${useBtn(x,'bonus')}</td></tr>`).join('')+'</tbody>' : empty(3,NOODDS);
+    const nsAmt=num('ns-amt')||0, nc=Math.min(Math.max((num('ns-conv')??70)/100,0),1);
+    const ns=C.map(x=>({...x, r:x.p*(x.d-1)-(1-x.p)+(1-x.p)*nc})).sort((a,b)=>b.r-a.r).slice(0,5);
+    $('ns-t').innerHTML = ns.length ? `<thead><tr><th>Side</th><th>EV</th><th></th></tr></thead><tbody>`+ns.map(x=>`<tr><td>${sideCell(x)}</td><td class="val ${x.r>=0?'win':'loss'}"><b>${sgn(x.r)}</b><small>${sUsd(x.r*nsAmt)}</small></td><td>${useBtn(x,'nosweat')}</td></tr>`).join('')+'</tbody>' : empty(3,NOODDS);
+    const b=(num('pb-pct')||0)/100, pbAmt=num('pb-amt')||0, pcapIn=num('pb-cap'), pcap=pcapIn!=null&&pcapIn>0?pcapIn:null;
+    const pb=C.map(x=>{ const d2=1+(x.d-1)*(1+b), raw=(d2-1)*pbAmt, w=pcap!=null?Math.min(raw,pcap):raw, ev=x.p*w-(1-x.p)*pbAmt;
+      return {...x, d2, ev, r:pbAmt>0?ev/pbAmt:x.p*(d2-1)-(1-x.p), capped:pcap!=null&&raw>pcap}; }).sort((a,b)=>b.r-a.r).slice(0,5);
+    $('pb-t').innerHTML = pb.length ? `<thead><tr><th>Side</th><th>EV</th><th></th></tr></thead><tbody>`+pb.map(x=>`<tr><td>${sideCell(x, ` · boosted ${fmtML(amer(x.d2))}${x.capped?' (capped)':''}`)}</td><td class="val ${x.r>=0?'win':'loss'}"><b>${sgn(x.r)}</b><small>${sUsd(x.ev)}</small></td><td>${useBtn(x,'boost')}</td></tr>`).join('')+'</tbody>' : empty(3,NOODDS);
+  }
+  document.querySelector('#promos .bestgrid').addEventListener('click', e=>{
+    const btn=e.target.closest('.usebtn'); if(!btn) return;
+    $('pc-game').value=btn.dataset.gid; fillMarkets(); $('pc-mkt').value=btn.dataset.mkt; fillLines();
+    const t=btn.dataset.type; document.querySelector(`input[name="pctype"][value="${t}"]`).checked=true;
+    if(t==='bonus') $('pc-stake').value=$('bb-amt').value;
+    if(t==='nosweat'){ $('pc-stake').value=$('ns-amt').value; $('pc-conv').value=$('ns-conv').value; }
+    if(t==='boost'){ $('pc-bmode').value='pct'; $('pc-bpct').value=$('pb-pct').value; $('pc-stake').value=$('pb-amt').value; $('pc-cap').value=$('pb-cap').value; }
+    calc(); $('pcform').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  $('pcform').addEventListener('submit', e=>e.preventDefault());
+  $('pc-game').addEventListener('change', ()=>{ fillMarkets(); calc(); });
+  $('pc-mkt').addEventListener('change', ()=>{ fillLines(); calc(); });
+  $('pc-line').addEventListener('change', ()=>{ oddsTouched=false; fillOdds(); calc(); });
+  $('pc-odds').addEventListener('input', ()=>{ oddsTouched=true; });
+  $('pcform').addEventListener('input', calc);
+  $('pcform').addEventListener('change', calc);
+  document.querySelectorAll('#promos .bu input, #promos .bu select, #pc-sharponly').forEach(el=>{ el.addEventListener('input', best); el.addEventListener('change', best); });
+  fillMarkets(); calc(); best();
+})();
+// hide jump links whose section is hidden
+document.querySelectorAll('#jump a').forEach(a=>{ const t=document.querySelector(a.getAttribute('href')); if(!t||t.hidden) a.hidden=true; });
 
 document.getElementById('foot').textContent = `Trained on ${P.trained_on_games.toLocaleString()} games (2013–present). Data: nflverse. Not betting advice.`;
 </script>

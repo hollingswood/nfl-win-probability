@@ -810,3 +810,32 @@ def test_ml_v4_spread_vs_moneyline(tmp_path):
     wed = datetime(2026, 9, 30, 14, 15, tzinfo=timezone.utc)
     g2 = dict(g, context={"live_odds": lo})
     assert ml_v4.evaluate(g2, r, wed) is None and any("only bets" in x for x in g2["ml_v4_check"])
+
+
+@pytest.mark.parametrize("live", [True, False])
+def test_dashboard_promo_calculator_section(live):
+    """The promo & boost calculator renders with full live odds (sharp fair prices, best moneylines,
+    per-book spreads/totals) and without any live odds; the section, nav link and disclaimer are present."""
+    import json
+    import re
+    bd = _load_build_dashboard()
+    pred = _dash_predictions(False)
+    if live:
+        pred["live_odds_available"] = True
+        pred["upcoming"][0]["context"]["live_odds"] = {
+            "commence_time": "2026-10-04T17:00:00Z", "consensus_home_prob": 0.58, "sharp_home_prob": 0.585,
+            "pinnacle_home_prob": 0.59, "pin_sharp_home_prob": 0.587, "consensus_home_margin": 2.5,
+            "best_home_ml": {"price": -135, "book": "DraftKings"}, "best_away_ml": {"price": 125, "book": "FanDuel"},
+            "spreads_by_book": [{"book": "FanDuel", "home_point": -2.5, "home_price": -110, "away_point": 2.5,
+                                 "away_price": -110}],
+            "totals": {"consensus_total": 45.0, "totals_by_book": [
+                {"book": "FanDuel", "point": 44.5, "over_price": -110, "under_price": -110}]}}
+    backtest = {"overall": {"margin": {"accuracy": 0.66, "n": 2000}, "vegas": {"accuracy": 0.67, "n": 2000}},
+                "seasons": "2018-2025", "calibration": [], "by_season": []}
+    body = bd.render(bd.build_payload(pred, backtest, None, []))
+    assert '<section id="promos">' in body and 'href="#promos"' in body
+    assert "Not financial advice. Promo terms vary by book and state; check the terms." in body
+    for el in ("pc-game", "pc-odds", "pcout", "bb-t", "ns-t", "pb-t"):
+        assert f'id="{el}"' in body
+    data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
+    assert ("live_odds" in data["predictions"]["upcoming"][0]["context"]) == live
