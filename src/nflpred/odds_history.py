@@ -226,12 +226,24 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
     return total
 
 
+def plan_dense(games, season, horizon_days=9):
+    """Hourly snapshots (:10 past each hour) on every day with an unplayed game in the next 9 days:
+    the dense price history needed to model how long soft prices last and to train a true-price model."""
+    times, kicks = _daily(games, season, horizon_days, lambda b: [b + timedelta(hours=h, minutes=10) for h in range(24)])
+    return _keep(times, kicks, horizon_days)
+
+
+DENSE_FIELDS = FIELDS + ["tot_point", "tot_over_price", "tot_under_price"]
+
+
 PLANS = {  # name: (planner, markets, regions, subdirectory, fields)
     "main": (None, "h2h,spreads", "us,us2", "", FIELDS),
     "totals": (plan_totals, "totals", "us", "totals", TOTAL_FIELDS),
     "openers": (plan_openers, "h2h,spreads", "us", "openers", FIELDS),
     "hourly": (plan_hourly, "h2h,spreads", "us", "hourly", FIELDS),
     "pinnacle": (plan_pinnacle, "h2h", "bookmakers:pinnacle", "pinnacle", FIELDS),
+    "dense": (plan_dense, "h2h,spreads,totals", "us,us2", "dense", DENSE_FIELDS),
+    "dense_pin": (plan_dense, "h2h,spreads,totals", "bookmakers:pinnacle", "dense_pin", DENSE_FIELDS),
 }
 
 
@@ -329,7 +341,8 @@ def backfill(games, seasons, key, regions="us,us2", markets="h2h,spreads", reser
             total["remaining"] = remaining
             rows = rows_from_snapshot(payload, t)
             if rows:
-                _append(out_dir / f"nfl_odds_{s}.csv.gz", rows, fields)
+                name = f"nfl_odds_{s}_{t:%Y-%m}.csv.gz" if planner is plan_dense else f"nfl_odds_{s}.csv.gz"
+                _append(out_dir / name, rows, fields)  # dense: monthly files keep each under GitHub's size limit
             with done_path.open("a") as f:
                 f.write(t.isoformat() + "\n")
             total["fetched"] += 1

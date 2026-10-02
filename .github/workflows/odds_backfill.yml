@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "big = all props + openers for derivatives/alternates/props 2023-25 (~200k credits; needs a large plan)"
+        description: "dense = hourly odds (all US books + Pinnacle) for the seasons given; ~330k credits per season; run one season per click"
         type: choice
-        options: [big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
-        default: big
+        options: [dense, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
+        default: dense
       seasons:
         description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
         default: "2020-2025"
@@ -31,7 +31,7 @@ permissions:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -46,6 +46,7 @@ jobs:
           PLANS="${{ inputs.plan }}"
           if [ "$PLANS" = "extras" ]; then PLANS="totals openers hourly"; fi
           if [ "$PLANS" = "alternates" ]; then PLANS="props:alternate_spreads"; fi
+          if [ "$PLANS" = "dense" ]; then PLANS="dense dense_pin"; fi
           if [ "$PLANS" = "big" ]; then PLANS="props:player_pass_yds,player_pass_attempts,player_rush_yds,player_receptions,player_anytime_td:open+early+close props:player_reception_yds:open props:spreads_h1,totals_h1,team_totals:open props:alternate_spreads:open"; fi
           if [ "$PLANS" = "derivatives" ]; then PLANS="props:spreads_h1,totals_h1,team_totals"; fi
           for P in $PLANS; do python -m nflpred.odds_history --plan $P $ARGS; done
