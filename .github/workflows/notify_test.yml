@@ -1,0 +1,17 @@
+name: Test phone alert
+
+# Sends one test push to the ntfy topic in the NTFY_TOPIC secret.
+on:
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send test push
+        run: |
+          python -m nflpred.notify "NFL predictor: test alert" "If you can read this, phone alerts work. Paper bets, failed runs and finished backfills will arrive here." 3
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
