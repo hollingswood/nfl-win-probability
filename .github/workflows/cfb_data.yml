@@ -1,0 +1,48 @@
+name: CFB data pull
+
+# College football data from CollegeFootballData.com (free key in the CFBD_API_KEY secret) -> data/cfb/raw.
+# Past seasons are downloaded once; the current season is refreshed each run (~16 calls).
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "Seasons, e.g. 2014-2026 or 2026"
+        default: "2014-2026"
+
+concurrency:
+  group: cfb-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Download
+        run: python -m cfbpred.fetch --years "${{ inputs.years }}"
+        env:
+          PYTHONPATH: src
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+      - name: Save to the repo
+        if: always()
+        run: |
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add data/cfb
+          git commit -q -m "CFB data pull (${{ inputs.years }})" || { echo "nothing new"; exit 0; }
+          for i in 1 2 3 4 5; do git pull -q --rebase && git push -q && exit 0; sleep 10; done
+          echo "::error::Could not push the CFB data"; exit 1
+      - name: Phone alert if this run failed
+        if: failure()
+        continue-on-error: true
+        run: |
+          python -m nflpred.notify "CFB data pull FAILED" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 4 --soft
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
