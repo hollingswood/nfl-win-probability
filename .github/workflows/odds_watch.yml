@@ -35,6 +35,7 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
       - name: Alert on new bets (only tracks that have passed validation write this file)
         if: hashFiles('output/alert_watch.md') != ''
         env:
@@ -48,6 +49,12 @@ jobs:
         env:
           PYTHONPATH: src
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Futures snapshot (every 6 h, plus after starting-QB news; logging only)
+        continue-on-error: true
+        run: python -m nflpred.futures
+        env:
+          PYTHONPATH: src
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Build dashboard
         run: python scripts/build_dashboard.py
         env:
@@ -66,6 +73,14 @@ jobs:
         if: steps.commit.outputs.changed == 'true'
         with:
           path: site
+      - name: Phone alert if this run failed
+        if: failure()
+        continue-on-error: true
+        run: |
+          python -m nflpred.notify "Hourly odds watch FAILED" "Run failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 4
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
 

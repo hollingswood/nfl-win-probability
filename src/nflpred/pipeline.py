@@ -382,9 +382,16 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["props_receptions_bets"] = {"error": str(e)}
         print("props receptions bets: failed:", e)
+    try:
+        from . import exchanges
+        result["exchange_value_bets"] = exchanges.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["exchange_value_bets"] = {"error": str(e)}
+        print("exchange value bets: failed:", e)
     _aplus_tracks(result, df)
     _grade_v2_record(result)
     _totals_grade_record(result)
+    _exchange_display(result)
     try:  # AI news outcome audit + pre-registered promotion check (display only; nothing feeds the model)
         from . import news_audit
         a = news_audit.run(ROOT / "history", season)
@@ -395,7 +402,26 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     write_alert(result)
+    _notify_new_bets(result)
     return result
+
+
+def _exchange_display(pred: dict) -> None:
+    """Fee-adjusted Kalshi / Robinhood / other exchange prices on each game card (display only)."""
+    try:
+        from . import exchanges
+        exchanges.attach(pred, ROOT / "history")
+    except Exception as e:
+        print("exchange display failed:", e)
+
+
+def _notify_new_bets(pred: dict, exclude_ids: set | None = None) -> None:
+    """Phone push (ntfy) for every paper bet logged in this run; no-op without NTFY_TOPIC."""
+    try:
+        from . import notify
+        notify.new_bets(pred, exclude_ids)
+    except Exception as e:
+        print("notify failed:", e)
 
 
 def alert_lines(result: dict) -> list[str]:
@@ -535,12 +561,14 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
     forecast-wind and early-week unders, night games, receptions props, the A+ grade tracks). The v1 tracks only
     act on full runs, as pre-registered. Grading happens on full runs."""
-    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions
+    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions, exchanges
     path = OUT / "predictions.json"
     if not path.exists():
         print("watch: no predictions.json yet")
         return None
     pred = json.loads(path.read_text())
+    from . import notify
+    already_new = notify.new_ids(pred)  # bets announced by an earlier run; never re-alert
     now = now or dt.datetime.now(dt.timezone.utc)
     if not any(g.get("kickoff_utc") and dt.datetime.fromisoformat(g["kickoff_utc"]) > now
                for g in pred.get("upcoming", [])):
@@ -576,7 +604,8 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
         return props_receptions.process(p, g, h, now=now, fetch=odds_lib.fetch_event_props)
     for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
                     ("totals_early_under_bets", lambda p, g, h: totals_early_under.process(p, g, h, now=now)),
-                    ("props_receptions_bets", props_fn), ("night_west_bets", night_west.process)):
+                    ("props_receptions_bets", props_fn), ("night_west_bets", night_west.process),
+                    ("exchange_value_bets", lambda p, g, h: exchanges.process(p, g, h, now=now))):
         try:
             res = fn(pred, no_games, ROOT / "history")
             prev = pred.get(key) or {}
@@ -589,7 +618,9 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     _aplus_tracks(pred, no_games, now)
     _grade_v2_record(pred)
     _totals_grade_record(pred)
+    _exchange_display(pred)
     M.save_json(pred, path)
+    _notify_new_bets(pred, already_new)
     if write_alert(pred, OUT / "alert_watch.md"):
         print("watch: new bets on a validated track, see output/alert_watch.md")
     return pred

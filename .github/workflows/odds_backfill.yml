@@ -62,3 +62,11 @@ jobs:
           git add data/historical_odds || true
           git commit -m "Historical odds backfill (${{ inputs.seasons }})" || echo "no changes"
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+      - name: Phone alert when the backfill ends
+        if: always() && inputs.dry_run == false
+        continue-on-error: true
+        run: |
+          python -m nflpred.notify "Odds backfill ${{ job.status }}" "Plan ${{ inputs.plan }}, seasons ${{ inputs.seasons }}. ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ job.status == 'success' && '3' || '4' }}
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}

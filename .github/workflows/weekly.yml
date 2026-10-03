@@ -86,6 +86,7 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
       - name: Vegas comparison (blend test + betting simulation)
         # Weekly (Tuesday's daily run) or on manual runs; it re-runs the 2015-2025 comparison.
         if: github.event.schedule == '17 14 * * *' || github.event_name == 'workflow_dispatch'
@@ -120,6 +121,14 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
+      - name: Phone alert if this run failed
+        if: failure()
+        continue-on-error: true
+        run: |
+          python -m nflpred.notify "Weekly predictions run FAILED" "Run failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 4
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
 
   deploy:
     needs: predict
