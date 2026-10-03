@@ -304,6 +304,7 @@ section[id]{scroll-margin-top:12px}
 .pcnote ul{padding-left:18px;display:grid;gap:6px;margin:10px 0 0}
 .pcnote code{font:12px var(--mono);color:var(--ink);white-space:normal}
 .pcwarn{font-size:13px;color:var(--vegas);margin:0}
+.loglink{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--accent);text-decoration:underline;white-space:nowrap}
 </style>
 
 <div class="wrap">
@@ -312,7 +313,7 @@ section[id]{scroll-margin-top:12px}
     <h1>NFL Edge Board</h1>
     <p>A bet is only worth making when <b>our chance</b> of winning it beats the chance the <b>price requires</b>; that gap is the <b>edge</b>. Separate paper-betting tracks test different ideas under locked rules. The original model rules are still shown, but they showed no edge in backtests. Nothing here is a recommendation until a track passes its test.</p>
     <div class="keyrow"><span><span class="st st-bet" id="betkey">PAPER BET</span> logged under a track's locked rules (a real bet only after the track is validated)</span> <span><span class="st st-watch">WATCH</span> passes the price test, waiting on timing or news</span> <span><span class="st st-no">NO</span> doesn't qualify; the main reason is shown</span></div>
-    <nav class="jump" id="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#betswrap">Paper bets</a><a href="#promos">Promo calculator</a><a href="#sec-season">Season so far</a><a href="#sec-notes">How to read</a></nav>
+    <nav class="jump" id="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#mybets">My bets</a><a href="#betswrap">Paper bets</a><a href="#promos">Promo calculator</a><a href="#sec-season">Season so far</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
@@ -330,6 +331,12 @@ section[id]{scroll-margin-top:12px}
     <p class="g2note" id="g2games"></p>
     <p class="g2note" id="ainewsacc"></p>
     <div class="games" id="games"></div>
+  </section>
+
+  <section id="mybets">
+    <div class="sechead"><h2>My bets</h2><span class="pill">Real money · logged by you</span></div>
+    <p class="edge" id="mybetsintro"></p>
+    <div class="scroll"><table class="sumtbl" id="mybetstbl"></table></div>
   </section>
 
   <section id="betswrap">
@@ -647,6 +654,9 @@ const GORD = {'A+':0, 'A':1, 'B+':2, 'B':3, 'C+':4, 'C':5};
 const gTier = gr => !gr ? 'none' : gr==='A+' ? 'top' : /^[AB]/.test(gr) ? 'mid' : 'low';
 const gradeBadge = (gr, tip, big, tier) => `<span class="gb gb-${tier||gTier(gr)}${big?' big':''}" title="${esc(tip||'Not graded')}">${gr||'—'}</span>`;
 const stPill = st => `<span class="st st-${st.k}">${st.t}</span>`;
+// pre-filled "I placed a bet" form for a paper bet (GitHub issue; saved by the placed_bet workflow)
+const LOGU = D.log_urls || {};
+const logLink = b => b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : '';
 const chip = key => `<span class="chip ${key==='ml_v1'||key==='spread'?'orig':''}">${CHIP[key]}</span>`;
 const pickOf = s => s.mkt==='ml' ? `${s.team} ${od(s.price)}` : s.mkt==='sp' ? `${s.team} ${ptd(s.point)} (${od(s.price)})` : s.mkt==='prop' ? `${s.team} (${od(s.price)})` : `${s.team||'Under'} ${s.point} (${od(s.price)})`;
 // totals grade of the offer a track or box is showing (same side, number and price), else null
@@ -678,6 +688,7 @@ function gameRows(g){
     // status: logged bet, else a watch (current tracks first), else the main reason it doesn't qualify
     const lab = s => `${CHIP[s.key]}${sigStatus(s,g).k==='no'?':':''} `;
     const w = st.filter(x=>x.st.k==='watch').sort((a,b)=>b.s.current-a.s.current)[0];
+    r.bet = (st.find(x=>x.s.open)||{s:{}}).s.open || null;
     if(lead) r.st={...lead.st, d:lab(lead.s)+lead.st.d};
     else if(w) r.st={...w.st, d:lab(w.s)+w.st.d};
     else if(st.length) r.st={...st[0].st, d:lab(st[0].s)+st[0].st.d};
@@ -849,12 +860,12 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
     <div class="keyrow"><span><span class="st st-bet">${live?'BET':'PAPER BET'}</span> logged</span> <span><span class="st st-watch">WATCH</span> would qualify later (time shown)</span> <span><span class="st st-no">NO</span> doesn't qualify (main reason shown)</span> <span><span class="chip">ML v4</span>tracks that agree</span> <span><span class="chip orig">Original model</span>first model's rules, no edge on real lines</span></div>`;
   // receptions-props paper bets (one row each; props have no grade)
   for(const g of P.upcoming) for(const b of (OPEN_PROPS[g.game_id]||[])) allRows.push({g, mkt:'prop', team:b.team, pick:`${b.player} ${cap1(b.side)} ${b.point} rec (${od(b.price)})`, book:b.book,
-    grade:null, gtip:'Props are not graded', st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.props_rec}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${od(b.price)}`},
+    grade:null, gtip:'Props are not graded', bet:b, st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.props_rec}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${od(b.price)}`},
     why:[`<span class="wl">${chip('props_rec')}${esc(`${sgn(b.edge)} vs the other books' fair price (${b.n_other} books)`)}</span>`], current:true, sortEdge:b.edge});
   // exchange-value paper bets (venue price after fees vs Pinnacle fair; not graded)
   const EXM = {h2h:'ml', spreads:'sp', totals:'tot'};
   for(const g of P.upcoming) for(const b of (OPEN_EXCH[g.game_id]||[])) allRows.push({g, mkt:EXM[b.market]||'ml', team:b.team, pick:`${b.team}${b.market==='h2h'?' ML':''} (${od(b.price)} after fees)`, book:b.book,
-    grade:null, gtip:'Exchange bets are not graded', st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.exch}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${b.quoted_cents}¢ (${od(b.price)} after fees)`},
+    grade:null, gtip:'Exchange bets are not graded', bet:b, st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.exch}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${b.quoted_cents}¢ (${od(b.price)} after fees)`},
     why:[`<span class="wl">${chip('exch')}${esc(`${sgn(b.edge)} vs Pinnacle's fair price after ${b.book} fees${b.best_book?`; best sportsbook ${od(b.best_book_price)} (${sgn(b.best_book_ev||0)})`:''}`)}</span>`], current:true, sortEdge:b.edge});
   allRows.sort(rowSort);
   // totals A/B/C have lost value (unlike moneyline A/B), so they never go to the watchlist
@@ -866,7 +877,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   const row = r => `<div class="brow"><span>${gradeBadge(r.grade, r.gtip, true, r.tier)}</span>
     <span class="bpk"><b>${esc(r.pick)}</b><small>${MK[r.mkt]} · ${esc(r.book)}</small><small>${gt(r.g)}</small></span>
     <span class="bwhy">${r.why.join('')}</span>
-    <span class="bst">${stPill(r.st)}<small>${esc(r.st.d)}</small></span></div>`;
+    <span class="bst">${stPill(r.st)}<small>${esc(r.st.d)}</small>${r.bet?logLink(r.bet):''}</span></div>`;
   const list = (rows, cls, empty) => `<div class="blist ${cls}">${rows.length ? head + rows.map(row).join('') : `<div class="bempty">${empty}</div>`}</div>`;
   const n = x => `${x} pick${x===1?'':'s'}`;
   document.getElementById('board').innerHTML = `
@@ -1088,6 +1099,20 @@ function trackWindow(key){
   return slot(null, I.when);
 }
 
+// My bets: real bets logged through the form, scored against the paper bet they came from
+(function(){
+  const M=D.placed||{}, B=M.bets||[], usd=x=>x==null?'—':`${x<0?'−':''}$${Math.abs(x).toFixed(2)}`;
+  const NEWU='https://github.com/hollingswood/nfl-win-probability/issues/new?template=placed_bet.yml';
+  document.getElementById('mybetsintro').innerHTML = `Bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet (board or Paper bets), fix the odds and stake you got, and submit; it shows up here after the next update. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a>.`+
+    (B.length?` <b>${M.graded||0} graded</b> · ${M.wins||0}–${M.losses||0} · profit <b>${usd(M.profit)}</b>${M.roi!=null?` (ROI ${sgn(M.roi)})`:''} · avg CLV ${M.avg_clv!=null?sgn(M.avg_clv):'—'} · your price vs the track's ${M.avg_price_vs_paper!=null?sgn(M.avg_price_vs_paper):'—'}${M.open_stake?` · ${usd(M.open_stake)} open`:''}`:'');
+  const t=document.getElementById('mybetstbl');
+  if(!B.length){ t.innerHTML='<tbody><tr><td style="text-align:left;font-family:var(--body)">No real bets logged yet.</td></tr></tbody>'; return; }
+  const ST={open:'open',graded:'graded',check:'check result',manual:'manual',unmatched:'no matching paper bet'};
+  const td=(l,h,c='')=>`<td data-l="${l}"${c?` class="${c}"`:''}><div>${h}</div></td>`;
+  t.innerHTML=`<thead><tr><th>Logged</th><th>Pick</th><th>Book</th><th>Your odds</th><th>Stake</th><th title="Your payout vs the price the paper track logged">vs track</th><th>CLV</th><th>Result</th><th>Profit</th></tr></thead><tbody>`+
+    B.map(b=>`<tr>${td('Logged',new Date(b.logged_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}${td('Pick',`<b>${esc(b.pick)}</b>${b.point!=null?` (${b.point})`:''}${b.track?`<small> · ${esc(b.track)}</small>`:''}`,'wr')}${td('Book',esc(b.book))}${td('Your odds',esc(b.odds))}${td('Stake',usd(b.stake))}${td('vs track',b.price_vs_paper!=null?sgn(b.price_vs_paper):'—')}${td('CLV',b.clv!=null?sgn(b.clv):'—')}${td('Result',b.result||ST[b.status]||b.status,b.result==='win'?'win':b.result==='loss'?'loss':'')}${td('Profit',b.profit!=null?usd(b.profit):'—')}</tr>`).join('')+'</tbody>';
+})();
+
 (function(){
   const order=['ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','totals','totals_eu','night','spread','ml_v1'];
   const tracks=order.map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
@@ -1130,8 +1155,8 @@ function trackWindow(key){
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(chk.roi_positive,'')}`],
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(chk.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
-    const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td></tr>`).join('')+'</tbody>'
+    const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th><th></th></tr></thead><tbody>`+
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
       gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';

@@ -115,7 +115,7 @@ def test_totals_grade_research_filters_and_features():
     assert F2["move_mu"] == 0.0 and F2["best_gap"] == 0.0
 
 
-def test_totals_grade_attach_first_seen_and_bet_label(tmp_path):
+def test_totals_grade_attach_first_seen_and_bet_label(tmp_path, monkeypatch):
     pytest.importorskip("lightgbm")
     from nflpred import grade_totals as GT
     # an earlier snapshot 6 days out (within 7 days) with a higher total -> first seen; one 8 days out is ignored
@@ -128,6 +128,8 @@ def test_totals_grade_attach_first_seen_and_bet_label(tmp_path):
     first = GT.first_seen(tmp_path, [g])
     assert first[g["game_id"]]["ts"].startswith("2026-10-05T14:10") and first[g["game_id"]]["pt_cons"] == 47.5
     now = datetime(2026, 10, 6, 14, 15, tzinfo=UTC)
+    from nflpred import odds as O  # don't depend on the user's my_books.json
+    monkeypatch.setattr(O, "load_allowed_books", lambda path=None: {"draftkings", "fanduel", "betmgm", "williamhill_us"})
     s = GT.attach({"upcoming": [g]}, tmp_path, now)
     assert s["available"] and s["graded_games"] == 1 and s["errors"] == 0
     G = g["totals_grade"]

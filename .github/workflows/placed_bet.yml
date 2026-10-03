@@ -1,0 +1,39 @@
+name: Log placed bet
+
+# Saves a bet you placed (the "I placed a bet" issue form) to history/placed_bets.json and closes the issue.
+# Only issues opened by the repo owner are accepted.
+on:
+  issues:
+    types: [opened, edited]
+
+concurrency:
+  group: placed-bets
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  log:
+    if: contains(github.event.issue.labels.*.name, 'placed-bet') && github.event.issue.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Save the bet
+        run: python -m nflpred.placed ingest
+        env:
+          PYTHONPATH: src
+      - name: Commit
+        run: |
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add history/placed_bets.json
+          git commit -m "Placed bet (issue #${{ github.event.issue.number }})" || echo "no changes"
+          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep 7; done
+      - name: Confirm and close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body-file "$RUNNER_TEMP/placed_comment.md"
+          gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }} || true

@@ -27,15 +27,31 @@ PRIORITY_TRACKS = {"aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "m
 
 
 def send(title: str, message: str, priority: int = 3, tags: list[str] | None = None,
-         click: str = DASHBOARD, topic: str | None = None) -> bool:
+         click: str = DASHBOARD, topic: str | None = None, actions: list[dict] | None = None) -> bool:
     topic = topic or os.environ.get("NTFY_TOPIC")
     if not topic:
         return False
-    body = json.dumps({"topic": topic, "title": title, "message": message, "priority": priority,
-                       "tags": tags or [], "click": click}).encode()
-    req = urllib.request.Request("https://ntfy.sh/", data=body, headers={"Content-Type": "application/json"})
+    payload = {"topic": topic, "title": title, "message": message, "priority": priority,
+               "tags": tags or [], "click": click}
+    if actions:
+        payload["actions"] = actions[:3]
+    req = urllib.request.Request("https://ntfy.sh/", data=json.dumps(payload).encode(),
+                                 headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=15) as r:
         return 200 <= r.status < 300
+
+
+def _norm(s: str) -> str:
+    return "".join(ch for ch in str(s).lower() if ch.isalnum())
+
+
+def account_names() -> set | None:
+    try:
+        from pathlib import Path
+        d = json.loads((Path(__file__).resolve().parents[2] / "my_books.json").read_text())
+        return {_norm(x) for x in d.get("account_names", [])} or None
+    except Exception:
+        return None
 
 
 def _kick(b: dict, pred: dict) -> str:
@@ -81,18 +97,37 @@ def new_ids(pred: dict) -> set:
     return {b.get("id") for _, b in collect(pred)}
 
 
-def new_bets(pred: dict, exclude_ids: set | None = None) -> bool:
-    """exclude_ids: 'new' bets already present before this run (blocks a watch run did not refresh)."""
+def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) -> bool:
+    """exclude_ids: 'new' bets already present before this run (blocks a watch run did not refresh).
+    Up to `max_single` bets: one push each with an "I placed it" button (pre-filled log form).
+    More than that: one combined push; log bets from the dashboard."""
+    from .placed import log_url
     items = [(k, b) for k, b in collect(pred) if b.get("id") not in (exclude_ids or set())]
     if not items:
         return False
-    lines = [bet_line(k, b, pred) for k, b in items]
-    hot = any(k in PRIORITY_TRACKS for k, _ in items)
-    title = f"{len(items)} new paper bet{'s' if len(items) > 1 else ''}" + (" (A+/top track)" if hot else "")
-    msg = "\n".join(lines) + "\n\nPrices move within hours. Paper tracks, not yet validated. Not financial advice."
-    ok = send(title, msg, priority=4 if hot else 3, tags=["football"])
-    print(f"notify: {'sent' if ok else 'skipped (no NTFY_TOPIC)'} {len(items)} bet(s)")
-    return ok
+    accts = account_names()
+    note = "Paper track, not yet validated. Not financial advice."
+    sent = 0
+    if len(items) <= max_single:
+        for k, b in items:
+            hot = k in PRIORITY_TRACKS
+            line = bet_line(k, b, pred)
+            if accts is not None and _norm(b.get("book", "")) not in accts:
+                line += " (no account at this book)"
+            ok = send(f"{'A+/top: ' if hot else ''}{TRACK_NAMES.get(k, k)}", f"{line}\n\nPrices move within hours. {note}",
+                      priority=4 if hot else 3, tags=["football"],
+                      actions=[{"action": "view", "label": "I placed it", "url": log_url(b)},
+                               {"action": "view", "label": "Dashboard", "url": DASHBOARD}])
+            sent += bool(ok)
+    else:
+        hot = any(k in PRIORITY_TRACKS for k, _ in items)
+        lines = [bet_line(k, b, pred) for k, b in items]
+        ok = send(f"{len(items)} new paper bets" + (" (A+/top track)" if hot else ""),
+                  "\n".join(lines) + f"\n\nLog the ones you place from the dashboard (Log bet links). {note}",
+                  priority=4 if hot else 3, tags=["football"])
+        sent += bool(ok)
+    print(f"notify: {'sent' if sent else 'skipped (no NTFY_TOPIC)'} {len(items)} bet(s)")
+    return bool(sent)
 
 
 if __name__ == "__main__":

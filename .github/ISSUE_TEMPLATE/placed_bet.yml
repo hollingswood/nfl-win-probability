@@ -1,0 +1,47 @@
+name: I placed a bet
+description: Log a real bet you placed (book, odds, stake). It is saved to history/placed_bets.json and scored on the dashboard.
+title: "Placed: "
+labels: ["placed-bet"]
+body:
+  - type: input
+    id: bet_id
+    attributes:
+      label: Bet ID
+      description: Filled in from the alert or dashboard. Leave blank for a bet no track made.
+  - type: input
+    id: pick
+    attributes:
+      label: Pick
+      description: e.g. WAS ML, PHI -3.5, Under 47.5, Jake Ferguson Over 3.5 rec
+    validations:
+      required: true
+  - type: input
+    id: book
+    attributes:
+      label: Book
+      description: Where you placed it (DraftKings, FanDuel, theScore Bet, Kalshi, Robinhood...)
+    validations:
+      required: true
+  - type: input
+    id: odds
+    attributes:
+      label: Odds you got
+      description: American odds (e.g. +188 or -110). For Kalshi/Robinhood you can enter the contract price in cents (e.g. 35c).
+    validations:
+      required: true
+  - type: input
+    id: point
+    attributes:
+      label: Line you got
+      description: Spread/total/prop number if it differs from the alert (blank = same line)
+  - type: input
+    id: stake
+    attributes:
+      label: Stake ($)
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional (limited by the book, got a worse price, boost used...)

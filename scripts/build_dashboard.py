@@ -166,7 +166,33 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_ai": news_by_game(news_signals or [], predictions.get("upcoming", []), now),
             "news_audit": news_audit,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
-            "rules": load_rule_limits() if rules is None else rules}
+            "rules": load_rule_limits() if rules is None else rules,
+            "placed": load_placed(), "log_urls": log_urls(predictions)}
+
+
+def load_placed() -> dict | None:
+    """Real bets you logged (history/placed_bets.json), scored against their paper bets."""
+    try:
+        from nflpred import placed
+        return placed.summary(ROOT / "history")
+    except Exception as e:
+        print("placed bets: skipped:", e)
+        return None
+
+
+def log_urls(predictions: dict) -> dict:
+    """bet id -> pre-filled 'I placed a bet' form, for every open paper bet."""
+    try:
+        from nflpred.placed import log_url
+    except Exception:
+        return {}
+    out = {}
+    for k, block in predictions.items():
+        if k.endswith("_bets") and isinstance(block, dict):
+            for b in block.get("open") or []:
+                if b.get("id"):
+                    out[b["id"]] = log_url(b)
+    return out
 
 
 def render(payload: dict, template: str | None = None) -> str:
