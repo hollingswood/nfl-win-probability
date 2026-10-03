@@ -55,6 +55,12 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: College football odds snapshot (logging only; hourly Thu-Sat, every 3 h otherwise)
+        continue-on-error: true
+        run: python -m cfbpred.odds_live
+        env:
+          PYTHONPATH: src
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Build dashboard
         run: python scripts/build_dashboard.py
         env:

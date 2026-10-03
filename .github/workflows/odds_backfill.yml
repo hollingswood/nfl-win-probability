@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "dense = hourly odds (all US books + Pinnacle), ~350k credits and ~1.5 h per season; saved after every season"
+        description: "dense = NFL hourly odds (all US books + Pinnacle), ~350k credits and ~1.5 h per season. cfb = college football odds (~35k credits per season, 2021+)"
         type: choice
-        options: [dense, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
+        options: [dense, cfb, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
         default: dense
       seasons:
         description: "Seasons, e.g. 2025 or 2023-2025 (newest first). Each season is saved as soon as it finishes; a run stops itself at ~5.5 h and a re-run resumes"
@@ -58,6 +58,7 @@ jobs:
           if [ "$PLANS" = "extras" ]; then PLANS="totals openers hourly"; fi
           if [ "$PLANS" = "alternates" ]; then PLANS="props:alternate_spreads"; fi
           if [ "$PLANS" = "dense" ]; then PLANS="dense dense_pin"; fi
+          if [ "$PLANS" = "cfb" ]; then PLANS="cfb cfb_pin"; fi
           if [ "$PLANS" = "big" ]; then PLANS="props:player_pass_yds,player_pass_attempts,player_rush_yds,player_receptions,player_anytime_td:open+early+close props:player_reception_yds:open props:spreads_h1,totals_h1,team_totals:open props:alternate_spreads:open"; fi
           if [ "$PLANS" = "derivatives" ]; then PLANS="props:spreads_h1,totals_h1,team_totals"; fi
           SEASONS=$(python -c "import sys; a=sys.argv[1]; print(' '.join(str(x) for x in sorted((range(int(a.split('-')[0]), int(a.split('-')[1])+1) if '-' in a else map(int, a.split(','))), reverse=True)))" "${{ inputs.seasons }}")
@@ -65,7 +66,8 @@ jobs:
           for S in $SEASONS; do
             for P in $PLANS; do
               if [ "$(date +%s)" -gt "$BACKFILL_DEADLINE" ]; then echo "time limit reached; re-run to resume"; break 2; fi
-              python -m nflpred.odds_history --plan $P --seasons $S --reserve ${{ inputs.reserve }} $DRY
+              MOD=nflpred.odds_history; case "$P" in cfb*) MOD=cfbpred.odds_history;; esac
+              python -m $MOD --plan $P --seasons $S --reserve ${{ inputs.reserve }} $DRY
               if [ -z "$DRY" ]; then save "$P $S"; fi
             done
           done

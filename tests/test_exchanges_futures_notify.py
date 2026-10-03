@@ -98,3 +98,12 @@ def test_backfill_stops_at_deadline(tmp_path, monkeypatch):
     res = OH.backfill(None, [2025], "k", out_dir=tmp_path, planner=lambda g, s: [datetime(2025, 9, 7, tzinfo=timezone.utc)],
                       fetcher=lambda *a: calls.append(a) or ({}, 100.0))
     assert res["stopped"].startswith("time limit") and not calls
+
+
+def test_cfb_plan_and_cadence():
+    from cfbpred import odds_history as CH, odds_live as CL
+    t = CH.plan(2025)
+    assert 300 < len(t) < 500 and all(x.minute == 10 for x in t)
+    assert CL.due(datetime(2026, 10, 3, 17, 0, tzinfo=timezone.utc))          # Saturday: hourly
+    assert not CL.due(datetime(2026, 10, 6, 17, 0, tzinfo=timezone.utc))      # Tuesday 17:00: skip
+    assert CL.due(datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc))          # every 3rd hour
