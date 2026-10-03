@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
     inputs:
       plan:
-        description: "dense = hourly odds (all US books + Pinnacle) for the seasons given; ~330k credits per season; run one season per click"
+        description: "dense = hourly odds (all US books + Pinnacle), ~350k credits and ~1.5 h per season; saved after every season"
         type: choice
         options: [dense, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
         default: dense
       seasons:
-        description: "Seasons, e.g. 2020-2025 or 2024,2025 (newest are fetched first)"
-        default: "2020-2025"
+        description: "Seasons, e.g. 2025 or 2023-2025 (newest first). Each season is saved as soon as it finishes; a run stops itself at ~5.5 h and a re-run resumes"
+        default: "2025"
       dry_run:
         description: "Only count snapshots and credits (spends nothing)"
         type: boolean
@@ -31,7 +31,7 @@ permissions:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 355
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -39,29 +39,49 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Download historical odds
+      - name: Download historical odds (saved to the repo after every season and plan)
         run: |
-          ARGS="--seasons ${{ inputs.seasons }} --reserve ${{ inputs.reserve }}"
-          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          export BACKFILL_DEADLINE=$(( $(date +%s) + 320*60 ))   # stop cleanly ~5h20m in; GitHub kills jobs at 6 h
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git config http.postBuffer 524288000
+          save() {
+            git add data/historical_odds
+            git commit -q -m "Historical odds backfill ($1)" || { echo "nothing new to save"; return 0; }
+            for i in 1 2 3 4 5; do
+              if git pull -q --rebase && git push -q; then echo "saved: $1"; return 0; fi
+              sleep 10
+            done
+            echo "::error::Could not push the downloaded data ($1)"; exit 1
+          }
           PLANS="${{ inputs.plan }}"
           if [ "$PLANS" = "extras" ]; then PLANS="totals openers hourly"; fi
           if [ "$PLANS" = "alternates" ]; then PLANS="props:alternate_spreads"; fi
           if [ "$PLANS" = "dense" ]; then PLANS="dense dense_pin"; fi
           if [ "$PLANS" = "big" ]; then PLANS="props:player_pass_yds,player_pass_attempts,player_rush_yds,player_receptions,player_anytime_td:open+early+close props:player_reception_yds:open props:spreads_h1,totals_h1,team_totals:open props:alternate_spreads:open"; fi
           if [ "$PLANS" = "derivatives" ]; then PLANS="props:spreads_h1,totals_h1,team_totals"; fi
-          for P in $PLANS; do python -m nflpred.odds_history --plan $P $ARGS; done
+          SEASONS=$(python -c "import sys; a=sys.argv[1]; print(' '.join(str(x) for x in sorted((range(int(a.split('-')[0]), int(a.split('-')[1])+1) if '-' in a else map(int, a.split(','))), reverse=True)))" "${{ inputs.seasons }}")
+          DRY=""; if [ "${{ inputs.dry_run }}" = "true" ]; then DRY="--dry-run"; fi
+          for S in $SEASONS; do
+            for P in $PLANS; do
+              if [ "$(date +%s)" -gt "$BACKFILL_DEADLINE" ]; then echo "time limit reached; re-run to resume"; break 2; fi
+              python -m nflpred.odds_history --plan $P --seasons $S --reserve ${{ inputs.reserve }} $DRY
+              if [ -z "$DRY" ]; then save "$P $S"; fi
+            done
+          done
         env:
           PYTHONPATH: src
           PYTHONUNBUFFERED: "1"  # show progress lines live in the log
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-      - name: Commit what was downloaded (also after a failure, so a re-run resumes)
+      - name: Save anything left (after a failure or cancel)
         if: always() && inputs.dry_run == false
         run: |
           git config user.name "nfl-bot"
           git config user.email "nfl-bot@users.noreply.github.com"
           git add data/historical_odds || true
-          git commit -m "Historical odds backfill (${{ inputs.seasons }})" || echo "no changes"
-          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+          git commit -q -m "Historical odds backfill (${{ inputs.seasons }}, partial)" || { echo "nothing to save"; exit 0; }
+          for i in 1 2 3 4 5; do git pull -q --rebase && git push -q && exit 0; sleep 10; done
+          echo "::error::Could not push the downloaded data"; exit 1
       - name: Phone alert when the backfill ends
         if: always() && inputs.dry_run == false
         continue-on-error: true

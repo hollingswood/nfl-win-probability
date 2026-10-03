@@ -80,6 +80,7 @@ def test_notify_sends_only_unseen(monkeypatch):
 
 def test_futures_due(tmp_path, monkeypatch):
     now = datetime(2026, 10, 3, 12, 0, tzinfo=timezone.utc)
+    monkeypatch.setattr(F, "HIST", tmp_path)   # never read the real news log
     assert F.due(now, {}) == "scheduled"
     assert F.due(now, {"last": (now - timedelta(hours=2)).isoformat()}) is None
     log = tmp_path / "news_llm.jsonl"
@@ -88,3 +89,12 @@ def test_futures_due(tmp_path, monkeypatch):
     monkeypatch.setattr(F, "HIST", tmp_path)
     assert F.due(now, {"last": (now - timedelta(hours=2)).isoformat()}).startswith("news: Caleb Williams")
     assert F.due(now, {"last": (now - timedelta(minutes=20)).isoformat()}) is None   # at most one extra per hour
+
+
+def test_backfill_stops_at_deadline(tmp_path, monkeypatch):
+    from nflpred import odds_history as OH
+    monkeypatch.setenv("BACKFILL_DEADLINE", "1")   # long past
+    calls = []
+    res = OH.backfill(None, [2025], "k", out_dir=tmp_path, planner=lambda g, s: [datetime(2025, 9, 7, tzinfo=timezone.utc)],
+                      fetcher=lambda *a: calls.append(a) or ({}, 100.0))
+    assert res["stopped"].startswith("time limit") and not calls

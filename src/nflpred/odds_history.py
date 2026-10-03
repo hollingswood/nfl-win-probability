@@ -176,6 +176,9 @@ def backfill_props(seasons, key, market="player_reception_yds", regions="us", re
         if dry_run:
             continue
         for r, t, tag in todo:
+            if _out_of_time():
+                total["stopped"] = "time limit (re-run to resume)"
+                return total
             if total["remaining"] is not None and total["remaining"] - cost < reserve:
                 total["stopped"] = f"reserve of {reserve} credits reached"
                 return total
@@ -307,6 +310,14 @@ def remaining_credits(key: str) -> float | None:
         return None
 
 
+def _out_of_time() -> bool:
+    """True once BACKFILL_DEADLINE (unix seconds, set by the workflow) has passed: stop cleanly so the
+    workflow can commit what was downloaded before GitHub's 6-hour job limit kills it."""
+    import time
+    d = os.environ.get("BACKFILL_DEADLINE")
+    return bool(d) and time.time() > float(d)
+
+
 def _append(path: Path, rows: list[dict], fields=FIELDS):
     new = not path.exists()
     with gzip.open(path, "at", newline="") as f:
@@ -333,6 +344,10 @@ def backfill(games, seasons, key, regions="us,us2", markets="h2h,spreads", reser
         if dry_run:
             continue
         for t in todo:
+            if _out_of_time():
+                total["stopped"] = "time limit (re-run to resume)"
+                print("stopping:", total["stopped"])
+                return total
             if total["remaining"] is not None and total["remaining"] - cost < reserve:
                 total["stopped"] = f"reserve of {reserve} credits reached"
                 print("stopping:", total["stopped"])
