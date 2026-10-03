@@ -135,3 +135,4 @@ if __name__ == "__main__":
     ok = send(a[0] if a else "NFL predictor", a[1] if len(a) > 1 else "test", int(a[2]) if len(a) > 2 else 3,
               tags=["warning"] if len(a) > 2 and int(a[2]) >= 4 else ["football"])
     print("sent" if ok else "no NTFY_TOPIC set")
+    sys.exit(0 if ok or "--soft" in a else 1)

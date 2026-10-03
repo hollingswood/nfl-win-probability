@@ -77,7 +77,7 @@ jobs:
         if: failure()
         continue-on-error: true
         run: |
-          python -m nflpred.notify "Hourly odds watch FAILED" "Run failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 4
+          python -m nflpred.notify "Hourly odds watch FAILED" "Run failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 4 --soft
         env:
           PYTHONPATH: src
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}

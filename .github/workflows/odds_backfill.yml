@@ -66,7 +66,7 @@ jobs:
         if: always() && inputs.dry_run == false
         continue-on-error: true
         run: |
-          python -m nflpred.notify "Odds backfill ${{ job.status }}" "Plan ${{ inputs.plan }}, seasons ${{ inputs.seasons }}. ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ job.status == 'success' && '3' || '4' }}
+          python -m nflpred.notify "Odds backfill ${{ job.status }}" "Plan ${{ inputs.plan }}, seasons ${{ inputs.seasons }}. ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ job.status == 'success' && '3' || '4' }} --soft
         env:
           PYTHONPATH: src
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
