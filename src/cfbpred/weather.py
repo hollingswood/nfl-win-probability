@@ -102,14 +102,20 @@ def backfill(seasons: list[int], max_calls: int = 4000, sleep: float = 0.15, dea
     store = json.loads(path.read_text()) if path.exists() else {}
     V = venues()
     calls, skipped, failed = 0, {"no_venue": 0, "dome": 0, "tbd": 0}, 0
+    nope_p = WDIR / "weeks_without_old_forecasts.json"
+    nope = set(json.loads(nope_p.read_text())) if nope_p.exists() else set()
+    skipped["no_old_forecast"] = 0
     for s in seasons:
         G = D.games([s])
-        G = G[G.completed & ((G.home_div == "fbs") | (G.away_div == "fbs"))]
+        G = G[G.completed & ((G.home_div == "fbs") | (G.away_div == "fbs"))].sort_values("start")
         tbd = _tbd(s)
         for r in G.itertuples():
             gid = str(int(r.game_id))
+            wk = f"{s}-{getattr(r, 'season_type', '')}-{getattr(r, 'week', '')}"
             if gid in store:
                 continue
+            if wk in nope:             # the archive has no 1-2 day old wind forecasts that week: don't spend calls
+                skipped["no_old_forecast"] += 1; continue
             v = V.get(int(r.venue_id)) if r.venue_id == r.venue_id and r.venue_id is not None else None
             if v is None:
                 skipped["no_venue"] += 1; continue
@@ -123,18 +129,28 @@ def backfill(seasons: list[int], max_calls: int = 4000, sleep: float = 0.15, dea
             ko = datetime.fromisoformat(str(r.start)).astimezone(timezone.utc)
             end = ko + timedelta(hours=WINDOW_H + 1)
             hourly = HOURLY_PREV
-            try:
-                pay = getter(PREV_URL, {"latitude": v["lat"], "longitude": v["lon"], "hourly": hourly, "models": "gfs_seamless",
-                                        "start_date": ko.date().isoformat(), "end_date": end.date().isoformat(), "timezone": "UTC",
-                                        "temperature_unit": "fahrenheit", "wind_speed_unit": "mph", "precipitation_unit": "inch"})
-                store[gid] = {"dome": False, "kickoff": ko.isoformat(timespec="minutes"), **window(pay, ko)}
-            except urllib.error.HTTPError as e:
-                failed += 1
-                if e.code == 429:            # over the hourly/daily limit: stop and resume next run
-                    path.write_text(json.dumps(store))
-                    return {"calls": calls, "saved": len(store), "skipped": skipped, "failed": failed, "done": False, "rate_limited": True}
-            except Exception:
-                failed += 1
+            params = {"latitude": v["lat"], "longitude": v["lon"], "hourly": hourly, "models": "gfs_seamless",
+                      "start_date": ko.date().isoformat(), "end_date": end.date().isoformat(), "timezone": "UTC",
+                      "temperature_unit": "fahrenheit", "wind_speed_unit": "mph", "precipitation_unit": "inch"}
+            for attempt in range(2):     # one retry after a pause (timeouts, 5xx)
+                try:
+                    pay = getter(PREV_URL, params)
+                    rec = {"dome": False, "kickoff": ko.isoformat(timespec="minutes"), **window(pay, ko)}
+                    store[gid] = rec
+                    if rec["d1"]["wind_mph"] is None and rec["d2"]["wind_mph"] is None:
+                        nope.add(wk)
+                        nope_p.write_text(json.dumps(sorted(nope)))
+                    break
+                except urllib.error.HTTPError as e:
+                    if e.code == 429:            # over the hourly/daily limit: stop and resume later
+                        path.write_text(json.dumps(store))
+                        return {"calls": calls, "saved": len(store), "skipped": skipped, "failed": failed + 1, "done": False, "rate_limited": True}
+                    if attempt:
+                        failed += 1
+                except Exception:
+                    if attempt:
+                        failed += 1
+                time.sleep(3)
             calls += 1
             if calls % 200 == 0:
                 path.write_text(json.dumps(store))

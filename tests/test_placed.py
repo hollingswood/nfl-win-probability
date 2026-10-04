@@ -155,3 +155,20 @@ def test_cfb_weather_window_and_backfill(tmp_path, monkeypatch):
     store = __import__("json").loads((tmp_path / "game_weather.json").read_text())
     assert store["11"]["d2"]["wind_mph"] == 20.5 and store["12"] == {"dome": True}
     assert CW.backfill([2024], sleep=0, getter=lambda u, p: 1 / 0)["calls"] == 0   # resumable: nothing left
+
+
+def test_cfb_weather_skips_weeks_without_old_forecasts(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    import pandas as pd
+    from cfbpred import weather as CW
+    ko = datetime(2021, 9, 4, 19, 0, tzinfo=timezone.utc)
+    pay = {"hourly": {"time": [f"2021-09-04T{h:02d}:00" for h in range(24)], "wind_speed_10m": [9.0] * 24}}
+    monkeypatch.setattr(CW, "WDIR", tmp_path)
+    monkeypatch.setattr(CW, "venues", lambda: {1: {"lat": 40, "lon": -80, "dome": False}})
+    monkeypatch.setattr(CW, "_tbd", lambda s: set())
+    G = pd.DataFrame([{"game_id": i, "start": pd.Timestamp(ko), "completed": True, "home_div": "fbs", "away_div": "fbs",
+                       "venue_id": 1, "season_type": "regular", "week": 1} for i in range(5)])
+    monkeypatch.setattr(CW.D, "games", lambda ys: G)
+    calls = []
+    rep = CW.backfill([2021], sleep=0, getter=lambda u, p: calls.append(1) or pay)
+    assert len(calls) == 1 and rep["skipped"]["no_old_forecast"] == 4
