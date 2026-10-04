@@ -23,6 +23,10 @@ Price every quote at your books against Pinnacle's line at the same moment, at a
 
 **All 12 rules beat the closing line**, and every quote used had been updated by the book within 3 hours of the snapshot. The edge is biggest 3-7 days before kickoff (soft books are slow to copy Pinnacle early in the week) and holds in Power-4 and smaller-conference games alike. Realized ROI is noisy at these sample sizes (±3-9%); CLV is the reliable signal. Frozen as the **cfb_shop** paper track (cfb_shop_rules.json): spreads at EV ≥ 4%, totals and moneylines at EV ≥ 2%, across Arizona books, quarter-Kelly stakes.
 
+**Model-free check.** The CLV above prices different numbers with the key-number model, so here is a check that uses no model at all: how many points our number beat Pinnacle's closing number by. Spreads at EV ≥ 2%: **+1.00 ± 0.06 points**; at EV ≥ 4%: +1.54 ± 0.15. Totals at EV ≥ 2%: **+1.17 ± 0.06 points**; at EV ≥ 4%: +1.96 ± 0.16. The bets consistently hold a better number than the market ends at. At these sample sizes realized results don't contradict this (totals 52.5-54.8% wins, spreads 50-52%, ±2 points of noise).
+
+**Expected scale (honest).** About 286 bets a season across Arizona books (36% of them at your three) at roughly +2.4% expected value each. At flat $100 bets that's about $690 a season expected across all AZ books, about $250 with only your three. It grows with more books, early-week checks, and larger stakes, until books start limiting the account, which is how soft books treat consistent winners.
+
 **Books matter.** With only your 3 books, the totals rule found 418 bets in five seasons; with all Arizona books, 914. BetRivers, BetMGM and Hard Rock showed the most consistent CLV. Caesars showed none.
 
 ## 2. Openers vs power ratings: FAILS

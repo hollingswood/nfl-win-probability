@@ -149,7 +149,7 @@ def candidates(O, pinmu, books):
 
 def grade(B, close, R):
     """CLV under Pinnacle's last pre-kickoff quote of the same market, and realized result."""
-    B = B.join(close, on="event_id", how="inner").join(R, on="event_id", how="inner").reset_index(drop=True)
+    B = B.join(close, how="inner").join(R, how="inner").rename_axis("event_id").reset_index()
     clv = np.full(len(B), np.nan)
     res = np.full(len(B), np.nan)
     d = PS.dec(B.price.to_numpy(float))
