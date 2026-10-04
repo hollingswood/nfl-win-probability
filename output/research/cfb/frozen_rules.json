@@ -1,0 +1,24 @@
+{
+  "frozen_on": "2026-10-03",
+  "note": "Chosen on development seasons only (alt_models.md). Each rule is run ONCE on its holdout. Pass = one-sided p < 0.0167 (3 rules, Bonferroni) AND the stated profitability bar. Features: walk-forward opponent-adjusted ratings of points, PPA, success rate, explosiveness, plays, rush/pass PPA, line yards, stuff rate, power success, second-level/open-field yards, standard/passing-downs PPA; plus margin ridge, CFBD pregame Elo, talent and returning production, week, home field. FBS vs FBS only. Prices are not in the CFBD data, so -110 is assumed (break-even 52.38%).",
+  "rules": {
+    "R1_opener_spread": {
+      "model": "all_linear (OLS with ridge 1.0 on every feature) predicting the home margin, fit on 2014-2023 results",
+      "bet": "side the model favors vs the OPENING spread (CFBD spreadOpen, median of providers) when |model - open| >= 5",
+      "holdout": [2024, 2025],
+      "tests": ["cover rate vs the opening number > 52.38% with one-sided p < 0.0167", "mean line move toward our side (close - open) > 0"]
+    },
+    "R2_close_residual": {
+      "model": "LightGBM (300 trees, lr 0.02, 7 leaves, min 80) predicting result minus closing spread from every feature + the close, fit 2014-2021",
+      "bet": "side of the predicted residual when |predicted residual| >= the 80th percentile of |predicted residual| on 2019-21 validation (threshold frozen from the dev fit)",
+      "holdout": [2022, 2023, 2024, 2025],
+      "tests": ["cover rate vs the close > 52.38% with one-sided p < 0.0167"]
+    },
+    "R3_close_totals": {
+      "model": "OLS total from sums of adjusted points, plays, PPA, success rate and explosiveness, fit 2014-2021",
+      "bet": "over/under vs the closing total when |pred - close| >= 3",
+      "holdout": [2022, 2023, 2024, 2025],
+      "tests": ["hit rate vs the close > 52.38% with one-sided p < 0.0167"]
+    }
+  }
+}
