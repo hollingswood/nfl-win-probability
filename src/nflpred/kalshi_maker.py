@@ -111,21 +111,22 @@ def _latest_events(sport: str) -> tuple[datetime | None, list[dict], list[Path]]
     return t, evs, files
 
 
-def match_market(m: dict, events: list[dict]) -> tuple[dict, str] | None:
-    """Kalshi game-winner market -> (odds event, side) using the market's team label and the event title."""
+def match_market(m: dict, events: list[dict], partner: dict | None = None) -> tuple[dict, str] | None:
+    """Kalshi game-winner market -> (odds event, side). Kalshi titles name one team ("Buffalo wins"), so the game's
+    other market (same event_ticker) must fit the other team; kickoff within 36 h of the expected expiration minus 3.5 h."""
     label = m.get("yes_sub_title") or m.get("subtitle") or ""
-    title = m.get("title") or ""
+    other_label = (partner or {}).get("yes_sub_title") or m.get("no_sub_title") or ""
     exp = _ts(m.get("expected_expiration_time") or m.get("close_time"))
     found = []
     for ev in events:
         ko = _ts(ev.get("commence_time"))
-        if exp and ko and abs((exp - ko).total_seconds()) > 2 * 86400:
+        if exp and ko and abs((exp - timedelta(hours=3.5) - ko).total_seconds()) > 36 * 3600:
             continue
         side = match_team(label, ev)
         if not side:
             continue
         other = "away" if side == "home" else "home"
-        if title and not (set(_tokens(ev[f"{other}_team"])) & set(_tokens(title))):
+        if other_label and not _fits(other_label, ev[f"{other}_team"]):
             continue
         found.append((ev, side))
     return found[0] if len(found) == 1 else None
@@ -267,8 +268,12 @@ def process(now: datetime | None = None, getter=_get) -> dict:
                 state.setdefault("probe_saved", {})[key] = now.isoformat(timespec="minutes")
             rep[f"markets_{series}"] = len(mk)
             matched = 0
+            by_event = {}
             for m in mk:
-                hit = match_market(m, events)
+                by_event.setdefault(m.get("event_ticker"), []).append(m)
+            for m in mk:
+                partner = next((x for x in by_event.get(m.get("event_ticker"), []) if x is not m), None)
+                hit = match_market(m, events, partner)
                 if not hit:
                     continue
                 matched += 1

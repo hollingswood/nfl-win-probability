@@ -206,11 +206,11 @@ def test_kalshi_maker_match_post_settle(tmp_path, monkeypatch):
           "bookmakers": [{"key": "pinnacle", "markets": [{"key": "h2h", "outcomes": [{"name": "Los Angeles Chargers", "price": -150}, {"name": "Los Angeles Rams", "price": 135}]}]}]}
     with gzip.open(tmp_path / "odds_2026-10-09T1730.json.gz", "wt") as f:
         json.dump([ev], f)
-    mk = [{"ticker": "KXNFLGAME-X-LAC", "title": "Los Angeles R at Los Angeles C", "yes_sub_title": "Los Angeles C", "yes_bid": 50, "yes_ask": 60,
+    mk = [{"ticker": "KXNFLGAME-X-LAC", "event_ticker": "KXNFLGAME-X", "title": "Los Angeles C wins", "yes_sub_title": "Los Angeles C", "yes_bid": 50, "yes_ask": 60,
            "expected_expiration_time": "2026-10-11T23:30:00Z"},
-          {"ticker": "KXNFLGAME-X-LAR", "title": "Los Angeles R at Los Angeles C", "yes_sub_title": "Los Angeles R", "yes_bid_dollars": "0.38", "yes_ask_dollars": "0.45",
+          {"ticker": "KXNFLGAME-X-LAR", "event_ticker": "KXNFLGAME-X", "title": "Los Angeles R wins", "yes_sub_title": "Los Angeles R", "yes_bid_dollars": "0.38", "yes_ask_dollars": "0.45",
            "expected_expiration_time": "2026-10-11T23:30:00Z"}]
-    assert K.match_market(mk[0], [ev])[1] == "home" and K.match_market(mk[1], [ev])[1] == "away"
+    assert K.match_market(mk[0], [ev], mk[1])[1] == "home" and K.match_market(mk[1], [ev], mk[0])[1] == "away"
     def getter(url):
         if "/markets?" in url:
             return {"markets": mk if "KXNFLGAME" in url else []}
