@@ -8,7 +8,7 @@ on:
       plan:
         description: "dense = NFL hourly odds (all US books + Pinnacle), ~350k credits and ~1.5 h per season. cfb = college football odds (~35k credits per season, 2021+)"
         type: choice
-        options: [dense, cfb, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
+        options: [dense, cfb, cfb_deriv, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
         default: dense
       seasons:
         description: "Seasons, e.g. 2025 or 2023-2025 (newest first). Each season is saved as soon as it finishes; a run stops itself at ~5.5 h and a re-run resumes"
