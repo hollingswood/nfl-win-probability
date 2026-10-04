@@ -63,6 +63,12 @@ table.cfb tr.day td{background:var(--bg);font:600 12px var(--mono);letter-spacin
     <p class="g2note" id="cfbnote"></p>
   </section>
 
+  <section id="cfbshop">
+    <div class="sechead"><h2>Shop vs sharp · spreads, totals, moneylines</h2><span class="pill">Paper track · not recommendations</span></div>
+    <p class="edge" id="cfbshopintro"></p>
+    <div class="scroll"><table class="cfb" id="cfbshopt"></table></div>
+  </section>
+
   <section id="cfbbets">
     <div class="sechead"><h2>Paper bets · college moneylines</h2><span class="pill">Shadow mode · not recommendations</span></div>
     <p class="edge" id="cfbbetsintro"></p>
@@ -92,7 +98,7 @@ const withOdds = G.filter(g=>g.odds).length;
 $('strip').innerHTML = [
   [G.length, 'FBS games in the next 8 days'], [withOdds, 'with pre-game odds'],
   [C.odds_checked_at ? new Date(C.odds_checked_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'}) : '–', 'odds checked (AZ)'],
-  [String((C.cfb_ml_bets&&C.cfb_ml_bets.record&&C.cfb_ml_bets.record.passed)?1:0), 'validated college rules (1 in paper test)']
+  [String(['cfb_ml_bets','cfb_shop_bets'].filter(k=>C[k]&&C[k].record&&C[k].record.passed).length), 'college tracks validated live (2 in paper test)']
 ].map(([b,s])=>`<div class="stat"><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
 const confs = [...new Set(G.flatMap(g=>[g.home_conf,g.away_conf]).filter(Boolean))].sort();
 $('f-conf').innerHTML += confs.map(c=>`<option>${esc(c)}</option>`).join('');
@@ -150,10 +156,23 @@ $('cfbnote').innerHTML = `Spreads are shown from the home team's side (−7 = ho
   const pct=x=>x==null?'—':`${x>0?'+':''}${(x*100).toFixed(1)}%`;
   $('cfbbetsintro').innerHTML = `Two price rules that passed the 2021–25 test: <b>P1</b> your book's moneyline beats Pinnacle's no-vig price by 2%+ (472 bets, +2.2% closing line value); <b>P2</b> your book's moneyline beats the win chance implied by Pinnacle's spread by 2%+ (855 bets, +1.8%). The edge shrank in 2024–25, so this is a live test: ${R.graded||0} graded of ${R.min_bets||150} needed${R.graded?` · ${R.wins}–${R.losses} · ${R.profit_units>0?'+':''}${R.profit_units} units · avg CLV ${pct(R.avg_clv)}`:''}.`;
   const rows=[...open.map(b=>({...b,st:'open'})), ...gr];
-  const td=(l,h)=>`<td data-l="${l}">${h}</td>`;
+  const td=(l,h)=>`<td data-l="${l}"><span>${h}</span></td>`;
   $('cfbbetst').innerHTML = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Bet</th><th>Rule</th><th>Edge</th><th>Result</th><th>CLV</th></tr></thead><tbody>`+
     (rows.length ? rows.map(b=>`<tr>${td('Kickoff (AZ)',when(b.kickoff_utc))}<td class="m" data-l="Game">${esc(b.away)} @ ${esc(b.home)}</td>${td('Bet',`${esc(b.team)} ${od(b.price)}<small>${esc(b.book)}</small>`)}${td('Rule',b.rule)}${td('Edge',pct(b.edge))}${td('Result',b.status==='open'?'open':`${b.result} ${b.profit_units>0?'+':''}${b.profit_units}u`)}${td('CLV',pct(b.clv))}</tr>`).join('')
       : `<tr><td colspan="7" style="text-align:left;font-family:var(--body)">No college paper bets yet; prices are checked every hour Thursday–Saturday.</td></tr>`) + '</tbody>';
+})();
+// shop-vs-sharp paper track (cfb_shop_rules.json)
+(function(){
+  const B=C.cfb_shop_bets||{}, R=B.record||{}, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+  const pct=x=>x==null?'—':`${x>0?'+':''}${(x*100).toFixed(1)}%`;
+  const M=R.by_market||{};
+  $('cfbshopintro').innerHTML = `Every quote at Arizona books is priced against Pinnacle's line at the same moment, at any number (college key numbers 3, 7, 10, 14, 17, 21 built in). It bets only quotes that beat the sharp price: spreads by 4%+, totals and moneylines by 2%+. On 2021–25 these rules beat Pinnacle's closing line by about 2–4% per bet over 1,400+ bets, in every season. Bets at books you don't have an account with are marked; they show what opening that account would add. Stake = quarter Kelly, capped at 2% of bankroll. Record: ${R.graded||0} graded of ${R.min_bets||150} needed${R.graded?` · ${R.wins}–${R.losses}${R.pushes?`–${R.pushes}`:''} · ${R.profit_units>0?'+':''}${R.profit_units} units · avg CLV ${pct(R.avg_clv)}`:''}${['spread','total','ml'].some(k=>(M[k]||{}).graded)?` (spreads ${(M.spread||{}).graded||0}, totals ${(M.total||{}).graded||0}, moneylines ${(M.ml||{}).graded||0})`:''}.`;
+  const rows=[...open.map(b=>({...b,st:'open'})), ...gr];
+  const td=(l,h)=>`<td data-l="${l}"><span>${h}</span></td>`;
+  const pick=b=>b.market==='ml'?`${esc(b.team)} ML`:b.market==='spread'?`${esc(b.team)} ${ln(b.point)}`:`${esc(b.team)} ${b.point}`;
+  $('cfbshopt').innerHTML = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Bet</th><th>Edge</th><th>Stake</th><th>Result</th><th>CLV</th></tr></thead><tbody>`+
+    (rows.length ? rows.map(b=>`<tr>${td('Kickoff (AZ)',when(b.kickoff_utc))}<td class="m" data-l="Game">${esc(b.away)} @ ${esc(b.home)}</td>${td('Bet',`${pick(b)} ${od(b.price)}<small>${esc(b.book)}${b.your_book===false?' · no account':''}</small>`)}${td('Edge',pct(b.edge))}${td('Stake',b.kelly_pct!=null?`${b.kelly_pct}%`:'—')}${td('Result',b.status==='open'?'open':`${b.result} ${b.profit_units>0?'+':''}${b.profit_units}u`)}${td('CLV',pct(b.clv))}</tr>`).join('')
+      : `<tr><td colspan="7" style="text-align:left;font-family:var(--body)">No bets yet. Prices are checked every hour Thursday–Saturday and every 3 hours otherwise; the edge is usually largest 3–7 days before kickoff.</td></tr>`) + '</tbody>';
 })();
 // research results (markdown table from output/research/cfb/holdout.md)
 (function(){

@@ -21,9 +21,9 @@ TRACK_NAMES = {
     "ml_v4_bets": "Moneyline v4", "night_west_bets": "Night west", "totals_wind_bets": "Wind under",
     "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop",
     "aplus_ml_bets": "A+ moneyline", "aplus_spread_bets": "A+ spread", "aplus_totals_bets": "A+ total",
-    "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML",
+    "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML", "cfb_shop_bets": "College shop vs sharp",
 }
-PRIORITY_TRACKS = {"preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
+PRIORITY_TRACKS = {"cfb_shop_bets", "preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
 
 
 def send(title: str, message: str, priority: int = 3, tags: list[str] | None = None,
@@ -69,14 +69,19 @@ def bet_line(key: str, b: dict, pred: dict) -> str:
     price = b.get("price")
     px = f"{price:+d}" if isinstance(price, int) else str(price)
     what = b.get("team") or b.get("side", "")
-    if b.get("market") == "h2h":
+    if b.get("market") in ("h2h", "ml"):
         what += " ML"
+    elif b.get("point") is not None:
+        pt = b["point"]
+        what += f" {pt:+g}" if b.get("market") == "spread" else f" {pt:g}"
     if key in ("bets", "ml_v2_bets", "ml_v3_bets", "ml_v4_bets", "aplus_ml_bets", "night_west_bets") and "ML" not in what:
         what = f"{what} ML" if key != "night_west_bets" else what
     parts = [f"{TRACK_NAMES.get(key, key)}: {what} {px} @ {b.get('book', '?')}"]
     if b.get("edge") is not None:
         parts.append(f"edge {b['edge']:+.1%}")
-    if b.get("units") is not None:
+    if b.get("kelly_pct") is not None:
+        parts.append(f"stake {b['kelly_pct']:g}% of bankroll")
+    elif b.get("units") is not None:
         parts.append(f"{b['units']:g}u")
     kk = _kick(b, pred)
     if kk:

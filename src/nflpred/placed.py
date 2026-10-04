@@ -113,7 +113,7 @@ def ingest(event_path: str, log: Path = LOG) -> dict:
 # ------------------------------------------------------------------------------------- scoring
 def load_ledgers(hist: Path = HIST) -> dict:
     out = {}
-    for p in hist.glob("paper_bets*.json"):
+    for p in [*hist.glob("paper_bets*.json"), *hist.glob("cfb/paper_bets*.json")]:   # NFL + college ledgers
         try:
             for b in json.loads(p.read_text()):
                 if b.get("id"):

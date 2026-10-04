@@ -30,18 +30,29 @@ def params() -> dict:
     return json.loads(PARAMS.read_text())
 
 
+_WCACHE: dict = {}
+
+
 def _w(P: dict) -> np.ndarray:
+    k = ("w", tuple(P["w"].items()))
+    if k in _WCACHE:
+        return _WCACHE[k]
     w = np.ones(len(KM))
     for k, x in P["w"].items():
         w[np.abs(KM) == int(k)] = x
     w[KM == 0] = 0.0
+    _WCACHE[k] = w
     return w
 
 
 def _v(P: dict) -> np.ndarray:
+    k = ("v", tuple(P["v"].items()))
+    if k in _WCACHE:
+        return _WCACHE[k]
     v = np.ones(len(KT))
-    for k, x in P["v"].items():
-        v[KT == int(k)] = x
+    for kk, x in P["v"].items():
+        v[KT == int(kk)] = x
+    _WCACHE[k] = v
     return v
 
 

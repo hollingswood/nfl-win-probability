@@ -57,10 +57,13 @@ def mus(pin):
     """Pinnacle rows -> mu_m (spread-implied mean margin), mu_t (total), q_ml (no-vig home win)."""
     pin = pin.copy()
     mm, mt, qm = [], [], []
+    from functools import lru_cache
+    ms = lru_cache(maxsize=None)(DI.mu_from_spread)
+    mtt = lru_cache(maxsize=None)(DI.mu_from_total)
     for r in pin.itertuples():
-        mm.append(DI.mu_from_spread(r.sp_home_point, r.sp_home_price, r.sp_away_price)
+        mm.append(ms(float(r.sp_home_point), float(r.sp_home_price), float(r.sp_away_price))
                   if not (math.isnan(r.sp_home_point) or math.isnan(r.sp_home_price) or math.isnan(r.sp_away_price)) else np.nan)
-        mt.append(DI.mu_from_total(r.tot_point, r.tot_over_price, r.tot_under_price)
+        mt.append(mtt(float(r.tot_point), float(r.tot_over_price), float(r.tot_under_price))
                   if not (math.isnan(r.tot_point) or math.isnan(r.tot_over_price) or math.isnan(r.tot_under_price)) else np.nan)
         if not (math.isnan(r.ml_home) or math.isnan(r.ml_away)):
             a, b = DI.implied(r.ml_home), DI.implied(r.ml_away)

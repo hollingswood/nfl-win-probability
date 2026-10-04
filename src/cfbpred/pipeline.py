@@ -253,10 +253,10 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         print("cfb weather failed:", e)
     rdir = ROOT / "output" / "research" / "cfb"
-    research_md = "\n\n".join(f.read_text() for f in (rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
+    research_md = "\n\n".join(f.read_text() for f in (rdir / "round2.md", rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
     res = {"generated_at": now.isoformat(timespec="minutes"), "season": season,
            "odds_checked_at": (datetime.strptime(snap_at, "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc).isoformat(timespec="minutes") if snap_at else None),
-           "model": {"n_games_fit": coef.get("n_margin"), "note": "Model spreads are display only (no model rule passed its holdout). The only college bets are the moneyline price-rule paper track."},
+           "model": {"n_games_fit": coef.get("n_margin"), "note": "Model spreads are display only (no model rule passed its holdout). College bets come only from price rules: shop-vs-sharp (spreads, totals, moneylines vs Pinnacle) and the moneyline price track."},
            "games": games, "research_md": research_md,
            "matched_odds": sum(1 for g in games if g["odds"]), "n_games": len(games)}
     try:   # college paper track (P1/P2 moneyline price rules) + phone alerts for new bets
@@ -269,6 +269,15 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         res["cfb_ml_bets"] = {"error": str(e)}
         print("cfb track failed:", e)
+    try:   # shop-vs-sharp paper track (spreads, totals, moneylines vs Pinnacle) + phone alerts
+        from . import shop
+        res["cfb_shop_bets"] = shop.process(now)
+        if res["cfb_shop_bets"]["new"]:
+            from nflpred import notify
+            notify.new_bets({"upcoming": [], "cfb_shop_bets": res["cfb_shop_bets"]}, set())
+    except Exception as e:
+        res["cfb_shop_bets"] = {"error": str(e)}
+        print("cfb shop track failed:", e)
     (OUT / "cfb_predictions.json").write_text(json.dumps(res, indent=1, default=str))
     print(f"cfb: {len(games)} games this week, {res['matched_odds']} with live odds")
     return res

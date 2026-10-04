@@ -172,3 +172,25 @@ def test_cfb_weather_skips_weeks_without_old_forecasts(tmp_path, monkeypatch):
     calls = []
     rep = CW.backfill([2021], sleep=0, getter=lambda u, p: calls.append(1) or pay)
     assert len(calls) == 1 and rep["skipped"]["no_old_forecast"] == 4
+
+
+def test_cfb_shop_candidates_and_grading(tmp_path, monkeypatch):
+    from cfbpred import shop as SH
+    r = SH.load_rules()
+    def bk(key, sp_h, sp_hp, sp_ap, tot, op, up, mlh, mla):
+        return {"key": key, "title": key, "markets": [
+            {"key": "spreads", "outcomes": [{"name": "Home U", "point": sp_h, "price": sp_hp}, {"name": "Away U", "point": -sp_h, "price": sp_ap}]},
+            {"key": "totals", "outcomes": [{"name": "Over", "point": tot, "price": op}, {"name": "Under", "point": tot, "price": up}]},
+            {"key": "h2h", "outcomes": [{"name": "Home U", "price": mlh}, {"name": "Away U", "price": mla}]}]}
+    ev = {"id": "e1", "home_team": "Home U", "away_team": "Away U", "commence_time": "2026-10-10T19:00:00Z",
+          "bookmakers": [bk("pinnacle", -7, -105, -105, 50.5, -105, -105, -280, 240),
+                         bk("fanduel", -5.5, -110, -110, 50.5, -110, -110, -300, 230),     # home -5.5 is well off the sharp -7
+                         bk("draftkings", -7, -110, -110, 54.5, -110, -110, -300, 230)]}  # under 54.5 vs sharp 50.5
+    c = {x["market"]: x for x in SH.candidates(ev, r)}
+    assert c["spread"]["side"] == "home" and c["spread"]["point"] == -5.5 and c["spread"]["book_key"] == "fanduel"
+    assert c["total"]["side"] == "under" and c["total"]["point"] == 54.5 and c["total"]["edge"] > 0.04
+    assert "ml" not in c and 0 < c["spread"]["kelly_pct"] <= 2.0
+    b = {"market": "spread", "side": "home", "point": -5.5}
+    assert SH.settle(b, 6, 50) > 0 and SH.settle(b, 5, 50) < 0
+    assert SH.settle({"market": "total", "side": "under", "point": 54.5}, 3, 50) > 0
+    assert SH.settle({"market": "ml", "side": "away"}, -3, 50) > 0
