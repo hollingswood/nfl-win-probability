@@ -107,7 +107,8 @@ def main():
     lastpts = Pn.sort_values("t").groupby("event_id")[["sp_home_point", "tot_point"]].last()
     out, allbets = {}, []
     for setname, books in (("MINE", MINE), ("AZ", AZ)):
-        C = SS.candidates(O, pin, books)
+        mon = O.ko.dt.strftime("%Y-%m")
+        C = pd.concat([SS.candidates(O[mon == m], pin, books) for m in sorted(mon.unique())], ignore_index=True)   # by month: memory
         for th in THRESH:
             for mk in ("spread", "total", "ml"):
                 q = C[(C.market == mk) & (C.ev >= th)]
