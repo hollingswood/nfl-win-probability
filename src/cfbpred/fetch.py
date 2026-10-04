@@ -83,9 +83,30 @@ def pull(years: list[int], key: str, refresh_current: bool = True) -> dict:
     return {"saved": len(saved), "calls": CALLS["n"]}
 
 
+def pull_passing(years: list[int], key: str) -> dict:
+    """Per-game passing stats (who actually played QB) -> games_players_passing_<year>_<type>_<week>.json.gz.
+    One call per week; finished weeks are not re-downloaded. Used to find starting-QB changes (news-timing study)."""
+    RAW.mkdir(parents=True, exist_ok=True)
+    saved = 0
+    for y in years:
+        for st, weeks in (("regular", range(1, 17)), ("postseason", range(1, 2))):
+            for wk in weeks:
+                out = RAW / f"games_players_passing_{y}_{st}_{wk}.json.gz"
+                if out.exists():
+                    continue
+                data = get("games/players", {"year": y, "week": wk, "seasonType": st, "category": "passing"}, key)
+                if not data:
+                    continue
+                with gzip.open(out, "wt") as f:
+                    json.dump(data, f)
+                saved += 1
+    return {"passing_weeks_saved": saved, "calls": CALLS["n"]}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--years", default="2014-2026")
+    ap.add_argument("--passing", action="store_true", help="also pull per-game passing stats (QB starters)")
     a = ap.parse_args(argv)
     key = os.environ.get("CFBD_API_KEY")
     if not key:
@@ -96,6 +117,8 @@ def main(argv=None):
     else:
         years = [int(x) for x in a.years.split(",")]
     res = pull(years, key)
+    if a.passing:
+        res.update(pull_passing([y for y in years if y >= 2021], key))
     print(json.dumps(res))
     summ = os.environ.get("GITHUB_STEP_SUMMARY")
     if summ:

@@ -31,7 +31,39 @@ FEEDS = {
     "google_cfb_qb": Q("college football quarterback (start OR benched OR injury OR \"ruled out\" OR \"out for\" OR suspended) when:1d"),
     "google_cfb_injury": Q("college football (injury OR \"ruled out\" OR questionable OR \"opt out\" OR suspended OR \"availability report\") when:1d"),
     "google_cfb_context": Q("college football (\"offensive coordinator\" OR \"play-caller\" OR fired OR \"interim coach\" OR illness OR flu) when:1d"),
+    "google_cfb_discipline": Q("college football (suspended OR suspension OR dismissed OR arrested OR \"violation of team rules\") when:1d"),
+    "google_cfb_eligibility": Q("college football (eligible OR ineligible OR \"transfer portal\" OR \"opts out\" OR redshirt OR \"NCAA ruling\") when:1d"),
+    "google_cfb_depth": Q("college football (\"depth chart\" OR \"starting quarterback\" OR \"QB1\" OR \"true freshman\" OR \"will start\") when:1d"),
+    "google_cfb_market": Q("college football (\"line move\" OR \"sharp money\" OR \"sharp action\" OR \"betting splits\" OR \"odds shift\") when:1d"),
+    "google_cfb_logistics": Q("college football (\"kickoff time\" OR postponed OR relocated OR \"weather delay\" OR hurricane OR \"travel delay\") when:1d"),
 }
+
+CONTEXT = ["coach_fired_or_interim", "play_caller_change", "scheme_or_role_change", "suspension_or_discipline",
+           "eligibility_or_transfer", "opt_out_or_resting", "illness_outbreak", "weather_or_logistics",
+           "kickoff_time_or_venue_change", "motivation", "depth_chart_change", "kicker_or_special_teams",
+           "offensive_line_shuffle", "market_report", "other"]
+INSTR = """For each news item below, extract (A) every concrete player-availability or starter signal and
+(B) team-level context that could move a point spread or total this week.
+Return ONLY a JSON object {"availability": [...], "context": [...]} (lists may be empty).
+(A) availability element:
+{"item": <item number>, "player": str, "team": str, "position": str or null,
+ "signal": one of ["out", "out_for_season", "doubtful", "questionable", "game_time_decision", "expected_to_play",
+                   "will_start", "benched", "returning", "suspended", "dismissed", "transferred_or_ineligible",
+                   "opted_out", "other"],
+ "is_starting_qb_news": true/false, "game_week_relevant": true/false,
+ "certainty": number 0-1 (how definite the wording is: "ruled out" 1.0, "expected to" 0.7, "could" 0.4),
+ "quote": short exact phrase supporting it}
+(B) context element:
+{"item": <item number>, "team": str, "category": one of """ + json.dumps(CONTEXT) + """,
+ "summary": one short factual sentence, "player": str or null, "game_week_relevant": true/false,
+ "direction": "helps" | "hurts" | "unclear" (for that team this week, only if the item itself implies it),
+ "certainty": number 0-1, "quote": short exact phrase supporting it,
+ "line_move": for market_report only: {"from": number or null, "to": number or null, "market": "spread"|"total"|"moneyline"|null}}
+Context examples: head coach fired / interim named, new play-caller, several players suspended, a key player ruled
+ineligible or entering the portal, starters resting or opting out, illness in the locker room, hurricane/relocated game,
+kickoff time moved, rivalry/bowl-eligibility/look-ahead spot stated by a reporter, QB depth chart changed, kicker hurt,
+offensive-line starters out, and betting-market reports (line moved, sharp money, betting splits) WITH numbers if given.
+Skip recaps, recruiting, rankings talk and fantasy advice without news. Never guess."""
 
 
 def fbs_teams() -> list[str]:
@@ -53,7 +85,7 @@ def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: floa
     system = ("You extract COLLEGE FOOTBALL (FBS) injury, quarterback and availability news for a betting model. "
               "Only report facts stated in the items; never guess. The team field must be EXACTLY one of these school "
               "names: " + "; ".join(teams) + ". Skip NFL, recruiting and high-school items.")
-    instr = N.INSTRUCTIONS.replace("NFL", "college football")
+    instr = INSTR
     body = "\n\n".join(f"[{i}] ({it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
                        for i, it in enumerate(items))
     payload = {"model": N.MODEL, "max_tokens": 4000, "system": system,
@@ -70,12 +102,12 @@ def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: floa
         obj = {}
     ts = set(teams)
     av = [x for x in (obj.get("availability") or []) if isinstance(x, dict) and x.get("team") in ts and x.get("player")]
-    cx = [x for x in (obj.get("context") or []) if isinstance(x, dict) and x.get("team") in ts and x.get("category") in N.CONTEXT_CATEGORIES]
+    cx = [x for x in (obj.get("context") or []) if isinstance(x, dict) and x.get("team") in ts and x.get("category") in CONTEXT]
     return av, cx
 
 
 def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetch_feed, llm=call_claude,
-         max_items: int = 120, force: bool = False) -> dict:
+         max_items: int = 180, force: bool = False) -> dict:
     now = now or datetime.now(timezone.utc)
     api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     rep = {"feeds": {}, "new_items": 0, "signals": 0, "context_items": 0}
@@ -109,7 +141,7 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
                     idx = s.get("item")
                     src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
                     keep = ("player", "team", "position", "signal", "is_starting_qb_news", "game_week_relevant", "certainty", "quote") if kind == "av" \
-                        else ("team", "category", "summary", "player", "direction", "game_week_relevant", "certainty", "quote")
+                        else ("team", "category", "summary", "player", "direction", "game_week_relevant", "certainty", "quote", "line_move")
                     out.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
                                 "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
                                 **{k: s.get(k) for k in keep}})

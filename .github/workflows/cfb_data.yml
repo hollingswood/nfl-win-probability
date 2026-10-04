@@ -8,6 +8,10 @@ on:
       years:
         description: "Seasons, e.g. 2014-2026 or 2026"
         default: "2014-2026"
+      passing:
+        description: "Also pull per-game QB passing stats (2021+)"
+        type: boolean
+        default: false
 
 concurrency:
   group: cfb-data
@@ -25,7 +29,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Download
-        run: python -m cfbpred.fetch --years "${{ inputs.years }}"
+        run: python -m cfbpred.fetch --years "${{ inputs.years }}" ${{ inputs.passing && '--passing' || '' }}
         env:
           PYTHONPATH: src
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
