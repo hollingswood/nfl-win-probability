@@ -179,6 +179,25 @@ def forecast(games: list[dict], now: datetime, getter=_get) -> dict[int, dict]:
     return out
 
 
+def probe(seasons: list[int], getter=_get) -> dict:
+    """One call per season on an open-air game: fails fast if the API errors or returns no older forecasts."""
+    V, out = venues(), {}
+    for s in seasons:
+        G = D.games([s])
+        G = G[G.completed & G.venue_id.notna()]
+        r = next((r for r in G.itertuples() if V.get(int(r.venue_id), {}).get("dome") is False), None)
+        if r is None:
+            continue
+        v, ko = V[int(r.venue_id)], datetime.fromisoformat(str(r.start)).astimezone(timezone.utc)
+        pay = getter(PREV_URL, {"latitude": v["lat"], "longitude": v["lon"], "hourly": HOURLY_PREV, "models": "gfs_seamless",
+                                "start_date": ko.date().isoformat(), "end_date": (ko + timedelta(hours=WINDOW_H + 1)).date().isoformat(),
+                                "timezone": "UTC", "temperature_unit": "fahrenheit", "wind_speed_unit": "mph", "precipitation_unit": "inch"})
+        out[s] = window(pay, ko)
+    if not any((w.get("d2") or {}).get("wind_mph") is not None for w in out.values()):
+        raise SystemExit(f"Previous Runs API returned no 2-day-old forecasts: {out}")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seasons", default="2021,2022,2023,2024,2025,2026")
@@ -190,6 +209,7 @@ def main():
     if key and not (D.RAW / "venues.json.gz").exists():
         print("venues:", pull_venues(key))
     seasons = [int(x) for x in a.seasons.split(",")]
+    print("probe:", json.dumps(probe(seasons)), flush=True)
     deadline = datetime.now(timezone.utc) + timedelta(minutes=a.minutes)
     while True:
         t0 = datetime.now(timezone.utc)
