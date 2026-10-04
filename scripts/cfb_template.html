@@ -1,0 +1,140 @@
+<title>College Football Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+__STYLE__
+.wrap,.wrap>section{grid-template-columns:minmax(0,1fr)}
+.wrap>section>*{min-width:0}
+.wrap>*{min-width:0}
+.research .scroll{overflow-x:auto}
+header .xlink{justify-self:start}
+.xlink{display:inline-block;margin-top:10px;font:600 13px var(--mono);letter-spacing:.04em;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:2px;padding:4px 10px}
+.xlink:hover{background:var(--accent-soft)}
+.cfbfilters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:4px 0 14px}
+.cfbfilters label{display:grid;gap:4px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cfbfilters select,.cfbfilters input[type=search]{font:15px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:6px 8px;min-width:180px}
+.cfbfilters .chk{display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font:14px var(--body);color:var(--ink)}
+table.cfb{width:100%;border-collapse:collapse;font-size:14px}
+table.cfb th{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
+table.cfb th:nth-child(-n+2){text-align:left}
+table.cfb td{white-space:nowrap;padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top;font-family:var(--mono);font-size:13px}
+table.cfb td.m{text-align:left;font-family:var(--body);font-size:15px;white-space:normal;min-width:180px}
+table.cfb td.m small,table.cfb td small{display:block;color:var(--muted);font:12px var(--body)}
+table.cfb td.k{text-align:left;white-space:nowrap}
+table.cfb tr.day td{background:var(--bg);font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px}
+.gapbig{color:var(--lean);font-weight:600}
+.final{color:var(--muted)}
+.research table{font-size:14px;border-collapse:collapse;margin:8px 0}
+.research th,.research td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+@media (max-width:760px){
+  table.cfb thead{display:none}
+  table.cfb,table.cfb tbody,table.cfb tr,table.cfb td{display:block;width:100%}
+  table.cfb tr{border:1px solid var(--line);background:var(--surface);margin:0 0 10px;padding:6px 0}
+  table.cfb tr.day{border:none;background:none;margin:14px 0 4px;padding:0}
+  table.cfb td{display:flex;justify-content:space-between;gap:12px;border:none;padding:4px 12px;text-align:right}
+  table.cfb td::before{content:attr(data-l);font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left}
+  table.cfb td.m{display:block}
+  table.cfb tr.day td{display:block;text-align:left}
+  table.cfb td.m::before{content:none}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="stamp"></div>
+    <h1>College Football Board</h1>
+    <p><b>Research mode.</b> Every FBS game this week with the market's line, Pinnacle's line, our model's number and the best price at your books. <b>None of this is a bet</b>: no college rule has passed its one-time test yet (results below). The next tests are price-based (soft books vs Pinnacle, moneyline vs spread, opener drift), the kind that worked in the NFL; they start once the college odds history is downloaded.</p>
+    <a class="xlink" href="../">← NFL board</a>
+  </header>
+
+  <div class="strip" id="strip"></div>
+
+  <section id="week">
+    <div class="sechead"><h2>This week</h2><span class="pill">Not financial advice</span></div>
+    <div class="cfbfilters">
+      <label>Conference<select id="f-conf"><option value="">All</option></select></label>
+      <label>Team<input type="search" id="f-team" placeholder="Search a team"></label>
+      <label class="chk"><input type="checkbox" id="f-odds"> Only games with live odds</label>
+      <label class="chk"><input type="checkbox" id="f-gap"> Only big model gaps (5+ pts)</label>
+      <label class="chk"><input type="checkbox" id="f-past"> Show games already started</label>
+    </div>
+    <div class="scroll"><table class="cfb" id="cfbt"></table></div>
+    <p class="g2note" id="cfbnote"></p>
+  </section>
+
+  <section id="research" class="research">
+    <div class="sechead"><h2>What the testing says</h2></div>
+    <div id="resmd"></div>
+    <p class="g2note">The model sees every public stat we could get: opponent-adjusted points, expected points added per play, success rate, explosiveness, rushing and passing efficiency, offensive-line yards, standard- and passing-down efficiency, roster talent and returning production. It still trails the closing line by about half a point to a point and a half per game. That's the same lesson as the NFL: the edges are in prices, not predictions.</p>
+  </section>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+const C = JSON.parse(document.getElementById('data').textContent);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const od = x => x==null ? '–' : x>0 ? `+${x}` : `−${Math.abs(x)}`;
+const ln = x => x==null ? '–' : x===0 ? 'PK' : x>0 ? `+${x}` : `−${Math.abs(x)}`;
+const AZ = {timeZone:'America/Phoenix'};
+const when = iso => new Date(iso).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'});
+const dayKey = iso => new Date(iso).toLocaleDateString('en-US',{...AZ, weekday:'long', month:'short', day:'numeric'});
+$('stamp').textContent = `Updated ${new Date(C.generated_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'})} AZ`;
+const G = C.games || [];
+const withOdds = G.filter(g=>g.odds).length;
+$('strip').innerHTML = [
+  [G.length, 'FBS games in the next 8 days'], [withOdds, 'with pre-game odds'],
+  [C.odds_checked_at ? new Date(C.odds_checked_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'}) : '–', 'odds checked (AZ)'],
+  ['0', 'validated college rules']
+].map(([b,s])=>`<div class="stat"><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
+const confs = [...new Set(G.flatMap(g=>[g.home_conf,g.away_conf]).filter(Boolean))].sort();
+$('f-conf').innerHTML += confs.map(c=>`<option>${esc(c)}</option>`).join('');
+// home line from the home team's point of view; market home margin = −spread
+const ab = (g, side) => g[side+'_abbr'] || g[side];
+function row(g){
+  const o=g.odds||{}, pin=o.pinnacle||{}, bs=o.best_spread||{}, bm=o.best_ml||{}, bt=o.best_total||{};
+  const homeFav = o.spread!=null ? o.spread<0 : (g.model_margin||0)>0;
+  const mkt = o.spread!=null ? `${esc(ab(g,'home'))} ${ln(o.spread)}` : '–';
+  const pinS = pin.spread!=null ? `${ln(pin.spread)}` : '–';
+  const model = g.model_margin!=null ? `${esc(ab(g,'home'))} ${ln(-Math.round(g.model_margin*2)/2)}` : '–';
+  const gap = g.gap!=null ? `<span class="${Math.abs(g.gap)>=5?'gapbig':''}">${g.gap>0?esc(ab(g,'home')):esc(ab(g,'away'))} +${Math.abs(g.gap).toFixed(1)}</span>` : '–';
+  const tot = o.total!=null ? `${o.total}<small>model ${g.model_total??'–'}${g.total_gap!=null?` (${g.total_gap>0?'+':''}${g.total_gap})`:''}</small>` : (g.model_total!=null?`–<small>model ${g.model_total}</small>`:'–');
+  const best = [bs.away?`${esc(ab(g,'away'))} ${ln(bs.away.point)} ${od(bs.away.price)} <small>${esc(bs.away.book)}</small>`:'', bs.home?`${esc(ab(g,'home'))} ${ln(bs.home.point)} ${od(bs.home.price)} <small>${esc(bs.home.book)}</small>`:''].filter(Boolean).join('') || '–';
+  const ml = (bm.away||bm.home) ? `${esc(ab(g,'away'))} ${od(bm.away&&bm.away.price)}<small>${esc(ab(g,'home'))} ${od(bm.home&&bm.home.price)}</small>` : '–';
+  const done = g.home_pts!=null;
+  const kick = done ? `<span class="final">Final</span><small>${g.away_pts}–${g.home_pts}</small>` : new Date(g.start)<new Date() ? 'In progress' : when(g.start);
+  return `<tr><td class="k" data-l="Kickoff (AZ)">${kick}</td>
+    <td class="m" data-l="Game"><b>${esc(g.away)}</b> @ <b>${esc(g.home)}</b><small>${esc(g.away_conf||'')}${g.away_conf!==g.home_conf?` vs ${esc(g.home_conf||'')}`:''}${g.neutral?' · neutral site':''}</small></td>
+    <td data-l="Market spread">${mkt}<small>${o.n_books?`${o.n_books} books`:''}</small></td>
+    <td data-l="Pinnacle">${pinS}</td>
+    <td data-l="Model">${model}<small>${g.model_home_prob!=null?`${esc(ab(g,'home'))} wins ${Math.round(g.model_home_prob*100)}%`:''}</small></td>
+    <td data-l="Model gap">${gap}</td>
+    <td data-l="Total">${tot}</td>
+    <td data-l="Best spread (your books)">${best}</td>
+    <td data-l="Moneyline (your books)">${ml}</td></tr>`;
+}
+function render(){
+  const cf=$('f-conf').value, q=$('f-team').value.trim().toLowerCase(), oo=$('f-odds').checked, gg=$('f-gap').checked, past=$('f-past').checked, now=new Date();
+  const rows = G.filter(g => (past || new Date(g.start) > now) && (!cf || g.home_conf===cf || g.away_conf===cf) && (!q || (g.home+' '+g.away).toLowerCase().includes(q))
+    && (!oo || g.odds) && (!gg || (g.gap!=null && Math.abs(g.gap)>=5)));
+  let html = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Market spread</th><th>Pinnacle</th><th>Model</th><th title="How many points the model likes one side more than the market">Model gap</th><th>Total</th><th>Best spread · your books</th><th>Moneyline · your books</th></tr></thead><tbody>`;
+  let last = '';
+  for (const g of rows){ const d=dayKey(g.start); if(d!==last){ html += `<tr class="day"><td colspan="9">${esc(d)}</td></tr>`; last=d; } html += row(g); }
+  if(!rows.length) html += `<tr><td colspan="9" style="text-align:left;font-family:var(--body)">No games match.</td></tr>`;
+  $('cfbt').innerHTML = html + '</tbody>';
+}
+['f-conf','f-team','f-odds','f-gap','f-past'].forEach(id=>$(id).addEventListener('input', render));
+render();
+$('cfbnote').innerHTML = `Spreads are shown from the home team's side (−7 = home favored by 7). <b>Model gap</b> = points the model likes that side more than the market. Gaps of 5+ are highlighted, but in testing they didn't cover (47% on 2024–25 openers), so treat them as a talking point, not a bet. Next week's lines appear once books post openers (Sunday). Odds refresh hourly Thursday–Saturday, every 3 hours otherwise.`;
+// research results (markdown table from output/research/cfb/holdout.md)
+(function(){
+  const md = C.research_md || ''; if(!md){ $('resmd').innerHTML='<p>No results yet.</p>'; return; }
+  const lines = md.split('\n'); let html='', tbl=[];
+  const flush=()=>{ if(!tbl.length) return; const rows=tbl.filter(r=>!/^\|[-| ]+\|$/.test(r)).map(r=>r.split('|').slice(1,-1).map(c=>c.trim()));
+    html += '<div class="scroll"><table><thead><tr>'+rows[0].map(c=>`<th>${esc(c.replace(/\\\|/g,'|'))}</th>`).join('')+'</tr></thead><tbody>'+rows.slice(1).map(r=>'<tr>'+r.map(c=>`<td>${esc(c.replace(/\\\|/g,'|'))}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>'; tbl=[]; };
+  for(const l of lines){ if(l.startsWith('|')){ tbl.push(l); continue; } flush();
+    if(l.startsWith('# ')) html += `<h3>${esc(l.slice(2))}</h3>`; else if(l.startsWith('- ')) html += `<div class="g2note">${esc(l.slice(2))}</div>`; else if(l.trim()) html += `<p>${esc(l)}</p>`; }
+  flush(); $('resmd').innerHTML = html;
+})();
+</script>

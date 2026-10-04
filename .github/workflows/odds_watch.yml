@@ -61,6 +61,12 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: College football page data (CFBD refresh every 12 h, ratings, this week's games)
+        continue-on-error: true
+        run: python -m cfbpred.pipeline
+        env:
+          PYTHONPATH: src
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
       - name: Build dashboard
         run: python scripts/build_dashboard.py
         env:
@@ -70,7 +76,7 @@ jobs:
         run: |
           git config user.name "nfl-bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          git add history output/predictions.json
+          git add history output/predictions.json output/cfb_predictions.json output/cfb_model.json output/cfb_features.parquet data/cfb 2>/dev/null || git add history output/predictions.json
           if git commit -m "Odds watch $(date -u +%FT%H%M)"; then
             for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
             echo "changed=true" >> "$GITHUB_OUTPUT"

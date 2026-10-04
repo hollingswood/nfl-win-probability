@@ -66,7 +66,7 @@ def pull(years: list[int], key: str, refresh_current: bool = True) -> dict:
         jobs = [(p, st) for p in PER_TYPE for st in ("regular", "postseason")] + [(p, None) for p in PER_YEAR]
         for path, st in jobs:
             out = _name(path, y, st)
-            if out.exists() and not (refresh_current and y >= cur):
+            if out.exists() and not (refresh_current and y >= cur and st):   # yearly tables don't change in-season
                 continue
             params = {"year": y}
             if st:

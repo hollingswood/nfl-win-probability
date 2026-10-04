@@ -232,7 +232,22 @@ def main(argv=None) -> int:
         news_audit=load_news_audit(Path(a.news).with_name("news_audit.json")),
         news_context=load_news_signals(Path(a.news).with_name("news_context.jsonl")))
     print("wrote", write_site(render(payload), Path(a.out)))
+    cfb = build_cfb(Path(a.out))
+    if cfb:
+        print("wrote", cfb)
     return 0
+
+
+def build_cfb(site: Path) -> Path | None:
+    """College football page (site/cfb/index.html) from output/cfb_predictions.json; shares the NFL page's styles."""
+    src = ROOT / "output" / "cfb_predictions.json"
+    if not src.exists():
+        return None
+    nfl = (ROOT / "scripts" / "dashboard_template.html").read_text()
+    style = nfl.split("<style>", 1)[1].split("</style>", 1)[0]
+    tpl = (ROOT / "scripts" / "cfb_template.html").read_text().replace("__STYLE__", style)
+    body = tpl.replace("__DATA__", json.dumps(clean_json(json.loads(src.read_text())), allow_nan=False).replace("</", "<\\/"))
+    return write_site(body, site / "cfb")
 
 
 if __name__ == "__main__":

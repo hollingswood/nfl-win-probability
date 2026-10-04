@@ -107,3 +107,19 @@ def test_cfb_plan_and_cadence():
     assert CL.due(datetime(2026, 10, 3, 17, 0, tzinfo=timezone.utc))          # Saturday: hourly
     assert not CL.due(datetime(2026, 10, 6, 17, 0, tzinfo=timezone.utc))      # Tuesday 17:00: skip
     assert CL.due(datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc))          # every 3rd hour
+
+
+def test_cfb_team_matching_and_odds_view():
+    from cfbpred import pipeline as CP
+    m = CP.team_matcher(["Hawai'i", "San José State", "Southern Miss", "Louisiana", "Louisiana Tech", "Texas", "Texas A&M"])
+    assert m("Hawaii Rainbow Warriors") == "Hawai'i" and m("San Jose State Spartans") == "San José State"
+    assert m("Southern Mississippi Golden Eagles") == "Southern Miss" and m("Louisiana Ragin Cajuns") == "Louisiana"
+    assert m("Louisiana Tech Bulldogs") == "Louisiana Tech" and m("Texas A&M Aggies") == "Texas A&M" and m("Texas Longhorns") == "Texas"
+    ev = {"home_team": "Texas Longhorns", "away_team": "Texas A&M Aggies", "bookmakers": [
+        {"key": "fanduel", "title": "FanDuel", "markets": [
+            {"key": "spreads", "outcomes": [{"name": "Texas Longhorns", "point": -3.5, "price": -110}, {"name": "Texas A&M Aggies", "point": 3.5, "price": -110}]},
+            {"key": "h2h", "outcomes": [{"name": "Texas Longhorns", "price": -170}, {"name": "Texas A&M Aggies", "price": 145}]}]},
+        {"key": "pinnacle", "title": "Pinnacle", "markets": [
+            {"key": "spreads", "outcomes": [{"name": "Texas Longhorns", "point": -3.0, "price": -105}, {"name": "Texas A&M Aggies", "point": 3.0, "price": -105}]}]}]}
+    o = CP.odds_view(ev, {"fanduel"})
+    assert o["spread"] == -3.25 and o["pinnacle"]["spread"] == -3.0 and o["best_ml"]["away"]["price"] == 145
