@@ -11,7 +11,9 @@ def prep():
     ret = D.yearly("player_returning", range(2014, 2027))[["season", "team", "percentPPA"]]
     return g, tal, ret
 
-def run(g, tal, ret, cap=28.0, lam=4.0, a=0.69, b=3.35, c=0.30, fcs=-20.0, last_seasons=(2014, 2026)):
+def run(g, tal, ret, cap=28.0, lam=4.0, a=0.69, b=3.35, c=0.30, fcs=-20.0, last_seasons=(2014, 2026), d=0.0, tmap=None):
+    """d * tmap[(season, team)]: transfer-production term (transfer_prior.py); 0 keeps the original prior."""
+    tmap = tmap or {}
     teams = sorted(set(g.home) | set(g.away)); ix = {t: i for i, t in enumerate(teams)}; k = len(teams)
     div = dict(zip(g.home, g.home_div)); div.update(dict(zip(g.away, g.away_div)))
     final = {}; out = []
@@ -26,7 +28,8 @@ def run(g, tal, ret, cap=28.0, lam=4.0, a=0.69, b=3.35, c=0.30, fcs=-20.0, last_
             if div.get(t) != "fbs":
                 prior[i] = last.get(t, fm) * 0.8 + 0.2 * fm; continue
             lm = last.get(t, 0.0)
-            prior[i] = a * lm + b * float(tz.get(t, 0.0) if len(tz) else 0) + c * lm * ((float(rp.get(t, rpm)) - rpm) if len(rp) else 0)
+            prior[i] = (a * lm + b * float(tz.get(t, 0.0) if len(tz) else 0) + c * lm * ((float(rp.get(t, rpm)) - rpm) if len(rp) else 0)
+                        + d * tmap.get((s, t), 0.0))
         A = np.zeros((k + 1, k + 1)); A[np.arange(k), np.arange(k)] = lam; A[k, k] = 1e-6
         bv = np.zeros(k + 1); R = prior.copy()
         for sl in sorted(S.slot.unique()):

@@ -27,7 +27,9 @@ RAW = ROOT / "data" / "cfb" / "raw"
 
 def transfer_z() -> dict:
     out = {}
-    for s in range(2021, 2027):
+    for s in range(2021, 2030):
+        if not (RAW / f"player_portal_{s}.json.gz").exists() or not (RAW / f"ppa_players_season_{s - 1}.json.gz").exists():
+            continue
         portal = json.load(gzip.open(RAW / f"player_portal_{s}.json.gz"))
         ppa = json.load(gzip.open(RAW / f"ppa_players_season_{s - 1}.json.gz"))
         prod = {}

@@ -1,0 +1,35 @@
+{
+ "pre-portal defaults": {
+  "a": 0.69,
+  "b": 3.35,
+  "c": 0.3,
+  "d": 0.0,
+  "mae_fit_2021_23": null,
+  "mae_2024_25_weeks_1_6": 12.96,
+  "games": 591
+ },
+ "baseline refit 2021-23": {
+  "a": 0.8,
+  "b": 4.5,
+  "c": 0.3,
+  "d": 0.0,
+  "mae_fit_2021_23": 12.504,
+  "mae_2024_25_weeks_1_6": 12.713,
+  "games": 591
+ },
+ "transfer refit 2021-23": {
+  "a": 0.8,
+  "b": 4.5,
+  "c": 0.3,
+  "d": 2.0,
+  "mae_fit_2021_23": 12.42,
+  "mae_2024_25_weeks_1_6": 12.599,
+  "games": 591
+ },
+ "adopt_screen": true,
+ "production_check": {
+  "done": "2026-10-04",
+  "result": "NOT adopted",
+  "detail": "In the full college model (ratings + stats features, each season fit only on earlier seasons) the transfer prior with refit weights changed out-of-sample results: 2024 better (MAE 12.70 vs 12.82, log loss 0.5047 vs 0.5078), 2025 worse (12.69 vs 12.60, 0.4892 vs 0.4871), 2026 weeks 0-5 worse (14.08 vs 13.94, 0.3735 vs 0.3685). The early-season ratings screen passed, but the model people see got worse in the two newest seasons, so production keeps the original prior."
+ }
+}
