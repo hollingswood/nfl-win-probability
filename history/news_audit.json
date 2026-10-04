@@ -1,52 +1,67 @@
 {
- "generated_at": "2026-10-04T16:12+00:00",
- "signals": 682,
- "units": 237,
+ "generated_at": "2026-10-04T18:14+00:00",
+ "signals": 738,
+ "units": 264,
  "skipped": {
   "team_unclear": 8,
   "no_game": 0,
-  "not_game_week": 11
+  "not_game_week": 17
  },
  "roster_check": {
-  "match": 642,
+  "match": 698,
   "team_mismatch": 30,
   "not_found": 10
  },
- "graded": 1,
- "pending": 132,
+ "graded": 5,
+ "pending": 147,
  "overall": {
-  "n": 1,
-  "correct": 1,
-  "pct": 100.0
+  "n": 5,
+  "correct": 3,
+  "pct": 60.0
  },
  "by_signal": {
   "expected_to_play": {
+   "n": 2,
+   "correct": 1,
+   "pct": 50.0
+  },
+  "out": {
+   "n": 1,
+   "correct": 1,
+   "pct": 100.0
+  },
+  "returning": {
+   "n": 1,
+   "correct": 0,
+   "pct": 0.0
+  },
+  "will_start": {
    "n": 1,
    "correct": 1,
    "pct": 100.0
   }
  },
  "qb": {
-  "n": 0,
-  "correct": 0,
-  "pct": null,
-  "pending": 20
+  "n": 4,
+  "correct": 2,
+  "pct": 50.0,
+  "pending": 21
  },
  "rule_population": {
-  "n": 0,
-  "correct": 0,
-  "pct": null,
-  "pending": 17
+  "n": 3,
+  "correct": 2,
+  "pct": 66.7,
+  "pending": 18
  },
  "official_report_agreement": {
-  "n": 1,
-  "agree": 1,
-  "pct": 100.0
+  "n": 5,
+  "agree": 3,
+  "pct": 60.0
  },
  "lead_vs_report_hours": {
-  "n": 133,
-  "median": -0.4,
-  "share_before_report": 48.9
+  "n": 152,
+  "median": 1.6,
+  "share_before_report": 52.0
  },
  "qb_line_move_6h": {
   "n": 23,
@@ -55,6 +70,258 @@
   "avg_after_negative_signals": -0.1
  },
  "rows": [
+  {
+   "seen_at": "2026-10-04T17:38+00:00",
+   "player": "Jalon Daniels",
+   "team": "TB",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_05_TB_DAL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 74.4,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true
+  },
+  {
+   "seen_at": "2026-10-04T17:38+00:00",
+   "player": "Saquon Barkley",
+   "team": "PHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 122.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Tyson Bagent",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Case Keenum",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Jaylin Lane",
+   "team": "WAS",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Marcus Mariota",
+   "team": "WAS",
+   "signal": "injured_reserve",
+   "qb": true,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Benjamin Morrison",
+   "team": "TB",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_TB_DAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 74.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Caleb Williams",
+   "team": "CHI",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Lane Johnson",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Alec Pierce",
+   "team": "IND",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Puka Nacua",
+   "team": "LA",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 146.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Nico Collins",
+   "team": "HOU",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_HOU_TEN",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "Joey Porter Jr.",
+   "team": "DAL",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_TB_DAL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 74.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T17:23+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T16:23+00:00",
+   "player": "Brock Bowers",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_04_KC_LV",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T16:23+00:00",
+   "player": "Ronnie Stanley",
+   "team": "BAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_04_TEN_BAL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T16:23+00:00",
+   "player": "Zay Flowers",
+   "team": "BAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_04_TEN_BAL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T16:23+00:00",
+   "player": "Christian Benford",
+   "team": "BUF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_04_NE_BUF",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T16:23+00:00",
+   "player": "Lane Johnson",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_04_LA_PHI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
   {
    "seen_at": "2026-10-04T15:23+00:00",
    "player": "Marcus Mariota",
@@ -545,7 +812,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -20.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -558,7 +828,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -649,7 +922,10 @@
    "roster": "team_mismatch",
    "certainty": 1.0,
    "lead_vs_report_h": -12.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1155,7 +1431,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 4.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1168,7 +1447,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 4.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1185,7 +1467,10 @@
     "after": -0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": true
   },
   {
@@ -1202,7 +1487,10 @@
     "after": -0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true
   },
   {
@@ -1543,7 +1831,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 23.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1675,7 +1966,10 @@
     "after": 0.0,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -1822,7 +2116,10 @@
     "after": 0.0,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": true
   },
   {
@@ -1859,12 +2156,12 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "0 of 25 audited starting-QB signals so far",
-   "precision n/a (needs >= 95%)"
+   "3 of 25 audited starting-QB signals so far",
+   "precision 67% (needs >= 95%)"
   ],
-  "n": 0,
-  "correct": 0,
-  "precision": null,
+  "n": 3,
+  "correct": 2,
+  "precision": 0.6667,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
