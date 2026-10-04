@@ -63,7 +63,7 @@
         "live_odds": {
           "event_id": "664e6bda5721dc63be16bcf7d962a436",
           "totals": {
-            "consensus_total": 44.54,
+            "consensus_total": 44.52,
             "sharp_total": 44.39,
             "median_point": 44.5,
             "totals_by_book": [
@@ -238,13 +238,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                43.5,
-                -113,
-                108
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 44.5,
@@ -261,9 +254,9 @@
               [
                 "prophetx",
                 "ProphetX",
-                45.0,
-                112,
-                -117
+                44.5,
+                108,
+                -111
               ],
               [
                 "pinnacle",
@@ -275,14 +268,14 @@
               [
                 "betopenly",
                 "BetOpenly",
-                44.5,
-                103,
-                -103
+                44.0,
+                100,
+                100
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.4413,
+          "books": 26,
+          "consensus_home_prob": 0.4398,
           "sharp_home_prob": 0.4343,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.4433,
@@ -305,7 +298,7 @@
           },
           "best_exchange_away_ml": {
             "price": -127,
-            "book": "Polymarket"
+            "book": "Novig"
           },
           "consensus_home_margin": -2.5,
           "best_home_ml": {
@@ -488,12 +481,12 @@
             },
             "fliff": {
               "ml": [
-                110,
-                -140
+                115,
+                -145
               ],
               "sp": [
                 2.5,
-                -110,
+                -105,
                 -115
               ],
               "tot": [
@@ -637,8 +630,8 @@
               ],
               "sp": [
                 2.5,
-                -105,
-                -115
+                -110,
+                -110
               ],
               "tot": [
                 44.0,
@@ -696,9 +689,9 @@
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.5269,
-          "home_ev_at_best": 0.1592,
-          "away_ev_at_best": -0.1764
+          "blend_home_prob": 0.526,
+          "home_ev_at_best": 0.1572,
+          "away_ev_at_best": -0.1749
         }
       },
       "top_factors": [
@@ -724,9 +717,6 @@
       "model_total": 46.9,
       "grade_v2": null,
       "grade_v2_sides": {},
-      "grade_v2_check": [
-        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
-      ],
       "totals_grade": {
         "side": "under",
         "point": 44.5,
@@ -736,7 +726,7 @@
         "predicted_clv": -0.0211,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 44.65,
         "sharp_total": 44.37
       },
@@ -894,11 +884,11 @@
         "book": "DraftKings",
         "p_sharp": 0.5657,
         "p_model": 0.3611,
-        "p_market": 0.5587,
+        "p_market": 0.5602,
         "p_needed": 0.5745,
         "ev_sharp": -0.0153,
         "ev_model": -0.3714,
-        "gap": 0.015768085106383056,
+        "gap": 0.014268085106383,
         "verdict": "pass",
         "reasons": [
           "best price only -1.5% vs sharp books (need 2%)",
@@ -918,11 +908,11 @@
         "book": "DraftKings",
         "p_sharp": 0.5657,
         "p_model": 0.3611,
-        "p_market": 0.5587,
+        "p_market": 0.5602,
         "p_needed": 0.5745,
         "ev_sharp": -0.0153,
         "ev_model": -0.3714,
-        "gap": 0.015768085106383056,
+        "gap": 0.014268085106383,
         "verdict": "pass",
         "reasons": [
           "best price only -1.5% vs sharp books (need 2%)",
@@ -958,13 +948,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 4.8,
-        "consensus_total": 44.54,
+        "consensus_total": 44.52,
         "best_under": {
           "book": "DraftKings",
           "book_key": "draftkings",
           "point": 44.5,
           "price": -112,
-          "ev": -0.0284
+          "ev": -0.0256
         },
         "verdict": "pass",
         "reasons": [
@@ -983,7 +973,7 @@
         "ev_sharp": -0.0173,
         "sharp_total": 44.37,
         "consensus_total": 44.65,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -1.7% vs the sharp fair total (need +0%)",
@@ -1056,7 +1046,7 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 57.1,
@@ -1090,8 +1080,8 @@
             "label": "ProphetX",
             "side": "away",
             "point": null,
-            "price": -131,
-            "ev": -0.0171,
+            "price": -130,
+            "ev": -0.0137,
             "best_book": "draftkings",
             "best_book_price": -135,
             "best_book_ev": -0.0309
@@ -1100,54 +1090,57 @@
             "label": "ProphetX",
             "side": "home",
             "point": null,
-            "price": 123,
-            "ev": -0.0137,
+            "price": 122,
+            "ev": -0.018,
             "best_book": "espnbet",
             "best_book_price": 120,
             "best_book_ev": -0.0247
           },
           "spreads:away": {
-            "label": "Polymarket US",
+            "label": "Kalshi",
             "side": "away",
             "point": -2.5,
-            "price": -105,
-            "ev": -0.0335,
+            "price": -107,
+            "ev": -0.0428,
             "best_book": "fanduel",
             "best_book_price": -110,
             "best_book_ev": -0.0542
           },
           "spreads:home": {
-            "label": "Polymarket US",
+            "label": "Kalshi",
             "side": "home",
             "point": 2.5,
-            "price": -109,
-            "ev": -0.0338,
+            "price": -112,
+            "ev": -0.043,
             "best_book": "draftkings",
             "best_book_price": -108,
             "best_book_ev": -0.0282
           },
           "totals:over": {
-            "label": "Kalshi",
+            "label": "ProphetX",
             "side": "over",
             "point": 44.5,
-            "price": -103,
-            "ev": -0.0488,
+            "price": 106,
+            "ev": -0.006,
             "best_book": "espnbet",
             "best_book_price": 100,
             "best_book_ev": -0.0342
           },
           "totals:under": {
-            "label": "Kalshi",
+            "label": "ProphetX",
             "side": "under",
             "point": 44.5,
-            "price": -116,
-            "ev": -0.0366,
+            "price": -113,
+            "ev": -0.0264,
             "best_book": "draftkings",
             "best_book_price": -112,
             "best_book_ev": -0.0212
           }
         }
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ]
     },
     {
       "game_id": "2026_04_DAL_HOU",
@@ -1203,7 +1196,7 @@
         "live_odds": {
           "event_id": "daf55e2df5341c007fee5a0fc5bbc2d4",
           "totals": {
-            "consensus_total": 48.91,
+            "consensus_total": 48.88,
             "sharp_total": 48.88,
             "median_point": 48.5,
             "totals_by_book": [
@@ -1378,13 +1371,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                48.5,
-                -108,
-                104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 49.5,
@@ -1421,11 +1407,11 @@
               ]
             ]
           },
-          "books": 27,
+          "books": 26,
           "consensus_home_prob": 0.5747,
           "sharp_home_prob": 0.5729,
           "sharp_books": 2,
-          "pinnacle_home_prob": 0.5793,
+          "pinnacle_home_prob": 0.581,
           "sharp_spreads": [
             [
               -3.0,
@@ -1441,7 +1427,7 @@
           "pin_sharp_home_prob": 0.5729,
           "best_exchange_home_ml": {
             "price": -138,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 138,
@@ -1745,8 +1731,8 @@
               ],
               "sp": [
                 -3.0,
-                100,
-                -120
+                -105,
+                -115
               ],
               "tot": [
                 48.5,
@@ -1808,9 +1794,9 @@
                 125
               ],
               "sp": [
-                -2.5,
-                -120,
-                100
+                -3.0,
+                -105,
+                -115
               ],
               "tot": [
                 48.5,
@@ -1820,13 +1806,13 @@
             },
             "pinnacle": {
               "ml": [
-                -146,
-                132
+                -147,
+                133
               ],
               "sp": [
                 -3.0,
-                107,
-                -118
+                106,
+                -116
               ],
               "tot": [
                 49.0,
@@ -1891,7 +1877,7 @@
         "predicted_clv": -0.0323,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 48.84,
         "sharp_total": 48.86
       },
@@ -2111,7 +2097,7 @@
         "ev_sharp": -0.0278,
         "sharp_total": 48.86,
         "consensus_total": 48.84,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -2.8% vs the sharp fair total (need +0%)",
@@ -2137,13 +2123,13 @@
         "team": "DAL"
       },
       "tuesday_move_check": [
-        "predicted move 0.08 pts (needs 0.743)",
+        "predicted move 0.07 pts (needs 0.743)",
         "starting QB uncertain or changed",
         "kickoff not 3.5-7 days away",
         "only bets at the Tuesday 7:10am AZ run"
       ],
       "tuesday_move": {
-        "predicted_move_pts": -0.08,
+        "predicted_move_pts": -0.07,
         "side": "home",
         "team": "HOU",
         "tuesday_point": -3.0
@@ -2198,19 +2184,19 @@
         "current_grade": "C"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 42.9,
             "all_in_cents": 44.63,
             "price": 124,
-            "ev": -0.0574
+            "ev": -0.0613
           },
           "home": {
             "quoted_cents": 58.0,
             "all_in_cents": 59.69,
             "price": -148,
-            "ev": -0.0295
+            "ev": -0.0266
           }
         },
         "robinhood": {
@@ -2218,13 +2204,13 @@
             "quoted_cents": 42.9,
             "all_in_cents": 44.92,
             "price": 123,
-            "ev": -0.0634
+            "ev": -0.0672
           },
           "home": {
             "quoted_cents": 58.0,
             "all_in_cents": 59.98,
             "price": -150,
-            "ev": -0.0343
+            "ev": -0.0314
           }
         },
         "best": {
@@ -2233,20 +2219,20 @@
             "side": "away",
             "point": null,
             "price": 135,
-            "ev": -0.0103,
+            "ev": -0.0144,
             "best_book": "fanduel",
             "best_book_price": 132,
-            "best_book_ev": -0.024
+            "best_book_ev": -0.0279
           },
           "h2h:home": {
             "label": "ProphetX",
             "side": "home",
             "point": null,
             "price": -143,
-            "ev": -0.0152,
+            "ev": -0.0123,
             "best_book": "draftkings",
             "best_book_price": -148,
-            "best_book_ev": -0.0293
+            "best_book_ev": -0.0264
           }
         }
       }
@@ -2420,7 +2406,7 @@
                 "fliff",
                 "Fliff",
                 48.5,
-                -105,
+                -110,
                 -115
               ],
               [
@@ -2487,13 +2473,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                48.5,
-                100,
-                -104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 48.5,
@@ -2530,8 +2509,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.5906,
+          "books": 26,
+          "consensus_home_prob": 0.5914,
           "sharp_home_prob": 0.5994,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.5949,
@@ -2558,7 +2537,7 @@
           },
           "consensus_home_margin": 3.0,
           "best_home_ml": {
-            "price": -145,
+            "price": -150,
             "book": "theScore Bet",
             "key": "espnbet"
           },
@@ -2585,9 +2564,9 @@
             {
               "book": "theScore Bet",
               "home_point": -3.0,
-              "home_price": -105,
+              "home_price": -110,
               "away_point": 3.0,
-              "away_price": -115
+              "away_price": -110
             }
           ],
           "by_book": {
@@ -2657,8 +2636,8 @@
             },
             "rebet": {
               "ml": [
-                -154,
-                131
+                -158,
+                134
               ],
               "sp": [
                 -3.0,
@@ -2753,8 +2732,8 @@
             },
             "mybookieag": {
               "ml": [
-                -161,
-                136
+                -164,
+                139
               ],
               "sp": [
                 -3.0,
@@ -2769,17 +2748,17 @@
             },
             "fliff": {
               "ml": [
-                -165,
+                -170,
                 130
               ],
               "sp": [
                 -2.5,
-                -125,
-                100
+                -130,
+                105
               ],
               "tot": [
                 48.5,
-                -105,
+                -110,
                 -115
               ]
             },
@@ -2802,7 +2781,7 @@
             "betmgm": {
               "ml": [
                 -160,
-                130
+                135
               ],
               "sp": [
                 -3.0,
@@ -2817,8 +2796,8 @@
             },
             "hardrockbet": {
               "ml": [
-                -150,
-                130
+                -155,
+                135
               ],
               "sp": [
                 -3.0,
@@ -2833,8 +2812,8 @@
             },
             "hardrockbet_oh": {
               "ml": [
-                -150,
-                130
+                -155,
+                135
               ],
               "sp": [
                 -3.0,
@@ -2849,8 +2828,8 @@
             },
             "hardrockbet_fl": {
               "ml": [
-                -150,
-                130
+                -155,
+                135
               ],
               "sp": [
                 -3.0,
@@ -2865,13 +2844,13 @@
             },
             "espnbet": {
               "ml": [
-                -145,
-                125
+                -150,
+                130
               ],
               "sp": [
                 -3.0,
-                -105,
-                -115
+                -110,
+                -110
               ],
               "tot": [
                 47.5,
@@ -2913,8 +2892,8 @@
             },
             "bovada": {
               "ml": [
-                -160,
-                135
+                -165,
+                140
               ],
               "sp": [
                 -3.0,
@@ -2945,9 +2924,9 @@
             }
           },
           "commence_time": "2026-10-04T20:25:00Z",
-          "blend_home_prob": 0.6528,
-          "home_ev_at_best": 0.103,
-          "away_ev_at_best": -0.1806
+          "blend_home_prob": 0.6532,
+          "home_ev_at_best": 0.0887,
+          "away_ev_at_best": -0.1816
         }
       },
       "top_factors": [
@@ -2974,9 +2953,9 @@
       "grade_v2": {
         "side": "home",
         "team": "SF",
-        "price": -145,
+        "price": -150,
         "book": "theScore Bet",
-        "predicted_clv": 0.0019,
+        "predicted_clv": -0.0101,
         "grade": "C",
         "grading_version": 2
       },
@@ -2984,9 +2963,9 @@
         "home": {
           "side": "home",
           "team": "SF",
-          "price": -145,
+          "price": -150,
           "book": "theScore Bet",
-          "predicted_clv": 0.0019,
+          "predicted_clv": -0.0101,
           "grade": "C",
           "grading_version": 2
         }
@@ -3000,7 +2979,7 @@
         "predicted_clv": -0.015,
         "grade": "B",
         "grading_version": 2,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "consensus_total": 48.44,
         "sharp_total": 48.82
       },
@@ -3115,62 +3094,64 @@
       },
       "spread_check": [],
       "ml_v2_check": [
-        "best price only +1.3% vs sharp books (need 2%)"
+        "best price only -0.1% vs sharp books (need 2%)"
       ],
       "ml_v2": {
         "side": "home",
         "team": "SF",
-        "price": -145,
+        "price": -150,
         "book": "theScore Bet",
         "p_sharp": 0.5994,
         "p_model": 0.7103,
-        "p_market": 0.5906,
-        "p_needed": 0.5918,
-        "ev_sharp": 0.0128,
-        "ev_model": 0.2002,
-        "gap": 0.001236734693877528,
-        "verdict": "lean",
+        "p_market": 0.5914,
+        "p_needed": 0.6,
+        "ev_sharp": -0.001,
+        "ev_model": 0.1838,
+        "gap": 0.008600000000000052,
+        "verdict": "pass",
         "reasons": [
-          "best price only +1.3% vs sharp books (need 2%)"
+          "best price only -0.1% vs sharp books (need 2%)"
         ]
       },
       "ml_v3_check": [
-        "best price only +1.3% vs sharp books (need 2%)"
+        "best price only -0.1% vs sharp books (need 2%)"
       ],
       "ml_v3": {
         "side": "home",
         "team": "SF",
-        "price": -145,
+        "price": -150,
         "book": "theScore Bet",
         "p_sharp": 0.5994,
         "p_model": 0.7103,
-        "p_market": 0.5906,
-        "p_needed": 0.5918,
-        "ev_sharp": 0.0128,
-        "ev_model": 0.2002,
-        "gap": 0.001236734693877528,
-        "verdict": "lean",
+        "p_market": 0.5914,
+        "p_needed": 0.6,
+        "ev_sharp": -0.001,
+        "ev_model": 0.1838,
+        "gap": 0.008600000000000052,
+        "verdict": "pass",
         "reasons": [
-          "best price only +1.3% vs sharp books (need 2%)"
+          "best price only -0.1% vs sharp books (need 2%)"
         ]
       },
       "ml_v4_check": [
-        "moneyline only -1.3% vs sharp spread (need 2%)",
+        "moneyline only -1.9% vs sharp spread (need 2%)",
+        "negative vs sharp moneyline",
         "only bets at the Tue/Sun 7:10am and Fri 2:40pm AZ runs"
       ],
       "ml_v4": {
-        "side": "home",
-        "team": "SF",
-        "price": -145,
-        "book": "theScore Bet",
-        "p_spread": 0.5842,
-        "p_sharp_ml": 0.5994,
-        "p_needed": 0.5918,
-        "ev_spread": -0.0129,
-        "ev_ml": 0.0128,
+        "side": "away",
+        "team": "DEN",
+        "price": 136,
+        "book": "DraftKings",
+        "p_spread": 0.4158,
+        "p_sharp_ml": 0.4006,
+        "p_needed": 0.4237,
+        "ev_spread": -0.0187,
+        "ev_ml": -0.0546,
         "verdict": "pass",
         "reasons": [
-          "moneyline only -1.3% vs sharp spread (need 2%)",
+          "moneyline only -1.9% vs sharp spread (need 2%)",
+          "negative vs sharp moneyline",
           "only bets at the Tue/Sun 7:10am and Fri 2:40pm AZ runs"
         ]
       },
@@ -3205,7 +3186,7 @@
         "ev_sharp": -0.0662,
         "sharp_total": 48.82,
         "consensus_total": 48.44,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "verdict": "pass",
         "reasons": [
           "best under only -6.6% vs the sharp fair total (need +0%)",
@@ -3243,10 +3224,10 @@
       "aplus_ml": {
         "side": "home",
         "team": "SF",
-        "price": -145,
+        "price": -150,
         "book": "theScore Bet",
         "grade": "C",
-        "predicted_clv": 0.0019,
+        "predicted_clv": -0.0101,
         "verdict": "pass",
         "reasons": [
           "grade C (needs A+)"
@@ -3292,7 +3273,7 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 42.0,
@@ -3339,25 +3320,25 @@
             "price": -151,
             "ev": -0.0112,
             "best_book": "espnbet",
-            "best_book_price": -145,
-            "best_book_ev": 0.0052
+            "best_book_price": -150,
+            "best_book_ev": -0.0085
           },
           "spreads:away": {
-            "label": "Polymarket US",
+            "label": "Kalshi",
             "side": "away",
             "point": 2.5,
-            "price": 107,
-            "ev": -0.0411,
+            "price": 105,
+            "ev": -0.0509,
             "best_book": "fanduel",
             "best_book_price": 100,
             "best_book_ev": -0.0758
           },
           "spreads:home": {
-            "label": "Polymarket US",
+            "label": "Kalshi",
             "side": "home",
             "point": -2.5,
-            "price": -123,
-            "ev": -0.0249,
+            "price": -126,
+            "ev": -0.0336,
             "best_book": "fanduel",
             "best_book_price": -122,
             "best_book_ev": -0.0212
@@ -3454,8 +3435,8 @@
                 "book": "DraftKings",
                 "key": "draftkings",
                 "point": 51.5,
-                "over_price": -108,
-                "under_price": -112
+                "over_price": -112,
+                "under_price": -108
               },
               {
                 "book": "FanDuel",
@@ -3477,8 +3458,8 @@
                 "draftkings",
                 "DraftKings",
                 51.5,
-                -108,
-                -112
+                -112,
+                -108
               ],
               [
                 "williamhill_us",
@@ -3575,8 +3556,8 @@
                 "courtside",
                 "Courtside",
                 51.5,
-                -106,
-                -110
+                -110,
+                -106
               ],
               [
                 "betanysports",
@@ -3621,13 +3602,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                51.5,
-                100,
-                -104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 50.5,
@@ -3645,14 +3619,14 @@
                 "betopenly",
                 "BetOpenly",
                 51.5,
-                100,
-                100
+                -102,
+                102
               ],
               [
                 "prophetx",
                 "ProphetX",
                 51.5,
-                101,
+                100,
                 -104
               ],
               [
@@ -3664,8 +3638,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.3561,
+          "books": 26,
+          "consensus_home_prob": 0.3559,
           "sharp_home_prob": 0.3494,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.3557,
@@ -3687,8 +3661,8 @@
             "book": "BetOpenly"
           },
           "best_exchange_away_ml": {
-            "price": -182,
-            "book": "Novig"
+            "price": -186,
+            "book": "Kalshi"
           },
           "consensus_home_margin": -4.0,
           "best_home_ml": {
@@ -3705,9 +3679,9 @@
             {
               "book": "DraftKings",
               "home_point": 3.5,
-              "home_price": -105,
+              "home_price": 100,
               "away_point": -3.5,
-              "away_price": -115
+              "away_price": -120
             },
             {
               "book": "FanDuel",
@@ -3732,13 +3706,13 @@
               ],
               "sp": [
                 3.5,
-                -105,
-                -115
+                100,
+                -120
               ],
               "tot": [
                 51.5,
-                -108,
-                -112
+                -112,
+                -108
               ]
             },
             "williamhill_us": {
@@ -3955,14 +3929,14 @@
                 -194
               ],
               "sp": [
-                3.5,
-                -105,
-                -115
+                4.5,
+                -123,
+                -108
               ],
               "tot": [
                 51.5,
-                -106,
-                -110
+                -110,
+                -106
               ]
             },
             "betanysports": {
@@ -4079,9 +4053,9 @@
             }
           },
           "commence_time": "2026-10-05T00:20:00Z",
-          "blend_home_prob": 0.362,
-          "home_ev_at_best": -0.0154,
-          "away_ev_at_best": -0.0397
+          "blend_home_prob": 0.3618,
+          "home_ev_at_best": -0.0158,
+          "away_ev_at_best": -0.0395
         }
       },
       "top_factors": [
@@ -4134,7 +4108,7 @@
         "predicted_clv": -0.0192,
         "grade": "B",
         "grading_version": 2,
-        "hours_before": 9.1,
+        "hours_before": 8.9,
         "consensus_total": 52.08,
         "sharp_total": 51.93
       },
@@ -4152,10 +4126,10 @@
         "under": {
           "side": "under",
           "point": 51.5,
-          "price": -110,
-          "book": "theScore Bet",
-          "book_key": "espnbet",
-          "predicted_clv": -0.0286,
+          "price": -108,
+          "book": "DraftKings",
+          "book_key": "draftkings",
+          "predicted_clv": -0.0207,
           "grade": "C",
           "grading_version": 2
         }
@@ -4165,15 +4139,15 @@
           "over",
           "draftkings",
           51.5,
-          -108,
-          -0.0587
+          -112,
+          -0.0659
         ],
         [
           "under",
           "draftkings",
           51.5,
-          -112,
-          -0.0323
+          -108,
+          -0.0207
         ],
         [
           "over",
@@ -4201,7 +4175,7 @@
           "espnbet",
           51.5,
           -110,
-          -0.0286
+          -0.03
         ]
       ],
       "bet_check": [
@@ -4282,11 +4256,11 @@
         "book": "DraftKings",
         "p_sharp": 0.6506,
         "p_model": 0.5755,
-        "p_market": 0.6439,
+        "p_market": 0.6441,
         "p_needed": 0.6644,
         "ev_sharp": -0.0208,
         "ev_model": -0.1338,
-        "gap": 0.020529530201342294,
+        "gap": 0.020329530201342205,
         "verdict": "bet",
         "reasons": []
       },
@@ -4301,11 +4275,11 @@
         "book": "DraftKings",
         "p_sharp": 0.6506,
         "p_model": 0.5755,
-        "p_market": 0.6439,
+        "p_market": 0.6441,
         "p_needed": 0.6644,
         "ev_sharp": -0.0208,
         "ev_model": -0.1338,
-        "gap": 0.020529530201342294,
+        "gap": 0.020329530201342205,
         "verdict": "bet",
         "reasons": []
       },
@@ -4339,11 +4313,11 @@
         "forecast_wind_mph": 1.3,
         "consensus_total": 52.08,
         "best_under": {
-          "book": "theScore Bet",
-          "book_key": "espnbet",
+          "book": "DraftKings",
+          "book_key": "draftkings",
           "point": 51.5,
-          "price": -110,
-          "ev": -0.0366
+          "price": -108,
+          "ev": -0.0281
         },
         "verdict": "pass",
         "reasons": [
@@ -4351,21 +4325,21 @@
         ]
       },
       "early_under_check": [
-        "best under only -2.8% vs the sharp fair total (need +0%)",
+        "best under only -1.9% vs the sharp fair total (need +0%)",
         "less than 96 h before kickoff (rule: 96 h-7 days)"
       ],
       "early_under": {
-        "book": "theScore Bet",
-        "book_key": "espnbet",
+        "book": "DraftKings",
+        "book_key": "draftkings",
         "point": 51.5,
-        "price": -110,
-        "ev_sharp": -0.028,
+        "price": -108,
+        "ev_sharp": -0.0194,
         "sharp_total": 51.93,
         "consensus_total": 52.08,
-        "hours_before": 9.1,
+        "hours_before": 8.9,
         "verdict": "pass",
         "reasons": [
-          "best under only -2.8% vs the sharp fair total (need +0%)",
+          "best under only -1.9% vs the sharp fair total (need +0%)",
           "less than 96 h before kickoff (rule: 96 h-7 days)"
         ]
       },
@@ -4412,22 +4386,23 @@
       "aplus_spread": {
         "side": "home",
         "team": "CAR",
-        "point": 4.0,
-        "price": -110,
-        "book": "theScore Bet",
-        "ev": -0.015,
+        "point": 3.5,
+        "price": 100,
+        "book": "DraftKings",
+        "ev": -0.0029,
         "p_cover": 0.4986,
-        "p_push": 0.0332,
-        "grade": "C",
-        "score": -1,
+        "p_push": 0.0,
+        "grade": "C+",
+        "score": 0,
         "why": [
-          "-1 line moved against us"
+          "-1 line moved against us",
+          "+1 right side of 3/7"
         ],
         "grading_version": 1,
         "expected_home_margin": -4.35,
         "verdict": "pass",
         "reasons": [
-          "grade C (needs A+)"
+          "grade C+ (needs A+)"
         ]
       },
       "aplus_totals": {
@@ -4447,7 +4422,7 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 36.0,
@@ -4521,11 +4496,11 @@
             "label": "ProphetX",
             "side": "over",
             "point": 51.5,
-            "price": -101,
-            "ev": -0.0005,
-            "best_book": "draftkings",
-            "best_book_price": -108,
-            "best_book_ev": -0.0326
+            "price": -102,
+            "ev": -0.0055,
+            "best_book": "espnbet",
+            "best_book_price": -110,
+            "best_book_ev": -0.0411
           },
           "totals:under": {
             "label": "ProphetX",
@@ -4533,9 +4508,9 @@
             "point": 51.5,
             "price": -106,
             "ev": -0.0333,
-            "best_book": "espnbet",
-            "best_book_price": -110,
-            "best_book_ev": -0.0498
+            "best_book": "draftkings",
+            "best_book_price": -108,
+            "best_book_ev": -0.0415
           }
         }
       }
@@ -4776,13 +4751,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                39.5,
-                104,
-                -108
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 37.5,
@@ -4806,9 +4774,9 @@
               [
                 "prophetx",
                 "ProphetX",
-                40.5,
-                122,
-                -123
+                38.5,
+                -109,
+                105
               ],
               [
                 "pinnacle",
@@ -4819,8 +4787,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.4019,
+          "books": 26,
+          "consensus_home_prob": 0.4014,
           "sharp_home_prob": 0.3975,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.4083,
@@ -4842,8 +4810,8 @@
             "book": "BetOpenly"
           },
           "best_exchange_away_ml": {
-            "price": -148,
-            "book": "ProphetX"
+            "price": -150,
+            "book": "Kalshi"
           },
           "consensus_home_margin": -3.0,
           "best_home_ml": {
@@ -5063,8 +5031,8 @@
               ],
               "sp": [
                 3.0,
-                -110,
-                -110
+                -105,
+                -115
               ],
               "tot": [
                 39.0,
@@ -5080,7 +5048,7 @@
               "sp": [
                 3.5,
                 -130,
-                100
+                105
               ],
               "tot": [
                 39.5,
@@ -5186,8 +5154,8 @@
             },
             "betanysports": {
               "ml": [
-                144,
-                -164
+                145,
+                -165
               ],
               "sp": [
                 3.0,
@@ -5234,9 +5202,9 @@
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.4127,
-          "home_ev_at_best": 0.0111,
-          "away_ev_at_best": -0.0338
+          "blend_home_prob": 0.4124,
+          "home_ev_at_best": 0.0104,
+          "away_ev_at_best": -0.0333
         }
       },
       "top_factors": [
@@ -5289,7 +5257,7 @@
         "predicted_clv": -0.0352,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 39.05,
         "sharp_total": 39.05
       },
@@ -5442,11 +5410,11 @@
         "book": "theScore Bet",
         "p_sharp": 0.6025,
         "p_model": 0.5288,
-        "p_market": 0.5981,
+        "p_market": 0.5986,
         "p_needed": 0.6078,
         "ev_sharp": -0.0088,
         "ev_model": -0.13,
-        "gap": 0.009743137254901946,
+        "gap": 0.009243137254902,
         "verdict": "pass",
         "reasons": [
           "best price only -0.9% vs sharp books (need 2%)",
@@ -5464,11 +5432,11 @@
         "book": "theScore Bet",
         "p_sharp": 0.6025,
         "p_model": 0.5288,
-        "p_market": 0.5981,
+        "p_market": 0.5986,
         "p_needed": 0.6078,
         "ev_sharp": -0.0088,
         "ev_model": -0.13,
-        "gap": 0.009743137254901946,
+        "gap": 0.009243137254902,
         "verdict": "pass",
         "reasons": [
           "best price only -0.9% vs sharp books (need 2%)",
@@ -5528,7 +5496,7 @@
         "ev_sharp": -0.0484,
         "sharp_total": 39.05,
         "consensus_total": 39.05,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -4.8% vs the sharp fair total (need +0%)",
@@ -5615,7 +5583,7 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 60.0,
@@ -5649,8 +5617,8 @@
             "label": "ProphetX",
             "side": "away",
             "point": null,
-            "price": -151,
-            "ev": -0.0165,
+            "price": -153,
+            "ev": -0.0218,
             "best_book": "espnbet",
             "best_book_price": -155,
             "best_book_ev": -0.0266
@@ -5669,8 +5637,8 @@
             "label": "ProphetX",
             "side": "away",
             "point": -3.0,
-            "price": 103,
-            "ev": -0.0206,
+            "price": 101,
+            "ev": -0.03,
             "best_book": "fanduel",
             "best_book_price": -108,
             "best_book_ev": -0.0704
@@ -5679,31 +5647,11 @@
             "label": "ProphetX",
             "side": "home",
             "point": 3.0,
-            "price": -109,
-            "ev": -0.0089,
+            "price": -108,
+            "ev": -0.0045,
             "best_book": "draftkings",
             "best_book_price": -105,
             "best_book_ev": 0.01
-          },
-          "totals:over": {
-            "label": "Polymarket US",
-            "side": "over",
-            "point": 39.5,
-            "price": -101,
-            "ev": -0.0282,
-            "best_book": null,
-            "best_book_price": null,
-            "best_book_ev": null
-          },
-          "totals:under": {
-            "label": "Polymarket US",
-            "side": "under",
-            "point": 39.5,
-            "price": -114,
-            "ev": -0.0381,
-            "best_book": null,
-            "best_book_price": null,
-            "best_book_ev": null
           }
         }
       }
@@ -5769,7 +5717,7 @@
         "live_odds": {
           "event_id": "2ea94ddf20f66432b9024fe2e2eaba5f",
           "totals": {
-            "consensus_total": 52.34,
+            "consensus_total": 52.39,
             "sharp_total": 52.75,
             "median_point": 51.5,
             "totals_by_book": [
@@ -5944,13 +5892,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                51.5,
-                -104,
-                100
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 51.5,
@@ -5962,14 +5903,14 @@
                 "Novig",
                 51.5,
                 -104,
-                102
+                100
               ],
               [
                 "prophetx",
                 "ProphetX",
                 52.0,
-                103,
-                -108
+                101,
+                -106
               ],
               [
                 "pinnacle",
@@ -5987,7 +5928,7 @@
               ]
             ]
           },
-          "books": 27,
+          "books": 26,
           "consensus_home_prob": 0.5664,
           "sharp_home_prob": 0.5781,
           "sharp_books": 2,
@@ -6010,7 +5951,7 @@
             "book": "ProphetX"
           },
           "best_exchange_away_ml": {
-            "price": 136,
+            "price": 135,
             "book": "BetOpenly"
           },
           "consensus_home_margin": 2.5,
@@ -6231,7 +6172,7 @@
               ],
               "sp": [
                 -2.5,
-                -115,
+                -120,
                 -105
               ],
               "tot": [
@@ -6402,8 +6343,8 @@
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.5106,
-          "home_ev_at_best": -0.114,
+          "blend_home_prob": 0.5105,
+          "home_ev_at_best": -0.1141,
           "away_ev_at_best": 0.0964
         }
       },
@@ -6466,7 +6407,7 @@
         "predicted_clv": -0.0029,
         "grade": "A",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 52.26,
         "sharp_total": 52.74
       },
@@ -6649,13 +6590,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 4.0,
-        "consensus_total": 52.34,
+        "consensus_total": 52.39,
         "best_under": {
           "book": "DraftKings",
           "book_key": "draftkings",
           "point": 51.5,
           "price": -110,
-          "ev": -0.0511
+          "ev": -0.054
         },
         "verdict": "pass",
         "reasons": [
@@ -6674,7 +6615,7 @@
         "ev_sharp": -0.0714,
         "sharp_total": 52.74,
         "consensus_total": 52.26,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -7.1% vs the sharp fair total (need +0%)",
@@ -6760,7 +6701,7 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 57.1,
@@ -6814,8 +6755,8 @@
             "label": "ProphetX",
             "side": "home",
             "point": -2.5,
-            "price": -109,
-            "ev": -0.0089,
+            "price": -108,
+            "ev": -0.0045,
             "best_book": "fanduel",
             "best_book_price": -112,
             "best_book_ev": -0.0208
@@ -6834,8 +6775,8 @@
             "label": "ProphetX",
             "side": "over",
             "point": 52.0,
-            "price": 101,
-            "ev": -0.0045,
+            "price": -101,
+            "ev": -0.0142,
             "best_book": null,
             "best_book_price": null,
             "best_book_ev": null
@@ -6844,8 +6785,8 @@
             "label": "ProphetX",
             "side": "under",
             "point": 52.0,
-            "price": -110,
-            "ev": -0.0376,
+            "price": -108,
+            "ev": -0.0289,
             "best_book": null,
             "best_book_price": null,
             "best_book_ev": null
@@ -6910,7 +6851,7 @@
         "live_odds": {
           "event_id": "e0cbd266dcf997089203a1b33ba0333d",
           "totals": {
-            "consensus_total": 48.1,
+            "consensus_total": 48.15,
             "sharp_total": 48.2,
             "median_point": 48.0,
             "totals_by_book": [
@@ -7032,8 +6973,8 @@
                 "betmgm",
                 "BetMGM",
                 48.0,
-                -108,
-                -110
+                -110,
+                -108
               ],
               [
                 "bovada",
@@ -7085,13 +7026,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                48.5,
-                113,
-                -117
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 47.5,
@@ -7108,9 +7042,9 @@
               [
                 "betopenly",
                 "BetOpenly",
-                47.5,
-                100,
-                100
+                48.0,
+                -101,
+                101
               ],
               [
                 "prophetx",
@@ -7128,8 +7062,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.333,
+          "books": 26,
+          "consensus_home_prob": 0.3336,
           "sharp_home_prob": 0.3295,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.3289,
@@ -7147,7 +7081,7 @@
           ],
           "pin_sharp_home_prob": 0.3295,
           "best_exchange_home_ml": {
-            "price": 209,
+            "price": 206,
             "book": "BetOpenly"
           },
           "best_exchange_away_ml": {
@@ -7169,9 +7103,9 @@
             {
               "book": "DraftKings",
               "home_point": 4.5,
-              "home_price": -105,
+              "home_price": -102,
               "away_point": -4.5,
-              "away_price": -115
+              "away_price": -118
             },
             {
               "book": "FanDuel",
@@ -7196,8 +7130,8 @@
               ],
               "sp": [
                 4.5,
-                -105,
-                -115
+                -102,
+                -118
               ],
               "tot": [
                 47.5,
@@ -7387,9 +7321,9 @@
                 -220
               ],
               "sp": [
-                4.5,
-                -105,
-                -115
+                5.5,
+                -124,
+                -107
               ],
               "tot": [
                 47.5,
@@ -7399,7 +7333,7 @@
             },
             "betmgm": {
               "ml": [
-                185,
+                188,
                 -225
               ],
               "sp": [
@@ -7409,14 +7343,14 @@
               ],
               "tot": [
                 48.0,
-                -108,
-                -110
+                -110,
+                -108
               ]
             },
             "bovada": {
               "ml": [
-                190,
-                -230
+                185,
+                -225
               ],
               "sp": [
                 5.0,
@@ -7543,9 +7477,9 @@
             }
           },
           "commence_time": "2026-10-04T20:25:00Z",
-          "blend_home_prob": 0.3105,
-          "home_ev_at_best": -0.1151,
-          "away_ev_at_best": 0.0178
+          "blend_home_prob": 0.3108,
+          "home_ev_at_best": -0.1141,
+          "away_ev_at_best": 0.0173
         }
       },
       "top_factors": [
@@ -7571,9 +7505,6 @@
       "model_total": 42.8,
       "grade_v2": null,
       "grade_v2_sides": {},
-      "grade_v2_check": [
-        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
-      ],
       "totals_grade": {
         "side": "over",
         "point": 47.5,
@@ -7583,7 +7514,7 @@
         "predicted_clv": -0.0322,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "consensus_total": 48.15,
         "sharp_total": 48.18
       },
@@ -7733,11 +7664,11 @@
         "book": "theScore Bet",
         "p_sharp": 0.6705,
         "p_model": 0.6514,
-        "p_market": 0.667,
+        "p_market": 0.6664,
         "p_needed": 0.6774,
         "ev_sharp": -0.0102,
         "ev_model": -0.0384,
-        "gap": 0.010419354838709594,
+        "gap": 0.011019354838709638,
         "verdict": "pass",
         "reasons": [
           "best price only -1.0% vs sharp books (need 2%)",
@@ -7755,11 +7686,11 @@
         "book": "theScore Bet",
         "p_sharp": 0.6705,
         "p_model": 0.6514,
-        "p_market": 0.667,
+        "p_market": 0.6664,
         "p_needed": 0.6774,
         "ev_sharp": -0.0102,
         "ev_model": -0.0384,
-        "gap": 0.010419354838709594,
+        "gap": 0.011019354838709638,
         "verdict": "pass",
         "reasons": [
           "best price only -1.0% vs sharp books (need 2%)",
@@ -7804,7 +7735,7 @@
         "ev_sharp": -0.0432,
         "sharp_total": 48.18,
         "consensus_total": 48.15,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "verdict": "pass",
         "reasons": [
           "best under only -4.3% vs the sharp fair total (need +0%)",
@@ -7828,13 +7759,13 @@
         "team": "KC"
       },
       "tuesday_move_check": [
-        "predicted move 0.04 pts (needs 0.743)",
+        "predicted move 0.05 pts (needs 0.743)",
         "starting QB uncertain or changed",
         "kickoff not 3.5-7 days away",
         "only bets at the Tuesday 7:10am AZ run"
       ],
       "tuesday_move": {
-        "predicted_move_pts": -0.04,
+        "predicted_move_pts": -0.05,
         "side": "home",
         "team": "LV",
         "tuesday_point": 4.5
@@ -7844,9 +7775,9 @@
         "side": "home",
         "team": "LV",
         "point": 4.5,
-        "price": -105,
+        "price": -102,
         "book": "DraftKings",
-        "ev": -0.0331,
+        "ev": -0.0192,
         "p_cover": 0.4953,
         "p_push": 0.0,
         "grade": "C",
@@ -7878,7 +7809,7 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 68.1,
@@ -7945,8 +7876,8 @@
             "price": 102,
             "ev": -0.0186,
             "best_book": "draftkings",
-            "best_book_price": -105,
-            "best_book_ev": -0.0509
+            "best_book_price": -102,
+            "best_book_ev": -0.0373
           },
           "totals:over": {
             "label": "ProphetX",
@@ -7969,7 +7900,10 @@
             "best_book_ev": null
           }
         }
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ]
     },
     {
       "game_id": "2026_04_LAC_SEA",
@@ -8032,7 +7966,7 @@
         "live_odds": {
           "event_id": "96d2373cda647873b971f268482bced0",
           "totals": {
-            "consensus_total": 43.11,
+            "consensus_total": 43.13,
             "sharp_total": 42.7,
             "median_point": 43.0,
             "totals_by_book": [
@@ -8207,13 +8141,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                42.5,
-                -104,
-                100
-              ],
-              [
                 "novig",
                 "Novig",
                 42.5,
@@ -8243,7 +8170,7 @@
               ]
             ]
           },
-          "books": 26,
+          "books": 25,
           "consensus_home_prob": 0.7475,
           "sharp_home_prob": 0.7429,
           "sharp_books": 2,
@@ -8660,7 +8587,7 @@
           "commence_time": "2026-10-04T20:25:00Z",
           "blend_home_prob": 0.7613,
           "home_ev_at_best": -0.0272,
-          "away_ev_at_best": -0.0573
+          "away_ev_at_best": -0.0572
         }
       },
       "top_factors": [
@@ -8713,7 +8640,7 @@
         "predicted_clv": -0.02,
         "grade": "B",
         "grading_version": 2,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "consensus_total": 43.14,
         "sharp_total": 42.71
       },
@@ -8916,7 +8843,7 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 3.8,
-        "consensus_total": 43.11,
+        "consensus_total": 43.13,
         "best_under": {
           "book": "theScore Bet",
           "book_key": "espnbet",
@@ -8941,7 +8868,7 @@
         "ev_sharp": -0.0097,
         "sharp_total": 42.71,
         "consensus_total": 43.14,
-        "hours_before": 5.2,
+        "hours_before": 5.0,
         "verdict": "pass",
         "reasons": [
           "best under only -1.0% vs the sharp fair total (need +0%)",
@@ -9026,7 +8953,7 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "best": {
           "h2h:away": {
             "label": "ProphetX",
@@ -9047,26 +8974,6 @@
             "best_book": "draftkings",
             "best_book_price": -360,
             "best_book_ev": -0.0505
-          },
-          "spreads:away": {
-            "label": "Polymarket US",
-            "side": "away",
-            "point": 7.5,
-            "price": -123,
-            "ev": -0.0381,
-            "best_book": null,
-            "best_book_price": null,
-            "best_book_ev": null
-          },
-          "spreads:home": {
-            "label": "Polymarket US",
-            "side": "home",
-            "point": -7.5,
-            "price": 107,
-            "ev": -0.0259,
-            "best_book": null,
-            "best_book_price": null,
-            "best_book_ev": null
           }
         }
       }
@@ -9307,13 +9214,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                42.5,
-                -108,
-                104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 42.5,
@@ -9337,9 +9237,9 @@
               [
                 "betopenly",
                 "BetOpenly",
-                43.0,
-                100,
-                100
+                42.5,
+                -108,
+                108
               ],
               [
                 "pinnacle",
@@ -9350,11 +9250,11 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.3721,
+          "books": 26,
+          "consensus_home_prob": 0.3678,
           "sharp_home_prob": 0.373,
           "sharp_books": 2,
-          "pinnacle_home_prob": 0.3734,
+          "pinnacle_home_prob": 0.3676,
           "sharp_spreads": [
             [
               3.5,
@@ -9369,12 +9269,12 @@
           ],
           "pin_sharp_home_prob": 0.373,
           "best_exchange_home_ml": {
-            "price": 171,
-            "book": "BetOpenly"
+            "price": 178,
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": -170,
-            "book": "Polymarket"
+            "book": "Novig"
           },
           "consensus_home_margin": -3.5,
           "best_home_ml": {
@@ -9594,7 +9494,7 @@
               ],
               "sp": [
                 3.5,
-                -110,
+                -115,
                 -110
               ],
               "tot": [
@@ -9621,7 +9521,7 @@
             },
             "betmgm": {
               "ml": [
-                155,
+                160,
                 -190
               ],
               "sp": [
@@ -9701,8 +9601,8 @@
             },
             "betanysports": {
               "ml": [
-                160,
-                -185
+                165,
+                -195
               ],
               "sp": [
                 3.5,
@@ -9733,13 +9633,13 @@
             },
             "bovada": {
               "ml": [
-                160,
-                -185
+                165,
+                -195
               ],
               "sp": [
                 3.5,
-                -110,
-                -110
+                -105,
+                -115
               ],
               "tot": [
                 43.0,
@@ -9749,13 +9649,13 @@
             },
             "pinnacle": {
               "ml": [
-                161,
-                -180
+                165,
+                -185
               ],
               "sp": [
                 3.5,
-                -109,
-                -101
+                -106,
+                -104
               ],
               "tot": [
                 43.0,
@@ -9765,9 +9665,9 @@
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.3656,
-          "home_ev_at_best": -0.0348,
-          "away_ev_at_best": -0.0208
+          "blend_home_prob": 0.3631,
+          "home_ev_at_best": -0.0414,
+          "away_ev_at_best": -0.017
         }
       },
       "top_factors": [
@@ -9820,7 +9720,7 @@
         "predicted_clv": -0.0286,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 43.15,
         "sharp_total": 43.15
       },
@@ -9970,11 +9870,11 @@
         "book": "DraftKings",
         "p_sharp": 0.373,
         "p_model": 0.4134,
-        "p_market": 0.3721,
+        "p_market": 0.3678,
         "p_needed": 0.3788,
         "ev_sharp": -0.0153,
         "ev_model": 0.0914,
-        "gap": 0.006687878787878854,
+        "gap": 0.010987878787878824,
         "verdict": "pass",
         "reasons": [
           "best price only -1.5% vs sharp books (need 2%)"
@@ -9990,11 +9890,11 @@
         "book": "DraftKings",
         "p_sharp": 0.373,
         "p_model": 0.4134,
-        "p_market": 0.3721,
+        "p_market": 0.3678,
         "p_needed": 0.3788,
         "ev_sharp": -0.0153,
         "ev_model": 0.0914,
-        "gap": 0.006687878787878854,
+        "gap": 0.010987878787878824,
         "verdict": "pass",
         "reasons": [
           "best price only -1.5% vs sharp books (need 2%)"
@@ -10053,7 +9953,7 @@
         "ev_sharp": -0.0262,
         "sharp_total": 43.15,
         "consensus_total": 43.15,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -2.6% vs the sharp fair total (need +0%)",
@@ -10138,19 +10038,19 @@
         "current_grade": "C"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 64.0,
             "all_in_cents": 65.64,
             "price": -191,
-            "ev": -0.0455
+            "ev": -0.0366
           },
           "home": {
-            "quoted_cents": 37.0,
-            "all_in_cents": 38.67,
-            "price": 159,
-            "ev": -0.0343
+            "quoted_cents": 36.0,
+            "all_in_cents": 37.58,
+            "price": 166,
+            "ev": -0.0218
           }
         },
         "robinhood": {
@@ -10158,13 +10058,13 @@
             "quoted_cents": 64.0,
             "all_in_cents": 66.03,
             "price": -194,
-            "ev": -0.0511
+            "ev": -0.0423
           },
           "home": {
-            "quoted_cents": 37.0,
-            "all_in_cents": 39.04,
-            "price": 156,
-            "ev": -0.0434
+            "quoted_cents": 36.0,
+            "all_in_cents": 37.97,
+            "price": 163,
+            "ev": -0.0318
           }
         },
         "best": {
@@ -10172,41 +10072,41 @@
             "label": "ProphetX",
             "side": "away",
             "point": null,
-            "price": -173,
-            "ev": -0.0122,
+            "price": -176,
+            "ev": -0.0073,
             "best_book": "fanduel",
             "best_book_price": -184,
-            "best_book_ev": -0.0329
+            "best_book_ev": -0.0239
           },
           "h2h:home": {
-            "label": "ProphetX",
-            "side": "home",
-            "point": null,
-            "price": 163,
-            "ev": -0.0191,
-            "best_book": "draftkings",
-            "best_book_price": 164,
-            "best_book_ev": -0.0142
-          },
-          "spreads:away": {
-            "label": "Polymarket US",
-            "side": "away",
-            "point": -3.5,
-            "price": -101,
-            "ev": -0.0239,
-            "best_book": "espnbet",
-            "best_book_price": -110,
-            "best_book_ev": -0.0632
-          },
-          "spreads:home": {
             "label": "Kalshi",
             "side": "home",
+            "point": null,
+            "price": 166,
+            "ev": -0.0218,
+            "best_book": "draftkings",
+            "best_book_price": 164,
+            "best_book_ev": -0.0295
+          },
+          "spreads:away": {
+            "label": "ProphetX",
+            "side": "away",
+            "point": -3.5,
+            "price": -100,
+            "ev": -0.0048,
+            "best_book": "espnbet",
+            "best_book_price": -110,
+            "best_book_ev": -0.0498
+          },
+          "spreads:home": {
+            "label": "ProphetX",
+            "side": "home",
             "point": 3.5,
-            "price": -112,
-            "ev": -0.0341,
+            "price": -108,
+            "ev": -0.0333,
             "best_book": "draftkings",
             "best_book_price": -105,
-            "best_book_ev": -0.0057
+            "best_book_ev": -0.0193
           }
         }
       }
@@ -10443,13 +10343,6 @@
                 -115
               ],
               [
-                "polymarket",
-                "Polymarket",
-                38.5,
-                -104,
-                100
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 38.5,
@@ -10474,23 +10367,23 @@
                 "prophetx",
                 "ProphetX",
                 38.5,
-                -103,
+                -104,
                 102
               ],
               [
                 "pinnacle",
                 "Pinnacle",
                 38.5,
-                -104,
-                -108
+                -103,
+                -109
               ]
             ]
           },
-          "books": 27,
+          "books": 26,
           "consensus_home_prob": 0.8192,
           "sharp_home_prob": 0.8296,
           "sharp_books": 2,
-          "pinnacle_home_prob": 0.8154,
+          "pinnacle_home_prob": 0.8174,
           "sharp_spreads": [
             [
               -10.0,
@@ -10506,7 +10399,7 @@
           "pin_sharp_home_prob": 0.8296,
           "best_exchange_home_ml": {
             "price": -488,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 484,
@@ -10885,18 +10778,18 @@
             },
             "pinnacle": {
               "ml": [
-                -531,
-                425
+                -538,
+                431
               ],
               "sp": [
                 -10.0,
-                106,
-                -117
+                105,
+                -116
               ],
               "tot": [
                 38.5,
-                -104,
-                -108
+                -103,
+                -109
               ]
             }
           },
@@ -10965,7 +10858,7 @@
         "predicted_clv": -0.0259,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 4.9,
+        "hours_before": 4.7,
         "consensus_total": 38.51,
         "sharp_total": 38.25
       },
@@ -11180,7 +11073,7 @@
         "ev_sharp": -0.0232,
         "sharp_total": 38.25,
         "consensus_total": 38.51,
-        "hours_before": 4.9,
+        "hours_before": 4.7,
         "verdict": "pass",
         "reasons": [
           "best under only -2.3% vs the sharp fair total (need +0%)",
@@ -11269,19 +11162,19 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 18.0,
             "all_in_cents": 19.02,
             "price": 426,
-            "ev": -0.0295
+            "ev": -0.0401
           },
           "home": {
             "quoted_cents": 83.0,
             "all_in_cents": 83.98,
             "price": -524,
-            "ev": -0.029
+            "ev": -0.0266
           }
         },
         "robinhood": {
@@ -11289,13 +11182,13 @@
             "quoted_cents": 18.0,
             "all_in_cents": 19.99,
             "price": 400,
-            "ev": -0.0765
+            "ev": -0.0866
           },
           "home": {
             "quoted_cents": 83.0,
             "all_in_cents": 84.98,
             "price": -566,
-            "ev": -0.0405
+            "ev": -0.0381
           }
         },
         "best": {
@@ -11304,40 +11197,40 @@
             "side": "away",
             "point": null,
             "price": 470,
-            "ev": 0.0528,
+            "ev": 0.0413,
             "best_book": "draftkings",
             "best_book_price": 400,
-            "best_book_ev": -0.077
+            "best_book_ev": -0.087
           },
           "h2h:home": {
             "label": "ProphetX",
             "side": "home",
             "point": null,
             "price": -500,
-            "ev": -0.0215,
+            "ev": -0.0191,
             "best_book": "fanduel",
             "best_book_price": -510,
-            "best_book_ev": -0.0247
+            "best_book_ev": -0.0223
           },
           "totals:over": {
             "label": "ProphetX",
             "side": "over",
             "point": 38.5,
-            "price": -105,
-            "ev": -0.0332,
+            "price": -106,
+            "ev": -0.0422,
             "best_book": "draftkings",
             "best_book_price": -108,
-            "best_book_ev": -0.0459
+            "best_book_ev": -0.0503
           },
           "totals:under": {
             "label": "ProphetX",
             "side": "under",
             "point": 38.5,
             "price": -100,
-            "ev": 0.009,
+            "ev": 0.0135,
             "best_book": "fanduel",
             "best_book_price": -110,
-            "best_book_ev": -0.0367
+            "best_book_ev": -0.0323
           }
         }
       }
@@ -11578,13 +11471,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                49.5,
-                100,
-                -104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 49.5,
@@ -11594,9 +11480,9 @@
               [
                 "betopenly",
                 "BetOpenly",
-                49.5,
-                103,
-                100
+                49.0,
+                101,
+                -101
               ],
               [
                 "novig",
@@ -11609,23 +11495,23 @@
                 "prophetx",
                 "ProphetX",
                 48.5,
-                -117,
+                -116,
                 113
               ],
               [
                 "pinnacle",
                 "Pinnacle",
                 49.5,
-                -105,
-                -107
+                -104,
+                -108
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.7362,
+          "books": 26,
+          "consensus_home_prob": 0.7372,
           "sharp_home_prob": 0.7402,
           "sharp_books": 2,
-          "pinnacle_home_prob": 0.7316,
+          "pinnacle_home_prob": 0.733,
           "sharp_spreads": [
             [
               -7.0,
@@ -11640,21 +11526,21 @@
           ],
           "pin_sharp_home_prob": 0.7402,
           "best_exchange_home_ml": {
-            "price": -285,
-            "book": "Polymarket"
+            "price": -280,
+            "book": "ProphetX"
           },
           "best_exchange_away_ml": {
-            "price": 287,
+            "price": 290,
             "book": "BetOpenly"
           },
           "consensus_home_margin": 7.0,
           "best_home_ml": {
-            "price": -320,
+            "price": -300,
             "book": "theScore Bet",
             "key": "espnbet"
           },
           "best_away_ml": {
-            "price": 270,
+            "price": 280,
             "book": "FanDuel",
             "key": "fanduel"
           },
@@ -11662,16 +11548,16 @@
             {
               "book": "DraftKings",
               "home_point": -7.0,
-              "home_price": -105,
+              "home_price": -108,
               "away_point": 7.0,
-              "away_price": -115
+              "away_price": -112
             },
             {
               "book": "FanDuel",
-              "home_point": -6.5,
-              "home_price": -122,
-              "away_point": 6.5,
-              "away_price": 100
+              "home_point": -7.0,
+              "home_price": -105,
+              "away_point": 7.0,
+              "away_price": -115
             },
             {
               "book": "theScore Bet",
@@ -11684,13 +11570,13 @@
           "by_book": {
             "draftkings": {
               "ml": [
-                -325,
-                260
+                -340,
+                270
               ],
               "sp": [
                 -7.0,
-                -105,
-                -115
+                -108,
+                -112
               ],
               "tot": [
                 49.5,
@@ -11716,13 +11602,13 @@
             },
             "fanduel": {
               "ml": [
-                -335,
-                270
+                -350,
+                280
               ],
               "sp": [
-                -6.5,
-                -122,
-                100
+                -7.0,
+                -105,
+                -115
               ],
               "tot": [
                 49.5,
@@ -11876,13 +11762,13 @@
             },
             "courtside": {
               "ml": [
-                -316,
-                267
+                -331,
+                277
               ],
               "sp": [
                 -7.0,
-                -103,
-                -113
+                -106,
+                -110
               ],
               "tot": [
                 49.5,
@@ -11908,8 +11794,8 @@
             },
             "espnbet": {
               "ml": [
-                -320,
-                260
+                -300,
+                250
               ],
               "sp": [
                 -7.0,
@@ -11928,9 +11814,9 @@
                 260
               ],
               "sp": [
-                -6.5,
-                -120,
-                100
+                -7.0,
+                -105,
+                -115
               ],
               "tot": [
                 49.5,
@@ -12008,9 +11894,9 @@
                 260
               ],
               "sp": [
-                -6.5,
-                -115,
-                -105
+                -7.0,
+                -105,
+                -115
               ],
               "tot": [
                 49.5,
@@ -12020,25 +11906,25 @@
             },
             "pinnacle": {
               "ml": [
-                -305,
-                262
+                -307,
+                264
               ],
               "sp": [
                 -7.0,
-                106,
-                -117
+                105,
+                -116
               ],
               "tot": [
                 49.5,
-                -105,
-                -107
+                -104,
+                -108
               ]
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.7032,
-          "home_ev_at_best": -0.0771,
-          "away_ev_at_best": 0.0982
+          "blend_home_prob": 0.7038,
+          "home_ev_at_best": -0.0616,
+          "away_ev_at_best": 0.1255
         }
       },
       "top_factors": [
@@ -12065,20 +11951,20 @@
       "grade_v2": {
         "side": "away",
         "team": "NE",
-        "price": 270,
+        "price": 280,
         "book": "FanDuel",
-        "predicted_clv": -0.0097,
-        "grade": "C",
+        "predicted_clv": 0.0079,
+        "grade": "B",
         "grading_version": 2
       },
       "grade_v2_sides": {
         "away": {
           "side": "away",
           "team": "NE",
-          "price": 270,
+          "price": 280,
           "book": "FanDuel",
-          "predicted_clv": -0.0097,
-          "grade": "C",
+          "predicted_clv": 0.0079,
+          "grade": "B",
           "grading_version": 2
         }
       },
@@ -12091,7 +11977,7 @@
         "predicted_clv": -0.0364,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 49.67,
         "sharp_total": 49.39
       },
@@ -12226,47 +12112,43 @@
       },
       "spread_check": [],
       "ml_v2_check": [
-        "best price only -2.9% vs sharp books (need 2%)",
-        "model disagrees"
+        "best price only -1.3% vs sharp books (need 2%)"
       ],
       "ml_v2": {
-        "side": "home",
-        "team": "BUF",
-        "price": -320,
-        "book": "theScore Bet",
-        "p_sharp": 0.7402,
-        "p_model": 0.6488,
-        "p_market": 0.7362,
-        "p_needed": 0.7619,
-        "ev_sharp": -0.0285,
-        "ev_model": -0.1484,
-        "gap": 0.025704761904761897,
+        "side": "away",
+        "team": "NE",
+        "price": 280,
+        "book": "FanDuel",
+        "p_sharp": 0.2598,
+        "p_model": 0.3512,
+        "p_market": 0.2628,
+        "p_needed": 0.2632,
+        "ev_sharp": -0.0128,
+        "ev_model": 0.3346,
+        "gap": 0.0003578947368420571,
         "verdict": "pass",
         "reasons": [
-          "best price only -2.9% vs sharp books (need 2%)",
-          "model disagrees"
+          "best price only -1.3% vs sharp books (need 2%)"
         ]
       },
       "ml_v3_check": [
-        "best price only -2.9% vs sharp books (need 2%)",
-        "model disagrees"
+        "best price only -1.3% vs sharp books (need 2%)"
       ],
       "ml_v3": {
-        "side": "home",
-        "team": "BUF",
-        "price": -320,
-        "book": "theScore Bet",
-        "p_sharp": 0.7402,
-        "p_model": 0.6488,
-        "p_market": 0.7362,
-        "p_needed": 0.7619,
-        "ev_sharp": -0.0285,
-        "ev_model": -0.1484,
-        "gap": 0.025704761904761897,
+        "side": "away",
+        "team": "NE",
+        "price": 280,
+        "book": "FanDuel",
+        "p_sharp": 0.2598,
+        "p_model": 0.3512,
+        "p_market": 0.2628,
+        "p_needed": 0.2632,
+        "ev_sharp": -0.0128,
+        "ev_model": 0.3346,
+        "gap": 0.0003578947368420571,
         "verdict": "pass",
         "reasons": [
-          "best price only -2.9% vs sharp books (need 2%)",
-          "model disagrees"
+          "best price only -1.3% vs sharp books (need 2%)"
         ]
       },
       "ml_v4_check": [
@@ -12276,13 +12158,13 @@
       "ml_v4": {
         "side": "away",
         "team": "NE",
-        "price": 270,
+        "price": 280,
         "book": "FanDuel",
         "p_spread": 0.2808,
         "p_sharp_ml": 0.2598,
-        "p_needed": 0.2703,
-        "ev_spread": 0.039,
-        "ev_ml": -0.0387,
+        "p_needed": 0.2632,
+        "ev_spread": 0.067,
+        "ev_ml": -0.0128,
         "verdict": "lean",
         "reasons": [
           "negative vs sharp moneyline",
@@ -12320,7 +12202,7 @@
         "ev_sharp": -0.0296,
         "sharp_total": 49.39,
         "consensus_total": 49.67,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -3.0% vs the sharp fair total (need +0%)",
@@ -12358,36 +12240,36 @@
       "aplus_ml": {
         "side": "away",
         "team": "NE",
-        "price": 270,
+        "price": 280,
         "book": "FanDuel",
-        "grade": "C",
-        "predicted_clv": -0.0097,
+        "grade": "B",
+        "predicted_clv": 0.0079,
         "verdict": "pass",
         "reasons": [
-          "grade C (needs A+)"
+          "grade B (needs A+)"
         ]
       },
       "aplus_spread": {
         "side": "away",
         "team": "NE",
-        "point": 6.5,
-        "price": 100,
-        "book": "FanDuel",
-        "ev": 0.0547,
+        "point": 7.0,
+        "price": -112,
+        "book": "DraftKings",
+        "ev": 0.0488,
         "p_cover": 0.5273,
-        "p_push": 0.0,
-        "grade": "C+",
-        "score": 0,
+        "p_push": 0.0507,
+        "grade": "B",
+        "score": 1,
         "why": [
-          "+2 edge +5.5%",
+          "+1 edge +4.9%",
           "-1 line moved against us",
-          "-1 wrong side of 3/7"
+          "+1 right side of 3/7"
         ],
         "grading_version": 1,
         "expected_home_margin": 6.22,
         "verdict": "pass",
         "reasons": [
-          "grade C+ (needs A+)"
+          "grade B (needs A+)"
         ]
       },
       "aplus_totals": {
@@ -12407,19 +12289,19 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 74.0,
             "all_in_cents": 75.37,
             "price": -306,
-            "ev": -0.0293
+            "ev": -0.0275
           },
           "away": {
             "quoted_cents": 26.0,
             "all_in_cents": 27.32,
             "price": 266,
-            "ev": -0.0177
+            "ev": -0.0228
           }
         },
         "robinhood": {
@@ -12427,13 +12309,13 @@
             "quoted_cents": 74.0,
             "all_in_cents": 76.03,
             "price": -317,
-            "ev": -0.0377
+            "ev": -0.0358
           },
           "away": {
             "quoted_cents": 26.0,
             "all_in_cents": 27.97,
             "price": 257,
-            "ev": -0.0406
+            "ev": -0.0456
           }
         },
         "best": {
@@ -12441,41 +12323,41 @@
             "label": "ProphetX",
             "side": "home",
             "point": null,
-            "price": -291,
-            "ev": -0.0168,
+            "price": -286,
+            "ev": -0.0104,
             "best_book": "espnbet",
-            "best_book_price": -320,
-            "best_book_ev": -0.0398
+            "best_book_price": -300,
+            "best_book_ev": -0.0227
           },
           "h2h:away": {
             "label": "ProphetX",
             "side": "away",
             "point": null,
             "price": 274,
-            "ev": 0.0048,
+            "ev": -0.0004,
             "best_book": "fanduel",
-            "best_book_price": 270,
-            "best_book_ev": -0.0069
+            "best_book_price": 280,
+            "best_book_ev": 0.0146
           },
           "totals:over": {
-            "label": "Polymarket US",
+            "label": "Kalshi",
             "side": "over",
             "point": 49.5,
-            "price": -105,
-            "ev": -0.0289,
+            "price": -112,
+            "ev": -0.0605,
             "best_book": "espnbet",
             "best_book_price": -105,
-            "best_book_ev": -0.0283
+            "best_book_ev": -0.0328
           },
           "totals:under": {
             "label": "Kalshi",
             "side": "under",
             "point": 49.5,
             "price": -107,
-            "ev": -0.0294,
+            "ev": -0.025,
             "best_book": "fanduel",
             "best_book_price": -110,
-            "best_book_ev": -0.0411
+            "best_book_ev": -0.0367
           }
         }
       }
@@ -12716,13 +12598,6 @@
                 -115
               ],
               [
-                "polymarket",
-                "Polymarket",
-                43.5,
-                100,
-                -104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 43.5,
@@ -12746,9 +12621,9 @@
               [
                 "prophetx",
                 "ProphetX",
-                43.5,
-                102,
-                -104
+                43.0,
+                -106,
+                104
               ],
               [
                 "pinnacle",
@@ -12759,8 +12634,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.6316,
+          "books": 26,
+          "consensus_home_prob": 0.631,
           "sharp_home_prob": 0.6328,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.6306,
@@ -12778,12 +12653,12 @@
           ],
           "pin_sharp_home_prob": 0.6328,
           "best_exchange_home_ml": {
-            "price": -174,
-            "book": "Novig"
+            "price": -172,
+            "book": "BetOpenly"
           },
           "best_exchange_away_ml": {
             "price": 170,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "consensus_home_margin": 3.5,
           "best_home_ml": {
@@ -13115,8 +12990,8 @@
               ],
               "sp": [
                 -3.5,
-                -110,
-                -110
+                -115,
+                -105
               ],
               "tot": [
                 43.0,
@@ -13174,9 +13049,9 @@
             }
           },
           "commence_time": "2026-10-04T17:00:00Z",
-          "blend_home_prob": 0.7022,
-          "home_ev_at_best": 0.0968,
-          "away_ev_at_best": -0.2407
+          "blend_home_prob": 0.7019,
+          "home_ev_at_best": 0.0963,
+          "away_ev_at_best": -0.2399
         }
       },
       "top_factors": [
@@ -13229,7 +13104,7 @@
         "predicted_clv": -0.0186,
         "grade": "B",
         "grading_version": 2,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "consensus_total": 43.37,
         "sharp_total": 43.39
       },
@@ -13356,11 +13231,11 @@
         "book": "FanDuel",
         "p_sharp": 0.6328,
         "p_model": 0.7565,
-        "p_market": 0.6316,
+        "p_market": 0.631,
         "p_needed": 0.6403,
         "ev_sharp": -0.0117,
         "ev_model": 0.1815,
-        "gap": 0.008687769784172628,
+        "gap": 0.009287769784172673,
         "verdict": "pass",
         "reasons": [
           "best price only -1.2% vs sharp books (need 2%)"
@@ -13376,11 +13251,11 @@
         "book": "FanDuel",
         "p_sharp": 0.6328,
         "p_model": 0.7565,
-        "p_market": 0.6316,
+        "p_market": 0.631,
         "p_needed": 0.6403,
         "ev_sharp": -0.0117,
         "ev_model": 0.1815,
-        "gap": 0.008687769784172628,
+        "gap": 0.009287769784172673,
         "verdict": "pass",
         "reasons": [
           "best price only -1.2% vs sharp books (need 2%)"
@@ -13439,7 +13314,7 @@
         "ev_sharp": -0.0089,
         "sharp_total": 43.39,
         "consensus_total": 43.37,
-        "hours_before": 1.8,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -0.9% vs the sharp fair total (need +0%)",
@@ -13522,7 +13397,7 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 64.0,
@@ -13573,24 +13448,44 @@
             "best_book_ev": -0.058
           },
           "spreads:home": {
-            "label": "ProphetX",
+            "label": "Kalshi",
             "side": "home",
             "point": -3.5,
-            "price": 101,
-            "ev": -0.0093,
+            "price": -107,
+            "ev": -0.0473,
             "best_book": "fanduel",
             "best_book_price": -108,
             "best_book_ev": -0.0505
           },
           "spreads:away": {
-            "label": "ProphetX",
+            "label": "Kalshi",
             "side": "away",
             "point": 3.5,
-            "price": -108,
-            "ev": -0.0243,
+            "price": -112,
+            "ev": -0.0385,
             "best_book": "draftkings",
             "best_book_price": -108,
             "best_book_ev": -0.0236
+          },
+          "totals:over": {
+            "label": "ProphetX",
+            "side": "over",
+            "point": 43.0,
+            "price": -108,
+            "ev": -0.018,
+            "best_book": null,
+            "best_book_price": null,
+            "best_book_ev": null
+          },
+          "totals:under": {
+            "label": "ProphetX",
+            "side": "under",
+            "point": 43.0,
+            "price": 102,
+            "ev": -0.0111,
+            "best_book": null,
+            "best_book_price": null,
+            "best_book_ev": null
           }
         }
       }
@@ -13656,7 +13551,7 @@
         "live_odds": {
           "event_id": "f01589b0e7e6dd4f4ac1220a1db81f53",
           "totals": {
-            "consensus_total": 42.51,
+            "consensus_total": 42.41,
             "sharp_total": 42.41,
             "median_point": 42.5,
             "totals_by_book": [
@@ -13700,7 +13595,7 @@
               [
                 "betus",
                 "BetUS",
-                42.5,
+                42.0,
                 -110,
                 -110
               ],
@@ -13764,7 +13659,7 @@
                 "fliff",
                 "Fliff",
                 42.5,
-                -115,
+                -110,
                 -110
               ],
               [
@@ -13812,7 +13707,7 @@
               [
                 "betanysports",
                 "BetAnything",
-                42.5,
+                42.0,
                 -110,
                 -110
               ],
@@ -13831,13 +13726,6 @@
                 -105
               ],
               [
-                "polymarket",
-                "Polymarket",
-                42.5,
-                100,
-                -104
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 42.5,
@@ -13847,9 +13735,9 @@
               [
                 "betopenly",
                 "BetOpenly",
-                42.5,
-                105,
-                -105
+                42.0,
+                100,
+                100
               ],
               [
                 "novig",
@@ -13862,8 +13750,8 @@
                 "prophetx",
                 "ProphetX",
                 42.5,
-                101,
-                -104
+                102,
+                -103
               ],
               [
                 "pinnacle",
@@ -13874,7 +13762,7 @@
               ]
             ]
           },
-          "books": 27,
+          "books": 26,
           "consensus_home_prob": 0.8525,
           "sharp_home_prob": 0.8494,
           "sharp_books": 2,
@@ -13893,11 +13781,11 @@
           ],
           "pin_sharp_home_prob": 0.8494,
           "best_exchange_home_ml": {
-            "price": -614,
-            "book": "Polymarket"
+            "price": -590,
+            "book": "Novig"
           },
           "best_exchange_away_ml": {
-            "price": 638,
+            "price": 675,
             "book": "BetOpenly"
           },
           "consensus_home_margin": 11.5,
@@ -13978,7 +13866,7 @@
                 -110
               ],
               "tot": [
-                42.5,
+                42.0,
                 -110,
                 -110
               ]
@@ -14113,8 +14001,8 @@
             },
             "fliff": {
               "ml": [
-                -935,
-                545
+                -970,
+                560
               ],
               "sp": [
                 -12.5,
@@ -14123,7 +14011,7 @@
               ],
               "tot": [
                 42.5,
-                -115,
+                -110,
                 -110
               ]
             },
@@ -14181,7 +14069,7 @@
                 550
               ],
               "sp": [
-                -12.0,
+                -11.5,
                 -110,
                 -110
               ],
@@ -14197,7 +14085,7 @@
                 550
               ],
               "sp": [
-                -12.0,
+                -11.5,
                 -110,
                 -110
               ],
@@ -14213,7 +14101,7 @@
                 550
               ],
               "sp": [
-                -12.0,
+                -11.5,
                 -110,
                 -110
               ],
@@ -14225,8 +14113,8 @@
             },
             "betanysports": {
               "ml": [
-                -750,
-                520
+                -800,
+                550
               ],
               "sp": [
                 -11.5,
@@ -14234,7 +14122,7 @@
                 -110
               ],
               "tot": [
-                42.5,
+                42.0,
                 -110,
                 -110
               ]
@@ -14291,7 +14179,7 @@
           "commence_time": "2026-10-04T17:00:00Z",
           "blend_home_prob": 0.872,
           "home_ev_at_best": -0.0147,
-          "away_ev_at_best": -0.1682
+          "away_ev_at_best": -0.1683
         }
       },
       "top_factors": [
@@ -14344,8 +14232,8 @@
         "predicted_clv": -0.0215,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 1.8,
-        "consensus_total": 42.56,
+        "hours_before": 1.6,
+        "consensus_total": 42.53,
         "sharp_total": 42.42
       },
       "totals_grade_sides": {
@@ -14390,14 +14278,14 @@
           "fanduel",
           42.5,
           -110,
-          -0.0594
+          -0.0616
         ],
         [
           "under",
           "fanduel",
           42.5,
           -110,
-          -0.0346
+          -0.033
         ],
         [
           "over",
@@ -14553,13 +14441,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 7.8,
-        "consensus_total": 42.51,
+        "consensus_total": 42.41,
         "best_under": {
           "book": "theScore Bet",
           "book_key": "espnbet",
           "point": 42.5,
           "price": -105,
-          "ev": -0.022
+          "ev": -0.0135
         },
         "verdict": "pass",
         "reasons": [
@@ -14577,8 +14465,8 @@
         "price": -105,
         "ev_sharp": -0.0163,
         "sharp_total": 42.42,
-        "consensus_total": 42.56,
-        "hours_before": 1.8,
+        "consensus_total": 42.53,
+        "hours_before": 1.6,
         "verdict": "pass",
         "reasons": [
           "best under only -1.6% vs the sharp fair total (need +0%)",
@@ -14652,7 +14540,7 @@
         "book_key": "espnbet",
         "grade": "C",
         "predicted_clv": -0.0215,
-        "consensus_total": 42.56,
+        "consensus_total": 42.53,
         "sharp_total": 42.42,
         "verdict": "pass",
         "reasons": [
@@ -14661,7 +14549,7 @@
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 86.0,
@@ -14705,8 +14593,8 @@
             "label": "ProphetX",
             "side": "away",
             "point": null,
-            "price": 588,
-            "ev": 0.0132,
+            "price": 568,
+            "ev": -0.0156,
             "best_book": "draftkings",
             "best_book_price": 550,
             "best_book_ev": -0.0426
@@ -14735,8 +14623,8 @@
             "label": "ProphetX",
             "side": "over",
             "point": 42.5,
-            "price": -101,
-            "ev": -0.0279,
+            "price": -100,
+            "ev": -0.0231,
             "best_book": "draftkings",
             "best_book_price": -105,
             "best_book_ev": -0.0463
@@ -14745,8 +14633,8 @@
             "label": "ProphetX",
             "side": "under",
             "point": 42.5,
-            "price": -106,
-            "ev": -0.0066,
+            "price": -105,
+            "ev": -0.0019,
             "best_book": "espnbet",
             "best_book_price": -105,
             "best_book_ev": -0.0014
@@ -14811,7 +14699,7 @@
         "live_odds": {
           "event_id": "8bd90781e17e6d97df3941063cedae1e",
           "totals": {
-            "consensus_total": 48.0,
+            "consensus_total": 48.05,
             "sharp_total": 48.31,
             "median_point": 47.5,
             "totals_by_book": [
@@ -14986,13 +14874,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                47.5,
-                -104,
-                100
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 47.5,
@@ -15029,8 +14910,8 @@
               ]
             ]
           },
-          "books": 27,
-          "consensus_home_prob": 0.54,
+          "books": 26,
+          "consensus_home_prob": 0.5413,
           "sharp_home_prob": 0.5282,
           "sharp_books": 2,
           "pinnacle_home_prob": 0.5355,
@@ -15049,13 +14930,13 @@
           "pin_sharp_home_prob": 0.5282,
           "best_exchange_home_ml": {
             "price": -117,
-            "book": "Polymarket"
+            "book": "Novig"
           },
           "best_exchange_away_ml": {
             "price": 117,
             "book": "BetOpenly"
           },
-          "consensus_home_margin": 1.5,
+          "consensus_home_margin": 1.8,
           "best_home_ml": {
             "price": -120,
             "book": "theScore Bet",
@@ -15444,9 +15325,9 @@
             }
           },
           "commence_time": "2026-10-06T00:15:00Z",
-          "blend_home_prob": 0.5199,
-          "home_ev_at_best": -0.0469,
-          "away_ev_at_best": 0.0083
+          "blend_home_prob": 0.5206,
+          "home_ev_at_best": -0.0455,
+          "away_ev_at_best": 0.0067
         }
       },
       "top_factors": [
@@ -15499,7 +15380,7 @@
         "predicted_clv": -0.0217,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 33.1,
+        "hours_before": 32.9,
         "consensus_total": 48.02,
         "sharp_total": 48.33
       },
@@ -15651,11 +15532,11 @@
         "book": "DraftKings",
         "p_sharp": 0.4718,
         "p_model": 0.4779,
-        "p_market": 0.46,
+        "p_market": 0.4587,
         "p_needed": 0.4762,
         "ev_sharp": -0.0092,
         "ev_model": 0.0036,
-        "gap": 0.0161904761904762,
+        "gap": 0.017490476190476167,
         "verdict": "pass",
         "reasons": [
           "best price only -0.9% vs sharp books (need 2%)"
@@ -15671,11 +15552,11 @@
         "book": "DraftKings",
         "p_sharp": 0.4718,
         "p_model": 0.4779,
-        "p_market": 0.46,
+        "p_market": 0.4587,
         "p_needed": 0.4762,
         "ev_sharp": -0.0092,
         "ev_model": 0.0036,
-        "gap": 0.0161904761904762,
+        "gap": 0.017490476190476167,
         "verdict": "pass",
         "reasons": [
           "best price only -0.9% vs sharp books (need 2%)"
@@ -15713,7 +15594,7 @@
         "point": -1.5,
         "price": -115,
         "book": "DraftKings",
-        "ev": -0.0367,
+        "ev": -0.0196,
         "verdict": "pending",
         "reasons": [
           "bets only in the last 3 h before kickoff"
@@ -15734,7 +15615,7 @@
         "ev_sharp": -0.0519,
         "sharp_total": 48.33,
         "consensus_total": 48.02,
-        "hours_before": 33.1,
+        "hours_before": 32.9,
         "verdict": "pass",
         "reasons": [
           "best under only -5.2% vs the sharp fair total (need +0%)",
@@ -15748,12 +15629,12 @@
         "picks": []
       },
       "preseason_prior_check": [
-        "market within 1.3 pts of the preseason number (needs 4)"
+        "market within 1.0 pts of the preseason number (needs 4)"
       ],
       "preseason_prior": {
         "pre_home_margin": 2.82,
-        "market_home_margin": 1.5,
-        "gap": 1.32,
+        "market_home_margin": 1.8,
+        "gap": 1.02,
         "side": "home",
         "team": "NO"
       },
@@ -15787,8 +15668,8 @@
         "point": 2.5,
         "price": -115,
         "book": "FanDuel",
-        "ev": -0.0005,
-        "p_cover": 0.5346,
+        "ev": -0.0131,
+        "p_cover": 0.5279,
         "p_push": 0.0,
         "grade": "C",
         "score": -1,
@@ -15798,7 +15679,7 @@
           "-1 QB change"
         ],
         "grading_version": 1,
-        "expected_home_margin": 0.77,
+        "expected_home_margin": 1.0,
         "verdict": "pass",
         "reasons": [
           "grade C (needs A+)"
@@ -15820,7 +15701,7 @@
         "current_grade": "C"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 46.9,
@@ -15948,7 +15829,7 @@
           "event_id": "259b5df9aa0d10257f56de78523495e0",
           "totals": {
             "consensus_total": 47.35,
-            "sharp_total": 47.25,
+            "sharp_total": null,
             "median_point": 47.0,
             "totals_by_book": [
               {
@@ -15982,13 +15863,6 @@
                 -109
               ],
               [
-                "betus",
-                "BetUS",
-                47.0,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 46.5,
@@ -16008,20 +15882,6 @@
                 47.0,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                47.0,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                47.0,
-                -107,
-                -107
               ],
               [
                 "ballybet",
@@ -16052,25 +15912,18 @@
                 -108
               ],
               [
-                "polymarket",
-                "Polymarket",
-                46.5,
-                -113,
-                100
-              ],
-              [
                 "kalshi",
                 "Kalshi",
                 46.5,
                 -108,
-                104
+                100
               ],
               [
                 "novig",
                 "Novig",
-                47.5,
-                -111,
-                -120
+                46.5,
+                -120,
+                -106
               ],
               [
                 "betopenly",
@@ -16081,27 +15934,16 @@
               ]
             ]
           },
-          "books": 13,
-          "consensus_home_prob": 0.8092,
+          "books": 12,
+          "consensus_home_prob": 0.8087,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -9.5,
-              -115,
-              -105
-            ],
-            [
-              -9.5,
-              -110,
-              100
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": -456,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 468,
@@ -16167,19 +16009,6 @@
                 -109
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -9.5,
-                -115,
-                -105
-              ],
-              "tot": [
-                47.0,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 -520,
@@ -16226,32 +16055,6 @@
                 47.0,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -9.5,
-                -115,
-                -105
-              ],
-              "tot": [
-                47.0,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -9.5,
-                -110,
-                100
-              ],
-              "tot": [
-                47.0,
-                -107,
-                -107
               ]
             },
             "ballybet": {
@@ -16320,9 +16123,9 @@
             }
           },
           "commence_time": "2026-10-09T00:15:00Z",
-          "blend_home_prob": 0.7615,
-          "home_ev_at_best": -0.092,
-          "away_ev_at_best": 0.1924
+          "blend_home_prob": 0.7612,
+          "home_ev_at_best": -0.0924,
+          "away_ev_at_best": 0.194
         }
       },
       "top_factors": [
@@ -16346,38 +16149,20 @@
         }
       ],
       "model_total": 50.1,
-      "grade_v2": {
-        "side": "away",
-        "team": "TB",
-        "price": 400,
-        "book": "DraftKings",
-        "predicted_clv": -0.0286,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "away": {
-          "side": "away",
-          "team": "TB",
-          "price": 400,
-          "book": "DraftKings",
-          "predicted_clv": -0.0286,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": {
         "side": "under",
         "point": 47.5,
         "price": -110,
         "book": "DraftKings",
         "book_key": "draftkings",
-        "predicted_clv": -0.0091,
-        "grade": "A",
+        "predicted_clv": -0.011,
+        "grade": "B",
         "grading_version": 2,
-        "hours_before": 105.1,
+        "hours_before": 104.9,
         "consensus_total": 47.35,
-        "sharp_total": 47.24
+        "sharp_total": null
       },
       "totals_grade_sides": {
         "over": {
@@ -16386,7 +16171,7 @@
           "price": -115,
           "book": "FanDuel",
           "book_key": "fanduel",
-          "predicted_clv": -0.0405,
+          "predicted_clv": -0.0389,
           "grade": "C",
           "grading_version": 2
         },
@@ -16396,8 +16181,8 @@
           "price": -110,
           "book": "DraftKings",
           "book_key": "draftkings",
-          "predicted_clv": -0.0091,
-          "grade": "A",
+          "predicted_clv": -0.011,
+          "grade": "B",
           "grading_version": 2
         }
       },
@@ -16407,28 +16192,28 @@
           "draftkings",
           47.5,
           -110,
-          -0.0828
+          -0.0806
         ],
         [
           "under",
           "draftkings",
           47.5,
           -110,
-          -0.0091
+          -0.011
         ],
         [
           "over",
           "fanduel",
           46.5,
           -115,
-          -0.0405
+          -0.0389
         ],
         [
           "under",
           "fanduel",
           46.5,
           -105,
-          -0.0493
+          -0.0533
         ]
       ],
       "bet_check": [
@@ -16534,24 +16319,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "best under only -1.1% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 47.5,
-        "price": -110,
-        "ev_sharp": -0.0106,
-        "sharp_total": 47.24,
-        "consensus_total": 47.35,
-        "hours_before": 105.1,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -1.1% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-08T00:15+00:00",
         "checked_at": null,
@@ -16579,18 +16349,7 @@
         "team": "TB",
         "tuesday_point": -9.5
       },
-      "aplus_ml": {
-        "side": "away",
-        "team": "TB",
-        "price": 400,
-        "book": "DraftKings",
-        "grade": "C",
-        "predicted_clv": -0.0286,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "away",
         "team": "TB",
@@ -16619,18 +16378,18 @@
         "price": -110,
         "book": "DraftKings",
         "book_key": "draftkings",
-        "grade": "A",
-        "predicted_clv": -0.0091,
+        "grade": "B",
+        "predicted_clv": -0.011,
         "consensus_total": 47.35,
-        "sharp_total": 47.24,
+        "sharp_total": null,
         "verdict": "pass",
         "reasons": [
-          "grade A (needs A+)"
+          "grade B (needs A+)"
         ],
         "team": "Under"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 82.0,
@@ -16660,7 +16419,10 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ]
     },
     {
       "game_id": "2026_05_BAL_ATL",
@@ -16717,7 +16479,7 @@
           "event_id": "86457f91112732f21ad4bb7d37bd291c",
           "totals": {
             "consensus_total": 49.67,
-            "sharp_total": 49.67,
+            "sharp_total": null,
             "median_point": 49.5,
             "totals_by_book": [
               {
@@ -16751,13 +16513,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                49.5,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 49.5,
@@ -16777,20 +16532,6 @@
                 49.5,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                49.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                49.5,
-                -107,
-                -107
               ],
               [
                 "betparx",
@@ -16814,13 +16555,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                49.5,
-                -122,
-                -113
-              ],
-              [
                 "novig",
                 "Novig",
                 49.5,
@@ -16829,27 +16563,16 @@
               ]
             ]
           },
-          "books": 9,
-          "consensus_home_prob": 0.3081,
+          "books": 8,
+          "consensus_home_prob": 0.3054,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              6.0,
-              -115,
-              -105
-            ],
-            [
-              6.0,
-              -110,
-              100
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 212,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": -245,
@@ -16908,19 +16631,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                6.0,
-                -115,
-                -105
-              ],
-              "tot": [
-                49.5,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 205,
@@ -16964,32 +16674,6 @@
                 49.5,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                6.0,
-                -115,
-                -105
-              ],
-              "tot": [
-                49.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                6.0,
-                -110,
-                100
-              ],
-              "tot": [
-                49.5,
-                -107,
-                -107
               ]
             },
             "betparx": {
@@ -17042,9 +16726,9 @@
             }
           },
           "commence_time": "2026-10-12T00:20:00Z",
-          "blend_home_prob": 0.3424,
-          "home_ev_at_best": 0.0957,
-          "away_ev_at_best": -0.0794
+          "blend_home_prob": 0.3408,
+          "home_ev_at_best": 0.0905,
+          "away_ev_at_best": -0.0771
         }
       },
       "top_factors": [
@@ -17068,32 +16752,11 @@
         }
       ],
       "model_total": 44.8,
-      "grade_v2": {
-        "side": "home",
-        "team": "ATL",
-        "price": 220,
-        "book": "DraftKings",
-        "predicted_clv": -0.0462,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "home": {
-          "side": "home",
-          "team": "ATL",
-          "price": 220,
-          "book": "DraftKings",
-          "predicted_clv": -0.0462,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -17183,24 +16846,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "best under only -4.7% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 49.5,
-        "price": -110,
-        "ev_sharp": -0.0468,
-        "sharp_total": 49.67,
-        "consensus_total": 49.67,
-        "hours_before": 177.1,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -4.7% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-11T00:20+00:00",
         "checked_at": null,
@@ -17229,19 +16877,7 @@
         "team": "ATL",
         "tuesday_point": 6.0
       },
-      "aplus_ml": {
-        "side": "home",
-        "team": "ATL",
-        "price": 220,
-        "book": "DraftKings",
-        "grade": "C",
-        "predicted_clv": -0.0462,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "home",
         "team": "ATL",
@@ -17266,7 +16902,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 32.1,
@@ -17296,7 +16932,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_CHI_GB",
@@ -17359,8 +17001,8 @@
         "live_odds": {
           "event_id": "2caea57b1e5cfbba1334cfbfd46f6771",
           "totals": {
-            "consensus_total": 45.42,
-            "sharp_total": 45.03,
+            "consensus_total": 45.81,
+            "sharp_total": null,
             "median_point": 45.5,
             "totals_by_book": [
               {
@@ -17415,27 +17057,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                44.5,
-                -110,
-                -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                44.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                44.5,
-                -107,
-                -107
-              ],
-              [
                 "betparx",
                 "betPARX",
                 45.5,
@@ -17457,42 +17078,24 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                44.5,
-                -203,
-                -170
-              ],
-              [
                 "novig",
                 "Novig",
-                45.5,
-                104,
-                -300
+                53.5,
+                -257,
+                -100000
               ]
             ]
           },
-          "books": 10,
+          "books": 9,
           "consensus_home_prob": 0.5499,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -2.0,
-              -107,
-              -113
-            ],
-            [
-              -2.0,
-              -102,
-              -108
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
-            "price": -108,
-            "book": "Polymarket"
+            "price": -122,
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 117,
@@ -17603,45 +17206,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -2.0,
-                -105,
-                -115
-              ],
-              "tot": [
-                44.5,
-                -110,
-                -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -2.0,
-                -107,
-                -113
-              ],
-              "tot": [
-                44.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -2.0,
-                -102,
-                -108
-              ],
-              "tot": [
-                44.5,
-                -107,
-                -107
-              ]
-            },
             "betparx": {
               "ml": [
                 -136,
@@ -17720,15 +17284,9 @@
       "model_total": 46.8,
       "grade_v2": null,
       "grade_v2_sides": {},
-      "grade_v2_check": [
-        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
-      ],
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -17819,13 +17377,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 13.8,
-        "consensus_total": 45.42,
+        "consensus_total": 45.81,
         "best_under": {
           "book": "DraftKings",
           "book_key": "draftkings",
           "point": 45.5,
           "price": -110,
-          "ev": -0.0211
+          "ev": -0.0435
         },
         "verdict": "pass",
         "reasons": [
@@ -17834,22 +17392,9 @@
         ]
       },
       "early_under_check": [
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 45.5,
-        "price": -110,
-        "ev_sharp": 0.0013,
-        "sharp_total": 45.01,
-        "consensus_total": 45.42,
-        "hours_before": 169.8,
-        "verdict": "lean",
-        "reasons": [
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -17902,7 +17447,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 46.1,
@@ -17932,7 +17477,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_CIN_MIA",
@@ -17996,7 +17547,7 @@
           "event_id": "c4647ca1201e6768501877267ca8251b",
           "totals": {
             "consensus_total": 46.66,
-            "sharp_total": 46.66,
+            "sharp_total": null,
             "median_point": 46.5,
             "totals_by_book": [
               {
@@ -18030,13 +17581,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                46.5,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 46.5,
@@ -18056,20 +17600,6 @@
                 46.5,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                46.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                46.5,
-                -107,
-                -107
               ],
               [
                 "ballybet",
@@ -18093,13 +17623,6 @@
                 -112
               ],
               [
-                "polymarket",
-                "Polymarket",
-                46.5,
-                -122,
-                -113
-              ],
-              [
                 "novig",
                 "Novig",
                 46.5,
@@ -18108,33 +17631,22 @@
               ]
             ]
           },
-          "books": 9,
+          "books": 8,
           "consensus_home_prob": 0.208,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              10.0,
-              -120,
-              100
-            ],
-            [
-              10.0,
-              -116,
-              105
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 456,
             "book": "Kalshi"
           },
           "best_exchange_away_ml": {
-            "price": -488,
-            "book": "Polymarket"
+            "price": -525,
+            "book": "Kalshi"
           },
-          "consensus_home_margin": -9.0,
+          "consensus_home_margin": -8.5,
           "best_home_ml": {
             "price": 410,
             "book": "FanDuel",
@@ -18191,19 +17703,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                10.0,
-                -120,
-                100
-              ],
-              "tot": [
-                46.5,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 410,
@@ -18247,32 +17746,6 @@
                 46.5,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                10.0,
-                -120,
-                100
-              ],
-              "tot": [
-                46.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                10.0,
-                -116,
-                105
-              ],
-              "tot": [
-                46.5,
-                -107,
-                -107
               ]
             },
             "ballybet": {
@@ -18374,9 +17847,6 @@
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "price outside allowed range",
         "injury report not out"
@@ -18482,24 +17952,9 @@
         ]
       },
       "early_under_check": [
-        "best under only -4.5% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 46.5,
-        "price": -110,
-        "ev_sharp": -0.0447,
-        "sharp_total": 46.64,
-        "consensus_total": 46.64,
-        "hours_before": 169.8,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -4.5% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -18507,25 +17962,25 @@
         "picks": []
       },
       "preseason_prior_check": [
-        "market within 2.7 pts of the preseason number (needs 4)"
+        "market within 3.2 pts of the preseason number (needs 4)"
       ],
       "preseason_prior": {
         "pre_home_margin": -11.69,
-        "market_home_margin": -9.0,
-        "gap": -2.69,
+        "market_home_margin": -8.5,
+        "gap": -3.19,
         "side": "away",
         "team": "CIN"
       },
       "tuesday_move_check": [
-        "predicted move 0.38 pts (needs 0.743)",
+        "predicted move 0.33 pts (needs 0.743)",
         "starting QB uncertain or changed",
         "only bets at the Tuesday 7:10am AZ run"
       ],
       "tuesday_move": {
-        "predicted_move_pts": -0.38,
+        "predicted_move_pts": -0.33,
         "side": "home",
         "team": "MIA",
-        "tuesday_point": 9.0
+        "tuesday_point": 8.75
       },
       "aplus_ml": {
         "side": "home",
@@ -18540,28 +17995,30 @@
         ]
       },
       "aplus_spread": {
-        "side": "away",
-        "team": "CIN",
-        "point": -8.5,
-        "price": -110,
-        "book": "DraftKings",
-        "ev": -0.0329,
-        "p_cover": 0.5066,
+        "side": "home",
+        "team": "MIA",
+        "point": 8.5,
+        "price": -105,
+        "book": "FanDuel",
+        "ev": -0.0136,
+        "p_cover": 0.5052,
         "p_push": 0.0,
-        "grade": "C+",
-        "score": 0,
-        "why": [],
+        "grade": "B",
+        "score": 1,
+        "why": [
+          "+1 line moved our way"
+        ],
         "grading_version": 1,
-        "expected_home_margin": -9.79,
+        "expected_home_margin": -9.42,
         "verdict": "pass",
         "reasons": [
-          "grade C+ (needs A+)",
+          "grade B (needs A+)",
           "more than 7 days before kickoff (research window)"
         ]
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 84.0,
@@ -18591,7 +18048,10 @@
           }
         },
         "best": {}
-      }
+      },
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_CLE_NYJ",
@@ -18678,9 +18138,6 @@
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "no live totals"
-      ],
       "bet_check": [
         "no live odds"
       ],
@@ -18720,7 +18177,10 @@
       ],
       "aplus_ml": null,
       "aplus_spread": null,
-      "aplus_totals": null
+      "aplus_totals": null,
+      "totals_grade_check": [
+        "no live totals"
+      ]
     },
     {
       "game_id": "2026_05_DEN_LAC",
@@ -18779,8 +18239,8 @@
         "live_odds": {
           "event_id": "d1d408fdfd272046fb517fe992a1c5a0",
           "totals": {
-            "consensus_total": 43.13,
-            "sharp_total": 42.56,
+            "consensus_total": 43.71,
+            "sharp_total": null,
             "median_point": 43.5,
             "totals_by_book": [
               {
@@ -18814,13 +18274,6 @@
                 -129
               ],
               [
-                "betus",
-                "BetUS",
-                42.5,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 43.5,
@@ -18840,20 +18293,6 @@
                 43.0,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                42.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                42.5,
-                -107,
-                -107
               ],
               [
                 "betparx",
@@ -18877,13 +18316,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                42.5,
-                -156,
-                -144
-              ],
-              [
                 "novig",
                 "Novig",
                 43.5,
@@ -18892,23 +18324,12 @@
               ]
             ]
           },
-          "books": 9,
-          "consensus_home_prob": 0.4478,
+          "books": 8,
+          "consensus_home_prob": 0.4482,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              2.0,
-              -115,
-              -105
-            ],
-            [
-              2.0,
-              -110,
-              100
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 122,
@@ -18978,19 +18399,6 @@
                 -129
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                2.0,
-                -115,
-                -105
-              ],
-              "tot": [
-                42.5,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 118,
@@ -19034,32 +18442,6 @@
                 43.0,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                2.0,
-                -115,
-                -105
-              ],
-              "tot": [
-                42.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                2.0,
-                -110,
-                100
-              ],
-              "tot": [
-                42.5,
-                -107,
-                -107
               ]
             },
             "betparx": {
@@ -19112,9 +18494,9 @@
             }
           },
           "commence_time": "2026-10-11T20:05:00Z",
-          "blend_home_prob": 0.4178,
-          "home_ev_at_best": -0.0892,
-          "away_ev_at_best": 0.0135
+          "blend_home_prob": 0.418,
+          "home_ev_at_best": -0.0887,
+          "away_ev_at_best": 0.0131
         }
       },
       "top_factors": [
@@ -19138,32 +18520,11 @@
         }
       ],
       "model_total": 42.1,
-      "grade_v2": {
-        "side": "home",
-        "team": "LAC",
-        "price": 118,
-        "book": "FanDuel",
-        "predicted_clv": -0.0006,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "home": {
-          "side": "home",
-          "team": "LAC",
-          "price": 118,
-          "book": "FanDuel",
-          "predicted_clv": -0.0006,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "best edge +1.3% below 3%",
         "injury report not out"
@@ -19253,22 +18614,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 43.5,
-        "price": -110,
-        "ev_sharp": 0.0207,
-        "sharp_total": 42.56,
-        "consensus_total": 43.36,
-        "hours_before": 172.9,
-        "verdict": "lean",
-        "reasons": [
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -19286,30 +18634,18 @@
         "team": "LAC"
       },
       "tuesday_move_check": [
-        "predicted move 0.05 pts (needs 0.743)",
+        "predicted move 0.14 pts (needs 0.743)",
         "starting QB uncertain or changed",
         "kickoff not 3.5-7 days away",
         "only bets at the Tuesday 7:10am AZ run"
       ],
       "tuesday_move": {
-        "predicted_move_pts": -0.05,
+        "predicted_move_pts": -0.14,
         "side": "home",
         "team": "LAC",
-        "tuesday_point": 2.0
+        "tuesday_point": 2.5
       },
-      "aplus_ml": {
-        "side": "home",
-        "team": "LAC",
-        "price": 118,
-        "book": "FanDuel",
-        "grade": "C",
-        "predicted_clv": -0.0006,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "away",
         "team": "DEN",
@@ -19335,9 +18671,15 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_DET_ARI",
@@ -19393,9 +18735,9 @@
         "live_odds": {
           "event_id": "f8e7f43f73aa983c5c99c189587f0118",
           "totals": {
-            "consensus_total": 53.22,
-            "sharp_total": 53.22,
-            "median_point": 52.5,
+            "consensus_total": 52.54,
+            "sharp_total": null,
+            "median_point": 52.0,
             "totals_by_book": [
               {
                 "book": "DraftKings",
@@ -19449,27 +18791,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                52.5,
-                -110,
-                -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                52.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                52.5,
-                -107,
-                -107
-              ],
-              [
                 "betparx",
                 "betPARX",
                 52.0,
@@ -19491,13 +18812,6 @@
                 -113
               ],
               [
-                "polymarket",
-                "Polymarket",
-                52.5,
-                -144,
-                -144
-              ],
-              [
                 "novig",
                 "Novig",
                 46.5,
@@ -19506,27 +18820,16 @@
               ]
             ]
           },
-          "books": 10,
-          "consensus_home_prob": 0.32,
+          "books": 9,
+          "consensus_home_prob": 0.3194,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              5.0,
-              -110,
-              -110
-            ],
-            [
-              5.0,
-              -105,
-              -105
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 203,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": -228,
@@ -19637,45 +18940,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                5.0,
-                -110,
-                -110
-              ],
-              "tot": [
-                52.5,
-                -110,
-                -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                5.0,
-                -110,
-                -110
-              ],
-              "tot": [
-                52.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                5.0,
-                -105,
-                -105
-              ],
-              "tot": [
-                52.5,
-                -107,
-                -107
-              ]
-            },
             "betparx": {
               "ml": [
                 200,
@@ -19726,9 +18990,9 @@
             }
           },
           "commence_time": "2026-10-11T20:25:00Z",
-          "blend_home_prob": 0.3152,
-          "home_ev_at_best": -0.0545,
-          "away_ev_at_best": -0.0298
+          "blend_home_prob": 0.3149,
+          "home_ev_at_best": -0.0554,
+          "away_ev_at_best": -0.0294
         }
       },
       "top_factors": [
@@ -19752,32 +19016,11 @@
         }
       ],
       "model_total": 50.4,
-      "grade_v2": {
-        "side": "home",
-        "team": "ARI",
-        "price": 200,
-        "book": "DraftKings",
-        "predicted_clv": -0.0254,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "home": {
-          "side": "home",
-          "team": "ARI",
-          "price": 200,
-          "book": "DraftKings",
-          "predicted_clv": -0.0254,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "best edge -3.0% below 3%",
         "injury report not out"
@@ -19864,24 +19107,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "best under only -4.4% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 52.5,
-        "price": -110,
-        "ev_sharp": -0.0441,
-        "sharp_total": 53.22,
-        "consensus_total": 53.22,
-        "hours_before": 173.2,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -4.4% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -19899,29 +19127,17 @@
         "team": "DET"
       },
       "tuesday_move_check": [
-        "predicted move 0.07 pts (needs 0.743)",
+        "predicted move 0.05 pts (needs 0.743)",
         "kickoff not 3.5-7 days away",
         "only bets at the Tuesday 7:10am AZ run"
       ],
       "tuesday_move": {
-        "predicted_move_pts": -0.07,
+        "predicted_move_pts": -0.05,
         "side": "home",
         "team": "ARI",
         "tuesday_point": 5.5
       },
-      "aplus_ml": {
-        "side": "home",
-        "team": "ARI",
-        "price": 200,
-        "book": "DraftKings",
-        "grade": "C",
-        "predicted_clv": -0.0254,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "away",
         "team": "DET",
@@ -19944,7 +19160,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
             "quoted_cents": 33.0,
@@ -19974,7 +19190,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_HOU_TEN",
@@ -20037,8 +19259,8 @@
         "live_odds": {
           "event_id": "cc52bba56e74f5cddbe9011046181c3d",
           "totals": {
-            "consensus_total": 39.1,
-            "sharp_total": 38.63,
+            "consensus_total": 39.15,
+            "sharp_total": null,
             "median_point": 39.0,
             "totals_by_book": [
               {
@@ -20072,13 +19294,6 @@
                 -108
               ],
               [
-                "betus",
-                "BetUS",
-                38.5,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 38.5,
@@ -20098,20 +19313,6 @@
                 39.0,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                38.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                38.5,
-                -107,
-                -107
               ],
               [
                 "betparx",
@@ -20135,46 +19336,28 @@
                 -109
               ],
               [
-                "polymarket",
-                "Polymarket",
-                40.5,
-                -186,
-                -170
-              ],
-              [
                 "novig",
                 "Novig",
-                32.5,
-                -809,
+                44.5,
+                -456,
                 -100000
               ]
             ]
           },
-          "books": 9,
+          "books": 8,
           "consensus_home_prob": 0.2735,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              6.5,
-              -110,
-              -110
-            ],
-            [
-              6.5,
-              -105,
-              -105
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 285,
             "book": "Kalshi"
           },
           "best_exchange_away_ml": {
-            "price": -335,
-            "book": "Polymarket"
+            "price": -317,
+            "book": "Kalshi"
           },
           "consensus_home_margin": -6.5,
           "best_home_ml": {
@@ -20233,19 +19416,6 @@
                 -108
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                6.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                38.5,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 265,
@@ -20289,32 +19459,6 @@
                 39.0,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                6.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                38.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                6.5,
-                -105,
-                -105
-              ],
-              "tot": [
-                38.5,
-                -107,
-                -107
               ]
             },
             "betparx": {
@@ -20367,8 +19511,8 @@
             }
           },
           "commence_time": "2026-10-11T17:00:00Z",
-          "blend_home_prob": 0.2575,
-          "home_ev_at_best": -0.06,
+          "blend_home_prob": 0.2576,
+          "home_ev_at_best": -0.0599,
           "away_ev_at_best": -0.0141
         }
       },
@@ -20393,32 +19537,11 @@
         }
       ],
       "model_total": 40.3,
-      "grade_v2": {
-        "side": "home",
-        "team": "TEN",
-        "price": 265,
-        "book": "FanDuel",
-        "predicted_clv": -0.0081,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "home": {
-          "side": "home",
-          "team": "TEN",
-          "price": 265,
-          "book": "FanDuel",
-          "predicted_clv": -0.0081,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "best edge -1.4% below 3%",
         "injury report not out"
@@ -20509,13 +19632,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 9.6,
-        "consensus_total": 39.1,
+        "consensus_total": 39.15,
         "best_under": {
           "book": "DraftKings",
           "book_key": "draftkings",
           "point": 39.5,
           "price": -110,
-          "ev": -0.0219
+          "ev": -0.0273
         },
         "verdict": "pass",
         "reasons": [
@@ -20524,22 +19647,9 @@
         ]
       },
       "early_under_check": [
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 39.5,
-        "price": -110,
-        "ev_sharp": 0.0054,
-        "sharp_total": 38.62,
-        "consensus_total": 39.11,
-        "hours_before": 169.8,
-        "verdict": "lean",
-        "reasons": [
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -20566,19 +19676,7 @@
         "team": "TEN",
         "tuesday_point": 6.5
       },
-      "aplus_ml": {
-        "side": "home",
-        "team": "TEN",
-        "price": 265,
-        "book": "FanDuel",
-        "grade": "C",
-        "predicted_clv": -0.0081,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "away",
         "team": "HOU",
@@ -20603,12 +19701,12 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
-            "quoted_cents": 77.0,
-            "all_in_cents": 78.25,
-            "price": -360,
+            "quoted_cents": 76.0,
+            "all_in_cents": 77.3,
+            "price": -340,
             "ev": null
           },
           "home": {
@@ -20620,9 +19718,9 @@
         },
         "robinhood": {
           "away": {
-            "quoted_cents": 77.0,
-            "all_in_cents": 79.01,
-            "price": -376,
+            "quoted_cents": 76.0,
+            "all_in_cents": 78.02,
+            "price": -355,
             "ev": null
           },
           "home": {
@@ -20633,7 +19731,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_IND_PIT",
@@ -20720,9 +19824,6 @@
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "no live totals"
-      ],
       "bet_check": [
         "no live odds"
       ],
@@ -20762,7 +19863,10 @@
       ],
       "aplus_ml": null,
       "aplus_spread": null,
-      "aplus_totals": null
+      "aplus_totals": null,
+      "totals_grade_check": [
+        "no live totals"
+      ]
     },
     {
       "game_id": "2026_05_LV_NE",
@@ -20819,7 +19923,7 @@
           "event_id": "6b024bad1abb54f597225e4ab9b39d89",
           "totals": {
             "consensus_total": 44.39,
-            "sharp_total": 44.39,
+            "sharp_total": null,
             "median_point": 44.0,
             "totals_by_book": [
               {
@@ -20853,13 +19957,6 @@
                 -115
               ],
               [
-                "betus",
-                "BetUS",
-                44.0,
-                -110,
-                -110
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 43.5,
@@ -20876,20 +19973,6 @@
               [
                 "mybookieag",
                 "MyBookie.ag",
-                44.0,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                44.0,
-                -107,
-                -107
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
                 44.0,
                 -110,
                 -110
@@ -20916,13 +19999,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                43.5,
-                -127,
-                -113
-              ],
-              [
                 "novig",
                 "Novig",
                 43.5,
@@ -20931,23 +20007,12 @@
               ]
             ]
           },
-          "books": 10,
-          "consensus_home_prob": 0.6267,
+          "books": 9,
+          "consensus_home_prob": 0.6268,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -3.5,
-              100,
-              -110
-            ],
-            [
-              -3.5,
-              -105,
-              -115
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": -178,
@@ -21017,19 +20082,6 @@
                 -115
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                -105,
-                -115
-              ],
-              "tot": [
-                44.0,
-                -110,
-                -110
-              ]
-            },
             "fanduel": {
               "ml": [
                 -198,
@@ -21068,32 +20120,6 @@
                 -3.5,
                 -110,
                 -110
-              ],
-              "tot": [
-                44.0,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                100,
-                -110
-              ],
-              "tot": [
-                44.0,
-                -107,
-                -107
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                -105,
-                -115
               ],
               "tot": [
                 44.0,
@@ -21151,9 +20177,9 @@
             }
           },
           "commence_time": "2026-10-11T17:00:00Z",
-          "blend_home_prob": 0.7069,
-          "home_ev_at_best": 0.0751,
-          "away_ev_at_best": -0.2204
+          "blend_home_prob": 0.707,
+          "home_ev_at_best": 0.0752,
+          "away_ev_at_best": -0.2206
         }
       },
       "top_factors": [
@@ -21177,32 +20203,11 @@
         }
       ],
       "model_total": 40.0,
-      "grade_v2": {
-        "side": "away",
-        "team": "LV",
-        "price": 166,
-        "book": "FanDuel",
-        "predicted_clv": 0.0023,
-        "grade": "C",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "away": {
-          "side": "away",
-          "team": "LV",
-          "price": 166,
-          "book": "FanDuel",
-          "predicted_clv": 0.0023,
-          "grade": "C",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -21293,24 +20298,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "best under only -2.9% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 44.5,
-        "price": -115,
-        "ev_sharp": -0.0294,
-        "sharp_total": 44.37,
-        "consensus_total": 44.37,
-        "hours_before": 169.8,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -2.9% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -21337,19 +20327,7 @@
         "team": "NE",
         "tuesday_point": -3.5
       },
-      "aplus_ml": {
-        "side": "away",
-        "team": "LV",
-        "price": 166,
-        "book": "FanDuel",
-        "grade": "C",
-        "predicted_clv": 0.0023,
-        "verdict": "pass",
-        "reasons": [
-          "grade C (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "home",
         "team": "NE",
@@ -21375,7 +20353,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 37.0,
@@ -21405,7 +20383,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_MIN_NO",
@@ -21464,8 +20448,8 @@
         "live_odds": {
           "event_id": "2cda9bf0fbe35a2735f0dd8aaafe9eff",
           "totals": {
-            "consensus_total": 45.47,
-            "sharp_total": 44.76,
+            "consensus_total": 45.62,
+            "sharp_total": null,
             "median_point": 45.5,
             "totals_by_book": [
               {
@@ -21499,13 +20483,6 @@
                 -113
               ],
               [
-                "betus",
-                "BetUS",
-                44.0,
-                -115,
-                -105
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 45.5,
@@ -21525,20 +20502,6 @@
                 45.0,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                44.0,
-                -115,
-                -105
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                44.0,
-                -113,
-                -102
               ],
               [
                 "betparx",
@@ -21562,13 +20525,6 @@
                 -112
               ],
               [
-                "polymarket",
-                "Polymarket",
-                45.5,
-                -122,
-                -113
-              ],
-              [
                 "novig",
                 "Novig",
                 45.5,
@@ -21577,23 +20533,12 @@
               ]
             ]
           },
-          "books": 9,
+          "books": 8,
           "consensus_home_prob": 0.4501,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              1.5,
-              -110,
-              -110
-            ],
-            [
-              1.5,
-              -105,
-              -105
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": 113,
@@ -21656,19 +20601,6 @@
                 -113
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                1.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                44.0,
-                -115,
-                -105
-              ]
-            },
             "fanduel": {
               "ml": [
                 108,
@@ -21712,32 +20644,6 @@
                 45.0,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                1.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                44.0,
-                -115,
-                -105
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                1.5,
-                -105,
-                -105
-              ],
-              "tot": [
-                44.0,
-                -113,
-                -102
               ]
             },
             "betparx": {
@@ -21791,7 +20697,7 @@
           },
           "commence_time": "2026-10-11T17:00:00Z",
           "blend_home_prob": 0.3943,
-          "home_ev_at_best": -0.1325,
+          "home_ev_at_best": -0.1326,
           "away_ev_at_best": 0.0864
         }
       },
@@ -21816,32 +20722,11 @@
         }
       ],
       "model_total": 41.8,
-      "grade_v2": {
-        "side": "home",
-        "team": "NO",
-        "price": 120,
-        "book": "DraftKings",
-        "predicted_clv": 0.0073,
-        "grade": "B",
-        "grading_version": 2
-      },
-      "grade_v2_sides": {
-        "home": {
-          "side": "home",
-          "team": "NO",
-          "price": 120,
-          "book": "DraftKings",
-          "predicted_clv": 0.0073,
-          "grade": "B",
-          "grading_version": 2
-        }
-      },
+      "grade_v2": null,
+      "grade_v2_sides": {},
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -21931,22 +20816,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "FanDuel",
-        "book_key": "fanduel",
-        "point": 45.5,
-        "price": -110,
-        "ev_sharp": 0.0153,
-        "sharp_total": 44.74,
-        "consensus_total": 45.45,
-        "hours_before": 169.8,
-        "verdict": "lean",
-        "reasons": [
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -21974,19 +20846,7 @@
         "team": "MIN",
         "tuesday_point": 2.0
       },
-      "aplus_ml": {
-        "side": "home",
-        "team": "NO",
-        "price": 120,
-        "book": "DraftKings",
-        "grade": "B",
-        "predicted_clv": 0.0073,
-        "verdict": "pass",
-        "reasons": [
-          "grade B (needs A+)",
-          "more than 7 days before kickoff (research window)"
-        ]
-      },
+      "aplus_ml": null,
       "aplus_spread": {
         "side": "away",
         "team": "MIN",
@@ -22013,7 +20873,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 53.9,
@@ -22043,7 +20903,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_NYG_WAS",
@@ -22130,9 +20996,6 @@
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "no live totals"
-      ],
       "bet_check": [
         "no live odds"
       ],
@@ -22172,7 +21035,10 @@
       ],
       "aplus_ml": null,
       "aplus_spread": null,
-      "aplus_totals": null
+      "aplus_totals": null,
+      "totals_grade_check": [
+        "no live totals"
+      ]
     },
     {
       "game_id": "2026_05_PHI_JAX",
@@ -22235,8 +21101,8 @@
         "live_odds": {
           "event_id": "21b26266f3d78af02eb672e606275d95",
           "totals": {
-            "consensus_total": 45.03,
-            "sharp_total": 45.03,
+            "consensus_total": 44.88,
+            "sharp_total": null,
             "median_point": 44.5,
             "totals_by_book": [
               {
@@ -22284,32 +21150,11 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                44.5,
-                -110,
-                -110
-              ],
-              [
                 "mybookieag",
                 "MyBookie.ag",
                 44.5,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                44.5,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                44.5,
-                -107,
-                -107
               ],
               [
                 "ballybet",
@@ -22340,13 +21185,6 @@
                 -113
               ],
               [
-                "polymarket",
-                "Polymarket",
-                44.5,
-                -113,
-                -117
-              ],
-              [
                 "novig",
                 "Novig",
                 44.5,
@@ -22355,31 +21193,20 @@
               ]
             ]
           },
-          "books": 11,
-          "consensus_home_prob": 0.5896,
+          "books": 10,
+          "consensus_home_prob": 0.5889,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -3.0,
-              -120,
-              100
-            ],
-            [
-              -3.0,
-              -116,
-              105
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": -150,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
-            "price": 141,
-            "book": "Novig"
+            "price": 138,
+            "book": "Kalshi"
           },
           "consensus_home_margin": 3.0,
           "best_home_ml": {
@@ -22469,19 +21296,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -3.0,
-                -120,
-                100
-              ],
-              "tot": [
-                44.5,
-                -110,
-                -110
-              ]
-            },
             "mybookieag": {
               "ml": null,
               "sp": [
@@ -22493,32 +21307,6 @@
                 44.5,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -3.0,
-                -120,
-                100
-              ],
-              "tot": [
-                44.5,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -3.0,
-                -116,
-                105
-              ],
-              "tot": [
-                44.5,
-                -107,
-                -107
               ]
             },
             "ballybet": {
@@ -22587,9 +21375,9 @@
             }
           },
           "commence_time": "2026-10-11T13:30:00Z",
-          "blend_home_prob": 0.6784,
-          "home_ev_at_best": 0.0971,
-          "away_ev_at_best": -0.241
+          "blend_home_prob": 0.678,
+          "home_ev_at_best": 0.0965,
+          "away_ev_at_best": -0.2401
         }
       },
       "top_factors": [
@@ -22615,21 +21403,18 @@
       "model_total": 44.3,
       "grade_v2": null,
       "grade_v2_sides": {},
-      "grade_v2_check": [
-        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
-      ],
       "totals_grade": {
         "side": "over",
         "point": 44.5,
         "price": -105,
         "book": "DraftKings",
         "book_key": "draftkings",
-        "predicted_clv": -0.041,
+        "predicted_clv": -0.0401,
         "grade": "C",
         "grading_version": 2,
-        "hours_before": 166.3,
+        "hours_before": 166.1,
         "consensus_total": 45.01,
-        "sharp_total": 45.01
+        "sharp_total": null
       },
       "totals_grade_sides": {
         "over": {
@@ -22638,7 +21423,7 @@
           "price": -105,
           "book": "DraftKings",
           "book_key": "draftkings",
-          "predicted_clv": -0.041,
+          "predicted_clv": -0.0401,
           "grade": "C",
           "grading_version": 2
         },
@@ -22659,7 +21444,7 @@
           "draftkings",
           44.5,
           -105,
-          -0.041
+          -0.0401
         ],
         [
           "under",
@@ -22673,7 +21458,7 @@
           "fanduel",
           44.5,
           -106,
-          -0.0444
+          -0.044
         ],
         [
           "under",
@@ -22774,13 +21559,13 @@
       ],
       "totals_view": {
         "forecast_wind_mph": 5.3,
-        "consensus_total": 45.03,
+        "consensus_total": 44.88,
         "best_under": {
           "book": "FanDuel",
           "book_key": "fanduel",
           "point": 44.5,
           "price": -114,
-          "ev": -0.0639
+          "ev": -0.0529
         },
         "verdict": "pass",
         "reasons": [
@@ -22789,24 +21574,9 @@
         ]
       },
       "early_under_check": [
-        "best under only -6.1% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "FanDuel",
-        "book_key": "fanduel",
-        "point": 44.5,
-        "price": -114,
-        "ev_sharp": -0.0611,
-        "sharp_total": 45.01,
-        "consensus_total": 45.01,
-        "hours_before": 166.3,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -6.1% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -22865,9 +21635,9 @@
         "book": "DraftKings",
         "book_key": "draftkings",
         "grade": "C",
-        "predicted_clv": -0.041,
+        "predicted_clv": -0.0401,
         "consensus_total": 45.01,
-        "sharp_total": 45.01,
+        "sharp_total": null,
         "verdict": "pass",
         "reasons": [
           "grade C (needs A+)"
@@ -22875,12 +21645,12 @@
         "team": "Over"
       },
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "home": {
-            "quoted_cents": 60.9,
-            "all_in_cents": 62.6,
-            "price": -167,
+            "quoted_cents": 60.0,
+            "all_in_cents": 61.68,
+            "price": -161,
             "ev": null
           },
           "away": {
@@ -22892,9 +21662,9 @@
         },
         "robinhood": {
           "home": {
-            "quoted_cents": 60.9,
-            "all_in_cents": 62.94,
-            "price": -170,
+            "quoted_cents": 60.0,
+            "all_in_cents": 62.0,
+            "price": -163,
             "ev": null
           },
           "away": {
@@ -22905,7 +21675,10 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ]
     },
     {
       "game_id": "2026_05_SF_SEA",
@@ -22969,7 +21742,7 @@
           "event_id": "8e5d515b10d8a5ffb324640ed60bcc55",
           "totals": {
             "consensus_total": 47.85,
-            "sharp_total": 47.63,
+            "sharp_total": null,
             "median_point": 47.5,
             "totals_by_book": [
               {
@@ -23003,13 +21776,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                47.0,
-                -115,
-                -105
-              ],
-              [
                 "fanduel",
                 "FanDuel",
                 47.5,
@@ -23029,20 +21795,6 @@
                 47.5,
                 -110,
                 -110
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                47.0,
-                -115,
-                -105
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                47.0,
-                -113,
-                -102
               ],
               [
                 "betparx",
@@ -23066,13 +21818,6 @@
                 -110
               ],
               [
-                "polymarket",
-                "Polymarket",
-                47.5,
-                -122,
-                -113
-              ],
-              [
                 "novig",
                 "Novig",
                 47.5,
@@ -23081,27 +21826,16 @@
               ]
             ]
           },
-          "books": 9,
+          "books": 8,
           "consensus_home_prob": 0.6192,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -3.5,
-              -105,
-              -115
-            ],
-            [
-              -3.5,
-              100,
-              -110
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
-            "price": -170,
-            "book": "Polymarket"
+            "price": -178,
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 170,
@@ -23160,19 +21894,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                -105,
-                -115
-              ],
-              "tot": [
-                47.0,
-                -115,
-                -105
-              ]
-            },
             "fanduel": {
               "ml": [
                 -200,
@@ -23216,32 +21937,6 @@
                 47.5,
                 -110,
                 -110
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                -105,
-                -115
-              ],
-              "tot": [
-                47.0,
-                -115,
-                -105
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -3.5,
-                100,
-                -110
-              ],
-              "tot": [
-                47.0,
-                -113,
-                -102
               ]
             },
             "betparx": {
@@ -23325,7 +22020,7 @@
         "team": "SF",
         "price": 168,
         "book": "FanDuel",
-        "predicted_clv": 0.0226,
+        "predicted_clv": 0.023,
         "grade": "A",
         "grading_version": 2
       },
@@ -23335,7 +22030,7 @@
           "team": "SF",
           "price": 168,
           "book": "FanDuel",
-          "predicted_clv": 0.0226,
+          "predicted_clv": 0.023,
           "grade": "A",
           "grading_version": 2
         }
@@ -23343,9 +22038,6 @@
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -23452,24 +22144,9 @@
         ]
       },
       "early_under_check": [
-        "best under only -3.3% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "DraftKings",
-        "book_key": "draftkings",
-        "point": 47.5,
-        "price": -110,
-        "ev_sharp": -0.0332,
-        "sharp_total": 47.62,
-        "consensus_total": 47.84,
-        "hours_before": 173.2,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -3.3% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-09T21:40+00:00",
         "checked_at": null,
@@ -23504,7 +22181,7 @@
         "price": 168,
         "book": "FanDuel",
         "grade": "A",
-        "predicted_clv": 0.0226,
+        "predicted_clv": 0.023,
         "verdict": "pass",
         "reasons": [
           "grade A (needs A+)",
@@ -23537,7 +22214,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 37.0,
@@ -23567,7 +22244,10 @@
           }
         },
         "best": {}
-      }
+      },
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     },
     {
       "game_id": "2026_05_BUF_LA",
@@ -23626,8 +22306,8 @@
         "live_odds": {
           "event_id": "e6d00eedd87d367e510314bd8cab8f6f",
           "totals": {
-            "consensus_total": 53.48,
-            "sharp_total": 53.53,
+            "consensus_total": 53.32,
+            "sharp_total": null,
             "median_point": 52.5,
             "totals_by_book": [
               {
@@ -23682,27 +22362,6 @@
                 -110
               ],
               [
-                "betus",
-                "BetUS",
-                53.0,
-                -110,
-                -110
-              ],
-              [
-                "lowvig",
-                "LowVig.ag",
-                53.0,
-                -107,
-                -107
-              ],
-              [
-                "betonlineag",
-                "BetOnline.ag",
-                53.0,
-                -110,
-                -110
-              ],
-              [
                 "betparx",
                 "betPARX",
                 52.5,
@@ -23724,13 +22383,6 @@
                 -109
               ],
               [
-                "polymarket",
-                "Polymarket",
-                52.5,
-                -127,
-                -122
-              ],
-              [
                 "novig",
                 "Novig",
                 53.5,
@@ -23739,27 +22391,16 @@
               ]
             ]
           },
-          "books": 10,
-          "consensus_home_prob": 0.553,
+          "books": 9,
+          "consensus_home_prob": 0.5545,
           "sharp_home_prob": null,
           "sharp_books": 0,
           "pinnacle_home_prob": null,
-          "sharp_spreads": [
-            [
-              -2.5,
-              -105,
-              -105
-            ],
-            [
-              -2.5,
-              -110,
-              -110
-            ]
-          ],
+          "sharp_spreads": [],
           "pin_sharp_home_prob": null,
           "best_exchange_home_ml": {
             "price": -127,
-            "book": "Polymarket"
+            "book": "Kalshi"
           },
           "best_exchange_away_ml": {
             "price": 117,
@@ -23870,45 +22511,6 @@
                 -110
               ]
             },
-            "betus": {
-              "ml": null,
-              "sp": [
-                -2.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                53.0,
-                -110,
-                -110
-              ]
-            },
-            "lowvig": {
-              "ml": null,
-              "sp": [
-                -2.5,
-                -105,
-                -105
-              ],
-              "tot": [
-                53.0,
-                -107,
-                -107
-              ]
-            },
-            "betonlineag": {
-              "ml": null,
-              "sp": [
-                -2.5,
-                -110,
-                -110
-              ],
-              "tot": [
-                53.0,
-                -110,
-                -110
-              ]
-            },
             "betparx": {
               "ml": [
                 -139,
@@ -23959,9 +22561,9 @@
             }
           },
           "commence_time": "2026-10-13T00:15:00Z",
-          "blend_home_prob": 0.5088,
-          "home_ev_at_best": -0.1143,
-          "away_ev_at_best": 0.061
+          "blend_home_prob": 0.5097,
+          "home_ev_at_best": -0.1128,
+          "away_ev_at_best": 0.0591
         }
       },
       "top_factors": [
@@ -23987,15 +22589,9 @@
       "model_total": 53.0,
       "grade_v2": null,
       "grade_v2_sides": {},
-      "grade_v2_check": [
-        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
-      ],
       "totals_grade": null,
       "totals_grade_sides": {},
       "totals_grade_offers": [],
-      "totals_grade_check": [
-        "graded only within 7 days of kickoff"
-      ],
       "bet_check": [
         "injury report not out"
       ],
@@ -24099,24 +22695,9 @@
         "indoors or no forecast"
       ],
       "early_under_check": [
-        "best under only -4.7% vs the sharp fair total (need +0%)",
-        "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
+        "no sharp-book total (or no allowed-book under)"
       ],
-      "early_under": {
-        "book": "FanDuel",
-        "book_key": "fanduel",
-        "point": 53.5,
-        "price": -115,
-        "ev_sharp": -0.0467,
-        "sharp_total": 53.53,
-        "consensus_total": 53.47,
-        "hours_before": 201.1,
-        "verdict": "pass",
-        "reasons": [
-          "best under only -4.7% vs the sharp fair total (need +0%)",
-          "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
-        ]
-      },
+      "early_under": null,
       "props_receptions": {
         "early_check_at": "2026-10-12T00:15+00:00",
         "checked_at": null,
@@ -24170,7 +22751,7 @@
       },
       "aplus_totals": null,
       "exchanges": {
-        "checked_at": "2026-10-04T15:11+00:00",
+        "checked_at": "2026-10-04T15:23+00:00",
         "kalshi": {
           "away": {
             "quoted_cents": 46.1,
@@ -24200,7 +22781,13 @@
           }
         },
         "best": {}
-      }
+      },
+      "grade_v2_check": [
+        "no moneyline price is +EV vs any fair reference (ungraded; below C)"
+      ],
+      "totals_grade_check": [
+        "graded only within 7 days of kickoff"
+      ]
     }
   ],
   "live_odds_available": true,
@@ -25051,7 +23638,7 @@
   "grade_v2": {
     "version": 2,
     "available": true,
-    "graded_games": 21,
+    "graded_games": 14,
     "errors": 0,
     "thresholds": {
       "A+": 0.025,
@@ -26461,5 +25048,6 @@
       "min_n": 25,
       "min_precision": 0.95
     }
-  }
+  },
+  "odds_checked_at": "2026-10-04T15:23+00:00"
 }
