@@ -224,3 +224,23 @@ def test_kalshi_maker_match_post_settle(tmp_path, monkeypatch):
     out2 = K.process(now=now + timedelta(hours=1), getter=getter)
     assert out2["report"]["filled"] >= 1
     assert any(b["status"] == "filled" and b["fill"] == "through" for b in out2["open"])
+
+
+def test_picks_logger_and_futures_view(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    from nflpred import picks_log as PL, futures_value as FV
+    monkeypatch.setattr(PL, "HIST", tmp_path)
+    feed = [{"title": "Week 6 NFL picks against the spread", "link": "https://x.com/a", "published": None, "summary": ""},
+            {"title": "Injury update", "link": "https://x.com/b", "published": None, "summary": ""}]
+    calls = []
+    def llm(text, key):
+        calls.append(text)
+        return [{"analyst": "A", "sport": "nfl", "away_team": "Dallas Cowboys", "home_team": "Houston Texans", "market": "spread", "pick": "Houston Texans", "line": -3.5}]
+    rep = PL.scan(now=datetime(2026, 10, 8, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: feed, texter=lambda u: "text", llm=llm)
+    assert rep["picks"] == 1 and len(calls) == 1          # same article across feeds is read once
+    assert PL.scan(api_key="k", fetcher=lambda u: feed, texter=lambda u: "t", llm=llm)["picks"] == 0
+    snap = {"markets": {"m": [{"bookmakers": [
+        {"key": k, "title": k, "markets": [{"key": "outrights", "outcomes": [{"name": "A", "price": p}, {"name": "B", "price": -120}]}]}
+        for k, p in (("draftkings", 300), ("fanduel", 140), ("betmgm", 150), ("pinnacle", 150))]}]}}
+    v = FV.snapshot_view(snap, "m")
+    assert v["A"]["book"] == "draftkings" and v["A"]["ev"] > 0.3 and v["A"]["n_books"] == 4

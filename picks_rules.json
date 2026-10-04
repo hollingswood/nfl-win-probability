@@ -1,0 +1,7 @@
+{
+  "test": "analyst_picks",
+  "version": 1,
+  "frozen_on": "2026-10-04",
+  "note": "Logging-only test (src/nflpred/picks_log.py): explicit published NFL and college picks from public RSS outlets (CBS, Yahoo, ESPN, PFT), read by Claude Haiku with their stated line and the time first seen. Prior evidence is against an edge (published studies of expert/tout picks and of fading the public). Scored at season's end: (1) each pick's side vs the CLOSING line (cover rate vs 50%, and line value: did the close move toward the pick after it was published?), (2) consensus: games with 3+ picks on one side. Pass for any follow-up: >= 300 picks, line value > 0 at p < 0.05, and the consensus side covering the close at > 52.4% (binomial p < 0.05). Do not edit to fit results; bump the version.",
+  "log": "history/picks_log.jsonl"
+}

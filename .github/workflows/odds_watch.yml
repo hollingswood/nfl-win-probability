@@ -55,6 +55,17 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Futures line-shopping paper test (Super Bowl prices vs the all-book fair price)
+        continue-on-error: true
+        run: python -m nflpred.futures_value
+        env:
+          PYTHONPATH: src
+      - name: Analyst picks logger (published picks with first-seen time; scored vs the close at season end)
+        continue-on-error: true
+        run: python -m nflpred.picks_log
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: College football odds snapshot (logging only; hourly Thu-Sat, every 3 h otherwise)
         continue-on-error: true
         run: python -m cfbpred.odds_live

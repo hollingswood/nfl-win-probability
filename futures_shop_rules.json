@@ -1,0 +1,21 @@
+{
+  "track": "futures_shop",
+  "version": 1,
+  "frozen_on": "2026-10-04",
+  "note": "Paper test of line shopping NFL futures (Super Bowl winner, the only outright market in our feed). Futures carry 20-30% vig, so a price only has value when one book is far longer than the others. No sharp book is in the futures feed, so the fair price is the median across books of each book's no-vig probability (power method, which handles the longshot bias). Weak reference: treat results as a screen. Graded by closing line value against the same consensus at the last snapshot before the playoffs begin, and by the result. Do not edit to fit results; bump the version. Prices taken only at Arizona books (DraftKings, FanDuel, ESPN Bet, BetMGM, Caesars, BetRivers, Fanatics, Hard Rock, Bally); the consensus uses every book in the feed.",
+  "market": "americanfootball_nfl_super_bowl_winner",
+  "qualify": {
+    "min_books": 4,
+    "min_ev": 0.08,
+    "min_fair_prob": 0.02,
+    "one_bet_per_team_per_days": 14
+  },
+  "sizing": {
+    "units": 0.5
+  },
+  "validation": {
+    "min_bets": 40,
+    "avg_clv_positive_with_p_below": 0.05
+  },
+  "ledger": "paper_bets_futures_shop.json"
+}
