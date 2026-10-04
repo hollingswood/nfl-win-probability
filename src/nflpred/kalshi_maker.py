@@ -289,7 +289,7 @@ def process(now: datetime | None = None, getter=_get) -> dict:
                     continue
                 bid = math.floor(100 * fair) - q["margin_cents"]
                 yb, ya = _cents(m, "yes_bid"), _cents(m, "yes_ask")
-                if yb is None or ya is None or not (bid > yb and bid < ya):
+                if ya is None or not (1 <= bid < ya):     # v2: a maker order anywhere below the best ask (joins the queue)
                     continue
                 expires = min(now + timedelta(minutes=75), ko - timedelta(minutes=q["min_minutes_before_kickoff"]))
                 state["active"].append({"id": f"kmk:{m['ticker']}:{now:%Y%m%dT%H%M}", "track": "kalshi_maker", "rules_version": r["version"],

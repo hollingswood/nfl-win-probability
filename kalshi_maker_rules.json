@@ -1,10 +1,17 @@
 {
   "track": "kalshi_maker",
-  "version": 1,
+  "version": 2,
   "frozen_on": "2026-10-04",
   "note": "Paper test of POSTING resting orders on Kalshi game-winner contracts instead of taking prices (research: reports/NFL and college betting edges.md, rank 2: maker fee 0.0175*p*(1-p) vs taker 0.07*p*(1-p); on Kalshi makers lost far less than takers; exchanges don't limit winners). Simulated, nothing is posted. Each hourly run posts one hypothetical 1-contract YES bid per team at (Pinnacle Shin fair - margin), only when that bid would be the new best bid and below the best ask (a maker, not a taker). The order lives until the next run or 30 min before kickoff. Fill = a trade in that window printed strictly BELOW our bid (the price traded through us, so a resting order there was certainly filled); 'touch' fills (trade at our price) are logged but not graded, since queue position is unknown. The real risk is adverse selection: we get filled when the price is moving against us. Graded by CLV vs Pinnacle's Shin close and by results. ARIZONA: Kalshi's legal status in Arizona is unresolved (state criminal case vs Kalshi, Ninth Circuit ruling Aug 2026): paper only. Do not edit to fit results; bump the version.",
   "api": "https://api.elections.kalshi.com/trade-api/v2",
-  "series": {"nfl": ["KXNFLGAME"], "cfb": ["KXNCAAFGAME", "KXNCAAFBGAME", "KXCFBGAME"]},
+  "series": {
+    "nfl": [
+      "KXNFLGAME"
+    ],
+    "cfb": [
+      "KXNCAAFGAME"
+    ]
+  },
   "qualify": {
     "margin_cents": 3,
     "min_fair": 0.15,
@@ -13,8 +20,22 @@
     "max_days_before_kickoff": 7,
     "max_pinnacle_age_hours": 2
   },
-  "fees": {"maker": "0.0175 * p * (1 - p) per contract"},
-  "validation": {"min_fills": 150, "avg_clv_positive_with_p_below": 0.05, "realized_roi_above": 0.0},
+  "fees": {
+    "maker": "0.0175 * p * (1 - p) per contract"
+  },
+  "validation": {
+    "min_fills": 150,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0
+  },
   "ledger": "paper_bets_kalshi_maker.json",
-  "state": "kalshi_maker_state.json"
+  "state": "kalshi_maker_state.json",
+  "version_history": [
+    {
+      "version": 1,
+      "frozen_on": "2026-10-04",
+      "post_rule": "only when (fair - margin) would be the new best bid"
+    }
+  ],
+  "version_2_note": "Changed before any order was ever posted or filled: in the first live runs (12 NFL and 113 college markets matched) v1 posted nothing, because Kalshi's best bid usually sits within 1-2 cents of the sharp fair price, so a bid at fair - 3 cents is never the best bid. v2 joins the queue: post whenever the bid is below the best ask (a maker order), even if other bids are higher. Fill rule unchanged and conservative: counted only when a trade prints strictly below our price, which means every bid at our price was filled. Series fixed: college games are KXNCAAFGAME (found in the first run)."
 }
