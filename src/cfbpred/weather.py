@@ -89,13 +89,13 @@ def window(payload: dict, kickoff: datetime, suffixes=("", "_previous_day1", "_p
     return out
 
 
-def _get(url: str, params: dict, timeout: float = 30) -> dict:
+def _get(url: str, params: dict, timeout: float = 20) -> dict:
     with urllib.request.urlopen(f"{url}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
         return json.load(r)
 
 
 def backfill(seasons: list[int], max_calls: int = 4000, sleep: float = 0.15, deadline: datetime | None = None,
-             getter=_get) -> dict:
+             getter=_get, checkpoint=None) -> dict:
     """Resumable; saves every 200 calls. Returns counts."""
     WDIR.mkdir(parents=True, exist_ok=True)
     path = WDIR / "game_weather.json"
@@ -138,7 +138,9 @@ def backfill(seasons: list[int], max_calls: int = 4000, sleep: float = 0.15, dea
             calls += 1
             if calls % 200 == 0:
                 path.write_text(json.dumps(store))
-                print(f"  {calls} calls, {len(store)} games saved", flush=True)
+                print(f"  {calls} calls, {len(store)} games saved, {failed} failed", flush=True)
+            if checkpoint and calls % 500 == 0:
+                checkpoint(f"{len(store)} games, {failed} failed calls")
             time.sleep(sleep)
     path.write_text(json.dumps(store))
     return {"calls": calls, "saved": len(store), "skipped": skipped, "failed": failed, "done": True}
@@ -198,6 +200,21 @@ def probe(seasons: list[int], getter=_get) -> dict:
     return out
 
 
+def git_checkpoint(msg: str) -> None:
+    """In GitHub Actions: commit + push the weather file so progress is visible and survives a killed job."""
+    import subprocess
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    sh = lambda c: subprocess.run(c, shell=True, cwd=ROOT, capture_output=True, text=True)
+    sh('git config user.name "nfl-bot" && git config user.email "nfl-bot@users.noreply.github.com"')
+    sh("git add data/cfb")
+    if sh(f'git commit -q -m "CFB weather backfill: {msg}"').returncode == 0:
+        for _ in range(3):
+            if sh("git pull -q --rebase && git push -q").returncode == 0:
+                break
+            time.sleep(5)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seasons", default="2021,2022,2023,2024,2025,2026")
@@ -209,11 +226,15 @@ def main():
     if key and not (D.RAW / "venues.json.gz").exists():
         print("venues:", pull_venues(key))
     seasons = [int(x) for x in a.seasons.split(",")]
-    print("probe:", json.dumps(probe(seasons)), flush=True)
+    t0 = time.time()
+    print("probe:", json.dumps(probe(seasons)), f"{(time.time() - t0) / len(seasons):.1f} s/call", flush=True)
     deadline = datetime.now(timezone.utc) + timedelta(minutes=a.minutes)
     while True:
         t0 = datetime.now(timezone.utc)
-        rep = backfill(seasons, a.max_calls, deadline=deadline)
+        t1 = time.time()
+        rep = backfill(seasons, a.max_calls, deadline=deadline, checkpoint=git_checkpoint)
+        rep["seconds_per_call"] = round((time.time() - t1) / max(1, rep["calls"]), 2)
+        git_checkpoint(f"{rep['saved']} games ({rep['seconds_per_call']} s/call)")
         print(json.dumps(rep), flush=True)
         if rep["done"] or not a.hourly_chunks or datetime.now(timezone.utc) + timedelta(minutes=62) >= deadline:
             break
