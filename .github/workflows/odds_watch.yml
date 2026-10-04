@@ -67,6 +67,11 @@ jobs:
         env:
           PYTHONPATH: src
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Kalshi resting-order paper test (simulated maker bids; public Kalshi data, no key)
+        continue-on-error: true
+        run: python -m nflpred.kalshi_maker
+        env:
+          PYTHONPATH: src
       - name: College football page data (CFBD refresh every 12 h, ratings, this week's games)
         continue-on-error: true
         run: python -m cfbpred.pipeline

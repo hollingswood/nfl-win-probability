@@ -540,6 +540,7 @@ const TRACKS = {
   pre:{name:'Preseason prior · weeks 2-8, market 4+ pts off the preseason number', key:'preseason_prior_bets', short:'Preseason'},
   tue:{name:'Tuesday move · predicted line move, top 10%', key:'tuesday_move_bets', short:'Tue move'},
   exch:{name:'Exchange value · Kalshi / Robinhood / Polymarket / ProphetX after fees vs Pinnacle', key:'exchange_value_bets', short:'Exchange'},
+  kmk:{name:'Kalshi resting orders · simulated maker bids at Pinnacle fair − 3¢', key:'kalshi_maker_bets', short:'Kalshi maker'},
   spread:{name:'Spread v1 (original model rules · no edge in backtest)', key:'spread_bets', short:'Spread v1'},
   ml_v1:{name:'Moneyline v1 (original model rules · no edge in backtest)', key:'bets', short:'Moneyline v1'},
 };
@@ -548,8 +549,8 @@ const od = x => x==null ? '' : x>0 ? `+${x}` : `−${Math.abs(x)}`;          // 
 const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
-const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', pre:'Preseason', tue:'Tue move'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
+const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', pre:'Preseason', tue:'Tue move'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
@@ -1102,6 +1103,10 @@ const TRACK_INFO = {
     when:'Any hourly check, within 7 days of kickoff',
     ev:'New 2026 test · no history',
     tip:'Pre-registered 2026-10-02 (exchange_value_rules.json). After fees, Kalshi and Robinhood cost about as much as a −110 sportsbook (4.5–5% for both sides) and rarely beat Pinnacle; ProphetX (~1.5–2%) and Polymarket US (~3.6%) more often show +1% or better, though quotes have no size and may be thin. Graded on closing line value vs Pinnacle.'},
+  kmk:{label:'Kalshi resting orders', what:'Simulated maker bids on Kalshi game winners (NFL and college) at Pinnacle fair minus 3¢; counted only when a trade prints below the bid. Paper only: Kalshi is legally contested in Arizona',
+    when:'Every hourly check; each bid lives about an hour',
+    ev:'New 2026 test · no history',
+    tip:'Research rank 2 (reports/NFL and college betting edges.md): posting orders costs a maker about 0.9% of stake vs 3.5% for a taker at 50¢, and exchanges do not limit winners. The risk is adverse selection (getting filled when the price is moving against you). Graded on closing line value vs Pinnacle (Shin) and results; 150 fills needed.'},
   spread:{label:'Spread v1', what:"Original model's spread picks",
     when:'Scheduled full runs, once the injury report is out',
     ev:'No edge on real 2020–25 early-week lines',
@@ -1157,7 +1162,7 @@ function trackWindow(key){
 })();
 
 (function(){
-  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','totals','totals_eu','night','spread','ml_v1'];
+  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','kmk','totals','totals_eu','night','spread','ml_v1'];
   const tracks=order.map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;

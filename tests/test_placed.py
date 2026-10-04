@@ -194,3 +194,33 @@ def test_cfb_shop_candidates_and_grading(tmp_path, monkeypatch):
     assert SH.settle(b, 6, 50) > 0 and SH.settle(b, 5, 50) < 0
     assert SH.settle({"market": "total", "side": "under", "point": 54.5}, 3, 50) > 0
     assert SH.settle({"market": "ml", "side": "away"}, -3, 50) > 0
+
+
+def test_kalshi_maker_match_post_settle(tmp_path, monkeypatch):
+    import json, gzip
+    from datetime import datetime, timezone, timedelta
+    from nflpred import kalshi_maker as K
+    monkeypatch.setattr(K, "HIST", tmp_path)
+    now = datetime(2026, 10, 9, 18, 0, tzinfo=timezone.utc)
+    ev = {"id": "e1", "home_team": "Los Angeles Chargers", "away_team": "Los Angeles Rams", "commence_time": "2026-10-11T20:05:00Z",
+          "bookmakers": [{"key": "pinnacle", "markets": [{"key": "h2h", "outcomes": [{"name": "Los Angeles Chargers", "price": -150}, {"name": "Los Angeles Rams", "price": 135}]}]}]}
+    with gzip.open(tmp_path / "odds_2026-10-09T1730.json.gz", "wt") as f:
+        json.dump([ev], f)
+    mk = [{"ticker": "KXNFLGAME-X-LAC", "title": "Los Angeles R at Los Angeles C", "yes_sub_title": "Los Angeles C", "yes_bid": 50, "yes_ask": 60,
+           "expected_expiration_time": "2026-10-11T23:30:00Z"},
+          {"ticker": "KXNFLGAME-X-LAR", "title": "Los Angeles R at Los Angeles C", "yes_sub_title": "Los Angeles R", "yes_bid_dollars": "0.38", "yes_ask_dollars": "0.45",
+           "expected_expiration_time": "2026-10-11T23:30:00Z"}]
+    assert K.match_market(mk[0], [ev])[1] == "home" and K.match_market(mk[1], [ev])[1] == "away"
+    def getter(url):
+        if "/markets?" in url:
+            return {"markets": mk if "KXNFLGAME" in url else []}
+        return {"trades": [{"yes_price": 52}, {"yes_price": 50}]}
+    out = K.process(now=now, getter=getter)
+    act = out["active"]
+    lac = next(o for o in act if o["side"] == "home")
+    fair = K.shin(-150, 135)
+    assert lac["bid_cents"] == int(fair * 100) - 3 and 50 < lac["bid_cents"] < 60
+    # next run: a trade at 50 printed below a bid of ~54 -> filled (through)
+    out2 = K.process(now=now + timedelta(hours=1), getter=getter)
+    assert out2["report"]["filled"] >= 1
+    assert any(b["status"] == "filled" and b["fill"] == "through" for b in out2["open"])
