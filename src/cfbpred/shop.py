@@ -112,7 +112,8 @@ def offers(ev: dict, books: list[str], S: dict | None = None) -> dict:
                  market == "total" and ((point < cur["point"]) if side == "over" else (point > cur["point"]))))
             if better:
                 out[market][side] = {"point": point, "price": price, "book": bk.get("title", bk["key"]), "book_key": bk["key"],
-                                     "edge": e, "grade": letter(e), "p_win": round(pr[0], 4) if pr else None}
+                                     "edge": e, "grade": letter(e), "p_win": round(pr[0], 4) if pr else None,
+                                     "p_push": round(pr[1], 4) if pr else None}
     return out
 
 

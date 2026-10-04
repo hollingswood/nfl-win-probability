@@ -27,7 +27,7 @@ header .xlink{justify-self:start}
     <p>A bet is only worth making when the <b>price</b> beats the chance the sharpest book (<b>Pinnacle</b>) gives it; that gap is the <b>edge</b>, and the <b>grade</b> says how big it is. In 2021–25 testing, college prices that beat Pinnacle's line went on to beat its closing line too. Our stats model is shown next to Vegas for context, but it does not beat the closing line, so no bet uses it. Everything is <b>paper</b> (logged and scored, not recommended) until a track passes its live test. Not financial advice.</p>
     <div class="keyrow"><span><span class="st st-bet">PAPER BET</span> logged by a track's locked rules</span> <span><span class="st st-watch">WATCH</span> clears the bar, logs at the next odds check</span> <span><span class="st st-no">NO</span> below the bar (reason shown)</span></div>
     <a class="xlink" href="../">← NFL board</a>
-    <nav class="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#betswrap">Paper bets</a><a href="#sec-season">Season so far</a><a href="#sec-test">Model vs Vegas</a><a href="#sec-research">Testing</a><a href="#sec-notes">How to read</a></nav>
+    <nav class="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#promos">Promo calculator</a><a href="#betswrap">Paper bets</a><a href="#sec-season">Season so far</a><a href="#sec-test">Model vs Vegas</a><a href="#sec-research">Testing</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
@@ -51,6 +51,36 @@ header .xlink{justify-self:start}
       <label class="chk"><input type="checkbox" id="f-past"> Show games already started</label>
     </div>
     <div class="games" id="games"></div>
+  </section>
+
+  <section id="promos">
+    <div class="sechead"><h2>Promo &amp; boost calculator</h2><span class="pill">Not financial advice</span></div>
+    <p class="edge">Values a sportsbook promo against <b>Pinnacle's fair price</b> for that bet (vig removed), not against the promo book's own odds. Pick a game and bet, type the odds your book shows, and choose the promo. Promo terms vary by book; check them.</p>
+    <div class="two pcgrid">
+      <form class="panel pc" id="cpc" autocomplete="off">
+        <div class="fields">
+          <label class="wide">Game<select id="cp-game"></select></label>
+          <label class="wide">Bet<select id="cp-bet"></select></label>
+          <label>Posted odds<input id="cp-odds" type="text" placeholder="+150"></label>
+          <label>Fair win %<input id="cp-fair" type="text"><span class="hint" id="cp-fairh"></span></label>
+        </div>
+        <fieldset class="seg"><legend>Promo type</legend>
+          <label><input type="radio" name="cptype" value="boost" checked><span>Profit boost</span></label>
+          <label><input type="radio" name="cptype" value="bonus"><span>Bonus bet</span></label>
+          <label><input type="radio" name="cptype" value="nosweat"><span>No-sweat</span></label>
+        </fieldset>
+        <div class="fields">
+          <label>Profit boost %<input id="cp-bpct" type="text" value="25"></label>
+          <label>Stake $<input id="cp-stake" type="text" value="25"></label>
+          <label>Max winnings $<input id="cp-cap" type="text" placeholder="no cap"></label>
+          <label>Bonus conversion %<input id="cp-conv" type="text" value="65"><span class="hint">cash per $1 of bonus bet (no-sweat refunds)</span></label>
+        </div>
+      </form>
+      <div class="panel pcres" id="cp-out" aria-live="polite"></div>
+    </div>
+    <h3 class="pch">Best places for a bonus bet this week</h3>
+    <p class="edge">A bonus bet returns only the profit, so it keeps the most value at longer prices: expected cash per $1 of bonus = fair win chance × (decimal odds − 1). Prices +150 to +500 at your books, valued at Pinnacle's fair price.</p>
+    <div class="scroll"><table class="sumtbl" id="cp-best"></table></div>
   </section>
 
   <section id="betswrap">
@@ -265,6 +295,41 @@ renderGames();
       gr.map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)}</td><td>${od(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv!=null?sgn(b.clv):'—'}</td></tr>`).join('')+'</tbody>' : '';
     return `<div class="track"><h3>${name} <span class="pill">shadow</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}</div>`;
   }).join('');
+})();
+
+// promo & boost calculator (college): fair win chance from Pinnacle via the graded offers
+(function(){
+  const dec=a=>a>0?1+a/100:1+100/Math.abs(a), num=v=>{const x=parseFloat(String(v).replace(/[−–]/g,'-').replace(/[^0-9.+-]/g,''));return Number.isFinite(x)?x:null;};
+  const usd=x=>`${x<0?'−':''}$${Math.abs(x).toFixed(2)}`;
+  const opts=[]; for(const g of upcoming){ for(const r of marketRows(g)) if(r.x.p_win!=null) opts.push(r); }
+  const games=[...new Map(opts.map(r=>[r.g.game_id,r.g])).values()];
+  const gs=$('cp-game'), bs=$('cp-bet');
+  if(!games.length){ $('promos').querySelector('.pcgrid').innerHTML='<p class="edge">No games with a Pinnacle price yet (Pinnacle posts college games Sunday or Monday).</p>'; $('cp-best').innerHTML=''; return; }
+  gs.innerHTML=games.map(g=>`<option value="${g.game_id}">${esc(g.away)} @ ${esc(g.home)} · ${when(g.start)}</option>`).join('');
+  const fillBets=()=>{ const R=opts.filter(r=>String(r.g.game_id)===gs.value); bs.innerHTML=R.map((r,i)=>`<option value="${i}">${esc(MKT[r.m])}: ${esc(r.pick)} · ${esc(r.book)}</option>`).join(''); bs._rows=R; load(); };
+  const load=()=>{ const r=(bs._rows||[])[+bs.value]; if(!r) return; $('cp-odds').value=od(r.x.price).replace('−','-'); $('cp-fair').value=(100*r.x.p_win).toFixed(1);
+    $('cp-fairh').textContent=r.x.p_push?`push chance ${(100*r.x.p_push).toFixed(1)}% (stake back)`:'Pinnacle, vig removed (Shin)'; calc(); };
+  const calc=()=>{
+    const r=(bs._rows||[])[+bs.value]||{x:{}}, a=num($('cp-odds').value), p=(num($('cp-fair').value)||0)/100, push=r.x.p_push||0, S=num($('cp-stake').value)||0;
+    const cap=num($('cp-cap').value), conv=(num($('cp-conv').value)||0)/100, type=(document.querySelector('input[name=cptype]:checked')||{}).value;
+    if(a==null||!p||!S){ $('cp-out').innerHTML='<p class="edge">Enter odds, fair win % and stake.</p>'; return; }
+    const lose=Math.max(0,1-p-push); let d=dec(a), win=(d-1)*S, ev, label, note;
+    if(type==='boost'){ const b=(num($('cp-bpct').value)||0)/100; win=(d-1)*(1+b)*S; if(cap!=null) win=Math.min(win,cap); ev=p*win-lose*S; label='Profit boost'; note=`Boosted payout ${usd(win)} on ${usd(S)}; break-even win chance ${(100*S/(S+win)).toFixed(1)}%.`; }
+    else if(type==='bonus'){ if(cap!=null) win=Math.min(win,cap); ev=p*win; label='Bonus bet'; note=`Worth ${(100*ev/S).toFixed(0)}% of face value. Above about 65–70% is a good use.`; }
+    else { if(cap!=null) win=Math.min(win,cap); ev=p*win-lose*S+lose*conv*S; label='No-sweat'; note=`Refund counted at ${Math.round(conv*100)}% conversion.`; }
+    const pct=ev/S, good = type==='bonus' ? pct>=0.65 : pct>=0.03, ok = type==='bonus' ? pct>=0.55 : pct>=0;
+    $('cp-out').innerHTML=`<div class="stat"><b class="num">${usd(ev)}</b><span>expected value · ${label} · ${pct>=0?'+':''}${(100*pct).toFixed(1)}% of stake</span></div>
+      <p class="edge"><span class="st st-${good?'bet':ok?'watch':'no'}">${good?'TAKE IT':ok?'MARGINAL':'PASS'}</span> ${esc(note)}</p>
+      <p class="g2note">Without the promo this bet is worth ${r.x.edge!=null?sgn(r.x.edge):'—'} vs Pinnacle. Fair chance from Pinnacle's line with the vig removed; spreads and totals priced at your exact number with college key numbers.</p>`;
+  };
+  gs.addEventListener('input', fillBets); bs.addEventListener('input', load);
+  for(const id of ['cp-odds','cp-fair','cp-bpct','cp-stake','cp-cap','cp-conv']) $(id).addEventListener('input', calc);
+  document.querySelectorAll('input[name=cptype]').forEach(x=>x.addEventListener('input', calc));
+  fillBets();
+  const best=opts.filter(r=>r.x.price>=150&&r.x.price<=500).map(r=>({r, v:r.x.p_win*(dec(r.x.price)-1)})).sort((a,b)=>b.v-a.v).slice(0,12);
+  $('cp-best').innerHTML = best.length ? `<thead><tr><th style="text-align:left">Bet</th><th style="text-align:left">Game</th><th>Price</th><th>Fair win</th><th>Cash per $100 bonus</th></tr></thead><tbody>`+
+    best.map(({r,v})=>`<tr><td style="text-align:left"><b>${esc(r.pick)}</b><small> ${esc(r.book)}</small></td><td style="text-align:left;font-family:var(--body)">${esc(r.g.away)} @ ${esc(r.g.home)}</td><td>${od(r.x.price)}</td><td>${pct(r.x.p_win)}</td><td>$${(100*v).toFixed(0)}</td></tr>`).join('')+'</tbody>'
+    : '<tbody><tr><td style="text-align:left;font-family:var(--body)">No +150 to +500 prices with a Pinnacle line right now.</td></tr></tbody>';
 })();
 
 // season so far: model (fit on earlier seasons only) vs the Vegas closing line, game by game
