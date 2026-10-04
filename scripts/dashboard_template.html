@@ -845,7 +845,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
   if(g.vegas_home_margin!=null){
     const d=g.model_home_margin-g.vegas_home_margin, who=d>0?g.home_team:g.away_team;
     gap = Math.abs(d)<1 ? `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: essentially the same, so there's little to exploit.`
-      : `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: the model is <b>${Math.abs(d).toFixed(1)} pts higher on ${esc(who)}</b>. This gap is the only source of edge. The bet math trusts Vegas more than the model (it uses about ⅓ model, ⅔ market), so a big gap becomes a much smaller edge.`;
+      : `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: the model is <b>${Math.abs(d).toFixed(1)} pts higher on ${esc(who)}</b>. The original model's bet math trusts Vegas more (spreads use about ⅓ model, ⅔ Vegas; moneylines keep about half of the gap), so a big gap becomes a much smaller edge. On 2020–25 games Vegas alone predicted better than any blend, so treat this gap as context, not an edge; the newer tracks use prices only.`;
   }
   return `<article class="game" data-gid="${esc(g.game_id)}">
     <div class="gmeta"><span>${fmtDay(g.gameday)} · ${esc(g.gametime||'')} · WK ${g.week}</span>${g.neutral_site?'<span class="tag">NEUTRAL</span>':''}</div>
