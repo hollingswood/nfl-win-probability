@@ -61,6 +61,12 @@ jobs:
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: College football AI news reader (logging only; same cadence as the college odds)
+        continue-on-error: true
+        run: python -m cfbpred.news
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: College football page data (CFBD refresh every 12 h, ratings, this week's games)
         continue-on-error: true
         run: python -m cfbpred.pipeline

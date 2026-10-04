@@ -118,7 +118,15 @@ function row(g){
     <td data-l="Model gap">${gap}</td>
     <td data-l="Total">${tot}</td>
     <td data-l="Best spread (your books)">${best}</td>
-    <td data-l="Moneyline (your books)">${ml}</td></tr>`;
+    <td data-l="Moneyline (your books)">${ml}</td></tr>${newsRow(g)}`;
+}
+// AI-read news for either team in the last 7 days (logging only; not used by any rule)
+function newsRow(g){
+  const N=g.news||{}, items=[...(N.away||[]).map(x=>({...x,t:g.away})),...(N.home||[]).map(x=>({...x,t:g.home}))];
+  if(!items.length) return '';
+  const line=x=>x.kind==='av' ? `${x.is_starting_qb_news?'<b>QB</b> ':''}<b>${esc(x.t)}</b> ${esc(x.player||'')}${x.position?` (${esc(x.position)})`:''}: ${esc(String(x.signal||'').replace(/_/g,' '))}`
+    : `<b>${esc(x.t)}</b> ${esc(String(x.category||'').replace(/_/g,' '))}: ${esc(x.summary||'')}`;
+  return `<tr class="newsrow"><td></td><td colspan="8" class="m"><small>AI-read news (not used by any rule): ${items.slice(0,4).map(x=>`${line(x)}${x.link?` · <a href="${esc(x.link)}" target="_blank" rel="noopener">source</a>`:''}`).join(' · ')}</small></td></tr>`;
 }
 function render(){
   const cf=$('f-conf').value, q=$('f-team').value.trim().toLowerCase(), oo=$('f-odds').checked, gg=$('f-gap').checked, past=$('f-past').checked, now=new Date();

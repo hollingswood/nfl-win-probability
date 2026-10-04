@@ -112,3 +112,20 @@ def test_cfb_ml_candidates():
     rules = {x["rule"] for x in c if x["team"] == "Baylor Bears"}
     assert "P1" in rules and all(x["price"] == 300 and x["book"] == "FanDuel" for x in c)
     assert not [x for x in c if x["team"] == "Texas Longhorns"]
+
+
+def test_cfb_news_scan_logs_valid_teams(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    from cfbpred import news as CN
+    monkeypatch.setattr(CN, "HIST", tmp_path)
+    monkeypatch.setattr(CN, "fbs_teams", lambda: ["Texas", "Alabama"])
+    items = [{"title": "Texas QB ruled out", "link": "http://x/1", "published": "2026-10-08T12:00+00:00", "summary": "..."}]
+    def llm(batch, key, teams):
+        return ([{"item": 0, "player": "QB One", "team": "Texas", "signal": "out", "is_starting_qb_news": True,
+                  "game_week_relevant": True, "certainty": 1.0, "quote": "ruled out"},
+                 {"item": 0, "player": "X", "team": "Nowhere State", "signal": "out"}][:1], [])
+    rep = CN.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: items, llm=llm, force=True)
+    assert rep["signals"] == 1 and rep["qb_signals"] == ["QB One (Texas): out"]
+    rec = CN.recent_by_team(7, datetime(2026, 10, 9, tzinfo=timezone.utc))
+    assert rec["Texas"][0]["player"] == "QB One"
+    assert CN.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: items, llm=llm, force=True)["new_items"] == 0
