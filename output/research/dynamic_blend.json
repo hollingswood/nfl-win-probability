@@ -1,0 +1,50 @@
+{
+ "tuned_on": "2015-2019",
+ "scored_on": "2020-2025",
+ "games_holdout": 1688,
+ "params": {
+  "halflife_games": 4,
+  "w0": 0.5,
+  "lam": 0.0,
+  "kappa": 0.0
+ },
+ "static_w": 0.48,
+ "log_loss_holdout": {
+  "vegas": 0.60704,
+  "model": 0.62085,
+  "static_blend": 0.61012,
+  "dynamic_blend": 0.61039
+ },
+ "log_loss_tuning": {
+  "vegas": 0.61872,
+  "static_blend": 0.615,
+  "dynamic_blend": 0.61501
+ },
+ "by_season_holdout": {
+  "2020": {
+   "vegas": 0.59,
+   "dynamic": 0.5936
+  },
+  "2021": {
+   "vegas": 0.6232,
+   "dynamic": 0.6227
+  },
+  "2022": {
+   "vegas": 0.605,
+   "dynamic": 0.6125
+  },
+  "2023": {
+   "vegas": 0.627,
+   "dynamic": 0.6281
+  },
+  "2024": {
+   "vegas": 0.5892,
+   "dynamic": 0.5961
+  },
+  "2025": {
+   "vegas": 0.607,
+   "dynamic": 0.6084
+  }
+ },
+ "beats_vegas_holdout": false
+}

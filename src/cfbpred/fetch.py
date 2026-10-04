@@ -28,7 +28,7 @@ API = "https://api.collegefootballdata.com"
 CALLS = {"n": 0}
 
 PER_TYPE = ["games", "lines", "stats/game/advanced"]          # regular + postseason
-PER_YEAR = ["talent", "player/returning", "recruiting/teams", "ratings/sp", "teams/fbs"]
+PER_YEAR = ["talent", "player/returning", "recruiting/teams", "ratings/sp", "teams/fbs", "player/portal", "ppa/players/season"]
 
 
 def get(path: str, params: dict, key: str, tries: int = 3):
@@ -71,7 +71,7 @@ def pull(years: list[int], key: str, refresh_current: bool = True) -> dict:
             params = {"year": y}
             if st:
                 params["seasonType"] = st
-            if path == "stats/game/advanced":
+            if path in ("stats/game/advanced", "ppa/players/season"):
                 params["excludeGarbageTime"] = "true"
             data = get(path, params, key)
             if data is None:

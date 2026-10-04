@@ -32,7 +32,7 @@ def ll(y, p):
 def main():
     df = build(refresh=False, today=dt.date.today())
     parts = []
-    for s in range(2013, 2026):
+    for s in range(2014, 2026):
         te = df[(df.season == s) & df.home_win.notna()].copy()
         fit = M.fit(df, before_season=s)
         te["p"] = M.predict(fit, te)
