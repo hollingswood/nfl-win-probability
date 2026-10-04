@@ -307,6 +307,9 @@ section[id]{scroll-margin-top:12px}
 .loglink{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--accent);text-decoration:underline;white-space:nowrap}
 .xlink{display:inline-block;margin:10px 0 4px;font:600 13px var(--mono);letter-spacing:.04em;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:2px;padding:4px 10px}
 .xlink:hover{background:var(--accent-soft)}
+.mkt .vm{display:grid;gap:2px;padding-bottom:8px;margin-bottom:6px;border-bottom:1px dashed var(--line)}
+.mkt .vm span.big{font:700 17px var(--display)!important;letter-spacing:.02em}
+.mkt .vm .cmp{font:13px var(--mono)}
 </style>
 
 <div class="wrap">
@@ -709,11 +712,11 @@ function gameRows(g){
   });
 }
 const rowSort = (a,b) => (GORD[a.grade]??9)-(GORD[b.grade]??9) || (b.current-a.current) || SORD[a.st.k]-SORD[b.st.k] || b.sortEdge-a.sortEdge;
-function mktBox(label, rows, emptyHtml, extra=''){
-  if(!rows.length) return `<div class="mkt"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(null, label==='MONEYLINE'?'Not graded: no price beats any fair reference':'Not graded: no positive spread edge')}</span></div>${emptyHtml}</div>`;
+function mktBox(label, rows, emptyHtml, extra='', cmp=''){
+  if(!rows.length) return `<div class="mkt"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(null, label==='MONEYLINE'?'Not graded: no price beats any fair reference':'Not graded: no positive spread edge')}</span></div>${cmp}${emptyHtml}</div>`;
   const r=rows[0];
   return `<div class="mkt is-${r.st.k}"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(r.grade, r.gtip, false, r.tier)}${stPill(r.st)}</span></div>
-    <span class="pick">${esc(r.pick)}</span><span class="odds">best price at ${esc(r.book)}</span>
+    ${cmp}<span class="pick">${esc(r.pick)}</span><span class="odds">best price at ${esc(r.book)}</span>
     ${r.why.join('')}<span class="why">${esc(r.st.d)}</span>${extra}
     ${rows.slice(1).map(o=>`<span class="why">Other side: <b>${esc(o.pick)}</b> · grade ${o.grade||'—'} · ${o.st.t}</span>`).join('')}</div>`;
 }
@@ -821,6 +824,18 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       <span class="fv">${f.points.toFixed(1)} pts</span></div>`).join('');
   const line = m => m == null ? '—' : (Math.abs(m) < 0.25 ? 'Pick' : (m > 0 ? `${esc(g.home_team)} −${Math.abs(m).toFixed(1)}` : `${esc(g.away_team)} −${Math.abs(m).toFixed(1)}`));
   const m=g.moneyline, sp=g.spread, b=sp&&sp.best;
+  // Vegas vs model, always shown (like the TOTAL box): spread from the favorite's side, moneyline as win %
+  const LO=(g.context||{}).live_odds||{};
+  const vSp = LO.consensus_home_margin!=null ? LO.consensus_home_margin : g.vegas_home_margin;
+  const shp = (LO.sharp_spreads||[]).map(x=>-x[0]); const vSharp = shp.length ? shp.sort((a,b)=>a-b)[Math.floor(shp.length/2)] : null;
+  const diffTxt = (mod, veg, unit, fmt) => mod==null||veg==null ? '' : Math.abs(mod-veg) < (unit==='pts'?0.5:0.015) ? ' · about the same as Vegas'
+    : ` · ${fmt(Math.abs(mod-veg))} more on ${esc(mod>veg?g.home_team:g.away_team)}`;
+  const spCmp = `<div class="vm"><span class="big">Vegas ${vSp!=null?line(vSp):'—'}</span><span class="odds">${LO.consensus_home_margin!=null?'consensus':'schedule line'}${vSharp!=null?` · sharp books ${line(vSharp)}`:''}</span>`+
+    `<span class="cmp">Model ${line(g.model_home_margin)}${diffTxt(g.model_home_margin, vSp, 'pts', x=>x.toFixed(1)+' pts')}</span></div>`;
+  const vP = LO.sharp_home_prob ?? LO.consensus_home_prob ?? g.vegas_home_prob;
+  const fav = p => p==null ? '—' : p>=0.5 ? `${esc(g.home_team)} ${pct(p)}` : `${esc(g.away_team)} ${pct(1-p)}`;
+  const mlCmp = `<div class="vm"><span class="big">Vegas ${fav(vP)}</span><span class="odds">${LO.sharp_home_prob!=null?'sharp books, no-vig':LO.consensus_home_prob!=null?'all-book consensus, no-vig':'schedule line'}</span>`+
+    `<span class="cmp">Model ${fav(g.home_win_prob)}${diffTxt(g.home_win_prob, vP, 'p', x=>Math.round(x*100)+' pts')}</span></div>`;
   const mlEmpty = m ? `<span class="odds">No positive price on either side (best: ${esc(m.team)} ${od(m.price)}, ${sgn(m.edge)})</span>` : `<span class="odds">No live odds yet</span>`;
   const spEmpty = b ? `<span class="odds">No positive edge (best: ${esc(b.team)} ${ptd(b.point)} ${od(b.price)}, ${sgn(b.ev)})</span>` : `<span class="odds">No live spreads yet</span>`;
   const spRows=R.filter(r=>r.mkt==='sp').sort((a,b)=>SORD[a.st.k]-SORD[b.st.k]||rowSort(a,b));
@@ -843,7 +858,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
       <span class="a" style="width:${(1-hp)*100}%"></span><span class="h" style="width:${hp*100}%"></span>
       ${g.vegas_home_prob!=null?`<span class="v" style="left:${(1-g.vegas_home_prob)*100}%"></span>`:''}
     </div>
-    <div class="markets">${mktBox('MONEYLINE', R.filter(r=>r.mkt==='ml').sort((a,b)=>SORD[a.st.k]-SORD[b.st.k]||rowSort(a,b)), mlEmpty)}${mktBox('SPREAD', spRows, spEmpty, buyTxt)}${totalBox(g)}</div>
+    <div class="markets">${mktBox('MONEYLINE', R.filter(r=>r.mkt==='ml').sort((a,b)=>SORD[a.st.k]-SORD[b.st.k]||rowSort(a,b)), mlEmpty, '', mlCmp)}${mktBox('SPREAD', spRows, spEmpty, buyTxt, spCmp)}${totalBox(g)}</div>
     ${trackLines(g)}
     ${propsLine(g)}
     ${exchLine(g)}
