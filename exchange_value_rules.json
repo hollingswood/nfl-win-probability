@@ -1,16 +1,49 @@
 {
   "track": "exchange_value",
-  "version": 1,
-  "frozen_on": "2026-10-02",
+  "version": 2,
+  "frozen_on": "2026-10-04",
   "note": "Paper track, pre-registered before any results. Question: after each venue's real fees, does any exchange / prediction market offer prices better than Pinnacle's no-vig fair price often enough to beat the close? Basis: 1,481 logged game-snapshots (2026-09-29 to 10-02). Median two-way cost after fees: Kalshi 4.5%, Robinhood 5.0-5.1%, Polymarket 3.6-4.4%, ProphetX 1.4-2.0%, Novig 1.1-1.6%; share of quotes >= +1% vs Pinnacle fair: ProphetX ML 10.6%, Polymarket ML 8.2%, Kalshi ML 2.8%, Robinhood 0%. Quotes are top-of-book from The Odds API with no size, so some may be thin or stale (hence the freshness and max-EV guards). Do not edit to fit results; bump the version instead.",
   "venues": {
-    "kalshi": {"source": "kalshi", "label": "Kalshi", "fee": "kalshi_taker", "bettable": true},
-    "robinhood": {"source": "kalshi", "label": "Robinhood", "fee": "robinhood", "bettable": true,
-                  "note": "Robinhood NFL contracts are Kalshi's order book; price = Kalshi ask + Robinhood 1c commission + exchange fee (capped 1c)"},
-    "polymarket": {"source": "polymarket", "label": "Polymarket US", "fee": "polymarket_taker", "bettable": true},
-    "prophetx": {"source": "prophetx", "label": "ProphetX", "fee": "winnings_commission", "commission": 0.02, "bettable": true},
-    "novig": {"source": "novig", "label": "Novig", "fee": "none", "bettable": false, "note": "not available in Arizona (logged for reference only)"},
-    "betopenly": {"source": "betopenly", "label": "BetOpenly", "fee": "none", "bettable": false, "note": "fees and Arizona availability unverified (reference only)"}
+    "kalshi": {
+      "source": "kalshi",
+      "label": "Kalshi",
+      "fee": "kalshi_taker",
+      "bettable": true
+    },
+    "robinhood": {
+      "source": "kalshi",
+      "label": "Robinhood",
+      "fee": "robinhood",
+      "bettable": true,
+      "note": "Robinhood NFL contracts are Kalshi's order book; price = Kalshi ask + Robinhood 1c commission + exchange fee (capped 1c)"
+    },
+    "polymarket": {
+      "source": "polymarket",
+      "label": "Polymarket US",
+      "fee": "polymarket_taker",
+      "bettable": true
+    },
+    "prophetx": {
+      "source": "prophetx",
+      "label": "ProphetX",
+      "fee": "winnings_commission",
+      "commission": 0.02,
+      "bettable": true
+    },
+    "novig": {
+      "source": "novig",
+      "label": "Novig",
+      "fee": "none",
+      "bettable": false,
+      "note": "not available in Arizona (logged for reference only)"
+    },
+    "betopenly": {
+      "source": "betopenly",
+      "label": "BetOpenly",
+      "fee": "none",
+      "bettable": false,
+      "note": "fees and Arizona availability unverified (reference only)"
+    }
   },
   "fees": {
     "kalshi_taker": "cost = p + 0.07 * p * (1 - p)",
@@ -20,21 +53,42 @@
     "none": "cost = p"
   },
   "qualify": {
-    "markets": ["h2h", "spreads", "totals"],
-    "fair": "Pinnacle no-vig probability (multiplicative) at the same snapshot, same market and same point (both sides quoted)",
+    "markets": [
+      "h2h",
+      "spreads",
+      "totals"
+    ],
+    "fair": "Pinnacle no-vig probability (Shin's method) at the same snapshot, same market and same point (both sides quoted)",
     "min_ev": 0.02,
     "max_ev": 0.15,
     "max_quote_age_minutes": 90,
-    "fair_prob_range": [0.12, 0.88],
+    "fair_prob_range": [
+      0.12,
+      0.88
+    ],
     "kickoff_within_days": 7,
     "min_minutes_before_kickoff": 30,
     "one_bet_per": "game x market (first snapshot where any bettable venue qualifies; best EV venue/side at that snapshot)"
   },
-  "sizing": {"units": 1.0},
+  "sizing": {
+    "units": 1.0
+  },
   "grading": {
     "clv": "decimal price after fees x Pinnacle no-vig probability of our side at the same point in our last odds snapshot before kickoff - 1; no same-point Pinnacle close = no CLV",
     "result": "final score; spreads/totals pushes return the stake"
   },
-  "validation": {"min_bets": 100, "avg_clv_positive_with_p_below": 0.05, "realized_roi_above": 0.0},
-  "ledger": "paper_bets_exchange_value.json"
+  "validation": {
+    "min_bets": 100,
+    "avg_clv_positive_with_p_below": 0.05,
+    "realized_roi_above": 0.0
+  },
+  "ledger": "paper_bets_exchange_value.json",
+  "version_history": [
+    {
+      "version": 1,
+      "frozen_on": "2026-10-02",
+      "fair": "Pinnacle no-vig probability (multiplicative) at the same snapshot, same market and same point (both sides quoted)"
+    }
+  ],
+  "version_2_note": "Only change: Shin vig removal instead of multiplicative (output/research/devig_methods.md, devig_tracks.json: multiplicative overstates longshots; several v1 bets were +270 to +570 underdogs). v1 bets keep rules_version 1; open v1 bets are graded against the Shin close."
 }

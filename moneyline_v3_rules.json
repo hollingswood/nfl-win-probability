@@ -1,7 +1,7 @@
 {
   "track": "moneyline_v3",
-  "version": 1,
-  "frozen_on": "2026-10-01",
+  "version": 2,
+  "frozen_on": "2026-10-04",
   "note": "Same rules and thresholds as moneyline_v2 (not re-tuned); only the fair-price reference changes to the median no-vig of Pinnacle, LowVig and BetOnline (output/research/pinnacle_ref.md: Pinnacle is not clearly sharper on 2024-25, but the blend stops the reference resting on one book group \u2014 LowVig and BetOnline are one company; circasports/bookmaker never appear in the feed). Runs alongside v2 as a separate record; no claim of improvement. Do not edit to fit results; bump version instead.",
   "market": "moneyline",
   "idea": "Soft sportsbooks lag the sharp books. Bet when one of my_books.json offers a price better than the sharp books' no-vig fair price AND the model agrees the price is not negative-EV.",
@@ -34,7 +34,17 @@
     "clv_definition": "bet decimal odds x nflverse closing no-vig probability of that side - 1 (same as moneyline v1)"
   },
   "checked": "every full run plus the hourly odds watch (added 2026-09-30, before any bets were logged)",
-  "reference_field": "pin_sharp_home_prob",
+  "reference_field": "pin_sharp_home_prob_shin",
   "ledger": "paper_bets_ml_v3.json",
-  "game_key": "ml_v3"
+  "game_key": "ml_v3",
+  "version_history": [
+    {
+      "version": 1,
+      "frozen_on": "2026-10-01",
+      "reference_field": "pin_sharp_home_prob",
+      "devig": "multiplicative"
+    }
+  ],
+  "devig": "shin",
+  "version_2_note": "Only change from v1: the fair price removes the vig with Shin's method instead of multiplicative. Reason (output/research/devig_methods.md, devig_tracks.json): multiplicative was the least accurate method on Pinnacle closing moneylines in NFL and CFB and overstates longshots; on 2022-25 NFL lines, soft-book ML bets chosen with multiplicative fair prices across -1000..+1000 lost 0.3% CLV (underdogs -1.4%) vs +1.0% with Shin. Thresholds unchanged. v1 bets keep rules_version 1 and are not counted in the v2 record."
 }

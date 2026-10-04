@@ -118,6 +118,7 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
         probs, spreads, best = [], [], {"home": None, "away": None}
         sharp_probs, pin_probs, best_ex = [], [], {"home": None, "away": None}
         ref3 = []  # moneyline v3 reference: Pinnacle + LowVig + BetOnline
+        sharp_shin, ref3_shin, pin_shin = [], [], []   # same references, Shin vig removal (devig.py)
         sharp_spreads = []  # moneyline v4: sharp books' spread + juice
         book_spreads = []
         by_book = {}  # grade v2 (grade_v2.py): raw ML / spread per book (exchanges left out, as in the research feed)
@@ -136,6 +137,15 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
                         pin_probs.append(h / (h + a))
                     if bk.get("key") in ("pinnacle", "lowvig", "betonlineag"):
                         ref3.append(h / (h + a))
+                    if bk.get("key") in SHARP_BOOKS or bk.get("key") in ("pinnacle", "lowvig", "betonlineag"):
+                        from .devig import shin as _shin
+                        ps = _shin(px[ev["home_team"]], px[ev["away_team"]])
+                        if bk.get("key") in SHARP_BOOKS:
+                            sharp_shin.append(ps)
+                        if bk.get("key") in ("pinnacle", "lowvig", "betonlineag"):
+                            ref3_shin.append(ps)
+                        if bk.get("key") == "pinnacle":
+                            pin_shin.append(ps)
                     if bk.get("key") in EXCHANGES:
                         for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
                             if best_ex[side] is None or px[name] > best_ex[side]["price"]:
@@ -177,6 +187,9 @@ def summarize(events: list[dict], allowed: set | None = None) -> dict[tuple[str,
             "pinnacle_home_prob": round(pin_probs[0], 4) if pin_probs else None,
             "sharp_spreads": sharp_spreads,
             "pin_sharp_home_prob": round(statistics.median(ref3), 4) if ref3 else None,
+            "sharp_home_prob_shin": round(statistics.median(sharp_shin), 4) if sharp_shin else None,
+            "pin_sharp_home_prob_shin": round(statistics.median(ref3_shin), 4) if ref3_shin else None,
+            "pinnacle_home_prob_shin": round(pin_shin[0], 4) if pin_shin else None,
             "best_exchange_home_ml": best_ex["home"], "best_exchange_away_ml": best_ex["away"],
             "consensus_home_margin": round(statistics.median(spreads), 1) if spreads else None,
             "best_home_ml": best["home"], "best_away_ml": best["away"],

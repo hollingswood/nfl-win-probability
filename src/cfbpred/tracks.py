@@ -53,8 +53,8 @@ def pinnacle(ev: dict) -> dict | None:
         h2, sp = mk.get("h2h", {}), mk.get("spreads", {})
         out = {}
         if ev["home_team"] in h2 and ev["away_team"] in h2:
-            ph, pa = imp(h2[ev["home_team"]]["price"]), imp(h2[ev["away_team"]]["price"])
-            out["fair_h"] = ph / (ph + pa)
+            from nflpred.devig import shin   # v2 (2026-10-04): Shin vig removal; v1 used multiplicative
+            out["fair_h"] = shin(h2[ev["home_team"]]["price"], h2[ev["away_team"]]["price"])
         if ev["home_team"] in sp and ev["away_team"] in sp and sp[ev["home_team"]].get("point") is not None:
             ch, ca = imp(sp[ev["home_team"]]["price"]), imp(sp[ev["away_team"]]["price"])
             out["pt"], out["cover_h"] = sp[ev["home_team"]]["point"], ch / (ch + ca)

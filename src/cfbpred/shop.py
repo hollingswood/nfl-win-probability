@@ -45,9 +45,9 @@ def sharp(ev: dict) -> dict:
             if "Over" in tt and "Under" in tt and tt["Over"].get("point") is not None:
                 out["mu_t"] = DI.mu_from_total(tt["Over"]["point"], tt["Over"]["price"], tt["Under"]["price"])
                 out["pin_total"] = tt["Over"]["point"]
-            if h in h2 and a in h2:
-                ph, pa = DI.implied(h2[h]["price"]), DI.implied(h2[a]["price"])
-                out["q_ml"] = ph / (ph + pa)
+            if h in h2 and a in h2:              # v2 (2026-10-04): Shin vig removal; v1 used multiplicative
+                from nflpred.devig import shin
+                out["q_ml"] = shin(h2[h]["price"], h2[a]["price"])
         except Exception:
             pass
     return out

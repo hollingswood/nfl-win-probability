@@ -79,6 +79,11 @@ def _side(mk: str, o: dict, ev: dict) -> str | None:
     return "home" if o["name"] == ev["home_team"] else "away" if o["name"] == ev["away_team"] else None
 
 
+from .devig import shin_from_implied  # noqa: E402
+
+DEVIG = "shin"   # exchange_value_rules.json v2; v1 (until 2026-10-04) used multiplicative
+
+
 def _pinnacle_fair(ev: dict) -> dict:
     """{market: {(side, point): fair prob}} from Pinnacle, both sides required."""
     out = {}
@@ -92,8 +97,13 @@ def _pinnacle_fair(ev: dict) -> dict:
             ps = {(_side(m["key"], o, ev), o.get("point")): implied(o["price"]) for o in os_}
             if None in {k[0] for k in ps}:
                 continue
-            z = sum(ps.values())
-            out[m["key"]] = {k: v / z for k, v in ps.items()}
+            (k1, v1), (k2, v2) = ps.items()
+            if DEVIG == "shin":                 # exchange_value v2: Shin vig removal (devig.py)
+                f1 = shin_from_implied(v1, v2)
+                out[m["key"]] = {k1: f1, k2: 1 - f1}
+            else:
+                z = v1 + v2
+                out[m["key"]] = {k1: v1 / z, k2: v2 / z}
             out[m["key"] + "_updated"] = m.get("last_update")
     return out
 
