@@ -1,0 +1,12 @@
+{
+  "track": "cfb_body_clock",
+  "version": 1,
+  "frozen_on": "2026-10-04",
+  "note": "Tracked at Tyler's request although the rule FAILED its research screen (output/research/cfb/factor_screen.md, F2: 77 bets 2014-25, 54.5% cover, p 0.35, 7/12 seasons above 52.4%, 2022-25 56.7%). This is a live test of a weak lead, not a validated edge. Definition copied exactly from scripts/research/cfb/factor_screen.py F2: FBS vs FBS, not a neutral site, the away team's home time zone is >= 2 hours WEST of the home team's (standard-time offsets as in TZ_OFF), kickoff before 1:00 pm in the home team's standard time -> bet the HOME team against the spread. Do not edit to fit results; bump the version.",
+  "books": ["draftkings", "fanduel", "espnbet"],
+  "qualify": {"min_tz_gap_hours": 2, "max_local_kickoff_hour": 13, "bet_window_hours_before_kickoff": [0.17, 3], "price_range": [-130, 120]},
+  "sizing": {"units": 1.0},
+  "grading": {"primary": "cover rate vs 52.38% (binomial)", "clv": "EV of our home spread under Pinnacle's last pre-kickoff spread, key-number pricing (informational)"},
+  "validation": {"min_bets": 60, "cover_rate_p_below": 0.05},
+  "ledger": "cfb/paper_bets_cfb_body_clock.json"
+}

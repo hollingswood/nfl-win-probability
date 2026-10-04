@@ -77,6 +77,41 @@ def fit_models(G: pd.DataFrame, season: int) -> dict:
             "n_margin": len(fm), "n_total": len(ft)}
 
 
+def backtest(G: pd.DataFrame, season: int, first: int = 2022) -> list[dict]:
+    """Each past season scored with a model fit only on earlier seasons, vs the CFBD consensus closing line."""
+    L = D.lines(range(first, season))
+    out = []
+    for s in range(first, season):
+        c = fit_models(G, s - 1)
+        g = G[(G.season == s) & G.margin.notna() & ((G.home_div == "fbs") | (G.away_div == "fbs"))].copy()
+        g["mm"], g["mt"] = apply(g, c["margin"]), apply(g, c["total"])
+        g = g.merge(L, on="game_id", how="inner").dropna(subset=["spread_close"])
+        out.append(score_games(g.assign(vm=-g.spread_close, vt=g.total_close), s))
+    return out
+
+
+def score_games(g: pd.DataFrame, label) -> dict:
+    """g: margin, total, mm (model home margin), mt (model total), vm (Vegas home margin), vt (Vegas total)."""
+    hw = g.margin > 0
+    v = g[g.vm != 0]
+    ats_side, ats_res = (g.mm - g.vm).apply(lambda x: 1 if x > 0 else -1 if x < 0 else 0), (g.margin - g.vm).apply(lambda x: 1 if x > 0 else -1 if x < 0 else 0)
+    a = (ats_side * ats_res)[(ats_side != 0) & (ats_res != 0)]
+    t = g.dropna(subset=["vt", "mt"])
+    ou_side, ou_res = (t.mt - t.vt).apply(lambda x: 1 if x > 0 else -1 if x < 0 else 0), (t.total - t.vt).apply(lambda x: 1 if x > 0 else -1 if x < 0 else 0)
+    o = (ou_side * ou_res)[(ou_side != 0) & (ou_res != 0)]
+    ph = 0.5 * (1 + (g.mm / (SIGMA * math.sqrt(2))).apply(math.erf))
+    pv = 0.5 * (1 + (g.vm / (SIGMA * math.sqrt(2))).apply(math.erf))
+    ll = lambda p: float(-(hw * p.clip(1e-4, 1 - 1e-4).apply(math.log) + (~hw) * (1 - p.clip(1e-4, 1 - 1e-4)).apply(math.log)).mean())
+    return {"season": label, "games": int(len(g)),
+            "model_right": int(((g.mm > 0) == hw).sum()), "vegas_right": int(((v.vm > 0) == (v.margin > 0)).sum()), "vegas_games": int(len(v)),
+            "model_ats_w": int((a > 0).sum()), "model_ats_l": int((a < 0).sum()),
+            "model_ou_w": int((o > 0).sum()), "model_ou_l": int((o < 0).sum()),
+            "model_mae": round(float((g.mm - g.margin).abs().mean()), 2), "vegas_mae": round(float((g.vm - g.margin).abs().mean()), 2),
+            "model_total_mae": round(float((t.mt - t.total).abs().mean()), 2) if len(t) else None,
+            "vegas_total_mae": round(float((t.vt - t.total).abs().mean()), 2) if len(t) else None,
+            "model_log_loss": round(ll(ph), 4), "vegas_log_loss": round(ll(pv), 4)}
+
+
 def apply(df: pd.DataFrame, coef: dict) -> pd.Series:
     out = pd.Series(coef["const"], index=df.index, dtype=float)
     for k, v in coef.items():
@@ -191,6 +226,8 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     if refreshed or force or not CACHE.exists() or not model_path.exists():
         G = build_features(season)
         coef = fit_models(G, season)
+        coef["prev"] = fit_models(G, season - 1)       # fit only on earlier seasons: honest scorecard for this season
+        coef["backtest"] = backtest(G, season)
         model_path.write_text(json.dumps(coef, indent=1))
         G[G.season == season].to_parquet(CACHE)
     coef = json.loads(model_path.read_text())
@@ -221,6 +258,16 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
             ev = None   # already kicked off at the snapshot: the feed's prices are in-game, not pre-game
         if ev:
             o = odds_view(ev, allowed)
+            o["event_id"] = ev.get("id")
+            try:
+                from . import shop as SH
+                S = SH.sharp(ev)
+                az = json.loads((ROOT / "cfb_shop_rules.json").read_text())["books"]
+                o["mine"] = SH.offers(ev, sorted(allowed), S)
+                o["az"] = SH.offers(ev, az, S)
+                o["sharp"] = {k: round(v, 2) if isinstance(v, float) else v for k, v in S.items()}
+            except Exception as e:
+                print("cfb offers failed:", e)
             if match(ev["home_team"]) != r.home:   # feed lists the teams the other way round (neutral site)
                 o = None
         mm = float(r.model_margin) if not pd.isna(r.model_margin) else None
@@ -278,6 +325,32 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         res["cfb_shop_bets"] = {"error": str(e)}
         print("cfb shop track failed:", e)
+    try:   # this season so far: model (fit on earlier seasons only) vs Vegas closing line, game by game
+        prev = coef.get("prev") or coef
+        done = G[G.completed & G.margin.notna() & ((G.home_div == "fbs") | (G.away_div == "fbs"))].copy()
+        done["mm"], done["mt"] = apply(done, prev["margin"]), apply(done, prev["total"])
+        L = D.lines([season])
+        done = done.merge(L, on="game_id", how="inner").dropna(subset=["spread_close"])
+        done["vm"], done["vt"] = -done.spread_close, done.total_close
+        res["season_to_date"] = {"summary": score_games(done, season) if len(done) else None,
+                                 "games": [{"game_id": int(r.game_id), "week": int(r.week), "start": r.start.isoformat(), "home": r.home, "away": r.away,
+                                            "home_abbr": abbr.get(r.home), "away_abbr": abbr.get(r.away),
+                                            "home_pts": int(r.home_pts), "away_pts": int(r.away_pts),
+                                            "model_margin": round(float(r.mm), 1), "model_total": round(float(r.mt), 1),
+                                            "vegas_margin": float(r.vm), "vegas_total": None if pd.isna(r.vt) else float(r.vt)}
+                                           for r in done.sort_values("start").itertuples()]}
+        res["backtest"] = coef.get("backtest") or []
+    except Exception as e:
+        print("cfb season scorecard failed:", e)
+    try:   # body-clock paper track (rule F2; failed its screen, tracked on request)
+        from . import bodyclock
+        res["cfb_body_clock_bets"] = bodyclock.process(now)
+        if res["cfb_body_clock_bets"]["new"]:
+            from nflpred import notify
+            notify.new_bets({"upcoming": [], "cfb_body_clock_bets": res["cfb_body_clock_bets"]}, set())
+    except Exception as e:
+        res["cfb_body_clock_bets"] = {"error": str(e)}
+        print("cfb body clock failed:", e)
     (OUT / "cfb_predictions.json").write_text(json.dumps(res, indent=1, default=str))
     print(f"cfb: {len(games)} games this week, {res['matched_odds']} with live odds")
     return res

@@ -1,85 +1,90 @@
-<title>College Football Board</title>
+<title>College Football Edge Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 __STYLE__
 .wrap,.wrap>section{grid-template-columns:minmax(0,1fr)}
-.wrap>section>*{min-width:0}
-.wrap>*{min-width:0}
-.research .scroll{overflow-x:auto}
+.wrap>*,.wrap>section>*{min-width:0}
 header .xlink{justify-self:start}
-.xlink{display:inline-block;margin-top:10px;font:600 13px var(--mono);letter-spacing:.04em;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:2px;padding:4px 10px}
-.xlink:hover{background:var(--accent-soft)}
 .cfbfilters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:4px 0 14px}
 .cfbfilters label{display:grid;gap:4px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cfbfilters select,.cfbfilters input[type=search]{font:15px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:6px 8px;min-width:180px}
+.cfbfilters select,.cfbfilters input[type=search]{font:15px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:6px 8px;min-width:170px}
 .cfbfilters .chk{display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font:14px var(--body);color:var(--ink)}
-table.cfb{width:100%;border-collapse:collapse;font-size:14px}
-table.cfb th{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
-table.cfb th:nth-child(-n+2){text-align:left}
-table.cfb td{white-space:nowrap;padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top;font-family:var(--mono);font-size:13px}
-table.cfb td.m{text-align:left;font-family:var(--body);font-size:15px;white-space:normal;min-width:180px}
-table.cfb td.m small,table.cfb td small{display:block;color:var(--muted);font:12px var(--body)}
-table.cfb td.k{text-align:left;white-space:nowrap}
-table.cfb tr.day td{background:var(--bg);font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px}
-.gapbig{color:var(--lean);font-weight:600}
-.final{color:var(--muted)}
+.dayh{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px;grid-column:1/-1}
+.team .nm{display:block;font:13px var(--body);color:var(--muted);white-space:normal}
+.research h3{margin:18px 0 6px}
 .research table{font-size:14px;border-collapse:collapse;margin:8px 0}
-.research th,.research td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
-@media (max-width:760px){
-  table.cfb thead{display:none}
-  table.cfb,table.cfb tbody,table.cfb tr,table.cfb td{display:block;width:100%}
-  table.cfb tr{border:1px solid var(--line);background:var(--surface);margin:0 0 10px;padding:6px 0}
-  table.cfb tr.day{border:none;background:none;margin:14px 0 4px;padding:0}
-  table.cfb td{display:flex;justify-content:space-between;gap:12px;border:none;padding:4px 12px;text-align:right}
-  table.cfb td::before{content:attr(data-l);font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left}
-  table.cfb td.m{display:block}
-  table.cfb tr.day td{display:block;text-align:left}
-  table.cfb td.m::before{content:none}
-}
+.research th,.research td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;font-family:var(--body)}
+.bttbl td,.bttbl th{text-align:right}
+.bttbl td:first-child,.bttbl th:first-child{text-align:left}
 </style>
 
 <div class="wrap">
   <header>
     <div class="eyebrow" id="stamp"></div>
-    <h1>College Football Board</h1>
-    <p><b>Research mode.</b> Every FBS game this week with the market's line, Pinnacle's line, our model's number and the best price at your books. <b>None of this is a bet</b>: no college rule has passed its one-time test yet (results below). The next tests are price-based (soft books vs Pinnacle, moneyline vs spread, opener drift), the kind that worked in the NFL; they start once the college odds history is downloaded.</p>
+    <h1>College Football Edge Board</h1>
+    <p>A bet is only worth making when the <b>price</b> beats the chance the sharpest book (<b>Pinnacle</b>) gives it; that gap is the <b>edge</b>, and the <b>grade</b> says how big it is. In 2021–25 testing, college prices that beat Pinnacle's line went on to beat its closing line too. Our stats model is shown next to Vegas for context, but it does not beat the closing line, so no bet uses it. Everything is <b>paper</b> (logged and scored, not recommended) until a track passes its live test. Not financial advice.</p>
+    <div class="keyrow"><span><span class="st st-bet">PAPER BET</span> logged by a track's locked rules</span> <span><span class="st st-watch">WATCH</span> clears the bar, logs at the next odds check</span> <span><span class="st st-no">NO</span> below the bar (reason shown)</span></div>
     <a class="xlink" href="../">← NFL board</a>
+    <nav class="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#betswrap">Paper bets</a><a href="#sec-season">Season so far</a><a href="#sec-test">Model vs Vegas</a><a href="#sec-research">Testing</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
 
-  <section id="week">
-    <div class="sechead"><h2>This week</h2><span class="pill">Not financial advice</span></div>
+  <section id="sec-board">
+    <div class="sechead"><h2>This week's board</h2><span class="pill">Shadow mode · paper only</span></div>
+    <div class="blegend" id="boardintro"></div>
+    <div id="board" style="display:grid;gap:22px"></div>
+  </section>
+
+  <section id="sec-games">
+    <div class="sechead"><h2>Games</h2>
+      <div class="legend"><span><i style="background:var(--away)"></i>Away</span><span><i style="background:var(--accent)"></i>Home</span><span><i class="tick"></i>Vegas</span></div>
+    </div>
+    <p class="g2note" id="gnote"></p>
     <div class="cfbfilters">
       <label>Conference<select id="f-conf"><option value="">All</option></select></label>
       <label>Team<input type="search" id="f-team" placeholder="Search a team"></label>
-      <label class="chk"><input type="checkbox" id="f-odds"> Only games with live odds</label>
-      <label class="chk"><input type="checkbox" id="f-gap"> Only big model gaps (5+ pts)</label>
+      <label class="chk"><input type="checkbox" id="f-odds"> Only games with odds</label>
+      <label class="chk"><input type="checkbox" id="f-grade"> Only A / A+ prices</label>
       <label class="chk"><input type="checkbox" id="f-past"> Show games already started</label>
     </div>
-    <div class="scroll"><table class="cfb" id="cfbt"></table></div>
-    <p class="g2note" id="cfbnote"></p>
+    <div class="games" id="games"></div>
   </section>
 
-  <section id="cfbshop">
-    <div class="sechead"><h2>Shop vs sharp · spreads, totals, moneylines</h2><span class="pill">Paper track · not recommendations</span></div>
-    <p class="edge" id="cfbshopintro"></p>
-    <div class="scroll"><table class="cfb" id="cfbshopt"></table></div>
+  <section id="betswrap">
+    <div class="sechead"><h2>Paper bets</h2><span class="pill">Shadow mode · not recommendations</span></div>
+    <p class="edge" id="betintro"></p>
+    <div class="scroll"><table class="sumtbl" id="betsum"></table></div>
+    <div id="tracks"></div>
   </section>
 
-  <section id="cfbbets">
-    <div class="sechead"><h2>Paper bets · college moneylines</h2><span class="pill">Shadow mode · not recommendations</span></div>
-    <p class="edge" id="cfbbetsintro"></p>
-    <div class="scroll"><table class="cfb" id="cfbbetst"></table></div>
+  <section id="sec-season">
+    <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
+    <div class="strip" id="stdstrip"></div>
+    <p class="stdnote" id="stdnote"></p>
+    <div class="wks" id="std"></div>
   </section>
 
-  <section id="research" class="research">
+  <section id="sec-test">
+    <div class="sechead"><h2>Model vs Vegas, past seasons</h2><span class="pill">fit only on earlier seasons</span></div>
+    <p class="edge" id="bttxt"></p>
+    <div class="scroll"><table class="bttbl" id="bt"></table></div>
+  </section>
+
+  <section id="sec-research" class="research">
     <div class="sechead"><h2>What the testing says</h2></div>
     <div id="resmd"></div>
-    <p class="g2note">The model sees every public stat we could get: opponent-adjusted points, expected points added per play, success rate, explosiveness, rushing and passing efficiency, offensive-line yards, standard- and passing-down efficiency, roster talent and returning production. It still trails the closing line by about half a point to a point and a half per game. That's the same lesson as the NFL: the edges are in prices, not predictions.</p>
   </section>
+
+  <section class="notes" id="sec-notes">
+    <h2 style="color:var(--ink)">How to read this</h2>
+    <p><b>Grades</b> compare the best price at your books with Pinnacle's line at the same moment, at any number (college key numbers 3, 7, 10, 14, 17, 21 are built in). <b>A+</b> = the price beats Pinnacle by 4%+, <b>A</b> = 2–4%, <b>B</b> = 0–2%, <b>C</b> = worse than Pinnacle. On 2021–25 lines the grades lined up with what happened at the close: A+ offers beat Pinnacle's closing line by about 2–8% depending on the market, A by 1–2.6%, B about zero, and C lost 1.5–3.5%. No grade means Pinnacle hasn't posted the game yet (it posts most college games Sunday or Monday) or doesn't list it.</p>
+    <p><b>Tracks.</b> The shop-vs-sharp track bets spreads graded A+ and totals or moneylines graded A or better, at any Arizona book, in the 7 days before kickoff; bets at books where you have no account are marked. The college moneyline track uses only your three books. The body-clock track tests rule F2 at your request even though it failed its screen.</p>
+    <p><b>Model</b> numbers come from a ratings model built on opponent-adjusted efficiency, success rate, explosiveness, line play, talent and returning production. It picks winners nearly as often as Vegas but misses the final margin by more, so it is context only. Odds refresh hourly Thursday–Saturday and every 3 hours otherwise.</p>
+  </section>
+  <footer id="foot"></footer>
 </div>
 
 <script type="application/json" id="data">__DATA__</script>
@@ -88,100 +93,241 @@ const C = JSON.parse(document.getElementById('data').textContent);
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const od = x => x==null ? '–' : x>0 ? `+${x}` : `−${Math.abs(x)}`;
-const ln = x => x==null ? '–' : x===0 ? 'PK' : x>0 ? `+${x}` : `−${Math.abs(x)}`;
-const AZ = {timeZone:'America/Phoenix'};
-const when = iso => new Date(iso).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'});
-const dayKey = iso => new Date(iso).toLocaleDateString('en-US',{...AZ, weekday:'long', month:'short', day:'numeric'});
-$('stamp').textContent = `Updated ${new Date(C.generated_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'})} AZ`;
+const ptd = x => x==null ? '–' : x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
+const pct = x => Math.round(x*100)+'%';
+const sgn = (x,d=1) => x==null ? '—' : `${x>0?'+':x<0?'−':''}${Math.abs(x*100).toFixed(d)}%`;
+const cap1 = s => s ? s[0].toUpperCase()+s.slice(1) : s;
+const AZT = {timeZone:'America/Phoenix'};
+const when = iso => new Date(iso).toLocaleString('en-US',{...AZT, weekday:'short', hour:'numeric', minute:'2-digit'});
+const dayKey = iso => new Date(iso).toLocaleDateString('en-US',{...AZT, weekday:'long', month:'short', day:'numeric'});
+const gTier = gr => !gr ? 'none' : gr==='A+' ? 'top' : /^[AB]/.test(gr) ? 'mid' : 'low';
+const gradeBadge = (gr, tip, big) => `<span class="gb gb-${gTier(gr)}${big?' big':''}" title="${esc(tip||'Not graded')}">${gr||'—'}</span>`;
+const stPill = st => `<span class="st st-${st.k}">${st.t}</span>`;
+const SORD = {bet:0, watch:1, no:2}, GORD = {'A+':0, 'A':1, 'B':2, 'C':3};
 const G = C.games || [];
-const withOdds = G.filter(g=>g.odds).length;
-$('strip').innerHTML = [
-  [G.length, 'FBS games in the next 8 days'], [withOdds, 'with pre-game odds'],
-  [C.odds_checked_at ? new Date(C.odds_checked_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'}) : '–', 'odds checked (AZ)'],
-  [String(['cfb_ml_bets','cfb_shop_bets'].filter(k=>C[k]&&C[k].record&&C[k].record.passed).length), 'college tracks validated live (2 in paper test)']
-].map(([b,s])=>`<div class="stat"><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
-const confs = [...new Set(G.flatMap(g=>[g.home_conf,g.away_conf]).filter(Boolean))].sort();
-$('f-conf').innerHTML += confs.map(c=>`<option>${esc(c)}</option>`).join('');
-// home line from the home team's point of view; market home margin = −spread
 const ab = (g, side) => g[side+'_abbr'] || g[side];
-function row(g){
-  const o=g.odds||{}, pin=o.pinnacle||{}, bs=o.best_spread||{}, bm=o.best_ml||{}, bt=o.best_total||{};
-  const homeFav = o.spread!=null ? o.spread<0 : (g.model_margin||0)>0;
-  const mkt = o.spread!=null ? `${esc(ab(g,'home'))} ${ln(o.spread)}` : '–';
-  const pinS = pin.spread!=null ? `${ln(pin.spread)}` : '–';
-  const model = g.model_margin!=null ? `${esc(ab(g,'home'))} ${ln(-Math.round(g.model_margin*2)/2)}` : '–';
-  const gap = g.gap!=null ? `<span class="${Math.abs(g.gap)>=5?'gapbig':''}">${g.gap>0?esc(ab(g,'home')):esc(ab(g,'away'))} +${Math.abs(g.gap).toFixed(1)}</span>` : '–';
-  const tot = o.total!=null ? `${o.total}<small>model ${g.model_total??'–'}${g.total_gap!=null?` (${g.total_gap>0?'+':''}${g.total_gap})`:''}</small>` : (g.model_total!=null?`–<small>model ${g.model_total}</small>`:'–');
-  const best = [bs.away?`${esc(ab(g,'away'))} ${ln(bs.away.point)} ${od(bs.away.price)} <small>${esc(bs.away.book)}</small>`:'', bs.home?`${esc(ab(g,'home'))} ${ln(bs.home.point)} ${od(bs.home.price)} <small>${esc(bs.home.book)}</small>`:''].filter(Boolean).join('') || '–';
-  const ml = (bm.away||bm.home) ? `${esc(ab(g,'away'))} ${od(bm.away&&bm.away.price)}<small>${esc(ab(g,'home'))} ${od(bm.home&&bm.home.price)}</small>` : '–';
-  const bestT = (bt.Over||bt.Under) ? `<small>${bt.Over?`O ${bt.Over.point} ${od(bt.Over.price)} ${esc(bt.Over.book)}`:''}${bt.Over&&bt.Under?' · ':''}${bt.Under?`U ${bt.Under.point} ${od(bt.Under.price)} ${esc(bt.Under.book)}`:''}</small>` : '';
-  const W = g.weather||{};
-  const wx = W.dome ? ' · indoors' : W.wind_mph!=null ? ` · <span class="${W.wind_mph>=15?'gapbig':''}" title="Forecast for the kickoff window (Open-Meteo). Display only.">wind ${Math.round(W.wind_mph)} mph${W.gust_mph!=null?` (gusts ${Math.round(W.gust_mph)})`:''}, ${Math.round(W.temp_f)}°F${W.precip_in>=0.05?`, rain ${W.precip_in}"`:''}</span>` : '';
-  const done = g.home_pts!=null;
-  const kick = done ? `<span class="final">Final</span><small>${g.away_pts}–${g.home_pts}</small>` : new Date(g.start)<new Date() ? 'In progress' : when(g.start);
-  return `<tr><td class="k" data-l="Kickoff (AZ)">${kick}</td>
-    <td class="m" data-l="Game"><b>${esc(g.away)}</b> @ <b>${esc(g.home)}</b><small>${esc(g.away_conf||'')}${g.away_conf!==g.home_conf?` vs ${esc(g.home_conf||'')}`:''}${g.neutral?' · neutral site':''}${wx}</small></td>
-    <td data-l="Market spread">${mkt}<small>${o.n_books?`${o.n_books} books`:''}</small></td>
-    <td data-l="Pinnacle">${pinS}</td>
-    <td data-l="Model">${model}<small>${g.model_home_prob!=null?`${esc(ab(g,'home'))} wins ${Math.round(g.model_home_prob*100)}%`:''}</small></td>
-    <td data-l="Model gap">${gap}</td>
-    <td data-l="Total">${tot}${bestT}</td>
-    <td data-l="Best spread (your books)">${best}</td>
-    <td data-l="Moneyline (your books)">${ml}</td></tr>${newsRow(g)}`;
+const MKT = {ml:'Moneyline', spread:'Spread', total:'Total'};
+const BAR = {spread:0.04, total:0.02, ml:0.02};       // shop-vs-sharp thresholds (cfb_shop_rules.json)
+const GRADE_CLV = {'A+':'+2–8%', 'A':'+1–2.6%', 'B':'about 0', 'C':'−1.5 to −3.5%'};
+
+$('stamp').textContent = `${C.season} season · updated ${new Date(C.generated_at).toLocaleString('en-US',{...AZT, month:'short', day:'numeric', hour:'numeric', minute:'2-digit'})} AZ`;
+
+// open paper bets by odds event
+const SHOP=C.cfb_shop_bets||{}, MLB=C.cfb_ml_bets||{}, CLK=C.cfb_body_clock_bets||{};
+const openBy = {};
+for(const [k,B] of [['shop',SHOP],['ml',MLB],['clock',CLK]]) for(const b of (B.open||[])) (openBy[b.event_id]??=[]).push({...b, _k:k});
+const TRK = {shop:'Shop vs sharp', ml:'College ML', clock:'Body clock'};
+
+// per game: best offer per market and side at your books, graded vs Pinnacle
+function pickTxt(g, m, side, o){ if(!o) return '—';
+  return m==='ml' ? `${ab(g,side)} ML ${od(o.price)}` : m==='spread' ? `${ab(g,side)} ${ptd(o.point)} (${od(o.price)})` : `${cap1(side)} ${o.point} (${od(o.price)})`; }
+function gradeTip(o, m){
+  if(!o || o.grade==null) return 'Not graded: Pinnacle has not posted this game yet (usually Sunday or Monday), or does not list it';
+  return `Grade ${o.grade}: this price is worth ${sgn(o.edge)} against Pinnacle's line right now. In 2021–25, ${o.grade} ${MKT[m].toLowerCase()} offers went on to beat Pinnacle's closing line by ${GRADE_CLV[o.grade]} on average.`;
 }
-// AI-read news for either team in the last 7 days (logging only; not used by any rule)
-function newsRow(g){
-  const N=g.news||{}, items=[...(N.away||[]).map(x=>({...x,t:g.away})),...(N.home||[]).map(x=>({...x,t:g.home}))];
-  if(!items.length) return '';
-  const line=x=>x.kind==='av' ? `${x.is_starting_qb_news?'<b>QB</b> ':''}<b>${esc(x.t)}</b> ${esc(x.player||'')}${x.position?` (${esc(x.position)})`:''}: ${esc(String(x.signal||'').replace(/_/g,' '))}`
-    : `<b>${esc(x.t)}</b> ${esc(String(x.category||'').replace(/_/g,' '))}: ${esc(x.summary||'')}`;
-  return `<tr class="newsrow"><td></td><td colspan="8" class="m"><small>AI-read news (not used by any rule): ${items.slice(0,4).map(x=>`${line(x)}${x.link?` · <a href="${esc(x.link)}" target="_blank" rel="noopener">source</a>`:''}`).join(' · ')}</small></td></tr>`;
+const ROWS = new Map();
+function marketRows(g){
+  if(ROWS.has(g.game_id)) return ROWS.get(g.game_id);
+  const o=g.odds||{}, M=o.mine||{}, A=o.az||{}, rows=[], ev=openBy[o.event_id]||[];
+  for(const m of ['ml','spread','total']){
+    for(const side of (m==='total' ? ['over','under'] : ['away','home'])){
+      const x=(M[m]||{})[side]; if(!x) continue;
+      const az=(A[m]||{})[side];
+      const bet=ev.find(b=>(b.market||'ml')===m && b.side===side) || (m==='spread'&&side==='home' ? (CLK.open||[]).map(b=>({...b,_k:'clock'})).find(b=>b.game_id===g.game_id) : null);
+      let st;
+      if(bet) st={k:'bet', t:'PAPER BET', d:`${TRK[bet._k]}: logged ${when(bet.placed_at)} at ${m!=='ml'&&bet.point!=null?ptd(bet.point)+' ':''}${od(bet.price)} ${bet.book}${bet.your_book===false?' (no account)':''}`};
+      else if(x.edge!=null && x.edge>=BAR[m]) st={k:'watch', t:'WATCH', d:`clears the shop-vs-sharp bar (${Math.round(BAR[m]*100)}%+); logs at the next odds check if the price holds${new Date(g.start)-Date.now()>7*864e5?' and kickoff is within 7 days':''}`};
+      else if(x.edge==null) st={k:'no', t:'NO', d:'no sharp line to compare yet'};
+      else st={k:'no', t:'NO', d:`${sgn(x.edge)} vs Pinnacle; ${MKT[m].toLowerCase()} bets need ${Math.round(BAR[m]*100)}%+`};
+      const azBetter = az && az.edge!=null && (x.edge==null || az.edge>x.edge+0.005) && az.book!==x.book ? az : null;
+      rows.push({g, m, side, x, az:azBetter, st, grade:x.grade, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet});
+    }
+  }
+  ROWS.set(g.game_id, rows); return rows;
 }
-function render(){
-  const cf=$('f-conf').value, q=$('f-team').value.trim().toLowerCase(), oo=$('f-odds').checked, gg=$('f-gap').checked, past=$('f-past').checked, now=new Date();
-  const rows = G.filter(g => (past || new Date(g.start) > now) && (!cf || g.home_conf===cf || g.away_conf===cf) && (!q || (g.home+' '+g.away).toLowerCase().includes(q))
-    && (!oo || g.odds) && (!gg || (g.gap!=null && Math.abs(g.gap)>=5)));
-  let html = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Market spread</th><th>Pinnacle</th><th>Model</th><th title="How many points the model likes one side more than the market">Model gap</th><th>Total</th><th>Best spread · your books</th><th>Moneyline · your books</th></tr></thead><tbody>`;
-  let last = '';
-  for (const g of rows){ const d=dayKey(g.start); if(d!==last){ html += `<tr class="day"><td colspan="9">${esc(d)}</td></tr>`; last=d; } html += row(g); }
-  if(!rows.length) html += `<tr><td colspan="9" style="text-align:left;font-family:var(--body)">No games match.</td></tr>`;
-  $('cfbt').innerHTML = html + '</tbody>';
+const rowSort=(a,b)=>(GORD[a.grade]??9)-(GORD[b.grade]??9)||SORD[a.st.k]-SORD[b.st.k]||b.edge-a.edge;
+const upcoming = G.filter(g=>new Date(g.start)>new Date());
+
+// strip
+const BT=C.backtest||[], tot=BT.reduce((s,r)=>({g:s.g+r.games,m:s.m+r.model_right,v:s.v+r.vegas_right,vg:s.vg+r.vegas_games}),{g:0,m:0,v:0,vg:0});
+const SS=(C.season_to_date||{}).summary;
+const allRows=[]; for(const g of upcoming) allRows.push(...marketRows(g));
+$('strip').innerHTML=[
+  [tot.g?pct(tot.m/tot.g):'—', `Model picks the winner, ${BT.length?BT[0].season+'–'+BT[BT.length-1].season:''} (${tot.g.toLocaleString()} games)`],
+  [tot.vg?pct(tot.v/tot.vg):'—', 'Vegas favorite wins, same games'],
+  [SS?`${SS.model_right}–${SS.games-SS.model_right}`:'—', `${C.season} model winner picks (Vegas ${SS?`${SS.vegas_right}–${SS.vegas_games-SS.vegas_right}`:'—'})`],
+  [allRows.filter(r=>r.grade==='A+'||r.grade==='A').length, `A / A+ prices on the board · ${upcoming.length} games ahead`],
+  [C.odds_checked_at?new Date(C.odds_checked_at).toLocaleString('en-US',{...AZT, weekday:'short', hour:'numeric', minute:'2-digit'}):'–', 'odds checked (AZ)'],
+].map(([b,s])=>`<div class="stat"><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
+
+// board
+(function(){
+  $('boardintro').innerHTML = `<p style="margin:0">Every price at your books that beats Pinnacle's line, best first. <b>Grade</b> = how much the price beats the sharp line (A+ 4%+, A 2–4%, B 0–2%). <b>Status</b> = whether the shop-vs-sharp track logged it (spreads need A+, totals and moneylines A or better). A better price at an Arizona book you don't have an account with is shown under the pick. <b>Paper only.</b></p>`;
+  const R=allRows.filter(r=>(r.x.edge!=null && r.x.edge>=0) || r.bet).sort(rowSort);
+  const gt = g => `${esc(g.away)} @ ${esc(g.home)} · ${when(g.start)} AZ`;
+  const head = `<div class="brow bh"><span>Grade</span><span>Pick</span><span>Why</span><span>Status</span></div>`;
+  const row = r => `<div class="brow"><span>${gradeBadge(r.grade, gradeTip(r.x,r.m), true)}</span>
+    <span class="bpk"><b>${esc(r.pick)}</b><small>${MKT[r.m]} · ${esc(r.book)}</small><small>${gt(r.g)}</small></span>
+    <span class="bwhy"><span class="wl"><span class="chip grd">Vs Pinnacle</span>${sgn(r.x.edge)} expected value at this price${r.x.p_win!=null?` · wins ${pct(r.x.p_win)} of the time`:''}</span>${r.az?`<span class="wl" style="color:var(--muted)">Better at ${esc(r.az.book)} (no account): ${esc(pickTxt(r.g,r.m,r.side,r.az))}, ${sgn(r.az.edge)}</span>`:''}</span>
+    <span class="bst">${stPill(r.st)}<small>${esc(r.st.d)}</small></span></div>`;
+  const list=(rows,cls,empty)=>`<div class="blist ${cls}">${rows.length?head+rows.map(row).join(''):`<div class="bempty">${empty}</div>`}</div>`;
+  const top=R.filter(r=>r.grade==='A+'), mid=R.filter(r=>r.grade==='A'), rest=R.filter(r=>!top.includes(r)&&!mid.includes(r));
+  const n=x=>`${x} pick${x===1?'':'s'}`;
+  $('board').innerHTML = `
+    <section class="bgroup"><div class="bgh"><h3>A+ · beats Pinnacle by 4%+</h3><span class="cnt">${n(top.length)}</span></div><p class="gi">The strongest prices. In 2021–25 they beat Pinnacle's closing line by about 2% (spreads), 4% (moneylines) and 6–8% (totals).</p>
+      ${list(top,'top','Nothing graded A+ right now. Prices are re-checked hourly Thursday–Saturday and every 3 hours otherwise; the best spots usually show up 3–7 days before kickoff.')}</section>
+    <section class="bgroup"><div class="bgh"><h3>A · beats Pinnacle by 2–4%</h3><span class="cnt">${n(mid.length)}</span></div><p class="gi">Also beat the close in testing (+1% spreads and totals, +2.5% moneylines). Totals and moneylines at A are logged by the track; spreads need A+.</p>
+      ${list(mid,'','No A grades right now.')}</section>
+    <details class="bgroup"><summary><div class="bgh"><h3>B · 0–2% better than Pinnacle</h3><span class="cnt">${n(rest.length)} · about break-even in testing · click to show</span></div></summary>
+      ${list(rest,'','Nothing else.')}</details>`;
+})();
+
+// games
+const confs=[...new Set(G.flatMap(g=>[g.home_conf,g.away_conf]).filter(Boolean))].sort();
+$('f-conf').innerHTML += confs.map(c=>`<option>${esc(c)}</option>`).join('');
+$('gnote').innerHTML = `Each card shows Vegas and our model side by side, then the best price at your books with its grade. The bar is the model's win chance; the tick marks Vegas. Pinnacle posts most college games Sunday or Monday; until then prices show without a grade.`;
+const favLine = (m, g) => m==null ? '—' : Math.abs(m)<0.25 ? "Pick'em" : m>0 ? `${esc(ab(g,'home'))} −${Math.abs(Math.round(m*2)/2)}` : `${esc(ab(g,'away'))} −${Math.abs(Math.round(m*2)/2)}`;
+function mktBox(label, m, g, rows, cmp, extra=''){
+  const R=rows.filter(r=>r.m===m).sort(rowSort), r=R[0];
+  if(!r) return `<div class="mkt"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(null)}</span></div>${cmp}<span class="odds">No prices at your books yet</span>${extra}</div>`;
+  const other=R[1];
+  return `<div class="mkt is-${r.st.k}"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(r.grade, gradeTip(r.x,m))}${stPill(r.st)}</span></div>
+    ${cmp}<span class="pick">${esc(r.pick)}</span><span class="odds">best price at ${esc(r.book)}${r.x.edge!=null?` · ${sgn(r.x.edge)} vs Pinnacle`:''}</span>
+    ${r.az?`<span class="why">Better at ${esc(r.az.book)} (no account): ${esc(pickTxt(g,m,r.side,r.az))}, ${sgn(r.az.edge)}</span>`:''}
+    <span class="why">${esc(r.st.d)}</span>${extra}
+    ${other?`<span class="why">Other side: <b>${esc(other.pick)}</b> ${esc(other.book)} · grade ${other.grade||'—'}${other.x.edge!=null?` (${sgn(other.x.edge)})`:''}</span>`:''}</div>`;
 }
-['f-conf','f-team','f-odds','f-gap','f-past'].forEach(id=>$(id).addEventListener('input', render));
-render();
-$('cfbnote').innerHTML = `Spreads are shown from the home team's side (−7 = home favored by 7). <b>Model gap</b> = points the model likes that side more than the market. Gaps of 5+ are highlighted, but in testing they didn't cover (47% on 2024–25 openers), so treat them as a talking point, not a bet. Next week's lines appear once books post openers (Sunday). Odds refresh hourly Thursday–Saturday, every 3 hours otherwise.`;
-// college moneyline paper track (P1 soft books vs Pinnacle, P2 moneyline vs Pinnacle spread)
+function card(g){
+  const o=g.odds||{}, rows=marketRows(g), pin=o.pinnacle||{}, hp=g.model_home_prob, vp=pin.home_prob ?? o.home_prob;
+  const vm = o.spread!=null ? -o.spread : null, mm=g.model_margin;
+  const diff = (a,b,unit) => a==null||b==null ? '' : Math.abs(a-b) < (unit==='pts'?0.5:0.015) ? ' · about the same as Vegas' : ` · ${unit==='pts'?Math.abs(a-b).toFixed(1)+' pts':Math.round(Math.abs(a-b)*100)+' pts'} more on ${esc(a>b?ab(g,'home'):ab(g,'away'))}`;
+  const fav = p => p==null ? '—' : p>=0.5 ? `${esc(ab(g,'home'))} ${pct(p)}` : `${esc(ab(g,'away'))} ${pct(1-p)}`;
+  const mlCmp = `<div class="vm"><span class="big">Vegas ${fav(vp)}</span><span class="odds">${pin.home_prob!=null?'Pinnacle, no-vig':o.home_prob!=null?'all-book consensus, no-vig':'no line yet'}</span><span class="cmp">Model ${fav(hp)}${diff(hp,vp,'p')}</span></div>`;
+  const spCmp = `<div class="vm"><span class="big">Vegas ${favLine(vm,g)}</span><span class="odds">${o.n_books?`consensus of ${o.n_books} books`:'no line yet'}${pin.spread!=null?` · Pinnacle ${favLine(-pin.spread,g)}`:''}</span><span class="cmp">Model ${favLine(mm,g)}${diff(mm,vm,'pts')}</span></div>`;
+  const W=g.weather||{};
+  const wx = W.dome ? 'Indoors' : W.wind_mph!=null ? `<span class="${W.wind_mph>=15?'warn':''}">${Math.round(W.temp_f)}°F · wind ${Math.round(W.wind_mph)} mph${W.gust_mph!=null?` (gusts ${Math.round(W.gust_mph)})`:''}${W.precip_in>=0.05?` · rain ${W.precip_in}"`:''}</span>` : 'Forecast pending';
+  const totCmp = `<div class="vm"><span class="big">Vegas ${o.total!=null?o.total:'—'}</span><span class="odds">${o.total!=null?'consensus':'no total yet'}${pin.total!=null?` · Pinnacle ${pin.total}`:''}</span><span class="cmp">Model ${g.model_total!=null?g.model_total.toFixed(1):'—'}${g.model_total!=null&&o.total!=null?(Math.abs(g.model_total-o.total)<0.5?' · about the same as Vegas':` · ${Math.abs(g.model_total-o.total).toFixed(1)} ${g.model_total>o.total?'higher':'lower'} than Vegas`):''}</span></div>`;
+  const clock=(CLK.qualifying_games||[]).find(x=>x.game_id===g.game_id);
+  const N=g.news||{}, news=[...(N.away||[]).map(x=>({...x,t:g.away})),...(N.home||[]).map(x=>({...x,t:g.home}))].slice(0,5);
+  const src=n=>n.link?` · <a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">source</a>`:'';
+  const newsHtml = news.length ? `<div class="ainews"><span class="subh" title="Read from public feeds by an AI; logged only, not used by any track">AI-read news (logged only)</span>${news.map(n=>n.kind==='av'
+      ? `<div class="an">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.t)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${src(n)}</div>`
+      : `<div class="an"><span class="qb">CTX</span><b>${esc(n.t)}</b> ${esc(String(n.category||'').replace(/_/g,' '))}: ${esc(n.summary||'')}${src(n)}</div>`).join('')}</div>` : '';
+  const flags=(openBy[o.event_id]||[]).map(b=>`<span class="betflag">PAPER ${esc(b.market==='total'?cap1(b.side)+' '+b.point:b.market==='spread'?(b.team||'')+' '+ptd(b.point):(b.team||'')+' ML')}</span>`).join('');
+  const homeFav = (hp??0.5) >= .5, started = new Date(g.start) < new Date();
+  const kick = g.home_pts!=null ? `Final ${esc(ab(g,'away'))} ${g.away_pts}–${g.home_pts} ${esc(ab(g,'home'))}` : started ? 'In progress' : when(g.start)+' AZ';
+  const lh=clock?clock.local_kickoff_hour:0;
+  return `<article class="game" data-gid="${g.game_id}">
+    <div class="gmeta"><span>${kick} · WK ${g.week} · ${esc(g.away_conf||'')}${g.away_conf!==g.home_conf?` vs ${esc(g.home_conf||'')}`:''}</span>${g.neutral?'<span class="tag">NEUTRAL</span>':''}${flags}</div>
+    <div class="teams">
+      <div class="team ${homeFav?'':'fav'}"><span class="ab">${esc(ab(g,'away'))}</span><span class="nm">${esc(g.away)}</span><span class="pct">${hp!=null?pct(1-hp):'—'}</span></div>
+      <span class="at">@</span>
+      <div class="team home ${homeFav?'fav':''}"><span class="ab">${esc(ab(g,'home'))}</span><span class="nm">${esc(g.home)}</span><span class="pct">${hp!=null?pct(hp):'—'}</span></div>
+    </div>
+    ${hp!=null?`<div class="bar" role="img" aria-label="Model: ${esc(g.away)} ${pct(1-hp)}, ${esc(g.home)} ${pct(hp)}"><span class="a" style="width:${(1-hp)*100}%"></span><span class="h" style="width:${hp*100}%"></span>${vp!=null?`<span class="v" style="left:${(1-vp)*100}%"></span>`:''}</div>`:''}
+    <div class="markets">${mktBox('MONEYLINE','ml',g,rows,mlCmp)}${mktBox('SPREAD','spread',g,rows,spCmp)}${mktBox('TOTAL','total',g,rows,totCmp,`<span class="why">${wx}</span>`)}</div>
+    ${clock?`<div class="ctx"><span><span class="chip">Body clock</span>${esc(g.away)} plays ${clock.tz_gap_hours} time zones east of home at ${((lh+11)%12)+1} ${lh>=12?'pm':'am'} local: the body-clock track backs ${esc(g.home)} against the spread in the last 3 hours (unvalidated rule)</span></div>`:''}
+    ${newsHtml}
+  </article>`;
+}
+function renderGames(){
+  const cf=$('f-conf').value, q=$('f-team').value.trim().toLowerCase(), oo=$('f-odds').checked, ga=$('f-grade').checked, past=$('f-past').checked, now=new Date();
+  const list=G.filter(g=>(past||new Date(g.start)>now) && (!cf||g.home_conf===cf||g.away_conf===cf) && (!q||(g.home+' '+g.away).toLowerCase().includes(q))
+    && (!oo||g.odds) && (!ga||marketRows(g).some(r=>r.grade==='A'||r.grade==='A+')));
+  let html='', last='';
+  for(const g of list){ const d=dayKey(g.start); if(d!==last){ html+=`<div class="dayh">${esc(d)}</div>`; last=d; } html+=card(g); }
+  $('games').innerHTML = html || '<p class="edge">No games match.</p>';
+}
+['f-conf','f-team','f-odds','f-grade','f-past'].forEach(id=>$(id).addEventListener('input', renderGames));
+renderGames();
+
+// paper bets
 (function(){
-  const B=C.cfb_ml_bets||{}, R=B.record||{}, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
-  const pct=x=>x==null?'—':`${x>0?'+':''}${(x*100).toFixed(1)}%`;
-  $('cfbbetsintro').innerHTML = `Two price rules that passed the 2021–25 test: <b>P1</b> your book's moneyline beats Pinnacle's no-vig price by 2%+ (472 bets, +2.2% closing line value); <b>P2</b> your book's moneyline beats the win chance implied by Pinnacle's spread by 2%+ (855 bets, +1.8%). The edge shrank in 2024–25, so this is a live test: ${R.graded||0} graded of ${R.min_bets||150} needed${R.graded?` · ${R.wins}–${R.losses} · ${R.profit_units>0?'+':''}${R.profit_units} units · avg CLV ${pct(R.avg_clv)}`:''}.`;
-  const rows=[...open.map(b=>({...b,st:'open'})), ...gr];
-  const td=(l,h)=>`<td data-l="${l}"><span>${h}</span></td>`;
-  $('cfbbetst').innerHTML = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Bet</th><th>Rule</th><th>Edge</th><th>Result</th><th>CLV</th></tr></thead><tbody>`+
-    (rows.length ? rows.map(b=>`<tr>${td('Kickoff (AZ)',when(b.kickoff_utc))}<td class="m" data-l="Game">${esc(b.away)} @ ${esc(b.home)}</td>${td('Bet',`${esc(b.team)} ${od(b.price)}<small>${esc(b.book)}</small>`)}${td('Rule',b.rule)}${td('Edge',pct(b.edge))}${td('Result',b.status==='open'?'open':`${b.result} ${b.profit_units>0?'+':''}${b.profit_units}u`)}${td('CLV',pct(b.clv))}</tr>`).join('')
-      : `<tr><td colspan="7" style="text-align:left;font-family:var(--body)">No college paper bets yet; prices are checked every hour Thursday–Saturday.</td></tr>`) + '</tbody>';
+  const T=[
+    ['shop',SHOP,'Shop vs sharp','Spreads, totals and moneylines at Arizona books that beat Pinnacle (spreads 4%+, totals and moneylines 2%+)','Every odds check, up to 7 days before kickoff','All 12 pre-declared rules beat the close on 2021–25 (+1.7% to +7.6% CLV, 1,400+ bets)'],
+    ['ml',MLB,'College moneyline','Moneylines at your 3 books that beat Pinnacle no-vig (P1) or Pinnacle’s spread-implied price (P2) by 2%+','Every odds check','P1 +2.2% CLV (472 bets), P2 +1.8% (855 bets), 2021–25; shrank in 2024–25'],
+    ['clock',CLK,'Body clock (unvalidated)','Home team vs a visitor from 2+ time zones west, kickoff before 1 pm local','Last 3 h before those kickoffs','FAILED its screen (54.5% on 77 games 2014–25, p 0.35); tracked at your request'],
+  ].filter(([,B])=>B && !B.error);
+  $('betintro').innerHTML = `Everything here is paper: logged and scored, not recommended. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit. Stakes are quarter Kelly, capped at 2% of bankroll. To log a real bet, tap <b>I placed it</b> on the phone alert; your real bets show on the <a href="../#mybets">NFL page under My bets</a>.`;
+  const td=(l,h,c='')=>`<td data-l="${l}"${c?` class="${c}"`:''}><div>${h}</div></td>`;
+  $('betsum').innerHTML = `<thead><tr><th>Track</th><th>What it bets</th><th>When</th><th>Open</th><th>Graded</th><th>W–L</th><th>Avg CLV</th><th>Status</th><th>Evidence</th></tr></thead><tbody>`+
+    T.map(([k,B,name,what,whenT,ev])=>{ const r=B.record||{}, g=r.graded||0;
+      return `<tr>${td('Track',`<b>${name}</b>`)}${td('What it bets',esc(what),'wr')}${td('When',esc(whenT),'wr nw')}${td('Open',(B.open||[]).length)}${td('Graded',`${g}<small> / ${r.min_bets??'—'}</small>`)}${td('W–L',g?`${r.wins}–${r.losses}`:'—')}${td('Avg CLV',g&&r.avg_clv!=null?sgn(r.avg_clv):'—')}${td('Status','<span class="pill">shadow</span>')}${td('Evidence',esc(ev),'wr ev'+(k==='shop'?' top':''))}</tr>`; }).join('')+'</tbody>';
+  const label=b=>b.market==='total'?`<b>${cap1(b.side)} ${b.point}</b>`:b.market==='spread'?`<b>${esc(b.team)} ${ptd(b.point)}</b>`:`<b>${esc(b.team)} ML</b>`;
+  $('tracks').innerHTML = `<span class="subh">Track details</span>`+T.map(([k,B,name])=>{
+    const r=B.record||{}, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+    const stats=[[`${r.graded||0} / ${r.min_bets??'—'}`,'graded bets'],[`${r.wins||0}–${r.losses||0}`,`${(r.profit_units||0)>0?'+':''}${(r.profit_units||0).toFixed(2)} units`],[r.avg_clv!=null&&r.graded?sgn(r.avg_clv):'—','avg. closing line value']]
+      .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
+    const openT = open.length ? `<thead><tr><th style="text-align:left">Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Kickoff</th></tr></thead><tbody>`+
+      open.map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)}</td><td>${od(b.price)}</td><td style="text-align:left">${esc(b.book)}${b.your_book===false?' <small>(no account)</small>':''}</td><td>${b.edge!=null?sgn(b.edge):'—'}</td><td>${b.kelly_pct!=null?b.kelly_pct+'%':(b.units||1)+'u'}</td><td>${when(b.kickoff_utc)}</td></tr>`).join('')+'</tbody>'
+      : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open paper bets right now.</td></tr></tbody>`;
+    const grT = gr.length ? `<thead><tr><th style="text-align:left">Game</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
+      gr.map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)}</td><td>${od(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv!=null?sgn(b.clv):'—'}</td></tr>`).join('')+'</tbody>' : '';
+    return `<div class="track"><h3>${name} <span class="pill">shadow</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}</div>`;
+  }).join('');
 })();
-// shop-vs-sharp paper track (cfb_shop_rules.json)
+
+// season so far: model (fit on earlier seasons only) vs the Vegas closing line, game by game
 (function(){
-  const B=C.cfb_shop_bets||{}, R=B.record||{}, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
-  const pct=x=>x==null?'—':`${x>0?'+':''}${(x*100).toFixed(1)}%`;
-  const M=R.by_market||{};
-  $('cfbshopintro').innerHTML = `Every quote at Arizona books is priced against Pinnacle's line at the same moment, at any number (college key numbers 3, 7, 10, 14, 17, 21 built in). It bets only quotes that beat the sharp price: spreads by 4%+, totals and moneylines by 2%+. On 2021–25 these rules beat Pinnacle's closing line by about 2–4% per bet over 1,400+ bets, in every season. Bets at books you don't have an account with are marked; they show what opening that account would add. Stake = quarter Kelly, capped at 2% of bankroll. Record: ${R.graded||0} graded of ${R.min_bets||150} needed${R.graded?` · ${R.wins}–${R.losses}${R.pushes?`–${R.pushes}`:''} · ${R.profit_units>0?'+':''}${R.profit_units} units · avg CLV ${pct(R.avg_clv)}`:''}${['spread','total','ml'].some(k=>(M[k]||{}).graded)?` (spreads ${(M.spread||{}).graded||0}, totals ${(M.total||{}).graded||0}, moneylines ${(M.ml||{}).graded||0})`:''}.`;
-  const rows=[...open.map(b=>({...b,st:'open'})), ...gr];
-  const td=(l,h)=>`<td data-l="${l}"><span>${h}</span></td>`;
-  const pick=b=>b.market==='ml'?`${esc(b.team)} ML`:b.market==='spread'?`${esc(b.team)} ${ln(b.point)}`:`${esc(b.team)} ${b.point}`;
-  $('cfbshopt').innerHTML = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Bet</th><th>Edge</th><th>Stake</th><th>Result</th><th>CLV</th></tr></thead><tbody>`+
-    (rows.length ? rows.map(b=>`<tr>${td('Kickoff (AZ)',when(b.kickoff_utc))}<td class="m" data-l="Game">${esc(b.away)} @ ${esc(b.home)}</td>${td('Bet',`${pick(b)} ${od(b.price)}<small>${esc(b.book)}${b.your_book===false?' · no account':''}</small>`)}${td('Edge',pct(b.edge))}${td('Stake',b.kelly_pct!=null?`${b.kelly_pct}%`:'—')}${td('Result',b.status==='open'?'open':`${b.result} ${b.profit_units>0?'+':''}${b.profit_units}u`)}${td('CLV',pct(b.clv))}</tr>`).join('')
-      : `<tr><td colspan="7" style="text-align:left;font-family:var(--body)">No bets yet. Prices are checked every hour Thursday–Saturday and every 3 hours otherwise; the edge is usually largest 3–7 days before kickoff.</td></tr>`) + '</tbody>';
+  const S=C.season_to_date||{}, rowsAll=[...(S.games||[])].reverse(), sm=S.summary;
+  $('stdh').textContent=`${C.season} so far`;
+  if(!rowsAll.length){ $('stdnote').textContent='No completed games yet.'; $('stdstrip').hidden=true; return; }
+  $('stdsum').innerHTML = sm ? `Win-probability log loss: model <strong class="num">${sm.model_log_loss.toFixed(3)}</strong> · Vegas <strong class="num">${sm.vegas_log_loss.toFixed(3)}</strong> · ${sm.games} games` : '';
+  const n1=x=>(Math.round(x*10)/10).toFixed(1).replace(/\.0$/,'');
+  const mk=res=>res==null?'':res==='push'?' <span class="psh" title="push">–</span>':res?' <span class="ok" title="right">✓</span>':' <span class="bad" title="wrong">✗</span>';
+  const rec=()=>({w:0,l:0,p:0}), add=(r,res)=>{ if(res==null) return; res==='push'?r.p++:res?r.w++:r.l++; };
+  const wl=r=>r.w+r.l+r.p===0?'—':`${r.w}–${r.l}${r.p?`–${r.p}`:''}`;
+  const Sx={mlM:rec(),mlV:rec(),ats:rec(),ou:rec(),eM:[],eV:[],tM:[],tV:[]}, weeks=new Map();
+  for(const r of rowsAll){
+    const W=weeks.get(r.week)||(weeks.set(r.week,{ml:rec(),ats:rec(),ou:rec(),rows:[]}),weeks.get(r.week));
+    const am=r.home_pts-r.away_pts, at=r.home_pts+r.away_pts, H=esc(r.home_abbr||r.home), A=esc(r.away_abbr||r.away);
+    const fin=`<span class="${am<0?'w':'l'}">${A} ${r.away_pts}</span> <span class="l">@</span> <span class="${am>0?'w':'l'}">${H} ${r.home_pts}</span>`;
+    const mHome=r.model_margin>0, mRes=am===0?null:(mHome?am>0:am<0); add(Sx.mlM,mRes); add(W.ml,mRes);
+    const vHome=r.vegas_margin>0, vRes=am===0||r.vegas_margin===0?null:(vHome?am>0:am<0); add(Sx.mlV,vRes);
+    const mlCell=`<span>Model picked <b>${mHome?H:A}</b>${mk(mRes)}</span><small>Vegas favorite: ${r.vegas_margin===0?"pick'em":(vHome?H:A)}${mk(vRes)}</small>`;
+    const sl=r.vegas_margin, mm=r.model_margin; Sx.eM.push(Math.abs(mm-am)); Sx.eV.push(Math.abs(sl-am));
+    const diff=am-sl; let pick='<span class="dim">No call: model matched Vegas</span>';
+    if(Math.abs(mm-sl)>=0.05){ const home=mm>sl, rr=Math.abs(diff)<0.05?'push':home?diff>0:diff<0; add(Sx.ats,rr); add(W.ats,rr);
+      pick=`<span>Model took <b>${home?`${H} ${ptd(-sl)}`:`${A} ${ptd(sl)}`}</b>${mk(rr)}</span>`; }
+    const fl=m=>Math.abs(m)<0.25?"Pick'em":m>0?`${H} −${n1(m)}`:`${A} −${n1(-m)}`;
+    const spCell=`${pick}<small>Vegas line ${fl(sl)} · model had ${fl(mm)}</small><small>${am===0?'Tie':`${am>0?H:A} won by ${Math.abs(am)}`}</small>`;
+    let toCell='<span class="dim">No Vegas total</span>';
+    if(r.vegas_total!=null){ const tl=r.vegas_total, mt=r.model_total, d=at-tl; Sx.tM.push(Math.abs(mt-at)); Sx.tV.push(Math.abs(tl-at));
+      let p2='<span class="dim">No call</span>';
+      if(Math.abs(mt-tl)>=0.05){ const over=mt>tl, rr=Math.abs(d)<0.05?'push':over?d>0:d<0; add(Sx.ou,rr); add(W.ou,rr); p2=`<span>Model took <b>${over?'Over':'Under'} ${tl}</b>${mk(rr)}</span>`; }
+      toCell=`${p2}<small>Vegas total ${tl} · model had ${mt.toFixed(1)}</small><small>Final ${at}</small>`; }
+    W.rows.push(`<div class="srow"><div><span class="lab">Final · Wk ${r.week}</span><span class="fin">${fin}</span></div><div><span class="lab">Moneyline</span>${mlCell}</div><div><span class="lab">Spread</span>${spCell}</div><div><span class="lab">Total</span>${toCell}</div></div>`);
+  }
+  const avg=a=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1):'—';
+  $('stdstrip').innerHTML=[
+    [wl(Sx.mlM),`Model winner picks · Vegas favorite ${wl(Sx.mlV)}`],[wl(Sx.ats),'Model against the closing spread'],[wl(Sx.ou),'Model over/under vs the closing total'],
+    [avg(Sx.eM),`Model avg. miss on the margin, pts · Vegas ${avg(Sx.eV)}`],[avg(Sx.tM),`Model avg. miss on the total, pts · Vegas ${avg(Sx.tV)}`],
+  ].map(([b,t])=>`<div class="stat"><b class="num">${b}</b><span>${t}</span></div>`).join('');
+  $('stdnote').innerHTML=`Model side vs the Vegas <b>closing</b> line (CFBD consensus) for every completed FBS game: a scorecard, not bets you could have made. The model here is fit only on earlier seasons, so this season is out of sample. ✓ right · ✗ wrong · – push.`;
+  const head=`<div class="srow sh"><span>Final</span><span>Moneyline</span><span>Spread</span><span>Total</span></div>`;
+  $('std').innerHTML=[...weeks.entries()].map(([wk,W],i)=>`<details class="wk"${i===0?' open':''}><summary><b>Week ${wk}</b><span>${W.rows.length} games · picks ${wl(W.ml)} · spread ${wl(W.ats)} · over/under ${wl(W.ou)}</span></summary>${head}${W.rows.join('')}</details>`).join('');
 })();
-// research results (markdown table from output/research/cfb/holdout.md)
+
+// past seasons
 (function(){
-  const md = C.research_md || ''; if(!md){ $('resmd').innerHTML='<p>No results yet.</p>'; return; }
-  const lines = md.split('\n'); let html='', tbl=[];
-  const flush=()=>{ if(!tbl.length) return; const rows=tbl.filter(r=>!/^\|[-| ]+\|$/.test(r)).map(r=>r.split('|').slice(1,-1).map(c=>c.trim()));
-    html += '<div class="scroll"><table><thead><tr>'+rows[0].map(c=>`<th>${esc(c.replace(/\\\|/g,'|'))}</th>`).join('')+'</tr></thead><tbody>'+rows.slice(1).map(r=>'<tr>'+r.map(c=>`<td>${esc(c.replace(/\\\|/g,'|'))}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>'; tbl=[]; };
-  for(const l of lines){ if(l.startsWith('|')){ tbl.push(l); continue; } flush();
-    if(l.startsWith('# ')) html += `<h3>${esc(l.slice(2))}</h3>`; else if(l.startsWith('- ')) html += `<div class="g2note">${esc(l.slice(2))}</div>`; else if(l.trim()) html += `<p>${esc(l)}</p>`; }
-  flush(); $('resmd').innerHTML = html;
+  if(!BT.length){ $('sec-test').hidden=true; return; }
+  $('bttxt').innerHTML = `How often each was <b>right</b>: the model's pick to win vs the Vegas favorite, the model's side against the closing spread and total, and how far each missed the final margin. Vegas edges the model on every measure, the usual result, because the closing line is the best public forecast. That is why bets here come from <b>prices</b> (beating Pinnacle at your books), not from the model.`;
+  const p=(a,b)=>b?`${Math.round(100*a/b)}%`:'—', w=(x,y)=>`${x}–${y}`;
+  $('bt').innerHTML=`<thead><tr><th>Season</th><th>Games</th><th>Model picks right</th><th>Vegas favorite right</th><th>Model vs spread</th><th>Model vs total</th><th>Model miss (pts)</th><th>Vegas miss (pts)</th><th>Model log loss</th><th>Vegas log loss</th></tr></thead><tbody>`+
+    BT.map(r=>`<tr><td>${r.season}</td><td>${r.games}</td><td>${p(r.model_right,r.games)}</td><td>${p(r.vegas_right,r.vegas_games)}</td><td>${w(r.model_ats_w,r.model_ats_l)} <small>(${p(r.model_ats_w,r.model_ats_w+r.model_ats_l)})</small></td><td>${w(r.model_ou_w,r.model_ou_l)}</td><td>${r.model_mae.toFixed(1)}</td><td class="best">${r.vegas_mae.toFixed(1)}</td><td>${r.model_log_loss.toFixed(3)}</td><td class="best">${r.vegas_log_loss.toFixed(3)}</td></tr>`).join('')+'</tbody>';
 })();
+
+// research notes (markdown)
+(function(){
+  const md=C.research_md||''; if(!md){ $('resmd').innerHTML='<p>No results yet.</p>'; return; }
+  const inl=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<code>$1</code>');
+  let html='', tbl=[];
+  const flush=()=>{ if(!tbl.length) return; const rows=tbl.filter(r=>!/^\|[-| :]+\|$/.test(r)).map(r=>r.split('|').slice(1,-1).map(c=>c.trim()));
+    html+='<div class="scroll"><table><thead><tr>'+rows[0].map(c=>`<th>${inl(c)}</th>`).join('')+'</tr></thead><tbody>'+rows.slice(1).map(r=>'<tr>'+r.map(c=>`<td>${inl(c)}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>'; tbl=[]; };
+  for(const l of md.split('\n')){ if(l.startsWith('|')){ tbl.push(l); continue; } flush();
+    if(l.startsWith('# ')) html+=`<h3>${inl(l.slice(2))}</h3>`; else if(l.startsWith('## ')) html+=`<h4>${inl(l.slice(3))}</h4>`;
+    else if(l.startsWith('- ')) html+=`<div class="g2note">${inl(l.slice(2))}</div>`; else if(l.trim()) html+=`<p>${inl(l)}</p>`; }
+  flush(); $('resmd').innerHTML=html;
+})();
+$('foot').innerHTML = `College data: CollegeFootballData.com · odds: The Odds API · weather: Open-Meteo. Not financial advice.`;
 </script>

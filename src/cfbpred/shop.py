@@ -72,6 +72,50 @@ def kelly_pct(w: float, l: float, american: float, r: dict) -> float:
     return round(max(0.0, min(r["sizing"]["max_pct_bankroll"], 100 * r["sizing"]["kelly_fraction"] * f)), 2)
 
 
+GRADES = [(0.04, "A+"), (0.02, "A"), (0.0, "B")]   # EV vs the sharp line; 2021-25 CLV rose with each step
+                                                  # (output/research/cfb/grade_buckets.json)
+
+
+def letter(edge: float | None) -> str | None:
+    if edge is None:
+        return None
+    return next((g for th, g in GRADES if edge >= th), "C")
+
+
+def offers(ev: dict, books: list[str], S: dict | None = None) -> dict:
+    """Best quote per market and side among `books`, priced vs the sharp line: {market: {side: offer}}."""
+    S = S if S is not None else sharp(ev)
+    out: dict = {}
+    for bk in ev.get("bookmakers", []):
+        if bk.get("key") not in books:
+            continue
+        mk = _markets(bk)
+        q = []
+        for side, name in (("home", ev["home_team"]), ("away", ev["away_team"])):
+            o = mk.get("spreads", {}).get(name)
+            if o and o.get("point") is not None:
+                q.append(("spread", side, o["point"], o["price"]))
+            o = mk.get("h2h", {}).get(name)
+            if o:
+                q.append(("ml", side, None, o["price"]))
+        for side, name in (("over", "Over"), ("under", "Under")):
+            o = mk.get("totals", {}).get(name)
+            if o and o.get("point") is not None:
+                q.append(("total", side, o["point"], o["price"]))
+        for market, side, point, price in q:
+            pr = probs(market, side, point, S) if S else None
+            e = round(DI.ev(*pr, price), 4) if pr else None
+            cur = out.setdefault(market, {}).get(side)
+            better = cur is None or (e is not None and (cur["edge"] is None or e > cur["edge"])) or \
+                (e is None and cur["edge"] is None and (market == "ml" and price > cur["price"] or
+                 market == "spread" and (point, price) > (cur["point"], cur["price"]) or
+                 market == "total" and ((point < cur["point"]) if side == "over" else (point > cur["point"]))))
+            if better:
+                out[market][side] = {"point": point, "price": price, "book": bk.get("title", bk["key"]), "book_key": bk["key"],
+                                     "edge": e, "grade": letter(e), "p_win": round(pr[0], 4) if pr else None}
+    return out
+
+
 def candidates(ev: dict, r: dict) -> list[dict]:
     S = sharp(ev)
     if not S:
