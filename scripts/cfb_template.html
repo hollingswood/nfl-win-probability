@@ -63,6 +63,12 @@ table.cfb tr.day td{background:var(--bg);font:600 12px var(--mono);letter-spacin
     <p class="g2note" id="cfbnote"></p>
   </section>
 
+  <section id="cfbbets">
+    <div class="sechead"><h2>Paper bets · college moneylines</h2><span class="pill">Shadow mode · not recommendations</span></div>
+    <p class="edge" id="cfbbetsintro"></p>
+    <div class="scroll"><table class="cfb" id="cfbbetst"></table></div>
+  </section>
+
   <section id="research" class="research">
     <div class="sechead"><h2>What the testing says</h2></div>
     <div id="resmd"></div>
@@ -86,7 +92,7 @@ const withOdds = G.filter(g=>g.odds).length;
 $('strip').innerHTML = [
   [G.length, 'FBS games in the next 8 days'], [withOdds, 'with pre-game odds'],
   [C.odds_checked_at ? new Date(C.odds_checked_at).toLocaleString('en-US',{...AZ, weekday:'short', hour:'numeric', minute:'2-digit'}) : '–', 'odds checked (AZ)'],
-  ['0', 'validated college rules']
+  [String((C.cfb_ml_bets&&C.cfb_ml_bets.record&&C.cfb_ml_bets.record.passed)?1:0), 'validated college rules (1 in paper test)']
 ].map(([b,s])=>`<div class="stat"><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
 const confs = [...new Set(G.flatMap(g=>[g.home_conf,g.away_conf]).filter(Boolean))].sort();
 $('f-conf').innerHTML += confs.map(c=>`<option>${esc(c)}</option>`).join('');
@@ -127,6 +133,17 @@ function render(){
 ['f-conf','f-team','f-odds','f-gap','f-past'].forEach(id=>$(id).addEventListener('input', render));
 render();
 $('cfbnote').innerHTML = `Spreads are shown from the home team's side (−7 = home favored by 7). <b>Model gap</b> = points the model likes that side more than the market. Gaps of 5+ are highlighted, but in testing they didn't cover (47% on 2024–25 openers), so treat them as a talking point, not a bet. Next week's lines appear once books post openers (Sunday). Odds refresh hourly Thursday–Saturday, every 3 hours otherwise.`;
+// college moneyline paper track (P1 soft books vs Pinnacle, P2 moneyline vs Pinnacle spread)
+(function(){
+  const B=C.cfb_ml_bets||{}, R=B.record||{}, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse();
+  const pct=x=>x==null?'—':`${x>0?'+':''}${(x*100).toFixed(1)}%`;
+  $('cfbbetsintro').innerHTML = `Two price rules that passed the 2021–25 test: <b>P1</b> your book's moneyline beats Pinnacle's no-vig price by 2%+ (472 bets, +2.2% closing line value); <b>P2</b> your book's moneyline beats the win chance implied by Pinnacle's spread by 2%+ (855 bets, +1.8%). The edge shrank in 2024–25, so this is a live test: ${R.graded||0} graded of ${R.min_bets||150} needed${R.graded?` · ${R.wins}–${R.losses} · ${R.profit_units>0?'+':''}${R.profit_units} units · avg CLV ${pct(R.avg_clv)}`:''}.`;
+  const rows=[...open.map(b=>({...b,st:'open'})), ...gr];
+  const td=(l,h)=>`<td data-l="${l}">${h}</td>`;
+  $('cfbbetst').innerHTML = `<thead><tr><th>Kickoff (AZ)</th><th>Game</th><th>Bet</th><th>Rule</th><th>Edge</th><th>Result</th><th>CLV</th></tr></thead><tbody>`+
+    (rows.length ? rows.map(b=>`<tr>${td('Kickoff (AZ)',when(b.kickoff_utc))}<td class="m" data-l="Game">${esc(b.away)} @ ${esc(b.home)}</td>${td('Bet',`${esc(b.team)} ${od(b.price)}<small>${esc(b.book)}</small>`)}${td('Rule',b.rule)}${td('Edge',pct(b.edge))}${td('Result',b.status==='open'?'open':`${b.result} ${b.profit_units>0?'+':''}${b.profit_units}u`)}${td('CLV',pct(b.clv))}</tr>`).join('')
+      : `<tr><td colspan="7" style="text-align:left;font-family:var(--body)">No college paper bets yet; prices are checked every hour Thursday–Saturday.</td></tr>`) + '</tbody>';
+})();
 // research results (markdown table from output/research/cfb/holdout.md)
 (function(){
   const md = C.research_md || ''; if(!md){ $('resmd').innerHTML='<p>No results yet.</p>'; return; }

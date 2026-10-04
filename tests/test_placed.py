@@ -96,3 +96,19 @@ def test_spread_tracks_preseason_and_tuesday():
     assert f["pt"] == 2.25 and abs(f["f_pin"] - (1.5 - 2.25)) < 1e-9
     tue = datetime(2026, 10, 6, 14, 15, tzinfo=timezone.utc)
     assert ST.in_window(tue, rt) and not ST.in_window(now, rt)
+
+
+def test_cfb_ml_candidates():
+    from cfbpred import tracks as T
+    r = T.load_rules()
+    ev = {"id": "e", "home_team": "Texas Longhorns", "away_team": "Baylor Bears", "commence_time": "2026-10-10T20:00:00Z",
+          "bookmakers": [
+              {"key": "pinnacle", "markets": [
+                  {"key": "h2h", "outcomes": [{"name": "Texas Longhorns", "price": -300}, {"name": "Baylor Bears", "price": 250}]},
+                  {"key": "spreads", "outcomes": [{"name": "Texas Longhorns", "point": -7.5, "price": -105}, {"name": "Baylor Bears", "point": 7.5, "price": -105}]}]},
+              {"key": "fanduel", "title": "FanDuel", "markets": [
+                  {"key": "h2h", "outcomes": [{"name": "Texas Longhorns", "price": -320}, {"name": "Baylor Bears", "price": 300}]}]}]}
+    c = T.candidates(ev, r)
+    rules = {x["rule"] for x in c if x["team"] == "Baylor Bears"}
+    assert "P1" in rules and all(x["price"] == 300 and x["book"] == "FanDuel" for x in c)
+    assert not [x for x in c if x["team"] == "Texas Longhorns"]

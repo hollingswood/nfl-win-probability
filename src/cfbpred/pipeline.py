@@ -243,6 +243,16 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
            "model": {"n_games_fit": coef.get("n_margin"), "note": "Display only. No college rule has passed its holdout test."},
            "games": games, "research_md": hold.read_text() if hold.exists() else "",
            "matched_odds": sum(1 for g in games if g["odds"]), "n_games": len(games)}
+    try:   # college paper track (P1/P2 moneyline price rules) + phone alerts for new bets
+        from . import tracks
+        res["cfb_ml_bets"] = tracks.process(now)
+        if res["cfb_ml_bets"]["new"]:
+            from nflpred import notify
+            prev = set()
+            notify.new_bets({"upcoming": [], "cfb_ml_bets": res["cfb_ml_bets"]}, prev)
+    except Exception as e:
+        res["cfb_ml_bets"] = {"error": str(e)}
+        print("cfb track failed:", e)
     (OUT / "cfb_predictions.json").write_text(json.dumps(res, indent=1, default=str))
     print(f"cfb: {len(games)} games this week, {res['matched_odds']} with live odds")
     return res

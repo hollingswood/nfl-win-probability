@@ -1,0 +1,193 @@
+{
+ "events": 5694,
+ "matched_results": 5321,
+ "rules": {
+  "P1 soft-vs-Pinnacle moneyline (EV>=2%)": {
+   "bets": 472,
+   "mean_clv": 0.0221,
+   "se": 0.0048,
+   "p": 0.0,
+   "roi": 0.0152,
+   "roi_se": 0.0656,
+   "win_rate": 0.358,
+   "seasons_clv_positive": "5/5",
+   "by_season": {
+    "2021": {
+     "n": 67,
+     "clv": 0.037,
+     "roi": 0.171
+    },
+    "2022": {
+     "n": 89,
+     "clv": 0.0271,
+     "roi": 0.012
+    },
+    "2023": {
+     "n": 163,
+     "clv": 0.0282,
+     "roi": 0.079
+    },
+    "2024": {
+     "n": 60,
+     "clv": 0.0022,
+     "roi": -0.265
+    },
+    "2025": {
+     "n": 93,
+     "clv": 0.0089,
+     "roi": -0.025
+    }
+   },
+   "pass": true,
+   "2026_out_of_sample": {
+    "bets": 8,
+    "mean_clv": 0.0268,
+    "se": 0.0222,
+    "p": 0.11367,
+    "roi": 0.2313,
+    "roi_se": 0.6106,
+    "win_rate": 0.375
+   },
+   "clv_unit": "price CLV vs Pinnacle no-vig close"
+  },
+  "P2 moneyline vs Pinnacle spread (EV>=2%, >=0 vs ML)": {
+   "bets": 855,
+   "mean_clv": 0.0179,
+   "se": 0.0036,
+   "p": 0.0,
+   "roi": 0.0676,
+   "roi_se": 0.0488,
+   "win_rate": 0.378,
+   "seasons_clv_positive": "5/5",
+   "by_season": {
+    "2021": {
+     "n": 129,
+     "clv": 0.0264,
+     "roi": 0.28
+    },
+    "2022": {
+     "n": 150,
+     "clv": 0.0252,
+     "roi": -0.067
+    },
+    "2023": {
+     "n": 247,
+     "clv": 0.0217,
+     "roi": 0.082
+    },
+    "2024": {
+     "n": 122,
+     "clv": 0.0133,
+     "roi": -0.057
+    },
+    "2025": {
+     "n": 207,
+     "clv": 0.0057,
+     "roi": 0.09
+    }
+   },
+   "pass": true,
+   "2026_out_of_sample": {
+    "bets": 42,
+    "mean_clv": 0.0216,
+    "se": 0.0126,
+    "p": 0.0424,
+    "roi": -0.007,
+    "roi_se": 0.205,
+    "win_rate": 0.381
+   },
+   "clv_unit": "price CLV vs Pinnacle no-vig close"
+  },
+  "P3 early unders (96-200 h, EV>=0 vs Pinnacle)": {
+   "bets": 16,
+   "mean_clv": 0.0385,
+   "se": 0.0165,
+   "p": 0.00973,
+   "roi": 0.1079,
+   "roi_se": 0.2523,
+   "win_rate": 0.562,
+   "seasons_clv_positive": "3/4",
+   "by_season": {
+    "2022": {
+     "n": 1,
+     "clv": -0.0351,
+     "roi": 0.952
+    },
+    "2023": {
+     "n": 2,
+     "clv": 0.1256,
+     "roi": 0.948
+    },
+    "2024": {
+     "n": 6,
+     "clv": 0.058,
+     "roi": -0.012
+    },
+    "2025": {
+     "n": 7,
+     "clv": 0.0074,
+     "roi": -0.15
+    }
+   },
+   "pass": true,
+   "2026_out_of_sample": {
+    "bets": 3,
+    "mean_clv": 0.0352,
+    "se": 0.0089,
+    "p": 4e-05,
+    "roi": 0.3016,
+    "roi_se": 0.6508,
+    "win_rate": 0.667
+   },
+   "clv_unit": "price CLV vs Pinnacle close (normal)"
+  },
+  "P4 follow Pinnacle early (>=1 pt off US median)": {
+   "bets": 182,
+   "mean_clv": 0.5975,
+   "se": 0.1663,
+   "p": 0.00016,
+   "roi": -0.0059,
+   "roi_se": 0.0703,
+   "win_rate": 0.522,
+   "seasons_clv_positive": "5/5",
+   "by_season": {
+    "2021": {
+     "n": 24,
+     "clv": 0.0729,
+     "roi": -0.007
+    },
+    "2022": {
+     "n": 40,
+     "clv": 0.1,
+     "roi": 0.025
+    },
+    "2023": {
+     "n": 31,
+     "clv": 0.3548,
+     "roi": -0.14
+    },
+    "2024": {
+     "n": 39,
+     "clv": 1.0385,
+     "roi": 0.122
+    },
+    "2025": {
+     "n": 48,
+     "clv": 1.0729,
+     "roi": -0.049
+    }
+   },
+   "pass": false,
+   "2026_out_of_sample": {
+    "bets": 22,
+    "mean_clv": 0.3636,
+    "se": 0.3853,
+    "p": 0.17265,
+    "roi": -0.1729,
+    "roi_se": 0.2018,
+    "win_rate": 0.429
+   },
+   "clv_unit": "points vs US median close"
+  }
+ }
+}

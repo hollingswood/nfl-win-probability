@@ -1,0 +1,19 @@
+{
+  "track": "cfb_ml",
+  "version": 1,
+  "frozen_on": "2026-10-03",
+  "note": "College football price screen (output/research/cfb/price_screen.json; rules P1 and P2 passed, P3 too few bets, P4 failed). Two sub-rules share one ledger, one bet per game per sub-rule. P1 soft-vs-Pinnacle: 472 bets 2021-25, CLV +2.2% vs the Pinnacle no-vig close (p<0.0001), 5/5 seasons positive, ROI +1.5% +- 6.6%. P2 moneyline vs Pinnacle spread: 855 bets, CLV +1.8% (p<0.0001), 5/5 seasons, ROI +6.8% +- 4.9%; 2026 to date +2.2% CLV on 42 bets. WARNING: CLV shrank from ~2.5-3.7% (2021-23) to 0.2-0.9% (2024-25). Live snapshots are hourly Thu-Sat (research snapshots were 2-6 per day), so live prices are fresher than in the research. Do not edit to fit results; bump the version.",
+  "books": ["draftkings", "fanduel", "espnbet"],
+  "qualify": {
+    "min_minutes_before_kickoff": 60,
+    "price_range": [-300, 300],
+    "P1": "your best moneyline beats the Pinnacle no-vig win probability by EV >= 2%",
+    "P2": "your best moneyline beats the Pinnacle-SPREAD-implied win probability (normal, sd 15.7, juice-adjusted) by EV >= 2% AND has EV >= 0 vs Pinnacle's own moneyline",
+    "min_ev": 0.02,
+    "spread_sd": 15.7
+  },
+  "sizing": {"units": 1.0},
+  "grading": {"clv": "decimal price x Pinnacle no-vig win probability in our last NCAAF snapshot before kickoff - 1", "result": "CFBD final score"},
+  "validation": {"min_bets": 150, "avg_clv_positive_with_p_below": 0.05, "realized_roi_above": 0.0},
+  "ledger": "cfb/paper_bets_cfb_ml.json"
+}

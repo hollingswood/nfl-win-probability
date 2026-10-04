@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-04T04:23+00:00",
+ "generated_at": "2026-10-04T05:04+00:00",
  "season": 2026,
  "odds_checked_at": "2026-10-04T04:23+00:00",
  "model": {
@@ -1882,5 +1882,42 @@
  ],
  "research_md": "# CFB frozen rules: one-shot holdout\n\n| rule | bets | W-L | cover/hit | p (vs 52.38%) | result | notes |\n|---|---|---|---|---|---|---|\n| R1 opener spread (|model\u2212open| \u2265 5) | 416 | 197-219 | 0.474 | 0.980 | fail | line moved our way 49% / against 39%, mean +0.47 pts; cover vs close 0.472 |\n| R2 close residual (LightGBM, top-20% threshold) | 398 | 209-189 | 0.525 | 0.479 | fail | threshold 2.69 pts |\n| R3 close totals (|pred\u2212close| \u2265 3) | 1379 | 719-660 | 0.521 | 0.571 | fail | overs 73% of bets |\n\nBy season:\n\n- R1 2024: 214 bets, cover 0.448\n- R1 2025: 206 bets, cover 0.500\n- R2 2022: 92 bets, cover 0.506\n- R2 2023: 100 bets, cover 0.545\n- R2 2024: 118 bets, cover 0.521\n- R2 2025: 97 bets, cover 0.526\n- R3 2022: 356 bets, hit 0.490\n- R3 2023: 386 bets, hit 0.533\n- R3 2024: 323 bets, hit 0.562\n- R3 2025: 332 bets, hit 0.502\n",
  "matched_odds": 15,
- "n_games": 63
+ "n_games": 63,
+ "cfb_ml_bets": {
+  "track": "cfb_ml",
+  "mode": "shadow",
+  "rules_version": 1,
+  "new": [],
+  "open": [],
+  "recent_graded": [],
+  "record": {
+   "graded": 0,
+   "wins": 0,
+   "losses": 0,
+   "units_staked": 0,
+   "profit_units": 0,
+   "roi": 0.0,
+   "avg_clv": 0.0,
+   "clv_p_value": 1.0,
+   "checks": {
+    "enough_bets": false,
+    "clv_positive_and_significant": false,
+    "roi_positive": false
+   },
+   "passed": false,
+   "min_bets": 150,
+   "by_rule": {
+    "P1": {
+     "graded": 0,
+     "profit_units": 0,
+     "avg_clv": null
+    },
+    "P2": {
+     "graded": 0,
+     "profit_units": 0,
+     "avg_clv": null
+    }
+   }
+  }
+ }
 }
