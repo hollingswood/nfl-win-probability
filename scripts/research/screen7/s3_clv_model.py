@@ -92,6 +92,17 @@ def main():
         res.append(pd.DataFrame({"season": test, "clv_pts": clv, "pnl": pnl, "r": r}))
         out[f"beta_{test}"] = dict(zip(["const"] + feats, np.round(beta, 3).tolist()))
     R = pd.concat(res)
+    # frozen live parameters: ridge fit on ALL 2022-25 games, threshold = 90th pct of |pred| over the 2023-25 test predictions
+    X = np.column_stack([np.ones(len(D))] + [D[f] for f in feats]); A = X.T @ X + 5 * np.eye(X.shape[1]); A[0, 0] -= 5
+    bf = np.linalg.solve(A, X.T @ D.move.to_numpy())
+    allp = []
+    for test in (2023, 2024, 2025):
+        tr, te = D[D.season < test], D[D.season == test]
+        Xt = np.column_stack([np.ones(len(tr))] + [tr[f] for f in feats]); At = Xt.T @ Xt + 5 * np.eye(Xt.shape[1]); At[0, 0] -= 5
+        bt = np.linalg.solve(At, Xt.T @ tr.move.to_numpy())
+        allp += list(np.abs(np.column_stack([np.ones(len(te))] + [te[f] for f in feats]) @ bt))
+    out["frozen"] = {"coef": dict(zip(["const"] + feats, [round(float(x), 5) for x in bf])),
+                     "threshold_abs_pred_pts": round(float(np.quantile(allp, 0.9)), 3)}
     m, se = R.clv_pts.mean(), R.clv_pts.std() / math.sqrt(len(R))
     out["top_decile"] = {"bets": int(len(R)), "mean_clv_pts": round(float(m), 3), "se": round(float(se), 3),
                          "p_clv": round(0.5 * math.erfc((m / se) / math.sqrt(2)), 4), "share_clv_positive": round(float((R.clv_pts > 0).mean()), 3),

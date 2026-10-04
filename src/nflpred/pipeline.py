@@ -157,9 +157,14 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
     p_full = M.predict(model, games)
     p = qba.blended_prob(model, games, avail, M.predict)  # == p_full when both QBs are healthy
     margin = model.predict_margin(games)
+    g0 = games.copy()
+    for c in ("inj_off_diff", "inj_def_diff"):   # Tuesday-information margin (no injury report yet): tuesday_move track
+        if c in g0:
+            g0[c] = 0.0
+    margin_no_inj = model.predict_margin(g0)
     expl = M.explain(model, games)
     out = []
-    for (_, g), ph, pf, mg, ex, (_, av) in zip(games.iterrows(), p, p_full, margin, expl, avail.iterrows()):
+    for (_, g), ph, pf, mg, mg0, ex, (_, av) in zip(games.iterrows(), p, p_full, margin, margin_no_inj, expl, avail.iterrows()):
         ctx = game_context(
             g, (forecasts or {}).get(g["game_id"]),
             odds_lib.match(live, g["home_team"], g["away_team"], g["gameday"].date()) if live else None, ph)
@@ -180,6 +185,7 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
             "pick": g["home_team"] if ph >= 0.5 else g["away_team"],
             # Spreads as "home margin": +3 means home favored by 3.
             "model_home_margin": round(float(mg), 1),
+            "model_home_margin_no_inj": round(float(mg0), 2),
             "vegas_home_margin": _opt(g.get("spread_line"), 1),
             "vegas_home_prob": _opt(g["vegas_home_prob"]),
             "injury_report": bool(g.get("home_inj_reported", 0) and g.get("away_inj_reported", 0)),
@@ -382,6 +388,13 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["props_receptions_bets"] = {"error": str(e)}
         print("props receptions bets: failed:", e)
+    for key, fn_name in (("preseason_prior_bets", "process_preseason"), ("tuesday_move_bets", "process_tuesday")):
+        try:
+            from . import spread_tracks
+            result[key] = getattr(spread_tracks, fn_name)(result, df, ROOT / "history")
+        except Exception as e:
+            result[key] = {"error": str(e)}
+            print(f"{key}: failed:", e)
     try:
         from . import exchanges
         result["exchange_value_bets"] = exchanges.process(result, df, ROOT / "history")
@@ -561,7 +574,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
     forecast-wind and early-week unders, night games, receptions props, the A+ grade tracks). The v1 tracks only
     act on full runs, as pre-registered. Grading happens on full runs."""
-    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions, exchanges
+    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions, exchanges, spread_tracks
     path = OUT / "predictions.json"
     if not path.exists():
         print("watch: no predictions.json yet")
@@ -605,7 +618,9 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
                     ("totals_early_under_bets", lambda p, g, h: totals_early_under.process(p, g, h, now=now)),
                     ("props_receptions_bets", props_fn), ("night_west_bets", night_west.process),
-                    ("exchange_value_bets", lambda p, g, h: exchanges.process(p, g, h, now=now))):
+                    ("exchange_value_bets", lambda p, g, h: exchanges.process(p, g, h, now=now)),
+                    ("preseason_prior_bets", lambda p, g, h: spread_tracks.process_preseason(p, g, h, now=now)),
+                    ("tuesday_move_bets", lambda p, g, h: spread_tracks.process_tuesday(p, g, h, now=now))):
         try:
             res = fn(pred, no_games, ROOT / "history")
             prev = pred.get(key) or {}

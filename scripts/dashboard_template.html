@@ -520,7 +520,7 @@ const v1Badge = (gr, why) => gr ? `<span class="grade ${gradeCls(gr)}" title="Sp
 // grade v2 of the offer a track or box is showing (same side at the same best price), else null
 const sideG2 = (g, side, price) => { const x=((g.grade_v2_sides)||{})[side]; return x && (price==null || x.price===price) ? x : null; };
 const g2Inline = x => x ? `${g2Badge(x.grade, x.predicted_clv)} <span class="g2c">pred CLV ${pcv(x.predicted_clv)}</span>` : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','totals_early_under_bets','props_receptions_bets','night_west_bets','aplus_ml_bets','aplus_spread_bets','aplus_totals_bets','exchange_value_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','totals_early_under_bets','props_receptions_bets','night_west_bets','aplus_ml_bets','aplus_spread_bets','aplus_totals_bets','exchange_value_bets','preseason_prior_bets','tuesday_move_bets'].some(k=>P[k]&&P[k].mode==='live');
 // totals grade: predicted CLV of an over/under offer; only A+ has shown an edge (A/B/C were negative)
 const TG = P.totals_grade || {};
 const TGNOTE = TG.note || 'Totals grade = predicted closing-line value; only A+ has shown an edge (2023-25: +1.5% CLV)';
@@ -537,6 +537,8 @@ const TRACKS = {
   aplus_ml:{name:'A+ moneyline · every moneyline-grade A+ offer', key:'aplus_ml_bets', short:'A+ ML'},
   aplus_sp:{name:'A+ spread · every spread-grade A+ offer', key:'aplus_spread_bets', short:'A+ spread'},
   aplus_tot:{name:'A+ totals · every totals-grade A+ offer', key:'aplus_totals_bets', short:'A+ totals'},
+  pre:{name:'Preseason prior · weeks 2-8, market 4+ pts off the preseason number', key:'preseason_prior_bets', short:'Preseason'},
+  tue:{name:'Tuesday move · predicted line move, top 10%', key:'tuesday_move_bets', short:'Tue move'},
   exch:{name:'Exchange value · Kalshi / Robinhood / Polymarket / ProphetX after fees vs Pinnacle', key:'exchange_value_bets', short:'Exchange'},
   spread:{name:'Spread v1 (original model rules · no edge in backtest)', key:'spread_bets', short:'Spread v1'},
   ml_v1:{name:'Moneyline v1 (original model rules · no edge in backtest)', key:'bets', short:'Moneyline v1'},
@@ -546,8 +548,8 @@ const od = x => x==null ? '' : x>0 ? `+${x}` : `−${Math.abs(x)}`;          // 
 const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
-const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets'};
+const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', pre:'Preseason', tue:'Tue move'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
@@ -595,6 +597,8 @@ function nextWindow(g, key='ml_v4'){
 // open ledger bets by track+game, so a logged paper bet always shows as PAPER BET
 const OPEN = {};
 for(const [k,lk] of Object.entries(LEDGER)) for(const b of ((P[lk]||{}).open||[])) OPEN[`${k}|${b.game_id}|${b.team}`] = b;
+const OPEN_SP2 = {};
+for(const k of ['preseason_prior_bets','tuesday_move_bets']) for(const b of ((P[k]||{}).open||[])) (OPEN_SP2[b.game_id] ??= []).push({...b, _k:k});
 const OPEN_EXCH = {};
 for(const b of ((P.exchange_value_bets||{}).open||[])) (OPEN_EXCH[b.game_id] ??= []).push(b);
 const OPEN_PROPS = {};
@@ -804,6 +808,12 @@ function exchLine(g){
   const tail = lg.length ? ` · paper bet: ${lg.map(b=>esc(`${b.team} ${od(b.price)} ${b.book}`)).join(', ')}` : good.length ? ` · at or above fair: ${good.join(', ')}` : ' · none beat Pinnacle fair after fees';
   return parts.length||good.length||lg.length ? `<div class="ctx"><span title="Prices after each venue's fees (Robinhood = Kalshi's book + 1¢ commission + exchange fee). Moneyline shown; fair = Pinnacle no-vig."><span class="chip">${CHIP.exch}</span>Exchanges after fees: ${parts.join(' · ')}${tail}</span></div>` : '';
 }
+function sp2Line(g){
+  const a=g.preseason_prior, t=g.tuesday_move, parts=[];
+  if(a) parts.push(`<span class="chip">${CHIP.pre}</span>preseason number ${esc(a.pre_home_margin>0?g.home_team:g.away_team)} by ${Math.abs(a.pre_home_margin).toFixed(1)} vs market ${esc(a.market_home_margin>0?g.home_team:g.away_team)} by ${Math.abs(a.market_home_margin).toFixed(1)}: ${Math.abs(a.gap).toFixed(1)} pts toward ${esc(a.team)}${Math.abs(a.gap)>=4?' (qualifies; bets in the last 3 h)':' (needs 4)'}`);
+  if(t) parts.push(`<span class="chip">${CHIP.tue}</span>predicted line move ${Math.abs(t.predicted_move_pts).toFixed(2)} pts toward ${esc(t.team)} (needs 0.74, Tuesday run only)`);
+  return parts.length ? `<div class="ctx">${parts.map(x=>`<span>${x}</span>`).join(' ')}</div>` : '';
+}
 function propsLine(g){
   const v=g.props_receptions; if(!v) return '';
   const R=RULES.props_rec||{}, when=Date.parse(v.early_check_at||''), lg=OPEN_PROPS[g.game_id]||[];
@@ -862,6 +872,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     ${trackLines(g)}
     ${propsLine(g)}
     ${exchLine(g)}
+    ${sp2Line(g)}
     <div class="gap">${gap}</div>
     ${aiNews(g)}
     <div class="factors"><span class="subh">What drives the model's number (Vegas sees most of these too)</span>${factors}</div>
@@ -886,6 +897,10 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   for(const g of P.upcoming) for(const b of (OPEN_EXCH[g.game_id]||[])) allRows.push({g, mkt:EXM[b.market]||'ml', team:b.team, pick:`${b.team}${b.market==='h2h'?' ML':''} (${od(b.price)} after fees)`, book:b.book,
     grade:null, gtip:'Exchange bets are not graded', bet:b, st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP.exch}: logged ${fmtWhen(Date.parse(b.placed_at))} at ${b.quoted_cents}¢ (${od(b.price)} after fees)`},
     why:[`<span class="wl">${chip('exch')}${esc(`${sgn(b.edge)} vs Pinnacle's fair price after ${b.book} fees${b.best_book?`; best sportsbook ${od(b.best_book_price)} (${sgn(b.best_book_ev||0)})`:''}`)}</span>`], current:true, sortEdge:b.edge});
+  for(const g of P.upcoming) for(const b of (OPEN_SP2[g.game_id]||[])){ const ck=b._k==='preseason_prior_bets'?'pre':'tue';
+    allRows.push({g, mkt:'sp', team:b.team, pick:`${b.team} ${ptd(b.point)} (${od(b.price)})`, book:b.book, grade:null, gtip:'Not graded', bet:b,
+      st:{k:'bet', t:live?'BET':'PAPER BET', d:`${CHIP[ck]}: logged ${fmtWhen(Date.parse(b.placed_at))}`},
+      why:[`<span class="wl">${chip(ck)}${esc(ck==='pre'?`market ${Math.abs(b.gap).toFixed(1)} pts off the preseason number${b.qb_changed_label?' · QB changed since week 1':''}`:`line predicted to move ${Math.abs(b.predicted_move_pts).toFixed(2)} pts toward ${b.team}`)}</span>`], current:true, sortEdge:0.05}); }
   allRows.sort(rowSort);
   // totals A/B/C have lost value (unlike moneyline A/B), so they never go to the watchlist
   const top=allRows.filter(r=>r.grade==='A+'), mid=allRows.filter(r=>/^[AB]/.test(r.grade||'')&&r.grade!=='A+'&&r.mkt!=='tot'), rest=allRows.filter(r=>!top.includes(r)&&!mid.includes(r));
@@ -1074,6 +1089,15 @@ const TRACK_INFO = {
     when:'Any run (full or hourly) when a game first grades A+, within 7 days of kickoff',
     ev:'+1.5% CLV · 243 bets 2023–25',
     tip:'Totals grade A+ (output/research/grade_granular.md Q2): model frozen on 2020–22, tested once on 2023–25: 243 bets (~81 a season), +1.5% ± 0.7 closing line value (p = 0.012), ROI +7.5% ± 6.1; about 95% were early-week unders. 2026 is the clean test.'},
+  pre:{label:'Preseason prior', what:'Weeks 2–8: the side preseason win totals favor when the market is 4+ points away from the preseason number, flat 1 unit',
+    when:'Hourly, in the last 3 hours before kickoff',
+    ev:'60.5% covers · 332 bets 2013–25 · judged on results',
+    top:true,
+    tip:'Screen S6 (Fodor, Patterson & Shank 2025): markets overreact to early-season results. 2013–25 at closing prices: 332 bets, 60.5% cover, ROI +16.5% ± 5.1% (p 0.0007), 11 of 13 seasons positive; 2024–25, after the paper, +7%. Same rule in weeks 9–18: 49% (placebo). Bets on teams that changed starting QB since week 1 did worse (56.5% vs 62.7%), shown as a label.'},
+  tue:{label:'Tuesday move', what:'At the Tuesday 7:10am AZ run: predicted Tuesday-to-close line move (model + preseason + Pinnacle gap), top 10%, bet the side the line should move toward',
+    when:'Tuesday 7:10am AZ run',
+    ev:'+0.6 pts CLV · 62 bets 2023–25',
+    tip:'Screen S3, Tuesday-only information (model margin without the Friday injury report; games with a starting-QB change skipped): 62 bets, line moved our way by +0.62 pts on average (p 0.0003; 57% our way, 23% against), 58% covers, ROI +11% ± 12%. Judged on closing line value in points.'},
   exch:{label:'Exchange value', what:'Kalshi, Robinhood, Polymarket US or ProphetX price that beats Pinnacle fair by 2%+ after fees, flat 1 unit',
     when:'Any hourly check, within 7 days of kickoff',
     ev:'New 2026 test · no history',
@@ -1133,7 +1157,7 @@ function trackWindow(key){
 })();
 
 (function(){
-  const order=['ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','totals','totals_eu','night','spread','ml_v1'];
+  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','totals','totals_eu','night','spread','ml_v1'];
   const tracks=order.map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
@@ -1169,7 +1193,7 @@ function trackWindow(key){
   const active=tracks.filter(([,B])=>(B.open||[]).length || (B.record&&B.record.graded) || (B.recent_graded||[]).length);
   document.getElementById('tracks').innerHTML = active.length ? `<span class="subh">Track details</span>`+active.map(([name,B,key])=>{
     const mlT=key.startsWith('ml_')||key==='aplus_ml', tgT=key==='totals'||key==='totals_eu'||key==='aplus_tot';
-    const spread=key==='spread'||key==='night'||key==='aplus_sp', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
+    const spread=key==='spread'||key==='night'||key==='aplus_sp'||key==='pre'||key==='tue', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(chk.enough_bets,'graded bets')],
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(chk.roi_positive,'')}`],
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(chk.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]

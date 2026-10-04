@@ -1,0 +1,20 @@
+{
+  "track": "preseason_prior",
+  "version": 1,
+  "frozen_on": "2026-10-03",
+  "note": "Screen S6 (output/research/screen7/s6_preseason.json; Fodor, Patterson & Shank 2025). Weeks 2-8: bet the side preseason win totals favor when the market's home margin is 4+ points away from the preseason-implied margin. 2013-2025 at the closing number/price: 332 bets, 60.5% cover, ROI +16.5% +- 5.1% (p 0.0007), 11/13 seasons positive, 2024-25 (after the paper) +7%; same rule in weeks 9-18 covers 49% (placebo). 3 thresholds were examined (2/3/4); 4 was the strongest, 3 was pre-declared primary (p 0.034) - treat as a candidate, judged on 2026+ results. The edge claims the closing line itself is wrong, so it is graded on results (ATS at our price), CLV informational. Post-hoc diagnostic (not part of the rule): bets on teams whose starting QB changed since week 1 covered 56.5% vs 62.7% unchanged; shown as a label. Do not edit to fit results; bump the version.",
+  "qualify": {
+    "weeks": [2, 8],
+    "preseason_file": "data/research_futures/win_totals_2013_2026.csv (line_adj = vig-adjusted win total)",
+    "implied_home_margin": "2.48 * (not neutral) + 2.085 * (win_total_home - win_total_away)",
+    "market_home_margin": "live consensus home margin (all books)",
+    "min_gap_points": 4.0,
+    "bet_within_hours_of_kickoff": 3,
+    "min_minutes_before_kickoff": 10,
+    "price": "best spread price for the favored side among my_books.json allowed books, at the most favorable point"
+  },
+  "sizing": {"units": 1.0},
+  "grading": {"result": "ATS at our point and price; push returns stake", "clv": "informational: points vs our last pre-kickoff consensus"},
+  "validation": {"min_bets": 60, "test": "one-sided binomial: cover rate > 52.38% with p < 0.05 AND ROI > 0"},
+  "ledger": "paper_bets_preseason_prior.json"
+}

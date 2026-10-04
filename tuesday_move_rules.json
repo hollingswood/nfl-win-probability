@@ -1,0 +1,30 @@
+{
+  "track": "tuesday_move",
+  "version": 1,
+  "frozen_on": "2026-10-03",
+  "note": "Screen S3 (output/research/screen7/s3_clv_model.json). At the Tuesday 14:10 UTC run, predict the Tuesday->close move of the consensus home spread from Tuesday-only information and bet the top decile in the direction of the predicted move at today's number. Walk-forward 2023-25 (hourly odds), games without a starting-QB change, model margin without injury-report inputs: 62 bets, CLV +0.62 pts per bet (p 0.0003; 57% moved our way, 23% against), ATS 58.1%, ROI +10.6% +- 12.0%, positive all 3 seasons. An earlier version that used final-report injuries and actual starters looked far better (+1.0 pt, 64%) because of look-ahead; that version is NOT this rule. Do not edit to fit results; bump the version.",
+  "qualify": {
+    "window_utc": ["Tue", "14:10"],
+    "window_tolerance_minutes": 50,
+    "kickoff_hours": [84, 170],
+    "skip_if": "either team's expected starting QB differs from its previous starter (qb_change != 0) or a QB is on the injury report (play_prob < 1)",
+    "features": {
+      "pt": "Tuesday consensus home point = -(median home margin across sportsbooks, Pinnacle and exchanges excluded)",
+      "f_model": "model_home_margin_no_inj + pt",
+      "f_pre": "weeks <= 8: (2.48 + 2.085*(win_total_home - win_total_away)) + pt; else 0",
+      "f_pin": "Pinnacle home point - pt (0 if missing)",
+      "f_mlgap": "median-ML no-vig home prob - 0.5 + 0.03*pt",
+      "f_disp": "std of books' home points",
+      "f_abs": "|pt|",
+      "f_tot": "consensus total"
+    },
+    "coef": {"const": 0.69084, "f_model": -0.11721, "f_pre": -0.02501, "f_pin": -0.06716, "f_mlgap": -0.00188, "f_disp": -0.02734, "f_abs": -0.02238, "f_tot": -0.01415},
+    "predicted_move": "const + sum(coef*feature): + = home point will rise (market moves toward the away team) -> bet AWAY now; - -> bet HOME now",
+    "min_abs_predicted_move_pts": 0.743,
+    "price": "best price for that side among my_books.json allowed books at the most favorable point"
+  },
+  "sizing": {"units": 1.0},
+  "grading": {"clv_points": "our point vs the last pre-kickoff consensus point (our-side points gained)", "result": "ATS at our point and price"},
+  "validation": {"min_bets": 40, "test": "mean CLV points > 0 with one-sided p < 0.05 AND ROI >= 0"},
+  "ledger": "paper_bets_tuesday_move.json"
+}
