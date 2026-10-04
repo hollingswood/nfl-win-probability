@@ -1,0 +1,9 @@
+{
+  "track": "season_props_under",
+  "version": 1,
+  "frozen_on": "2026-10-04",
+  "status": "waiting for data: season-long player props are posted from spring to early September; none of our odds feeds (The Odds API) carry them, and scraping sportsbook sites breaks their terms. First possible test: 2027 preseason.",
+  "note": "Pre-registered from the research report (reports/NFL and college betting edges.md, rank 4): one tracker found NFL season-long prop unders won 61% of 604 props in 2021-22 (QB passing-yard unders 74%), with blind unders profitable 5 seasons running; the reason is that injuries, benchings and trades only cut a season total. Rule fixed now, before any data: bet the UNDER on every season-long player yardage, reception, touchdown and sack prop posted at your books (DraftKings, FanDuel, theScore/ESPN Bet) in the 7 days before week 1, flat 1 unit, price -140 or longer. Graded on final regular-season stats (nflverse), ROI and win rate vs the price's break-even. Capital is locked all season, so report ROI per month locked too. Do not edit to fit results; bump the version.",
+  "data_options": ["manual entry of each book's season props through the 'log a bet' form in the week before kickoff", "a licensed feed that carries season props (OddsJam, SportsGameOdds) if added later"],
+  "validation": {"min_bets": 100, "win_rate_above_break_even_p_below": 0.05, "realized_roi_above": 0.0}
+}

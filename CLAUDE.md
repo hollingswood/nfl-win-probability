@@ -88,3 +88,4 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist
+- 2027 preseason: season-long prop unders (season_props_rules.json, pre-registered 2026-10-04; needs a data source, none of our feeds carry season props)
