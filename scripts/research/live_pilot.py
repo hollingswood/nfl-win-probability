@@ -63,7 +63,7 @@ def main():
     snap = snap.merge(s, left_on=["season", "home", "away"], right_on=["season", "home_team", "away_team"])
     snap = snap[(pd.to_datetime(snap.gameday).dt.tz_localize("UTC") - snap.ko.dt.floor("D")).abs() <= pd.Timedelta(days=2)]
     cols = ["game_id", "time_of_day", "vegas_home_wp", "qtr", "game_seconds_remaining", "total_home_score", "total_away_score"]
-    pbp = pd.concat([ND.load_pbp([y])[cols] for y in range(2022, 2026)])
+    pbp = pd.concat([pd.read_parquet(ROOT / "data" / "raw" / f"pbp_{y}.parquet", columns=cols) for y in range(2022, 2026)])
     pbp = pbp.dropna(subset=["time_of_day", "vegas_home_wp"])
     pbp["tod"] = pd.to_datetime(pbp.time_of_day, utc=True, format="mixed")
     pbp = pbp.sort_values("tod")
@@ -97,7 +97,7 @@ def main():
         out[name] = {"bets": int(n), "win_rate": round(float(won[ok].mean()), 3) if n else None, "roi": round(float(m), 4) if n else None,
                      "roi_se": round(float(se), 4) if n > 1 else None, "p": round(0.5 * math.erfc((m / se) / math.sqrt(2)), 4) if n > 1 and se > 0 else None,
                      "avg_price": round(float(np.median(price[ok])), 0) if n else None}
-        out[name]["pass"] = bool(n >= 50 and out[name]["roi"] > 0 and (out[name]["p"] or 1) < 0.05 / 4)
+        out[name]["pass"] = bool(n >= 50 and out[name]["roi"] > 0 and out[name]["p"] is not None and out[name]["p"] < 0.05 / 4)
     gap = M.vegas_home_wp - M.p_mkt
     rule("L1 nflfastR gap >= 0.06", gap.abs() >= 0.06, gap > 0)
     rule("L2 nflfastR gap >= 0.10", gap.abs() >= 0.10, gap > 0)
