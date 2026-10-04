@@ -244,6 +244,14 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
             g["news"] = {"home": recent.get(g["home"], []), "away": recent.get(g["away"], [])}
     except Exception as e:
         print("cfb news attach failed:", e)
+    try:   # kickoff-window forecast for open-air games (display + logged for a later honest test)
+        from . import weather as cw
+        wx = cw.forecast(games, now)
+        for g in games:
+            if g["game_id"] in wx:
+                g["weather"] = wx[g["game_id"]]
+    except Exception as e:
+        print("cfb weather failed:", e)
     rdir = ROOT / "output" / "research" / "cfb"
     research_md = "\n\n".join(f.read_text() for f in (rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
     res = {"generated_at": now.isoformat(timespec="minutes"), "season": season,

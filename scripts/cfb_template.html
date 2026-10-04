@@ -108,15 +108,18 @@ function row(g){
   const tot = o.total!=null ? `${o.total}<small>model ${g.model_total??'–'}${g.total_gap!=null?` (${g.total_gap>0?'+':''}${g.total_gap})`:''}</small>` : (g.model_total!=null?`–<small>model ${g.model_total}</small>`:'–');
   const best = [bs.away?`${esc(ab(g,'away'))} ${ln(bs.away.point)} ${od(bs.away.price)} <small>${esc(bs.away.book)}</small>`:'', bs.home?`${esc(ab(g,'home'))} ${ln(bs.home.point)} ${od(bs.home.price)} <small>${esc(bs.home.book)}</small>`:''].filter(Boolean).join('') || '–';
   const ml = (bm.away||bm.home) ? `${esc(ab(g,'away'))} ${od(bm.away&&bm.away.price)}<small>${esc(ab(g,'home'))} ${od(bm.home&&bm.home.price)}</small>` : '–';
+  const bestT = (bt.Over||bt.Under) ? `<small>${bt.Over?`O ${bt.Over.point} ${od(bt.Over.price)} ${esc(bt.Over.book)}`:''}${bt.Over&&bt.Under?' · ':''}${bt.Under?`U ${bt.Under.point} ${od(bt.Under.price)} ${esc(bt.Under.book)}`:''}</small>` : '';
+  const W = g.weather||{};
+  const wx = W.dome ? ' · indoors' : W.wind_mph!=null ? ` · <span class="${W.wind_mph>=15?'gapbig':''}" title="Forecast for the kickoff window (Open-Meteo). Display only.">wind ${Math.round(W.wind_mph)} mph${W.gust_mph!=null?` (gusts ${Math.round(W.gust_mph)})`:''}, ${Math.round(W.temp_f)}°F${W.precip_in>=0.05?`, rain ${W.precip_in}"`:''}</span>` : '';
   const done = g.home_pts!=null;
   const kick = done ? `<span class="final">Final</span><small>${g.away_pts}–${g.home_pts}</small>` : new Date(g.start)<new Date() ? 'In progress' : when(g.start);
   return `<tr><td class="k" data-l="Kickoff (AZ)">${kick}</td>
-    <td class="m" data-l="Game"><b>${esc(g.away)}</b> @ <b>${esc(g.home)}</b><small>${esc(g.away_conf||'')}${g.away_conf!==g.home_conf?` vs ${esc(g.home_conf||'')}`:''}${g.neutral?' · neutral site':''}</small></td>
+    <td class="m" data-l="Game"><b>${esc(g.away)}</b> @ <b>${esc(g.home)}</b><small>${esc(g.away_conf||'')}${g.away_conf!==g.home_conf?` vs ${esc(g.home_conf||'')}`:''}${g.neutral?' · neutral site':''}${wx}</small></td>
     <td data-l="Market spread">${mkt}<small>${o.n_books?`${o.n_books} books`:''}</small></td>
     <td data-l="Pinnacle">${pinS}</td>
     <td data-l="Model">${model}<small>${g.model_home_prob!=null?`${esc(ab(g,'home'))} wins ${Math.round(g.model_home_prob*100)}%`:''}</small></td>
     <td data-l="Model gap">${gap}</td>
-    <td data-l="Total">${tot}</td>
+    <td data-l="Total">${tot}${bestT}</td>
     <td data-l="Best spread (your books)">${best}</td>
     <td data-l="Moneyline (your books)">${ml}</td></tr>${newsRow(g)}`;
 }

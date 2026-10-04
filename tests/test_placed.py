@@ -129,3 +129,29 @@ def test_cfb_news_scan_logs_valid_teams(tmp_path, monkeypatch):
     rec = CN.recent_by_team(7, datetime(2026, 10, 9, tzinfo=timezone.utc))
     assert rec["Texas"][0]["player"] == "QB One"
     assert CN.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: items, llm=llm, force=True)["new_items"] == 0
+
+
+def test_cfb_weather_window_and_backfill(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    import pandas as pd
+    from cfbpred import weather as CW
+    ko = datetime(2024, 10, 5, 19, 30, tzinfo=timezone.utc)
+    hrs = [f"2024-10-05T{h:02d}:00" for h in range(24)]
+    pay = {"hourly": {"time": hrs, "wind_speed_10m": [10.0] * 24, "wind_speed_10m_previous_day2": [h * 1.0 for h in range(24)],
+                      "wind_gusts_10m_previous_day1": [30.0] * 24, "temperature_2m": [50.0] * 24, "precipitation": [0.01] * 24}}
+    w = CW.window(pay, ko)
+    assert w["d0"]["wind_mph"] == 10.0 and w["d2"]["wind_mph"] == 20.5     # hours 19..22
+    assert w["d1"]["gust_mph"] == 30.0 and w["d0"]["precip_in"] == 0.04 and w["d1"]["wind_mph"] is None
+    monkeypatch.setattr(CW, "WDIR", tmp_path)
+    monkeypatch.setattr(CW, "venues", lambda: {1: {"lat": 40, "lon": -80, "dome": False}, 2: {"lat": 40, "lon": -80, "dome": True}})
+    monkeypatch.setattr(CW, "_tbd", lambda s: set())
+    G = pd.DataFrame([{"game_id": 11, "start": pd.Timestamp(ko), "completed": True, "home_div": "fbs", "away_div": "fbs", "venue_id": 1},
+                      {"game_id": 12, "start": pd.Timestamp(ko), "completed": True, "home_div": "fbs", "away_div": "fbs", "venue_id": 2}])
+    monkeypatch.setattr(CW.D, "games", lambda ys: G)
+    calls = []
+    rep = CW.backfill([2024], sleep=0, getter=lambda u, p: calls.append(p) or pay)
+    assert rep["done"] and len(calls) == 1 and rep["skipped"]["dome"] == 1
+    assert len(calls[0]["hourly"].split(",")) == 10
+    store = __import__("json").loads((tmp_path / "game_weather.json").read_text())
+    assert store["11"]["d2"]["wind_mph"] == 20.5 and store["12"] == {"dome": True}
+    assert CW.backfill([2024], sleep=0, getter=lambda u, p: 1 / 0)["calls"] == 0   # resumable: nothing left

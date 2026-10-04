@@ -1,0 +1,52 @@
+name: CFB weather backfill
+
+# One-time, resumable: GFS forecasts (as they stood 1 and 2 days before) for every college game since 2021 at an
+# open-air venue, from the free Open-Meteo Previous Runs API -> data/cfb/weather/game_weather.json.
+# Runs 4,000 calls per hour (free limit 5,000/hour, 10,000/day) until done or out of time. Re-run if it stops early.
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "Seasons"
+        default: "2021,2022,2023,2024,2025,2026"
+
+concurrency:
+  group: cfb-weather
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Download forecasts
+        run: python -m cfbpred.weather --seasons "${{ inputs.seasons }}" --hourly-chunks --minutes 320
+        env:
+          PYTHONPATH: src
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+      - name: Save to the repo
+        if: always()
+        run: |
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add data/cfb
+          git commit -q -m "CFB weather backfill" || { echo "nothing new"; exit 0; }
+          for i in 1 2 3 4 5; do git pull -q --rebase && git push -q && exit 0; sleep 10; done
+          echo "::error::Could not push the weather data"; exit 1
+      - name: Phone alert when finished
+        if: always()
+        continue-on-error: true
+        run: |
+          python -m nflpred.notify "CFB weather backfill: ${{ job.status }}" "$(python -c "import json;d=json.load(open('data/cfb/weather/game_weather.json'));print(len(d),'games saved')" 2>/dev/null || echo 'no file')" 3 --soft
+        env:
+          PYTHONPATH: src
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
