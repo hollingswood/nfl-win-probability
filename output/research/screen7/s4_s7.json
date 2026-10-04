@@ -1,0 +1,365 @@
+{
+ "S4": {
+  "by_season": [
+   {
+    "season": 2014,
+    "n": 266,
+    "corr_errors": 0.968,
+    "beta_gap": 0.157,
+    "mae_model": 11.47,
+    "mae_close": 11.3
+   },
+   {
+    "season": 2015,
+    "n": 267,
+    "corr_errors": 0.976,
+    "beta_gap": 0.427,
+    "mae_model": 10.17,
+    "mae_close": 10.12
+   },
+   {
+    "season": 2016,
+    "n": 265,
+    "corr_errors": 0.97,
+    "beta_gap": 0.582,
+    "mae_model": 9.3,
+    "mae_close": 9.09
+   },
+   {
+    "season": 2017,
+    "n": 266,
+    "corr_errors": 0.975,
+    "beta_gap": 0.006,
+    "mae_model": 10.24,
+    "mae_close": 10.07
+   },
+   {
+    "season": 2018,
+    "n": 265,
+    "corr_errors": 0.968,
+    "beta_gap": 0.45,
+    "mae_model": 10.11,
+    "mae_close": 9.93
+   },
+   {
+    "season": 2019,
+    "n": 266,
+    "corr_errors": 0.976,
+    "beta_gap": 0.144,
+    "mae_model": 10.45,
+    "mae_close": 10.2
+   },
+   {
+    "season": 2020,
+    "n": 268,
+    "corr_errors": 0.977,
+    "beta_gap": 0.613,
+    "mae_model": 9.92,
+    "mae_close": 9.81
+   },
+   {
+    "season": 2021,
+    "n": 284,
+    "corr_errors": 0.98,
+    "beta_gap": 0.17,
+    "mae_model": 10.9,
+    "mae_close": 10.67
+   },
+   {
+    "season": 2022,
+    "n": 282,
+    "corr_errors": 0.968,
+    "beta_gap": -0.097,
+    "mae_model": 9.18,
+    "mae_close": 8.81
+   },
+   {
+    "season": 2023,
+    "n": 285,
+    "corr_errors": 0.987,
+    "beta_gap": 0.247,
+    "mae_model": 10.13,
+    "mae_close": 9.98
+   },
+   {
+    "season": 2024,
+    "n": 285,
+    "corr_errors": 0.976,
+    "beta_gap": 0.43,
+    "mae_model": 9.93,
+    "mae_close": 9.7
+   },
+   {
+    "season": 2025,
+    "n": 284,
+    "corr_errors": 0.973,
+    "beta_gap": -0.144,
+    "mae_model": 9.87,
+    "mae_close": 9.68
+   }
+  ],
+  "beta_all": 0.224,
+  "beta_se": 0.077,
+  "corr_errors_all": 0.975,
+  "note": "beta_gap = how much of (model - close) shows up in (result - close). 0 = the model adds nothing the close lacks; 1 = the close ignores it entirely.",
+  "slices": {
+   "weeks 1-4": {
+    "n": 752,
+    "beta": 0.277,
+    "se": 0.166,
+    "z": 1.67
+   },
+   "weeks 5-9": {
+    "n": 852,
+    "beta": 0.041,
+    "se": 0.152,
+    "z": 0.27
+   },
+   "weeks 10-18": {
+    "n": 1565,
+    "beta": 0.313,
+    "se": 0.108,
+    "z": 2.91
+   },
+   "playoffs": {
+    "n": 144,
+    "beta": 0.038,
+    "se": 0.393,
+    "z": 0.1
+   },
+   "QB change either side": {
+    "n": 1936,
+    "beta": 0.091,
+    "se": 0.107,
+    "z": 0.85
+   },
+   "big gap |gap|>=3": {
+    "n": 885,
+    "beta": 0.31,
+    "se": 0.088,
+    "z": 3.52
+   },
+   "home fav": {
+    "n": 2064,
+    "beta": 0.193,
+    "se": 0.1,
+    "z": 1.93
+   },
+   "home dog": {
+    "n": 1215,
+    "beta": 0.273,
+    "se": 0.125,
+    "z": 2.18
+   }
+  }
+ },
+ "S7": {
+  "all": {
+   "log_loss_blend": 0.6119,
+   "log_loss_vegas": 0.6122,
+   "seasons_blend_better": 6,
+   "seasons": 11,
+   "z_blend_beats_vegas": 0.18,
+   "avg_model_weight": 0.537,
+   "last_model_weight": 0.357,
+   "ats_vs_close": {
+    ">=1": {
+     "bets": 587,
+     "cover": 0.518
+    },
+    ">=2": {
+     "bets": 80,
+     "cover": 0.562
+    },
+    ">=3": {
+     "bets": 12,
+     "cover": 0.583
+    }
+   },
+   "by_season": {
+    "2015": {
+     "blend": 0.6426,
+     "vegas": 0.6488
+    },
+    "2016": {
+     "blend": 0.6201,
+     "vegas": 0.6216
+    },
+    "2017": {
+     "blend": 0.5901,
+     "vegas": 0.5932
+    },
+    "2018": {
+     "blend": 0.6081,
+     "vegas": 0.6135
+    },
+    "2019": {
+     "blend": 0.6214,
+     "vegas": 0.6163
+    },
+    "2020": {
+     "blend": 0.5881,
+     "vegas": 0.59
+    },
+    "2021": {
+     "blend": 0.6228,
+     "vegas": 0.6232
+    },
+    "2022": {
+     "blend": 0.6115,
+     "vegas": 0.605
+    },
+    "2023": {
+     "blend": 0.6294,
+     "vegas": 0.627
+    },
+    "2024": {
+     "blend": 0.5895,
+     "vegas": 0.5892
+    },
+    "2025": {
+     "blend": 0.6072,
+     "vegas": 0.607
+    }
+   }
+  },
+  "trail1": {
+   "log_loss_blend": 0.6158,
+   "log_loss_vegas": 0.6122,
+   "seasons_blend_better": 3,
+   "seasons": 11,
+   "z_blend_beats_vegas": -1.76,
+   "avg_model_weight": 0.338,
+   "last_model_weight": 0.22,
+   "ats_vs_close": {
+    ">=1": {
+     "bets": 1271,
+     "cover": 0.522
+    },
+    ">=2": {
+     "bets": 473,
+     "cover": 0.526
+    },
+    ">=3": {
+     "bets": 168,
+     "cover": 0.506
+    }
+   },
+   "by_season": {
+    "2015": {
+     "blend": 0.6443,
+     "vegas": 0.6488
+    },
+    "2016": {
+     "blend": 0.6251,
+     "vegas": 0.6216
+    },
+    "2017": {
+     "blend": 0.5918,
+     "vegas": 0.5932
+    },
+    "2018": {
+     "blend": 0.6151,
+     "vegas": 0.6135
+    },
+    "2019": {
+     "blend": 0.6247,
+     "vegas": 0.6163
+    },
+    "2020": {
+     "blend": 0.5884,
+     "vegas": 0.59
+    },
+    "2021": {
+     "blend": 0.627,
+     "vegas": 0.6232
+    },
+    "2022": {
+     "blend": 0.6093,
+     "vegas": 0.605
+    },
+    "2023": {
+     "blend": 0.6345,
+     "vegas": 0.627
+    },
+    "2024": {
+     "blend": 0.5946,
+     "vegas": 0.5892
+    },
+    "2025": {
+     "blend": 0.6183,
+     "vegas": 0.607
+    }
+   }
+  },
+  "trail3": {
+   "log_loss_blend": 0.6122,
+   "log_loss_vegas": 0.6122,
+   "seasons_blend_better": 7,
+   "seasons": 11,
+   "z_blend_beats_vegas": -0.02,
+   "avg_model_weight": 0.378,
+   "last_model_weight": 0.123,
+   "ats_vs_close": {
+    ">=1": {
+     "bets": 791,
+     "cover": 0.521
+    },
+    ">=2": {
+     "bets": 141,
+     "cover": 0.56
+    },
+    ">=3": {
+     "bets": 32,
+     "cover": 0.5
+    }
+   },
+   "by_season": {
+    "2015": {
+     "blend": 0.6426,
+     "vegas": 0.6488
+    },
+    "2016": {
+     "blend": 0.6201,
+     "vegas": 0.6216
+    },
+    "2017": {
+     "blend": 0.5905,
+     "vegas": 0.5932
+    },
+    "2018": {
+     "blend": 0.6082,
+     "vegas": 0.6135
+    },
+    "2019": {
+     "blend": 0.6235,
+     "vegas": 0.6163
+    },
+    "2020": {
+     "blend": 0.5881,
+     "vegas": 0.59
+    },
+    "2021": {
+     "blend": 0.623,
+     "vegas": 0.6232
+    },
+    "2022": {
+     "blend": 0.6098,
+     "vegas": 0.605
+    },
+    "2023": {
+     "blend": 0.6292,
+     "vegas": 0.627
+    },
+    "2024": {
+     "blend": 0.5886,
+     "vegas": 0.5892
+    },
+    "2025": {
+     "blend": 0.6109,
+     "vegas": 0.607
+    }
+   }
+  }
+ }
+}

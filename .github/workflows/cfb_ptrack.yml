@@ -1,0 +1,38 @@
+name: CFB rating-system archive (Prediction Tracker)
+
+# Downloads The Prediction Tracker's per-season college football files (dozens of public rating systems'
+# game predictions plus opening/closing lines) into data/cfb/ptrack/ for the ensemble research.
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "Seasons, e.g. 2010-2025"
+        default: "2010-2025"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download
+        run: |
+          mkdir -p data/cfb/ptrack
+          A=${{ inputs.years }}; FROM=${A%-*}; TO=${A#*-}
+          for Y in $(seq $FROM $TO); do
+            for U in "https://www.thepredictiontracker.com/ncaa${Y}.csv" "http://www.thepredictiontracker.com/ncaa${Y}.csv" "https://www.thepredictiontracker.com/ncaaresults${Y}.csv"; do
+              if curl -sSfL --max-time 60 -A "Mozilla/5.0" -o "data/cfb/ptrack/ncaa${Y}.csv" "$U"; then
+                echo "$Y ok from $U: $(wc -l < data/cfb/ptrack/ncaa${Y}.csv) lines"; head -2 "data/cfb/ptrack/ncaa${Y}.csv"; break
+              else rm -f "data/cfb/ptrack/ncaa${Y}.csv"; echo "$Y failed: $U"; fi
+            done
+          done
+          ls -la data/cfb/ptrack
+      - name: Save
+        run: |
+          git config user.name "nfl-bot"; git config user.email "nfl-bot@users.noreply.github.com"
+          git add data/cfb/ptrack || true
+          git commit -q -m "CFB Prediction Tracker archive (${{ inputs.years }})" || { echo "nothing downloaded"; exit 0; }
+          for i in 1 2 3 4 5; do git pull -q --rebase && git push -q && exit 0; sleep 10; done
+          exit 1
