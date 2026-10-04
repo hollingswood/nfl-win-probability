@@ -357,6 +357,7 @@ section[id]{scroll-margin-top:12px}
         <h3 class="pch">Value a promo</h3>
         <div class="fields">
           <label class="wide">Game<select id="pc-game"></select></label>
+          <label>Sportsbook<select id="pc-book"></select></label>
           <label id="pc-mktw">Bet<select id="pc-mkt"></select></label>
           <label id="pc-linew">Line<select id="pc-line"></select></label>
           <label id="pc-fairw">Your fair win %<input id="pc-fair" type="text" value="50"><span class="hint">no sharp price for this bet; use your own estimate</span></label>
@@ -1234,6 +1235,13 @@ function trackWindow(key){
   const opt = (v,t) => `<option value="${esc(v)}">${esc(t)}</option>`;
   $('pc-game').innerHTML = games.map(g=>opt(g.game_id, gLabel(g))).join('') + opt('custom','Another bet (enter your own fair %)');
   let oddsTouched=false;
+  // sportsbook picker: your books first, then every other book in the feed
+  const BOOKT={draftkings:'DraftKings',fanduel:'FanDuel',espnbet:'theScore Bet',betmgm:'BetMGM',williamhill_us:'Caesars',betrivers:'BetRivers',fanatics:'Fanatics',hardrockbet:'Hard Rock Bet',ballybet:'Bally Bet',betparx:'betPARX',fliff:'Fliff',bovada:'Bovada',betonlineag:'BetOnline',lowvig:'LowVig',mybookieag:'MyBookie',betus:'BetUS',rebet:'Rebet',pinnacle:'Pinnacle',courtside:'Courtside',betanysports:'BetAnySports'};
+  const BOOKNM = k => BOOKT[k] || k;
+  const MINE = D.my_books || [], allBk = new Set();
+  for(const g of games) for(const k of Object.keys((g.context.live_odds||{}).by_book||{})) if(!/^hardrockbet_/.test(k)) allBk.add(k);
+  $('pc-book').innerHTML = opt('', 'Best of your books') + MINE.filter(k=>allBk.has(k)).map(k=>opt(k, `${BOOKNM(k)} (yours)`)).join('')
+    + [...allBk].filter(k=>!MINE.includes(k)).sort((a,b)=>BOOKNM(a).localeCompare(BOOKNM(b))).map(k=>opt(k, BOOKNM(k))).join('');
   function fillMarkets(){
     const g=GM[$('pc-game').value], custom=!g;
     $('pc-mktw').hidden=custom; $('pc-fairw').hidden=!custom;
@@ -1266,9 +1274,28 @@ function trackWindow(key){
       push:Number.isInteger(r.point), best:r.best, opp:r.opp,
       oppLabel: sp?`${home?g.away_team:g.home_team} ${pt(-r.point)}`:`${over?'Under':'Over'} ${r.point}`};
   }
+  // price at one chosen sportsbook (by_book: every book in the feed, main lines only)
+  function bookPrice(s, key){
+    const bb=((s.g&&s.g.context.live_odds.by_book)||{})[key]; if(!bb) return {miss:'no price at this book'};
+    const m=s.m;
+    if(m==='ml_home'||m==='ml_away') return bb.ml ? {price:bb.ml[m==='ml_home'?0:1]} : {miss:'no moneyline at this book'};
+    if(m==='sp_home'||m==='sp_away'){
+      if(!bb.sp) return {miss:'no spread at this book'};
+      const ptv = m==='sp_home'?bb.sp[0]:-bb.sp[0];
+      return String(ptv)===$('pc-line').value ? {price:bb.sp[m==='sp_home'?1:2]} : {miss:`its line is ${pt(ptv)}`};
+    }
+    if(!bb.tot) return {miss:'no total at this book'};
+    return String(bb.tot[0])===$('pc-line').value ? {price:bb.tot[m==='tot_over'?1:2]} : {miss:`its total is ${bb.tot[0]}`};
+  }
   function fillOdds(){
     if(oddsTouched) return;
-    const s=selected();
+    const s=selected(), bk=$('pc-book').value;
+    if(bk && s.g){
+      const r=bookPrice(s, bk), nm=BOOKNM(bk);
+      if(r.price!=null){ $('pc-odds').value=fmtML(r.price); $('pc-oddshint').textContent=`at ${nm}${s.best&&s.best.price>r.price?` (best of your books: ${fmtML(s.best.price)} at ${s.best.book})`:''}`; }
+      else { $('pc-odds').value=''; $('pc-oddshint').textContent=`${nm}: ${r.miss}; type the price it shows`; }
+      return;
+    }
     $('pc-odds').value = s.best ? fmtML(s.best.price) : ($('pc-odds').value || '');
     $('pc-oddshint').textContent = s.best ? `best at ${s.best.book}` : 'type the price your book shows';
   }
@@ -1383,6 +1410,7 @@ function trackWindow(key){
   $('pcform').addEventListener('submit', e=>e.preventDefault());
   $('pc-game').addEventListener('change', ()=>{ fillMarkets(); calc(); });
   $('pc-mkt').addEventListener('change', ()=>{ fillLines(); calc(); });
+  $('pc-book').addEventListener('change', ()=>{ oddsTouched=false; fillOdds(); calc(); });
   $('pc-line').addEventListener('change', ()=>{ oddsTouched=false; fillOdds(); calc(); });
   $('pc-odds').addEventListener('input', ()=>{ oddsTouched=true; });
   $('pcform').addEventListener('input', calc);

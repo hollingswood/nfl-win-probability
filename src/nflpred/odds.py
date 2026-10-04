@@ -83,8 +83,9 @@ SHARP_BOOKS = {"lowvig", "betonlineag", "circasports", "bookmaker"}
 
 
 def _book_detail(mk: dict, home: str, away: str) -> dict:
-    """One book's moneyline [home, away] and main spread [home_point, home_price, away_price] (None if missing)."""
-    out = {"ml": None, "sp": None}
+    """One book's moneyline [home, away], main spread [home_point, home_price, away_price] and total
+    [point, over_price, under_price] (None if missing)."""
+    out = {"ml": None, "sp": None, "tot": None}
     try:
         if "h2h" in mk:
             px = {o["name"]: o["price"] for o in mk["h2h"]["outcomes"]}
@@ -96,6 +97,11 @@ def _book_detail(mk: dict, home: str, away: str) -> dict:
             if (ho and ao and ho.get("point") is not None and ho.get("price") is not None
                     and ao.get("price") is not None):
                 out["sp"] = [ho["point"], ho["price"], ao["price"]]
+        if "totals" in mk:
+            tt = {o["name"]: o for o in mk["totals"]["outcomes"]}
+            ov, un = tt.get("Over"), tt.get("Under")
+            if ov and un and ov.get("point") is not None and ov.get("price") is not None and un.get("price") is not None:
+                out["tot"] = [ov["point"], ov["price"], un["price"]]
     except Exception:
         pass
     return out

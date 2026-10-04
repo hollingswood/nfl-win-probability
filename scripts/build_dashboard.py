@@ -167,7 +167,14 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_audit": news_audit,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules,
-            "placed": load_placed(), "log_urls": log_urls(predictions)}
+            "placed": load_placed(), "log_urls": log_urls(predictions), "my_books": load_my_books()}
+
+
+def load_my_books() -> list:
+    try:
+        return json.loads((ROOT / "my_books.json").read_text()).get("allowed_books", [])
+    except (OSError, ValueError):
+        return []
 
 
 def load_placed() -> dict | None:
