@@ -70,11 +70,12 @@ def main():
     fs = sorted(glob.glob(str(ROOT / "data/historical_odds/cfb_deriv/cfb_deriv_*.csv.gz")))
     if not fs:
         raise SystemExit("no derivative odds yet (run the cfb_deriv backfill)")
-    D = pd.concat([pd.read_csv(f).assign(season=int(Path(f).name[9:13])) for f in fs], ignore_index=True)
+    D = pd.concat([pd.read_csv(f).assign(season=int(Path(f).name[10:14])) for f in fs], ignore_index=True)
     D["t"] = pd.to_datetime(D.requested_ts, utc=True); D["ko"] = pd.to_datetime(D.commence_time, utc=True)
     D["h"] = (D.ko - D.t).dt.total_seconds() / 3600
     early, close = D[D.h > 24], D[D.h < 3]
     # map odds events to CFBD games (same matcher as the main screens)
+    print("derivative rows", len(D), flush=True)
     O = PS.load("cfb")
     import opener_screen as OS
     E = OS.event_map(O)
@@ -86,35 +87,48 @@ def main():
         """normalize to rows: event, market, group, side, point, price, book."""
         r = df.copy()
         r["side"] = np.where(r.market == "spreads_h1", np.where(r.name == r.home, "home", "away"), r.name.str.lower())
-        r["team_side"] = np.where(r.market == "team_totals", np.where(r.description == r.home, "home", np.where(r.description == r.away, "away", None)), "")
+        r["team_side"] = np.where(r.market == "team_totals", np.where(r.description == r.home, "home", np.where(r.description == r.away, "away", "")), "")
         return r.dropna(subset=["point", "price"])
 
     E1 = side_rows(early); C1 = side_rows(close)
     pin_e = E1[E1.book == "pinnacle"]; pin_c = C1[C1.book == "pinnacle"]
     books = E1[E1.book.isin(AZ) & E1.price.between(-200, 200)]
 
+    def index(pin):   # (event, market, side, point, team_side) -> price   (lookup speed only; same rule)
+        return {(r.event_id, r.market, r.side, float(r.point), r.team_side or ""): r.price for r in pin.itertuples()}
+    IDX = {}
+
     def pin_fair(pin, row):
         """Shin no-vig probability of row's side at row's point from Pinnacle's same market (same number), else None."""
+        if id(pin) not in IDX:
+            IDX[id(pin)] = index(pin)
+        ix = IDX[id(pin)]
+        ts = row.team_side or ""
         if row.market == "spreads_h1":
             other = "away" if row.side == "home" else "home"
-            a = pin[(pin.event_id == row.event_id) & (pin.market == row.market) & (pin.side == row.side) & (pin.point == row.point)]
-            b = pin[(pin.event_id == row.event_id) & (pin.market == row.market) & (pin.side == other) & (pin.point == -row.point)]
+            a = ix.get((row.event_id, row.market, row.side, float(row.point), ts))
+            b = ix.get((row.event_id, row.market, other, float(-row.point), ts))
         else:
             other = "under" if row.side == "over" else "over"
-            m = (pin.event_id == row.event_id) & (pin.market == row.market) & (pin.point == row.point) & (pin.team_side == row.team_side)
-            a, b = pin[m & (pin.side == row.side)], pin[m & (pin.side == other)]
-        if a.empty or b.empty:
+            a = ix.get((row.event_id, row.market, row.side, float(row.point), ts))
+            b = ix.get((row.event_id, row.market, other, float(row.point), ts))
+        if a is None or b is None:
             return None
-        return shin_from_implied(PS.imp(a.price.iloc[0]).item(), PS.imp(b.price.iloc[0]).item())
+        return shin_from_implied(PS.imp(a).item(), PS.imp(b).item())
 
     pf = pin_full.dropna(subset=["sp_home_point", "tot_point"]).sort_values("t")
 
+    PF = {eid: grp[["t", "sp_home_point", "tot_point"]].to_numpy() for eid, grp in pf.groupby("event_id")}
+
     def derived(row):
-        g = pf[(pf.event_id == row.event_id) & (pf.t <= row.t) & (pf.t >= row.t - pd.Timedelta(hours=12))]
-        if g.empty:
+        arr = PF.get(row.event_id)
+        if arr is None:
             return None
-        g = g.iloc[-1]
-        M, T = -g.sp_home_point, g.tot_point
+        ok = [(t, sp, tt) for t, sp, tt in arr if row.t - pd.Timedelta(hours=12) <= t <= row.t]
+        if not ok:
+            return None
+        _, sp, tt = ok[-1]
+        M, T = -sp, tt
         if row.market == "spreads_h1":
             mean, sd = P["h1_margin_share"] * M, P["h1_margin_sd"]
             # home covers if margin + home_point > 0  ->  margin > -home_point
@@ -129,7 +143,10 @@ def main():
         return (w, p, l) if row.side == "over" else (l, p, w)
 
     rows = []
-    for r in books.itertuples():
+    print("book quotes to price:", len(books), flush=True)
+    for n_, r in enumerate(books.itertuples()):
+        if n_ % 20000 == 0:
+            print("  priced", n_, flush=True)
         f = pin_fair(pin_e, r)
         e_same = None
         if f is not None:

@@ -300,7 +300,7 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         print("cfb weather failed:", e)
     rdir = ROOT / "output" / "research" / "cfb"
-    research_md = "\n\n".join(f.read_text() for f in (rdir / "round2.md", rdir / "wind_screen.md", rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
+    research_md = "\n\n".join(f.read_text() for f in (rdir / "round2.md", rdir / "deriv_screen.md", rdir / "wind_screen.md", rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
     res = {"generated_at": now.isoformat(timespec="minutes"), "season": season,
            "odds_checked_at": (datetime.strptime(snap_at, "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc).isoformat(timespec="minutes") if snap_at else None),
            "model": {"n_games_fit": coef.get("n_margin"), "note": "Model spreads are display only (no model rule passed its holdout). College bets come only from price rules: shop-vs-sharp (spreads, totals, moneylines vs Pinnacle) and the moneyline price track."},
