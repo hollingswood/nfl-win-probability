@@ -225,6 +225,42 @@ def write_site(body: str, site: Path) -> Path:
     return site / "index.html"
 
 
+def add_prior_versions(pred: dict, history: Path = ROOT / "history") -> dict:
+    """For each paper track, summarize bets placed under EARLIER rules versions (they are not counted toward the
+    current version's validation, so the track record would otherwise look empty after a version bump).
+    Ledger = history/paper_bets_<key without _bets>.json (paper_bets.json for the v1 moneyline 'bets')."""
+    for key, B in pred.items():
+        if not (key.endswith("_bets") and isinstance(B, dict) and B.get("rules_version") is not None):
+            continue
+        path = history / ("paper_bets.json" if key == "bets" else f"paper_bets_{key[:-5]}.json")
+        try:
+            ledger = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        cur, out = B["rules_version"], {}
+        for b in ledger:
+            v = b.get("rules_version")
+            if v is None or v == cur:
+                continue
+            x = out.setdefault(v, {"version": v, "bets": 0, "open": 0, "graded": 0, "wins": 0, "losses": 0, "pushes": 0,
+                                   "profit_units": 0.0, "clv": []})
+            x["bets"] += 1
+            if b.get("status") == "open":
+                x["open"] += 1
+            elif b.get("status") == "graded":
+                x["graded"] += 1
+                res = b.get("result")
+                x["wins"] += res == "win"; x["losses"] += res == "loss"; x["pushes"] += res == "push"
+                x["profit_units"] += float(b.get("profit_units") or 0)
+                if isinstance(b.get("clv"), (int, float)):
+                    x["clv"].append(b["clv"])
+        if out:
+            B["prior_versions"] = [dict({k: v for k, v in x.items() if k != "clv"}, profit_units=round(x["profit_units"], 2),
+                                        avg_clv=round(sum(x["clv"]) / len(x["clv"]), 4) if x["clv"] else None)
+                                   for _, x in sorted(out.items())]
+    return pred
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--predictions", default=str(ROOT / "output" / "predictions.json"))
@@ -233,7 +269,7 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     vv = ROOT / "output" / "vs_vegas.json"
     payload = build_payload(
-        json.loads(Path(a.predictions).read_text()),
+        add_prior_versions(json.loads(Path(a.predictions).read_text())),
         json.loads((ROOT / "output" / "backtest.json").read_text()),
         json.loads(vv.read_text()) if vv.exists() else None,
         load_news_signals(Path(a.news)),

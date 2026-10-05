@@ -259,6 +259,12 @@ svg text{fill:var(--muted);font:11px var(--mono)}
 .notes p{margin:0}
 footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
 /* section jump links */
+.vtag{font:600 10px var(--mono);border:1px solid var(--line);border-radius:2px;padding:0 4px;color:var(--muted);margin-left:4px}
+.wktabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.wktabs:empty{display:none}
+.wktabs button{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:7px 12px;cursor:pointer}
+.wktabs button small{font:inherit;font-weight:500;opacity:.75;margin-left:6px;text-transform:none;letter-spacing:0}
+.wktabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
 .jump{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .jump a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
 .jump a:hover,.jump a:focus-visible{color:var(--accent);border-color:var(--accent)}
@@ -336,6 +342,7 @@ section[id]{scroll-margin-top:12px}
     </div>
     <p class="g2note" id="g2games"></p>
     <p class="g2note" id="ainewsacc"></p>
+    <div class="wktabs" id="wktabs" role="tablist" aria-label="Week"></div>
     <div class="games" id="games"></div>
   </section>
 
@@ -862,7 +869,7 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     gap = Math.abs(d)<1 ? `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: essentially the same, so there's little to exploit.`
       : `Model line <b>${line(g.model_home_margin)}</b> vs Vegas <b>${line(g.vegas_home_margin)}</b>: the model is <b>${Math.abs(d).toFixed(1)} pts higher on ${esc(who)}</b>. The original model's bet math trusts Vegas more (spreads use about ⅓ model, ⅔ Vegas; moneylines keep about half of the gap), so a big gap becomes a much smaller edge. On 2020–25 games Vegas alone predicted better than any blend, so treat this gap as context, not an edge; the newer tracks use prices only.`;
   }
-  return `<article class="game" data-gid="${esc(g.game_id)}">
+  return `<article class="game" data-gid="${esc(g.game_id)}" data-week="${g.week}">
     <div class="gmeta"><span>${fmtDay(g.gameday)} · ${esc(g.gametime||'')} · WK ${g.week}</span>${g.neutral_site?'<span class="tag">NEUTRAL</span>':''}</div>
     <div class="teams">
       <div class="team ${homeFav?'':'fav'}"><span class="ab">${esc(g.away_team)}</span><span class="qb">${esc(g.away_qb||'')}</span><span class="pct">${pct(1-hp)}</span></div>
@@ -884,6 +891,17 @@ document.getElementById('games').innerHTML = P.upcoming.map(g => {
     <div class="ctx">${context(g)}</div>
   </article>`;
 }).join('');
+// week tabs: the active week (earliest week with a game still to play) shows; later weeks appear as tabs once they have games
+(function(){
+  const wks=[...new Set(P.upcoming.map(g=>g.week))].sort((a,b)=>a-b), el=document.getElementById('wktabs');
+  if(!wks.length) return;
+  const n=w=>P.upcoming.filter(g=>g.week===w).length;
+  const show=w=>{ document.querySelectorAll('#games article.game').forEach(a=>a.hidden=+a.dataset.week!==w);
+    el.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected', String(+b.dataset.week===w))); };
+  el.innerHTML = wks.length>1 ? wks.map((w,i)=>`<button type="button" role="tab" data-week="${w}">Week ${w}<small>${n(w)} game${n(w)===1?'':'s'}${i===0?' · this week':''}</small></button>`).join('') : '';
+  el.addEventListener('click', e=>{ const b=e.target.closest('button'); if(b) show(+b.dataset.week); });
+  show(wks[0]);
+})();
 
 if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 // this week's board: one ranked list, grouped by grade
@@ -924,7 +942,7 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
       ${list(top, 'top', 'Nothing graded A+ right now. Prices are re-checked hourly.')}</section>
     <section class="bgroup"><div class="bgh"><h3>Watchlist · A / B</h3><span class="cnt">${n(mid.length)}</span></div><p class="gi">Positive but unproven: moneyline and spread A and B grades were about break-even in testing. Worth watching in case the price improves to A+. (Totals A/B lost value, so they are listed under Everything else.)</p>
       ${list(mid, '', 'No A or B grades right now.')}</section>
-    <details class="bgroup"${restBets?' open':''}><summary><div class="bgh"><h3>Everything else</h3><span class="cnt">${n(rest.length)} · C grades and ungraded${restBets?` · ${restBets} paper bet${restBets===1?'':'s'} logged`:''} · click to ${restBets?'hide':'show'}</span></div><p class="gi">Includes picks only the original model makes. Its big “edges” come from the model disagreeing with Vegas, and they showed no profit on real early-week lines.</p></summary>
+    <details class="bgroup"><summary><div class="bgh"><h3>Everything else</h3><span class="cnt">${n(rest.length)} · C grades and ungraded${restBets?` · ${restBets} paper bet${restBets===1?'':'s'} logged`:''} · click to show</span></div><p class="gi">Includes picks only the original model makes. Its big “edges” come from the model disagreeing with Vegas, and they showed no profit on real early-week lines.</p></summary>
       ${list(rest, '', 'Nothing else.')}</details>`;
 })();
 
@@ -1217,10 +1235,10 @@ function trackWindow(key){
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(chk.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th><th></th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
-      gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
+      gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag" title="Placed under earlier rules; not counted toward v${B.rules_version}">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
     const flagged=new Set();
     for (const b of open) { if(b.player){ if(flagged.has(b.game_id)) continue; flagged.add(b.game_id); }
       const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`);
@@ -1229,7 +1247,9 @@ function trackWindow(key){
     const bg=(mlT?B.by_grade_v2:tgT?B.by_totals_grade:B.by_grade)||[];
     const gradeT = key==='props_rec'||key==='props_un' ? '' : bg.length ? gradeTable(bg, mlT||tgT, false, tgT?tgBadge:null)
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by moneyline grade appears here once graded paper bets carry one.':tgT?'Performance by totals grade appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
-    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
+    const PV=B.prior_versions||[];
+    const prior = PV.length ? `<p class="g2note">${PV.map(x=>`<b>Earlier rules v${x.version}:</b> ${x.graded} graded (${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}, ${x.profit_units>0?'+':x.profit_units<0?'−':''}${Math.abs(x.profit_units).toFixed(2)} units${x.avg_clv!=null?`, avg CLV ${sgn(x.avg_clv)}`:''})${x.open?`, ${x.open} still open`:''}`).join('; ')}. Shown below marked v${PV.map(x=>x.version).join('/')}, but not counted toward v${B.rules_version}'s record: the rules changed, so v${B.rules_version} starts its own count.</p>` : '';
+    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div>${prior}<div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
   }).join('') : '';
 })();
 
