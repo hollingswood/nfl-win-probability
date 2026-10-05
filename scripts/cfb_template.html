@@ -138,6 +138,8 @@ const G = C.games || [];
 const ab = (g, side) => g[side+'_abbr'] || g[side];
 const MKT = {ml:'Moneyline', spread:'Spread', total:'Total'};
 const BAR = {spread:0.04, total:0.02, ml:0.02};       // shop-vs-sharp thresholds (cfb_shop_rules.json)
+const PR = [-200, 200];                                // tested price range (cfb_shop_rules.json qualify.price_range)
+const inRange = x => x && x.price!=null && x.price>=PR[0] && x.price<=PR[1];
 const GRADE_CLV = {'A+':'+2–8%', 'A':'+1–2.6%', 'B':'about 0', 'C':'−1.5 to −3.5%'};
 
 $('stamp').textContent = `${C.season} season · updated ${new Date(C.generated_at).toLocaleString('en-US',{...AZT, month:'short', day:'numeric', hour:'numeric', minute:'2-digit'})} AZ`;
@@ -153,6 +155,7 @@ function pickTxt(g, m, side, o){ if(!o) return '—';
   return m==='ml' ? `${ab(g,side)} ML ${od(o.price)}` : m==='spread' ? `${ab(g,side)} ${ptd(o.point)} (${od(o.price)})` : `${cap1(side)} ${o.point} (${od(o.price)})`; }
 function gradeTip(o, m){
   if(!o || o.grade==null) return 'Not graded: Pinnacle has not posted this game yet (usually Sunday or Monday), or does not list it';
+  if(!inRange(o)) return `Not graded: ${od(o.price)} is outside the tested price range (${od(PR[0])} to ${od(PR[1])}). Long shots were never validated: in 2021–25, +500 and longer dogs that beat Pinnacle by 2%+ still lost money (ROI −12% to −25%).`;
   return `Grade ${o.grade}: this price is worth ${sgn(o.edge)} against Pinnacle's line right now. In 2021–25, ${o.grade} ${MKT[m].toLowerCase()} offers went on to beat Pinnacle's closing line by ${GRADE_CLV[o.grade]} on average.`;
 }
 const ROWS = new Map();
@@ -166,11 +169,12 @@ function marketRows(g){
       const bet=ev.find(b=>(b.market||'ml')===m && b.side===side) || (m==='spread'&&side==='home' ? (CLK.open||[]).map(b=>({...b,_k:'clock'})).find(b=>b.game_id===g.game_id) : null);
       let st;
       if(bet) st={k:'bet', t:'PAPER BET', d:`${TRK[bet._k]}: logged ${when(bet.placed_at)} at ${m!=='ml'&&bet.point!=null?ptd(bet.point)+' ':''}${od(bet.price)} ${bet.book}${bet.your_book===false?' (no account)':''}`};
+      else if(!inRange(x)) st={k:'no', t:'NO', d:`${od(x.price)} is outside the tested price range (${od(PR[0])} to ${od(PR[1])}); the track never bets long shots or heavy favorites`};
       else if(x.edge!=null && x.edge>=BAR[m]) st={k:'watch', t:'WATCH', d:`clears the shop-vs-sharp bar (${Math.round(BAR[m]*100)}%+); logs at the next odds check if the price holds${new Date(g.start)-Date.now()>7*864e5?' and kickoff is within 7 days':''}`};
       else if(x.edge==null) st={k:'no', t:'NO', d:'no sharp line to compare yet'};
       else st={k:'no', t:'NO', d:`${sgn(x.edge)} vs Pinnacle; ${MKT[m].toLowerCase()} bets need ${Math.round(BAR[m]*100)}%+`};
       const azBetter = az && az.edge!=null && (x.edge==null || az.edge>x.edge+0.005) && az.book!==x.book ? az : null;
-      rows.push({g, m, side, x, az:azBetter, st, grade:x.grade, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet});
+      rows.push({g, m, side, x, az:azBetter, st, grade:inRange(x)?x.grade:null, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet});
     }
   }
   ROWS.set(g.game_id, rows); return rows;
