@@ -150,14 +150,38 @@ def _result_at_point(b: dict, point: float) -> str | None:
     return "push" if d == 0 else "win" if d > 0 else "loss"
 
 
-def score(rec: dict, ledgers: dict) -> dict:
+def kickoff_of(b: dict, schedule: dict | None = None) -> str | None:
+    """Game start (UTC ISO) of a paper bet: its own kickoff_utc, else the nflverse schedule (gameday + gametime ET)."""
+    if b.get("kickoff_utc"):
+        return b["kickoff_utc"]
+    gt = (schedule or {}).get(b.get("game_id"))
+    if gt:
+        from zoneinfo import ZoneInfo
+        try:
+            t = datetime.fromisoformat(f"{gt[0]}T{gt[1] or '13:00'}").replace(tzinfo=ZoneInfo("America/New_York"))
+            return t.astimezone(timezone.utc).isoformat(timespec="minutes")
+        except ValueError:
+            return None
+    return None
+
+
+def _schedule(root: Path = ROOT) -> dict:
+    try:
+        import pandas as pd
+        g = pd.read_parquet(root / "data" / "raw" / "games.parquet", columns=["game_id", "gameday", "gametime"])
+        return {r.game_id: (str(r.gameday)[:10], r.gametime if isinstance(r.gametime, str) else None) for r in g.itertuples()}
+    except Exception:
+        return {}
+
+
+def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     r = dict(rec)
     b = ledgers.get(rec.get("bet_id") or "")
     if not b:
         r["status"] = "manual" if not rec.get("bet_id") else "unmatched"
         return r
     r.update(track=b.get("track"), paper_price=b.get("price"), paper_book=b.get("book"), game_id=b.get("game_id"),
-             gameday=b.get("gameday"), paper_point=b.get("point"))
+             gameday=b.get("gameday"), paper_point=b.get("point"), kickoff_utc=kickoff_of(b, schedule))
     pd_, ud = _paper_decimal(b), rec.get("decimal")
     if pd_ and ud:
         r["price_vs_paper"] = round(ud / pd_ - 1, 4)  # +2% = you got 2% more payout than the track logged
@@ -181,7 +205,8 @@ def score(rec: dict, ledgers: dict) -> dict:
 def summary(hist: Path = HIST) -> dict:
     rows = json.loads((hist / "placed_bets.json").read_text()) if (hist / "placed_bets.json").exists() else []
     led = load_ledgers(hist)
-    bets = [score(x, led) for x in rows]
+    sched = _schedule(hist.parent)
+    bets = [score(x, led, sched) for x in rows]
     g = [b for b in bets if b.get("status") == "graded"]
     staked = sum(b.get("stake") or 0 for b in g if b.get("result") != "push")
     profit = sum(b.get("profit") or 0 for b in g)
