@@ -1,4 +1,7 @@
 import json
+from datetime import datetime, timezone
+
+import pytest
 from urllib.parse import parse_qs, urlparse
 
 from nflpred import placed as PL
@@ -266,3 +269,59 @@ def test_cfb_pinnacle_prob_uses_shin():
         {"key": "pinnacle", "markets": [{"key": "h2h", "outcomes": [{"name": "Troy Trojans", "price": -450}, {"name": "Southern Miss Golden Eagles", "price": 340}]}]}]}
     o = P.odds_view(ev, set())
     assert o["pinnacle"]["home_prob"] == round(shin(-450, 340), 4)
+
+
+def test_picks_score_grades_at_close_and_hot_test(tmp_path):
+    import pandas as pd
+    from nflpred import picks_score as PS
+    kick = pd.Timestamp("2026-10-11T17:00", tz="UTC")
+    nfl = pd.DataFrame([{"game_id": f"2026_{w:02d}_DET_KC", "week": w, "home_team": "KC", "away_team": "DET", "kick": kick + pd.Timedelta(days=7 * (w - 5)),
+                         "home_score": 27, "away_score": 20, "spread_line": 3.0, "total_line": 50.5, "home_moneyline": -150, "away_moneyline": 130}
+                        for w in range(1, 7)])
+    cfb = pd.DataFrame(columns=["home", "away", "kick", "completed", "home_pts"])
+    seen = lambda w: (kick + pd.Timedelta(days=7 * (w - 5)) - pd.Timedelta(days=2)).isoformat()
+    p = {"sport": "nfl", "home_team": "Kansas City Chiefs", "away_team": "Detroit Lions", "market": "spread", "pick": "Kansas City Chiefs",
+         "line": -2.5, "seen_at": seen(5)}
+    g = PS.grade_pick(p, nfl, cfb, lambda s: None)
+    assert g["result"] == "win" and g["units"] == pytest.approx(100 / 110) and g["line_value"] == 0.5    # KC -3 at close, won by 7
+    assert PS.grade_pick(dict(p, market="total", pick="under", line=51.5), nfl, cfb, lambda s: None)["result"] == "win"
+    ml = PS.grade_pick(dict(p, market="moneyline", pick="Detroit Lions", line=None), nfl, cfb, lambda s: None)
+    assert ml["result"] == "loss" and ml["units"] == -1.0
+    assert PS.grade_pick(dict(p, seen_at=(kick + pd.Timedelta(minutes=5)).isoformat()), nfl, cfb, lambda s: None) == {"late": True}
+    # hot test: 'Hot Hand' goes 9-1 over weeks 1-4, then picks week 5; 'Cold' does the opposite
+    rows = []
+    for w in range(1, 6):
+        for i in range(2 if w < 5 else 1):
+            win = not (w == 1 and i == 0)
+            rows.append({**p, "analyst": "Hot Hand", "seen_at": seen(w), "pick": "Kansas City Chiefs" if win else "Detroit Lions", "line": None, "x": i})
+            rows.append({**p, "analyst": "Cold", "seen_at": seen(w), "pick": "Detroit Lions", "line": None, "x": i})
+    (tmp_path / "picks_log.jsonl").write_text("\n".join(json.dumps(r) for r in rows))
+    out = PS.run(tmp_path, nfl=nfl, cfb=cfb)
+    # repeated identical picks are de-duplicated per picker+game+market+side; one row per week per side survives
+    t = out["hot_test"]
+    assert out["picks_graded"] > 0 and t["passed"] is False
+    assert {x["picker"] for x in out["pickers"]} == {"Hot Hand", "Cold"}
+
+
+def test_picks_log_bluesky_posts_become_picks(tmp_path, monkeypatch):
+    from nflpred import picks_log as PL, news_sources as NS
+    monkeypatch.setattr(PL, "HIST", tmp_path)
+    items = [{"title": "KC -3 (2u)", "link": "https://bsky.app/profile/capper.bsky.social/post/1", "published": "2026-10-08T15:00+00:00",
+              "summary": "KC -3 (2u) vs DET, love it", "outlet": "bsky:capper.bsky.social"},
+             {"title": "nice weather", "link": "https://bsky.app/profile/capper.bsky.social/post/2", "published": "2026-10-08T15:00+00:00",
+              "summary": "nice weather today", "outlet": "bsky:capper.bsky.social"}]
+    monkeypatch.setattr(NS, "bluesky_items", lambda acc, per_account=20: (items, {"ok": 1}))
+    seen_text = []
+    def llm(text, key):
+        seen_text.append(text)
+        return [{"analyst": "@capper.bsky.social", "sport": "nfl", "away_team": "Detroit Lions", "home_team": "Kansas City Chiefs",
+                 "market": "spread", "pick": "Kansas City Chiefs", "line": -3}]
+    rep = PL.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: [], texter=lambda u: "",
+                  llm=llm, bluesky={"capper.bsky.social": {}})
+    row = json.loads((tmp_path / "picks_log.jsonl").read_text().splitlines()[0])
+    assert rep["picks"] == 1 and row["source"] == "bluesky" and row["analyst"] == "@capper.bsky.social"
+    assert "nice weather" not in seen_text[0] and "KC -3" in seen_text[0]
+    acc = PL.bluesky_pickers(tmp_path, get=lambda m, p: {"actors": [{"handle": "a.bsky.social", "description": "NFL picks, 5u max"},
+                                                                     {"handle": "b.bsky.social", "description": "dad, Bears fan"}]}
+                             if m.endswith("searchActors") else {"followersCount": 900}, now=datetime(2026, 10, 8, tzinfo=timezone.utc))
+    assert list(acc) == ["a.bsky.social"]

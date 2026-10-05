@@ -326,7 +326,7 @@ section[id]{scroll-margin-top:12px}
     <p>A bet is only worth making when <b>our chance</b> of winning it beats the chance the <b>price requires</b>; that gap is the <b>edge</b>. Separate paper-betting tracks test different ideas under locked rules. The original model rules are still shown, but they showed no edge in backtests. Nothing here is a recommendation until a track passes its test.</p>
     <div class="keyrow"><span><span class="st st-bet" id="betkey">PAPER BET</span> logged under a track's locked rules (a real bet only after the track is validated)</span> <span><span class="st st-watch">WATCH</span> passes the price test, waiting on timing or news</span> <span><span class="st st-no">NO</span> doesn't qualify; the main reason is shown</span></div>
     <a class="xlink" href="cfb/">College football board →</a>
-    <nav class="jump" id="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#mybets">My bets</a><a href="#betswrap">Paper bets</a><a href="#promos">Promo calculator</a><a href="#sec-season">Season so far</a><a href="#sec-notes">How to read</a></nav>
+    <nav class="jump" id="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#mybets">My bets</a><a href="#betswrap">Paper bets</a><a href="#pickers">Pickers</a><a href="#promos">Promo calculator</a><a href="#sec-season">Season so far</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
@@ -361,6 +361,13 @@ section[id]{scroll-margin-top:12px}
     <div class="track" id="g2rec"></div>
     <div class="track" id="tgrec"></div>
     <div id="tracks"></div>
+  </section>
+
+  <section id="pickers" hidden>
+    <div class="sechead"><h2>Published pickers</h2><span class="pill">Logged and scored · not bets</span></div>
+    <p class="edge" id="pickintro"></p>
+    <div class="strip" id="pickstrip"></div>
+    <div class="scroll"><table class="sumtbl" id="picktbl"></table></div>
   </section>
 
   <section id="promos">
@@ -1048,6 +1055,24 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
   const head=`<div class="srow sh"><span>Final</span><span>Moneyline</span><span>Spread</span><span>Total</span></div>`;
   document.getElementById('std').innerHTML=[...weeks.entries()].map(([wk,W],i)=>
     `<details class="wk"${i===0?' open':''}><summary><b>Week ${wk}</b><span>${W.rows.length} game${W.rows.length===1?'':'s'} · picks ${wl(W.ml)} · spread ${wl(W.ats)} · over/under ${wl(W.ou)}</span></summary>${head}${W.rows.join('')}</details>`).join('');
+})();
+
+// published pickers (picks_score.py, picks_hot_rules.json): graded at the closing line
+(function(){
+  const K=D.picks; if(!K||!K.picks_graded) return;
+  document.getElementById('pickers').hidden=false;
+  const t=K.hot_test||{}, o=K.overall||{}, wl=(w,l)=>`${w}–${l}`;
+  document.getElementById('pickintro').innerHTML=`Picks published by CBS, Yahoo, ESPN, PFT, betting sites and Bluesky accounts that post picks, read by AI with the time we first saw them, and graded at the <b>closing</b> line (the price a follower could still get). <b>Line value</b> = points the market moved toward the pick after it was posted. The pre-registered <b>hot-picker test</b> follows anyone who went 60%+ on 8+ picks over the previous 4 weeks; it needs 200 followed picks covering over 52.4% (p < 0.05) and beating everyone else before it means anything. Studies so far say streaks don't predict the next week. ${K.late_picks_dropped?`${K.late_picks_dropped} picks first seen after kickoff are not counted.`:''}`;
+  document.getElementById('pickstrip').innerHTML=[
+    [wl(o.w||0,o.l||0), `all graded picks vs the close · ${(o.units||0)>0?'+':''}${(o.units||0).toFixed(1)} units`],
+    [o.avg_line_value!=null?`${o.avg_line_value>0?'+':''}${o.avg_line_value}`:'—', 'avg. line value, pts'],
+    [t.followed?wl(t.w,t.l):'—', `hot-picker test: ${t.followed||0} / 200 followed picks${t.cover_rate!=null?` · ${Math.round(t.cover_rate*100)}% (everyone else ${t.others_rate!=null?Math.round(t.others_rate*100)+'%':'—'})`:''}`],
+    [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot now: ${K.hot_now.map(h=>`${esc(h.picker)} (${h.sport.toUpperCase()} ${h.record})`).join(', ')}`:'hot pickers now (none yet: needs 8+ graded picks in 4 weeks)'],
+  ].map(([b,x])=>`<div class="stat"><b class="num">${esc(String(b))}</b><span>${x}</span></div>`).join('');
+  const R=(K.pickers||[]).filter(x=>x.graded>=3).slice(0,15);
+  document.getElementById('picktbl').innerHTML = R.length ? `<thead><tr><th style="text-align:left">Picker</th><th style="text-align:left">Outlet</th><th>Graded</th><th>W–L vs close</th><th>Units</th><th title="Points the market moved toward the pick after it was posted">Line value</th></tr></thead><tbody>`+
+    R.map(x=>`<tr><td style="text-align:left"><b>${esc(x.picker)}</b></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:/,'Bluesky'))}</td><td>${x.graded}</td><td>${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}</td><td class="${x.units>=0?'win':'loss'}">${x.units>0?'+':''}${x.units.toFixed(2)}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`).join('')+'</tbody>'
+    : '<tbody><tr><td style="text-align:left;font-family:var(--body)">Pickers with 3+ graded picks appear here.</td></tr></tbody>';
 })();
 
 // vs Vegas

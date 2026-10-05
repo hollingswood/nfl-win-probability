@@ -17,7 +17,7 @@ import os
 import re
 import sys
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from . import news_llm as N
@@ -32,7 +32,17 @@ FEEDS = {
     "espn_nfl": "https://www.espn.com/espn/rss/nfl/news",
     "espn_cfb": "https://www.espn.com/espn/rss/ncf/news",
     "pft": "https://www.nbcsports.com/profootballtalk.rss",
+    # betting sites (added 2026-10-05; reachability is recorded in history/picks_probe.json each run).
+    # Not read: Action Network (robots.txt disallows automated access), Reddit (API needs a login, blocks cloud servers)
+    "vsin": "https://vsin.com/feed/",
+    "pickswise": "https://www.pickswise.com/feed/",
+    "covers_nfl": "https://www.covers.com/rss/nfl",
+    "oddsshark": "https://www.oddsshark.com/rss.xml",
 }
+BLOCKED = ("actionnetwork.com", "reddit.com")
+BET_POST = re.compile(r"([+-]\d{1,2}(\.5)?\b|\bML\b|\bmoneyline\b|\b[ou]\s?\d{2}(\.5)?\b|\bover\b|\bunder\b|\b\d(\.\d)?u\b|\bunits?\b|\bATS\b)", re.I)
+PICKER_BIO = re.compile(r"(pick|capper|handicap|betting|bettor|units|ATS|sharp|wager)", re.I)
+PICKER_QUERIES = ["NFL picks", "college football picks", "CFB picks", "sports picks", "handicapper", "sports betting picks", "capper"]
 PICKY = re.compile(r"\b(picks?|best bets?|predictions?|against the spread|ATS|locks?|upset picks|expert)\b", re.I)
 INSTR = """Below is the text of a sports article. Extract every EXPLICIT pick the author or a named analyst makes on an NFL or
 college football game: a side against the spread, a moneyline winner pick, or an over/under. Only picks stated in the text;
@@ -68,8 +78,41 @@ def call_claude(text: str, api_key: str, timeout: float = 90) -> list[dict]:
     return [p for p in picks if isinstance(p, dict) and p.get("market") in ("spread", "moneyline", "total") and p.get("pick")]
 
 
+def bluesky_pickers(hist: Path = HIST, get=None, now: datetime | None = None, max_age_days: int = 7, limit: int = 80) -> dict:
+    """Bluesky accounts that post betting picks (bio mentions picks / capper / betting; >= 300 followers), refreshed
+    weekly into history/bluesky_pickers.json (reviewable; delete a handle there to drop it)."""
+    from . import news_sources as NS
+    get = get or NS._get
+    now = now or datetime.now(timezone.utc)
+    path = hist / "bluesky_pickers.json"
+    cur = json.loads(path.read_text()) if path.exists() else {}
+    if cur.get("_refreshed") and now - datetime.fromisoformat(cur["_refreshed"]) < timedelta(days=max_age_days):
+        return {k: v for k, v in cur.items() if not k.startswith("_")}
+    acc = {}
+    for q in PICKER_QUERIES:
+        try:
+            res = get("app.bsky.actor.searchActors", {"q": q, "limit": 50}).get("actors", [])
+        except Exception:
+            continue
+        for a in res:
+            bio = f"{a.get('displayName') or ''} {a.get('description') or ''}"
+            if PICKER_BIO.search(bio) and a.get("handle") not in acc:
+                acc[a["handle"]] = {"name": a.get("displayName"), "how": q}
+    for h in list(acc):
+        try:
+            acc[h]["followers"] = get("app.bsky.actor.getProfile", {"actor": h}).get("followersCount", 0)
+        except Exception:
+            acc[h]["followers"] = 0
+        if acc[h]["followers"] < 300:
+            del acc[h]
+    acc = dict(sorted(acc.items(), key=lambda kv: -kv[1]["followers"])[:limit])
+    hist.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"_refreshed": now.isoformat(timespec="minutes"), **acc}, indent=1))
+    return acc
+
+
 def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetch_feed, texter=_text, llm=call_claude,
-         max_articles: int = 12) -> dict:
+         max_articles: int = 12, bluesky=None) -> dict:
     now = now or datetime.now(timezone.utc)
     api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     rep = {"feeds": {}, "articles": 0, "picks": 0}
@@ -87,7 +130,8 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             rep["feeds"][name] = f"failed: {str(e)[:60]}"; continue
         for it in items:
             k = hashlib.sha1((it.get("link") or it.get("title", "")).encode()).hexdigest()[:16]
-            if k in seen or k in {c["key"] for c in cands} or not PICKY.search(it.get("title", "")) or "news.google.com" in (it.get("link") or ""):
+            if k in seen or k in {c["key"] for c in cands} or not PICKY.search(it.get("title", "")) or "news.google.com" in (it.get("link") or "") \
+                    or any(b in (it.get("link") or "") for b in BLOCKED):
                 continue
             cands.append(dict(it, source=name, key=k))
     rows = []
@@ -101,15 +145,54 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         for p in picks:
             rows.append({"seen_at": now.isoformat(timespec="minutes"), "published": it.get("published"), "source": it["source"],
                          "title": it.get("title"), "link": it.get("link"), **p})
+    # Bluesky accounts that post picks: recent posts that look like a bet, read in batches (analyst = @handle)
+    if bluesky is None and texter is not _text:
+        bluesky = False
+    if bluesky is not False:
+        try:
+            from . import news_sources as NS
+            accts = bluesky_pickers() if bluesky is None else bluesky
+            items, brep = NS.bluesky_items({h: {} for h in accts}, per_account=20)
+            rep["feeds"]["bluesky"] = brep
+            cutoff = (now - timedelta(days=2)).isoformat()
+            posts = []
+            for it in items:
+                k = hashlib.sha1(it["link"].encode()).hexdigest()[:16]
+                if k in seen or (it.get("published") or "") < cutoff or not BET_POST.search(it.get("summary", "")):
+                    continue
+                seen.add(k); posts.append(it)
+            for i in range(0, min(len(posts), 120), 30):
+                batch = posts[i:i + 30]
+                text = "Bluesky posts. Each post's author is the @handle in brackets; use it as the analyst and 'Bluesky' as outlet.\n\n" + \
+                    "\n\n".join(f"[@{it['outlet'].split(':', 1)[1]}] ({it.get('published')}) {it['summary']}" for it in batch)
+                try:
+                    for p in llm(text, api_key):
+                        h = str(p.get("analyst") or "").lstrip("@")
+                        src = next((it for it in batch if it["outlet"].endswith(":" + h)), None)
+                        rows.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published") if src else None,
+                                     "source": "bluesky", "title": (src or {}).get("title"), "link": (src or {}).get("link"),
+                                     **p, "analyst": "@" + h if h else None, "outlet": f"bsky:{h}" if h else "Bluesky"})
+                except Exception as e:
+                    rep.setdefault("errors", []).append(str(e)[:100])
+        except Exception as e:
+            rep["feeds"]["bluesky"] = f"failed: {str(e)[:80]}"
     if rows:
         with (HIST / "picks_log.jsonl").open("a") as f:
             for r in rows:
                 f.write(json.dumps(r) + "\n")
     seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
     rep["picks"] = len(rows)
+    if texter is _text:   # live runs: which feeds Actions can reach, readable without log access
+        (HIST / "picks_probe.json").write_text(json.dumps({"checked_at": now.isoformat(timespec="minutes"), "feeds": rep["feeds"]}, indent=1))
     return rep
 
 
 if __name__ == "__main__":
     print(json.dumps(scan(), indent=1))
+    try:   # score logged picks + hot-pickers test (picks_hot_rules.json) whenever new results may be in
+        from . import picks_score
+        res = picks_score.run()
+        print("picks scored:", res["picks_graded"], "hot test:", json.dumps(res["hot_test"]))
+    except Exception as e:
+        print("picks scoring failed:", e)
     sys.exit(0)

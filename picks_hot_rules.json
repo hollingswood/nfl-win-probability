@@ -1,0 +1,23 @@
+{
+  "test": "hot_pickers",
+  "version": 1,
+  "frozen_on": "2026-10-05",
+  "note": "Pre-registered before any scoring was run (src/nflpred/picks_score.py). Question: do published pickers who are on a hot streak keep winning? Prior evidence says no: bettors bet on streaks and it doesn't pay (NFL hot-hand betting studies); tipster crowds can look profitable at the prices they post but those prices are usually gone by the time a follower sees the pick. So every pick is graded at the CLOSING line (what a follower could still get if the line moved), plus 'line value' = how many points the market moved toward the pick between the picker's stated number and the close (only when the stated number is within 7 points of the close, to drop sign mistakes in extraction). Logging and scoring only; nothing bets. Do not edit to fit results; bump the version.",
+  "grading": {
+    "spread": "cover vs the closing spread (NFL: nflverse spread_line; college: DraftKings close from CFBD, else Bovada); push = no result; 1 unit at -110",
+    "total": "over/under vs the closing total; 1 unit at -110",
+    "moneyline": "straight-up winner; units at the closing moneyline when known (nflverse / CFBD), else not counted for units",
+    "only_before_kickoff": true
+  },
+  "hot": {
+    "definition": "a picker (named analyst or account) whose picks graded in the 4 previous weeks of that sport went >= 60% with >= 8 graded picks",
+    "follow": "every pick that picker makes in the following week"
+  },
+  "validation": {
+    "min_followed_picks": 200,
+    "cover_rate_vs_close_above": 0.5238,
+    "one_sided_p_below": 0.05,
+    "and_beats_all_other_picks": true
+  },
+  "sources": "picks_rules.json outlets (CBS, Yahoo, ESPN, PFT) + more betting-site RSS feeds + Bluesky accounts that post picks (discovered weekly). Action Network is not read: its robots.txt disallows automated access. Reddit is not read: its API needs a login and blocks cloud servers."
+}
