@@ -323,7 +323,7 @@ def test_bluesky_items_discover_and_source_accuracy(tmp_path):
             raise OSError("not found")
         if method == "app.bsky.actor.searchActors":
             if params["q"] == "Chiefs reporter":
-                return {"actors": [{"handle": "kcbeat.bsky.social", "displayName": "KC Beat", "description": "I cover the Chiefs for the Star"},
+                return {"actors": [{"handle": "kcbeat.bsky.social", "displayName": "KC Beat", "description": "I cover the Chiefs (NFL) for the Star"},
                                    {"handle": "tiny.bsky.social", "description": "Chiefs beat writer"},
                                    {"handle": "fan.bsky.social", "description": "Chiefs fan, dad"}]}
             return {"actors": []}
@@ -359,7 +359,7 @@ def test_classify_errors_once(tmp_path):
     (tmp_path / "news_audit.json").write_text(json.dumps({"rows": [row, {"verdict": "correct", "evidence": []}]}))
     calls = []
     errs = NS.classify_errors(tmp_path, "k", llm=lambda p: calls.append(p) or {"0": "source_wrong"})
-    assert list(errs.values())[0]["why"] == "source_wrong" and "Tyson Bagent" in calls[0]
+    assert errs[NS.error_id(row["evidence"][0])]["why"] == "source_wrong" and "Tyson Bagent" in calls[0]
     NS.classify_errors(tmp_path, "k", llm=lambda p: calls.append(p) or {})
     assert len(calls) == 1                                                   # cached
     out = NS.refresh(tmp_path, None)

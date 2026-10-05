@@ -53,6 +53,7 @@ SEED = {"jordanraanan.bsky.social": "NYG", "joebuscaglia.bsky.social": "BUF", "d
         "giana-jade.bsky.social": "BAL", "antwanstaley.bsky.social": "NYJ", "patriciatraina.bsky.social": "NYG",
         "wyche89.bsky.social": None, "sethwickersham.bsky.social": None, "nflnetwork.bsky.social": None,
         "rotopat.bsky.social": None, "thomasgower.bsky.social": "TEN"}
+FOOTBALL = re.compile(r"\b(NFL|football)\b", re.I)   # drops same-nickname baseball/NBA writers (SF Giants, etc.)
 REPORTER = re.compile(r"\b(reporter|beat|covers?|covering|writer|insider|correspondent|columnist|analyst|radio|host)\b", re.I)
 
 
@@ -95,7 +96,8 @@ def discover(history_dir: Path, get=_get, now: datetime | None = None, max_age_d
                 continue
             for a in res:
                 bio = (a.get("description") or "") + " " + (a.get("displayName") or "")
-                if nm.lower() in bio.lower() and REPORTER.search(bio) and a.get("handle") not in acc:
+                if (nm.lower() in bio.lower() and REPORTER.search(bio) and FOOTBALL.search(bio)
+                        and a.get("handle") not in acc):
                     acc[a["handle"]] = {"team": team, "name": a.get("displayName"), "how": "search"}
     # follower counts for search hits (searchActors does not return them); keep the biggest
     for h, v in list(acc.items()):
@@ -178,7 +180,7 @@ def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "cla
             continue
         for ev in r.get("evidence", []):
             k = error_id(ev)
-            if k not in errs:
+            if k not in errs and (k, ev.get("title")) not in {(t[0], t[1].get("title")) for t in todo}:
                 todo.append((k, ev, r))
     if not todo:
         return errs
@@ -190,7 +192,11 @@ def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "cla
         out = call(CLASSIFY + "\n\nCASES:\n" + body)
     except Exception as e:
         print("news error classification failed:", e)
+        errs["_status"] = f"failed {datetime.now(timezone.utc).isoformat(timespec='minutes')}: {str(e)[:200]}"
+        e_p.write_text(json.dumps(errs, indent=1))
         return errs
+    out = {re.sub(r"\D", "", str(k)): v for k, v in (out or {}).items()}   # "[3]" / "case 3" -> "3"
+    errs["_status"] = f"ok {datetime.now(timezone.utc).isoformat(timespec='minutes')}: {len(out)} answers for {min(len(todo), 40)} cases"
     for i, (k, ev, r) in enumerate(todo[:40]):
         v = out.get(str(i))
         if v in ("misread", "stale_or_hedged", "source_wrong"):
