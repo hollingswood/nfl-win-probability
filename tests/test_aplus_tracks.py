@@ -254,4 +254,7 @@ def test_dashboard_lists_aplus_tracks(tmp_path):
     for s in ("aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "A+ moneyline", "A+ spread", "A+ totals",
               "+2.3% CLV · 163 bets 2023–25", "+2.2% CLV · 49 bets 2023–25 · borderline", "+1.5% CLV · 243 bets 2023–25"):
         assert s in tpl
-    assert re.search(r"order=\[[^\]]*'aplus_ml','aplus_sp','aplus_tot'", tpl)
+    # tracks are listed in a dynamic ranking (live score, then research evidence), not a fixed order
+    for k in ("aplus_ml", "aplus_sp", "aplus_tot"):
+        assert re.search(rf"\n  {k}:{{name:", tpl) and re.search(rf"\n  {k}:{{es:[0-9.]+, label:", tpl)
+    assert "Object.keys(TRACKS)" in tpl and "liveScore" in tpl
