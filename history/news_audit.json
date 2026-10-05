@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-10-04T22:57+00:00",
- "signals": 868,
- "units": 298,
+ "generated_at": "2026-10-05T00:07+00:00",
+ "signals": 892,
+ "units": 303,
  "skipped": {
   "team_unclear": 8,
-  "no_game": 6,
-  "not_game_week": 23
+  "no_game": 9,
+  "not_game_week": 30
  },
  "roster_check": {
-  "match": 826,
+  "match": 850,
   "team_mismatch": 32,
   "not_found": 10
  },
- "graded": 47,
- "pending": 128,
+ "graded": 62,
+ "pending": 116,
  "overall": {
-  "n": 47,
-  "correct": 40,
-  "pct": 85.1
+  "n": 62,
+  "correct": 53,
+  "pct": 85.5
  },
  "by_signal": {
   "benched": {
@@ -26,55 +26,94 @@
    "pct": 0.0
   },
   "expected_to_play": {
-   "n": 24,
-   "correct": 21,
-   "pct": 87.5
+   "n": 33,
+   "correct": 29,
+   "pct": 87.9
   },
   "out": {
-   "n": 4,
+   "n": 5,
    "correct": 4,
-   "pct": 100.0
+   "pct": 80.0
   },
   "returning": {
-   "n": 11,
-   "correct": 10,
-   "pct": 90.9
+   "n": 15,
+   "correct": 14,
+   "pct": 93.3
   },
   "will_start": {
-   "n": 7,
-   "correct": 5,
-   "pct": 71.4
+   "n": 8,
+   "correct": 6,
+   "pct": 75.0
   }
  },
  "qb": {
-  "n": 15,
-  "correct": 8,
-  "pct": 53.3,
-  "pending": 15
+  "n": 17,
+  "correct": 9,
+  "pct": 52.9,
+  "pending": 13
  },
  "rule_population": {
-  "n": 12,
-  "correct": 7,
-  "pct": 58.3,
-  "pending": 14
+  "n": 14,
+  "correct": 8,
+  "pct": 57.1,
+  "pending": 12
  },
  "official_report_agreement": {
-  "n": 42,
-  "agree": 40,
-  "pct": 95.2
+  "n": 57,
+  "agree": 54,
+  "pct": 94.7
  },
  "lead_vs_report_hours": {
-  "n": 175,
+  "n": 178,
   "median": 4.6,
-  "share_before_report": 56.0
+  "share_before_report": 56.2
  },
  "qb_line_move_6h": {
-  "n": 26,
-  "avg_abs_after": 0.54,
-  "avg_abs_before": 0.03,
-  "avg_after_negative_signals": -0.1
+  "n": 30,
+  "avg_abs_after": 0.82,
+  "avg_abs_before": 0.02,
+  "avg_after_negative_signals": 0.5
  },
  "rows": [
+  {
+   "seen_at": "2026-10-04T23:23+00:00",
+   "player": "D.J. Reed",
+   "team": "DET",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_04_DET_CAR",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -51.4,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T23:23+00:00",
+   "player": "Joe Alt",
+   "team": "LAC",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 116.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
+  {
+   "seen_at": "2026-10-04T23:23+00:00",
+   "player": "Riley Moss",
+   "team": "DEN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 116.6,
+   "verdict": "pending",
+   "in_rule_population": false
+  },
   {
    "seen_at": "2026-10-04T22:23+00:00",
    "player": "Jalen Nailor",
@@ -216,7 +255,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -229,7 +271,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -270,7 +315,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -283,7 +331,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -47.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -389,7 +440,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 74.4,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true
   },
@@ -416,7 +470,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 122.6,
-   "line_move": null,
+   "line_move": {
+    "after": 3.5,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true
   },
@@ -430,7 +487,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 122.6,
-   "line_move": null,
+   "line_move": {
+    "after": 3.5,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true
   },
@@ -484,7 +544,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 122.6,
-   "line_move": null,
+   "line_move": {
+    "after": 3.5,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true
   },
@@ -576,7 +639,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": -44.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -699,7 +765,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": -43.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -744,7 +813,10 @@
     "after": -0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": true
   },
   {
@@ -876,7 +948,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -27.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -889,7 +964,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false
   },
   {
@@ -934,7 +1012,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -25.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false
   },
   {
@@ -963,7 +1044,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -25.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1040,7 +1124,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -25.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1053,7 +1140,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -25.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1237,7 +1327,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -19.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1250,7 +1343,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -19.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1383,7 +1479,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -3.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1444,7 +1543,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -2.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1457,7 +1559,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -1.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1723,7 +1828,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -0.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1752,7 +1860,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -0.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -1986,7 +2097,10 @@
     "after": 0.0,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true
   },
   {
@@ -2184,7 +2298,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 20.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -2277,7 +2394,10 @@
    "roster": "team_mismatch",
    "certainty": 0.8,
    "lead_vs_report_h": 22.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -2594,7 +2714,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 25.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -2607,7 +2730,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 25.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false
   },
   {
@@ -2620,7 +2746,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 25.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -2633,7 +2762,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 25.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false
   },
   {
@@ -2693,12 +2825,12 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "12 of 25 audited starting-QB signals so far",
-   "precision 58% (needs >= 95%)"
+   "14 of 25 audited starting-QB signals so far",
+   "precision 57% (needs >= 95%)"
   ],
-  "n": 12,
-  "correct": 7,
-  "precision": 0.5833,
+  "n": 14,
+  "correct": 8,
+  "precision": 0.5714,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
