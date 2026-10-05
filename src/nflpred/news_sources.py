@@ -169,7 +169,7 @@ item text alone:
 Return ONLY a JSON object {"<case id>": "misread" | "stale_or_hedged" | "source_wrong", ...}."""
 
 
-def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "claude-sonnet-5") -> dict:
+def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "claude-haiku-4-5") -> dict:
     """Classify each signal behind a 'wrong' audit unit once; cached in history/news_errors.json."""
     a_p, e_p = history_dir / "news_audit.json", history_dir / "news_errors.json"
     if not a_p.exists():
@@ -216,7 +216,8 @@ def _claude(prompt: str, api_key: str, model: str) -> str:
                                  headers={"x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=90) as r:
         resp = json.load(r)
-    return "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
+    text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
+    return text or f"(no text; stop_reason={resp.get('stop_reason')}, blocks={[b.get('type') for b in resp.get('content', [])]})"
 
 
 def source_table(audit: dict, errors: dict) -> dict:
