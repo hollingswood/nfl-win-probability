@@ -259,6 +259,7 @@ svg text{fill:var(--muted);font:11px var(--mono)}
 .notes p{margin:0}
 footer{font-size:12px;color:var(--muted);font-family:var(--mono)}
 /* section jump links */
+.rkn{font:600 13px var(--mono);color:var(--muted);margin-right:4px}
 .vtag{font:600 10px var(--mono);border:1px solid var(--line);border-radius:2px;padding:0 4px;color:var(--muted);margin-left:4px}
 .wktabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
 .wktabs:empty{display:none}
@@ -1076,71 +1077,71 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 // per-track facts for the paper-bets summary: what it bets, when it can bet, and the research behind it
 // (evidence = one-shot holdout results from the rules files' notes and the README; `top` marks the strongest)
 const TRACK_INFO = {
-  ml_v2:{label:'Moneyline v2', what:"Moneyline where your book beats the sharp books' fair price and the model agrees",
+  ml_v2:{es:0.6, label:'Moneyline v2', what:"Moneyline where your book beats the sharp books' fair price and the model agrees",
     when:'Hourly, once the injury report is out and both QBs are confirmed',
     ev:'+1.2% CLV · 145 bets 2023–25 · not significant',
     tip:'Rules set on 2020–22, tested once on 2023–25: 145 bets, +1.2% closing line value vs the nflverse close (p = 0.03, not significant after correcting for 7 ideas tested); +2.4% vs our own closing snapshot.'},
-  ml_v3:{label:'Moneyline v3', what:'Same as v2, fair price from Pinnacle + LowVig + BetOnline',
+  ml_v3:{es:0.5, label:'Moneyline v3', what:'Same as v2, fair price from Pinnacle + LowVig + BetOnline',
     when:'Hourly, once the injury report is out and both QBs are confirmed',
     ev:'v2 rules with a different fair price · no own holdout',
     tip:'Same rules and thresholds as v2 (not re-tuned); only the fair-price reference changes to the median no-vig price of Pinnacle, LowVig and BetOnline. Pinnacle was not clearly sharper on 2024–25.'},
-  ml_v4:{label:'Moneyline v4', what:'Moneyline priced worse than the sharp point spread implies', top:true,
+  ml_v4:{es:1.6, label:'Moneyline v4', what:'Moneyline priced worse than the sharp point spread implies', top:true,
     ev:'+1.6% CLV · 163 bets 2023–25',
     tip:'Rules set on 2020–22, tested once on 2023–25: 163 bets, +1.6% ± 0.7 closing line value vs the sharp closing moneyline (+2.0% vs the Pinnacle close); ROI +11% ± 13.'},
-  props_un:{label:'Tuesday star unders', what:"Under on every rush yds / receptions / rec yds prop already posted Tuesday morning (best number at your books)",
+  props_un:{es:1.0, label:'Tuesday star unders', what:"Under on every rush yds / receptions / rec yds prop already posted Tuesday morning (best number at your books)",
     when:'Tue 7:10am AZ', ev:'+4% to +14% ROI · 2024–25 · found after the fact',
     tip:'Found in the 2024-25 holdout (output/research/props_full.md), not pre-registered: players with props posted by Tuesday open went under 54-60% of the time; blind unders returned rush yds +13.8% ± 5.1, receptions +6.0% ± 2.9, rec yds +4.2% ± 3.2 ROI. Graded on results (the close carries the same bias, so CLV is not the test). 2026 is its first clean test: 150 bets, ROI > 0 at p < 0.05.'},
-  props_rec:{label:'Receptions props', what:"Receptions over/under priced 2%+ better than other books' median", top:true,
+  props_rec:{es:2.7, label:'Receptions props', what:"Receptions over/under priced 2%+ better than other books' median", top:true,
     ev:'+2.7% CLV · 278 bets 2024–25',
     tip:'Rule set on 2023, tested once on 2024–25: 278 bets, +2.7% ± 0.4 closing line value; realized ROI −6% ± 6.5 (44% hit rate), about 6.5 bets a week.'},
-  totals:{label:'Wind unders', what:'Unders in outdoor games with a 15+ mph wind forecast',
+  totals:{es:0.2, label:'Wind unders', what:'Unders in outdoor games with a 15+ mph wind forecast',
     when:'Any run within 6 days of kickoff, once the forecast qualifies',
     ev:'Untested on real forecasts (study used recorded wind)',
     tip:'Tuesday unders with 15+ mph wind made +7% CLV on 2023–25, but that used the wind recorded at the game (not knowable in advance); a Friday version made +1.2%. This track uses the real kickoff forecast, so 2026 is the honest test.'},
-  totals_eu:{label:'Early unders', what:"Unders at or better than the sharp books' fair total, 4–7 days out",
+  totals_eu:{es:1.3, label:'Early unders', what:"Unders at or better than the sharp books' fair total, 4–7 days out",
     ev:'+2.6% CLV · 122 bets 2023–25 · found after the fact',
     tip:'Found after the totals-grade holdout, not pre-registered: +2.3% CLV on 118 bets 2020–22 and +2.6% ± 0.9 on 122 bets 2023–25. 2026 is its first clean test.'},
-  night:{label:'Night games', what:'Spread on the more western team in 7pm+ ET games across time zones',
+  night:{es:0.8, label:'Night games', what:'Spread on the more western team in 7pm+ ET games across time zones',
     ev:'56.5% covers · 113 games 2023–25',
     tip:'The more western team beat the closing spread by about 2 points (2003–22; 2023–25: +2.2 ± 1.05 points, 56.5% covers, 113 games). Judged on cover rate, not CLV, because lines do not move toward it.'},
-  aplus_ml:{label:'A+ moneyline', what:'Every moneyline offer the grade rates A+ (predicted CLV ≥ +2.5%), flat 1 unit',
+  aplus_ml:{es:2.3, label:'A+ moneyline', what:'Every moneyline offer the grade rates A+ (predicted CLV ≥ +2.5%), flat 1 unit',
     when:'Any run (full or hourly) when a game first grades A+, within 7 days of kickoff',
     ev:'+2.3% CLV · 163 bets 2023–25',
     tip:'Moneyline grade v2 A+ (output/research/grade_v2.md): model frozen on 2020–22, tested once on 2023–25: 163 bets (~54 a season), +2.3% ± 1.0 closing line value (p = 0.009), ROI +22% ± 15. One bet per game at the first A+ snapshot. 2026 is the clean test.'},
-  aplus_sp:{label:'A+ spread', what:'Every spread offer the original points grade rates A+, flat 1 unit',
+  aplus_sp:{es:1.1, label:'A+ spread', what:'Every spread offer the original points grade rates A+, flat 1 unit',
     when:'Any run (full or hourly) when a game first grades A+, within 7 days of kickoff',
     ev:'+2.2% CLV · 49 bets 2023–25 · borderline',
     tip:'Spread grade v1 A+ (output/research/grade_v2_spread.md): never fit to data; 2023–25: 49 bets (~16 a season), +2.2% ± 1.3 closing line value (p = 0.05, borderline); 2020–22 +3.0% ± 1.2. Prices −145 to +125. 2026 is the clean test.'},
-  aplus_tot:{label:'A+ totals', what:'Every over/under the totals grade rates A+ (predicted CLV ≥ 0%), flat 1 unit; mostly early-week unders',
+  aplus_tot:{es:1.5, label:'A+ totals', what:'Every over/under the totals grade rates A+ (predicted CLV ≥ 0%), flat 1 unit; mostly early-week unders',
     when:'Any run (full or hourly) when a game first grades A+, within 7 days of kickoff',
     ev:'+1.5% CLV · 243 bets 2023–25',
     tip:'Totals grade A+ (output/research/grade_granular.md Q2): model frozen on 2020–22, tested once on 2023–25: 243 bets (~81 a season), +1.5% ± 0.7 closing line value (p = 0.012), ROI +7.5% ± 6.1; about 95% were early-week unders. 2026 is the clean test.'},
-  pre:{label:'Preseason prior', what:'Weeks 2–8: the side preseason win totals favor when the market is 4+ points away from the preseason number, flat 1 unit',
+  pre:{es:2.0, label:'Preseason prior', what:'Weeks 2–8: the side preseason win totals favor when the market is 4+ points away from the preseason number, flat 1 unit',
     when:'Hourly, in the last 3 hours before kickoff',
     ev:'60.5% covers · 332 bets 2013–25 · judged on results',
     top:true,
     tip:'Screen S6 (Fodor, Patterson & Shank 2025): markets overreact to early-season results. 2013–25 at closing prices: 332 bets, 60.5% cover, ROI +16.5% ± 5.1% (p 0.0007), 11 of 13 seasons positive; 2024–25, after the paper, +7%. Same rule in weeks 9–18: 49% (placebo). Bets on teams that changed starting QB since week 1 did worse (56.5% vs 62.7%), shown as a label.'},
-  tue:{label:'Tuesday move', what:'At the Tuesday 7:10am AZ run: predicted Tuesday-to-close line move (model + preseason + Pinnacle gap), top 10%, bet the side the line should move toward',
+  tue:{es:0.9, label:'Tuesday move', what:'At the Tuesday 7:10am AZ run: predicted Tuesday-to-close line move (model + preseason + Pinnacle gap), top 10%, bet the side the line should move toward',
     when:'Tuesday 7:10am AZ run',
     ev:'+0.6 pts CLV · 62 bets 2023–25',
     tip:'Screen S3, Tuesday-only information (model margin without the Friday injury report; games with a starting-QB change skipped): 62 bets, line moved our way by +0.62 pts on average (p 0.0003; 57% our way, 23% against), 58% covers, ROI +11% ± 12%. Judged on closing line value in points.'},
-  exch:{label:'Exchange value', what:'Kalshi, Robinhood, Polymarket US or ProphetX price that beats Pinnacle fair by 2%+ after fees, flat 1 unit',
+  exch:{es:0.3, label:'Exchange value', what:'Kalshi, Robinhood, Polymarket US or ProphetX price that beats Pinnacle fair by 2%+ after fees, flat 1 unit',
     when:'Any hourly check, within 7 days of kickoff',
     ev:'New 2026 test · no history',
     tip:'Pre-registered 2026-10-02 (exchange_value_rules.json). After fees, Kalshi and Robinhood cost about as much as a −110 sportsbook (4.5–5% for both sides) and rarely beat Pinnacle; ProphetX (~1.5–2%) and Polymarket US (~3.6%) more often show +1% or better, though quotes have no size and may be thin. Graded on closing line value vs Pinnacle.'},
-  fut:{label:'Futures line shopping', what:'Super Bowl winner at an Arizona book priced 8%+ above the median fair price across all books (vig removed), half a unit',
+  fut:{es:0.2, label:'Futures line shopping', what:'Super Bowl winner at an Arizona book priced 8%+ above the median fair price across all books (vig removed), half a unit',
     when:'Each futures snapshot (every 6 h and after QB news)',
     ev:'New 2026 test · weak fair price (no sharp book in the futures feed)',
     tip:'Futures carry 20-30% vig, so value only appears when one book is far longer than the rest. Graded after the Super Bowl; CLV vs the consensus before the playoffs.'},
-  kmk:{label:'Kalshi resting orders', what:'Simulated maker bids on Kalshi game winners (NFL and college) at Pinnacle fair minus 3¢; counted only when a trade prints below the bid. Paper only: Kalshi is legally contested in Arizona',
+  kmk:{es:0.3, label:'Kalshi resting orders', what:'Simulated maker bids on Kalshi game winners (NFL and college) at Pinnacle fair minus 3¢; counted only when a trade prints below the bid. Paper only: Kalshi is legally contested in Arizona',
     when:'Every hourly check; each bid lives about an hour',
     ev:'New 2026 test · no history',
     tip:'Research rank 2 (reports/NFL and college betting edges.md): posting orders costs a maker about 0.9% of stake vs 3.5% for a taker at 50¢, and exchanges do not limit winners. The risk is adverse selection (getting filled when the price is moving against you). Graded on closing line value vs Pinnacle (Shin) and results; 150 fills needed.'},
-  spread:{label:'Spread v1', what:"Original model's spread picks",
+  spread:{es:0, label:'Spread v1', what:"Original model's spread picks",
     when:'Scheduled full runs, once the injury report is out',
     ev:'No edge on real 2020–25 early-week lines',
     tip:'The original model rules. On real early-week lines 2020–25 they lost value against closing prices.'},
-  ml_v1:{label:'Moneyline v1', what:"Original model's moneyline picks",
+  ml_v1:{es:0, label:'Moneyline v1', what:"Original model's moneyline picks",
     when:'Scheduled full runs, once the injury report is out',
     ev:'No edge on real 2020–25 early-week lines',
     tip:'The original model rules. On real early-week lines 2020–25 they lost money at closing prices.'},
@@ -1192,8 +1193,16 @@ function trackWindow(key){
 })();
 
 (function(){
-  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','props_un','aplus_ml','aplus_sp','aplus_tot','exch','kmk','fut','totals','totals_eu','night','spread','ml_v1'];
-  const tracks=order.map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
+  // ranking (recomputed on every build): tracks with graded bets first, by a live score = closing-line value and
+  // profit, each shrunk toward zero for small samples; tracks with nothing graded yet follow, by their research evidence
+  const liveScore=(B)=>{ const r=B.record||{}, n=r.graded||0; if(!n) return null;
+    const roi=r.roi ?? (r.profit_units||0)/n, t=String(r.test||'');
+    if(/cover|roi/.test(t)) return roi*n/(n+100);                         // judged on results
+    const clv=/points/.test(t) ? (r.avg_clv||0)*0.03 : (r.avg_clv||0);     // CLV in points: ~3% per point
+    return clv*n/(n+20) + roi*n/(n+200); };
+  const tracks=Object.keys(TRACKS).map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error)
+    .map(t=>[...t, liveScore(t[1])])
+    .sort((a,b)=> (a[3]==null)-(b[3]==null) || (a[3]!=null ? b[3]-a[3] : (TRACK_INFO[b[2]].es??0)-(TRACK_INFO[a[2]].es??0)));
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
@@ -1201,10 +1210,12 @@ function trackWindow(key){
   document.getElementById('betintro').innerHTML = `${anyLive?'Tracks marked live are validated; the rest are':'Everything here is'} paper only: logged and scored, not recommended. Each track bets under its own locked rules at the best price when it decides. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
   // summary: one row per track
   const pctS=x=>`${x>0?'+':''}${(x*100).toFixed(1)}%`;
-  document.getElementById('betsum').innerHTML = `<thead><tr><th>Track</th><th>What it bets</th><th>Next betting window</th><th>Open</th><th title="Graded bets / bets needed before the track is judged">Graded</th><th>W–L</th><th title="Average closing line value of graded bets">Avg CLV</th><th>Status</th><th>Evidence (holdout)</th></tr></thead><tbody>`+
-    tracks.map(([,B,key])=>{ const I=TRACK_INFO[key], r=B.record||{}, live=B.mode==='live', g=r.graded||0;
+  const rankTip='Tracks with graded bets come first, ranked by a live score: closing-line value plus profit, each shrunk toward zero while the sample is small (a few lucky wins cannot jump a track to the top). Tracks with nothing graded yet follow, ranked by the strength of their research evidence. The order updates every run.';
+  document.getElementById('betsum').innerHTML = `<thead><tr><th title="${esc(rankTip)}">#</th><th>Track</th><th>What it bets</th><th>Next betting window</th><th>Open</th><th title="Graded bets / bets needed before the track is judged">Graded</th><th>W–L</th><th title="Average closing line value of graded bets">Avg CLV</th><th>Status</th><th>Evidence (holdout)</th></tr></thead><tbody>`+
+    tracks.map(([,B,key,sc],i)=>{ const I=TRACK_INFO[key], r=B.record||{}, live=B.mode==='live', g=r.graded||0;
       const td=(l,html,cls='',tip='')=>`<td data-l="${l}"${cls?` class="${cls}"`:''}${tip?` title="${esc(tip)}"`:''}><div>${html}</div></td>`;
-      return `<tr>${td('Track',`<b>${I.label}</b>`)}${td('What it bets',esc(I.what),'wr')}${td('Next window',trackWindow(key),'wr nw')}`+
+      const rk = sc!=null ? `<b>${i+1}</b><small> live ${sc>=0?'+':'−'}${Math.abs(sc*100).toFixed(1)}</small>` : `<b>${i+1}</b><small> evidence</small>`;
+      return `<tr>${td('#',rk,'', sc!=null?`Live score ${(sc*100).toFixed(2)}: ranked on ${g} graded bet${g===1?'':'s'}`:`Nothing graded yet: ranked by research evidence (expected edge about ${I.es??0}% after discounting weak or after-the-fact findings)`)}${td('Track',`<b>${I.label}</b>`)}${td('What it bets',esc(I.what),'wr')}${td('Next window',trackWindow(key),'wr nw')}`+
         `${td('Open',(B.open||[]).length)}${td('Graded',`${g}<small> / ${r.min_bets??'—'}</small>`)}${td('W–L',g?`${r.wins}–${r.losses}`:'—')}${td('Avg CLV',g&&r.avg_clv!=null?pctS(r.avg_clv):'—')}`+
         `${td('Status',`<span class="pill ${live?'live':''}" title="${live?'Validated: bets are recommendations':'Shadow: paper bets only, not recommendations'}">${live?'live':'shadow'}</span>`)}`+
         `${td('Evidence',esc(I.ev),`wr ev${I.top?' top':''}`,I.tip)}</tr>`; }).join('')+'</tbody>';
@@ -1226,7 +1237,7 @@ function trackWindow(key){
   const betLabel=(b,spread)=>b.track==='exchange_value'?`<b>${esc(b.team)}${b.market==='h2h'?' ML':''}</b> · ${esc(b.book)} ${b.quoted_cents}¢`:b.player?`<b>${esc(b.player)} ${cap1(b.side)} ${b.point}</b> ${esc(b.stat_label||'receptions')} · ${esc(b.opponent)}`:(b.side==='under'||b.side==='over')?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   // detail blocks only for tracks with at least one open or graded bet
   const active=tracks.filter(([,B])=>(B.open||[]).length || (B.record&&B.record.graded) || (B.recent_graded||[]).length);
-  document.getElementById('tracks').innerHTML = active.length ? `<span class="subh">Track details</span>`+active.map(([name,B,key])=>{
+  document.getElementById('tracks').innerHTML = active.length ? `<span class="subh">Track details</span>`+active.map(([name,B,key,sc])=>{ const rkN=tracks.findIndex(t=>t[2]===key)+1;
     const mlT=key.startsWith('ml_')||key==='aplus_ml', tgT=key==='totals'||key==='totals_eu'||key==='aplus_tot';
     const spread=key==='spread'||key==='night'||key==='aplus_sp'||key==='pre'||key==='tue', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(chk.enough_bets,'graded bets')],
@@ -1249,7 +1260,7 @@ function trackWindow(key){
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by moneyline grade appears here once graded paper bets carry one.':tgT?'Performance by totals grade appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
     const PV=B.prior_versions||[];
     const prior = PV.length ? `<p class="g2note">${PV.map(x=>`<b>Earlier rules v${x.version}:</b> ${x.graded} graded (${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}, ${x.profit_units>0?'+':x.profit_units<0?'−':''}${Math.abs(x.profit_units).toFixed(2)} units${x.avg_clv!=null?`, avg CLV ${sgn(x.avg_clv)}`:''})${x.open?`, ${x.open} still open`:''}`).join('; ')}. Shown below marked v${PV.map(x=>x.version).join('/')}, but not counted toward v${B.rules_version}'s record: the rules changed, so v${B.rules_version} starts its own count.</p>` : '';
-    return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div>${prior}<div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
+    return `<div class="track"><h3><span class="rkn" title="Rank in the Paper bets table">#${rkN}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div>${prior}<div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
   }).join('') : '';
 })();
 
