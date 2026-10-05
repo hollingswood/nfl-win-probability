@@ -20,8 +20,8 @@ from nflpred.model import clean_json  # noqa: E402
 
 NEWS_DAYS = 7
 NEWS_PER_GAME = 3
-NEWS_FIELDS = ("seen_at", "published", "source", "link", "title", "player", "team", "position",
-               "signal", "is_starting_qb_news", "game_week_relevant", "certainty")
+NEWS_FIELDS = ("seen_at", "published", "source", "outlet", "link", "title", "player", "team", "position",
+               "signal", "is_starting_qb_news", "game_week_relevant", "certainty", "source_weight")
 
 
 def news_team(s: dict) -> str | None:
@@ -57,7 +57,7 @@ def load_news_signals(path: Path) -> list[dict]:
             r = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if isinstance(r, dict) and r.get("team") and _ts(r.get("seen_at")):
+        if isinstance(r, dict) and r.get("team") and _ts(r.get("seen_at")) and not r.get("source_muted"):  # muted: news_sources.py
             out.append(r)
     return out
 
@@ -116,13 +116,20 @@ def context_by_game(items: list[dict], upcoming: list[dict], now: dt.datetime | 
 
 
 def load_news_audit(path: Path) -> dict | None:
-    """Compact accuracy summary of the AI news reader (history/news_audit.json, written by full runs)."""
+    """Compact accuracy summary of the AI news reader (history/news_audit.json, written by full runs) plus the
+    per-source record (history/news_sources.json, news_sources.py)."""
     try:
         a = json.loads(path.read_text())
     except (OSError, json.JSONDecodeError):
         return None
-    return {k: a.get(k) for k in ("generated_at", "overall", "qb", "rule_population", "promotion",
-                                  "lead_vs_report_hours", "roster_check")}
+    out = {k: a.get(k) for k in ("generated_at", "overall", "qb", "rule_population", "promotion",
+                                 "lead_vs_report_hours", "roster_check")}
+    try:
+        src = json.loads(path.with_name("news_sources.json").read_text()).get("sources", {})
+        out["sources"] = [dict(v, name=k) for k, v in list(src.items())[:15]]
+    except (OSError, json.JSONDecodeError):
+        pass
+    return out
 
 
 RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",

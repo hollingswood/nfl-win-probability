@@ -18,7 +18,7 @@ import re
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -41,6 +41,8 @@ FEEDS = {
         "NFL (\"play-caller\" OR \"play calling\" OR fired OR \"snap count\" OR illness OR flu OR \"rest starters\" "
         "OR holdout OR \"offensive line\" OR kicker) when:1d") + "&hl=en-US&gl=US&ceid=US:en",
 }
+from .news_sources import team_site_feeds  # noqa: E402  official team websites (injury / practice reports)
+FEEDS.update(team_site_feeds())
 
 CONTEXT_CATEGORIES = ["play_caller_change", "coach_fired_or_hired", "scheme_or_role_change", "snap_limit",
                       "illness_outbreak", "travel_or_weather_disruption", "resting_starters", "motivation_or_locker_room",
@@ -87,8 +89,10 @@ def fetch_feed(url: str, timeout: float = 20) -> list[dict]:
         except Exception:
             pub_iso = None
         desc = re.sub(r"<[^>]+>", " ", g("description"))
-        out.append({"title": g("title"), "link": g("link"), "published": pub_iso,
-                    "summary": re.sub(r"\s+", " ", desc)[:600]})
+        row = {"title": g("title"), "link": g("link"), "published": pub_iso, "summary": re.sub(r"\s+", " ", desc)[:600]}
+        if g("source"):  # Google News: the outlet that published it
+            row["outlet"] = g("source")
+        out.append(row)
     return out
 
 
@@ -101,6 +105,12 @@ def probe() -> dict:
             res[name] = f"ok ({len(items)} items)"
         except Exception as e:
             res[name] = f"failed: {str(e)[:120]}"
+    try:
+        from . import news_sources as NS
+        items, rep = NS.bluesky_items(dict(list(NS.SEED.items())[:3]))
+        res["bluesky"] = f"ok ({len(items)} posts from {rep['ok']} accounts)" if rep["ok"] else "failed: no account reachable"
+    except Exception as e:
+        res["bluesky"] = f"failed: {str(e)[:120]}"
     return res
 
 
@@ -109,7 +119,7 @@ def _key(item: dict) -> str:
 
 
 def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[dict]:
-    body = "\n\n".join(f"[{i}] ({it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
+    body = "\n\n".join(f"[{i}] ({it.get('outlet') or it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
                        for i, it in enumerate(items))
     payload = {"model": MODEL, "max_tokens": 4000, "system": SYSTEM,
                "messages": [{"role": "user", "content": INSTRUCTIONS + "\n\nITEMS:\n" + body}]}
@@ -139,7 +149,7 @@ LAST_CONTEXT: list = []   # context items from the most recent call_claude (read
 
 
 def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = None, fetcher=fetch_feed,
-         llm=call_claude, max_items: int = 150, roster: dict | None = None) -> dict:
+         llm=call_claude, max_items: int = 200, roster: dict | None = None, bluesky=None) -> dict:
     """New feed items -> AI signals appended to history/news_llm.jsonl. Each signal is checked against the
     latest roster snapshot (history/roster.json, saved by full runs; roster.py): `verify` + `team_verified`
     are added, the AI's own fields are kept unchanged. Without a snapshot the check is left to roster.backfill."""
@@ -165,7 +175,24 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
             k = _key(it)
             if k not in seen and k not in {x["key"] for x in new}:
                 new.append(dict(it, source=name, key=k))
+    # Bluesky reporters and team accounts (public API, no login); bluesky=False turns it off (tests)
+    from . import news_sources as NS
+    if bluesky is None and fetcher is not fetch_feed:
+        bluesky = False   # injected test feeds: no live Bluesky calls
+    if bluesky is not False:
+        try:
+            accounts = NS.discover(history_dir) if bluesky is None else bluesky
+            items, rep = NS.bluesky_items(accounts)
+            report["feeds"]["bluesky"] = rep
+            cutoff = (now - timedelta(days=2)).isoformat()
+            for it in items:
+                k = _key(it)
+                if (it.get("published") or "") >= cutoff and k not in seen and k not in {x["key"] for x in new}:
+                    new.append(dict(it, source="bluesky", key=k))
+        except Exception as e:
+            report["feeds"]["bluesky"] = f"failed: {str(e)[:80]}"
     report["new_items"] = len(new)
+    sw = NS.weights(history_dir)
     signals, contexts = [], []
     # newest first; only items actually sent to the model are marked seen (the rest wait for next run)
     new.sort(key=lambda x: x.get("published") or "", reverse=True)
@@ -179,14 +206,17 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                 src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
                 signals.append(roster_lib.attach({
                     "seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
-                    "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
+                    "source": src.get("source"), "outlet": src.get("outlet"), "link": src.get("link"), "title": src.get("title"),
                     **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
                                              "game_week_relevant", "certainty", "quote")}}, roster))
+                w = sw.get(NS.source_key(signals[-1]))
+                if w:
+                    signals[-1]["source_weight"], signals[-1]["source_muted"] = w["weight"], w["muted"]
             for c in LAST_CONTEXT:
                 idx = c.get("item")
                 src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
                 contexts.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
-                                 "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
+                                 "source": src.get("source"), "outlet": src.get("outlet"), "link": src.get("link"), "title": src.get("title"),
                                  **{k: c.get(k) for k in ("team", "category", "summary", "player", "direction",
                                                           "game_week_relevant", "certainty", "quote")}})
             LAST_CONTEXT.clear()
@@ -227,6 +257,13 @@ def main():
         print("roster backfill:", roster_lib.backfill(root / "history", roster_lib.load(root / "history")))
     except Exception as e:
         print("roster backfill failed:", e)
+    try:  # per-source accuracy (classifies new wrong calls once, then reweights sources)
+        from . import news_sources as NS
+        out = NS.refresh(root / "history", os.environ.get("ANTHROPIC_API_KEY"))
+        top = list((out.get("sources") or {}).items())[:12]
+        print("sources:", json.dumps({k: (v["n"], v["accuracy"], v["weight"], v["muted"]) for k, v in top}))
+    except Exception as e:
+        print("source accuracy failed:", e)
 
 
 if __name__ == "__main__":

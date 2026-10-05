@@ -784,7 +784,7 @@ const SRC = {google_injury:'Google News', google:'Google News', yahoo:'Yahoo', c
 const ago = iso => { const m=(Date.now()-new Date(iso).getTime())/60000; return m<60?`${Math.max(1,Math.round(m))}m ago`:m<1440?`${Math.round(m/60)}h ago`:`${Math.round(m/1440)}d ago`; };
 function aiNews(g){
   const N=(D.news_ai||{})[g.game_id]||[], C=(D.news_context||{})[g.game_id]||[]; if(!N.length&&!C.length) return '';
-  const src=n=>{ const name=SRC[n.source]||String(n.source||'source').replace(/_/g,' ');
+  const src=n=>{ const name=n.outlet ? String(n.outlet).replace(/^bsky:/,'Bluesky @').replace(/\.bsky\.social/,'') : SRC[n.source]||String(n.source||'source').replace(/_/g,' ');
     return /^https?:\/\//.test(n.link||'') ? `<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer" title="${esc(n.title||'')}">${esc(name)}</a>` : esc(name); };
   const chk=n=> n.check==='verified' ? '<span class="vf" title="Player found on this team\'s roster">✓ verified</span>'
     : n.check==='unclear' ? `<span class="tu" title="The AI's team did not match the roster${n.team_ai?` (AI said ${esc(n.team_ai)})`:''}">team unclear</span>` : '';
@@ -795,7 +795,9 @@ function aiNews(g){
   if(!A||!A.overall){el.hidden=true;return;}
   const o=A.overall, q=A.qb||{}, p=A.promotion||{}, pct=x=>x.n?` (${Math.round(100*x.correct/x.n)}%)`:'';
   const rule = p.eligible ? 'promotion rule met' : `promotes to the model after ${p.min_n||25} QB signals at ≥${Math.round((p.min_precision||0.95)*100)}% (${p.n||0} so far)`;
-  el.innerHTML = `<b>AI news accuracy so far:</b> ${o.n?`${o.correct}/${o.n} correct${pct(o)}`:'no finished games yet'}; QB signals ${q.n?`${q.correct}/${q.n}`:'0 graded'}; ${esc(rule)}. ✓ verified = player is on that team's roster.`;
+  const S=(A.sources||[]).filter(x=>x.n>=3).slice(0,8);
+  const srcT = S.length ? ` <b>By source</b> (right / judged; misreads by the AI don't count against a source): `+S.map(x=>`<span title="${x.correct} right, ${x.source_wrong} wrong as stated, ${x.stale_or_hedged} hedged/stale, ${x.misread} misread by the AI, ${x.unclassified} not yet classified · weight ${x.weight}${x.muted?' · MUTED (hidden)':''}">${esc(String(x.name).replace(/^bsky:/,'@').replace(/\.bsky\.social/,''))} ${x.accuracy==null?'—':Math.round(100*x.accuracy)+'%'}${x.muted?' (muted)':''}</span>`).join(' · ')+'.' : '';
+  el.innerHTML = `<b>AI news accuracy so far:</b> ${o.n?`${o.correct}/${o.n} correct${pct(o)}`:'no finished games yet'}; QB signals ${q.n?`${q.correct}/${q.n}`:'0 graded'}; ${esc(rule)}. ✓ verified = player is on that team's roster.${srcT}`;
 })();
 const allRows=[];
 document.getElementById('g2games').innerHTML = `<b>Grade</b> on each box: moneyline and total grades predict closing-line value; spread grades are the original points scheme. Only <b>A+</b> has shown an edge. Hover a grade for the reason.`;

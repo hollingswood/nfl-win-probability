@@ -316,6 +316,8 @@ def audit(signals: list[dict], games: pd.DataFrame, snaps: pd.DataFrame, stats: 
                 row["official_status"] = status
                 row["report_agrees"] = report_agrees(sig, status)
         row["in_rule_population"] = any(eligible(x) for x in group)  # first seen may be the mis-tagged copy
+        row["evidence"] = [{k: x.get(k) for k in ("seen_at", "source", "outlet", "title", "quote", "link", "player", "signal")}
+                           for x in group[:8]]   # who said it (news_sources.source_table)
         rows.append(row)
     graded = [r for r in rows if r["verdict"] in ("correct", "wrong")]
     by_sig: dict = {}

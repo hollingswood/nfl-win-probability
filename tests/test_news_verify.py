@@ -304,3 +304,63 @@ def test_news_context_extraction_logged(tmp_path):
     import json
     row = json.loads((tmp_path / "news_context.jsonl").read_text().splitlines()[0])
     assert row["category"] == "play_caller_change" and row["team"] == "CHI"
+
+
+# ------------------------------------------------------------------------------------------- sources: Bluesky, team sites, accuracy
+def test_bluesky_items_discover_and_source_accuracy(tmp_path):
+    from nflpred import news_sources as NS, news_llm as NL
+    assert len(NS.team_site_feeds()) == 4 and all("site%3Achiefs.com" in u or "chiefs" not in u for u in NS.team_site_feeds().values())
+    assert any("team_sites_1" == k for k in NL.FEEDS)
+
+    def get(method, params):
+        if method == "app.bsky.actor.getProfile":
+            if params["actor"] == "chiefs.com":
+                return {"handle": "chiefs.com", "displayName": "Kansas City Chiefs", "followersCount": 90000}
+            if params["actor"] == "kcbeat.bsky.social":
+                return {"handle": "kcbeat.bsky.social", "followersCount": 5000}
+            if params["actor"] == "tiny.bsky.social":
+                return {"handle": "tiny.bsky.social", "followersCount": 20}
+            raise OSError("not found")
+        if method == "app.bsky.actor.searchActors":
+            if params["q"] == "Chiefs reporter":
+                return {"actors": [{"handle": "kcbeat.bsky.social", "displayName": "KC Beat", "description": "I cover the Chiefs for the Star"},
+                                   {"handle": "tiny.bsky.social", "description": "Chiefs beat writer"},
+                                   {"handle": "fan.bsky.social", "description": "Chiefs fan, dad"}]}
+            return {"actors": []}
+        if method == "app.bsky.feed.getAuthorFeed":
+            return {"feed": [{"post": {"uri": "at://did:x/app.bsky.feed.post/abc", "record": {"text": "Patrick Mahomes  (ankle) will start Sunday.", "createdAt": "2026-10-03T18:00:00.000Z"}}},
+                             {"post": {"uri": "at://did:x/app.bsky.feed.post/r", "record": {"text": "repost"}}, "reason": {"$type": "app.bsky.feed.defs#reasonRepost"}}]}
+    acc = NS.discover(tmp_path, get=get, now=datetime(2026, 10, 4, tzinfo=timezone.utc))
+    assert acc["chiefs.com"]["how"] == "team_domain" and "kcbeat.bsky.social" in acc
+    assert "tiny.bsky.social" not in acc and "fan.bsky.social" not in acc and "jordanraanan.bsky.social" in acc
+    assert NS.discover(tmp_path, get=lambda *a: 1 / 0, now=datetime(2026, 10, 5, tzinfo=timezone.utc)) == acc   # cached for a week
+    items, rep = NS.bluesky_items({"kcbeat.bsky.social": {"team": "KC"}}, get=get)
+    assert len(items) == 1 and items[0]["outlet"] == "bsky:kcbeat.bsky.social (KC)" and items[0]["title"].startswith("Patrick Mahomes (ankle)")
+    assert items[0]["link"] == "https://bsky.app/profile/kcbeat.bsky.social/post/abc" and items[0]["published"] == "2026-10-03T18:00+00:00"
+    assert NS.source_key({"outlet": "bsky:kcbeat.bsky.social (KC)"}) == "bsky:kcbeat.bsky.social"
+    assert NS.source_key({"source": "google_injury", "title": "Mahomes to start - Arrowhead Pride"}) == "Arrowhead Pride"
+    assert NS.source_key({"source": "pft", "title": "x - y"}) == "pft"
+    # accuracy: misreads are not held against the source; muting needs >= 10 judged
+    ev = lambda src, i: {"source": src, "title": f"t{i}", "player": "P", "signal": "out", "link": f"l{src}{i}"}
+    rows = [{"verdict": "correct", "evidence": [ev("pft", i), ev("pft", i)]} for i in range(3)]
+    rows += [{"verdict": "wrong", "evidence": [ev("pft", 9)]}] + [{"verdict": "wrong", "evidence": [ev("cbs", i)]} for i in range(12)]
+    errors = {NS.error_id(ev("pft", 9)): {"why": "misread"}, **{NS.error_id(ev("cbs", i)): {"why": "source_wrong"} for i in range(12)}}
+    t = NS.source_table({"rows": rows}, errors)
+    assert t["pft"]["n"] == 4 and t["pft"]["correct"] == 3 and t["pft"]["misread"] == 1 and t["pft"]["accuracy"] == 1.0
+    assert t["pft"]["weight"] == round(7 / 8, 3) and not t["pft"]["muted"]
+    assert t["cbs"]["source_wrong"] == 12 and t["cbs"]["muted"] and t["cbs"]["weight"] == round(4 / 17, 3)
+
+
+def test_classify_errors_once(tmp_path):
+    from nflpred import news_sources as NS
+    row = {"verdict": "wrong", "team": "CHI", "truth": "did not start",
+           "evidence": [{"seen_at": "2026-10-03T00:23+00:00", "source": "pft", "title": "Bagent to start", "quote": "will start",
+                         "link": "L", "player": "Tyson Bagent", "signal": "will_start"}]}
+    (tmp_path / "news_audit.json").write_text(json.dumps({"rows": [row, {"verdict": "correct", "evidence": []}]}))
+    calls = []
+    errs = NS.classify_errors(tmp_path, "k", llm=lambda p: calls.append(p) or {"0": "source_wrong"})
+    assert list(errs.values())[0]["why"] == "source_wrong" and "Tyson Bagent" in calls[0]
+    NS.classify_errors(tmp_path, "k", llm=lambda p: calls.append(p) or {})
+    assert len(calls) == 1                                                   # cached
+    out = NS.refresh(tmp_path, None)
+    assert out["sources"]["pft"]["source_wrong"] == 1 and (tmp_path / "news_sources.json").exists()
