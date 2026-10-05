@@ -79,7 +79,7 @@ def fit_models(G: pd.DataFrame, season: int) -> dict:
 
 def backtest(G: pd.DataFrame, season: int, first: int = 2022) -> list[dict]:
     """Each past season scored with a model fit only on earlier seasons, vs the CFBD consensus closing line."""
-    L = D.lines(range(first, season))
+    L = D.lines(range(first, season), prefer=D.PREFERRED_PROVIDERS)
     out = []
     for s in range(first, season):
         c = fit_models(G, s - 1)
@@ -145,6 +145,9 @@ def team_matcher(teams: list[str]):
     return match
 
 
+from nflpred.devig import shin  # noqa: E402
+
+
 def implied(a: float) -> float:
     return 100 / (a + 100) if a > 0 else -a / (-a + 100)
 
@@ -173,14 +176,12 @@ def odds_view(ev: dict, allowed: set) -> dict:
         if key == "pinnacle":
             if home in sp:
                 pin["spread"] = sp[home].get("point")
-            if home in h2 and away in h2:
-                ph, pa = implied(h2[home]["price"]), implied(h2[away]["price"])
-                pin["home_prob"] = round(ph / (ph + pa), 4)
+            if home in h2 and away in h2:   # Shin vig removal, same as the grades (shop.sharp)
+                pin["home_prob"] = round(shin(h2[home]["price"], h2[away]["price"]), 4)
             if "Over" in tt:
                 pin["total"] = tt["Over"].get("point")
         if home in h2 and away in h2 and key not in ("pinnacle",):
-            ph, pa = implied(h2[home]["price"]), implied(h2[away]["price"])
-            ml_fair.append(ph / (ph + pa))
+            ml_fair.append(shin(h2[home]["price"], h2[away]["price"]))
         if key in allowed:
             for side, nm in (("home", home), ("away", away)):
                 if nm in h2 and (side not in ml_best or h2[nm]["price"] > ml_best[side]["price"]):
@@ -300,7 +301,7 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         print("cfb weather failed:", e)
     rdir = ROOT / "output" / "research" / "cfb"
-    research_md = "\n\n".join(f.read_text() for f in (rdir / "round2.md", rdir / "deriv_screen.md", rdir / "wind_screen.md", rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
+    research_md = "\n\n".join(f.read_text() for f in (rdir / "round2.md", rdir / "longshots.md", rdir / "deriv_screen.md", rdir / "wind_screen.md", rdir / "holdout.md", rdir / "factor_screen.md") if f.exists())
     res = {"generated_at": now.isoformat(timespec="minutes"), "season": season,
            "odds_checked_at": (datetime.strptime(snap_at, "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc).isoformat(timespec="minutes") if snap_at else None),
            "model": {"n_games_fit": coef.get("n_margin"), "note": "Model spreads are display only (no model rule passed its holdout). College bets come only from price rules: shop-vs-sharp (spreads, totals, moneylines vs Pinnacle) and the moneyline price track."},
@@ -329,14 +330,15 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
         prev = coef.get("prev") or coef
         done = G[G.completed & G.margin.notna() & ((G.home_div == "fbs") | (G.away_div == "fbs"))].copy()
         done["mm"], done["mt"] = apply(done, prev["margin"]), apply(done, prev["total"])
-        L = D.lines([season])
+        L = D.lines([season], prefer=D.PREFERRED_PROVIDERS)
         done = done.merge(L, on="game_id", how="inner").dropna(subset=["spread_close"])
         done["vm"], done["vt"] = -done.spread_close, done.total_close
         res["season_to_date"] = {"summary": score_games(done, season) if len(done) else None,
                                  "games": [{"game_id": int(r.game_id), "week": int(r.week), "start": r.start.isoformat(), "home": r.home, "away": r.away,
                                             "home_abbr": abbr.get(r.home), "away_abbr": abbr.get(r.away),
                                             "home_pts": int(r.home_pts), "away_pts": int(r.away_pts),
-                                            "model_margin": round(float(r.mm), 1), "model_total": round(float(r.mt), 1),
+                                            "model_margin": round(float(r.mm), 2), "model_total": round(float(r.mt), 2),
+                                            "line_source": r.line_source,
                                             "vegas_margin": float(r.vm), "vegas_total": None if pd.isna(r.vt) else float(r.vt)}
                                            for r in done.sort_values("start").itertuples()]}
         res["backtest"] = coef.get("backtest") or []

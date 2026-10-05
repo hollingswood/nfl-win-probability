@@ -2,9 +2,9 @@
 
 | rule | bets | W-L | cover/hit | p (vs 52.38%) | result | notes |
 |---|---|---|---|---|---|---|
-| R1 opener spread (|model−open| ≥ 5) | 416 | 197-219 | 0.474 | 0.980 | fail | line moved our way 49% / against 39%, mean +0.47 pts; cover vs close 0.472 |
+| R1 opener spread (model vs open gap ≥ 5) | 416 | 197-219 | 0.474 | 0.980 | fail | line moved our way 49% / against 39%, mean +0.47 pts; cover vs close 0.472 |
 | R2 close residual (LightGBM, top-20% threshold) | 398 | 209-189 | 0.525 | 0.479 | fail | threshold 2.69 pts |
-| R3 close totals (|pred−close| ≥ 3) | 1379 | 719-660 | 0.521 | 0.571 | fail | overs 73% of bets |
+| R3 close totals (prediction vs close gap ≥ 3) | 1379 | 719-660 | 0.521 | 0.571 | fail | overs 73% of bets |
 
 By season:
 

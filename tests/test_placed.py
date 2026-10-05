@@ -244,3 +244,25 @@ def test_picks_logger_and_futures_view(tmp_path, monkeypatch):
         for k, p in (("draftkings", 300), ("fanduel", 140), ("betmgm", 150), ("pinnacle", 150))]}]}}
     v = FV.snapshot_view(snap, "m")
     assert v["A"]["book"] == "draftkings" and v["A"]["ev"] > 0.3 and v["A"]["n_books"] == 4
+
+
+def test_cfb_lines_prefer_real_book(monkeypatch):
+    from cfbpred import data as D
+    games = [{"id": 1, "lines": [{"provider": "DraftKings", "spread": -2.5, "overUnder": 51.5},
+                                 {"provider": "Bovada", "spread": -3.0, "overUnder": 51.0}]},
+             {"id": 2, "lines": [{"provider": "Bovada", "spread": 7.0, "overUnder": 44.0}, {"provider": "teamrankings", "spread": 6.0}]}]
+    monkeypatch.setattr(D, "_load", lambda name: games if "regular" in name else [])
+    avg = D.lines([2026]).set_index("game_id")
+    assert avg.loc[1, "spread_close"] == -2.75                       # two-provider median = a number no book posted
+    L = D.lines([2026], prefer=D.PREFERRED_PROVIDERS).set_index("game_id")
+    assert L.loc[1, "spread_close"] == -2.5 and L.loc[1, "total_close"] == 51.5 and L.loc[1, "line_source"] == "DraftKings"
+    assert L.loc[2, "spread_close"] == 7.0 and L.loc[2, "line_source"] == "Bovada"
+
+
+def test_cfb_pinnacle_prob_uses_shin():
+    from cfbpred import pipeline as P
+    from nflpred.devig import shin
+    ev = {"home_team": "Troy Trojans", "away_team": "Southern Miss Golden Eagles", "bookmakers": [
+        {"key": "pinnacle", "markets": [{"key": "h2h", "outcomes": [{"name": "Troy Trojans", "price": -450}, {"name": "Southern Miss Golden Eagles", "price": 340}]}]}]}
+    o = P.odds_view(ev, set())
+    assert o["pinnacle"]["home_prob"] == round(shin(-450, 340), 4)

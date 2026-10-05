@@ -28,7 +28,7 @@ FIELDS = {"Bet ID": "bet_id", "Pick": "pick", "Book": "book", "Odds you got": "o
 # ------------------------------------------------------------------------------------- links
 def pick_text(b: dict) -> str:
     if b.get("player"):
-        return f"{b['player']} {b['side'].title()} {b['point']} rec"
+        return f"{b['player']} {b['side'].title()} {b['point']} {b.get('stat_label') or 'rec'}"
     team = b.get("team") or b.get("side", "")
     if b.get("market") == "h2h" or (b.get("point") is None and b.get("side") in ("home", "away")):
         return f"{team} ML"

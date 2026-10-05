@@ -13,9 +13,9 @@
 | F7 favorite by 21+ -> underdog | 1347 | 51.3% | -2.1% | 0.786 | 6/12 | 51.2% | fail |
 | F8 home underdog | 3448 | 49.7% | -5.1% | 0.999 | 0/12 | 51.4% | fail |
 | F9 late-season dog 1 h west of home -> that dog | 342 | 53.5% | +2.1% | 0.338 | 7/12 | 58.6% | fail |
-| F10 preseason prior wk2-6 |prior-close|>=7 | 1118 | 48.2% | -8.0% | 0.997 | 2/11 | 47.8% | fail |
+| F10 preseason prior wk2-6 prior vs close gap >= 7 | 1118 | 48.2% | -8.0% | 0.997 | 2/11 | 47.8% | fail |
 
-**Result: all 10 fail.** Travel, time zones, altitude, rest, letdowns, rivalries and big favorites are already priced into college closing lines. None is a model input or a paper track. The few above 53% (body clock, altitude, late-season dog travelling west) are too small to separate from luck; they are not being bet.
+**Result: all 10 fail.** Travel, time zones, altitude, rest, letdowns, rivalries and big favorites are already priced into college closing lines. None is a model input. The few above 53% (body clock, altitude, late-season dog travelling west) are too small to separate from luck. The body-clock rule (F2) is paper-tracked anyway at Tyler's request (body_clock_rules.json), labeled unvalidated.
 
 ## Spread and total price rules (P5, P6)
 
@@ -26,6 +26,6 @@ Same idea as the moneyline price rules that passed (soft-book price better than 
 | P5 spreads | 23 | +3.6% | -12.3% | too few bets to judge |
 | P6 totals | 12 | +1.0% | -50.0% | too few bets to judge |
 
-Books rarely hang a college spread or total at the same number as the sharp books with a better price, so these rules almost never fire. The college moneyline track (P1/P2) stays the only college paper track.
+Books rarely hang a college spread or total at the same number as the sharp books with a better price, so these rules almost never fire. These two rules are not tracked; the college paper tracks are shop-vs-sharp, the moneyline track (P1/P2) and the unvalidated body-clock rule.
 
 Not financial advice.

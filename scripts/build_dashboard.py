@@ -254,7 +254,14 @@ def build_cfb(site: Path) -> Path | None:
     nfl = (ROOT / "scripts" / "dashboard_template.html").read_text()
     style = nfl.split("<style>", 1)[1].split("</style>", 1)[0]
     tpl = (ROOT / "scripts" / "cfb_template.html").read_text().replace("__STYLE__", style)
-    body = tpl.replace("__DATA__", json.dumps(clean_json(json.loads(src.read_text())), allow_nan=False).replace("</", "<\\/"))
+    data = json.loads(src.read_text())
+    try:  # pre-filled "I placed it" forms for open college paper bets (scored on the NFL page's My bets)
+        from nflpred.placed import log_url
+        data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_ml_bets", "cfb_body_clock_bets")
+                            for b in ((data.get(k) or {}).get("open") or []) if b.get("id")}
+    except Exception as e:
+        print("cfb log links skipped:", e)
+    body = tpl.replace("__DATA__", json.dumps(clean_json(data), allow_nan=False).replace("</", "<\\/"))
     return write_site(body, site / "cfb")
 
 

@@ -40,19 +40,35 @@ def games(years) -> pd.DataFrame:
     return df
 
 
-def lines(years) -> pd.DataFrame:
-    """One row per game: median across providers of closing spread/total (home line: + = home underdog),
-    opening spread/total where any provider reports one, and per-provider counts."""
+PREFERRED_PROVIDERS = ("DraftKings", "ESPN Bet", "Bovada", "consensus")   # a real book's closing number
+
+
+def lines(years, prefer: tuple | None = None) -> pd.DataFrame:
+    """One row per game: closing spread/total (home line: + = home underdog), opening spread/total where any provider
+    reports one, and per-provider counts. Default: median across providers (with two providers that is their average,
+    often a quarter point no book posted). prefer=(...): take the first listed provider that has the number instead
+    (median only if none of them does); `line_source` says which."""
     rows = []
     for y in years:
         for st in ("regular", "postseason"):
             for g in _load(f"lines_{y}_{st}.json.gz"):
                 L = g.get("lines") or []
                 med = lambda k: statistics.median([x[k] for x in L if x.get(k) is not None]) if any(x.get(k) is not None for x in L) else None
-                rows.append({"game_id": g["id"], "spread_close": med("spread"), "spread_open": med("spreadOpen"),
-                             "total_close": med("overUnder"), "total_open": med("overUnderOpen"),
+                src = "median"
+
+                def pick(k):
+                    nonlocal src
+                    for pv in prefer or ():
+                        for x in L:
+                            if x.get("provider") == pv and x.get(k) is not None:
+                                if k == "spread":
+                                    src = pv
+                                return x[k]
+                    return med(k)
+                rows.append({"game_id": g["id"], "spread_close": pick("spread"), "spread_open": med("spreadOpen"),
+                             "total_close": pick("overUnder"), "total_open": med("overUnderOpen"),
                              "n_providers": len(L), "providers": ",".join(sorted({x["provider"] for x in L})),
-                             "home_ml": med("homeMoneyline"), "away_ml": med("awayMoneyline")})
+                             "home_ml": med("homeMoneyline"), "away_ml": med("awayMoneyline"), "line_source": src})
     return pd.DataFrame(rows)
 
 
