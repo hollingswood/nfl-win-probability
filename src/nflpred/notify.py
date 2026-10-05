@@ -19,10 +19,11 @@ AZ = timezone(timedelta(hours=-7))  # America/Phoenix, no DST
 TRACK_NAMES = {
     "bets": "Moneyline v1", "spread_bets": "Spread v1", "ml_v2_bets": "Moneyline v2", "ml_v3_bets": "Moneyline v3",
     "ml_v4_bets": "Moneyline v4", "night_west_bets": "Night west", "totals_wind_bets": "Wind under",
-    "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop",
+    "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop", "props_unders_bets": "Tuesday under",
     "aplus_ml_bets": "A+ moneyline", "aplus_spread_bets": "A+ spread", "aplus_totals_bets": "A+ total",
     "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML", "cfb_shop_bets": "College shop vs sharp", "cfb_body_clock_bets": "College body clock (unvalidated)",
 }
+QUIET_TRACKS = {"props_unders_bets"}
 PRIORITY_TRACKS = {"cfb_shop_bets", "preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
 
 
@@ -108,8 +109,16 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
     More than that: one combined push; log bets from the dashboard."""
     from .placed import log_url
     items = [(k, b) for k, b in collect(pred) if b.get("id") not in (exclude_ids or set())]
+    quiet = [(k, b) for k, b in items if k in QUIET_TRACKS]
+    items = [(k, b) for k, b in items if k not in QUIET_TRACKS]
+    if quiet:  # blind every-player tracks: one summary push, not one per bet
+        n = {}
+        for k, _ in quiet:
+            n[k] = n.get(k, 0) + 1
+        send("New paper bets (summary)", "\n".join(f"{TRACK_NAMES.get(k, k)}: {c} paper bets" for k, c in n.items())
+             + "\n\nList on the dashboard (Paper bets). Paper track, not yet validated. Not financial advice.", priority=2, tags=["football"])
     if not items:
-        return False
+        return bool(quiet)
     accts = account_names()
     note = "Paper track, not yet validated. Not financial advice."
     sent = 0

@@ -520,7 +520,7 @@ const v1Badge = (gr, why) => gr ? `<span class="grade ${gradeCls(gr)}" title="Sp
 // grade v2 of the offer a track or box is showing (same side at the same best price), else null
 const sideG2 = (g, side, price) => { const x=((g.grade_v2_sides)||{})[side]; return x && (price==null || x.price===price) ? x : null; };
 const g2Inline = x => x ? `${g2Badge(x.grade, x.predicted_clv)} <span class="g2c">pred CLV ${pcv(x.predicted_clv)}</span>` : '';
-const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','totals_early_under_bets','props_receptions_bets','night_west_bets','aplus_ml_bets','aplus_spread_bets','aplus_totals_bets','exchange_value_bets','preseason_prior_bets','tuesday_move_bets'].some(k=>P[k]&&P[k].mode==='live');
+const ANY_LIVE = ['spread_bets','bets','ml_v2_bets','ml_v3_bets','ml_v4_bets','totals_wind_bets','totals_early_under_bets','props_receptions_bets','props_unders_bets','night_west_bets','aplus_ml_bets','aplus_spread_bets','aplus_totals_bets','exchange_value_bets','preseason_prior_bets','tuesday_move_bets'].some(k=>P[k]&&P[k].mode==='live');
 // totals grade: predicted CLV of an over/under offer; only A+ has shown an edge (A/B/C were negative)
 const TG = P.totals_grade || {};
 const TGNOTE = TG.note || 'Totals grade = predicted closing-line value; only A+ has shown an edge (2023-25: +1.5% CLV)';
@@ -533,6 +533,7 @@ const TRACKS = {
   totals:{name:'Totals · forecast-wind unders', key:'totals_wind_bets', short:'Wind under'},
   totals_eu:{name:'Totals · early-week unders (Tuesday, new 2026 test)', key:'totals_early_under_bets', short:'Early under'},
   props_rec:{name:'Props · receptions line shopping (Friday)', key:'props_receptions_bets', short:'Rec props'},
+  props_un:{name:'Props · Tuesday star unders (rush yds, receptions, rec yds)', key:'props_unders_bets', short:'Tue unders'},
   night:{name:'Night games · western team', key:'night_west_bets', short:'Night game'},
   aplus_ml:{name:'A+ moneyline · every moneyline-grade A+ offer', key:'aplus_ml_bets', short:'A+ ML'},
   aplus_sp:{name:'A+ spread · every spread-grade A+ offer', key:'aplus_spread_bets', short:'A+ spread'},
@@ -550,8 +551,8 @@ const od = x => x==null ? '' : x>0 ? `+${x}` : `−${Math.abs(x)}`;          // 
 const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
-const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', fut:'Futures', pre:'Preseason', tue:'Tue move'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
+const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', props_un:'Tue unders', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', fut:'Futures', pre:'Preseason', tue:'Tue move'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', props_un:'props_unders_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
@@ -1066,6 +1067,9 @@ const TRACK_INFO = {
   ml_v4:{label:'Moneyline v4', what:'Moneyline priced worse than the sharp point spread implies', top:true,
     ev:'+1.6% CLV · 163 bets 2023–25',
     tip:'Rules set on 2020–22, tested once on 2023–25: 163 bets, +1.6% ± 0.7 closing line value vs the sharp closing moneyline (+2.0% vs the Pinnacle close); ROI +11% ± 13.'},
+  props_un:{label:'Tuesday star unders', what:"Under on every rush yds / receptions / rec yds prop already posted Tuesday morning (best number at your books)",
+    when:'Tue 7:10am AZ', ev:'+4% to +14% ROI · 2024–25 · found after the fact',
+    tip:'Found in the 2024-25 holdout (output/research/props_full.md), not pre-registered: players with props posted by Tuesday open went under 54-60% of the time; blind unders returned rush yds +13.8% ± 5.1, receptions +6.0% ± 2.9, rec yds +4.2% ± 3.2 ROI. Graded on results (the close carries the same bias, so CLV is not the test). 2026 is its first clean test: 150 bets, ROI > 0 at p < 0.05.'},
   props_rec:{label:'Receptions props', what:"Receptions over/under priced 2%+ better than other books' median", top:true,
     ev:'+2.7% CLV · 278 bets 2024–25',
     tip:'Rule set on 2023, tested once on 2024–25: 278 bets, +2.7% ± 0.4 closing line value; realized ROI −6% ± 6.5 (44% hit rate), about 6.5 bets a week.'},
@@ -1136,6 +1140,7 @@ function trackWindow(key){
   const R=RULES[key]||{}, I=TRACK_INFO[key], ko=g=>Date.parse(g.kickoff_utc||''), now=Date.now();
   const slot=(w,t)=>w?`<b>${w.now?'Open now':fmtWhen(w.at)}</b><small>${t}</small>`:`<small>${t}</small>`;
   if(key==='ml_v4') return slot(nextSlot(R.windows_utc||[['Tue','14:10'],['Fri','21:40'],['Sun','14:10']], R.window_tolerance_minutes??50), 'Tue & Sun 7:10am, Fri 2:40pm AZ');
+  if(key==='props_un') return slot(nextSlot(R.window_utc?[R.window_utc]:[['Tue','14:10']], R.window_tolerance_minutes??50), 'Tue 7:10am AZ');
   if(key==='totals_eu') return slot(nextSlot(R.windows_utc||[['Tue','14:10']], R.window_tolerance_minutes??50), 'Tue 7:10am AZ');
   if(key==='props_rec'){
     let w=nextSlot([['Fri','21:40']], R.window_tolerance_minutes??50);
@@ -1167,7 +1172,7 @@ function trackWindow(key){
 })();
 
 (function(){
-  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','aplus_ml','aplus_sp','aplus_tot','exch','kmk','fut','totals','totals_eu','night','spread','ml_v1'];
+  const order=['pre','tue','ml_v2','ml_v3','ml_v4','props_rec','props_un','aplus_ml','aplus_sp','aplus_tot','exch','kmk','fut','totals','totals_eu','night','spread','ml_v1'];
   const tracks=order.map(k=>[TRACKS[k].name,P[TRACKS[k].key],k]).filter(([,B])=>B&&!B.error);
   if(!tracks.length){document.getElementById('betswrap').hidden=true;return;}
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
@@ -1198,7 +1203,7 @@ function trackWindow(key){
   gradeRec('tgrec', 'Totals grades — paper record', 'totals tracks', TG.record||{}, 'All totals tracks', tgBadge, TGNOTE, 'A+ made +1.5% CLV on 2023–25 lines');
   const ge=document.getElementById('grdempty');
   if(empty.length) ge.innerHTML = empty.join(' · ')+'. Grades are recorded on new bets from 2026-10-02.'; else ge.hidden=true;
-  const betLabel=(b,spread)=>b.track==='exchange_value'?`<b>${esc(b.team)}${b.market==='h2h'?' ML':''}</b> · ${esc(b.book)} ${b.quoted_cents}¢`:b.player?`<b>${esc(b.player)} ${cap1(b.side)} ${b.point}</b> receptions · ${esc(b.opponent)}`:(b.side==='under'||b.side==='over')?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
+  const betLabel=(b,spread)=>b.track==='exchange_value'?`<b>${esc(b.team)}${b.market==='h2h'?' ML':''}</b> · ${esc(b.book)} ${b.quoted_cents}¢`:b.player?`<b>${esc(b.player)} ${cap1(b.side)} ${b.point}</b> ${esc(b.stat_label||'receptions')} · ${esc(b.opponent)}`:(b.side==='under'||b.side==='over')?`<b>${esc(b.team)} ${b.point}</b>`:spread?`<b>${esc(b.team)} ${b.point>0?'+':''}${b.point}</b> vs ${esc(b.opponent)}`:`<b>${esc(b.team)}</b> vs ${esc(b.opponent)}`;
   // detail blocks only for tracks with at least one open or graded bet
   const active=tracks.filter(([,B])=>(B.open||[]).length || (B.record&&B.record.graded) || (B.recent_graded||[]).length);
   document.getElementById('tracks').innerHTML = active.length ? `<span class="subh">Track details</span>`+active.map(([name,B,key])=>{
@@ -1206,6 +1211,7 @@ function trackWindow(key){
     const spread=key==='spread'||key==='night'||key==='aplus_sp'||key==='pre'||key==='tue', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(chk.enough_bets,'graded bets')],
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(chk.roi_positive,'')}`],
+      r.test==='roi' ? [`p = ${(r.roi_p_value??1).toFixed(2)}`, `ROI test (results, not CLV) ${ck(chk.roi_positive_and_significant,'p < 0.05')}`] :
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(chk.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th><th></th></tr></thead><tbody>`+
@@ -1216,10 +1222,10 @@ function trackWindow(key){
     const flagged=new Set();
     for (const b of open) { if(b.player){ if(flagged.has(b.game_id)) continue; flagged.add(b.game_id); }
       const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`);
-      const what = b.track==='exchange_value' ? `${esc(b.team)} (${esc(b.book)})` : b.player ? `${open.filter(x=>x.game_id===b.game_id).length} rec prop${open.filter(x=>x.game_id===b.game_id).length===1?'':'s'}` : `${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:(b.side==='under'||b.side==='over')?b.point:fmtP(b.price)}`;
+      const what = b.track==='exchange_value' ? `${esc(b.team)} (${esc(b.book)})` : b.player ? `${open.filter(x=>x.game_id===b.game_id).length} ${key==='props_un'?'under':'rec prop'}${open.filter(x=>x.game_id===b.game_id).length===1?'':'s'}` : `${esc(b.team)} ${spread?(b.point>0?'+':'')+b.point:(b.side==='under'||b.side==='over')?b.point:fmtP(b.price)}`;
       if(el) el.insertAdjacentHTML('beforeend',`<span class="betflag">${live?'BET':'PAPER'} ${what}</span>`); }
     const bg=(mlT?B.by_grade_v2:tgT?B.by_totals_grade:B.by_grade)||[];
-    const gradeT = key==='props_rec' ? '' : bg.length ? gradeTable(bg, mlT||tgT, false, tgT?tgBadge:null)
+    const gradeT = key==='props_rec'||key==='props_un' ? '' : bg.length ? gradeTable(bg, mlT||tgT, false, tgT?tgBadge:null)
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by moneyline grade appears here once graded paper bets carry one.':tgT?'Performance by totals grade appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
     return `<div class="track"><h3>${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
   }).join('') : '';

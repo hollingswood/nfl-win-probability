@@ -128,7 +128,7 @@ def load_news_audit(path: Path) -> dict | None:
 RULE_FILES = {"ml_v1": "betting_rules.json", "spread": "spread_rules.json", "ml_v2": "moneyline_v2_rules.json",
               "ml_v3": "moneyline_v3_rules.json", "ml_v4": "moneyline_v4_rules.json",
               "totals": "totals_wind_rules.json", "night": "night_west_rules.json",
-              "totals_eu": "totals_early_under_rules.json", "props_rec": "props_receptions_rules.json",
+              "totals_eu": "totals_early_under_rules.json", "props_rec": "props_receptions_rules.json", "props_un": "props_unders_rules.json",
               "aplus_ml": "grade_aplus_ml_rules.json", "aplus_sp": "grade_aplus_spread_rules.json",
               "aplus_tot": "grade_aplus_totals_rules.json", "exch": "exchange_value_rules.json",
               "pre": "preseason_prior_rules.json", "tue": "tuesday_move_rules.json"}

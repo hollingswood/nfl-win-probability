@@ -77,6 +77,12 @@ def load_snaps(season: int) -> pd.DataFrame:
 
 def receptions(game_id: str, player: str, stats: pd.DataFrame, snaps: pd.DataFrame) -> tuple[str, object]:
     """('graded', receptions) | ('void', reason) | ('open', reason) for a player-prop bet on this game."""
+    return stat_value(game_id, player, stats, snaps, "receptions")
+
+
+def stat_value(game_id: str, player: str, stats: pd.DataFrame, snaps: pd.DataFrame, col: str) -> tuple[str, object]:
+    """Same as receptions() for any weekly stat column (rushing_yards, receiving_yards, ...): a player with no stat
+    line who took an offensive snap counts as 0; no offensive snap = void."""
     st = stats[stats["game_id"] == game_id] if len(stats) else stats
     if len(st):
         cands = {}
@@ -87,8 +93,8 @@ def receptions(game_id: str, player: str, stats: pd.DataFrame, snaps: pd.DataFra
             cands[i] = {x for x in ns if x}
         hit = match(player, cands)
         if hit is not None:
-            v = st.loc[hit, "receptions"]
-            return "graded", int(0 if pd.isna(v) else v)
+            v = st.loc[hit, col] if col in st.columns else None
+            return "graded", float(0 if v is None or pd.isna(v) else v)
     sn = snaps[snaps["game_id"] == game_id] if len(snaps) else snaps
     if not len(sn):
         return "open", "stats/snap counts not published yet" if not len(st) else "no stat line; snap counts not published yet"

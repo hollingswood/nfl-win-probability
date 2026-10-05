@@ -388,3 +388,63 @@ def test_dashboard_renders_totals_grade_and_new_tracks():
     assert "NO GRADE YET" not in body and "no grade yet" not in body.lower()
     data = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', body, re.S).group(1))
     assert data["predictions"]["upcoming"][0]["totals_grade"]["grade"] == "A+"
+
+
+# ------------------------------------------------------------------------------------------- Tuesday star unders
+def _unders_resp(rows):
+    """rows: [(book, market, player, point, over, under)]"""
+    bks = {}
+    for b, mk, pl, pt, o, u in rows:
+        bks.setdefault(b, {}).setdefault(mk, []).extend([{"name": "Over", "description": pl, "price": o, "point": pt},
+                                                         {"name": "Under", "description": pl, "price": u, "point": pt}])
+    return {"id": "ev1", "bookmakers": [{"key": b, "title": b.title(), "markets": [{"key": k, "outcomes": oc} for k, oc in m.items()]}
+                                        for b, m in bks.items()]}
+
+
+UNDERS = [("draftkings", "player_rush_yds", "Jahmyr Gibbs", 74.5, -115, -115),
+          ("draftkings", "player_rush_yds", "Jahmyr Gibbs", 89.5, 150, -200),        # alt line at the same book: not main
+          ("fanduel", "player_rush_yds", "Jahmyr Gibbs", 76.5, -110, -120),          # best number
+          ("bovada", "player_rush_yds", "Jahmyr Gibbs", 79.5, -110, -110),           # not an allowed book
+          ("draftkings", "player_receptions", "Sam LaPorta", 4.5, -120, -110),       # only one book: skipped
+          ("draftkings", "player_reception_yds", "Amon-Ra St. Brown", 72.5, -115, -115),
+          ("betmgm", "player_reception_yds", "Amon-Ra St. Brown", 72.5, -110, -110)]  # same number, better price
+
+
+def test_props_unders_window_picks_and_grading(tmp_path):
+    from nflpred import props_unders as PU
+    r = PU.load_rules()
+    assert r["track"] == "props_unders_tue" and r["version"] == 1
+    tue = datetime(2026, 10, 6, 14, 23, tzinfo=UTC)
+    assert PU.in_window(tue, r) and PU.in_window(datetime(2026, 10, 6, 14, 10, tzinfo=UTC), r)
+    assert not PU.in_window(datetime(2026, 10, 6, 15, 23, tzinfo=UTC), r) and not PU.in_window(tue + timedelta(days=1), r)
+    calls = []
+
+    def fetch(eid, markets=None):
+        calls.append(markets)
+        return _unders_resp(UNDERS)
+    no_games = pd.DataFrame(columns=["game_id", "completed"])
+    res = PU.process({"upcoming": [_props_game()]}, no_games, tmp_path, r, now=tue, fetch=fetch, allowed=ALLOWED)
+    assert calls == ["player_rush_yds,player_receptions,player_reception_yds"] and res["api_calls"] == 1
+    got = {(b["market"], b["player"]): (b["point"], b["price"], b["book_key"]) for b in res["new"]}
+    assert got == {("player_rush_yds", "Jahmyr Gibbs"): (76.5, -120, "fanduel"),
+                   ("player_reception_yds", "Amon-Ra St. Brown"): (72.5, -110, "betmgm")}
+    assert all(b["side"] == "under" and b["units"] == 1.0 for b in res["new"]) and list(tmp_path.glob("props_*.json.gz"))
+    # same window again: no new call or duplicate; other days: nothing
+    PU.process({"upcoming": [_props_game()]}, no_games, tmp_path, r, now=tue + timedelta(minutes=30), fetch=fetch, allowed=ALLOWED)
+    PU.process({"upcoming": [_props_game()]}, no_games, tmp_path, r, now=tue + timedelta(days=3), fetch=fetch, allowed=ALLOWED)
+    assert len(calls) == 1
+    games = pd.DataFrame([{"game_id": "2026_05_DET_KC", "completed": True}])
+
+    def stats_for(season):
+        st = pd.DataFrame([{"game_id": "2026_05_DET_KC", "player_display_name": "Jahmyr Gibbs", "player_name": "J.Gibbs",
+                            "rushing_yards": 60, "receiving_yards": 12},
+                           {"game_id": "2026_05_DET_KC", "player_display_name": "Amon-Ra St. Brown", "player_name": "A.St. Brown",
+                            "rushing_yards": None, "receiving_yards": 101}])
+        return st, pd.DataFrame(columns=["game_id", "player", "offense_snaps"])
+    res = PU.process({"upcoming": []}, games, tmp_path, r, now=datetime(2026, 10, 13, 14, 17, tzinfo=UTC), stats_for=stats_for,
+                     allowed=ALLOWED)
+    g = {b["player"]: b for b in res["recent_graded"]}
+    assert g["Jahmyr Gibbs"]["result"] == "win" and g["Jahmyr Gibbs"]["profit_units"] == pytest.approx(100 / 120, abs=1e-3)
+    assert g["Amon-Ra St. Brown"]["result"] == "loss" and g["Amon-Ra St. Brown"]["profit_units"] == -1.0
+    rec = res["record"]
+    assert rec["graded"] == 2 and rec["wins"] == 1 and rec["test"] == "roi" and not rec["passed"]

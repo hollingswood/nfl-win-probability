@@ -388,6 +388,13 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     except Exception as e:
         result["props_receptions_bets"] = {"error": str(e)}
         print("props receptions bets: failed:", e)
+    try:
+        from . import props_unders
+        result["props_unders_bets"] = props_unders.process(
+            result, df, ROOT / "history", fetch=None if offline else odds_lib.fetch_event_props)
+    except Exception as e:
+        result["props_unders_bets"] = {"error": str(e)}
+        print("props unders bets: failed:", e)
     for key, fn_name in (("preseason_prior_bets", "process_preseason"), ("tuesday_move_bets", "process_tuesday")):
         try:
             from . import spread_tracks
@@ -574,7 +581,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
     forecast-wind and early-week unders, night games, receptions props, the A+ grade tracks). The v1 tracks only
     act on full runs, as pre-registered. Grading happens on full runs."""
-    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions, exchanges, spread_tracks
+    from . import ml_v2, ml_v4, night_west, totals as totals_lib, totals_early_under, props_receptions, props_unders, exchanges, spread_tracks
     path = OUT / "predictions.json"
     if not path.exists():
         print("watch: no predictions.json yet")
@@ -618,6 +625,7 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     for key, fn in (("ml_v2_bets", ml_v2.process), ("ml_v3_bets", ml_v2.process_v3), ("ml_v4_bets", ml_v4.process), ("totals_wind_bets", totals_lib.process),
                     ("totals_early_under_bets", lambda p, g, h: totals_early_under.process(p, g, h, now=now)),
                     ("props_receptions_bets", props_fn), ("night_west_bets", night_west.process),
+                    ("props_unders_bets", lambda p, g, h: props_unders.process(p, g, h, now=now, fetch=odds_lib.fetch_event_props)),
                     ("exchange_value_bets", lambda p, g, h: exchanges.process(p, g, h, now=now)),
                     ("preseason_prior_bets", lambda p, g, h: spread_tracks.process_preseason(p, g, h, now=now)),
                     ("tuesday_move_bets", lambda p, g, h: spread_tracks.process_tuesday(p, g, h, now=now))):

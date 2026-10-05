@@ -1,0 +1,21 @@
+{
+  "track": "props_unders_tue",
+  "version": 1,
+  "frozen_on": "2026-10-04",
+  "note": "Pre-registered from output/research/props_full.md section 4 (found in the 2024-25 holdout, so NOT validated; this season is its real test): players whose props are already posted at the Tuesday 14:10 UTC snapshot (mostly marquee players) went well under in 2024-25. Blind UNDER at the open: rush yds ROI +13.8% +- 5.1%, receptions +6.0% +- 2.9%, rec yds +4.2% +- 3.2% (over rates 40-46% at every snapshot). Every quoted player-market at that snapshot is bet, flat 1 unit, at the allowed book with the best under (highest number, then best price) on the main line. Graded on results (win rate and ROI vs the price's break-even), not CLV: the research says the close carries the same bias. Do not edit to fit results; bump the version.",
+  "markets": {"player_rush_yds": "rushing_yards", "player_receptions": "receptions", "player_reception_yds": "receiving_yards"},
+  "qualify": {
+    "window_utc": ["Tue", "14:10"],
+    "window_tolerance_minutes": 50,
+    "kickoff_within_days": 7,
+    "regions": "us",
+    "main_line_price_range": [-200, 170],
+    "min_books_quoting": 2
+  },
+  "sizing": {"units": 1.0},
+  "grading": {"result": "nflverse weekly player stats (stats_player): stat vs the point; no stat line but >= 1 offensive snap = 0; no offensive snap = void"},
+  "validation": {"min_bets": 150, "roi_positive_with_p_below": 0.05},
+  "cost": "one Odds API event call per game on Tuesday morning: 3 markets x 1 region = 3 credits per game (~50 credits a week)",
+  "ledger": "paper_bets_props_unders.json",
+  "state": "props_unders_state.json"
+}
