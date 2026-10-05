@@ -2,8 +2,8 @@
 (odds_backfill.yml plan `more_props`: 2023-25, Friday-early and close snapshots, regions=us).
 
 Markets (nflverse stats_player column):
-  defense:  player_sacks (def_sacks), player_solo_tackles (def_tackles_solo),
-            player_tackles_assists (def_tackles_solo + def_tackle_assists), player_defensive_interceptions (def_interceptions)
+  defense:  player_sacks (def_sacks), player_solo_tackles (def_tackles_solo + def_tackles_with_assist),
+            player_tackles_assists (solo + with_assist + def_tackle_assists; mapping fixed after the first run, see STAT), player_defensive_interceptions (def_interceptions)
   offense:  player_pass_tds (passing_tds), player_pass_interceptions (passing_interceptions),
             player_pass_completions (completions), player_rush_attempts (carries)
 Snapshots: early = Fri 21:40 UTC for Sunday games, kickoff - 24 h otherwise; close = kickoff - 75 min.
@@ -44,8 +44,10 @@ SEASONS = (2023, 2024, 2025)
 ALLOWED = set(json.load(open(ROOT / "my_books.json"))["allowed_books"])
 FILES = {"defense": "player_sacks+player_solo_tackles+player_tackles_assists+player_defensive_interceptions",
          "offense": "player_pass_tds+player_pass_interceptions+player_pass_completions+player_rush_attempts"}
-STAT = {"player_sacks": ("def_sacks",), "player_solo_tackles": ("def_tackles_solo",),
-        "player_tackles_assists": ("def_tackles_solo", "def_tackle_assists"), "player_defensive_interceptions": ("def_interceptions",),
+# official solo = nflverse def_tackles_solo + def_tackles_with_assist; official total adds def_tackle_assists
+# (checked: Zaire Franklin 2024 official 173 total / 93 solo = 75 + 18 + 80 in nflverse)
+STAT = {"player_sacks": ("def_sacks",), "player_solo_tackles": ("def_tackles_solo", "def_tackles_with_assist"),
+        "player_tackles_assists": ("def_tackles_solo", "def_tackles_with_assist", "def_tackle_assists"), "player_defensive_interceptions": ("def_interceptions",),
         "player_pass_tds": ("passing_tds",), "player_pass_interceptions": ("passing_interceptions",),
         "player_pass_completions": ("completions",), "player_rush_attempts": ("carries",)}
 DEF = {"player_sacks", "player_solo_tackles", "player_tackles_assists", "player_defensive_interceptions"}
@@ -83,7 +85,7 @@ def main_lines(d: pd.DataFrame) -> pd.DataFrame:
     q = q[q.over_price.between(LO, HI) & q.under_price.between(LO, HI)].copy()
     io, iu = 1 / dec(q.over_price), 1 / dec(q.under_price)
     q["p_over"] = io / (io + iu)
-    q["bal"] = (io - iu).abs()
+    q["bal"] = np.abs(io - iu)
     q = q.sort_values("bal").drop_duplicates(["event_id", "snap", "market", "book", "player"])
     return q
 
