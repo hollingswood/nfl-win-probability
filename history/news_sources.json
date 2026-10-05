@@ -1,52 +1,118 @@
 {
- "generated_at": "2026-10-05T21:24+00:00",
+ "generated_at": "2026-10-05T22:25+00:00",
  "rule": "weight = (correct + 4) / (judged + 5); misreads are the AI's fault and not counted; muted if >= 10 judged and weight < 0.6",
  "sources": {
   "yahoo": {
-   "n": 37,
-   "correct": 34,
+   "n": 74,
+   "correct": 68,
    "misread": 1,
-   "stale_or_hedged": 2,
+   "stale_or_hedged": 5,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.944,
-   "weight": 0.927,
+   "accuracy": 0.932,
+   "weight": 0.923,
    "muted": false
   },
   "pft": {
-   "n": 26,
-   "correct": 24,
+   "n": 60,
+   "correct": 55,
    "misread": 1,
-   "stale_or_hedged": 1,
+   "stale_or_hedged": 4,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.96,
-   "weight": 0.933,
+   "accuracy": 0.932,
+   "weight": 0.922,
    "muted": false
   },
   "Yahoo Sports": {
-   "n": 10,
-   "correct": 7,
+   "n": 30,
+   "correct": 26,
    "misread": 0,
-   "stale_or_hedged": 2,
+   "stale_or_hedged": 3,
    "source_wrong": 1,
    "unclassified": 0,
-   "accuracy": 0.7,
-   "weight": 0.733,
+   "accuracy": 0.867,
+   "weight": 0.857,
+   "muted": false
+  },
+  "Fantasy Footballers Podcast": {
+   "n": 8,
+   "correct": 8,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.923,
+   "muted": false
+  },
+  "cbs": {
+   "n": 8,
+   "correct": 6,
+   "misread": 2,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.909,
+   "muted": false
+  },
+  "ESPN": {
+   "n": 7,
+   "correct": 6,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.857,
+   "weight": 0.833,
+   "muted": false
+  },
+  "NBC Sports": {
+   "n": 7,
+   "correct": 6,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.857,
+   "weight": 0.833,
+   "muted": false
+  },
+  "Sports Illustrated": {
+   "n": 6,
+   "correct": 5,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.833,
+   "weight": 0.818,
    "muted": false
   },
   "NFL.com": {
-   "n": 4,
-   "correct": 2,
+   "n": 6,
+   "correct": 4,
    "misread": 0,
    "stale_or_hedged": 2,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.5,
-   "weight": 0.667,
+   "accuracy": 0.667,
+   "weight": 0.727,
    "muted": false
   },
-  "Sports Illustrated": {
+  "RotoBaller": {
+   "n": 3,
+   "correct": 2,
+   "misread": 1,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.857,
+   "muted": false
+  },
+  "bolavip.com": {
    "n": 3,
    "correct": 3,
    "misread": 0,
@@ -57,18 +123,84 @@
    "weight": 0.875,
    "muted": false
   },
-  "NBC Sports": {
+  "The Washington Post": {
    "n": 3,
-   "correct": 2,
+   "correct": 3,
    "misread": 0,
-   "stale_or_hedged": 1,
+   "stale_or_hedged": 0,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.667,
-   "weight": 0.75,
+   "accuracy": 1.0,
+   "weight": 0.875,
    "muted": false
   },
-  "Fantasy Footballers Podcast": {
+  "CBS Sports": {
+   "n": 3,
+   "correct": 2,
+   "misread": 1,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.857,
+   "muted": false
+  },
+  "nytimes.com": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
+  "FantasyPros": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
+  "Sportsnet.ca": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
+  "LancasterOnline": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
+  "ABC11 News": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
+  "FOX Sports": {
    "n": 2,
    "correct": 2,
    "misread": 0,
@@ -79,7 +211,40 @@
    "weight": 0.857,
    "muted": false
   },
-  "RotoBaller": {
+  "Tampa Bay Buccaneers": {
+   "n": 2,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.5,
+   "weight": 0.714,
+   "muted": false
+  },
+  "Daily Herald": {
+   "n": 2,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.5,
+   "weight": 0.714,
+   "muted": false
+  },
+  "google_injury": {
+   "n": 2,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.5,
+   "weight": 0.714,
+   "muted": false
+  },
+  "Yahoo": {
    "n": 2,
    "correct": 2,
    "misread": 0,
@@ -101,40 +266,29 @@
    "weight": 0.857,
    "muted": false
   },
-  "cbs": {
+  "The New York Times": {
    "n": 2,
-   "correct": 1,
-   "misread": 1,
+   "correct": 2,
+   "misread": 0,
    "stale_or_hedged": 0,
    "source_wrong": 0,
    "unclassified": 0,
    "accuracy": 1.0,
-   "weight": 0.833,
+   "weight": 0.857,
+   "muted": false
+  },
+  "New England Patriots": {
+   "n": 2,
+   "correct": 2,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.857,
    "muted": false
   },
   "google_qb": {
-   "n": 2,
-   "correct": 2,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.857,
-   "muted": false
-  },
-  "Sportsnet.ca": {
-   "n": 2,
-   "correct": 2,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.857,
-   "muted": false
-  },
-  "LancasterOnline": {
    "n": 2,
    "correct": 2,
    "misread": 0,
@@ -156,6 +310,61 @@
    "weight": 0.857,
    "muted": false
   },
+  "The Big Lead": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "GazetteXtra": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "Big Rapids Pioneer": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "Newsday": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "chronicleonline.com": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
   "The Times of India": {
    "n": 1,
    "correct": 1,
@@ -167,26 +376,26 @@
    "weight": 0.833,
    "muted": false
   },
-  "ESPN": {
+  "sportsnet.ca": {
    "n": 1,
-   "correct": 0,
+   "correct": 1,
    "misread": 0,
-   "stale_or_hedged": 1,
+   "stale_or_hedged": 0,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.0,
-   "weight": 0.667,
+   "accuracy": 1.0,
+   "weight": 0.833,
    "muted": false
   },
-  "Daily Herald": {
+  "New Haven Register": {
    "n": 1,
-   "correct": 0,
+   "correct": 1,
    "misread": 0,
-   "stale_or_hedged": 1,
+   "stale_or_hedged": 0,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.0,
-   "weight": 0.667,
+   "accuracy": 1.0,
+   "weight": 0.833,
    "muted": false
   },
   "ProFootballRumors.com": {
@@ -222,7 +431,29 @@
    "weight": 0.667,
    "muted": false
   },
-  "CBS Sports": {
+  "lancasteronline.com": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "Trentonian": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "New York Daily News": {
    "n": 1,
    "correct": 1,
    "misread": 0,
@@ -234,28 +465,6 @@
    "muted": false
   },
   "SuaraGarut.ID": {
-   "n": 1,
-   "correct": 1,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.833,
-   "muted": false
-  },
-  "FantasyPros": {
-   "n": 1,
-   "correct": 1,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.833,
-   "muted": false
-  },
-  "bolavip.com": {
    "n": 1,
    "correct": 1,
    "misread": 0,
@@ -290,13 +499,13 @@
   },
   "nbcsports.com": {
    "n": 1,
-   "correct": 1,
+   "correct": 0,
    "misread": 0,
-   "stale_or_hedged": 0,
+   "stale_or_hedged": 1,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.833,
+   "accuracy": 0.0,
+   "weight": 0.667,
    "muted": false
   },
   "The Guardian": {
@@ -343,17 +552,6 @@
    "weight": 0.667,
    "muted": false
   },
-  "google_injury": {
-   "n": 1,
-   "correct": 0,
-   "misread": 0,
-   "stale_or_hedged": 1,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 0.0,
-   "weight": 0.667,
-   "muted": false
-  },
   "The Baltimore Banner": {
    "n": 1,
    "correct": 0,
@@ -363,17 +561,6 @@
    "unclassified": 0,
    "accuracy": 0.0,
    "weight": 0.667,
-   "muted": false
-  },
-  "Yahoo": {
-   "n": 1,
-   "correct": 1,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.833,
    "muted": false
   },
   "sports.yahoo.com": {
@@ -396,6 +583,17 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.833,
+   "muted": false
+  },
+  "Detroit Jock City": {
+   "n": 1,
+   "correct": 0,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 0.0,
+   "weight": 0.667,
    "muted": false
   },
   "wtsp.com": {
