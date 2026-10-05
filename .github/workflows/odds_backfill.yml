@@ -8,7 +8,7 @@ on:
       plan:
         description: "dense = NFL hourly odds (all US books + Pinnacle), ~350k credits and ~1.5 h per season. cfb = college football odds (~35k credits per season, 2021+)"
         type: choice
-        options: [dense, cfb, cfb_deriv, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
+        options: [dense, cfb, cfb_deriv, more_props, big, derivatives, alternates, props, pinnacle, extras, totals, openers, hourly, main]
         default: dense
       seasons:
         description: "Seasons, e.g. 2025 or 2023-2025 (newest first). Each season is saved as soon as it finishes; a run stops itself at ~5.5 h and a re-run resumes"
@@ -60,6 +60,7 @@ jobs:
           if [ "$PLANS" = "dense" ]; then PLANS="dense dense_pin"; fi
           if [ "$PLANS" = "cfb" ]; then PLANS="cfb cfb_pin"; fi
           if [ "$PLANS" = "big" ]; then PLANS="props:player_pass_yds,player_pass_attempts,player_rush_yds,player_receptions,player_anytime_td:open+early+close props:player_reception_yds:open props:spreads_h1,totals_h1,team_totals:open props:alternate_spreads:open"; fi
+          if [ "$PLANS" = "more_props" ]; then PLANS="props:player_sacks,player_solo_tackles,player_tackles_assists,player_defensive_interceptions:early+close props:player_pass_tds,player_pass_interceptions,player_pass_completions,player_rush_attempts:early+close"; fi
           if [ "$PLANS" = "derivatives" ]; then PLANS="props:spreads_h1,totals_h1,team_totals"; fi
           SEASONS=$(python -c "import sys; a=sys.argv[1]; print(' '.join(str(x) for x in sorted((range(int(a.split('-')[0]), int(a.split('-')[1])+1) if '-' in a else map(int, a.split(','))), reverse=True)))" "${{ inputs.seasons }}")
           DRY=""; if [ "${{ inputs.dry_run }}" = "true" ]; then DRY="--dry-run"; fi
