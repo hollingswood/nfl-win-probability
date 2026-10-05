@@ -54,6 +54,7 @@ SEED = {"jordanraanan.bsky.social": "NYG", "joebuscaglia.bsky.social": "BUF", "d
         "wyche89.bsky.social": None, "sethwickersham.bsky.social": None, "nflnetwork.bsky.social": None,
         "rotopat.bsky.social": None, "thomasgower.bsky.social": "TEN"}
 FOOTBALL = re.compile(r"\b(NFL|football)\b", re.I)   # drops same-nickname baseball/NBA writers (SF Giants, etc.)
+OTHER_SPORT = re.compile(r"\b(MLB|baseball|NBA|basketball|NHL|hockey|WNBA|soccer|MLS)\b", re.I)
 REPORTER = re.compile(r"\b(reporter|beat|covers?|covering|writer|insider|correspondent|columnist|analyst|radio|host)\b", re.I)
 
 
@@ -96,7 +97,7 @@ def discover(history_dir: Path, get=_get, now: datetime | None = None, max_age_d
                 continue
             for a in res:
                 bio = (a.get("description") or "") + " " + (a.get("displayName") or "")
-                if (nm.lower() in bio.lower() and REPORTER.search(bio) and FOOTBALL.search(bio)
+                if (nm.lower() in bio.lower() and REPORTER.search(bio) and (FOOTBALL.search(bio) or not OTHER_SPORT.search(bio))
                         and a.get("handle") not in acc):
                     acc[a["handle"]] = {"team": team, "name": a.get("displayName"), "how": "search"}
     # follower counts for search hits (searchActors does not return them); keep the biggest
@@ -195,8 +196,12 @@ def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "cla
         errs["_status"] = f"failed {datetime.now(timezone.utc).isoformat(timespec='minutes')}: {str(e)[:200]}"
         e_p.write_text(json.dumps(errs, indent=1))
         return errs
-    out = {re.sub(r"\D", "", str(k)): v for k, v in (out or {}).items()}   # "[3]" / "case 3" -> "3"
-    errs["_status"] = f"ok {datetime.now(timezone.utc).isoformat(timespec='minutes')}: {len(out)} answers for {min(len(todo), 40)} cases"
+    text = out if isinstance(out, str) else json.dumps(out)   # parse loosely: "3": "misread", "[3]": ..., {"id": 3, "why": ...}
+    out = {}
+    for m in re.finditer(r'"?\[?(?:case[\s_#-]*)?(\d+)\]?"?\s*[:,]\s*(?:"why"\s*:\s*)?"(misread|stale_or_hedged|source_wrong)"', text, re.I):
+        out.setdefault(m.group(1), m.group(2).lower())
+    errs["_status"] = (f"ok {datetime.now(timezone.utc).isoformat(timespec='minutes')}: {len(out)} answers for {min(len(todo), 40)} cases"
+                       + ("" if out else f"; reply began: {text[:300]!r}"))
     for i, (k, ev, r) in enumerate(todo[:40]):
         v = out.get(str(i))
         if v in ("misread", "stale_or_hedged", "source_wrong"):
@@ -205,15 +210,13 @@ def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "cla
     return errs
 
 
-def _claude(prompt: str, api_key: str, model: str) -> dict:
+def _claude(prompt: str, api_key: str, model: str) -> str:
     payload = {"model": model, "max_tokens": 2000, "messages": [{"role": "user", "content": prompt}]}
     req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=json.dumps(payload).encode(), method="POST",
                                  headers={"x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=90) as r:
         resp = json.load(r)
-    text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
-    m = re.search(r"\{.*\}", text, re.S)
-    return json.loads(m.group(0)) if m else {}
+    return "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
 
 
 def source_table(audit: dict, errors: dict) -> dict:
