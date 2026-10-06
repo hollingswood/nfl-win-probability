@@ -1,38 +1,49 @@
 {
- "generated_at": "2026-10-06T19:24+00:00",
+ "generated_at": "2026-10-06T20:24+00:00",
  "rule": "weight = (correct + 4) / (judged + 5); misreads are the AI's fault and not counted; muted if >= 10 judged and weight < 0.6",
  "sources": {
   "yahoo": {
-   "n": 75,
-   "correct": 69,
+   "n": 77,
+   "correct": 71,
    "misread": 1,
    "stale_or_hedged": 5,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.932,
-   "weight": 0.924,
+   "accuracy": 0.934,
+   "weight": 0.926,
    "muted": false
   },
   "pft": {
-   "n": 63,
-   "correct": 58,
+   "n": 68,
+   "correct": 63,
    "misread": 1,
    "stale_or_hedged": 4,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.935,
-   "weight": 0.925,
+   "accuracy": 0.94,
+   "weight": 0.931,
    "muted": false
   },
   "Yahoo Sports": {
-   "n": 30,
-   "correct": 26,
+   "n": 31,
+   "correct": 27,
    "misread": 0,
    "stale_or_hedged": 3,
    "source_wrong": 1,
    "unclassified": 0,
-   "accuracy": 0.867,
-   "weight": 0.857,
+   "accuracy": 0.871,
+   "weight": 0.861,
+   "muted": false
+  },
+  "cbs": {
+   "n": 9,
+   "correct": 7,
+   "misread": 2,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.917,
    "muted": false
   },
   "Fantasy Footballers Podcast": {
@@ -46,26 +57,15 @@
    "weight": 0.923,
    "muted": false
   },
-  "cbs": {
-   "n": 8,
-   "correct": 6,
-   "misread": 2,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.909,
-   "muted": false
-  },
   "ESPN": {
-   "n": 7,
-   "correct": 6,
+   "n": 8,
+   "correct": 7,
    "misread": 0,
    "stale_or_hedged": 1,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.857,
-   "weight": 0.833,
+   "accuracy": 0.875,
+   "weight": 0.846,
    "muted": false
   },
   "NBC Sports": {
@@ -101,6 +101,17 @@
    "weight": 0.727,
    "muted": false
   },
+  "CBS Sports": {
+   "n": 4,
+   "correct": 3,
+   "misread": 1,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
+   "muted": false
+  },
   "RotoBaller": {
    "n": 3,
    "correct": 2,
@@ -132,17 +143,6 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.875,
-   "muted": false
-  },
-  "CBS Sports": {
-   "n": 3,
-   "correct": 2,
-   "misread": 1,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.857,
    "muted": false
   },
   "nytimes.com": {
@@ -308,6 +308,17 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.857,
+   "muted": false
+  },
+  "ProFootball Talk on NBC Sports": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
    "muted": false
   },
   "The Big Lead": {
@@ -506,6 +517,17 @@
    "unclassified": 0,
    "accuracy": 0.0,
    "weight": 0.667,
+   "muted": false
+  },
+  "thescore.com": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
    "muted": false
   },
   "The Guardian": {
