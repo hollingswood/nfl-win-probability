@@ -320,6 +320,10 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     try:   # shop-vs-sharp paper track (spreads, totals, moneylines vs Pinnacle) + phone alerts
         from . import shop
         res["cfb_shop_bets"] = shop.process(now)
+        try:   # v3 shadow variant (overs need 4%, haircut sizing), paper-tracked separately
+            res["cfb_shop_v3_bets"] = shop.process(now, shop.RULES_V3)
+        except Exception as e:
+            res["cfb_shop_v3_bets"] = {"error": str(e)}
         if res["cfb_shop_bets"]["new"]:
             from nflpred import notify
             notify.new_bets({"upcoming": [], "cfb_shop_bets": res["cfb_shop_bets"]}, set())

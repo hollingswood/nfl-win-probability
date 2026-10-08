@@ -1,0 +1,69 @@
+{
+ "track": "cfb_shop_v3",
+ "version": 3,
+ "frozen_on": "2026-10-07",
+ "note": "Shadow variant of cfb_shop v2, paper-tracked alongside it (v2 keeps running unchanged). Changes come from the 2021-25 segment study (output/research/round3/cfb_shop_segments.md), which sliced the same data that validated v2, so v3 must prove itself on 2026+ bets before it replaces anything: (1) OVERS need EV >= 4% (overs kept only 26% of their EV at the close vs 83% for unders; overs at EV 2-3% were worth ~+0.7% CLV); unders, spreads and moneylines keep their v2 bars. (2) Stake = quarter Kelly on the EV after the market's average EV-to-CLV gap (totals 1.9%, spreads 1.3%, moneylines 0). Everything else (books, price range, 60 min..7 days, one bet per game per market, Shin devig) as v2. Pass: >= 150 bets, CLV > 0 at p < 0.01, ROI > 0, and CLV per bet above v2's on the same games. Do not edit to fit results; bump the version.",
+ "books": [
+  "draftkings",
+  "fanduel",
+  "espnbet",
+  "betmgm",
+  "williamhill_us",
+  "betrivers",
+  "fanatics",
+  "hardrockbet",
+  "ballybet"
+ ],
+ "qualify": {
+  "min_minutes_before_kickoff": 60,
+  "max_days_before_kickoff": 7,
+  "price_range": [
+   -200,
+   200
+  ],
+  "min_ev": {
+   "spread": 0.04,
+   "total": 0.02,
+   "ml": 0.02
+  },
+  "one_bet_per_game_per_market": "first qualifying snapshot, best EV across books and sides at that snapshot",
+  "min_ev_side": {
+   "over": 0.04
+  }
+ },
+ "sizing": {
+  "method": "quarter Kelly vs the Pinnacle fair price, capped",
+  "kelly_fraction": 0.25,
+  "max_pct_bankroll": 2.0,
+  "flat_units_for_grading": 1.0,
+  "ev_haircut": {
+   "total": 0.019,
+   "spread": 0.013,
+   "ml": 0.0
+  }
+ },
+ "grading": {
+  "clv": "EV of our bet (same number and price) under Pinnacle's last pre-kickoff quote of that market, key-number pricing",
+  "result": "CFBD final score; pushes return the stake"
+ },
+ "validation": {
+  "min_bets": 150,
+  "avg_clv_positive_with_p_below": 0.01,
+  "realized_roi_above": 0.0
+ },
+ "ledger": "cfb/paper_bets_cfb_shop_v3.json",
+ "version_history": [
+  {
+   "version": 1,
+   "frozen_on": "2026-10-04",
+   "devig": "multiplicative"
+  },
+  {
+   "version": 2,
+   "frozen_on": "2026-10-04",
+   "devig": "shin"
+  }
+ ],
+ "devig": "shin",
+ "id_prefix": "cfbshop3"
+}

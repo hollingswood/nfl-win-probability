@@ -325,3 +325,28 @@ def test_picks_log_bluesky_posts_become_picks(tmp_path, monkeypatch):
                                                                      {"handle": "b.bsky.social", "description": "dad, Bears fan"}]}
                              if m.endswith("searchActors") else {"followersCount": 900}, now=datetime(2026, 10, 8, tzinfo=timezone.utc))
     assert list(acc) == ["a.bsky.social"]
+
+
+def test_cfb_odds_poll_hourly_when_pinnacle_posts():
+    from cfbpred import odds_live as OL
+    sun = lambda h: datetime(2026, 10, 11, h, 23, tzinfo=timezone.utc)      # Sunday
+    mon = lambda h: datetime(2026, 10, 12, h, 23, tzinfo=timezone.utc)
+    assert all(OL.due(sun(h)) for h in range(16, 24)) and all(OL.due(mon(h)) for h in range(13, 17))
+    assert not OL.due(mon(10)) and not OL.due(datetime(2026, 10, 13, 13, 23, tzinfo=timezone.utc))   # Tue 13 UTC: every 3 h only
+
+
+def test_cfb_shop_v3_over_bar_and_haircut():
+    from cfbpred import shop as SH
+    r2, r3 = SH.load_rules(), SH.load_rules(SH.RULES_V3)
+    assert r3["track"] == "cfb_shop_v3" and r3["qualify"]["min_ev_side"]["over"] == 0.04 and r3["ledger"] != r2["ledger"]
+    ev = {"home_team": "A", "away_team": "B", "bookmakers": [
+        {"key": "pinnacle", "markets": [{"key": "totals", "outcomes": [{"name": "Over", "point": 50.5, "price": -110}, {"name": "Under", "point": 50.5, "price": -110}]}]},
+        {"key": "draftkings", "markets": [{"key": "totals", "outcomes": [{"name": "Over", "point": 49.5, "price": -110}, {"name": "Under", "point": 49.5, "price": -110}]}]}]}
+    c2 = {c["side"]: c for c in SH.candidates(ev, r2)}
+    c3 = {c["side"]: c for c in SH.candidates(ev, r3)}
+    if "over" in c2 and c2["over"]["edge"] < 0.04:
+        assert "over" not in c3                       # v3: overs need 4%+
+    w, l = 0.55, 0.45
+    hw, hl = SH._haircut(w, l, -110, "total", r3)
+    assert hw < w and SH._haircut(w, l, -110, "total", r2) == (w, l)
+    assert SH.kelly_pct(hw, hl, -110, r3) < SH.kelly_pct(w, l, -110, r3)

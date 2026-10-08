@@ -1,0 +1,1121 @@
+{
+ "stage": "holdout",
+ "definitions": "PROPS-IMPLIED TEAM SCORING vs TEAM-TOTAL / GAME-TOTAL MARKETS (cross-market consistency), NFL 2023-25.\n\nQuestion: do player-prop markets imply team scoring that disagrees with the team-total / game-total markets, and\ndoes betting the derivative toward the props beat the close?  Pre-declared 2026-10-07, BEFORE any outcome or CLV\nof this design was looked at.  Stages:\n    PYTHONPATH=src python scripts/research/round3/props_implied_totals.py calibrate   # 2023 only (may be re-run)\n    PYTHONPATH=src python scripts/research/round3/props_implied_totals.py holdout     # 2024-25, ONCE (guarded)\nOutputs: output/research/round3/props_implied_totals_calib.json (2023 constants + 2023 in-sample descriptives),\n         output/research/round3/props_implied_totals.json (holdout), .md written from the json.\n\nDATA\n  Props: data/historical_odds/props (Odds API, regions=us), as loaded/matched by scripts/research/props_full.py\n    `prep` (cached quotes.parquet: event->game_id via props_backtest.map_games, player->gsis id via\n    props_backtest.match_players).  Snapshots: early = Fri 21:40 UTC (Sunday games; kickoff-24h otherwise),\n    close = kickoff-75 min (open = Tue 14:10 is too sparse in 2023 and is not used).\n    Anytime TD: only the Yes price exists (props_full puts it in p_imp = 1/decimal).\n  Team totals: data/historical_odds/derivatives via scripts/research/derivatives.py build() (main-line filters,\n    implied MEAN of every two-way quote under the derivatives.py team-points key-number pmf fit on 2012-22,\n    snapshot consensus `dcons` = median implied mean over ALL books; close consensus `close_cons`).\n  Game totals: data/historical_odds/totals + dense (tot_* columns); fg_fair filters of derivatives.py; per-quote\n    implied expected total under nflpred.totals.TotalDist (totals_dist.json); consensus = median over all books.\n  Outcomes: games.parquet scores; pbp TDs (td_player_id; team offensive TDs = pass/rush TD by posteam) and FGs.\n\nTEAM ASSIGNMENT (no look-ahead): a prop row's team is the player's team in this game when he played; for players\n  who end up inactive (props_full status did_not_play/unmatched) it is the team of his most recent EARLIER played\n  game in the same season (pd.merge_asof by name), kept only if it is one of the two teams in the game.  Every\n  quoted player counts, whether or not he later plays (the live system cannot know).\n\nPROPS-IMPLIED TEAM POINTS (per team-game and snapshot sn in {early, close})\n  TD signal (primary):\n    per quote: lam_raw = -ln(1 - p_imp); fair lam = k_b * lam_raw**gamma, books b in CORE_TD (the six books that\n      quote anytime TD in all three seasons).  k_b (per book) and gamma (global) are fit on 2023 by maximum\n      likelihood of 1{player scored >= 1 TD} = 1 - exp(-lam) over played players' early+close quotes (void rule).\n    player lam = median fair lam over core books (needs >= 2 books).\n    lam9 = sum of the 9 largest player lams on the team (team needs >= 9 such players: books list 11-14 players\n      per team and the depth of the list varies by season, so the tail is cut to keep the level comparable).\n    E[off TDs] = r_sn * lam9, r_sn = sum(realised offensive TDs) / sum(lam9) on 2023 (coverage factor).\n    PPTD = sum(points - 3*FGmade) / sum(all TDs) on 2023 (PAT/2pt/defensive-TD/safety value per TD).\n    FG points = f0_sn + f1_sn * TT_sn (OLS of 3*FGmade on the snapshot team total, 2023).\n    P_TD = PPTD * r_sn * lam9 + f0_sn + f1_sn * TT_sn + c0_sn, with c0_sn set so the 2023 mean of P_TD - TT_sn is\n      0 (the level is anchored to the market, so the signal is purely cross-sectional; c0 is reported).\n  Yards signal (secondary):\n    per player/market: consensus line L* (modal point over all books, ties -> closest to the median), p* = median\n      no-vig P(over) at L*; price-adjusted median m = L* + sigma_m * Phi^-1(p*), sigma = 60 pass yds, 20 rush yds.\n    Y = max QB pass-yds m on the team + sum of the 2 largest rush-yds m on the team (needs both).\n    P_YD = a_sn + b_sn * Y, OLS of the snapshot team total TT_sn on Y over 2023 team-games.\n  Market team points TT_sn = derivatives.py team-total consensus implied mean (dcons / close_cons); fallback (no\n    team-total quote) = derivatives.py full-game-implied team mean (fg_mean from game total and spread).\n  gap_sn = P_sn - TT_sn (points; + = props imply more scoring than the team-total market).\n\nRULES (4, all at the EARLY snapshot, flat 1u, thresholds fixed here, nothing tuned on outcomes)\n  P1_TD / P1_YD (team total): gap_early >= +1.5 -> team-total OVER; <= -1.5 -> UNDER.  One bet per team-game.\n  P2_TD / P2_YD (game total): gapG = gap_home + gap_away (both teams need the signal); >= +2.5 -> game OVER,\n    <= -2.5 -> UNDER.  One bet per game.\n  Books: Arizona-legal list AZ = draftkings, fanduel, espnbet, betmgm, williamhill_us, betrivers, fanatics,\n    hardrockbet, ballybet (only those present in the feed can be bet).  Among the AZ quotes of the side at the\n    betting snapshot take the max EV under the early all-book consensus (key-number pmf at dcons / TotalDist at\n    the consensus expected total) = best number/price trade-off.  Team totals: the derivatives early snapshot\n    (same requested time as the props snapshot).  Game totals: the totals/dense snapshot nearest to the props\n    early request within [-10, +70] min (never a price older than 10 min before the signal).\n  Informational variants (not tested): my_books.json books only (draftkings, fanduel, espnbet); threshold 0\n    (bet the sign of every gap) as a dose-response / vig baseline.\nCLV (the pass test): P_close(win) * decimal + P_close(push) - 1.  P_close(over) = median two-way no-vig P(over)\n  among CLOSE quotes of ALL books at the SAME number (\"direct\"; push share from the pmf at the close consensus);\n  if no close book quotes that number: pmf at the close consensus (team: close_cons; game: latest totals snapshot\n  0-3 h before kickoff, median implied mean).  Results graded on final team / game points (push refunds; OT in).\nSTATISTICS: mean CLV and ROI with game-clustered SEs; one-sided p = 1 - Phi(mean/SE).\nSPLIT: 2023 = calibration + in-sample descriptives only (all constants above fit there).  2024-25 = holdout, run\n  once with the 2023 constants frozen in props_implied_totals_calib.json.\nPASS (per rule, Bonferroni k = 4): holdout n >= 100 bets, mean CLV > 0 with one-sided p < 0.05/4 = 0.0125, and\n  mean CLV > 0 in 2024 AND in 2025 separately.  ROI is reported, not tested (too noisy at these n).\nLEAD-LAG (pre-declared secondary, reported for 2023 and 2024-25): per team-game, regress\n  dTT = TT_close - TT_early on gap_early (beta_mkt: market moves toward props) and dP = P_close - P_early on\n  -gap_early (beta_props: props move toward the market); same at game level with the game-total consensus and\n  gapG.  \"Market follows props\" = holdout beta_mkt > 0 (one-sided p < 0.05) AND beta_mkt - beta_props > 0\n  (game-cluster bootstrap, 2000 draws, one-sided p < 0.05).  Caveat declared up front: measurement noise in either\n  side's early value reverts and inflates its own beta; that is why the two directions are compared.\n",
+ "coverage": {
+  "2023": {
+   "team_games": 570,
+   "TT_early": 552,
+   "TT_close": 552,
+   "TD_early": 548,
+   "TD_close": 552,
+   "YD_early": 463,
+   "YD_close": 534,
+   "mean_players_listed_early": 13.5365,
+   "games_with_gt_early_snapshot": 274,
+   "games_with_gt_close": 285
+  },
+  "2024": {
+   "team_games": 570,
+   "TT_early": 570,
+   "TT_close": 570,
+   "TD_early": 562,
+   "TD_close": 570,
+   "YD_early": 493,
+   "YD_close": 547,
+   "mean_players_listed_early": 12.71454,
+   "games_with_gt_early_snapshot": 284,
+   "games_with_gt_close": 285
+  },
+  "2025": {
+   "team_games": 570,
+   "TT_early": 570,
+   "TT_close": 570,
+   "TD_early": 538,
+   "TD_close": 555,
+   "YD_early": 524,
+   "YD_close": 549,
+   "mean_players_listed_early": 12.48214,
+   "games_with_gt_early_snapshot": 283,
+   "games_with_gt_close": 285
+  }
+ },
+ "team_src_share": {
+  "(2023, 'close', 'played')": 0.5186,
+  "(2023, 'close', 'none')": 0.4378,
+  "(2023, 'close', 'prior_game')": 0.0436,
+  "(2023, 'early', 'played')": 0.559,
+  "(2023, 'early', 'none')": 0.3787,
+  "(2023, 'early', 'prior_game')": 0.0624,
+  "(2024, 'close', 'played')": 0.6726,
+  "(2024, 'close', 'none')": 0.2665,
+  "(2024, 'close', 'prior_game')": 0.0609,
+  "(2024, 'early', 'played')": 0.6867,
+  "(2024, 'early', 'none')": 0.2369,
+  "(2024, 'early', 'prior_game')": 0.0764,
+  "(2025, 'close', 'played')": 0.7736,
+  "(2025, 'close', 'none')": 0.1608,
+  "(2025, 'close', 'prior_game')": 0.0657,
+  "(2025, 'early', 'played')": 0.754,
+  "(2025, 'early', 'none')": 0.1643,
+  "(2025, 'early', 'prior_game')": 0.0817
+ },
+ "descriptives": {
+  "TD_early": {
+   "n": 1100,
+   "mean_gap": -1.26934,
+   "sd_gap": 1.32391,
+   "mean_gap_by_season": {
+    "2024": -0.769,
+    "2025": -1.792
+   },
+   "share_abs_gap_ge_1.5": 0.46727,
+   "corr_P_TT": 0.93656,
+   "corr_gap_TT": -0.22684,
+   "mae_TT_vs_pts": 7.17724,
+   "mae_P_vs_pts": 7.39608,
+   "slope_pts_resid_on_gap": -0.02255,
+   "slope_se": 0.20128
+  },
+  "TD_close": {
+   "n": 1125,
+   "mean_gap": -1.17166,
+   "sd_gap": 1.01753,
+   "mean_gap_by_season": {
+    "2024": -0.753,
+    "2025": -1.602
+   },
+   "share_abs_gap_ge_1.5": 0.38667,
+   "corr_P_TT": 0.96406,
+   "corr_gap_TT": -0.23846,
+   "mae_TT_vs_pts": 7.15662,
+   "mae_P_vs_pts": 7.29702,
+   "slope_pts_resid_on_gap": 0.07243,
+   "slope_se": 0.25608
+  },
+  "YD_early": {
+   "n": 1017,
+   "mean_gap": -1.20843,
+   "sd_gap": 1.9874,
+   "mean_gap_by_season": {
+    "2024": -0.879,
+    "2025": -1.518
+   },
+   "share_abs_gap_ge_1.5": 0.48574,
+   "corr_P_TT": 0.85315,
+   "corr_gap_TT": -0.68993,
+   "mae_TT_vs_pts": 7.20788,
+   "mae_P_vs_pts": 7.51435,
+   "slope_pts_resid_on_gap": -0.20319,
+   "slope_se": 0.14353
+  },
+  "YD_close": {
+   "n": 1096,
+   "mean_gap": -1.33866,
+   "sd_gap": 2.0555,
+   "mean_gap_by_season": {
+    "2024": -1.007,
+    "2025": -1.67
+   },
+   "share_abs_gap_ge_1.5": 0.52555,
+   "corr_P_TT": 0.86554,
+   "corr_gap_TT": -0.79551,
+   "mae_TT_vs_pts": 7.19565,
+   "mae_P_vs_pts": 7.5495,
+   "slope_pts_resid_on_gap": -0.27745,
+   "slope_se": 0.12853
+  }
+ },
+ "lead_lag": {
+  "team_TD": {
+   "n": 1100,
+   "beta_mkt": 0.00474,
+   "beta_mkt_se": 0.01229,
+   "beta_mkt_p": 0.3498,
+   "beta_props": 0.43463,
+   "beta_props_se": 0.02607,
+   "beta_props_p": 0.0,
+   "diff": -0.42989,
+   "diff_boot_se": 0.03214,
+   "diff_boot_p_le0": 1.0,
+   "sd_gap": 1.3233,
+   "sd_dmkt": 0.49284,
+   "sd_dprops": 0.94853,
+   "mean_dmkt_when_gap_ge_thr": -0.00998,
+   "mean_dmkt_when_gap_le_-thr": -0.00649
+  },
+  "game_TD": {
+   "n": 548,
+   "beta_mkt": -0.00271,
+   "beta_mkt_se": 0.01869,
+   "beta_mkt_p": 0.55758,
+   "beta_props": 0.43615,
+   "beta_props_se": 0.03012,
+   "beta_props_p": 0.0,
+   "diff": -0.43885,
+   "diff_boot_se": 0.04217,
+   "diff_boot_p_le0": 1.0,
+   "sd_gap": 2.05989,
+   "sd_dmkt": 0.76449,
+   "sd_dprops": 1.47387,
+   "mean_dmkt_when_gap_ge_thr": -0.2186,
+   "mean_dmkt_when_gap_le_-thr": 0.0208
+  },
+  "team_YD": {
+   "n": 1014,
+   "beta_mkt": -0.00062,
+   "beta_mkt_se": 0.00825,
+   "beta_mkt_p": 0.52977,
+   "beta_props": 0.03459,
+   "beta_props_se": 0.01297,
+   "beta_props_p": 0.00383,
+   "diff": -0.0352,
+   "diff_boot_se": 0.01707,
+   "diff_boot_p_le0": 0.979,
+   "sd_gap": 1.98806,
+   "sd_dmkt": 0.47173,
+   "sd_dprops": 0.63716,
+   "mean_dmkt_when_gap_ge_thr": -0.06987,
+   "mean_dmkt_when_gap_le_-thr": -0.00661
+  },
+  "game_YD": {
+   "n": 457,
+   "beta_mkt": 0.05422,
+   "beta_mkt_se": 0.01902,
+   "beta_mkt_p": 0.00218,
+   "beta_props": 0.1315,
+   "beta_props_se": 0.03313,
+   "beta_props_p": 4e-05,
+   "diff": -0.07728,
+   "diff_boot_se": 0.0426,
+   "diff_boot_p_le0": 0.962,
+   "sd_gap": 1.94803,
+   "sd_dmkt": 0.72831,
+   "sd_dprops": 0.93777,
+   "mean_dmkt_when_gap_ge_thr": 0.45766,
+   "mean_dmkt_when_gap_le_-thr": -0.03941
+  }
+ },
+ "rules": {
+  "P1_TD": {
+   "2024": {
+    "n": 160,
+    "n_clv": 160,
+    "clv": -0.03555,
+    "clv_se": 0.00314,
+    "clv_t": -11.3228,
+    "clv_p": 1.0,
+    "roi": -0.15026,
+    "roi_se": 0.07647,
+    "hit": 0.44375,
+    "over_share": 0.13125,
+    "mean_abs_gap": 2.23537,
+    "direct_share": 0.90625,
+    "bets_per_week": 7.27,
+    "books": {
+     "williamhill_us": 63,
+     "fanduel": 54,
+     "betrivers": 34,
+     "betmgm": 9
+    }
+   },
+   "2025": {
+    "n": 354,
+    "n_clv": 354,
+    "clv": -0.04406,
+    "clv_se": 0.0022,
+    "clv_t": -20.05351,
+    "clv_p": 1.0,
+    "roi": -0.10922,
+    "roi_se": 0.05071,
+    "hit": 0.46893,
+    "over_share": 0.03107,
+    "mean_abs_gap": 2.49484,
+    "direct_share": 0.86158,
+    "bets_per_week": 16.09,
+    "books": {
+     "betrivers": 186,
+     "fanduel": 135,
+     "williamhill_us": 33
+    }
+   },
+   "pooled": {
+    "n": 514,
+    "n_clv": 514,
+    "clv": -0.04141,
+    "clv_se": 0.00181,
+    "clv_t": -22.92837,
+    "clv_p": 1.0,
+    "roi": -0.12199,
+    "roi_se": 0.04227,
+    "hit": 0.46109,
+    "over_share": 0.06226,
+    "mean_abs_gap": 2.41407,
+    "direct_share": 0.87549,
+    "bets_per_week": 11.68,
+    "books": {
+     "betrivers": 220,
+     "fanduel": 189,
+     "williamhill_us": 96,
+     "betmgm": 9
+    }
+   },
+   "pass": false
+  },
+  "P1_YD": {
+   "2024": {
+    "n": 204,
+    "n_clv": 204,
+    "clv": -0.03668,
+    "clv_se": 0.00259,
+    "clv_t": -14.17481,
+    "clv_p": 1.0,
+    "roi": -0.08856,
+    "roi_se": 0.07153,
+    "hit": 0.47549,
+    "over_share": 0.19118,
+    "mean_abs_gap": 2.78212,
+    "direct_share": 0.87255,
+    "bets_per_week": 9.27,
+    "books": {
+     "williamhill_us": 81,
+     "fanduel": 76,
+     "betrivers": 43,
+     "betmgm": 4
+    }
+   },
+   "2025": {
+    "n": 290,
+    "n_clv": 290,
+    "clv": -0.04417,
+    "clv_se": 0.00262,
+    "clv_t": -16.83812,
+    "clv_p": 1.0,
+    "roi": -0.08565,
+    "roi_se": 0.0577,
+    "hit": 0.48276,
+    "over_share": 0.13103,
+    "mean_abs_gap": 3.0888,
+    "direct_share": 0.82759,
+    "bets_per_week": 13.18,
+    "books": {
+     "betrivers": 140,
+     "fanduel": 128,
+     "williamhill_us": 22
+    }
+   },
+   "pooled": {
+    "n": 494,
+    "n_clv": 494,
+    "clv": -0.04108,
+    "clv_se": 0.00188,
+    "clv_t": -21.86387,
+    "clv_p": 1.0,
+    "roi": -0.08685,
+    "roi_se": 0.04494,
+    "hit": 0.47976,
+    "over_share": 0.15587,
+    "mean_abs_gap": 2.96216,
+    "direct_share": 0.84615,
+    "bets_per_week": 11.23,
+    "books": {
+     "fanduel": 204,
+     "betrivers": 183,
+     "williamhill_us": 103,
+     "betmgm": 4
+    }
+   },
+   "pass": false
+  },
+  "P2_TD": {
+   "2024": {
+    "n": 76,
+    "n_clv": 76,
+    "clv": -0.03764,
+    "clv_se": 0.00483,
+    "clv_t": -7.79069,
+    "clv_p": 1.0,
+    "roi": -0.16414,
+    "roi_se": 0.10787,
+    "hit": 0.43243,
+    "over_share": 0.03947,
+    "mean_abs_gap": 3.73436,
+    "direct_share": 0.63158,
+    "bets_per_week": 3.45,
+    "books": {
+     "betmgm": 23,
+     "betrivers": 12,
+     "fanduel": 12,
+     "draftkings": 11,
+     "williamhill_us": 10,
+     "espnbet": 3,
+     "hardrockbet": 3,
+     "ballybet": 2
+    }
+   },
+   "2025": {
+    "n": 208,
+    "n_clv": 208,
+    "clv": -0.03076,
+    "clv_se": 0.00292,
+    "clv_t": -10.5474,
+    "clv_p": 1.0,
+    "roi": -0.01166,
+    "roi_se": 0.06625,
+    "hit": 0.51456,
+    "over_share": 0.00962,
+    "mean_abs_gap": 4.30715,
+    "direct_share": 0.72115,
+    "bets_per_week": 9.45,
+    "books": {
+     "draftkings": 52,
+     "betmgm": 43,
+     "williamhill_us": 36,
+     "fanduel": 33,
+     "fanatics": 22,
+     "betrivers": 8,
+     "hardrockbet": 7,
+     "ballybet": 4,
+     "espnbet": 3
+    }
+   },
+   "pooled": {
+    "n": 284,
+    "n_clv": 284,
+    "clv": -0.0326,
+    "clv_se": 0.0025,
+    "clv_t": -13.02329,
+    "clv_p": 1.0,
+    "roi": -0.05247,
+    "roi_se": 0.0566,
+    "hit": 0.49286,
+    "over_share": 0.01761,
+    "mean_abs_gap": 4.15387,
+    "direct_share": 0.69718,
+    "bets_per_week": 6.45,
+    "books": {
+     "betmgm": 66,
+     "draftkings": 63,
+     "williamhill_us": 46,
+     "fanduel": 45,
+     "fanatics": 22,
+     "betrivers": 20,
+     "hardrockbet": 10,
+     "espnbet": 6,
+     "ballybet": 6
+    }
+   },
+   "pass": false
+  },
+  "P2_YD": {
+   "2024": {
+    "n": 66,
+    "n_clv": 66,
+    "clv": -0.0445,
+    "clv_se": 0.00346,
+    "clv_t": -12.8443,
+    "clv_p": 1.0,
+    "roi": -0.12902,
+    "roi_se": 0.11747,
+    "hit": 0.45455,
+    "over_share": 0.0,
+    "mean_abs_gap": 3.79302,
+    "direct_share": 0.68182,
+    "bets_per_week": 3.14,
+    "books": {
+     "fanduel": 20,
+     "betmgm": 15,
+     "williamhill_us": 13,
+     "draftkings": 9,
+     "betrivers": 5,
+     "espnbet": 2,
+     "hardrockbet": 2
+    }
+   },
+   "2025": {
+    "n": 133,
+    "n_clv": 133,
+    "clv": -0.02508,
+    "clv_se": 0.0039,
+    "clv_t": -6.42916,
+    "clv_p": 1.0,
+    "roi": -0.04639,
+    "roi_se": 0.08333,
+    "hit": 0.49624,
+    "over_share": 0.0,
+    "mean_abs_gap": 4.28097,
+    "direct_share": 0.71429,
+    "bets_per_week": 6.05,
+    "books": {
+     "draftkings": 39,
+     "betmgm": 27,
+     "williamhill_us": 20,
+     "fanduel": 16,
+     "fanatics": 11,
+     "betrivers": 7,
+     "hardrockbet": 6,
+     "ballybet": 4,
+     "espnbet": 3
+    }
+   },
+   "pooled": {
+    "n": 199,
+    "n_clv": 199,
+    "clv": -0.03152,
+    "clv_se": 0.00292,
+    "clv_t": -10.78799,
+    "clv_p": 1.0,
+    "roi": -0.07379,
+    "roi_se": 0.06803,
+    "hit": 0.48241,
+    "over_share": 0.0,
+    "mean_abs_gap": 4.11914,
+    "direct_share": 0.70352,
+    "bets_per_week": 4.63,
+    "books": {
+     "draftkings": 48,
+     "betmgm": 42,
+     "fanduel": 36,
+     "williamhill_us": 33,
+     "betrivers": 12,
+     "fanatics": 11,
+     "hardrockbet": 8,
+     "espnbet": 5,
+     "ballybet": 4
+    }
+   },
+   "pass": false
+  }
+ },
+ "rules_my_books_info": {
+  "P1_TD": {
+   "2024": {
+    "n": 148,
+    "n_clv": 148,
+    "clv": -0.0477,
+    "clv_se": 0.00334,
+    "clv_t": -14.29775,
+    "clv_p": 1.0,
+    "roi": -0.12554,
+    "roi_se": 0.07869,
+    "hit": 0.45946,
+    "over_share": 0.12162,
+    "mean_abs_gap": 2.26029,
+    "direct_share": 0.89865,
+    "bets_per_week": 7.05,
+    "books": {
+     "fanduel": 148
+    }
+   },
+   "2025": {
+    "n": 353,
+    "n_clv": 353,
+    "clv": -0.05579,
+    "clv_se": 0.00223,
+    "clv_t": -25.07238,
+    "clv_p": 1.0,
+    "roi": -0.13018,
+    "roi_se": 0.05074,
+    "hit": 0.46176,
+    "over_share": 0.03116,
+    "mean_abs_gap": 2.49599,
+    "direct_share": 0.85552,
+    "bets_per_week": 16.05,
+    "books": {
+     "fanduel": 353
+    }
+   },
+   "pooled": {
+    "n": 501,
+    "n_clv": 501,
+    "clv": -0.0534,
+    "clv_se": 0.00186,
+    "clv_t": -28.74188,
+    "clv_p": 1.0,
+    "roi": -0.12881,
+    "roi_se": 0.04265,
+    "hit": 0.46108,
+    "over_share": 0.05788,
+    "mean_abs_gap": 2.42636,
+    "direct_share": 0.86826,
+    "bets_per_week": 11.65,
+    "books": {
+     "fanduel": 501
+    }
+   }
+  },
+  "P1_YD": {
+   "2024": {
+    "n": 189,
+    "n_clv": 189,
+    "clv": -0.04883,
+    "clv_se": 0.00251,
+    "clv_t": -19.43254,
+    "clv_p": 1.0,
+    "roi": -0.09158,
+    "roi_se": 0.0732,
+    "hit": 0.47619,
+    "over_share": 0.19577,
+    "mean_abs_gap": 2.78671,
+    "direct_share": 0.87831,
+    "bets_per_week": 9.0,
+    "books": {
+     "fanduel": 189
+    }
+   },
+   "2025": {
+    "n": 287,
+    "n_clv": 287,
+    "clv": -0.05425,
+    "clv_se": 0.0026,
+    "clv_t": -20.82673,
+    "clv_p": 1.0,
+    "roi": -0.10928,
+    "roi_se": 0.05806,
+    "hit": 0.47387,
+    "over_share": 0.12892,
+    "mean_abs_gap": 3.09692,
+    "direct_share": 0.83972,
+    "bets_per_week": 13.05,
+    "books": {
+     "fanduel": 287
+    }
+   },
+   "pooled": {
+    "n": 476,
+    "n_clv": 476,
+    "clv": -0.0521,
+    "clv_se": 0.00186,
+    "clv_t": -27.98829,
+    "clv_p": 1.0,
+    "roi": -0.10225,
+    "roi_se": 0.04551,
+    "hit": 0.47479,
+    "over_share": 0.15546,
+    "mean_abs_gap": 2.97375,
+    "direct_share": 0.85504,
+    "bets_per_week": 11.07,
+    "books": {
+     "fanduel": 476
+    }
+   }
+  },
+  "P2_TD": {
+   "2024": {
+    "n": 76,
+    "n_clv": 76,
+    "clv": -0.04288,
+    "clv_se": 0.00455,
+    "clv_t": -9.43467,
+    "clv_p": 1.0,
+    "roi": -0.15528,
+    "roi_se": 0.10838,
+    "hit": 0.44,
+    "over_share": 0.03947,
+    "mean_abs_gap": 3.73436,
+    "direct_share": 0.63158,
+    "bets_per_week": 3.45,
+    "books": {
+     "draftkings": 35,
+     "fanduel": 34,
+     "espnbet": 7
+    }
+   },
+   "2025": {
+    "n": 208,
+    "n_clv": 208,
+    "clv": -0.03631,
+    "clv_se": 0.00295,
+    "clv_t": -12.30543,
+    "clv_p": 1.0,
+    "roi": -0.02268,
+    "roi_se": 0.0665,
+    "hit": 0.50962,
+    "over_share": 0.00962,
+    "mean_abs_gap": 4.30715,
+    "direct_share": 0.78365,
+    "bets_per_week": 9.45,
+    "books": {
+     "draftkings": 116,
+     "fanduel": 70,
+     "espnbet": 22
+    }
+   },
+   "pooled": {
+    "n": 284,
+    "n_clv": 284,
+    "clv": -0.03807,
+    "clv_se": 0.00249,
+    "clv_t": -15.31406,
+    "clv_p": 1.0,
+    "roi": -0.05817,
+    "roi_se": 0.05679,
+    "hit": 0.49117,
+    "over_share": 0.01761,
+    "mean_abs_gap": 4.15387,
+    "direct_share": 0.74296,
+    "bets_per_week": 6.45,
+    "books": {
+     "draftkings": 151,
+     "fanduel": 104,
+     "espnbet": 29
+    }
+   }
+  },
+  "P2_YD": {
+   "2024": {
+    "n": 66,
+    "n_clv": 66,
+    "clv": -0.04793,
+    "clv_se": 0.00343,
+    "clv_t": -13.9623,
+    "clv_p": 1.0,
+    "roi": -0.13417,
+    "roi_se": 0.11677,
+    "hit": 0.45455,
+    "over_share": 0.0,
+    "mean_abs_gap": 3.79302,
+    "direct_share": 0.66667,
+    "bets_per_week": 3.14,
+    "books": {
+     "fanduel": 32,
+     "draftkings": 29,
+     "espnbet": 5
+    }
+   },
+   "2025": {
+    "n": 133,
+    "n_clv": 133,
+    "clv": -0.02965,
+    "clv_se": 0.00393,
+    "clv_t": -7.54733,
+    "clv_p": 1.0,
+    "roi": -0.04548,
+    "roi_se": 0.08342,
+    "hit": 0.49624,
+    "over_share": 0.0,
+    "mean_abs_gap": 4.28097,
+    "direct_share": 0.78195,
+    "bets_per_week": 6.05,
+    "books": {
+     "draftkings": 80,
+     "fanduel": 46,
+     "espnbet": 7
+    }
+   },
+   "pooled": {
+    "n": 199,
+    "n_clv": 199,
+    "clv": -0.03571,
+    "clv_se": 0.00293,
+    "clv_t": -12.20493,
+    "clv_p": 1.0,
+    "roi": -0.07489,
+    "roi_se": 0.06795,
+    "hit": 0.48241,
+    "over_share": 0.0,
+    "mean_abs_gap": 4.11914,
+    "direct_share": 0.74372,
+    "bets_per_week": 4.63,
+    "books": {
+     "draftkings": 109,
+     "fanduel": 78,
+     "espnbet": 12
+    }
+   }
+  }
+ },
+ "descriptives_2023_with_frozen_constants": {
+  "TD_early": {
+   "n": 548,
+   "mean_gap": 9e-05,
+   "sd_gap": 1.35753,
+   "mean_gap_by_season": {
+    "2023": 0.0
+   },
+   "share_abs_gap_ge_1.5": 0.22445,
+   "corr_P_TT": 0.93792,
+   "corr_gap_TT": -0.17699,
+   "mae_TT_vs_pts": 7.44466,
+   "mae_P_vs_pts": 7.57774,
+   "slope_pts_resid_on_gap": -0.1111,
+   "slope_se": 0.28823
+  },
+  "TD_close": {
+   "n": 552,
+   "mean_gap": 8e-05,
+   "sd_gap": 1.18923,
+   "mean_gap_by_season": {
+    "2023": 0.0
+   },
+   "share_abs_gap_ge_1.5": 0.15217,
+   "corr_P_TT": 0.95217,
+   "corr_gap_TT": -0.28389,
+   "mae_TT_vs_pts": 7.36846,
+   "mae_P_vs_pts": 7.46533,
+   "slope_pts_resid_on_gap": -0.36964,
+   "slope_se": 0.33083
+  },
+  "YD_early": {
+   "n": 463,
+   "mean_gap": 0.00052,
+   "sd_gap": 2.31701,
+   "mean_gap_by_season": {
+    "2023": 0.001
+   },
+   "share_abs_gap_ge_1.5": 0.44492,
+   "corr_P_TT": 0.80217,
+   "corr_gap_TT": -0.59708,
+   "mae_TT_vs_pts": 7.44875,
+   "mae_P_vs_pts": 7.73318,
+   "slope_pts_resid_on_gap": -0.14711,
+   "slope_se": 0.20696
+  },
+  "YD_close": {
+   "n": 534,
+   "mean_gap": 0.0006,
+   "sd_gap": 2.43835,
+   "mean_gap_by_season": {
+    "2023": 0.001
+   },
+   "share_abs_gap_ge_1.5": 0.47004,
+   "corr_P_TT": 0.78047,
+   "corr_gap_TT": -0.62517,
+   "mae_TT_vs_pts": 7.37688,
+   "mae_P_vs_pts": 7.69003,
+   "slope_pts_resid_on_gap": -0.14831,
+   "slope_se": 0.15999
+  }
+ },
+ "info_threshold0": {
+  "P1_TD": {
+   "2024": {
+    "n": 562,
+    "n_clv": 562,
+    "clv": -0.03366,
+    "clv_se": 0.0018,
+    "clv_t": -18.70201,
+    "clv_p": 1.0,
+    "roi": -0.03653,
+    "roi_se": 0.04076,
+    "hit": 0.50356,
+    "over_share": 0.22242,
+    "mean_abs_gap": 1.1407,
+    "direct_share": 0.88256,
+    "bets_per_week": 25.55,
+    "books": {
+     "williamhill_us": 202,
+     "fanduel": 198,
+     "betrivers": 147,
+     "betmgm": 15
+    }
+   },
+   "2025": {
+    "n": 538,
+    "n_clv": 538,
+    "clv": -0.04401,
+    "clv_se": 0.00173,
+    "clv_t": -25.4014,
+    "clv_p": 1.0,
+    "roi": -0.10607,
+    "roi_se": 0.04132,
+    "hit": 0.47026,
+    "over_share": 0.0632,
+    "mean_abs_gap": 1.95097,
+    "direct_share": 0.84015,
+    "bets_per_week": 24.45,
+    "books": {
+     "betrivers": 297,
+     "fanduel": 204,
+     "williamhill_us": 37
+    }
+   },
+   "pooled": {
+    "n": 1100,
+    "n_clv": 1100,
+    "clv": -0.03872,
+    "clv_se": 0.00127,
+    "clv_t": -30.5056,
+    "clv_p": 1.0,
+    "roi": -0.07054,
+    "roi_se": 0.02906,
+    "hit": 0.48727,
+    "over_share": 0.14455,
+    "mean_abs_gap": 1.537,
+    "direct_share": 0.86182,
+    "bets_per_week": 25.0,
+    "books": {
+     "betrivers": 444,
+     "fanduel": 402,
+     "williamhill_us": 239,
+     "betmgm": 15
+    }
+   }
+  },
+  "P1_YD": {
+   "2024": {
+    "n": 493,
+    "n_clv": 493,
+    "clv": -0.03731,
+    "clv_se": 0.00162,
+    "clv_t": -23.0873,
+    "clv_p": 1.0,
+    "roi": -0.07153,
+    "roi_se": 0.04525,
+    "hit": 0.48479,
+    "over_share": 0.34686,
+    "mean_abs_gap": 1.57018,
+    "direct_share": 0.88235,
+    "bets_per_week": 22.41,
+    "books": {
+     "williamhill_us": 174,
+     "fanduel": 162,
+     "betrivers": 146,
+     "betmgm": 11
+    }
+   },
+   "2025": {
+    "n": 524,
+    "n_clv": 524,
+    "clv": -0.04262,
+    "clv_se": 0.00176,
+    "clv_t": -24.27661,
+    "clv_p": 1.0,
+    "roi": -0.06575,
+    "roi_se": 0.04098,
+    "hit": 0.49237,
+    "over_share": 0.23282,
+    "mean_abs_gap": 2.03252,
+    "direct_share": 0.8416,
+    "bets_per_week": 23.82,
+    "books": {
+     "betrivers": 288,
+     "fanduel": 197,
+     "williamhill_us": 39
+    }
+   },
+   "pooled": {
+    "n": 1017,
+    "n_clv": 1017,
+    "clv": -0.04005,
+    "clv_se": 0.0012,
+    "clv_t": -33.37292,
+    "clv_p": 1.0,
+    "roi": -0.06855,
+    "roi_se": 0.03044,
+    "hit": 0.48869,
+    "over_share": 0.2881,
+    "mean_abs_gap": 1.8084,
+    "direct_share": 0.86136,
+    "bets_per_week": 23.11,
+    "books": {
+     "betrivers": 434,
+     "fanduel": 359,
+     "williamhill_us": 213,
+     "betmgm": 11
+    }
+   }
+  },
+  "P2_TD": {
+   "2024": {
+    "n": 280,
+    "n_clv": 280,
+    "clv": -0.03896,
+    "clv_se": 0.00261,
+    "clv_t": -14.90303,
+    "clv_p": 1.0,
+    "roi": -0.09867,
+    "roi_se": 0.05692,
+    "hit": 0.46931,
+    "over_share": 0.18571,
+    "mean_abs_gap": 1.94705,
+    "direct_share": 0.63571,
+    "bets_per_week": 12.73,
+    "books": {
+     "fanduel": 67,
+     "betrivers": 53,
+     "betmgm": 49,
+     "draftkings": 48,
+     "williamhill_us": 43,
+     "espnbet": 12,
+     "hardrockbet": 5,
+     "ballybet": 3
+    }
+   },
+   "2025": {
+    "n": 268,
+    "n_clv": 268,
+    "clv": -0.03195,
+    "clv_se": 0.00248,
+    "clv_t": -12.86119,
+    "clv_p": 1.0,
+    "roi": -0.0545,
+    "roi_se": 0.0584,
+    "hit": 0.49248,
+    "over_share": 0.03358,
+    "mean_abs_gap": 3.69752,
+    "direct_share": 0.72015,
+    "bets_per_week": 12.18,
+    "books": {
+     "draftkings": 72,
+     "betmgm": 47,
+     "fanduel": 45,
+     "williamhill_us": 45,
+     "fanatics": 26,
+     "betrivers": 13,
+     "hardrockbet": 9,
+     "ballybet": 7,
+     "espnbet": 4
+    }
+   },
+   "pooled": {
+    "n": 548,
+    "n_clv": 548,
+    "clv": -0.03554,
+    "clv_se": 0.00181,
+    "clv_t": -19.61133,
+    "clv_p": 1.0,
+    "roi": -0.07707,
+    "roi_se": 0.04077,
+    "hit": 0.48066,
+    "over_share": 0.11131,
+    "mean_abs_gap": 2.80312,
+    "direct_share": 0.67701,
+    "bets_per_week": 12.45,
+    "books": {
+     "draftkings": 120,
+     "fanduel": 112,
+     "betmgm": 96,
+     "williamhill_us": 88,
+     "betrivers": 66,
+     "fanatics": 26,
+     "espnbet": 16,
+     "hardrockbet": 14,
+     "ballybet": 10
+    }
+   }
+  },
+  "P2_YD": {
+   "2024": {
+    "n": 216,
+    "n_clv": 216,
+    "clv": -0.03917,
+    "clv_se": 0.00263,
+    "clv_t": -14.87898,
+    "clv_p": 1.0,
+    "roi": -0.12005,
+    "roi_se": 0.06444,
+    "hit": 0.45755,
+    "over_share": 0.16667,
+    "mean_abs_gap": 1.91722,
+    "direct_share": 0.625,
+    "bets_per_week": 9.82,
+    "books": {
+     "fanduel": 45,
+     "betrivers": 42,
+     "draftkings": 41,
+     "betmgm": 38,
+     "williamhill_us": 28,
+     "espnbet": 10,
+     "hardrockbet": 6,
+     "ballybet": 6
+    }
+   },
+   "2025": {
+    "n": 244,
+    "n_clv": 244,
+    "clv": -0.02824,
+    "clv_se": 0.0026,
+    "clv_t": -10.87106,
+    "clv_p": 1.0,
+    "roi": -0.01254,
+    "roi_se": 0.06131,
+    "hit": 0.5144,
+    "over_share": 0.03689,
+    "mean_abs_gap": 2.95734,
+    "direct_share": 0.72131,
+    "bets_per_week": 11.09,
+    "books": {
+     "draftkings": 66,
+     "betmgm": 50,
+     "fanduel": 38,
+     "williamhill_us": 32,
+     "fanatics": 28,
+     "betrivers": 11,
+     "espnbet": 7,
+     "hardrockbet": 7,
+     "ballybet": 5
+    }
+   },
+   "pooled": {
+    "n": 460,
+    "n_clv": 460,
+    "clv": -0.03337,
+    "clv_se": 0.00187,
+    "clv_t": -17.86022,
+    "clv_p": 1.0,
+    "roi": -0.06303,
+    "roi_se": 0.04449,
+    "hit": 0.48791,
+    "over_share": 0.09783,
+    "mean_abs_gap": 2.46894,
+    "direct_share": 0.67609,
+    "bets_per_week": 10.45,
+    "books": {
+     "draftkings": 107,
+     "betmgm": 88,
+     "fanduel": 83,
+     "williamhill_us": 60,
+     "betrivers": 53,
+     "fanatics": 28,
+     "espnbet": 17,
+     "hardrockbet": 13,
+     "ballybet": 11
+    }
+   }
+  }
+ },
+ "calibration_used": {
+  "td_map": {
+   "k_book": {
+    "betmgm": 0.84144,
+    "betrivers": 0.81592,
+    "bovada": 0.89118,
+    "draftkings": 0.93797,
+    "fanduel": 0.97953,
+    "williamhill_us": 0.89751
+   },
+   "gamma": 1.16926,
+   "n_quotes": 66612,
+   "converged": true,
+   "mean_p_raw": 0.22067,
+   "mean_p_fair": 0.17129,
+   "td_rate": 0.1711
+  },
+  "TOPN": 9,
+  "PPTD": 6.99564,
+  "early": {
+   "fg_f0": 4.95447,
+   "fg_f1": 0.00337,
+   "r": 0.9642,
+   "c0": 0.75211,
+   "n_td_teams": 548,
+   "yd_a": -6.1086,
+   "yd_b": 0.08912,
+   "n_yd_teams": 463,
+   "realised_off_tds_mean": 2.2646,
+   "lam9_mean": 2.34869
+  },
+  "close": {
+   "fg_f0": 4.99509,
+   "fg_f1": 0.00149,
+   "r": 1.01873,
+   "c0": 0.7753,
+   "n_td_teams": 552,
+   "yd_a": -3.73902,
+   "yd_b": 0.08036,
+   "n_yd_teams": 534,
+   "realised_off_tds_mean": 2.25906,
+   "lam9_mean": 2.21753
+  }
+ }
+}

@@ -23,7 +23,10 @@ URL = "https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds"
 def due(now: datetime) -> bool:
     wd, h = now.weekday(), now.hour          # Mon=0
     busy = (wd == 3 and h >= 12) or wd in (4, 5) or (wd == 6 and h < 8)
-    return busy or h % 3 == 0
+    # hourly when Pinnacle first posts college lines (Sun 16-24 UTC, Mon 13-17 UTC): the richest shop window in
+    # 2021-25 (Sunday snapshots +5.3% CLV vs +2.4% overall; output/research/round3/cfb_shop_segments.md)
+    posting = (wd == 6 and h >= 16) or (wd == 0 and 13 <= h < 17)
+    return busy or posting or h % 3 == 0
 
 
 def fetch(key: str) -> list[dict]:

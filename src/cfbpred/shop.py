@@ -21,8 +21,11 @@ ROOT = Path(__file__).resolve().parents[2]
 RULES = ROOT / "cfb_shop_rules.json"
 
 
-def load_rules() -> dict:
-    return json.loads(RULES.read_text())
+RULES_V3 = ROOT / "cfb_shop_v3_rules.json"
+
+
+def load_rules(path: Path = RULES) -> dict:
+    return json.loads(path.read_text())
 
 
 def _markets(bk: dict) -> dict:
@@ -64,6 +67,16 @@ def probs(market: str, side: str, point, S: dict):
         q = S["q_ml"] if side == "home" else 1 - S["q_ml"]
         return q, 0.0, 1 - q
     return None
+
+
+def _haircut(w: float, l: float, price: float, market: str, r: dict) -> tuple[float, float]:
+    """v3 sizing: shrink the win probability so EV drops by the market's average EV-to-CLV gap (2021-25:
+    totals 1.9%, spreads 1.3%, moneylines 0). v1/v2 rules have no haircut."""
+    h = (r["sizing"].get("ev_haircut") or {}).get(market, 0.0)
+    if not h:
+        return w, l
+    d = dec(price)
+    return max(0.0, w - h / d), min(1.0, l + h / d)
 
 
 def kelly_pct(w: float, l: float, american: float, r: dict) -> float:
@@ -147,11 +160,12 @@ def candidates(ev: dict, r: dict) -> list[dict]:
                 continue
             w, p, l = pr
             e = DI.ev(w, p, l, price)
-            if e >= r["qualify"]["min_ev"][market] and (market not in best or e > best[market]["edge"]):
+            bar = (r["qualify"].get("min_ev_side") or {}).get(side, r["qualify"]["min_ev"][market])
+            if e >= bar and (market not in best or e > best[market]["edge"]):
                 team = ev["home_team"] if side == "home" else ev["away_team"] if side == "away" else side.capitalize()
                 best[market] = {"market": market, "side": side, "team": team, "point": point, "price": price,
                                 "book": bk.get("title", bk["key"]), "book_key": bk["key"], "edge": round(e, 4),
-                                "p_win": round(w, 4), "p_push": round(p, 4), "kelly_pct": kelly_pct(w, l, price, r),
+                                "p_win": round(w, 4), "p_push": round(p, 4), "kelly_pct": kelly_pct(*_haircut(w, l, price, market, r), price, r),
                                 "sharp": {k: (round(v, 2) if isinstance(v, float) else v) for k, v in S.items()}}
     return list(best.values())
 
@@ -231,8 +245,8 @@ def record(ledger: list[dict], r: dict) -> dict:
             "passed": all(checks.values()), "min_bets": r["validation"]["min_bets"], "by_market": by_market}
 
 
-def process(now: datetime | None = None) -> dict:
-    r = load_rules()
+def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
+    r = load_rules(rules_path)
     now = now or datetime.now(timezone.utc)
     path = HIST / r["ledger"]
     ledger = json.loads(path.read_text()) if path.exists() else []
@@ -255,7 +269,7 @@ def process(now: datetime | None = None) -> dict:
                 if (ev["id"], c["market"]) in have:
                     continue
                 have.add((ev["id"], c["market"]))
-                new.append({"id": f"cfbshop:{ev['id']}:{c['market']}:{c['side']}", "track": "cfb_shop", "rules_version": r["version"],
+                new.append({"id": f"{r.get('id_prefix', 'cfbshop')}:{ev['id']}:{c['market']}:{c['side']}", "track": r["track"], "rules_version": r["version"],
                             "placed_at": now.isoformat(timespec="minutes"), "event_id": ev["id"], "season": season,
                             "kickoff_utc": ko.isoformat(), "home": ev["home_team"], "away": ev["away_team"],
                             "gameday": ko.date().isoformat(), "units": r["sizing"]["flat_units_for_grading"], "status": "open",
@@ -263,6 +277,6 @@ def process(now: datetime | None = None) -> dict:
     ledger += new
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, indent=1))
-    return {"track": "cfb_shop", "mode": "shadow", "rules_version": r["version"], "new": new,
+    return {"track": r["track"], "mode": "shadow", "rules_version": r["version"], "new": new,
             "open": [b for b in ledger if b.get("status") == "open"],
             "recent_graded": [b for b in ledger if b.get("status") == "graded"][-40:], "record": record(ledger, r)}

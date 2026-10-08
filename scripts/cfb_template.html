@@ -150,10 +150,10 @@ const GRADE_CLV = {spread:{'A+':'+2.1 to +3.8%','A':'+1.0 to +1.2%','B':'about 0
 $('stamp').textContent = `${C.season} season · updated ${new Date(C.generated_at).toLocaleString('en-US',{...AZT, month:'short', day:'numeric', hour:'numeric', minute:'2-digit'})} AZ`;
 
 // open paper bets by odds event
-const SHOP=C.cfb_shop_bets||{}, MLB=C.cfb_ml_bets||{}, CLK=C.cfb_body_clock_bets||{};
+const SHOP=C.cfb_shop_bets||{}, SHOP3=C.cfb_shop_v3_bets||{}, MLB=C.cfb_ml_bets||{}, CLK=C.cfb_body_clock_bets||{};
 const openBy = {};
-for(const [k,B] of [['shop',SHOP],['ml',MLB],['clock',CLK]]) for(const b of (B.open||[])) (openBy[b.event_id]??=[]).push({...b, _k:k});
-const TRK = {shop:'Shop vs sharp', ml:'College ML', clock:'Body clock'};
+for(const [k,B] of [['shop',SHOP],['shop3',SHOP3],['ml',MLB],['clock',CLK]]) for(const b of (B.open||[])) (openBy[b.event_id]??=[]).push({...b, _k:k});
+const TRK = {shop:'Shop vs sharp', shop3:'Shop v3 (test)', ml:'College ML', clock:'Body clock'};
 const LOGU = C.log_urls || {};
 const logLink = b => b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : '';
 
@@ -175,7 +175,7 @@ function marketRows(g){
     for(const side of (m==='total' ? ['over','under'] : ['away','home'])){
       const x=(M[m]||{})[side]; if(!x) continue;
       const az=(A[m]||{})[side];
-      const bet=ev.find(b=>(b.market||'ml')===m && b.side===side) || (m==='spread'&&side==='home' ? (CLK.open||[]).map(b=>({...b,_k:'clock'})).find(b=>b.game_id===g.game_id) : null);
+      const bet=ev.find(b=>(b.market||'ml')===m && b.side===side && b._k!=='shop3') || ev.find(b=>(b.market||'ml')===m && b.side===side) || (m==='spread'&&side==='home' ? (CLK.open||[]).map(b=>({...b,_k:'clock'})).find(b=>b.game_id===g.game_id) : null);
       let st;
       const shopDone = ev.find(b=>b._k==='shop' && b.market===m);          // shop track: one bet per game per market
       const azBetter = az && az.edge!=null && (x.edge==null || az.edge>x.edge+0.005) && az.book!==x.book ? az : null;
@@ -184,11 +184,12 @@ function marketRows(g){
       const azOk = !shopDone && az && inRange(az) && az.edge!=null && az.edge>=BAR[m] && !(inRange(x) && x.edge>=BAR[m]);
       const shopOk = (inRange(x) && x.edge!=null && x.edge>=BAR[m]) || azOk;
       const clockRow = m==='spread' && side==='home' && (CLK.qualifying_games||[]).some(q=>q.game_id===g.game_id);
-      if(bet) st={k:'bet', t:'PAPER BET', d:`${TRK[bet._k]}${bet.rule?` (${bet.rule})`:''}: logged ${when(bet.placed_at)} at ${m==='total'?`${cap1(bet.side)} ${bet.point} `:m==='spread'&&bet.point!=null?ptd(bet.point)+' ':''}${od(bet.price)} ${bet.book}${bet.your_book===false?' (no account)':''}`};
+      const big = x.edge!=null && x.edge>=0.10 ? ' · 10%+ edge: check the price by hand first (often a book error that may be voided)' : '';
+      if(bet) st={k:'bet', t:'PAPER BET', d:`${TRK[bet._k]}${bet.rule?` (${bet.rule})`:''}${big}: logged ${when(bet.placed_at)} at ${m==='total'?`${cap1(bet.side)} ${bet.point} `:m==='spread'&&bet.point!=null?ptd(bet.point)+' ':''}${od(bet.price)} ${bet.book}${bet.your_book===false?' (no account)':''}`};
       else if(x.edge==null) st={k:'no', t:'NO', d:'no sharp line to compare yet'};
       else if(soon && (shopOk||mlOk)) st={k:'no', t:'NO', d:'tracks stop logging 60 min before kickoff'};
       else if(shopDone && !mlOk) st={k:'no', t:'NO', d:`the shop track already logged ${shortBet(shopDone)} for this game (one bet per market)`};
-      else if(shopOk || mlOk) st={k:'watch', t:'WATCH', d:`${azOk?`${az.book} (no account) clears the shop-vs-sharp bar at ${pickTxt(g,m,side,az)}`:shopOk?`clears the shop-vs-sharp bar (${Math.round(BAR[m]*100)}%+)`:'clears the college moneyline track (2%+ at your books)'}; logs at the next odds check if the price holds${far&&shopOk?' and kickoff is within 7 days':''}${shopOk&&!azOk&&azBetter&&azBetter.edge>x.edge?` (the shop track takes the best Arizona price: ${azBetter.book})`:''}`};
+      else if(shopOk || mlOk) st={k:'watch', t:'WATCH', d:`${azOk?`${az.book} (no account) clears the shop-vs-sharp bar at ${pickTxt(g,m,side,az)}`:shopOk?`clears the shop-vs-sharp bar (${Math.round(BAR[m]*100)}%+)`:'clears the college moneyline track (2%+ at your books)'}; logs at the next odds check if the price holds${far&&shopOk?' and kickoff is within 7 days':''}${shopOk&&!azOk&&azBetter&&azBetter.edge>x.edge?` (the shop track takes the best Arizona price: ${azBetter.book})`:''}${big}`};
       else if(clockRow) st={k:'watch', t:'WATCH', d:'the body-clock track (unvalidated) backs the home spread in the last 3 hours before kickoff'};
       else if(!inRange(x) && !(m==='ml' && inRangeML(x))) st={k:'no', t:'NO', d:`${od(x.price)} is outside the tested price range (${od(PR[0])} to ${od(PR[1])}${m==='ml'?`; the moneyline track goes to ${od(PR_ML[0])} to ${od(PR_ML[1])}`:''}); long shots and heavy favorites are never bet`};
       else st={k:'no', t:'NO', d:`${sgn(x.edge)} vs Pinnacle; ${MKT[m].toLowerCase()} bets need ${Math.round(BAR[m]*100)}%+`};
@@ -300,12 +301,13 @@ renderGames();
 (function(){
   const T=[
     ['shop',SHOP,'Shop vs sharp','Spreads, totals and moneylines at Arizona books that beat Pinnacle (spreads 4%+, totals and moneylines 2%+), priced −200 to +200; one bet per game per market','Every odds check, 7 days to 60 min before kickoff','The 3 adopted rules beat Pinnacle’s close on 2021–25: spreads +3.8%, totals +2.0%, moneylines +2.9% CLV (1,430 bets; moneylines measured with the old vig method). All 12 rules tested had positive CLV (+1.2% to +7.6%)'],
+    ['shop3',SHOP3,'Shop vs sharp v3 (test)','Same as shop vs sharp, but overs need 4%+ (overs kept only a quarter of their edge at the close in 2021–25) and stakes use the edge after its usual shrink to the close','Same as shop vs sharp','New 2026 test from the 2021–25 segment study (same data that validated v2, so it must prove itself live)'],
     ['ml',MLB,'College moneyline','Moneylines at your 3 books, −300 to +300, that beat Pinnacle no-vig (P1) or Pinnacle’s spread-implied price (P2) by 2%+; P1 and P2 can both log the same game','Every odds check, until 60 min before kickoff','P1 +2.2% CLV (472 bets), P2 +1.8% (855 bets), 2021–25; shrank in 2024–25'],
     ['clock',CLK,'Body clock (unvalidated)','Home team vs a visitor from 2+ time zones west, kickoff before 1 pm local','Last 3 h before those kickoffs','FAILED its screen (54.5% on 77 games 2014–25, p 0.35); tracked at your request'],
   ].filter(([,B])=>B && !B.error);
   // ranking (recomputed every run): tracks with graded bets first by a live score (CLV + profit, shrunk for small samples),
   // then tracks with nothing graded by research evidence (expected edge %, discounted when weak or failed)
-  const ES={shop:2.6, ml:1.0, clock:0};
+  const ES={shop:2.6, shop3:2.0, ml:1.0, clock:0};
   const liveScore=(k,B)=>{ const r=B.record||{}, n=r.graded||0; if(!n) return null; const roi=r.roi ?? (r.profit_units||0)/n;
     if(k==='clock') return roi*n/(n+100); return (r.avg_clv||0)*n/(n+20) + roi*n/(n+200); };
   T.forEach(t=>t.push(liveScore(t[0],t[1])));
