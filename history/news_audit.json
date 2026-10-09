@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-10-09T05:21+00:00",
- "signals": 2003,
- "units": 801,
+ "generated_at": "2026-10-09T15:09+00:00",
+ "signals": 2033,
+ "units": 816,
  "skipped": {
-  "team_unclear": 37,
+  "team_unclear": 38,
   "no_game": 47,
   "not_game_week": 51
  },
  "roster_check": {
-  "match": 1912,
+  "match": 1941,
   "team_mismatch": 52,
-  "not_found": 39
+  "not_found": 40
  },
- "graded": 142,
- "pending": 283,
+ "graded": 154,
+ "pending": 281,
  "overall": {
-  "n": 142,
-  "correct": 123,
-  "pct": 86.6
+  "n": 154,
+  "correct": 133,
+  "pct": 86.4
  },
  "by_signal": {
   "benched": {
@@ -25,10 +25,15 @@
    "correct": 0,
    "pct": 0.0
   },
+  "doubtful": {
+   "n": 1,
+   "correct": 1,
+   "pct": 100.0
+  },
   "expected_to_play": {
-   "n": 45,
-   "correct": 37,
-   "pct": 82.2
+   "n": 46,
+   "correct": 38,
+   "pct": 82.6
   },
   "injured_reserve": {
    "n": 14,
@@ -36,19 +41,19 @@
    "pct": 100.0
   },
   "out": {
-   "n": 47,
-   "correct": 45,
-   "pct": 95.7
+   "n": 54,
+   "correct": 52,
+   "pct": 96.3
   },
   "returning": {
-   "n": 24,
-   "correct": 19,
-   "pct": 79.2
+   "n": 26,
+   "correct": 20,
+   "pct": 76.9
   },
   "will_start": {
-   "n": 11,
+   "n": 12,
    "correct": 8,
-   "pct": 72.7
+   "pct": 66.7
   }
  },
  "qb": {
@@ -64,22 +69,282 @@
   "pending": 22
  },
  "official_report_agreement": {
-  "n": 121,
-  "agree": 101,
-  "pct": 83.5
+  "n": 133,
+  "agree": 109,
+  "pct": 82.0
  },
  "lead_vs_report_hours": {
-  "n": 425,
-  "median": 69.6,
-  "share_before_report": 79.5
+  "n": 435,
+  "median": 66.6,
+  "share_before_report": 80.0
  },
  "qb_line_move_6h": {
-  "n": 64,
-  "avg_abs_after": 0.65,
-  "avg_abs_before": 0.24,
+  "n": 66,
+  "avg_abs_after": 0.63,
+  "avg_abs_before": 0.23,
   "avg_after_negative_signals": -0.08
  },
  "rows": [
+  {
+   "seen_at": "2026-10-09T14:24+00:00",
+   "player": "Tyler Guyton",
+   "team": "DAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 173.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T14:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys injury updates: CeeDee Lamb, Tyler Guyton exits add to Dallas' list of concerns - Yahoo Sports",
+     "quote": "CeeDee Lamb, Tyler Guyton exits add to Dallas' list of concerns",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNU1cyNU5PLXY5RWtOUkFoTFNlX2R0NW5nYS1TbkhqLXhSam4weXNpbmlQQ1VQR1BKU3JHSm81cnFBUXhUTEkxNm5xYVpCYUlhcDVEaTlDcllocHRETHZaLVFpNlhDQTI5dHBhb3ZuMDhzc1ZGR0g3Q3RDb05XQjhFN1I3dElRSlY3Z1Br?oc=5",
+     "player": "Tyler Guyton",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T13:24+00:00",
+   "player": "CeeDee Lamb",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 174.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T13:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "CeeDee Lamb injury update has Cowboys breathing sigh of relief - Yahoo Sports",
+     "quote": "injury update has Cowboys breathing sigh of relief",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPSVd4U0poM0tTWTQ3YzJoUEZNcmwzNVg0LUliZ2tKX0VWQlVsZjhDU1kwaXlYQ0NOSDZ4WVdIRHhLVmJzcU8yZ19jVUpCSGp2ekNKTlUwU3N1ZE9ldjB3ZXJILWJVb2pra2xBYzZiMjNwcWJmakVZLVJOci1vUUJMakRhMjEwZWFXdTFFSDFR?oc=5",
+     "player": "CeeDee Lamb",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T11:24+00:00",
+   "player": "Bryan Hudson",
+   "team": "NYG",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": 8.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T11:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Giants\u2019 center Bryan Hudson \u2018ready to take advantage of every rep that I get\u2019",
+     "quote": "Is Hudson now the Giants' starting center? Maybe.",
+     "link": "https://sports.yahoo.com/articles/giants-center-bryan-hudson-ready-110156016.html",
+     "player": "Bryan Hudson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T11:24+00:00",
+   "player": "Dameon Pierce",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 8.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T11:24+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Dameon Pierce has waited patiently for an opportunity that&#39;s finally arrived",
+     "quote": "Dameon Pierce has waited patiently for an opportunity that's finally arrived",
+     "link": "https://sports.yahoo.com/articles/dameon-pierce-waited-patiently-opportunity-070000624.html",
+     "player": "Dameon Pierce",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T11:24+00:00",
+   "player": "Will Shipley",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 8.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T11:24+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Will Shipley feeling prepared for biggest opportunity of his career",
+     "quote": "Without Saquon Barkley and Tank Bigsby on Sunday, third-year RB Will Shipley is ready for his opportunity.",
+     "link": "https://sports.yahoo.com/articles/shipley-feeling-prepared-biggest-opportunity-070000138.html",
+     "player": "Will Shipley",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T11:24+00:00",
+   "player": "Jake Majors",
+   "team": "PHI",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 8.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T11:24+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Next man up? That&#39;s Jake Majors, who will likely make his first NFL start Sunday",
+     "quote": "A first NFL start could await Jake Majors against Jacksonville.",
+     "link": "https://sports.yahoo.com/articles/next-man-thats-jake-majors-070000953.html",
+     "player": "Jake Majors",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T08:24+00:00",
+   "player": "Tyler Smith",
+   "team": "DAL",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 179.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T08:24+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: Cowboys activate guard Tyler Smith from IR for Thursday's game vs. Buccaneers - NFL.com",
+     "quote": "activate guard Tyler Smith from IR for Thursday's game",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOV19jRWRmY1hjcXRla0FLRXZCQy1WYlg2ZkN6QXlrVFR3dUM0QXl1TmdjMmh0M3I0MHBxZ3FJYUhtZGduemZ2cnFQTGVWaGYzcTluYWYtbERpTFdyV0pDY004Q3RRQ21IbFRqeVpsMTdXZmVydWlhNlJUdUZGMEhUSWtqeXZKZHBaWVNJ?oc=5",
+     "player": "Tyler Smith",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T06:24+00:00",
+   "player": "Jaylen Watson",
+   "team": "LA",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 37.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T06:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Rams get major injury boost ahead of Josh Allen showdown",
+     "quote": "Aaron Donald and Jaylen Watson returned to Rams practice Thursday",
+     "link": "https://sports.yahoo.com/articles/rams-major-injury-boost-ahead-011636516.html",
+     "player": "Jaylen Watson",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T05:24+00:00",
+   "player": "CeeDee Lamb",
+   "team": "DAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 182.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys\u2019 CeeDee Lamb suffers quad injury during nightmare Buccaneers game - Yahoo Sports",
+     "quote": "suffers quad injury during nightmare Buccaneers game",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQOGNldGRsQVdrNnhPS29DaFZXY19jN0NqbWpiX2MzOFBtSXFySHhZa0IzY0RsRzB0all3M0ItYjFjT01faTg3TTdnSUpXTnREeFlPT1J1UVNsNjhENW5GQ2pFSFgwTjhzRHpfVHBUNnl1eG9pdlJpcUNQLTFONHg5TmZnc1JMZWhP?oc=5",
+     "player": "CeeDee Lamb",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-09T14:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys injury updates: CeeDee Lamb, Tyler Guyton exits add to Dallas' list of concerns - Yahoo Sports",
+     "quote": "CeeDee Lamb, Tyler Guyton exits add to Dallas' list of concerns",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNU1cyNU5PLXY5RWtOUkFoTFNlX2R0NW5nYS1TbkhqLXhSam4weXNpbmlQQ1VQR1BKU3JHSm81cnFBUXhUTEkxNm5xYVpCYUlhcDVEaTlDcllocHRETHZaLVFpNlhDQTI5dHBhb3ZuMDhzc1ZGR0g3Q3RDb05XQjhFN1I3dElRSlY3Z1Br?oc=5",
+     "player": "CeeDee Lamb",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T05:24+00:00",
+   "player": "Colby Parkinson",
+   "team": "LA",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 38.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "team_sites_3",
+     "outlet": "Rams",
+     "title": "Injury Updates: 'As long as they progress accordingly,' Aaron Donald, Jaylen Watson and Colby Parkinson will be 'ready to go' for Week 5 against Bills, Sean McVay says - Rams",
+     "quote": "will be 'ready to go' for Week 5 against Bills, Sean McVay says",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxOWnNmU204LV8xMjZvTWJ6d3VRN1VoV2g5eGtzdlZtX0dqZEh3dXVqRDNYVXRxZm9FcEpGaTd6OGV4d2RGLWdOZS1UUXdKMHJ0SXhKQ3h6c1BzbGh5VzlOY1BQRzhoX05BemRBWEZRZGZWVGkwdjVoX29Fa0I4SkdxRmtlY0hMb2JUSkUzbVQ2eFZKNGxwTVZZZW1sUTB5WFNOVkFRV0Job3d6SjhRNE1HY21zcS1relJlbEgybVRYbV80V0U3N0xwelloNWYxejBRMTZ5clB1XzNsVG1QNWF5MHBpSldTa2Iwakx5MjgyYnNmajA1dHAtZl9saWlqRVM0dVpUUmdHQWlySU95VER4TC1WQ05UV00?oc=5",
+     "player": "Colby Parkinson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-09T04:24+00:00",
    "player": "Josh Allen",
@@ -90,7 +355,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 39.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -314,6 +582,26 @@
      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNamh3R2xxdjZLcF9ReDNCU2F0TXE3RG5BaHRNVG1hSlYzdWs2U2IyR0RzSmdvR1F6SVdlM1NrNXFydEpLMEJobnFaQ2tqUFg4R05jNGFQRDk4U05ZOFRqeVpFTEkxRmVCOFdudzdIdzEtOFhXWENvRWVZTjBNTUhUU3prVm92ZzhMRnluSzYzUlBwWUI5UkFpcmhlRERtQlNxZkxEc0g5dVdtVktEbmN3MkVZUTktZw?oc=5",
      "player": "Joey Porter Jr.",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Ex-Steeler Joey Porter Jr. Ruled Out for New Issue Ahead of Cowboys Week 5 TNF Game - Yahoo Sports",
+     "quote": "Ruled Out for New Issue Ahead of Cowboys Week 5 TNF Game",
+     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1hMUduNUsxSUVwaFkxbGhfX3NSaTk3U1BXQVEzeWlad2Q4UnljQ3hxN0t4Vm5IUEpVay1lOGFMNTJMR25uSU5wQkU4ZWFHTDVXbGJMcTFNbGNQNkVyYU40YS1rR0gwVHFHTUZDN3h4WW9kQWhJVWtUWVZLR1NlMUU?oc=5",
+     "player": "Joey Porter Jr.",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "New Cowboys star Joey Porter Jr. missing \u2018TNF\u2019 after vomiting from \u2018bad virus\u2019",
+     "quote": "missing 'TNF' after vomiting from 'bad virus'",
+     "link": "https://sports.yahoo.com/articles/cowboys-star-joey-porter-jr-003908170.html",
+     "player": "Joey Porter Jr.",
+     "signal": "out"
     }
    ]
   },
@@ -453,8 +741,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.4,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -531,6 +819,16 @@
      "title": "Aaron Donald is back and getting after it.",
      "quote": "Aaron Donald is back and getting after it",
      "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3mxfike5aa22d",
+     "player": "Aaron Donald",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-09T06:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Rams get major injury boost ahead of Josh Allen showdown",
+     "quote": "Aaron Donald and Jaylen Watson returned to Rams practice Thursday",
+     "link": "https://sports.yahoo.com/articles/rams-major-injury-boost-ahead-011636516.html",
      "player": "Aaron Donald",
      "signal": "returning"
     }
@@ -741,6 +1039,16 @@
      "title": "D'Andre Swift returns to practice, Kyle Monangai still out",
      "quote": "Kyle Monangai still out",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dandre-swift-returns-to-practice-kyle-monangai-still-out",
+     "player": "Kyle Monangai",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "Bears RB Kyle Monangai out with turf toe | 'The NFL Report' - NFL.com",
+     "quote": "Bears RB Kyle Monangai out with turf toe",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOSDhHelVSckx6T1lJdnU0aG5qWWVRdk5uZl9ZcnZvR085aVFIN3lGOTNSejJCSFBIdVZoTGFJOXRFQldTeWU4cDFTUmx2N04tSXdRQ2hEWlR4VkF5YW95ZGZlRm5ldTdPei1KTnRXazRlX1hyMzQ1TE1PaXJlT0Fwd1pGLWpxYy1uMXc?oc=5",
      "player": "Kyle Monangai",
      "signal": "out"
     }
@@ -1065,8 +1373,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -16.4,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -1093,8 +1401,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -16.4,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -1196,8 +1504,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -5.4,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -2263,8 +2571,8 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 21.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
    "official_status": null,
    "report_agrees": true,
    "in_rule_population": false,
@@ -2665,8 +2973,8 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 25.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -2891,8 +3199,8 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 32.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
    "official_status": "Questionable",
    "report_agrees": true,
    "in_rule_population": false,
@@ -3133,8 +3441,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 40.9,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -4012,8 +4320,8 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 46.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
    "official_status": "Questionable",
    "report_agrees": true,
    "in_rule_population": false,
@@ -4228,6 +4536,16 @@
      "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mx5qelvua22o",
      "player": "Jaylen Watson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "team_sites_3",
+     "outlet": "Rams",
+     "title": "Injury Updates: 'As long as they progress accordingly,' Aaron Donald, Jaylen Watson and Colby Parkinson will be 'ready to go' for Week 5 against Bills, Sean McVay says - Rams",
+     "quote": "will be 'ready to go' for Week 5 against Bills, Sean McVay says",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxOWnNmU204LV8xMjZvTWJ6d3VRN1VoV2g5eGtzdlZtX0dqZEh3dXVqRDNYVXRxZm9FcEpGaTd6OGV4d2RGLWdOZS1UUXdKMHJ0SXhKQ3h6c1BzbGh5VzlOY1BQRzhoX05BemRBWEZRZGZWVGkwdjVoX29Fa0I4SkdxRmtlY0hMb2JUSkUzbVQ2eFZKNGxwTVZZZW1sUTB5WFNOVkFRV0Job3d6SjhRNE1HY21zcS1relJlbEgybVRYbV80V0U3N0xwelloNWYxejBRMTZ5clB1XzNsVG1QNWF5MHBpSldTa2Iwakx5MjgyYnNmajA1dHAtZl9saWlqRVM0dVpUUmdHQWlySU95VER4TC1WQ05UV00?oc=5",
+     "player": "Jaylen Watson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -4408,6 +4726,26 @@
      "link": "https://sports.yahoo.com/articles/aaron-donald-likely-play-vs-061021776.html",
      "player": "Aaron Donald",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "team_sites_3",
+     "outlet": "Rams",
+     "title": "Injury Updates: 'As long as they progress accordingly,' Aaron Donald, Jaylen Watson and Colby Parkinson will be 'ready to go' for Week 5 against Bills, Sean McVay says - Rams",
+     "quote": "will be 'ready to go' for Week 5 against Bills, Sean McVay says",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxOWnNmU204LV8xMjZvTWJ6d3VRN1VoV2g5eGtzdlZtX0dqZEh3dXVqRDNYVXRxZm9FcEpGaTd6OGV4d2RGLWdOZS1UUXdKMHJ0SXhKQ3h6c1BzbGh5VzlOY1BQRzhoX05BemRBWEZRZGZWVGkwdjVoX29Fa0I4SkdxRmtlY0hMb2JUSkUzbVQ2eFZKNGxwTVZZZW1sUTB5WFNOVkFRV0Job3d6SjhRNE1HY21zcS1relJlbEgybVRYbV80V0U3N0xwelloNWYxejBRMTZ5clB1XzNsVG1QNWF5MHBpSldTa2Iwakx5MjgyYnNmajA1dHAtZl9saWlqRVM0dVpUUmdHQWlySU95VER4TC1WQ05UV00?oc=5",
+     "player": "Aaron Donald",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T12:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Rams Injury Report: Aaron Donald Among Three Key Starters Who Could Return vs. Bills - Yahoo Sports",
+     "quote": "Could Return vs. Bills",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOdEZnTm5WczE2aGpBUHlCemZWOUNsaW9DMGZWWU4xVHhFR1JIelIwWHYxRks2UkxEbFJ4RDdCMl9TRk5pWWN3anlZSW9rS2pVenRwMlUzZUdSc0swV0plSDRSTXhqbkJIaEhvTDhOSXlOY2V3TVM3akRSekZ6V0JNTlZ5MlEwVUU?oc=5",
+     "player": "Aaron Donald",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -4506,8 +4844,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 48.4,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -6646,6 +6984,16 @@
      "title": "Jets get Minkah Fitzpatrick back to face Bears with interception drought at 20 games www.nydailynews.com/2026/10/04/j...",
      "quote": "Jets get Minkah Fitzpatrick back to face Bears",
      "link": "https://bsky.app/profile/antwanstaley.bsky.social/post/3mx2gmsdi722j",
+     "player": "Minkah Fitzpatrick",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-09T05:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Minkah Fitzpatrick already elevating Jets defense after injury return",
+     "quote": "Safety Minkah Fitzpatrick returned from injury",
+     "link": "https://sports.yahoo.com/articles/minkah-fitzpatrick-already-elevating-jets-003928104.html",
      "player": "Minkah Fitzpatrick",
      "signal": "returning"
     }
@@ -10067,8 +10415,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 74.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -10294,8 +10642,8 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 74.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
    "official_status": null,
    "report_agrees": true,
    "in_rule_population": false,
