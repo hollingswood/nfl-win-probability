@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from urllib.parse import parse_qs, urlparse
@@ -350,3 +350,23 @@ def test_cfb_shop_v3_over_bar_and_haircut():
     hw, hl = SH._haircut(w, l, -110, "total", r3)
     assert hw < w and SH._haircut(w, l, -110, "total", r2) == (w, l)
     assert SH.kelly_pct(hw, hl, -110, r3) < SH.kelly_pct(w, l, -110, r3)
+
+
+def test_dedupe_counts_only_runs_that_did_work_and_late_copies_skip():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("dd", Path(__file__).resolve().parents[1] / "scripts" / "dedupe_run.py")
+    dd = importlib.util.module_from_spec(spec); spec.loader.exec_module(dd)
+    now = datetime(2026, 10, 5, 2, 53, tzinfo=timezone.utc)                       # GitHub copy of '5 0 * * 1' arriving 2h48m late
+    since = dd.slot_start("schedule", "5 0 * * 1", now)
+    assert since == datetime(2026, 10, 4, 23, 50, tzinfo=timezone.utc)
+    runs = [{"id": 1, "created_at": "2026-10-05T00:05:02Z", "conclusion": "success"}]
+    jobs = {1: [{"name": "check", "conclusion": "success"}, {"name": "predict", "conclusion": "success"}]}
+    assert dd.decide(runs, jobs.get, 9, since) is True                            # the 17:05 AZ dispatch did the slot
+    jobs[1][1]["conclusion"] = "skipped"
+    assert dd.decide(runs, jobs.get, 9, since) is False                           # a skipped run doesn't count (no chains)
+    assert dd.decide([], jobs.get, 9, since) is False                             # nothing covered it: run late
+    # outside-scheduler dispatch: 40-minute window as before
+    assert dd.slot_start("workflow_dispatch", "", now) == now - timedelta(minutes=40)
+    # cron later in the UTC day than now -> yesterday's slot
+    assert dd.slot_start("schedule", "5 23 * * 0,1,4", datetime(2026, 10, 9, 2, 54, tzinfo=timezone.utc)).day == 8

@@ -43,18 +43,23 @@ jobs:
     steps:
       # Both GitHub's schedule and the outside scheduler fire at about the same times; whichever
       # starts second skips itself so odds-API credits aren't spent twice. Manual runs never skip.
+      # scripts/dedupe_run.py: only runs whose predict job actually ran count, and GitHub's late scheduled
+      # copies are matched to their own slot (cron time - 15 min), so a copy arriving hours late skips.
+      - uses: actions/checkout@v4
+        if: github.event_name == 'schedule' || inputs.run_type != 'manual'
+        with:
+          sparse-checkout: scripts/dedupe_run.py
+          sparse-checkout-cone-mode: false
       - name: Skip if another run already covered this slot
         id: dedupe
         if: github.event_name == 'schedule' || inputs.run_type != 'manual'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          since=$(date -u -d '-40 minutes' +%Y-%m-%dT%H:%M:%SZ)
-          n=$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/weekly.yml/runs?created=%3E$since&per_page=20" |
-            python3 -c "import json,sys; rs=json.load(sys.stdin).get('workflow_runs',[]); print(sum(r['id']<${{ github.run_id }} and r['conclusion'] in (None,'success') for r in rs))")
-          echo "earlier runs in the last 40 min: $n"
-          if [ "${n:-0}" -gt 0 ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: python3 scripts/dedupe_run.py >> "$GITHUB_OUTPUT"
 
   predict:
     needs: check

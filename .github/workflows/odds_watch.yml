@@ -15,6 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
+  actions: write
   contents: write
   issues: write
   pages: write
@@ -30,6 +31,34 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
+      # Backup for the 7:10 AM Arizona daily full run (14:10 UTC, started by cron-job.org): the 2026-10-01..09
+      # validation found that job missing on 8 of 9 days and GitHub's own 14:17 copy starting 4-7 hours late.
+      # If no Weekly predictions run has done the work since 13:50 UTC, start one now.
+      - name: Start the daily full run if it hasn't happened
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          from datetime import datetime, timezone
+          import importlib.util
+          spec = importlib.util.spec_from_file_location("dd", "scripts/dedupe_run.py"); dd = importlib.util.module_from_spec(spec); spec.loader.exec_module(dd)
+          now = datetime.now(timezone.utc)
+          if now.hour != 14:
+              print("not the daily-backup hour"); raise SystemExit
+          tok, repo = os.environ["GH_TOKEN"], os.environ["REPO"]
+          since = now.replace(hour=13, minute=50, second=0, microsecond=0)
+          runs = dd._get(f"{dd.API}/repos/{repo}/actions/workflows/weekly.yml/runs?created=%3E{since:%Y-%m-%dT%H:%M:%SZ}&per_page=30", tok).get("workflow_runs", [])
+          if dd.decide(runs, lambda rid: dd._get(f"{dd.API}/repos/{repo}/actions/runs/{rid}/jobs", tok).get("jobs", []), 10**15, since):
+              print("daily run already done or in progress"); raise SystemExit
+          req = urllib.request.Request(f"{dd.API}/repos/{repo}/actions/workflows/weekly.yml/dispatches", method="POST",
+                                       data=json.dumps({"ref": "main", "inputs": {"run_type": "daily"}}).encode(),
+                                       headers={"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"})
+          urllib.request.urlopen(req, timeout=30)
+          print("started the daily full run (backup)")
+          PY
       - name: Refresh odds and run price-sensitive tracks
         run: python -m nflpred.pipeline watch
         env:
