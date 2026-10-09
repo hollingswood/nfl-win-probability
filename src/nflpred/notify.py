@@ -1,6 +1,7 @@
 """Phone alerts through ntfy (https://ntfy.sh): free app, no account.
 
-Set the GitHub secret NTFY_TOPIC to a long private topic name and subscribe to the same topic in the
+Channels (any or all, as GitHub secrets): Pushover (PUSHOVER_USER + PUSHOVER_TOKEN), Telegram (TELEGRAM_BOT_TOKEN +
+TELEGRAM_CHAT_ID), ntfy (NTFY_TOPIC). For ntfy: set NTFY_TOPIC to a long private topic name and subscribe to the same topic in the
 ntfy app. Anyone who knows the topic can read it, so treat the name like a password.
 
 * new_bets(pred)  -> one push per run listing every paper bet logged in that run
@@ -11,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -27,19 +29,54 @@ QUIET_TRACKS = {"props_unders_bets"}
 PRIORITY_TRACKS = {"cfb_shop_bets", "preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
 
 
-def send(title: str, message: str, priority: int = 3, tags: list[str] | None = None,
-         click: str = DASHBOARD, topic: str | None = None, actions: list[dict] | None = None) -> bool:
-    topic = topic or os.environ.get("NTFY_TOPIC")
-    if not topic:
-        return False
-    payload = {"topic": topic, "title": title, "message": message, "priority": priority,
-               "tags": tags or [], "click": click}
-    if actions:
-        payload["actions"] = actions[:3]
-    req = urllib.request.Request("https://ntfy.sh/", data=json.dumps(payload).encode(),
-                                 headers={"Content-Type": "application/json"})
+def _post(url: str, data: bytes, headers: dict) -> bool:
+    req = urllib.request.Request(url, data=data, headers=headers)
     with urllib.request.urlopen(req, timeout=15) as r:
         return 200 <= r.status < 300
+
+
+def channels() -> list[str]:
+    """Configured push channels (GitHub secrets): ntfy (NTFY_TOPIC), Pushover (PUSHOVER_USER + PUSHOVER_TOKEN),
+    Telegram (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID). Every configured channel gets every alert."""
+    e = os.environ
+    return [c for c, ok in (("ntfy", e.get("NTFY_TOPIC")), ("pushover", e.get("PUSHOVER_USER") and e.get("PUSHOVER_TOKEN")),
+                            ("telegram", e.get("TELEGRAM_BOT_TOKEN") and e.get("TELEGRAM_CHAT_ID"))) if ok]
+
+
+def send(title: str, message: str, priority: int = 3, tags: list[str] | None = None,
+         click: str = DASHBOARD, topic: str | None = None, actions: list[dict] | None = None) -> bool:
+    """Push to every configured channel; True if at least one accepted it. Failures on one channel never block another."""
+    e, ok = os.environ, False
+    if topic or e.get("NTFY_TOPIC"):
+        payload = {"topic": topic or e["NTFY_TOPIC"], "title": title, "message": message, "priority": priority,
+                   "tags": tags or [], "click": click}
+        if actions:
+            payload["actions"] = actions[:3]
+        try:
+            ok |= _post("https://ntfy.sh/", json.dumps(payload).encode(), {"Content-Type": "application/json"})
+        except Exception as ex:
+            print("ntfy failed:", ex)
+    link = next((a for a in (actions or []) if a.get("url")), None)
+    if e.get("PUSHOVER_USER") and e.get("PUSHOVER_TOKEN"):
+        form = {"token": e["PUSHOVER_TOKEN"], "user": e["PUSHOVER_USER"], "title": title[:250], "message": message[:1024],
+                "priority": 1 if priority >= 4 else 0, "url": (link or {}).get("url", click),
+                "url_title": (link or {}).get("label", "Dashboard")}
+        try:
+            ok |= _post("https://api.pushover.net/1/messages.json", urllib.parse.urlencode(form).encode(),
+                        {"Content-Type": "application/x-www-form-urlencoded"})
+        except Exception as ex:
+            print("pushover failed:", ex)
+    if e.get("TELEGRAM_BOT_TOKEN") and e.get("TELEGRAM_CHAT_ID"):
+        buttons = [[{"text": a.get("label", "Open"), "url": a["url"]}] for a in (actions or [])[:3] if a.get("url")] or \
+            [[{"text": "Dashboard", "url": click}]]
+        body = {"chat_id": e["TELEGRAM_CHAT_ID"], "text": f"{title}\n\n{message}"[:4000], "disable_web_page_preview": True,
+                "disable_notification": priority <= 2, "reply_markup": {"inline_keyboard": buttons}}
+        try:
+            ok |= _post(f"https://api.telegram.org/bot{e['TELEGRAM_BOT_TOKEN']}/sendMessage", json.dumps(body).encode(),
+                        {"Content-Type": "application/json"})
+        except Exception as ex:
+            print("telegram failed:", ex)
+    return bool(ok)
 
 
 def _norm(s: str) -> str:
@@ -140,7 +177,7 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
                   "\n".join(lines) + f"\n\nLog the ones you place from the dashboard (Log bet links). {note}",
                   priority=4 if hot else 3, tags=["football"])
         sent += bool(ok)
-    print(f"notify: {'sent' if sent else 'skipped (no NTFY_TOPIC)'} {len(items)} bet(s)")
+    print(f"notify: {'sent' if sent else 'not sent (no channel configured or all failed)'} {len(items)} bet(s) via {channels()}")
     return bool(sent)
 
 
@@ -148,5 +185,5 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     ok = send(a[0] if a else "NFL predictor", a[1] if len(a) > 1 else "test", int(a[2]) if len(a) > 2 else 3,
               tags=["warning"] if len(a) > 2 and int(a[2]) >= 4 else ["football"])
-    print("sent" if ok else "no NTFY_TOPIC set")
+    print(f"channels configured: {channels() or 'none'}; " + ("sent" if ok else "NOT sent"))
     sys.exit(0 if ok or "--soft" in a else 1)

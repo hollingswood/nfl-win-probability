@@ -28,6 +28,14 @@ concurrency:
 permissions:
   contents: write
 
+env:
+  # phone alerts: every configured channel gets every alert (nflpred/notify.py)
+  NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+  PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+  PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
 jobs:
   backfill:
     runs-on: ubuntu-latest

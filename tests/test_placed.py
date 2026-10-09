@@ -370,3 +370,16 @@ def test_dedupe_counts_only_runs_that_did_work_and_late_copies_skip():
     assert dd.slot_start("workflow_dispatch", "", now) == now - timedelta(minutes=40)
     # cron later in the UTC day than now -> yesterday's slot
     assert dd.slot_start("schedule", "5 23 * * 0,1,4", datetime(2026, 10, 9, 2, 54, tzinfo=timezone.utc)).day == 8
+
+
+def test_notify_sends_to_every_configured_channel(monkeypatch):
+    from nflpred import notify as N
+    sent = []
+    monkeypatch.setattr(N, "_post", lambda url, data, headers: sent.append(url) or True)
+    for k in ("NTFY_TOPIC", "PUSHOVER_USER", "PUSHOVER_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"):
+        monkeypatch.delenv(k, raising=False)
+    assert N.send("t", "m") is False and N.channels() == []
+    monkeypatch.setenv("PUSHOVER_USER", "u"); monkeypatch.setenv("PUSHOVER_TOKEN", "a")
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "b"); monkeypatch.setenv("TELEGRAM_CHAT_ID", "1")
+    assert N.send("t", "m", actions=[{"action": "view", "label": "I placed it", "url": "https://x"}]) is True
+    assert any("pushover" in u for u in sent) and any("telegram" in u for u in sent) and N.channels() == ["pushover", "telegram"]
