@@ -38,12 +38,25 @@ FEEDS = {
     "pickswise": "https://www.pickswise.com/feed/",
     "covers_nfl": "https://www.covers.com/rss/nfl",
     "oddsshark": "https://www.oddsshark.com/rss.xml",
+    # added 2026-10-09 (reachability checked live in history/picks_probe.json; dead ones cost nothing)
+    "usatoday_sbw": "https://sportsbookwire.usatoday.com/feed/",
+    "thelines": "https://www.thelines.com/feed/",
+    "pfn": "https://www.profootballnetwork.com/feed/",
+    "sdsouth": "https://www.saturdaydownsouth.com/feed/",
+    "fox_nfl": "https://api.foxsports.com/v2/content/optimized-rss?partnerKey=MB0Wehpmuj2lUhuRhQaafhBjAJqaPU244mlTDK1i&size=30&tags=fs/nfl",
+    "fox_cfb": "https://api.foxsports.com/v2/content/optimized-rss?partnerKey=MB0Wehpmuj2lUhuRhQaafhBjAJqaPU244mlTDK1i&size=30&tags=fs/college-football",
+    "sbr": "https://www.sportsbookreview.com/feed/",
+    "bettingpros": "https://www.bettingpros.com/articles/feed/",
+    "si_nfl": "https://www.si.com/nfl/.rss/full/",
+    "sportingnews": "https://www.sportingnews.com/us/nfl/rss",
 }
 BLOCKED = ("actionnetwork.com", "reddit.com")
 BET_POST = re.compile(r"([+-]\d{1,2}(\.5)?\b|\bML\b|\bmoneyline\b|\b[ou]\s?\d{2}(\.5)?\b|\bover\b|\bunder\b|\b\d(\.\d)?u\b|\bunits?\b|\bATS\b)", re.I)
-PICKER_BIO = re.compile(r"(pick|capper|handicap|betting|bettor|units|ATS|sharp|wager)", re.I)
-PICKER_QUERIES = ["NFL picks", "college football picks", "CFB picks", "sports picks", "handicapper", "sports betting picks", "capper"]
-PICKY = re.compile(r"\b(picks?|best bets?|predictions?|against the spread|ATS|locks?|upset picks|expert)\b", re.I)
+PICKER_BIO = re.compile(r"(\bpicks?\b|handicap|betting|bettor|\bbets?\b|\bunits?\b|\bATS\b|sharp|wager|sportsbook|odds)", re.I)
+PICKER_SPORT = re.compile(r"(\bNFL\b|\bCFB\b|college football|\bfootball\b|\bNCAAF\b)", re.I)
+PICKER_QUERIES = ["NFL picks", "college football picks", "CFB picks", "NFL best bets", "NFL betting", "college football betting",
+                  "CFB betting", "football handicapper", "NFL ATS", "sports betting football", "NFL props", "betting analyst NFL"]
+PICKY = re.compile(r"\b(picks?|best bets?|bets?|predictions?|prediction|against the spread|ATS|locks?|upset picks|expert|odds|spread|parlays?|leans?|props?|over/under)\b", re.I)
 INSTR = """Below is the text of a sports article. Extract every EXPLICIT pick the author or a named analyst makes on an NFL or
 college football game: a side against the spread, a moneyline winner pick, or an over/under. Only picks stated in the text;
 skip straight-up win predictions that give no betting line unless they say "moneyline". Return ONLY JSON:
@@ -96,14 +109,14 @@ def bluesky_pickers(hist: Path = HIST, get=None, now: datetime | None = None, ma
             continue
         for a in res:
             bio = f"{a.get('displayName') or ''} {a.get('description') or ''}"
-            if PICKER_BIO.search(bio) and a.get("handle") not in acc:
+            if PICKER_BIO.search(bio) and PICKER_SPORT.search(bio) and a.get("handle") not in acc:
                 acc[a["handle"]] = {"name": a.get("displayName"), "how": q}
     for h in list(acc):
         try:
             acc[h]["followers"] = get("app.bsky.actor.getProfile", {"actor": h}).get("followersCount", 0)
         except Exception:
             acc[h]["followers"] = 0
-        if acc[h]["followers"] < 300:
+        if acc[h]["followers"] < 150:
             del acc[h]
     acc = dict(sorted(acc.items(), key=lambda kv: -kv[1]["followers"])[:limit])
     hist.mkdir(parents=True, exist_ok=True)
@@ -112,7 +125,7 @@ def bluesky_pickers(hist: Path = HIST, get=None, now: datetime | None = None, ma
 
 
 def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetch_feed, texter=_text, llm=call_claude,
-         max_articles: int = 12, bluesky=None) -> dict:
+         max_articles: int = 30, bluesky=None) -> dict:
     now = now or datetime.now(timezone.utc)
     api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     rep = {"feeds": {}, "articles": 0, "picks": 0}

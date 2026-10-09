@@ -177,11 +177,15 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     from cfbpred.pipeline import team_matcher
     cmatch = team_matcher(sorted(set(cfb.home) | set(cfb.away))) if len(cfb) else (lambda s: None)
     graded, seen_keys, late = [], set(), 0
+    logged: dict = {}                 # every distinct NFL / college pick per picker (graded, pending or late)
     for p in picks:
         k = (picker_of(p), p.get("sport"), p.get("home_team"), p.get("away_team"), p.get("market"), str(p.get("pick")).lower())
         if k in seen_keys:            # the same pick repeated in another article / run
             continue
         seen_keys.add(k)
+        if p.get("sport") in ("nfl", "cfb"):
+            lg = logged.setdefault(picker_of(p), {"n": 0, "outlet": p.get("outlet") or p.get("source"), "sports": set(), "late": 0})
+            lg["n"] += 1; lg["sports"].add(p.get("sport"))
         try:
             g = grade_pick(p, nfl, cfb, cmatch)
         except Exception:
@@ -190,6 +194,8 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             continue
         if g.get("late"):
             late += 1
+            if picker_of(p) in logged:
+                logged[picker_of(p)]["late"] += 1
             continue
         graded.append({**g, "picker": picker_of(p), "sport": p.get("sport"), "market": p.get("market"), "pick": p.get("pick"),
                        "line": p.get("line"), "seen_at": p["seen_at"], "outlet": p.get("outlet") or p.get("source")})
@@ -209,7 +215,16 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         pickers.append({"picker": b["picker"], "outlet": b["outlet"], "sports": sorted(b["sports"]), "graded": b["n"], "wins": b["w"],
                         "losses": b["l"], "pushes": b["p"], "win_pct": round(b["w"] / d, 3) if d else None, "units": round(b["units"], 2),
                         "avg_line_value": round(sum(b["lv"]) / len(b["lv"]), 2) if b["lv"] else None, "n_line_value": len(b["lv"])})
-    pickers.sort(key=lambda x: (-(x["units"]), -x["graded"]))
+    have = {x["picker"] for x in pickers}
+    for x in pickers:
+        lg = logged.get(x["picker"], {})
+        x["logged"], x["pending"] = lg.get("n", x["graded"]), max(0, lg.get("n", x["graded"]) - x["graded"] - lg.get("late", 0))
+    for k, lg in logged.items():      # pickers with nothing graded yet (their games are still to be played)
+        if k not in have:
+            pickers.append({"picker": k, "outlet": lg["outlet"], "sports": sorted(lg["sports"]), "graded": 0, "wins": 0, "losses": 0,
+                            "pushes": 0, "win_pct": None, "units": 0.0, "avg_line_value": None, "n_line_value": 0,
+                            "logged": lg["n"], "pending": max(0, lg["n"] - lg["late"])})
+    pickers.sort(key=lambda x: (-(x["graded"] > 0), -(x["units"]), -x["graded"], -x["logged"]))
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
     H = r["hot"]
     test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0}
@@ -252,7 +267,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             if w + l >= 8 and w / (w + l) >= 0.60:
                 hot_now.append({"picker": k, "sport": sport, "week": nxt, "record": f"{w}-{l}"})
     out = {"generated_at": now.isoformat(timespec="minutes"), "rules_version": r["version"], "picks_logged": len(picks),
-           "picks_graded": len(graded), "late_picks_dropped": late, "pickers": pickers[:60], "hot_now": hot_now, "hot_test": test,
+           "picks_graded": len(graded), "late_picks_dropped": late, "pickers": pickers[:250], "n_pickers": len(pickers), "hot_now": hot_now, "hot_test": test,
            "overall": {"w": sum(x["result"] == "win" for x in graded), "l": sum(x["result"] == "loss" for x in graded),
                        "units": round(sum(x.get("units") or 0 for x in graded), 2),
                        "avg_line_value": round(sum(x["line_value"] for x in graded if x.get("line_value") is not None) /
