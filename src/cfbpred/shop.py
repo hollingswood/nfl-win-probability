@@ -291,7 +291,9 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
     return {"track": r["track"], "mode": "shadow", "rules_version": r["version"], "new": new,
             "books": books_of(r), "open": [b for b in cur if b.get("status") == "open"],
             "recent_graded": [b for b in cur if b.get("status") == "graded"][-40:], "record": record(ledger, r),
-            "prior_versions": prior_versions(ledger, r)}
+            "prior_versions": prior_versions(ledger, r),
+            "prior_open": [b for b in ledger if b.get("rules_version") != r["version"] and b.get("status") == "open"],
+            "prior_graded": [b for b in ledger if b.get("rules_version") != r["version"] and b.get("status") == "graded"][-60:]}
 
 
 def prior_versions(ledger: list[dict], r: dict) -> list[dict]:

@@ -18,6 +18,7 @@ header .xlink{justify-self:start}
 .research th,.research td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;font-family:var(--body)}
 .bttbl td,.bttbl th{text-align:right}
 .bttbl td:first-child,.bttbl th:first-child{text-align:left}
+.sumtbl tr.retired td{color:var(--muted);background:var(--surface)}
 </style>
 
 <div class="wrap">
@@ -155,9 +156,13 @@ $('stamp').textContent = `${C.season} season · odds and page updated ${fmtT(C.g
 // open paper bets by odds event
 const SHOP=C.cfb_shop_bets||{}, APLUS=C.cfb_aplus_bets||{}, SHOP3=C.cfb_shop_v3_bets||{}, MLB=C.cfb_ml_bets||{}, CLK=C.cfb_body_clock_bets||{};
 const openBy = {};   // only bets at your books (earlier rule versions also logged other Arizona books; those are summarized under Paper bets)
-for(const [k,B] of [['aplus',APLUS],['shop',SHOP],['shop3',SHOP3],['ml',MLB],['clock',CLK]]) for(const b of (B.open||[])) if(b.your_book!==false) (openBy[b.event_id]??=[]).push({...b, _k:k});
+for(const [k,B] of [['aplus',APLUS],['shop',SHOP],['shop3',SHOP3],['ml',MLB],['clock',CLK]]){
+  for(const b of (B.open||[])) if(b.your_book!==false) (openBy[b.event_id]??=[]).push({...b, _k:k});
+  for(const b of (B.prior_open||[])) if(b.your_book!==false) (openBy[b.event_id]??=[]).push({...b, _k:k, _old:true});   // earlier version, still open and graded
+}
 const TRK = {aplus:'A+', shop:'Shop vs sharp', shop3:'Stricter overs (test)', ml:'College ML', clock:'Body clock'};
-const chips = (ks, would) => ks.map(k=>`<span class="chip${would?' grd':''}" title="${would?'Would log this price at the next odds check':'Logged this bet'}">${TRK[k]}</span>`).join('');
+const trkName = b => TRK[b._k] + (b._old ? ` v${b.rules_version}` : '');
+const chips = (ks, would) => ks.map(k=>`<span class="chip${would?' grd':''}" title="${would?'Would log this price at the next odds check':'Logged this bet'}">${esc(k in TRK?TRK[k]:k)}</span>`).join('');
 const LOGU = C.log_urls || {};
 const logLink = b => b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : '';
 
@@ -181,7 +186,7 @@ function marketRows(g){
       const x=(M[m]||{})[side]; if(!x) continue;
       const bets=ev.filter(b=>(b.market||'ml')===m && b.side===side);
       if(m==='spread' && side==='home'){ const cb=(CLK.open||[]).find(b=>b.game_id===g.game_id); if(cb && !bets.some(b=>b._k==='clock')) bets.push({...cb,_k:'clock'}); }
-      const done = k => ev.find(b=>b._k===k && (b.market||'ml')===m);    // one bet per game per market, per track
+      const done = k => ev.find(b=>b._k===k && !b._old && (b.market||'ml')===m);    // one bet per game per market, per track (current version)
       const priced = inRange(x) && x.edge!=null;
       const would = [];
       if(priced && x.edge>=APLUS_BAR && !done('aplus')) would.push('aplus');
@@ -194,7 +199,7 @@ function marketRows(g){
       const blocked = priced && x.edge>=BAR[m] && !would.length ? (done('aplus')||done('shop')) : null;
       let st;
       if(bets.length){ const b=bets[0];
-        st={k:'bet', t:'PAPER BET', d:`${names([...new Set(bets.map(b=>b._k))])}${b.rule?` (${b.rule})`:''}: logged ${when(b.placed_at)} at ${m==='total'?`${cap1(b.side)} ${b.point} `:m==='spread'&&b.point!=null?ptd(b.point)+' ':''}${od(b.price)} ${b.book}${would.length&&!soon?` · ${names(would)} would also log it`:''}${big}`}; }
+        st={k:'bet', t:'PAPER BET', d:`${[...new Set(bets.map(trkName))].join(', ')}${b.rule?` (${b.rule})`:''}: logged ${when(b.placed_at)} at ${m==='total'?`${cap1(b.side)} ${b.point} `:m==='spread'&&b.point!=null?ptd(b.point)+' ':''}${od(b.price)} ${b.book}${would.length&&!soon?` · ${names(would)} would also log it`:''}${big}`}; }
       else if(x.edge==null) st={k:'no', t:'NO', d:'no sharp line to compare yet'};
       else if(soon && (would.length||clockRow)) st={k:'no', t:'NO', d:'tracks stop logging 60 min before kickoff'};
       else if(would.length) st={k:'watch', t:'WATCH', d:`${names(would)} would log this; logs at the next odds check if the price holds${far&&would.some(k=>k!=='ml')?' and kickoff is within 7 days':''}${big}`};
@@ -202,9 +207,9 @@ function marketRows(g){
       else if(blocked) st={k:'no', t:'NO', d:`already logged ${shortBet(blocked)} for this game (one bet per market per track)`};
       else if(!inRange(x) && !(m==='ml' && inRangeML(x))) st={k:'no', t:'NO', d:`${od(x.price)} is outside the tested price range (${od(PR[0])} to ${od(PR[1])}${m==='ml'?`; the moneyline track goes to ${od(PR_ML[0])} to ${od(PR_ML[1])}`:''}); long shots and heavy favorites are never bet`};
       else st={k:'no', t:'NO', d:`${sgn(x.edge)} vs Pinnacle; ${MKT[m].toLowerCase()} bets need ${Math.round(BAR[m]*100)}%+ (the A+ track 4%+)`};
-      const tk=[...new Set(bets.map(b=>b._k))];
+      const tk=[...new Set(bets.filter(b=>!b._old).map(b=>b._k))], tkOld=[...new Set(bets.filter(b=>b._old).map(trkName))];
       rows.push({g, m, side, x, st, grade:inRange(x)?x.grade:null, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet:bets[0],
-                 chips: chips(tk) + chips(soon?[]:would.filter(k=>!tk.includes(k)), true)});
+                 chips: chips(tk) + chips(tkOld) + chips(soon?[]:would.filter(k=>!tk.includes(k)), true)});
     }
   }
   ROWS.set(g.game_id, rows); return rows;
@@ -279,7 +284,7 @@ function card(g){
       ? `<div class="an">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.t)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${src(n)}</div>`
       : `<div class="an"><span class="qb">CTX</span><b>${esc(n.t)}</b> ${esc(String(n.category||'').replace(/_/g,' '))}: ${esc(n.summary||'')}${src(n)}</div>`).join('')}</div>` : '';
   const abT = t => t===g.odds_home||(t||'').startsWith(g.home) ? ab(g,'home') : (t||'').startsWith(g.away) ? ab(g,'away') : t;
-  const fl = new Map(); for(const b of (openBy[o.event_id]||[])){ const k=b.market==='total'?cap1(b.side)+' '+b.point:b.market==='spread'?abT(b.team)+' '+ptd(b.point):abT(b.team)+' ML'; fl.set(k,(fl.get(k)||[]).concat(TRK[b._k]+(b.rule?' '+b.rule:''))); }
+  const fl = new Map(); for(const b of (openBy[o.event_id]||[])){ const k=b.market==='total'?cap1(b.side)+' '+b.point:b.market==='spread'?abT(b.team)+' '+ptd(b.point):abT(b.team)+' ML'; fl.set(k,(fl.get(k)||[]).concat(trkName(b)+(b.rule?' '+b.rule:''))); }
   const flags=[...fl].map(([k,t])=>`<span class="betflag" title="${esc(t.join(', '))}">PAPER ${esc(k)}${t.length>1?` ×${t.length}`:''}</span>`).join('');
   const homeFav = (hp??0.5) >= .5, started = new Date(g.start) < new Date();
   const kick = g.home_pts!=null ? `Final ${esc(ab(g,'away'))} ${g.away_pts}–${g.home_pts} ${esc(ab(g,'home'))}` : started ? 'In progress' : when(g.start)+' AZ';
@@ -338,7 +343,9 @@ renderGames();
   const rankTip='Tracks with graded bets come first, ranked by a live score: closing-line value plus profit, each shrunk toward zero while the sample is small. Tracks with nothing graded yet follow, ranked by their research evidence. The order updates every run.';
   $('betsum').innerHTML = `<thead><tr><th title="${esc(rankTip)}">#</th><th>Track</th><th>What it bets</th><th>When</th><th>Open</th><th>Graded</th><th>W–L</th><th>Avg CLV</th><th>Status</th><th>Evidence</th></tr></thead><tbody>`+
     T.map(([k,B,name,what,whenT,ev,sc],i)=>{ const r=B.record||{}, g=r.graded||0;
-      return `<tr>${td('#',sc!=null?`<b>${i+1}</b><small> live ${sc>=0?'+':'−'}${Math.abs(sc*100).toFixed(1)}</small>`:`<b>${i+1}</b><small> evidence</small>`)}${td('Track',`<b>${name}</b>${B.rules_version!=null?`<small> v${B.rules_version}</small>`:''}`)}${td('What it bets',esc(what),'wr')}${td('When',esc(whenT),'wr nw')}${td('Open',(B.open||[]).length)}${td('Graded',`${g}<small> / ${r.min_bets??'—'}</small>`)}${td('W–L',g?`${r.wins}–${r.losses}`:'—')}${td('Avg CLV',g&&r.avg_clv!=null?sgn(r.avg_clv):'—')}${td('Status',`<span class="pill ${B.mode==='live'?'live':''}" title="${B.mode==='live'?'Validated: bets are recommendations':'Paper only until it passes its live test'}">${B.mode==='live'?'live':'shadow'}</span>`)}${td('Evidence',esc(ev),'wr ev'+(k==='aplus'?' top':''))}</tr>`; }).join('')+'</tbody>';
+      return `<tr>${td('#',sc!=null?`<b>${i+1}</b><small> live ${sc>=0?'+':'−'}${Math.abs(sc*100).toFixed(1)}</small>`:`<b>${i+1}</b><small> evidence</small>`)}${td('Track',`<b>${name}</b>${B.rules_version!=null?`<small> v${B.rules_version}</small>`:''}`)}${td('What it bets',esc(what),'wr')}${td('When',esc(whenT),'wr nw')}${td('Open',(B.open||[]).length)}${td('Graded',`${g}<small> / ${r.min_bets??'—'}</small>`)}${td('W–L',g?`${r.wins}–${r.losses}`:'—')}${td('Avg CLV',g&&r.avg_clv!=null?sgn(r.avg_clv):'—')}${td('Status',`<span class="pill ${B.mode==='live'?'live':''}" title="${B.mode==='live'?'Validated: bets are recommendations':'Paper only until it passes its live test'}">${B.mode==='live'?'live':'shadow'}</span>`)}${td('Evidence',esc(ev),'wr ev'+(k==='aplus'?' top':''))}</tr>`; }).join('')+
+    // earlier rule versions: retired (no new bets) but every bet they logged is still graded and kept
+    T.flatMap(([k,B,name])=>(B.prior_versions||[]).map(v=>`<tr class="retired">${td('#','<small>retired</small>')}${td('Track',`<b>${name}</b><small> v${v.version}</small>`)}${td('What it bets',k==='shop'||k==='shop3'?'Same rules at all 9 Arizona books (including books you don’t have)':'Earlier rules','wr')}${td('When','Retired Oct 10, 2026; open bets still graded','wr nw')}${td('Open',v.open)}${td('Graded',v.graded)}${td('W–L',v.graded?`${v.wins}–${v.losses}`:'—')}${td('Avg CLV',v.avg_clv!=null?sgn(v.avg_clv):'—')}${td('Status','<span class="pill">retired</span>')}${td('Evidence',`${v.profit_units>0?'+':''}${v.profit_units}u${v.roi!=null?` · ROI ${sgn(v.roi)}`:''} · ${v.at_your_books} of ${v.bets} bets at your books`,'wr ev')}</tr>`)).join('')+'</tbody>';
   const label=b=>b.market==='total'?`<b>${cap1(b.side)} ${b.point}</b>`:b.market==='spread'?`<b>${esc(b.team)} ${ptd(b.point)}</b>`:`<b>${esc(b.team)} ML</b>`;
   $('tracks').innerHTML = `<span class="subh">Track details</span>`+T.map(([k,B,name],i)=>{
     const live=B.mode==='live';
@@ -353,9 +360,12 @@ renderGames();
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open paper bets right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th style="text-align:left">Game</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
       gr.map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)}</td><td>${od(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv!=null?sgn(b.clv):'—'}</td></tr>`).join('')+'</tbody>' : '';
-    const PV=B.prior_versions||[];
-    const prior = PV.length ? `<p class="edge" style="font-size:13px;color:var(--muted);margin:4px 0 10px">Earlier rule versions (kept in the ledger, not counted toward this version): ${PV.map(v=>`v${v.version}: ${v.bets} bet${v.bets===1?'':'s'}${v.graded?`, ${v.wins}–${v.losses}, ${v.profit_units>0?'+':''}${v.profit_units}u${v.avg_clv!=null?`, CLV ${sgn(v.avg_clv)}`:''}`:''}${v.open?`, ${v.open} still open`:''}${v.at_your_books<v.bets?` (${v.bets-v.at_your_books} of the ${v.bets} at books you don't have)`:''}`).join(' · ')}. Bets at your books that still qualify are logged again under this version.</p>` : '';
-    return `<div class="track"><h3><span class="rkn">#${i+1}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3>${prior}<div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}</div>`;
+    const PV=B.prior_versions||[], po=B.prior_open||[], pg=(B.prior_graded||[]).slice().reverse();
+    const bookCell = b => `${esc(b.book)}${b.your_book===false?' <small>(no account)</small>':''}`;
+    const priorT = (po.length||pg.length) ? `<span class="subh">Earlier version bets (v${[...new Set([...po,...pg].map(b=>b.rules_version))].join(', v')}) · still tracked and graded</span><div class="scroll"><table><thead><tr><th style="text-align:left">Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Kickoff</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
+      [...po,...pg].map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)} <small>v${b.rules_version}</small></td><td>${od(b.price)}</td><td style="text-align:left">${bookCell(b)}</td><td>${when(b.kickoff_utc)}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.status==='open'?'open':esc(b.result)}</td><td>${b.status==='open'?'—':(b.profit_units>0?'+':'')+b.profit_units}</td><td>${b.clv!=null?sgn(b.clv):'—'}</td></tr>`).join('')+'</tbody></table></div>' : '';
+    const prior = PV.length ? `<p class="edge" style="font-size:13px;color:var(--muted);margin:4px 0 10px">Earlier rule versions (every bet kept and graded, listed below; not counted toward this version's test): ${PV.map(v=>`v${v.version}: ${v.bets} bet${v.bets===1?'':'s'}${v.graded?`, ${v.wins}–${v.losses}, ${v.profit_units>0?'+':''}${v.profit_units}u${v.avg_clv!=null?`, CLV ${sgn(v.avg_clv)}`:''}`:''}${v.open?`, ${v.open} still open`:''}${v.at_your_books<v.bets?` (${v.bets-v.at_your_books} of the ${v.bets} at books you don't have)`:''}`).join(' · ')}. Bets at your books that still qualify are logged again under this version.</p>` : '';
+    return `<div class="track"><h3><span class="rkn">#${i+1}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3>${prior}<div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${priorT}</div>`;
   }).join('');
 })();
 
