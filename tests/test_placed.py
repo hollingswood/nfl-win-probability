@@ -383,3 +383,48 @@ def test_notify_sends_to_every_configured_channel(monkeypatch):
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "b"); monkeypatch.setenv("TELEGRAM_CHAT_ID", "1")
     assert N.send("t", "m", actions=[{"action": "view", "label": "I placed it", "url": "https://x"}]) is True
     assert any("pushover" in u for u in sent) and any("telegram" in u for u in sent) and N.channels() == ["pushover", "telegram"]
+
+
+def test_cfb_tracks_use_only_your_books_and_aplus_track(tmp_path, monkeypatch):
+    import json
+    from cfbpred import shop as SH
+    mine = set(json.loads((SH.ROOT / "my_books.json").read_text())["allowed_books"])
+    r, r3, ra = SH.load_rules(), SH.load_rules(SH.RULES_V3), SH.load_rules(SH.RULES_APLUS)
+    for x in (r, r3, ra):
+        assert x["books"] == "my_books" and set(SH.books_of(x)) == mine
+    assert r["version"] == 3 and r3["version"] == 4 and ra["track"] == "cfb_aplus" and ra["ledger"] not in (r["ledger"], r3["ledger"])
+    assert all(v == 0.04 for v in ra["qualify"]["min_ev"].values()) and ra["qualify"]["price_range"] == [-200, 200]
+
+    def bk(key, tot):
+        return {"key": key, "title": key, "markets": [{"key": "totals", "outcomes": [{"name": "Over", "point": tot, "price": -110}, {"name": "Under", "point": tot, "price": -110}]}]}
+    ev = {"id": "e9", "home_team": "H", "away_team": "A", "commence_time": "2026-10-12T19:00:00Z",
+          "bookmakers": [bk("pinnacle", 50.5), bk("betmgm", 56.5), bk("draftkings", 52.5)]}
+    c = {x["side"]: x for x in SH.candidates(ev, r)}
+    assert c["under"]["book_key"] == "draftkings"                          # BetMGM's better number is ignored (no account)
+    e = c["under"]["edge"]
+    ca = {x["side"]: x for x in SH.candidates(ev, ra)}
+    assert ("under" in ca) == (e >= 0.04)                                   # A+ track: 4%+ only
+
+    # versioning: an earlier-version bet on the same game/market doesn't block the new version, and is summarized separately
+    now = datetime(2026, 10, 10, 18, 0, tzinfo=timezone.utc)
+    monkeypatch.setattr(SH, "HIST", tmp_path)
+    monkeypatch.setattr(SH, "snapshots", lambda: ["s"])
+    monkeypatch.setattr(SH, "snap_time", lambda f: now)
+    monkeypatch.setattr(SH, "load", lambda f: [ev])
+    monkeypatch.setattr(SH, "grade", lambda ledger, files: ledger)
+    old = {"id": "cfbshop:e9:total:under", "rules_version": 2, "event_id": "e9", "market": "total", "side": "under", "status": "open",
+           "book_key": "betmgm", "your_book": False, "units": 1}
+    (tmp_path / r["ledger"]).parent.mkdir(parents=True, exist_ok=True)
+    (tmp_path / r["ledger"]).write_text(json.dumps([old]))
+    out = SH.process(now)
+    assert [b["book_key"] for b in out["open"]] == ["draftkings"] and out["open"][0]["id"].endswith(":v3")
+    assert out["prior_versions"][0]["version"] == 2 and out["prior_versions"][0]["open"] == 1 and out["prior_versions"][0]["at_your_books"] == 0
+
+
+def test_cfb_results_refresh_every_2h_in_game_windows():
+    from datetime import timedelta
+    from cfbpred import pipeline as P
+    sat = datetime(2026, 10, 10, 20, 0, tzinfo=timezone.utc)
+    assert P.refresh_interval(sat) == timedelta(hours=2)
+    assert P.refresh_interval(datetime(2026, 10, 11, 9, 0, tzinfo=timezone.utc)) == timedelta(hours=2)    # Sunday early (late West Coast finals)
+    assert P.refresh_interval(datetime(2026, 10, 13, 20, 0, tzinfo=timezone.utc)) == timedelta(hours=12)  # Tuesday

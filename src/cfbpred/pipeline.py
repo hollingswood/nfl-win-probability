@@ -205,11 +205,23 @@ def odds_view(ev: dict, allowed: set) -> dict:
 
 
 # ------------------------------------------------------------------------------------- run
+def game_window(now: datetime) -> bool:
+    """College game window (UTC): Saturday 16:00 through Sunday 12:00, plus Thursday/Friday nights 23:00-07:00."""
+    wd, h = now.weekday(), now.hour
+    return (wd == 5 and h >= 16) or (wd == 6 and h < 12) or (wd in (3, 4) and h >= 23) or (wd in (4, 5) and h < 7)
+
+
+def refresh_interval(now: datetime) -> timedelta:
+    """CFBD results/lines pull: every 2 h during game windows (so finals, grades and the scorecard catch up the same
+    night), else every 12 h. About 6 calls per pull; ~75 pulls a month stays well inside the free 1,000 calls."""
+    return timedelta(hours=2) if game_window(now) else timedelta(hours=12)
+
+
 def refresh(now: datetime, force: bool = False) -> bool:
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
     last = datetime.fromisoformat(state["cfbd"]) if state.get("cfbd") else None
     key = os.environ.get("CFBD_API_KEY")
-    if not key or (not force and last and now - last < timedelta(hours=12)):
+    if not key or (not force and last and now - last < refresh_interval(now) - timedelta(minutes=10)):
         return False
     s = season_now(now)
     res = F.pull([s], key)
@@ -263,9 +275,7 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
             try:
                 from . import shop as SH
                 S = SH.sharp(ev)
-                az = json.loads((ROOT / "cfb_shop_rules.json").read_text())["books"]
-                o["mine"] = SH.offers(ev, sorted(allowed), S)
-                o["az"] = SH.offers(ev, az, S)
+                o["mine"] = SH.offers(ev, sorted(allowed), S)   # your books only (no other Arizona books shown)
                 o["sharp"] = {k: round(v, 2) if isinstance(v, float) else v for k, v in S.items()}
             except Exception as e:
                 print("cfb offers failed:", e)
@@ -306,7 +316,8 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
            "odds_checked_at": (datetime.strptime(snap_at, "%Y-%m-%dT%H%M").replace(tzinfo=timezone.utc).isoformat(timespec="minutes") if snap_at else None),
            "model": {"n_games_fit": coef.get("n_margin"), "note": "Model spreads are display only (no model rule passed its holdout). College bets come only from price rules: shop-vs-sharp (spreads, totals, moneylines vs Pinnacle) and the moneyline price track."},
            "games": games, "research_md": research_md,
-           "matched_odds": sum(1 for g in games if g["odds"]), "n_games": len(games)}
+           "matched_odds": sum(1 for g in games if g["odds"]), "n_games": len(games),
+           "results_pulled_at": (json.loads(STATE.read_text()).get("cfbd") if STATE.exists() else None)}
     try:   # college paper track (P1/P2 moneyline price rules) + phone alerts for new bets
         from . import tracks
         res["cfb_ml_bets"] = tracks.process(now)
@@ -320,10 +331,17 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     try:   # shop-vs-sharp paper track (spreads, totals, moneylines vs Pinnacle) + phone alerts
         from . import shop
         res["cfb_shop_bets"] = shop.process(now)
-        try:   # v3 shadow variant (overs need 4%, haircut sizing), paper-tracked separately
+        try:   # shadow variant (overs need 4%, haircut sizing), paper-tracked separately
             res["cfb_shop_v3_bets"] = shop.process(now, shop.RULES_V3)
         except Exception as e:
             res["cfb_shop_v3_bets"] = {"error": str(e)}
+        try:   # A+ track: every A+ offer at your books (cfb_aplus_rules.json)
+            res["cfb_aplus_bets"] = shop.process(now, shop.RULES_APLUS)
+            if res["cfb_aplus_bets"]["new"]:
+                from nflpred import notify
+                notify.new_bets({"upcoming": [], "cfb_aplus_bets": res["cfb_aplus_bets"]}, set())
+        except Exception as e:
+            res["cfb_aplus_bets"] = {"error": str(e)}
         if res["cfb_shop_bets"]["new"]:
             from nflpred import notify
             notify.new_bets({"upcoming": [], "cfb_shop_bets": res["cfb_shop_bets"]}, set())

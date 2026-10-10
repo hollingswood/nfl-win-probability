@@ -23,10 +23,10 @@ TRACK_NAMES = {
     "ml_v4_bets": "Moneyline v4", "night_west_bets": "Night west", "totals_wind_bets": "Wind under",
     "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop", "props_unders_bets": "Tuesday under",
     "aplus_ml_bets": "A+ moneyline", "aplus_spread_bets": "A+ spread", "aplus_totals_bets": "A+ total",
-    "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML", "cfb_shop_bets": "College shop vs sharp", "cfb_shop_v3_bets": "College shop v3 (test)", "cfb_body_clock_bets": "College body clock (unvalidated)",
+    "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML", "cfb_shop_bets": "College shop vs sharp", "cfb_shop_v3_bets": "College shop, stricter overs (test)", "cfb_aplus_bets": "College A+", "cfb_body_clock_bets": "College body clock (unvalidated)",
 }
 QUIET_TRACKS = {"props_unders_bets"}
-PRIORITY_TRACKS = {"cfb_shop_bets", "preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
+PRIORITY_TRACKS = {"cfb_shop_bets", "cfb_aplus_bets", "preseason_prior_bets", "tuesday_move_bets", "aplus_ml_bets", "aplus_spread_bets", "aplus_totals_bets", "ml_v4_bets", "props_receptions_bets"}
 
 
 def _post(url: str, data: bytes, headers: dict) -> bool:

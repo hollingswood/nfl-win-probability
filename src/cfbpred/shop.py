@@ -22,6 +22,14 @@ RULES = ROOT / "cfb_shop_rules.json"
 
 
 RULES_V3 = ROOT / "cfb_shop_v3_rules.json"
+RULES_APLUS = ROOT / "cfb_aplus_rules.json"
+
+
+def books_of(r: dict) -> list[str]:
+    """Rules books: a list, or "my_books" = the accounts in my_books.json (allowed_books)."""
+    if r.get("books") == "my_books":
+        return list(json.loads((ROOT / "my_books.json").read_text()).get("allowed_books", []))
+    return list(r["books"])
 
 
 def load_rules(path: Path = RULES) -> dict:
@@ -136,8 +144,9 @@ def candidates(ev: dict, r: dict) -> list[dict]:
         return []
     lo, hi = r["qualify"]["price_range"]
     best: dict = {}
+    books = books_of(r)
     for bk in ev.get("bookmakers", []):
-        if bk.get("key") not in r["books"]:
+        if bk.get("key") not in books:
             continue
         mk = _markets(bk)
         quotes = []
@@ -254,7 +263,7 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
     ledger = grade(ledger, files)
     new = []
     if files and now - snap_time(files[-1]) <= timedelta(hours=2):
-        have = {(b["event_id"], b["market"]) for b in ledger}
+        have = {(b["event_id"], b["market"]) for b in ledger if b.get("rules_version") == r["version"]}
         season = now.year if now.month >= 7 else now.year - 1
         q = r["qualify"]
         try:
@@ -269,7 +278,8 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
                 if (ev["id"], c["market"]) in have:
                     continue
                 have.add((ev["id"], c["market"]))
-                new.append({"id": f"{r.get('id_prefix', 'cfbshop')}:{ev['id']}:{c['market']}:{c['side']}", "track": r["track"], "rules_version": r["version"],
+                vtag = f":v{r['version']}" if r.get("books") == "my_books" else ""   # keeps ids unique across versions
+                new.append({"id": f"{r.get('id_prefix', 'cfbshop')}:{ev['id']}:{c['market']}:{c['side']}{vtag}", "track": r["track"], "rules_version": r["version"],
                             "placed_at": now.isoformat(timespec="minutes"), "event_id": ev["id"], "season": season,
                             "kickoff_utc": ko.isoformat(), "home": ev["home_team"], "away": ev["away_team"],
                             "gameday": ko.date().isoformat(), "units": r["sizing"]["flat_units_for_grading"], "status": "open",
@@ -277,6 +287,25 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
     ledger += new
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, indent=1))
+    cur = [b for b in ledger if b.get("rules_version") == r["version"]]
     return {"track": r["track"], "mode": "shadow", "rules_version": r["version"], "new": new,
-            "open": [b for b in ledger if b.get("status") == "open"],
-            "recent_graded": [b for b in ledger if b.get("status") == "graded"][-40:], "record": record(ledger, r)}
+            "books": books_of(r), "open": [b for b in cur if b.get("status") == "open"],
+            "recent_graded": [b for b in cur if b.get("status") == "graded"][-40:], "record": record(ledger, r),
+            "prior_versions": prior_versions(ledger, r)}
+
+
+def prior_versions(ledger: list[dict], r: dict) -> list[dict]:
+    """Earlier rules versions: kept in the ledger (graded as usual) but not counted toward the current version."""
+    out = []
+    for v in sorted({b.get("rules_version") for b in ledger if b.get("rules_version") != r["version"]}, key=lambda x: (x is None, x)):
+        bs = [b for b in ledger if b.get("rules_version") == v]
+        gr = [b for b in bs if b.get("status") == "graded"]
+        clv = [b["clv"] for b in gr if "clv" in b]
+        staked = sum(b["units"] for b in gr if b.get("result") != "push")
+        profit = sum(b.get("profit_units", 0) for b in gr)
+        out.append({"version": v, "bets": len(bs), "open": sum(b.get("status") == "open" for b in bs), "graded": len(gr),
+                    "wins": sum(b.get("result") == "win" for b in gr), "losses": sum(b.get("result") == "loss" for b in gr),
+                    "profit_units": round(profit, 2), "roi": round(profit / staked, 4) if staked else None,
+                    "avg_clv": round(sum(clv) / len(clv), 4) if clv else None,
+                    "at_your_books": sum(b.get("your_book") is True for b in bs)})
+    return out

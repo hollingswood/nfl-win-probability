@@ -1,56 +1,52 @@
 {
-  "track": "cfb_shop",
-  "version": 2,
-  "frozen_on": "2026-10-04",
-  "note": "College shop-vs-sharp screen (output/research/cfb/shop_screen.json, rules pre-declared and committed before results in f33671d). Passing rules on 2021-25 with the all-Arizona book set: spreads EV>=4% (113 bets, CLV +3.8% vs the Pinnacle close, p 3e-10, 5/5 seasons, ROI +0.1% +- 9.1%), totals EV>=2% (914 bets, CLV +2.0%, p 4e-13, 5/5, ROI +0.3% +- 3.2%), moneyline EV>=2% (403 bets, CLV +2.9%, p 2e-11, 5/5, ROI +2.6% +- 6.0%). Every one of the 12 declared rules had positive CLV; 7 failed only on realized ROI (noise) or bet count. Edge largest 3-7 days before kickoff. Pricing uses the key-number distributions in cfb_dist.json (fit 2014-21). Live snapshots are hourly Thu-Sat and every 3 h otherwise (research had ~2 per weekday), so more bets per game window are expected. The moneyline part overlaps the cfb_ml track (that one uses only your three books). Do not edit to fit results; bump the version.",
-  "books": [
-    "draftkings",
-    "fanduel",
-    "espnbet",
-    "betmgm",
-    "williamhill_us",
-    "betrivers",
-    "fanatics",
-    "hardrockbet",
-    "ballybet"
+ "track": "cfb_shop",
+ "version": 3,
+ "frozen_on": "2026-10-10",
+ "note": "College shop-vs-sharp screen (output/research/cfb/shop_screen.json, rules pre-declared and committed before results in f33671d). Passing rules on 2021-25 with the all-Arizona book set: spreads EV>=4% (113 bets, CLV +3.8% vs the Pinnacle close, p 3e-10, 5/5 seasons, ROI +0.1% +- 9.1%), totals EV>=2% (914 bets, CLV +2.0%, p 4e-13, 5/5, ROI +0.3% +- 3.2%), moneyline EV>=2% (403 bets, CLV +2.9%, p 2e-11, 5/5, ROI +2.6% +- 6.0%). Every one of the 12 declared rules had positive CLV; 7 failed only on realized ROI (noise) or bet count. Edge largest 3-7 days before kickoff. Pricing uses the key-number distributions in cfb_dist.json (fit 2014-21). Live snapshots are hourly Thu-Sat and every 3 h otherwise (research had ~2 per weekday), so more bets per game window are expected. The moneyline part overlaps the cfb_ml track (that one uses only your three books). Do not edit to fit results; bump the version.",
+ "books": "my_books",
+ "qualify": {
+  "min_minutes_before_kickoff": 60,
+  "max_days_before_kickoff": 7,
+  "price_range": [
+   -200,
+   200
   ],
-  "qualify": {
-    "min_minutes_before_kickoff": 60,
-    "max_days_before_kickoff": 7,
-    "price_range": [
-      -200,
-      200
-    ],
-    "min_ev": {
-      "spread": 0.04,
-      "total": 0.02,
-      "ml": 0.02
-    },
-    "one_bet_per_game_per_market": "first qualifying snapshot, best EV across books and sides at that snapshot"
+  "min_ev": {
+   "spread": 0.04,
+   "total": 0.02,
+   "ml": 0.02
   },
-  "sizing": {
-    "method": "quarter Kelly vs the Pinnacle fair price, capped",
-    "kelly_fraction": 0.25,
-    "max_pct_bankroll": 2.0,
-    "flat_units_for_grading": 1.0
+  "one_bet_per_game_per_market": "first qualifying snapshot, best EV across books and sides at that snapshot"
+ },
+ "sizing": {
+  "method": "quarter Kelly vs the Pinnacle fair price, capped",
+  "kelly_fraction": 0.25,
+  "max_pct_bankroll": 2.0,
+  "flat_units_for_grading": 1.0
+ },
+ "grading": {
+  "clv": "EV of our bet (same number and price) under Pinnacle's last pre-kickoff quote of that market, key-number pricing",
+  "result": "CFBD final score; pushes return the stake"
+ },
+ "validation": {
+  "min_bets": 150,
+  "avg_clv_positive_with_p_below": 0.01,
+  "realized_roi_above": 0.0
+ },
+ "ledger": "cfb/paper_bets_cfb_shop.json",
+ "version_history": [
+  {
+   "version": 1,
+   "frozen_on": "2026-10-04",
+   "devig": "multiplicative"
   },
-  "grading": {
-    "clv": "EV of our bet (same number and price) under Pinnacle's last pre-kickoff quote of that market, key-number pricing",
-    "result": "CFBD final score; pushes return the stake"
-  },
-  "validation": {
-    "min_bets": 150,
-    "avg_clv_positive_with_p_below": 0.01,
-    "realized_roi_above": 0.0
-  },
-  "ledger": "cfb/paper_bets_cfb_shop.json",
-  "version_history": [
-    {
-      "version": 1,
-      "frozen_on": "2026-10-04",
-      "devig": "multiplicative"
-    }
-  ],
-  "devig": "shin",
-  "version_2_note": "Only change: moneyline fair prices remove the vig with Shin's method instead of multiplicative (output/research/devig_methods.md, devig_tracks.json). On 2021-25 college lines, AZ-book moneylines chosen at EV >= 2% vs Pinnacle across -300..+300 gained +1.8% CLV with Shin vs +1.6% with multiplicative, and across -1000..+1000 +2.4% vs -3.2% (multiplicative picked bad longshots). Spreads and totals are unaffected. No v1 bets had been graded."
+  {
+   "version": 2,
+   "frozen_on": "2026-10-04",
+   "books": "all Arizona books (9)"
+  }
+ ],
+ "devig": "shin",
+ "version_2_note": "Only change: moneyline fair prices remove the vig with Shin's method instead of multiplicative (output/research/devig_methods.md, devig_tracks.json). On 2021-25 college lines, AZ-book moneylines chosen at EV >= 2% vs Pinnacle across -300..+300 gained +1.8% CLV with Shin vs +1.6% with multiplicative, and across -1000..+1000 +2.4% vs -3.2% (multiplicative picked bad longshots). Spreads and totals are unaffected. No v1 bets had been graded.",
+ "version_3_note": "Only change: bets only at the books Tyler has accounts with (my_books.json: DraftKings, FanDuel, theScore Bet), at his request 2026-10-10. Thresholds unchanged. Research for these 3 books (output/research/cfb/round2.md, 'your 3 books' rows, 2021-25): spreads EV>=4% +2.1% CLV (40 bets), totals EV>=2% +2.6% (418), moneylines EV>=2% +2.6% (197); about half the volume of all Arizona books (output/research/round3/cfb_shop_segments.md). v2 bets (all Arizona books) stay in the ledger as an earlier version."
 }

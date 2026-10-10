@@ -1,0 +1,39 @@
+{
+ "track": "cfb_aplus",
+ "id_prefix": "cfbaplus",
+ "version": 1,
+ "frozen_on": "2026-10-10",
+ "note": "College A+ paper track: bet EVERY offer the college grade rates A+ (EV >= 4% vs Pinnacle's no-vig line at the same moment, key-number pricing, cfbpred.dist) at your books (my_books.json), spreads, totals and moneylines priced -200..+200, one bet per game per market at the first A+ snapshot, 7 days to 60 min before kickoff, flat 1 unit. Evidence (output/research/cfb/round2.md, 'your 3 books EV>=4%' rules, 2021-25): totals +7.6% CLV (114 bets, pass), moneylines +4.4% (30), spreads +2.1% (40). Mirrors the NFL A+ tracks. Pass: >= 100 bets, CLV > 0 at p < 0.01, ROI > 0. Do not edit to fit results; bump the version.",
+ "books": "my_books",
+ "qualify": {
+  "min_minutes_before_kickoff": 60,
+  "max_days_before_kickoff": 7,
+  "price_range": [
+   -200,
+   200
+  ],
+  "min_ev": {
+   "spread": 0.04,
+   "total": 0.04,
+   "ml": 0.04
+  },
+  "one_bet_per_game_per_market": "first qualifying snapshot, best EV across books and sides at that snapshot"
+ },
+ "sizing": {
+  "method": "flat 1 unit (quarter-Kelly shown for reference)",
+  "kelly_fraction": 0.25,
+  "max_pct_bankroll": 2.0,
+  "flat_units_for_grading": 1.0
+ },
+ "grading": {
+  "clv": "EV of our bet (same number and price) under Pinnacle's last pre-kickoff quote of that market, key-number pricing",
+  "result": "CFBD final score; pushes return the stake"
+ },
+ "validation": {
+  "min_bets": 100,
+  "avg_clv_positive_with_p_below": 0.01,
+  "realized_roi_above": 0.0
+ },
+ "devig": "shin",
+ "ledger": "cfb/paper_bets_cfb_aplus.json"
+}

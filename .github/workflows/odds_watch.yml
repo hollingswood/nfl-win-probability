@@ -120,7 +120,7 @@ jobs:
         run: python -m nflpred.kalshi_maker
         env:
           PYTHONPATH: src
-      - name: College football page data (CFBD refresh every 12 h, ratings, this week's games)
+      - name: College football page data (CFBD refresh every 2 h in game windows, else 12 h; ratings, this week's games)
         continue-on-error: true
         run: python -m cfbpred.pipeline
         env:
