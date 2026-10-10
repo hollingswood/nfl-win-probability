@@ -231,8 +231,15 @@ def grade(ledger: list[dict], files: list[Path]) -> list[dict]:
     return out
 
 
+def counted(b: dict, r: dict) -> bool:
+    """Bets that count for the track: this version's, plus (when the rules say so) every earlier bet at your books."""
+    if b.get("rules_version") == r["version"]:
+        return True
+    return bool(r.get("count_earlier_bets_at_my_books")) and b.get("book_key") in books_of(r)
+
+
 def record(ledger: list[dict], r: dict) -> dict:
-    gr = [b for b in ledger if b.get("status") == "graded" and b.get("rules_version") == r["version"]]
+    gr = [b for b in ledger if b.get("status") == "graded" and counted(b, r)]
     staked = sum(b["units"] for b in gr if b["result"] != "push")
     profit = sum(b["profit_units"] for b in gr)
     clv = [b["clv"] for b in gr if "clv" in b]
@@ -263,7 +270,7 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
     ledger = grade(ledger, files)
     new = []
     if files and now - snap_time(files[-1]) <= timedelta(hours=2):
-        have = {(b["event_id"], b["market"]) for b in ledger if b.get("rules_version") == r["version"]}
+        have = {(b["event_id"], b["market"]) for b in ledger if counted(b, r)}
         season = now.year if now.month >= 7 else now.year - 1
         q = r["qualify"]
         try:
@@ -287,27 +294,7 @@ def process(now: datetime | None = None, rules_path: Path = RULES) -> dict:
     ledger += new
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, indent=1))
-    cur = [b for b in ledger if b.get("rules_version") == r["version"]]
+    cur = [b for b in ledger if counted(b, r)]   # bets at books you don't have are kept in the file but never shown or counted
     return {"track": r["track"], "mode": "shadow", "rules_version": r["version"], "new": new,
             "books": books_of(r), "open": [b for b in cur if b.get("status") == "open"],
-            "recent_graded": [b for b in cur if b.get("status") == "graded"][-40:], "record": record(ledger, r),
-            "prior_versions": prior_versions(ledger, r),
-            "prior_open": [b for b in ledger if b.get("rules_version") != r["version"] and b.get("status") == "open"],
-            "prior_graded": [b for b in ledger if b.get("rules_version") != r["version"] and b.get("status") == "graded"][-60:]}
-
-
-def prior_versions(ledger: list[dict], r: dict) -> list[dict]:
-    """Earlier rules versions: kept in the ledger (graded as usual) but not counted toward the current version."""
-    out = []
-    for v in sorted({b.get("rules_version") for b in ledger if b.get("rules_version") != r["version"]}, key=lambda x: (x is None, x)):
-        bs = [b for b in ledger if b.get("rules_version") == v]
-        gr = [b for b in bs if b.get("status") == "graded"]
-        clv = [b["clv"] for b in gr if "clv" in b]
-        staked = sum(b["units"] for b in gr if b.get("result") != "push")
-        profit = sum(b.get("profit_units", 0) for b in gr)
-        out.append({"version": v, "bets": len(bs), "open": sum(b.get("status") == "open" for b in bs), "graded": len(gr),
-                    "wins": sum(b.get("result") == "win" for b in gr), "losses": sum(b.get("result") == "loss" for b in gr),
-                    "profit_units": round(profit, 2), "roi": round(profit / staked, 4) if staked else None,
-                    "avg_clv": round(sum(clv) / len(clv), 4) if clv else None,
-                    "at_your_books": sum(b.get("your_book") is True for b in bs)})
-    return out
+            "recent_graded": [b for b in cur if b.get("status") == "graded"][-40:], "record": record(ledger, r)}

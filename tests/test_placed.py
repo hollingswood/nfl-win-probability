@@ -392,7 +392,7 @@ def test_cfb_tracks_use_only_your_books_and_aplus_track(tmp_path, monkeypatch):
     r, r3, ra = SH.load_rules(), SH.load_rules(SH.RULES_V3), SH.load_rules(SH.RULES_APLUS)
     for x in (r, r3, ra):
         assert x["books"] == "my_books" and set(SH.books_of(x)) == mine
-    assert r["version"] == 3 and r3["version"] == 4 and ra["track"] == "cfb_aplus" and ra["ledger"] not in (r["ledger"], r3["ledger"])
+    assert r["version"] == 4 and r3["version"] == 5 and r.get("count_earlier_bets_at_my_books") and ra["track"] == "cfb_aplus" and ra["ledger"] not in (r["ledger"], r3["ledger"])
     assert all(v == 0.04 for v in ra["qualify"]["min_ev"].values()) and ra["qualify"]["price_range"] == [-200, 200]
 
     def bk(key, tot):
@@ -405,20 +405,29 @@ def test_cfb_tracks_use_only_your_books_and_aplus_track(tmp_path, monkeypatch):
     ca = {x["side"]: x for x in SH.candidates(ev, ra)}
     assert ("under" in ca) == (e >= 0.04)                                   # A+ track: 4%+ only
 
-    # versioning: an earlier-version bet on the same game/market doesn't block the new version, and is summarized separately
+    # since the start, your books only: an earlier-version bet at a book you don't have is neither shown nor counted;
+    # one at your book counts (record, open list, one bet per game per market)
     now = datetime(2026, 10, 10, 18, 0, tzinfo=timezone.utc)
     monkeypatch.setattr(SH, "HIST", tmp_path)
     monkeypatch.setattr(SH, "snapshots", lambda: ["s"])
     monkeypatch.setattr(SH, "snap_time", lambda f: now)
     monkeypatch.setattr(SH, "load", lambda f: [ev])
     monkeypatch.setattr(SH, "grade", lambda ledger, files: ledger)
-    old = {"id": "cfbshop:e9:total:under", "rules_version": 2, "event_id": "e9", "market": "total", "side": "under", "status": "open",
-           "book_key": "betmgm", "your_book": False, "units": 1}
+    other = {"id": "cfbshop:e9:total:under", "rules_version": 2, "event_id": "e9", "market": "total", "side": "under", "status": "open",
+             "book_key": "betmgm", "your_book": False, "units": 1}
+    won = {"id": "cfbshop:e8:spread:home", "rules_version": 2, "event_id": "e8", "market": "spread", "side": "home", "status": "graded",
+           "book_key": "draftkings", "your_book": True, "units": 1, "result": "win", "profit_units": 0.91, "clv": 0.03}
     (tmp_path / r["ledger"]).parent.mkdir(parents=True, exist_ok=True)
-    (tmp_path / r["ledger"]).write_text(json.dumps([old]))
+    (tmp_path / r["ledger"]).write_text(json.dumps([other, won]))
     out = SH.process(now)
-    assert [b["book_key"] for b in out["open"]] == ["draftkings"] and out["open"][0]["id"].endswith(":v3")
-    assert out["prior_versions"][0]["version"] == 2 and out["prior_versions"][0]["open"] == 1 and out["prior_versions"][0]["at_your_books"] == 0
+    assert [b["book_key"] for b in out["open"]] == ["draftkings"] and out["open"][0]["id"].endswith(f":v{r['version']}")
+    assert out["record"]["graded"] == 1 and out["record"]["wins"] == 1 and [b["id"] for b in out["recent_graded"]] == [won["id"]]
+    assert "betmgm" not in json.dumps({k: out[k] for k in ("open", "recent_graded", "record")})
+    led = json.loads((tmp_path / r["ledger"]).read_text())
+    assert len(led) == 3                                                    # nothing deleted from the file
+    won2 = dict(won, id="x", event_id="e9", market="total", status="open")   # an earlier bet at your book blocks a second bet on that market
+    (tmp_path / r["ledger"]).write_text(json.dumps([won2]))
+    assert SH.process(now)["new"] == []
 
 
 def test_cfb_results_refresh_every_2h_in_game_windows():

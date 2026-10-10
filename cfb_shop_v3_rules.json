@@ -1,6 +1,6 @@
 {
  "track": "cfb_shop_v3",
- "version": 4,
+ "version": 5,
  "frozen_on": "2026-10-10",
  "note": "Shadow variant of cfb_shop v2, paper-tracked alongside it (v2 keeps running unchanged). Changes come from the 2021-25 segment study (output/research/round3/cfb_shop_segments.md), which sliced the same data that validated v2, so v3 must prove itself on 2026+ bets before it replaces anything: (1) OVERS need EV >= 4% (overs kept only 26% of their EV at the close vs 83% for unders; overs at EV 2-3% were worth ~+0.7% CLV); unders, spreads and moneylines keep their v2 bars. (2) Stake = quarter Kelly on the EV after the market's average EV-to-CLV gap (totals 1.9%, spreads 1.3%, moneylines 0). Everything else (books, price range, 60 min..7 days, one bet per game per market, Shin devig) as v2. Pass: >= 150 bets, CLV > 0 at p < 0.01, ROI > 0, and CLV per bet above v2's on the same games. Do not edit to fit results; bump the version.",
  "books": "my_books",
@@ -57,9 +57,16 @@
    "version": 3,
    "frozen_on": "2026-10-07",
    "books": "all Arizona books (9)"
+  },
+  {
+   "version": 4,
+   "frozen_on": "2026-10-10",
+   "books": "my_books, counting only bets logged under this version"
   }
  ],
  "devig": "shin",
  "id_prefix": "cfbshop3",
- "version_4_note": "Only change: your books only (my_books.json), same as the main shop track v3. Stricter overs (EV>=4%) and haircut sizing unchanged."
+ "version_4_note": "Only change: your books only (my_books.json), same as the main shop track v3. Stricter overs (EV>=4%) and haircut sizing unchanged.",
+ "count_earlier_bets_at_my_books": true,
+ "version_5_note": "Same change as cfb_shop v4: counts every bet at your books since the track started (earlier versions included), ignores bets at books you don't have."
 }
