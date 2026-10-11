@@ -146,8 +146,23 @@ def grade(ledger: list[dict], files: list[Path]) -> list[dict]:
     return out
 
 
+def one_per_game(ledger: list[dict]) -> list[dict]:
+    """The bets that count (v3): the first bet logged for each game; a same-moment P1 and P2 bet on the same side
+    is one bet labeled P1+P2. Later bets on a game stay in the ledger file but are not shown or counted."""
+    first: dict = {}
+    for b in sorted(ledger, key=lambda b: b.get("placed_at", "")):
+        f = first.get(b["event_id"])
+        if f is None:
+            first[b["event_id"]] = dict(b)
+        elif b["side"] == f["side"] and b.get("placed_at") == f.get("placed_at") and b.get("rule") not in f["rule"].split("+"):
+            f["rule"] = "+".join(sorted(set(f["rule"].split("+")) | {b["rule"]}))
+            if b["rule"] == "P1":          # edge shown = P1's (vs Pinnacle's own moneyline)
+                f["edge"] = b.get("edge")
+    return sorted(first.values(), key=lambda b: b.get("placed_at", ""))
+
+
 def record(ledger: list[dict], r: dict) -> dict:
-    gr = [b for b in ledger if b.get("status") == "graded" and b.get("rules_version") == r["version"]]
+    gr = [b for b in one_per_game(ledger) if b.get("status") == "graded"]
     staked = sum(b["units"] for b in gr if b["result"] != "push"); profit = sum(b["profit_units"] for b in gr)
     clv = [b["clv"] for b in gr if "clv" in b]
     m = sum(clv) / len(clv) if clv else 0.0
@@ -158,7 +173,7 @@ def record(ledger: list[dict], r: dict) -> dict:
     checks = {"enough_bets": len(gr) >= r["validation"]["min_bets"], "clv_positive_and_significant": m > 0 and p < 0.05, "roi_positive": roi > 0}
     by_rule = {}
     for rule in ("P1", "P2"):
-        x = [b for b in gr if b["rule"] == rule]
+        x = [b for b in gr if rule in b["rule"].split("+")]
         c = [b["clv"] for b in x if "clv" in b]
         by_rule[rule] = {"graded": len(x), "profit_units": round(sum(b["profit_units"] for b in x), 2),
                          "avg_clv": round(sum(c) / len(c), 4) if c else None}
@@ -177,23 +192,25 @@ def process(now: datetime | None = None) -> dict:
     ledger = grade(ledger, files)
     new = []
     if files and now - snap_time(files[-1]) <= timedelta(hours=2):
-        have = {(b["event_id"], b["rule"]) for b in ledger}
+        have = {b["event_id"] for b in ledger}        # v3: one bet per game, ever
         season = now.year if now.month >= 7 else now.year - 1
         for ev in load(files[-1]):
             ko = datetime.fromisoformat(ev["commence_time"].replace("Z", "+00:00"))
             if ko - now < timedelta(minutes=r["qualify"]["min_minutes_before_kickoff"]):
                 continue
-            for c in candidates(ev, r):
-                if (ev["id"], c["rule"]) in have:
-                    continue
-                have.add((ev["id"], c["rule"]))
-                new.append({"id": f"cfb:{ev['id']}:{c['rule']}:{c['side']}", "track": "cfb_ml", "rules_version": r["version"],
-                            "placed_at": now.isoformat(timespec="minutes"), "event_id": ev["id"], "season": season,
-                            "kickoff_utc": ko.isoformat(), "home": ev["home_team"], "away": ev["away_team"],
-                            "gameday": ko.date().isoformat(), "units": r["sizing"]["units"], "status": "open", **c})
+            cs = candidates(ev, r)
+            if ev["id"] in have or not cs or len({c["side"] for c in cs}) > 1:   # already bet, nothing, or rules disagree on the side
+                continue
+            have.add(ev["id"])
+            c = dict(next((c for c in cs if c["rule"] == "P1"), cs[0]), rule="+".join(sorted({c["rule"] for c in cs})))
+            new.append({"id": f"cfb:{ev['id']}:{c['rule']}:{c['side']}", "track": "cfb_ml", "rules_version": r["version"],
+                        "placed_at": now.isoformat(timespec="minutes"), "event_id": ev["id"], "season": season,
+                        "kickoff_utc": ko.isoformat(), "home": ev["home_team"], "away": ev["away_team"],
+                        "gameday": ko.date().isoformat(), "units": r["sizing"]["units"], "status": "open", **c})
     ledger += new
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, indent=1))
+    cur = one_per_game(ledger)
     return {"track": "cfb_ml", "mode": "shadow", "rules_version": r["version"], "new": new,
-            "open": [b for b in ledger if b.get("status") == "open"],
-            "recent_graded": [b for b in ledger if b.get("status") == "graded"][-25:], "record": record(ledger, r)}
+            "open": [b for b in cur if b.get("status") == "open"],
+            "recent_graded": [b for b in cur if b.get("status") == "graded"][-40:], "record": record(ledger, r)}

@@ -437,3 +437,21 @@ def test_cfb_results_refresh_every_2h_in_game_windows():
     assert P.refresh_interval(sat) == timedelta(hours=2)
     assert P.refresh_interval(datetime(2026, 10, 11, 9, 0, tzinfo=timezone.utc)) == timedelta(hours=2)    # Sunday early (late West Coast finals)
     assert P.refresh_interval(datetime(2026, 10, 13, 20, 0, tzinfo=timezone.utc)) == timedelta(hours=12)  # Tuesday
+
+
+def test_cfb_ml_counts_one_bet_per_game():
+    from cfbpred import tracks as T
+    r = T.load_rules()
+    assert r["version"] >= 3
+    g = lambda **k: {"status": "graded", "units": 1, **k}
+    led = [g(event_id="a", rule="P1", side="home", placed_at="2026-10-05T00:24", result="win", profit_units=0.76, clv=0.03, edge=0.034),
+           g(event_id="a", rule="P2", side="home", placed_at="2026-10-05T00:24", result="win", profit_units=0.76, clv=0.03, edge=0.027),
+           g(event_id="b", rule="P1", side="home", placed_at="2026-10-04T18:25", result="win", profit_units=0.57, clv=0.08),
+           g(event_id="b", rule="P2", side="away", placed_at="2026-10-05T15:25", result="loss", profit_units=-1, clv=-0.03)]
+    one = T.one_per_game(led)
+    assert len(one) == 2
+    a = next(b for b in one if b["event_id"] == "a")
+    assert a["rule"] == "P1+P2" and a["edge"] == 0.034
+    assert next(b for b in one if b["event_id"] == "b")["side"] == "home"      # first logged counts, the later other-side bet does not
+    rec = T.record(led, r)
+    assert rec["graded"] == 2 and rec["wins"] == 2 and rec["by_rule"]["P2"]["graded"] == 1

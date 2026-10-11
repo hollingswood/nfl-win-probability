@@ -178,7 +178,7 @@ function marketRows(g){
   if(ROWS.has(g.game_id)) return ROWS.get(g.game_id);
   const o=g.odds||{}, M=o.mine||{}, rows=[], ev=openBy[o.event_id]||[];
   const soon = new Date(g.start)-Date.now() < 60*6e4, far = new Date(g.start)-Date.now() > 7*864e5;
-  const mlP1Done = ev.some(b=>b._k==='ml' && b.rule==='P1');           // ML track: one bet per game per rule
+  const mlP1Done = ev.some(b=>b._k==='ml');                            // ML track: one bet per game
   for(const m of ['ml','spread','total']){
     for(const side of (m==='total' ? ['over','under'] : ['away','home'])){
       const x=(M[m]||{})[side]; if(!x) continue;
@@ -326,7 +326,7 @@ renderGames();
     ['aplus',APLUS,'A+ (every A+ price)','Every price at your books graded A+ (4%+ better than Pinnacle’s no-vig line): spreads, totals and moneylines, −200 to +200; one bet per game per market, flat 1 unit','Every odds check, 7 days to 60 min before kickoff','At your 3 books, 2021–25, A+ prices beat Pinnacle’s close: totals +7.6% CLV (114 bets), moneylines +4.4% (30), spreads +2.1% (40). New Oct 10, 2026; mirrors the NFL A+ tracks'],
     ['shop',SHOP,'Shop vs sharp','Spreads, totals and moneylines at your books that beat Pinnacle (spreads 4%+, totals and moneylines 2%+), priced −200 to +200; one bet per game per market','Every odds check, 7 days to 60 min before kickoff','At your 3 books, 2021–25: spreads +2.1% CLV (40 bets), totals +2.6% (418), moneylines +2.6% (197). All 12 shop rules tested beat the close (+1.2% to +7.6%)'],
     ['shop3',SHOP3,'Stricter overs (test)','Same as shop vs sharp at your books, but overs need 4%+ (overs kept only a quarter of their edge at the close in 2021–25) and stakes use the edge after its usual shrink to the close','Same as shop vs sharp','New 2026 test from the 2021–25 segment study (same data that validated shop vs sharp, so it must prove itself live)'],
-    ['ml',MLB,'College moneyline','Moneylines at your 3 books, −300 to +300, that beat Pinnacle no-vig (P1) or Pinnacle’s spread-implied price (P2) by 2%+; P1 and P2 can both log the same game','Every odds check, until 60 min before kickoff','P1 +2.2% CLV (472 bets), P2 +1.8% (855 bets), 2021–25; shrank in 2024–25'],
+    ['ml',MLB,'College moneyline','Moneylines at your 3 books, −300 to +300, that beat Pinnacle no-vig (P1) or Pinnacle’s spread-implied price (P2) by 2%+; one bet per game (P1+P2 when both qualify)','Every odds check, until 60 min before kickoff','P1 +2.2% CLV (472 bets), P2 +1.8% (855 bets), 2021–25; shrank in 2024–25'],
     ['clock',CLK,'Body clock (unvalidated)','Home team vs a visitor from 2+ time zones west, kickoff before 1 pm local','Last 3 h before those kickoffs','FAILED its screen (54.5% on 77 games 2014–25, p 0.35); tracked at your request'],
   ].filter(([,B])=>B && !B.error);
   // ranking (recomputed every run): tracks with graded bets first by a live score (CLV + profit, shrunk for small samples),
