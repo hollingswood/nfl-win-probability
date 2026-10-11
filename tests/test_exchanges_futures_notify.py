@@ -61,7 +61,8 @@ def test_spread_and_total_grading():
 
 
 def test_notify_noop_without_topic(monkeypatch):
-    monkeypatch.delenv("NTFY_TOPIC", raising=False)
+    for k in ("NTFY_TOPIC", "PUSHOVER_USER", "PUSHOVER_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"):
+        monkeypatch.delenv(k, raising=False)        # no channel configured -> nothing is sent
     pred = {"upcoming": [], "ml_v4_bets": {"new": [{"id": "a", "team": "WAS", "price": 188, "book": "FanDuel", "edge": 0.024, "units": 0.32}]}}
     assert N.new_bets(pred) is False
     line = N.bet_line("ml_v4_bets", pred["ml_v4_bets"]["new"][0], pred)
