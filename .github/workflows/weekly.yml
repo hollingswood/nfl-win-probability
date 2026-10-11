@@ -81,7 +81,11 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: Tests must pass before publishing
-        run: pytest -q
+        # failures are also posted as annotations (readable through the API when logs are not)
+        run: |
+          pytest -q -rfE 2>&1 | tee pytest.log; code=${PIPESTATUS[0]}
+          if [ "$code" != 0 ]; then grep -E '^(FAILED|ERROR) |^E  ' pytest.log | head -9 | while IFS= read -r l; do echo "::error title=pytest::${l:0:900}"; done; fi
+          exit $code
       - name: Backtest gate (refreshes data; blocks publishing if the model regressed)
         run: python -m nflpred.pipeline gate
         env:
