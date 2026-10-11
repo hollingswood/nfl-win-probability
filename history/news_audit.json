@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-10-09T21:45+00:00",
- "signals": 2308,
- "units": 883,
+ "generated_at": "2026-10-11T19:50+00:00",
+ "signals": 2751,
+ "units": 1024,
  "skipped": {
-  "team_unclear": 41,
-  "no_game": 47,
-  "not_game_week": 51
+  "team_unclear": 45,
+  "no_game": 56,
+  "not_game_week": 56
  },
  "roster_check": {
-  "match": 2205,
-  "team_mismatch": 60,
-  "not_found": 43
+  "match": 2621,
+  "team_mismatch": 82,
+  "not_found": 48
  },
- "graded": 154,
- "pending": 322,
+ "graded": 155,
+ "pending": 413,
  "overall": {
-  "n": 154,
-  "correct": 133,
-  "pct": 86.4
+  "n": 155,
+  "correct": 134,
+  "pct": 86.5
  },
  "by_signal": {
   "benched": {
@@ -31,9 +31,9 @@
    "pct": 100.0
   },
   "expected_to_play": {
-   "n": 46,
-   "correct": 38,
-   "pct": 82.6
+   "n": 47,
+   "correct": 39,
+   "pct": 83.0
   },
   "injured_reserve": {
    "n": 14,
@@ -57,34 +57,3046 @@
   }
  },
  "qb": {
-  "n": 20,
-  "correct": 12,
-  "pct": 60.0,
-  "pending": 30
+  "n": 21,
+  "correct": 13,
+  "pct": 61.9,
+  "pending": 32
  },
  "rule_population": {
-  "n": 17,
-  "correct": 11,
-  "pct": 64.7,
-  "pending": 25
+  "n": 18,
+  "correct": 12,
+  "pct": 66.7,
+  "pending": 27
  },
  "official_report_agreement": {
-  "n": 133,
-  "agree": 109,
-  "pct": 82.0
+  "n": 134,
+  "agree": 110,
+  "pct": 82.1
  },
  "lead_vs_report_hours": {
-  "n": 476,
-  "median": 49.1,
-  "share_before_report": 79.0
+  "n": 568,
+  "median": 46.6,
+  "share_before_report": 72.5
  },
  "qb_line_move_6h": {
-  "n": 66,
-  "avg_abs_after": 0.63,
-  "avg_abs_before": 0.23,
+  "n": 71,
+  "avg_abs_after": 0.59,
+  "avg_abs_before": 0.21,
   "avg_after_negative_signals": -0.08
  },
  "rows": [
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Case Keenum",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 120.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:kfishbain.bsky.social (CHI)",
+     "title": "Case Keenum in at quarterback for the Bears.",
+     "quote": "Case Keenum in at quarterback for the Bears",
+     "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3mxmq6ltxqs2r",
+     "player": "Case Keenum",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "TreVeyon Henderson",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_injury",
+     "outlet": "RotoBaller",
+     "title": "TreVeyon Henderson Ruled Out With Ankle Injury - NFL News | Fantasy Football - RotoBaller",
+     "quote": "TreVeyon Henderson Ruled Out With Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQbTgwWjc3SkhCMm10a0xXM3FuSF9LNnhwS29KY0hzRmpxUmx0RUprallGR1dseHBJRXg5V21DcnQ3UngzcWgxc19BdElTelNqaEg2akQ4bFNhTUwwWWc2Z2Y1TU9KUzJ3T1oyYmNDMHhMYmdfOWkzVlNRMG4xaTFlZHdFYUVmZmhIWmZQZmFOTGIyZVNjMG1TbA?oc=5",
+     "player": "TreVeyon Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "LT Will Campbell and RB TreVeyon Henderson are officially OUT.",
+     "quote": "officially OUT",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3mxmp5rbfth2v",
+     "player": "TreVeyon Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Campbell and Henderson downgraded to out.",
+     "quote": "downgraded to out",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxmp5hcdts2k",
+     "player": "TreVeyon Henderson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Will Campbell",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "LT Will Campbell and RB TreVeyon Henderson are officially OUT.",
+     "quote": "officially OUT",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3mxmp5rbfth2v",
+     "player": "Will Campbell",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Campbell and Henderson downgraded to out.",
+     "quote": "downgraded to out",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxmp5hcdts2k",
+     "player": "Will Campbell",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Roman Wilson",
+   "team": "PIT",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_PIT_TB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Steelers rule out WRs Roman Wilson, Ben Skowronek",
+     "quote": "ruled out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/steelers-rule-out-wrs-roman-wilson-ben-skowronek",
+     "player": "Roman Wilson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Steelers rule out WRs Roman Wilson, Ben Skowronek",
+     "quote": "ruled out",
+     "link": "https://sports.yahoo.com/articles/steelers-rule-wrs-roman-wilson-190151849.html",
+     "player": "Roman Wilson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Ben Skowronek",
+   "team": "PIT",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_PIT_TB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Steelers rule out WRs Roman Wilson, Ben Skowronek",
+     "quote": "ruled out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/steelers-rule-out-wrs-roman-wilson-ben-skowronek",
+     "player": "Ben Skowronek",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Steelers rule out WRs Roman Wilson, Ben Skowronek",
+     "quote": "ruled out",
+     "link": "https://sports.yahoo.com/articles/steelers-rule-wrs-roman-wilson-190151849.html",
+     "player": "Ben Skowronek",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "David Montgomery",
+   "team": "HOU",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_HOU_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Texans RB David Montgomery ruled out with groin injury - ESPN",
+     "quote": "ruled out with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNY0c2V2Q2cHp1VndPYzJ1QjNCZDdGVnRtRF9wcmlkVUwwV2g2bExKbU5nbU9nUGFGUHJwRkdhWlUyMHAyY3VNVkpMQ1ZJUnhyc2c3eXA5Z2RKbXlkQjg2dDBOdEkxV3B0SXN3OTNieVFIUG1xUk5yUXE2aTRGMVRWbmdxaVUxZWEzR2pMSEliUzhneW1s?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "David Montgomery knocked out with groin injury - Yahoo Sports",
+     "quote": "David Montgomery knocked out with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOcGNhRlg2UTdtbjgyaTlwYVgxeXZiQlNjWWNTaUQ3VFYyT05HSml5eWliR1ZjTC1pTXNTUU9KeUVvU1V3VmtGSnVzRkJFNmtwSVN5SEtLSW02MXd5X2VCdVJmODUtbmhrQUVObGQwVHgzcWZhQU1BTm1Tbnc0amRTZEJvOExlZnVKYkVXZXA2QQ?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_injury",
+     "outlet": "FantasyPros",
+     "title": "David Montgomery (groin) ruled out Sunday - FantasyPros",
+     "quote": "David Montgomery (groin) ruled out Sunday",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQX3ZKRDRSWXFVZERkTDZHbDRiSVZqUVBFREJWcXNvUGdsb2JMZzVaLVptOGE0UWk4Rl81cTRjbXladnVyZGQtYmtkcnVXUjRhM1JENDRPZTAxbVQ5U2c0WjJNWWZMN0JKZW1qZGYyUTRYbDJ3dk1oVXlxNDdQWnJFb25wWktVTnFQVi0yVFVvVGPSAZYBQVVfeXFMTkFTTDl6UjA3NW9YVjlZUzN6Sk1lVkx5WWh5ZUxqZ1cyamNMME1CelFKS3dwZ0pvdFBSdzZ4N2Y3Si0yd2IwdHA2bEJENkpDc1ozTXRYam54MUh4YnZQdUY5R29KYXMwV1Y3Y0ttOVJhSXBrTmNrWU9NYVk0R2R6V1EzY3lReVJfYmVmVnFIU2RqSWx4STJR?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Kurtis Rourke",
+   "team": "SF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
+     "player": "Kurtis Rourke",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Upton Stout",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "cleared and will play",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
+     "player": "Upton Stout",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Tyrique Stevenson",
+   "team": "CHI",
+   "signal": "doubtful",
+   "qb": false,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Injury update: Bears CB Tyrique Stevenson (hamstring) return is doubtful",
+     "quote": "return is doubtful",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3mxmom45vwk2k",
+     "player": "Tyrique Stevenson",
+     "signal": "doubtful"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Now Bears cornerback Tyrique Stevenson is doubtful with a hamstring injury. Bears are down linebacker T.J. Edwards, defensive end Dayo Odeyi",
+     "quote": "Bears cornerback Tyrique Stevenson is doubtful with a hamstring injury",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmoikr5ss2l",
+     "player": "Tyrique Stevenson",
+     "signal": "doubtful"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "T.J. Edwards",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Now Bears cornerback Tyrique Stevenson is doubtful with a hamstring injury. Bears are down linebacker T.J. Edwards, defensive end Dayo Odeyi",
+     "quote": "Bears are down linebacker T.J. Edwards",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmoikr5ss2l",
+     "player": "T.J. Edwards",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Injury update: Bears LB T.J. Edwards (hamstring) out for the game)",
+     "quote": "Bears LB T.J. Edwards (hamstring) out for the game",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3mxmnnjc6kk2k",
+     "player": "T.J. Edwards",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:kfishbain.bsky.social (CHI)",
+     "title": "Bears LB TJ Edwards has been downgraded to out with a hamstring injury. D'Marco Jackson is calling plays for the defense. Noah Sewell is the",
+     "quote": "Bears LB TJ Edwards has been downgraded to out with a hamstring injury",
+     "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3mxmnlcdkfk2r",
+     "player": "T.J. Edwards",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "T.J. Edwards (hamstring) has been downgraded to OUT. D'Marco Jackson is now wearing the green dot and handling communication for the Bears d",
+     "quote": "T.J. Edwards (hamstring) has been downgraded to OUT",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmnlfhtf22n",
+     "player": "T.J. Edwards",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Dayo Odeyingbo",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Now Bears cornerback Tyrique Stevenson is doubtful with a hamstring injury. Bears are down linebacker T.J. Edwards, defensive end Dayo Odeyi",
+     "quote": "defensive end Dayo Odeyingbo",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmoikr5ss2l",
+     "player": "Dayo Odeyingbo",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Ladd McConkey",
+   "team": "LAC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Ladd McConkey is active for the Chargers",
+     "quote": "Ladd McConkey will be available for the Chargers",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/ladd-mcconkey-is-active-for-the-chargers",
+     "player": "Ladd McConkey",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Skyy Moore",
+   "team": "GB",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Injury update: Packers return specialist Skyy Moore (ankle) out for the game.",
+     "quote": "Packers return specialist Skyy Moore (ankle) out for the game",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3mxmnn7gtqc2k",
+     "player": "Skyy Moore",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "T.J. Watt",
+   "team": "PIT",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_PIT_TB",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 120.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "T.J. Watt injury update as Steelers LB leaves game after eye poke",
+     "quote": "leaves game after eye poke",
+     "link": "https://sports.yahoo.com/articles/t-j-watt-injury-steelers-182406293.html",
+     "player": "T.J. Watt",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T19:25+00:00",
+   "player": "Fred Warner",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_qb",
+     "outlet": "49ers Webzone",
+     "title": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released - 49ers Webzone",
+     "quote": "Warner, Bosa cleared for training camp",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
+     "player": "Fred Warner",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "KC Concepcion",
+   "team": "CLE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_BAL_CLE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Browns rookie wide receiver KC Concepcion ruled out after helmet-to-helmet hit by Jets' Fitzpatrick - Yahoo Sports",
+     "quote": "ruled out after helmet-to-helmet hit",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPRlF3RVpNOFdSdHA1M0VCZ19CQ0JIdm5LSDFPazc0Vm5GMEJpc19hM3o3YXN5Q0xMM2ZpRWZkQlUtQnVsNmZqeE81X1ZYc1F2S1ZZZkRESG9FbDA4TXk5VHk2Y29TaGNLekZuYkgxbEhGblR1WFRJc2RhSDRlWlh0Y3pPbUktZw?oc=5",
+     "player": "KC Concepcion",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:spencito.bsky.social (CLE)",
+     "title": "With Concepcion out, Denzel Boston takes the first punt return chance for Browns",
+     "quote": "Concepcion out",
+     "link": "https://bsky.app/profile/spencito.bsky.social/post/3mxmk522ods2y",
+     "player": "KC Concepcion",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "KC Concepcion ruled out with head injury, Browns cut Jets lead to 7-3 - NBC Sports",
+     "quote": "KC Concepcion ruled out with head injury",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQV0FjNHZRY1hyckg1blE4ejB3WENmZlJQSW1YZndyNGJiVDBtRG9MTG9xcDBQRjVhclFFN21laGFDLWs5OUdTUWxaa2RPTF9UdHI4cmItaTlvaU05M1Rld3BYWjVGQmVSSV96UGpORTRoVl9udVU2S0NTVFliSVFQcWJQZmU1cWtMY2F4TjdOSU91YVFoaHh0OVU2cHZqMlNFUEp0QWxKMVVxTjkzSGljMzFwMU9xczl0NmFlcnNTSjBKbVBKeHF2QlBn?oc=5",
+     "player": "KC Concepcion",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "KC Concepcion ruled out with head injury, Browns cut Jets lead to 7-3",
+     "quote": "KC Concepcion ruled out with head injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kc-concepcion-ruled-out-with-head-injury-browns-cut-jets-lead-to-7-3",
+     "player": "KC Concepcion",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:spencito.bsky.social (CLE)",
+     "title": "KC Concepcion has a head injury and has already been ruled out. Browns gnna need Jerry Jeudy today.",
+     "quote": "KC Concepcion has a head injury and has already been ruled out",
+     "link": "https://bsky.app/profile/spencito.bsky.social/post/3mxmjuqeb722y",
+     "player": "KC Concepcion",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_injury",
+     "outlet": "The Washington Post",
+     "title": "Browns rookie wide receiver KC Concepcion ruled out after helmet-to-helmet hit by Jets' Fitzpatrick - The Washington Post",
+     "quote": "ruled out after helmet-to-helmet hit",
+     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNTTVqMC1ja3QycHJhZGJKY2tORXhOcGJmTXYtS2FBSFQ1QndFenJucUtEZGJ4dUg5bzBmWGNkd2tXRDEyZHJodGUyRmROZDBIakNBSXBmcWZ4aTVwM1h1b0tZMnRqWF9hSk5fVG5MeVViZWlpRi1teXFwNS11LVViZGNqbGtZNk5KME9sbFZOY2hfMG9yRzZPM0NoRW95TUFpLUlxUHhCMmFrTmIwTUdWYzEtV3ZPdVlfNXd6YWdTTVp0RjVHanBIbktVSkQ?oc=5",
+     "player": "KC Concepcion",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "Caleb Lomu",
+   "team": "NE",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "Caleb Lomu at LT in place of Will Campobell.",
+     "quote": "Caleb Lomu at LT in place of Will Campbell",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3mxml4uetej2p",
+     "player": "Caleb Lomu",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "With LT Will Campbell remaining down, first-round pick Caleb Lomu comes on to the field.",
+     "quote": "first-round pick Caleb Lomu comes on to the field",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxml3kjlpk2b",
+     "player": "Caleb Lomu",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "Will Campbell",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "Will Campbell immediately grabbed for his left knee, stayed down for about 1 minute and walked off with minor assistance to the sideline, wh",
+     "quote": "Will Campbell immediately grabbed for his left knee... walked off with minor assistance to the sideline... Potential massive loss at LT",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3mxml35q7ln2j",
+     "player": "Will Campbell",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "Henderson",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Henderson to the blue tent. Campbell is down.",
+     "quote": "Henderson to the blue tent",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxmkxrle2k2k",
+     "player": "Henderson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Henderson doesn't appear to be putting weight on that leg on the sideline. No blue tent yet.",
+     "quote": "doesn't appear to be putting weight on that leg on the sideline",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxmkwgv4dc26",
+     "player": "Henderson",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "Campbell",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Henderson to the blue tent. Campbell is down.",
+     "quote": "Campbell is down",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxmkxrle2k2k",
+     "player": "Campbell",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "KC Concepcion",
+   "team": "CLE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_BAL_CLE",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Browns WR KC Concepcion suffers head injury after illegal hit - ESPN",
+     "quote": "suffers head injury after illegal hit",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOdzdXR1Mybll6RWxwM2R5LVhHSWRDRUd6bloxaU9scl83aEIxNDdIak5LYXFuVlhuMTlheXNGMmNHTmg4U3k3eDVCanAxendOUHhxbFNKUDNhQ0YxSEFRTUhPMlRtX0lwUG4xN21UWWt0bVNNdWJLZlowZlZIYzc1dVlxaFZNYXBtMlZLeWxZc09PcFBVT2ZxN25qUzdqQm1DaUE?oc=5",
+     "player": "KC Concepcion",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "T.J. Edwards",
+   "team": "CHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 121.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Bears linebacker T.J. Edwards was in the medical tent for a while and is now leaving the Bears sideline and heading to the locker room.",
+     "quote": "leaving the Bears sideline and heading to the locker room",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmkuftxnk2q",
+     "player": "T.J. Edwards",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T18:24+00:00",
+   "player": "Tyson Bagent",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 121.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Caleb Williams officially inactive for Bears, Tyson Bagent set to start against Packers - Yahoo Sports",
+     "quote": "set to start against Packers",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQZWcxSWtDTjFmaTZlT1NrUmczUG1mNGJqMkxzOElocV8tekJaS0JvcGt0T0JmLTROQVRMSXp4S2RERThlSkRyNVdzX29McnpuU0o2RVpNN2x4UzNnaG85YXlrLXk2YlZwTU1YeUNRcEhSRWFoY2ZpNEVOSWtiMVItOEZlRkJPYXpaWHNsQ0tPX2dMM28?oc=5",
+     "player": "Tyson Bagent",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Christian Gonzalez",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots defensive coaching staff will have to alter plan to help Marcus Jones (5-8, 188) in the matchup against Brock Bowers (6-3, 237). Th",
+     "quote": "not having starting CBs Christian Gonzalez",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxmjfc3y422b",
+     "player": "Christian Gonzalez",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Carlton Davis III",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots defensive coaching staff will have to alter plan to help Marcus Jones (5-8, 188) in the matchup against Brock Bowers (6-3, 237). Th",
+     "quote": "not having starting CBs Carlton Davis III",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxmjfc3y422b",
+     "player": "Carlton Davis III",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "George Kittle",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -45.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_context",
+     "outlet": "RotoBaller",
+     "title": "George Kittle has an Illness, Expected to Play on Sunday - NFL News | Fantasy Football - RotoBaller",
+     "quote": "George Kittle has an Illness, Expected to Play on Sunday",
+     "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNNlJ6eVllODhmeG1BU3pHWXpnQ0l5aDFyTmRwTnJuNjh0aDI2OTZ1cnREM05xc2Vma0tVS2FsNlpId3U1UDN0cUQxTUViNjVCOExETUJ4MVR2YWhoc280dUZyOHFfUkVpTS01RE9ValdOem5TYkxOVFRSenJUVXd0YUsxTkFIMlBPLVM2c0dyQ3FsdDh3Snh5aXVtSWlmTEE2N0pfdw?oc=5",
+     "player": "George Kittle",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_context",
+     "outlet": "RotoWire",
+     "title": "George Kittle News: Will play through illness Sunday - RotoWire",
+     "quote": "Will play through illness Sunday",
+     "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNNGVGYkwyeTBSd2RCWXZDWVkzTWx0VXRwLTNvWGhJdDI4Y0pQdzRSckVxODgxNG9nelgwczVEVk1ORnlOYl8zajRxYWdYUjByak12NXhCVENGU2FnUDB2akFsY1ZCMVVnN0FPdlJNV0pDYVc4QW1PWGNDMXh6TnlPVC1SeXNBcWl6Y0JhdTFVd0JCWnJLOWxEVjlIcVNGREhDZ2V3OQ?oc=5",
+     "player": "George Kittle",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "TE George Kittle has an illness but is expected to play in today\u2019s game against the Seahawks, the 49ers announce.",
+     "quote": "has an illness but is expected to play in today's game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmi7vkt6c23",
+     "player": "George Kittle",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "49ers TE George Kittle is active despite illness; DL Mykel Williams to make his 2026 debut",
+     "quote": "49ers will have tight end George Kittle for today's game against the Seahawks after coming down with an illness",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/49ers-te-george-kittle-is-active-despite-illness-dl-mykel-williams-to-make-his-2026-debut",
+     "player": "George Kittle",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "49ers TE George Kittle is active despite illness; DL Mykel Williams to make his 2026 debut",
+     "quote": "49ers will have tight end George Kittle for today's game against the Seahawks after coming down with an illness",
+     "link": "https://sports.yahoo.com/articles/49ers-te-george-kittle-active-191148876.html",
+     "player": "George Kittle",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Caleb Williams",
+   "team": "CHI",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_06_CHI_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Big Rapids Pioneer",
+     "title": "Bears QB Caleb Williams misses third straight game with hamstring injury - Big Rapids Pioneer",
+     "quote": "misses third straight game with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOeEl6MjYwdmlkVmxDZk9adlVhUEZvSThvVVFpdS04cHZsN2hmTG9PSkRIYnJsUC1GZzRLY1pLNElPZUIxVXJlVUYtbEYxb0NwMGt0V0t5djc2NUJwUzdMckZfTjEwWHVYaS1HY0pqWTFoQmg5RnVfaG9UMng5OWwtOC02RlhXLWx6MEhrQjNQSnBvSWYzYVVxX2h0bE1iRlVWZ21YUGhB?oc=5",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Norwalk Hour",
+     "title": "Bears QB Caleb Williams misses third straight game with hamstring injury - Norwalk Hour",
+     "quote": "misses third straight game with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOTDBhbFN6QUtxYzM1LWF3UFFBVmVzRG1EWWVlX0ZTTDZkSWRhSzVES0xIYzJBM2NzQmR4RVB0dEN2WW83ZGdTQUhvT2dTZmY3Z1A3aDl1blJtZHFhME0wdFhQU2pZLXAxS1Q0cXRqaC1TTDdETGFDZGlQaVNUZi0wZTFxenVQUlBYU0dLUURCN3k1SUVqMXhESmxnQ1FqUQ?oc=5",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "LancasterOnline",
+     "title": "Bears QB Caleb Williams misses third straight game with hamstring injury - LancasterOnline",
+     "quote": "misses third straight game with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNQzBnVHlNZWZncUVXWm5tT204em5tNzBTVWVNZkk2eHBiNFBFZmRZRGNUMU82QzJ1Y05tbUhZUGRKcEF3VEd1ZF9HSFVXTnVScTNFSE9iVXFvalpFQXo0b3AyWDBxOHlkemVRaDBNdk5aX0dVQTF1Q2hBMzZHYjJ4dFRlME00ODc0UjBWWlJBX0NheUI3UGExOHRrcDhTZFF0S2d6Y2NrMk9ma1NJQTdjdFlCYWZuZ0dLOUQzQmxFRjh4QTFvR3lGZVNCY2hQVTd1b0JxUmZtOTcxeUZhSGFqOXJ5VlBjZ0RHeExOcWhGMWtTQlVRNWFEUzkydU5UV0E?oc=5",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Caleb Williams officially inactive for Bears, Tyson Bagent set to start against Packers - Yahoo Sports",
+     "quote": "officially inactive for Bears",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQZWcxSWtDTjFmaTZlT1NrUmczUG1mNGJqMkxzOElocV8tekJaS0JvcGt0T0JmLTROQVRMSXp4S2RERThlSkRyNVdzX29McnpuU0o2RVpNN2x4UzNnaG85YXlrLXk2YlZwTU1YeUNRcEhSRWFoY2ZpNEVOSWtiMVItOEZlRkJPYXpaWHNsQ0tPX2dMM28?oc=5",
+     "player": "Caleb Williams",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Terry McLaurin",
+   "team": "WAS",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_WAS_SF",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 146.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Commanders receiver Terry McLaurin active after hamstring injury - Yahoo Sports",
+     "quote": "active after hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQUzdpX1FFSTVnRGlnQjdLLW85OEFJd2lZckhYUXRQTDRQaGRycDNhdzVtcVhUem1UWXl2YzhicS1NUG1sM2JBYThUeXdFcDk3cFJtVUctY1lWNDh6ZzV6eTJHa0pMNnRNVHRZT3c5b1lNMVlRZWxHMTNtYlJidlFtckR5SU5meXcwTTZOSjNsM21hY0pK?oc=5",
+     "player": "Terry McLaurin",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Jalyx Hunt",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jalyx Hunt injury: Eagles edge rusher ruled OUT in London - Yahoo Sports",
+     "quote": "ruled OUT in London",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOb2s2alhXZlRwYnFEM1hQUHRWOUxJMk5GRC1qenYzdjU2UC1PWTJFSERwWXpNeG0wZjEyNlZ0U0VVeXdIZDZyYzNMRGEzZks1RkpDajNnWkFaMFlHZHN1STB2YmZJZEhqM0p4QS1MU0lYWURFQnFPcVNVdXhzZ1JpSmlQZmc?oc=5",
+     "player": "Jalyx Hunt",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Ashton Jeanty",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_BUF_LV",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Raiders RB Ashton Jeanty active against Patriots - ESPN",
+     "quote": "active against Patriots",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNeGZDZGlJZ2hubTRUT3JrSzhyWUtRV29mclFEU0hsYk9LVFlKZ2c1ZmpyUlZDZ1ExYXRpLV9XckhSbUNvVlVfSW9KbGhSVGx3dlFKdHlpLXo5c2xuOEEwT1JzZWowYkF4amdpZFpsNTNURXNMQVA2LVpuRVBral82LWh6SDNrTVZwbUhUanZB?oc=5",
+     "player": "Ashton Jeanty",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Vernon Broughton",
+   "team": "NO",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NO_NYG",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "New Orleans Saints vs. Minnesota Vikings Inactives: Vernon Broughton and Nathan Shepherd ruled out - Yahoo Sports",
+     "quote": "ruled out",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNNFJlcjRBcUdkdThvRVRrTkdIdnphUFhoSHRvejR0VzVMLUNmaEd0MXJoZWxqeFhBLWVaWndETHpiV0tmR0ZmWmg2T3hubDM3TE5qb1dKdktFNXcyd3ZRMXhtMUxLOUZ4M3FQdUI5Nlk1MkxjRFV0akxwTEJQN1FOenZmRVdrSXRNelpHRg?oc=5",
+     "player": "Vernon Broughton",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T17:24+00:00",
+   "player": "Nathan Shepherd",
+   "team": "NO",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NO_NYG",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "New Orleans Saints vs. Minnesota Vikings Inactives: Vernon Broughton and Nathan Shepherd ruled out - Yahoo Sports",
+     "quote": "ruled out",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNNFJlcjRBcUdkdThvRVRrTkdIdnphUFhoSHRvejR0VzVMLUNmaEd0MXJoZWxqeFhBLWVaWndETHpiV0tmR0ZmWmg2T3hubDM3TE5qb1dKdktFNXcyd3ZRMXhtMUxLOUZ4M3FQdUI5Nlk1MkxjRFV0akxwTEJQN1FOenZmRVdrSXRNelpHRg?oc=5",
+     "player": "Nathan Shepherd",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Will Shipley",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": 123.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "google_injury",
+     "outlet": "FantasyPros",
+     "title": "Will Shipley (foot) ruled out Sunday - FantasyPros",
+     "quote": "Will Shipley (foot) ruled out Sunday",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQTWlOOWllcEZuV3N5MFZlZFhvOXNLaHNFbXlnQTdpNkJLS2JhLXZJRUJqbmItdUpIcGdadnNXdlhSLVVkMTlpb2ZZUjBlUFR0WjNCZ2paQ0NDcG9zWkkzbURMc1hGZm81bXk5Zmk0LTQwdzhiZlg4bngwVHo0WUFseGVhNmxteXB1dEHSAY8BQVVfeXFMTW5ZTDEzU1BOLV9FRUhYT0xxS04zTzlIRjdFZE12bVpzb1FjTW4yOHdLTmxHNFI1Q1J6RnlkeG1IUFdUWVh0VldiY0psV1VVYlVyLTlEZGVyMXFudndDZ2poRG5OYTA3NlhKaG9TMzBzaGwtY3d4SERpdjllZTIwRHpxZ1hSbnMxejNpam9Tak0?oc=5",
+     "player": "Will Shipley",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Eagles, already depleted at RB, lose Will Shipley to foot injury - ESPN",
+     "quote": "lose Will Shipley to foot injury",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQeFA1and6SXBxTjctZ1BNNTdpdk4wa2ctWllCWkpPTEdrM0luZFkyN2NkYW9jODNmczdjR1hnQTY5QlFJaVNMalJnSDB5OUJjN1BsdmZoVUxJT3c3OUoxMUt1bzUxX3BXSmlucVNEdVNEa21QS0tBR0YzaEdKU3k4ZkRESmludkJxWUJ3Q25mTi1mSzQtNWoyeW1leVA?oc=5",
+     "player": "Will Shipley",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Tee Higgins",
+   "team": "CIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CIN_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bengals vs. Dolphins inactive players in Week 5: Ja\u2019Marr Chase, Tee Higgins cleared for game",
+     "quote": "Ja'Marr Chase, Tee Higgins cleared for game",
+     "link": "https://sports.yahoo.com/articles/bengals-vs-dolphins-inactive-players-154211524.html",
+     "player": "Tee Higgins",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bengals Ja\u2019Marr Chase, Tee Higgins and Bryan Cook all active against Dolphins",
+     "quote": "Ja'Marr Chase, Tee Higgins and Bryan Cook all active",
+     "link": "https://sports.yahoo.com/articles/bengals-ja-marr-chase-tee-154041624.html",
+     "player": "Tee Higgins",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Bryan Cook",
+   "team": "CIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CIN_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bengals Ja\u2019Marr Chase, Tee Higgins and Bryan Cook all active against Dolphins",
+     "quote": "Ja'Marr Chase, Tee Higgins and Bryan Cook all active",
+     "link": "https://sports.yahoo.com/articles/bengals-ja-marr-chase-tee-154041624.html",
+     "player": "Bryan Cook",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Ashton Jeanty",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_LV_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Raiders-Patriots: Ashton Jeanty is active",
+     "quote": "Ashton Jeanty is active",
+     "link": "https://sports.yahoo.com/articles/raiders-patriots-ashton-jeanty-active-153956539.html",
+     "player": "Ashton Jeanty",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Ozzy Trapilo",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bears-Packers Inactives: Caleb Williams and Ozzy Trapilo still out",
+     "quote": "Caleb Williams and Ozzy Trapilo still out",
+     "link": "https://sports.yahoo.com/articles/bears-packers-inactives-caleb-williams-153839796.html",
+     "player": "Ozzy Trapilo",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T16:24+00:00",
+   "player": "Kevin Zeitler",
+   "team": "GB",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Green Bay Packers \u2013 packers.com",
+     "title": "G Kevin Zeitler active for Green Bay | Packers-Bears inactives - Green Bay Packers \u2013 packers.com",
+     "quote": "G Kevin Zeitler active for Green Bay",
+     "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1RbXpUSWcwT0dtZlZyVTNQdmVQMlVPSmpuRmlVVDdlN1ZwUVFQalA4Q2NQZlA4aXVMWm83THh1MXdfN2xfeV9aZ3ZmWlNKNHNELUhyZHBpTjd0S08weUZtSFBxODVObVRndENXWlFKZnF3clFYaHRxYmp1Zw?oc=5",
+     "player": "Kevin Zeitler",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T15:48+00:00",
+   "player": "Jordan Addison",
+   "team": "MIN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_MIN_NO",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -43.8,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T15:48+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Justin Jefferson in, Jordan Addison out for Vikings; what about Odell Beckham Jr.? - Yahoo Sports",
+     "quote": "Jordan Addison out for Vikings",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNeFZRbTRNQkVrNVFlWWNaRTczTFdjRTFQV3NhQjhFaXRXczlmZWQyWTM4bjlOOHk4NGNlSTRWLVBNOFh0Z3ZMd0lucVUxbl81MzJ3aXlBdWQ1OUxyR2NmV05LRTFpRmxWSFZkS2Z0cnJUOXdPM0VTeVZYYzlWRFBnc2FKUW1mMFBfbWwwbzRNLVVUZw?oc=5",
+     "player": "Jordan Addison",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T15:24+00:00",
+   "player": "Jalyx Hunt",
+   "team": "PHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 124.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T15:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:jeff-neiburg.bsky.social (PHI)",
+     "title": "They just brought a cart out for Jalyx Hunt but he didn\u2019t want it. He is being helped off the field and saluted by Eagles fans as he hits th",
+     "quote": "being helped off the field and saluted by Eagles fans as he hits the tunnel",
+     "link": "https://bsky.app/profile/jeff-neiburg.bsky.social/post/3mxmc5qcp422x",
+     "player": "Jalyx Hunt",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T15:24+00:00",
+   "player": "Jalen Carter",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 124.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T15:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:jeff-neiburg.bsky.social (PHI)",
+     "title": "Looked like Jalen Carter just showed the Jaguars sideline after that TFL that he has two hands. (Carter had been wearing a cast on the right",
+     "quote": "showed the Jaguars sideline after that TFL that he has two hands. (Carter had been wearing a cast on the right hand while dealing with a wrist injury.)",
+     "link": "https://bsky.app/profile/jeff-neiburg.bsky.social/post/3mxmat3h6vc2i",
+     "player": "Jalen Carter",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T15:24+00:00",
+   "player": "Ja'Marr Chase",
+   "team": "CIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CIN_MIA",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": -43.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T15:24+00:00",
+     "source": "google_injury",
+     "outlet": "RotoWire",
+     "title": "Ja'Marr Chase Injury: In line to play in Week 5 - RotoWire",
+     "quote": "In line to play in Week 5",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQYm5oSk9OUzU3VnlRek54QkZDdUsxN0N4Zkt4QjlKVTc3ajJQRzRzd2ROeXBwZTVYRVNzMDliS0xYUHVVX0xFUmcyOXhyYmdtNVhIQzl0bk03QjRlR0ljNm5VczRuZklJRTN4Nld5WlRpSnFlYVZVNmlXZzRRdERHYnk3QV91UExJZWZrZGh0SW1nZXZrTERrUTdSS24?oc=5",
+     "player": "Ja'Marr Chase",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bengals vs. Dolphins inactive players in Week 5: Ja\u2019Marr Chase, Tee Higgins cleared for game",
+     "quote": "Ja'Marr Chase, Tee Higgins cleared for game",
+     "link": "https://sports.yahoo.com/articles/bengals-vs-dolphins-inactive-players-154211524.html",
+     "player": "Ja'Marr Chase",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bengals Ja\u2019Marr Chase, Tee Higgins and Bryan Cook all active against Dolphins",
+     "quote": "Ja'Marr Chase, Tee Higgins and Bryan Cook all active",
+     "link": "https://sports.yahoo.com/articles/bengals-ja-marr-chase-tee-154041624.html",
+     "player": "Ja'Marr Chase",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T14:25+00:00",
+   "player": "Saquon Barkley",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 125.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Saquon Barkley injury update: When will Eagles RB be back?",
+     "quote": "is out for Sunday's tilt against the Jacksonville Jaguars",
+     "link": "https://sports.yahoo.com/articles/saquon-barkley-injury-eagles-rb-140934685.html",
+     "player": "Saquon Barkley",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T14:25+00:00",
+   "player": "Bryan Thomas Jr.",
+   "team": "JAX",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_HOU_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 125.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Fight leads to two ejections at start of Jaguars vs. Eagles game in London",
+     "quote": "ejected on the first play of the game",
+     "link": "https://sports.yahoo.com/articles/fight-leads-two-ejections-start-134844387.html",
+     "player": "Bryan Thomas Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T14:25+00:00",
+   "player": "Jeremiah Trotter Jr.",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 125.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Fight leads to two ejections at start of Jaguars vs. Eagles game in London",
+     "quote": "ejected on the first play of the game",
+     "link": "https://sports.yahoo.com/articles/fight-leads-two-ejections-start-134844387.html",
+     "player": "Jeremiah Trotter Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T14:25+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 125.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "What Happened to DeVonta Smith? Latest Update on Eagles Star\u2019s Injury and Why He\u2019s Not Playing in Week 5 vs. Jaguars - Yahoo Sports",
+     "quote": "Why He's Not Playing in Week 5 vs. Jaguars",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQdFVxa1d2UFB2UlRJRWt0UW5YdGJOUVBvMVVBUXd4TzdfZ3dWcGQ5eWdJc29oNUFIZ1VqWmc3cGZBcC1ZOVlTZ2h4RDZ3bDBfSW56MVA4V2ZBRFNTQmhHVFNRdjZLZk00R014TUpJTHBlU2FWT1Rjc2VhOGxGQjM2UHBEUi1BOHJ0XzVxYk1R?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T13:24+00:00",
+   "player": "Carnell Tate",
+   "team": "TEN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_HOU_TEN",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -41.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T13:24+00:00",
+     "source": "google_injury",
+     "outlet": "RotoWire",
+     "title": "Carnell Tate Injury: Expected to play Sunday - RotoWire",
+     "quote": "Expected to play Sunday",
+     "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPbDdKOUVQN2RBMFVUOWE1LWJkTnQycll4bF9nQkF4X0lYZ0JjNlVYLUZoNjV5N2R4cmdDRXhtWlpKR3FmVGJMM0l3WFFMb2Zfc2hVM1k1MkRXSktIcFg1ck9aZG1qVzhQQld4eHdJSnpKUjJaV29mZ3JxMXFwV2dCVGtBNkg2R042VER6blRBT0hFMkxEdENLTHJ3?oc=5",
+     "player": "Carnell Tate",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T13:24+00:00",
+   "player": "Murray",
+   "team": "JAX",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -41.4,
+   "truth": null,
+   "verdict": "pending",
+   "official_status": "Doubtful",
+   "report_agrees": false,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T13:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Jacksonville Jaguars",
+     "title": "In and Out, 2026 Week 5: Murray Inactive for Eagles vs. Jaguars - Jacksonville Jaguars",
+     "quote": "Murray Inactive for Eagles vs. Jaguars",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNVGJFS1VzeGpWT2htczhzUDlGcThsY1haX3padHlLTFdTdVVFR2N4TExhbUN4MC1zbTJ0TFJKSVpKejRZclJGS3lodl9OcjBjcGp2VldDSk5yYVdqMEc2TlMzZWtBSE1FNmNvaTZaaEhUaDd1OXVwSDQ1S3NrbTNSQ3R5MFpYd2pHYUtrZS0zWlhBSTQ?oc=5",
+     "player": "Murray",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-11T12:24+00:00",
+   "player": "Jonathan Greenard",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -40.4,
+   "truth": null,
+   "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-11T12:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Eagles-Jaguars inactives: Jonathan Greenard is OUT",
+     "quote": "Jonathan Greenard is OUT",
+     "link": "https://sports.yahoo.com/articles/eagles-jaguars-inactives-jonathan-greenard-120715727.html",
+     "player": "Jonathan Greenard",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T13:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Jonathan Greenard is inactive for the Eagles",
+     "quote": "Jonathan Greenard is inactive for the Eagles",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jonathan-greenard-is-inactive-for-the-eagles",
+     "player": "Jonathan Greenard",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T23:24+00:00",
+   "player": "Odell Beckham Jr.",
+   "team": "MIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_MIN_NO",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": -27.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "team_sites_3",
+     "outlet": "Vikings.com",
+     "title": "Vikings Roster Moves: Odell Beckham Jr. Elevated for Saints Game - Vikings.com",
+     "quote": "Odell Beckham Jr. Elevated for Saints Game",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQdGd0eXE1bUhneGF4Wm1WdnVnZFpKS19OeVBHWk9rTXlia2hySVBBa3haOU1ZRWRGekNUYTdLdXpMT0lIal9lYlNsWE5HaVVYbThaMUVETnhlS3BEUjR2MUZhQUZERDVQc2tTbXZwTVd5MGxHMlBFQ0tmUjl6OThYZEd6cDFkY2c2?oc=5",
+     "player": "Odell Beckham Jr.",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "CBS Sports",
+     "title": "Vikings reportedly elevate Odell Beckham Jr. with Justin Jefferson, Jordan Addison questionable - CBS Sports",
+     "quote": "Vikings reportedly elevate Odell Beckham Jr.",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPZ0FZLVE1ODNRanQ0RGZtcHNKWWprTFJ4NTdFVU9YQldwQk5wZEVHV181cHQ2SVVkS1FncGRlaWdUWW56RGZqMGlzejNtVFE2TVczZFNKeG9SMXA4TkZ6Wl9oM0s1bFByUlpXUlJ2QktRa2xnOVhhX2l0UUNnVzVwYmJXaUZMY2lHZG4zcWR3?oc=5",
+     "player": "Odell Beckham Jr.",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T23:24+00:00",
+   "player": "Pittman",
+   "team": "PIT",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -27.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Sportsnet.ca",
+     "title": "Report: Steelers WR Pittman placed on short-term IR with foot injury - Sportsnet.ca",
+     "quote": "Steelers WR Pittman placed on short-term IR with foot injury",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWUdVNUlpZDI0anBaZHBQMjVKRWRsRE1wV3hLQzJ2ekZaazRpUTdGS2ZCNWdIVHVvdlk2eFQwbTNVLVdfdlJ3dXJDcFEwZ3lqUndMaGp5UFVfUkJGMm1sRE5IZzMyWE5EMU90V2hIbnpQbHlVQ0V1QXlmVDN1VFB0UHkwR0JON3dQZ0VHVnA0NFowbXZCWmhnRTdiampsRXNMU2RPbW5LbzU?oc=5",
+     "player": "Pittman",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T23:24+00:00",
+   "player": "Dont'e Thornton Jr.",
+   "team": "LV",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_LV_NE",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -27.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dont'e Thornton Jr. out for Raiders-Patriots game in NFL Week 5 - Yahoo Sports",
+     "quote": "Dont'e Thornton Jr. out for Raiders-Patriots game",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNRkEzVG1VcTlVbTBCS2JwNjZIMGpGcGhpaHhfNlIxTU9jSGVGYkdOWmhvdHQ2VzhJUk4tOFdEREdFcy0wenNYSElTWmU5US1RNTk5bzUtQzFUaDZFbjBOSVJBbjR0WGxpbE9jLUQwUXVLNEx2S3RLQ1UySl8wVERPdC13UEpBMEM4MnlN?oc=5",
+     "player": "Dont'e Thornton Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:57+00:00",
+   "player": "Joshua Palmer",
+   "team": "BUF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -1.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:57+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Bills rule out Ed Oliver, Joshua Palmer, wait on WR DJ Moore - ESPN",
+     "quote": "Bills rule out Joshua Palmer",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxONFUwMmR0bVNmMVNOaEFjNzVORHJ1M1JnZGtXenhlU1ZEODVQVUctY0l6ZmFMRzQzTGhyQkx5UTFxZHNFU3VLUVF6VjYySEFLUXNtdVdsSnNTTGdUMlVPNGM1dHh4TnBTRkVlTDZBTWVfY1BWUko1UnVYTE9neEwtYmhraUtBa0k5NzRxdHlTcmg2RjdJUjRQWkdzX1g?oc=5",
+     "player": "Joshua Palmer",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Bills coach Joe Brady rules out DT Ed Oliver and WR Joshua Palmer from playing against the LA Rams - Yahoo Sports",
+     "quote": "Bills coach Joe Brady rules out WR Joshua Palmer",
+     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdVdpUnlYMm04MVpXNXZ3TUJqU2VMRWtFMmJNSEpSeTl0d0w3V0J5QjM0YVAwU0ZpbWFodnZPVnQ1SGl2ZTI1azlUaWZBTWlYaVNaQklfSlVBQ29pNk50bE1aYVdQSjRxZzBHeXQ3WjJGNkM1S0hhcWFLT3VKRVhFREF3?oc=5",
+     "player": "Joshua Palmer",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T03:24+00:00",
+     "source": "google_injury",
+     "outlet": "FantasyPros",
+     "title": "Joshua Palmer (shoulder) ruled out Monday - FantasyPros",
+     "quote": "ruled out Monday",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxONVdsZkNtc2lYTTBmTTFxV1RPSFVMRFZtZjcwR1lxY2ZOTVdTX19NZW5XZXZxbnhrRE8yakViNWZva2dqV0xRV1I0T3RNbzNKbWdyZW5TcTBlbmdOMHhPUURkejcwbnZMVkEwcEFVcXZoM3JXRVJ0MGVUN1ppSEtYWEZHTEExdXFEenJodHBnLTlRNXVpaGZkUXhIQm1rbFpYNm5SWTNMYi10VmpXbVV3VVctakdOOHZtZWZsVVIyM0R6RmJXNzFVaTRn0gGWAUFVX3lxTE1DSUFXUzVIeHlkT1Nrc1BrNEhSNzBiYUEtNzl1U2R4UXBoTm9SVGRnV3VzZVpEVG9kRW9GaWt2X2VEdHJVeE40blAtN1V1V1dtMUtzeGlubF95ZTRwajgtMWNiUnJ0dkROMS16LTBiX2NmMEJuc01KdFhwRlV0U2ZQZDNzWHdpd0E5WUR6TlhDUUtiSGkydw?oc=5",
+     "player": "Joshua Palmer",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:57+00:00",
+   "player": "Nick Westbrook-Ikhine",
+   "team": "IND",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -25.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:57+00:00",
+     "source": "team_sites_2",
+     "outlet": "Colts.com",
+     "title": "Colts elevate WR Nick Westbrook-Ikhine to active roster from practice squad; place DE Arden Key on IR - Colts.com",
+     "quote": "Colts elevate WR Nick Westbrook-Ikhine to active roster from practice squad",
+     "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQQnlXVG05RExEaWJsOU0wUGdub0lKd1RHa2UzRVhaYmJsblRobXd0dTBrREliRTRub01VVURNbGp3M3RTTU9uMERBd2JOX1dxUjBGWEcxbkFtZHRlMnNaTVBObWhHa0tBek1BMEdJZkZuRnRxZ2dmTnY4aElYM1hGdUNZX0FBdHgzSHVRMTFjTGN4X1FsZXZHeG8ydUVpOHR3Nl9SclFabzJaYW9WQUdDNERhX1NBTmxxZkwwWl95MUs1emYyNVE?oc=5",
+     "player": "Nick Westbrook-Ikhine",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Chauncey Golston",
+   "team": "NYG",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:patriciatraina.bsky.social (NYG)",
+     "title": "Giants Place Chauncey Golston on IR, Elevate Two From Practice Squad https://www.si.com/nfl/giants/onsi/giants-chauncey-golston-ir-cambre-fo",
+     "quote": "Place Chauncey Golston on IR",
+     "link": "https://bsky.app/profile/patriciatraina.bsky.social/post/3mxkfzzp7672u",
+     "player": "Chauncey Golston",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:57+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Roster moves: NY Giants put Chauncey Golston on IR, elevate two from the practice squad",
+     "quote": "NY Giants defensive lineman Chauncy Golston goes to the IR",
+     "link": "https://sports.yahoo.com/articles/roster-moves-ny-giants-put-210925775.html",
+     "player": "Chauncey Golston",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "M.J. Stewart",
+   "team": "HOU",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_HOU_TEN",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Texans activate S M.J. Stewart, DT Kayden McDonald",
+     "quote": "activate S M.J. Stewart",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/texans-activate-s-m-j-stewart-dt-kayden-mcdonald",
+     "player": "M.J. Stewart",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Texans activate S M.J. Stewart, DT Kayden McDonald",
+     "quote": "activate S M.J. Stewart",
+     "link": "https://sports.yahoo.com/articles/texans-activate-m-j-stewart-203958795.html",
+     "player": "M.J. Stewart",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Scott Matlock",
+   "team": "LAC",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chargers make roster moves ahead of battle with Broncos",
+     "quote": "activating Scott Matlock... off of IR",
+     "link": "https://sports.yahoo.com/articles/chargers-roster-moves-ahead-battle-203908925.html",
+     "player": "Scott Matlock",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Branson Taylor",
+   "team": "LAC",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chargers make roster moves ahead of battle with Broncos",
+     "quote": "activating... Branson Taylor off of IR",
+     "link": "https://sports.yahoo.com/articles/chargers-roster-moves-ahead-battle-203908925.html",
+     "player": "Branson Taylor",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Trey Lance",
+   "team": "LAC",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Chargers put Trey Lance on injured reserve, make several other roster moves",
+     "quote": "quarterback Trey Lance's move to injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/chargers-put-trey-lance-on-injured-reserve-make-several-other-roster-moves",
+     "player": "Trey Lance",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Tim Patrick",
+   "team": "NYJ",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_CLE_NYJ",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SNY",
+     "title": "Jets active WR Tim Patrick from injured reserve",
+     "quote": "activating Tim Patrick off IR",
+     "link": "https://sports.yahoo.com/articles/jets-active-wr-tim-patrick-201917048.html",
+     "player": "Tim Patrick",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T11:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "New York Jets Flight Connections 10/11/26",
+     "quote": "Jets Activate WR Tim Patrick from",
+     "link": "https://sports.yahoo.com/articles/york-jets-flight-connections-10-110000003.html",
+     "player": "Tim Patrick",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T21:18+00:00",
+   "player": "Chris Brooks",
+   "team": "GB",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -25.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Packers place RB Chris Brooks on injured reserve",
+     "quote": "Packers place RB Chris Brooks on injured reserve",
+     "link": "https://sports.yahoo.com/articles/packers-place-rb-chris-brooks-201436755.html",
+     "player": "Chris Brooks",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Ed Oliver",
+   "team": "BUF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "DJ Moore questionable, Ed Oliver out for Bills on Monday night",
+     "quote": "Ed Oliver out for Bills on Monday night",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dj-moore-questionable-ed-oliver-out-for-bills-on-monday-night",
+     "player": "Ed Oliver",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "DJ Moore questionable, Ed Oliver out for Bills on Monday night - Yahoo Sports",
+     "quote": "Ed Oliver out for Bills on Monday night",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNczh3UTl6UG43SWtiNldfdTUzT0Jab3JyTi1hOTROaEZwSUYyU1pOclVPNW93eUlYOTduNkZGaDNQU2tRS0x3R05iRUwxcDFWRW02eVBuaWs5R1ZlUkdDbjdCWE1zNlh1LXVESDB0TWI3bjY2aUt5R1p3LXdtSHhPczNfd0ZRa1k?oc=5",
+     "player": "Ed Oliver",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T21:57+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Bills rule out Ed Oliver, Joshua Palmer, wait on WR DJ Moore - ESPN",
+     "quote": "Bills rule out Ed Oliver",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxONFUwMmR0bVNmMVNOaEFjNzVORHJ1M1JnZGtXenhlU1ZEODVQVUctY0l6ZmFMRzQzTGhyQkx5UTFxZHNFU3VLUVF6VjYySEFLUXNtdVdsSnNTTGdUMlVPNGM1dHh4TnBTRkVlTDZBTWVfY1BWUko1UnVYTE9neEwtYmhraUtBa0k5NzRxdHlTcmg2RjdJUjRQWkdzX1g?oc=5",
+     "player": "Ed Oliver",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Bills coach Joe Brady rules out DT Ed Oliver and WR Joshua Palmer from playing against the LA Rams - Yahoo Sports",
+     "quote": "Bills coach Joe Brady rules out DT Ed Oliver",
+     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdVdpUnlYMm04MVpXNXZ3TUJqU2VMRWtFMmJNSEpSeTl0d0w3V0J5QjM0YVAwU0ZpbWFodnZPVnQ1SGl2ZTI1azlUaWZBTWlYaVNaQklfSlVBQ29pNk50bE1aYVdQSjRxZzBHeXQ3WjJGNkM1S0hhcWFLT3VKRVhFREF3?oc=5",
+     "player": "Ed Oliver",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Yasir Abdullah",
+   "team": "ATL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_BAL_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Falcons place LB Yasir Abdullah on IR",
+     "quote": "placed linebacker Yasir Abdullah on injured reserve with a hamstring injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-place-lb-yasir-abdullah-on-ir",
+     "player": "Yasir Abdullah",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T04:24+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons place LB Yasir Abdullah on IR, sign S Jammie Robinson - Atlanta Falcons",
+     "quote": "place LB Yasir Abdullah on IR",
+     "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPb0IxZWxWRFRZT1NaWDc4Mzc5Tk9EVHBOVHo4MmFzelZnYUs3eXgyVVpZWG5QaVljdHRQREZkRmRKYnYxME1pWlMxTERXdjU3MW5DaGREQ2xPM0JfenlGUFJHSXc4aEw1WFN5UU0xSG42azB6VWRvMXBDZWp6YVQ1bEllb1BPdU15RFA5M0NhRzZHS0FXeFE?oc=5",
+     "player": "Yasir Abdullah",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Trey Amos",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "The #Commanders officially activated DE Deatrich Wise to the active roster, but CB Trey Amos and RB Jeremy McNichols were ruled out for tomo",
+     "quote": "CB Trey Amos and RB Jeremy McNichols were ruled out for tomorrow",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mxkc66ev3s26",
+     "player": "Trey Amos",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Jeremy McNichols",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "The #Commanders officially activated DE Deatrich Wise to the active roster, but CB Trey Amos and RB Jeremy McNichols were ruled out for tomo",
+     "quote": "CB Trey Amos and RB Jeremy McNichols were ruled out for tomorrow",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mxkc66ev3s26",
+     "player": "Jeremy McNichols",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Reggie Gilliam",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_LV_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Bunch of moves from the Patriots this afternoon: \u2022 WR Mack Hollins (calf) and FB Reggie Gilliam (ankle/knee) on injured reserve. Both will m",
+     "quote": "WR Mack Hollins (calf) and FB Reggie Gilliam (ankle/knee) on injured reserve",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxkc42oju22m",
+     "player": "Reggie Gilliam",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots transactions: \ud83c\udfc8Placed on IR: WR Mack Hollins, FB Reggie Gilliam \ud83c\udfc8 Activated to 53-man roster from NFI list: ST Brenden Schooler \ud83c\udfc8 S",
+     "quote": "Placed on IR: WR Mack Hollins, FB Reggie Gilliam",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxkbx6vhfc2p",
+     "player": "Reggie Gilliam",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Patriots activate Brenden Schooler, place two veterans on injured reserve amid series of moves",
+     "quote": "Fullback Reggie Gilliam... landed on injured reserve",
+     "link": "https://sports.yahoo.com/articles/patriots-activate-brenden-schooler-place-204612359.html",
+     "player": "Reggie Gilliam",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Activate S Brenden Schooler to the 53-Man Roster; Place FB Reggie Gilliam and WR Mack Hollins on Injured Reserve; Make Additional Roster Moves - Patriots.com",
+     "quote": "Place FB Reggie Gilliam and WR Mack Hollins on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxNVy1LeV9BWjlmYmZHWjh6MXVvdWFhOUFuUEhFOGMxUm1EblZKU05fOTFsaGd3RFRzUUtKbXEzWVlGNkQyZ0pyT2NMaWJkMTNqWml4cjlPdnVHdXNrZDgxT2ZwaENWZkFjc1puN3V1YjFaR1BjYVdYVXBudjNnU0xBb1NRU0Yta0Z3NW4tTHJmUW9Ja0xaN1pZODJyamY1Q1VDWmtFalA4WTZYV1F3c3VLQlVkS0pjS2xJYUsxQVRva2tFcEVucTBHTFkzcHZjRmJKUzE4QUhsLTN4TzE4RHRiYWU2V19iT3lxQ3hCeVdiYWt3LU9falhMeHBVdjZBNVZxemJYbWI5RG1MUkE?oc=5",
+     "player": "Reggie Gilliam",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Kindle Vildor",
+   "team": "NE",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_LV_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots transactions: \ud83c\udfc8Placed on IR: WR Mack Hollins, FB Reggie Gilliam \ud83c\udfc8 Activated to 53-man roster from NFI list: ST Brenden Schooler \ud83c\udfc8 S",
+     "quote": "Signed to 53-man roster from practice squad: CB Kindle Vildor",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxkbx6vhfc2p",
+     "player": "Kindle Vildor",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Isaiah Adams",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_DET_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "After putting LT Paris Johnson Jr. on season-ending IR earlier this week, #AZCardinals put RG Isaiah Adams on IR on Saturday: www.azcardinal",
+     "quote": "put RG Isaiah Adams on IR on Saturday",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mxkbqks5zs2n",
+     "player": "Isaiah Adams",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Cardinals place RG Isaiah Adams on IR",
+     "quote": "Cardinals place RG Isaiah Adams on IR",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cardinals-place-rg-isaiah-adams-on-ir",
+     "player": "Isaiah Adams",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T00:24+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Starting Guard Isaiah Adams Placed On Injured Reserve - Arizona Cardinals",
+     "quote": "Starting Guard Isaiah Adams Placed On Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQV0l3Y1VleGNyNWFhc3NoZkcyN0k5R0FKR1VfNWZrcU9NdmprcWNsUGd4TUNUenI0VzQ1MWc5Q3ktWWFZLVgyRnhmaHZaLXJRM1FPZDBlLVFsTF9LNHRBa2tkYUZibEZHSGZ6U3BYdnZSNlotbEwtN201QzhBeGhGQ29OTXU1VTV6N3M2TExBU3A?oc=5",
+     "player": "Isaiah Adams",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T20:24+00:00",
+   "player": "Michael Pittman Jr.",
+   "team": "PIT",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -24.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Steelers WR Michael Pittman headed to IR",
+     "quote": "The Steelers are placing wide receiver Michael Pittman Jr. on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/steelers-wr-michael-pittman-headed-to-ir",
+     "player": "Michael Pittman Jr.",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers placing WR Michael Pittman Jr. on injured reserve",
+     "quote": "Steelers placing WR Michael Pittman Jr. on injured reserve",
+     "link": "https://sports.yahoo.com/articles/steelers-placing-wr-michael-pittman-191744992.html",
+     "player": "Michael Pittman Jr.",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Michael Pittman Injury News Ruins Colts\u2019 Revenge Game - Yahoo Sports",
+     "quote": "Michael Pittman Injury News",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNcEdBLWtiZ0RmNHZGdVRCUUdjX0JrdEZaTldxemltMllEWWk2a2o2d0pYWUM4eVlKcS0wOWZobVJxQ0pwU2hiSXEzX2dLNWNnZDFDSEw4bWNBZzFnaUEzSUw5MXIwMEI3REc1VExwYkZnVHJ6T3VidmJfWnNHREt4QS1DNUM0ZzVHcVE?oc=5",
+     "player": "Michael Pittman",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T15:24+00:00",
+     "source": "google_context",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Michael Pittman Jr. Officially placed on IR - Fantasy Footballers Podcast",
+     "quote": "Officially placed on IR",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQam9FZlNial9rYXNBQXpuOTlBckFuTTJoMS1EY2FlMG1mc3RZcEdWb2g0T1FSWXllLVNENWNWdjFwSlZGRUFiX3BON2l3ci1LR0MwS3pxU2tSZEV0QURPV29pYm5SemhUaGcyR1E4NU1kRndJaWY1Zmg4d3ZORXRqcUNhSFFVTFZ0WHhybTRzdlhDVmFqWWlyZQ?oc=5",
+     "player": "Michael Pittman Jr.",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Is Rico Dowdle playing today for Steelers? Update on running back&#39;s injury",
+     "quote": "receiver Michael Pittman Jr., who was placed on injured reserve Saturday",
+     "link": "https://sports.yahoo.com/articles/rico-dowdle-playing-today-steelers-160641748.html",
+     "player": "Michael Pittman Jr.",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T19:24+00:00",
+   "player": "Odell Beckham Jr.",
+   "team": "MIN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_MIN_NO",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -23.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T19:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Vikings will elevate Odell Beckham Jr. from practice squad",
+     "quote": "has a chance to make his debut for Minnesota on Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/vikings-will-elevate-odell-beckham-jr-from-practice-squad",
+     "player": "Odell Beckham Jr.",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T19:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Odell Beckham Jr. will be activated from the practice squad tomorrow in New Orleans, per source. He could still be inactive, depending on Ju",
+     "quote": "will be activated from the practice squad tomorrow",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3mxk6hhcgaz2t",
+     "player": "Odell Beckham Jr.",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T18:24+00:00",
+   "player": "Christian McCaffrey",
+   "team": "SF",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -22.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Christian McCaffrey Returns to 49ers Lineup While Nick Bosa Remains Sidelined - Yahoo Sports",
+     "quote": "Christian McCaffrey Returns to 49ers Lineup",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPcnhoZmFLRUxNbWhFNFFRcGdBWFBKdWRDZjViLTRkU292ZkwyWDhuZ3hUNEZtVnhPN2hHeVFvdmlpVzRvbEV4WWZwcl9ua0pncGNwOGdFb21NNlVJMFZ2bDdsekptSUdHbFpTT3VKNnN4cjctWWFFcE84NXhveEhXUXVtTE4wdlBxc0g1cUROUXllbWs?oc=5",
+     "player": "Christian McCaffrey",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T17:24+00:00",
+   "player": "Arden Key",
+   "team": "IND",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -21.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts place DE Arden Key on IR with hamstring injury - ESPN",
+     "quote": "Colts place DE Arden Key on IR with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQbkdjWFBrRm1FSm9TTV9ZalZzTDBPZ3BDNURhMkNxX3dHSldNOG5ObW10MjNFTFRVMVJET0JHV0FGZmtwMW9JMkZjcm50N3dMWkRoOHpxdml1T0RrRWZxRS16SVJBZGNTcTU4cTVmanN6ZGtsZ3Z0WmNyazJzYWp3N3ZBTUJQV0w2bGpERDlHWlN4ZFE?oc=5",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T18:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Colts put Arden Key on IR, elevate Nick Westbrook-Ikhine",
+     "quote": "Colts defensive end Arden Key will miss multiple weeks with a hamstring injury and the team confirmed it on Saturday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/colts-put-arden-key-on-ir-elevate-nick-westbrook-ikhine",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T18:24+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Colts put Arden Key on IR, elevate Nick Westbrook-Ikhine",
+     "quote": "Colts defensive end Arden Key will miss multiple weeks with a hamstring injury and the team confirmed it on Saturday",
+     "link": "https://sports.yahoo.com/articles/colts-put-arden-key-ir-173302594.html",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:57+00:00",
+     "source": "team_sites_2",
+     "outlet": "Colts.com",
+     "title": "Colts elevate WR Nick Westbrook-Ikhine to active roster from practice squad; place DE Arden Key on IR - Colts.com",
+     "quote": "place DE Arden Key on IR",
+     "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQQnlXVG05RExEaWJsOU0wUGdub0lKd1RHa2UzRVhaYmJsblRobXd0dTBrREliRTRub01VVURNbGp3M3RTTU9uMERBd2JOX1dxUjBGWEcxbkFtZHRlMnNaTVBObWhHa0tBek1BMEdJZkZuRnRxZ2dmTnY4aElYM1hGdUNZX0FBdHgzSHVRMTFjTGN4X1FsZXZHeG8ydUVpOHR3Nl9SclFabzJaYW9WQUdDNERhX1NBTmxxZkwwWl95MUs1emYyNVE?oc=5",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T22:09+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN India",
+     "title": "Colts place DE Arden Key on IR with hamstring injury - ESPN India",
+     "quote": "Colts place DE Arden Key on IR with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQaTlUMEUyMy1vV0lYWU4yZXEyYzloSU9uU3o4aDhrNTdqSkRXS29kbFc0RlFUSDRqR2RqRV80R0ZrcEJnZURfcU51XzA1bmxZNnBCVWZXU1dhSlNoZkFveEp0MGl6MWlFWXNjeXVRZHNfVEZ5RjJZWUtCQmFVM0s5VHlSeV9XSFNtaENNSjl1blFydw?oc=5",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts place DE Arden Key on IR with hamstring injury - ESPN",
+     "quote": "Colts place DE Arden Key on IR with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPVXI0TVhkQmkzR3prbUVvSmZCSVlEQ1lsX0h3SkxSWEdnLXpaX3Zkak1OU3RCVUVEbkg5T3ljU1FlT3JfbHpWN3g3bnBmd1JJZmFZWFZnREE0TURkcE5zaDBwc0xTM2stUnlMT0lFSEdhWFRMM3M0dVNkemtZc0E1RXJPM202YWRZaERNTTZrX1padC0xYzQ4?oc=5",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T00:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN Philippines",
+     "title": "Colts place DE Arden Key on IR with hamstring injury - ESPN Philippines",
+     "quote": "Colts place DE Arden Key on IR with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQTHh5SjlzdUVzbEtBdmpsRkVxLWk3YmFvUXNENXVDNjBqcDJ6RElaZndGTVZDUnV0RThqd1hfcTdMczJmZGhKUlZHYnRQeFhYel9Idm9tOUpyVW45VkZBcHY4VzZ4WjRNYjVzRnUwanpYQjhSV3BjeWhVUnpJckFMUU5rbGZwUmNhQjJtdGZINkd3UQ?oc=5",
+     "player": "Arden Key",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T17:24+00:00",
+   "player": "Sam Kamara",
+   "team": "CLE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CLE_NYJ",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -21.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Browns elevate DTs Sam Kamara, Chris Williams from practice squad",
+     "quote": "Browns have elevated defensive tackle Sam Kamara from the practice squad for Sunday's game against the Jets",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/browns-elevate-dts-sam-kamara-chris-williams-from-practice-squad",
+     "player": "Sam Kamara",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Browns elevate DTs Sam Kamara, Chris Williams from practice squad",
+     "quote": "Browns have elevated defensive tackle Sam Kamara from the practice squad for Sunday's game against the Jets",
+     "link": "https://sports.yahoo.com/articles/browns-elevate-dts-sam-kamara-170528733.html",
+     "player": "Sam Kamara",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T17:24+00:00",
+   "player": "Chris Williams",
+   "team": "CLE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CLE_NYJ",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -21.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Browns elevate DTs Sam Kamara, Chris Williams from practice squad",
+     "quote": "Browns have elevated defensive tackle Chris Williams from the practice squad for Sunday's game against the Jets",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/browns-elevate-dts-sam-kamara-chris-williams-from-practice-squad",
+     "player": "Chris Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Browns elevate DTs Sam Kamara, Chris Williams from practice squad",
+     "quote": "Browns have elevated defensive tackle Chris Williams from the practice squad for Sunday's game against the Jets",
+     "link": "https://sports.yahoo.com/articles/browns-elevate-dts-sam-kamara-170528733.html",
+     "player": "Chris Williams",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T17:24+00:00",
+   "player": "Darius Slayton",
+   "team": "IND",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_IND_PIT",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -21.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "FantasyPros",
+     "title": "Darius Slayton (knee) ruled out Sunday - FantasyPros",
+     "quote": "Darius Slayton (knee) ruled out Sunday",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNam54U0ZFRU14TGEzMWRicmFUVzhjU2hnanBOUktsMWlhYVd5RUVCamgyMm5HaGRudkUwV2U2VG9FYl9FdEZuNnN3alJlU04zY3JXbEtKNkZUdmZTWDVGdUFrMnhjY0hYUWljNTlOMU4xRWxJbUllYXhzdjhyNFNkeVRmdVRoUnI3Z2tmYdIBkgFBVV95cUxQczJsZnZhcEZsTWJPQ0FLc3d3dnpCSi1kVEtvZG05UWxEMUJLQ1c1elVuV1hFUi1qTWNJUEZuUU1GRk9iQTZXUVZHYWtRdmloU1dtZnh4aDJGU19qVUlNRTZIQVZ4YUdkN2ZvaWNBYVVDZ1ZaUUR0OUloRUs1N0dOR1c4bjZfa1RCaGIxLUhqYlpjZw?oc=5",
+     "player": "Darius Slayton",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T19:24+00:00",
+     "source": "google_injury",
+     "outlet": "FantasyPros",
+     "title": "Darius Slayton (knee) ruled out Sunday - FantasyPros",
+     "quote": "ruled out Sunday",
+     "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOR2Vsci1yVUZUX2xKUmFTS25LYjl0eFpFRER0OXlBdU5jaU9YbVc4b2tRODFNb3JibzZVVFdIWFhnYlY2dTZBVmlxeVplMlpsUHZqUFA0anZ4YWZsWUZTTGtjNXJEaTJLOG1CT1RzMFc0LUNJbndXalctN1hmMjBNUTR5aXRmS1l2Vy03M00xbGc1bGp2NzMxMUltUkZQalRSekYtYXZGMk5aaHVqaWtyT2Y1M2Q5NEpPc1NMTXRsVHVtRXA4RkHSAZIBQVVfeXFMUHMybGZ2YXBGbE1iT0NBS3N3d3Z6QkotZFRLb2RtOVFsRDFCS0NXNXpVbldYRVItak1jSVBGblFNRkZPYkE2V1FWR2FrUXZpaFNXbWZ4eGgyRlNfalVJTUU2SEFWeGFHZDdmb2ljQWFVQ2dWWlFEdDlJaEVLNTdHTkdXOG42X2tUQmhiMS1IamJaY2c?oc=5",
+     "player": "Darius Slayton",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T15:24+00:00",
+     "source": "google_context",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Darius Slayton Won't play against Pittsburgh - Fantasy Footballers Podcast",
+     "quote": "Won't play against Pittsburgh",
+     "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPRVFxMTZkaXd5dEphLVhUd0lYdWY5Mkh4V0lmVE1zODFDOGtkY0NENjlxNTlRdktGeDRfbUtEeDJDQkdpTUxqOVRpM3FZM1VyNWZjWHZLX3pPelVMc0p3UW91dzhfYkZYVTBvel9FbGJUQW5SSEdXZ25JUDUtbmhhX3p1QnJTaC1ndzNnTURVZnhaLUlJN1ZuaHJn?oc=5",
+     "player": "Darius Slayton",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T15:24+00:00",
+   "player": "Marvin Harrison Jr.",
+   "team": "ARI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_DET_ARI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -19.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T15:24+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals reportedly finalizing deal to trade Marvin Harrison Jr.",
+     "quote": "informed Harrison that he'll be inactive for Week 5 while the trade details are being finalized",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/cardinals-trade-marvin-harrison-jr-details-compensation-rumors-151048588.html",
+     "player": "Marvin Harrison Jr.",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T16:24+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Cardinals finalizing Marvin Harrison Jr. trade, former No. 4 pick inactive vs. Lions per report",
+     "quote": "inactive vs. Lions after Arizona reportedly informed him of its decision",
+     "link": "https://www.cbssports.com/nfl/news/cardinals-marvin-harrison-jr-trade-2026/",
+     "player": "Marvin Harrison Jr.",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Marvin Harrison Jr. inactive for Week 5 as Cardinals work to finalize trade with struggling star",
+     "quote": "Marvin Harrison Jr. inactive for Week 5",
+     "link": "https://sports.yahoo.com/articles/marvin-harrison-jr-inactive-week-152311942.html",
+     "player": "Marvin Harrison Jr.",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "WR Marvin Harrison Jr. officially inactive today for the #AZCardinals against the Lions, as expected.",
+     "quote": "officially inactive today",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mxmokrr3xk2n",
+     "player": "Marvin Harrison Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T14:24+00:00",
+   "player": "Savion Williams",
+   "team": "GB",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_CHI_GB",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -18.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T14:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Savion Williams won&#39;t play in Week 5",
+     "quote": "Savion Williams won't play in Week 5",
+     "link": "https://sports.yahoo.com/articles/savion-williams-wont-play-week-135310013.html",
+     "player": "Savion Williams",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T14:24+00:00",
+   "player": "Christian Benford",
+   "team": "BUF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_BUF_LA",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 5.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T14:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Bills news: Christian Benford on track to return, other news out of One Bills Drive",
+     "quote": "Christian Benford on track to return",
+     "link": "https://sports.yahoo.com/articles/bills-news-christian-benford-track-135252258.html",
+     "player": "Christian Benford",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T13:24+00:00",
+   "player": "Ty Okada",
+   "team": "SEA",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -17.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T13:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Pre-Snap Reads: Seahawks D getting healthy ahead of tomorrow\u2019s tilt",
+     "quote": "It's the return of Ty Okada",
+     "link": "https://sports.yahoo.com/articles/pre-snap-reads-seahawks-d-131157130.html",
+     "player": "Ty Okada",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Seahawks secondary a full go for first time this season in Week 5",
+     "quote": "active for Seattle after a hamstring injury",
+     "link": "https://sports.yahoo.com/articles/seahawks-secondary-full-first-time-185633083.html",
+     "player": "Ty Okada",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T13:24+00:00",
+   "player": "Cade Mays",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_DET_ARI",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -17.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T13:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cade Mays out in NFL Week 5 at Arizona - Yahoo Sports",
+     "quote": "Cade Mays out in NFL Week 5 at Arizona",
+     "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1sUTAxWWNHb1o2TjhUczg0STFHWi02YUNtLUE0WV9uT2ZnbEgwOGZFaTV3SmE1Uk1LQ2NQMGU4YU5UWWs1ckQ3UWdQN0tsRmpxRUl6ZnFRdE1JcHRMYVVoWWpGM1dnUXR4Q3JTS2ktUHczSU95Q2hMMA?oc=5",
+     "player": "Cade Mays",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T09:24+00:00",
+   "player": "Kindle Vildor",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_LV_NE",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": -13.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots Saturday \ud83c\udfc8\ud83d\udeb6\u200d\u2642\ufe0f\u200dDay-before-game walkthrough \ud83d\udd53\ud83d\uded74p deadline roster moves/p-squad elevations NOTES: 4 CBs out...Practice-squad CB Kindl",
+     "quote": "Practice-squad CB Kindle Vildor expected to be part of plan",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxj4zrfhec2j",
+     "player": "Kindle Vildor",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T09:24+00:00",
+   "player": "Terry McLaurin",
+   "team": "WAS",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": -13.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Terry McLaurin Injury Update: Commanders WR Remains For Week 5 Game vs. Giants - Yahoo Sports",
+     "quote": "Terry McLaurin Injury Update: Commanders WR Remains For Week 5 Game",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNLVN3ME45aEJkOXM5VkZuVWFZZnk0VnpWbWY4WmVvbGtJT2pfZnNkY1B2WDdYMFJCdkJaUERXLUhrSXoyeTBVNktFXzdtYm9ydVNMUTdiVTZoV3ZTcWpGdVZzSXZLd1lFMzNudWotcEVoUFg3dDh4cUdXSVFxWU5fWVdRSkk3ZkE4M250WA?oc=5",
+     "player": "Terry McLaurin",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T15:48+00:00",
+     "source": "google_context",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Terry McLaurin Trending toward playing Sunday - Fantasy Footballers Podcast",
+     "quote": "Trending toward playing Sunday",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQVEtqejFfUVBqSWs1aEotX3o2TmxRSkQ1d3hreU9tLTVBdlJqay1pSWl1Y3NYdENvQlIyVmRZekl4dV9IbFBDa25EWnUxendUS3lWOEswVjd4QzBENWFKNVREMDBZYzNsYnVGM0FwbWdNZXJOWXRPUzFLaW4yeTRnVmxuVFJfektpNUsyYURlNmtGZ01lMmZTSXJJWFY?oc=5",
+     "player": "Terry McLaurin",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T09:24+00:00",
+   "player": "Lil'Jordan Humphrey",
+   "team": "DEN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -13.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Denver Broncos",
+     "title": "Broncos promote WR Lil\u2019Jordan Humphrey to active roster, place WR Pat Bryant on IR - Denver Broncos",
+     "quote": "Broncos promote WR Lil'Jordan Humphrey to active roster",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQSGxjMGN1bWV6RElydXQzeDlOaGZFY1pZMVo2ZmJ3Y0lKZlJaSUJ4akh3RkZ2V1NhbVJwSWVtakFzVmQwU01BdVp1dVVycnpPYl9qNkpuMWpnWkY3VHlldndaSmFDdWwxSi1sS1B1eV84REl4aU9ydDE2S1hndkpKSEEtQWpVS0NWQ3BJV2ZTRlF0NmxXUm5oNTdRT01pM2tLYVRNMnd1TTB3dEtEczNBWEdtNlp5LUk?oc=5",
+     "player": "Lil'Jordan Humphrey",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T02:24+00:00",
+   "player": "Rashawn Slater",
+   "team": "LAC",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -6.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T02:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Chargers provide Rashawn Slater major injury update ahead of Broncos clash",
+     "quote": "underwent successful ankle surgery...with the purpose of accelerating his return from a high-ankle sprain",
+     "link": "https://sports.yahoo.com/articles/chargers-rashawn-slater-major-injury-221149686.html",
+     "player": "Rashawn Slater",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T01:24+00:00",
+   "player": "Cam Skattebo",
+   "team": "NYG",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -5.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T01:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Giants Get Positive Injury News on RB Cam Skattebo - Yahoo Sports",
+     "quote": "Positive Injury News",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNa3NPSHozSFhTV0dSZDlCMDNhaHU0LTN0VUdkSmhoT0hTX3RIZzVjMzBBckRSeGdjS2JFNjJlREpELVBsbVI2QTNtYWhadnQwT2dlZFNhZ1ZweHVWWlFGRG1SbkxEaWZDcUc1UTdmTnV5T2RtRTRBWWQ0MVVQODlPNlpYRTJNdw?oc=5",
+     "player": "Cam Skattebo",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T01:24+00:00",
+   "player": "Goedert",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_PHI_JAX",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -5.4,
+   "truth": null,
+   "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T01:24+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Goedert clears injury report for Week 5 - NBC Sports",
+     "quote": "clears injury report for Week 5",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxORDg2aGhyd29EbHFFWDcyWmlDWkpSOV9UQW5xbGZ1cHZXTjBYSk5FNlFIc3VTWWl6bFJSeWlKMjQ2Z3FOUkk4dlpyMkRrUzBzemZNM2pDZHQ2X1lSOGtBRW9pN0dQeFdmTVZMMUZTUjJXN3gwc1VKVGZvbW5qRnRIa2lWTTFpUXhJWTRyQThlMzQzb0JzWVNLYzQySDBONFh3TktwR0VDUFI?oc=5",
+     "player": "Goedert",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-10T00:24+00:00",
+   "player": "Chig Okonkwo",
+   "team": "WAS",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_NYG_WAS",
+   "roster": "team_mismatch",
+   "certainty": 0.8,
+   "lead_vs_report_h": -4.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-10T00:24+00:00",
+     "source": "google_injury",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Chig Okonkwo Fades injury tag for Week 5 - Fantasy Footballers Podcast",
+     "quote": "Chig Okonkwo Fades injury tag for Week 5",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQOTVqQXVTcUJsWFIxSXJCMFZpQmhtT0JLWXZrZVlCbmZOOGh0LXl2cWZsYnFsb29YWENCWWZjclR4OWJtMkdaMkt6SnBfeUxtXzNHejJUdlZXb2JNMlVWVG4xTy1xUXdtcEtkczVkS1VyY1BVVkIxZFFOU256TWtGS3hwNjlhaWl2ZW5peVNGTXotdjJURVM1N1ViTkk?oc=5",
+     "player": "Chig Okonkwo",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T23:24+00:00",
+   "player": "Tyler Guyton",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 164.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Injuries to LT Tyler Guyton, WR CeeDee Lamb are not serious",
+     "quote": "X-rays on Cowboys left tackle Tyler Guyton's back were negative",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/injuries-to-lt-tyler-guyton-wr-ceedee-lamb-are-not-serious",
+     "player": "Tyler Guyton",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T01:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys Receive Positive Injury Updates on CeeDee Lamb and Tyler Guyton - Yahoo Sports",
+     "quote": "Cowboys Receive Positive Injury Updates on Tyler Guyton",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPeFpTTV9nMUxjOERndV9VNjZNbjZPNEF6MElpLVFoYU9QX09nOEhVaVMwSmI5UVNHbG4xUjJQNndWUDBPQ1FCQmRXR0xrUXFnQ2xwNTZjdUpDLWF4T0JXMklhZTB4bjRINEZRSlo0VGp4Mk40MGI0eTdINHp4OXZHREEzelduRVVsQlJCSHVxcTE0Zw?oc=5",
+     "player": "Tyler Guyton",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T23:24+00:00",
+   "player": "Quentin Johnston",
+   "team": "LAC",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_05_DEN_LAC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -3.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chargers Injury Report: Quentin Johnston, Derwin Hames OUT vs. Broncos",
+     "quote": "The Chargers will be without Joe Alt, Derwin James, and Quentin Johnston this week",
+     "link": "https://sports.yahoo.com/articles/chargers-injury-report-quentin-johnston-223916904.html",
+     "player": "Quentin Johnston",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T03:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Quentin Johnston ruled out for Week 5 - Yahoo Sports",
+     "quote": "ruled out for Week 5",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNeS1qVWdMdFd2cDVRNjZ4eVR2ZktQX0R3eGhtY0ZHaDFLWEh2QmY5LThjM0VUSGpwWXpoQVBUbDFaUlk1aTFIbDlsM0VlblZ6d0tCNWdxRDdJRGNYeW8xNUJULVE5Vy1CUW4wSHdwbkx0bVlGanc5c3I3dEMya1lJa1FfTHI?oc=5",
+     "player": "Quentin Johnston",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T23:24+00:00",
+   "player": "Nick Bosa",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_SF_SEA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -3.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Nick Bosa \u2018pretty darn likely\u2019 to return to the 49ers in Week 6 - Yahoo Sports",
+     "quote": "'pretty darn likely' to return to the 49ers in Week 6",
+     "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1MaElsMmZpd3pLaWxCS3Mzb2NRR2VtSVpXQnhZckpweVBaMlFwYlRfNWhITEdaMWV2bmQ5Zm5YN3A4dkt2LXVnblBtdTZ4d3E0S1JsVlY3cVNmUmhKSkh3RlFYVkRocy1vMzdMNlNwWGNVTWotaUZVSV9uUWI?oc=5",
+     "player": "Nick Bosa",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T00:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "Initially, Nick Bosa was thinking he could return to action after the bye. Now, his calf is feeling better and better, and he said he believ",
+     "quote": "he believes he has a good chance to play in Week 6",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxibposkls2h",
+     "player": "Nick Bosa",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T08:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Nick Bosa Gives Some Optimistic News About His Recovery From Calf Injury - Yahoo Sports",
+     "quote": "Nick Bosa Gives Some Optimistic News About His Recovery From Calf Injury",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPVzVUQnVMb3I1QUVSdGs5aXkxYUs2LVJJSnBXeERVNlowaF9WYWQ0RFRnUTNuaXE3TUE1UnRhZ2lGRmxpcERoZzJVbC1KVTh0ckxQVHFFZjhkajcxYjN4UFdOTjd2MDZKM18wSGZDcW9hT2Z5eVNfeXRtWXE0aXZmcmExemMyNkk?oc=5",
+     "player": "Nick Bosa",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "google_qb",
+     "outlet": "49ers Webzone",
+     "title": "49ers place four players on PUP list; Warner, Bosa cleared for training camp; Two released - 49ers Webzone",
+     "quote": "Warner, Bosa cleared for training camp",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMEo2QVdGbVM1YVp1Yy12aE94ZjUwWjlPWklHdVViZE8tajhHUnczOU9haXl0YVN3dHNsM1J0TGlmNGRJV2lzNFI5WUdSeElZSng0QXQycW94dC04RjBTa3FFLVlxTEVpTnhwVTdqbHZBRkhWZWJqS1BLLUoyYkZUeVdzQU4xWTRN?oc=5",
+     "player": "Nick Bosa",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T23:24+00:00",
+   "player": "Nick Vannett",
+   "team": "BAL",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_05_BAL_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -3.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "team_sites_1",
+     "outlet": "Baltimore Ravens",
+     "title": "Ravens Sign Tight End Nick Vannett to 53-Man Roster Following Durham Smythe Injury - Baltimore Ravens",
+     "quote": "Ravens Sign Tight End Nick Vannett to 53-Man Roster Following Durham Smythe Injury",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPUjVLU2FLX01ZU2Y2c0haU0NDVzNWZUhTRlM0Q2ZkVkdocF9jRzJnb3k5ZzQtTHZGeklZTjVPOV9RbkFoa1cxeWkyc0JNaGIzWjlCWjlKd0ZsczlfWUxhRHdMT3d1UEUxS3JRSlZkVUdHeC0zSVpvczQzOXpYRGx6SC1ZRVJTMVRPZVgyWkUtaVU3Q3Y3b2NOYUhLcklLZ3Bu?oc=5",
+     "player": "Nick Vannett",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-09T22:24+00:00",
+   "player": "Adin Huntington",
+   "team": "CLE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_05_CLE_NYJ",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -2.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ashleybastock42.bsky.social (CLE)",
+     "title": "\u2018Turtle time:\u2019 #Browns\u2019 Adin Huntington ready for bigger role vs. Jets amid DT injuries: www.cleveland.com/browns/2026/...",
+     "quote": "Huntington ready for bigger role vs. Jets amid DT injuries",
+     "link": "https://bsky.app/profile/ashleybastock42.bsky.social/post/3mxhvypoadk2r",
+     "player": "Adin Huntington",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-09T21:24+00:00",
    "player": "Tony Pollard",
@@ -167,6 +3179,26 @@
      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNaVJQTjN1eVNDVlh1QWgzdzZqSzgwSEtGcGRFLUhtbjZRdFpFMUI2NzlmdHA1VVdIMFhIY3JSb01rWWtQWV9TVXZaLTJEMmNEcE51cHVzVlMtM1VDRUxnUUt0X2JkLW1tTzZrQ0twOHRURWhKYzU0T1ZabEkwemJ0OQ?oc=5",
      "player": "Derwin James",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chargers Injury Report: Quentin Johnston, Derwin Hames OUT vs. Broncos",
+     "quote": "The Chargers will be without Joe Alt, Derwin James, and Quentin Johnston this week",
+     "link": "https://sports.yahoo.com/articles/chargers-injury-report-quentin-johnston-223916904.html",
+     "player": "Derwin James",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Chargers\u2019 Joe Alt, Derwin James ruled out for Broncos clash - Yahoo Sports",
+     "quote": "Chargers' Joe Alt, Derwin James ruled out for Broncos clash",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPWEVZSC1wS2lNRW13QWtvcjFGRkFBUG0yRVhSRUwwVnVVNWtkWmt2a01OaGhJQkVkd25FQ09pM3N6a3c1UEI4QWNNeFg0emxwMGhqRkY5QlJIRzYwMklvTkp1OGU1akUydDVUX01xM1oyUWcxd2VDTFVJc0dVcGZ3c1NsVzU?oc=5",
+     "player": "Derwin James",
+     "signal": "out"
     }
    ]
   },
@@ -225,8 +3257,14 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -1.0,
-   "line_move": null,
-   "verdict": "pending",
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -261,6 +3299,16 @@
      "title": "Tyleik Williams injury update: Lions DT 'ready to go' vs. Cardinals - Yahoo Sports",
      "quote": "Lions DT 'ready to go' vs. Cardinals",
      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNTW83Y2cwbHg2empTd1ExOGptLWZ4SzUzR0JoMDVwSE5XRnhmS3NIMFhxbnpoM2RHVHVhUndLdGpzNUpfTGxIYkotMG1wVWpkcC0tSG9oc2VRLTF4N1ZFV0ZzUGx0MjlzS2d1cTN3NGUxX2lCTURtSVhIdU54NGFnY3J0ZXROVGs?oc=5",
+     "player": "Tyleik Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Tyleik Williams injury update: Lions DT 'ready to go' vs. Cardinals - Yahoo Sports",
+     "quote": "Tyleik Williams 'ready to go' vs. Cardinals",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNMk5RUS04YU1OUkFfOHMxcEdVQkdDcjNWZ1NPRnNRU05QYjIyblMwYVhVeWU1QzltM2c1QTVDNXZ3RmswM3pzeG9MZzhpeGx5M3g3amh5X091c2U3WHlHeVN4dUdFOG9iVkR5UGd2VHZndTZ1eHpqb2xXRFpjMWItMmE5bEdqbk0?oc=5",
      "player": "Tyleik Williams",
      "signal": "expected_to_play"
     }
@@ -311,6 +3359,16 @@
      "title": "Texans will have Azeez Al-Shaair, Will Anderson Jr., Jadeveon Clowney",
      "quote": "The Texans ruled out wide receiver Tank Dell",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/texans-will-have-azeez-al-shaair-will-anderson-jr-jadeveon-clowney",
+     "player": "Tank Dell",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Tank Dell ruled out - Yahoo Sports",
+     "quote": "Tank Dell ruled out",
+     "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE9MajJRbVFrVkNXeUxiVnp6NzBNRDk4WGp6azJYTGtHZ21JSDd2dHZuME50emljME9vT3lDTHVJRk1CZW9XcVRDTDNCYWNMOE41d3dlS1RMemx5UHlBZ09aWmNVMFVvbEJNWDhaa2hIRl9GQQ?oc=5",
      "player": "Tank Dell",
      "signal": "out"
     }
@@ -448,6 +3506,16 @@
      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOdXJnTFE5Y1RycnpzRG50WDh2LXRETjJ6d292a2xDQWttN3pxODlLZHNxQmlGTDRsQWlBRzlweHkzRXhsN1ROTUl1T2NVS0FHb0JQeEJiVmNpb2lkNEp1YmJHSFJpdzhBVTBRYUY1UlJrUE54bm5NcENwUUpYRndoaTNFSlNqT0NmMGVkZQ?oc=5",
      "player": "Brian Branch",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T00:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Detroit Lions injury report: No Brian Branch in Week 5 - Yahoo Sports",
+     "quote": "No Brian Branch in Week 5",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOalA3dGtXeVpOczZDS1g1YUs1SF9xak9ZeGtaOXc4ek9CYTd0dVFpMjJDemV3aGFQbDQ2MTlHSXFnQ1h0MFlpcGl5bDNGMlVXdlgwT0J4c1FCS2JJY0tPV3NDMFlMNFdoYTZucHlQbFRpcU16bDBKdjdVR2JiSUhSUG1feS1CUQ?oc=5",
+     "player": "Brian Branch",
+     "signal": "out"
     }
    ]
   },
@@ -496,7 +3564,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -624,6 +3695,16 @@
      "link": "https://bsky.app/profile/spencito.bsky.social/post/3mxhirm7m222y",
      "player": "Mike Hall Jr.",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:spencito.bsky.social (CLE)",
+     "title": "The Browns used both of their practice squad elevations this week on DT Sam Kamara and DT Chris Williams with Mason Graham and Mike Hall Jr.",
+     "quote": "Mason Graham and Mike Hall Jr. both sidelined",
+     "link": "https://bsky.app/profile/spencito.bsky.social/post/3mxjxfjwzuc24",
+     "player": "Mike Hall Jr.",
+     "signal": "out"
     }
    ]
   },
@@ -657,6 +3738,26 @@
      "title": "Malik Nabers has no injury designation for Sunday",
      "quote": "Malik Nabers has no injury designation for Sunday",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/malik-nabers-has-no-injury-designation-for-sunday",
+     "player": "Malik Nabers",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T00:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Malik Nabers not on injury report for Week 5 - Yahoo Sports",
+     "quote": "Malik Nabers not on injury report for Week 5",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQaU0zdDdYYlNXbXJjYnpqc1Y1Q002LURJcDZVdzVPX25ObVVLMG1qMlRFNldLRWdOSkVVZmpqa04tc21nSkdwSDhoOFdLdW1MRHZlVjJYNHFoUzdiN3lxcXhyRlE5V3lIa25ocTZYMGhEX1ZKaUM1bGxaU1NfUm1vTWJvNFhDZw?oc=5",
+     "player": "Malik Nabers",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T17:24+00:00",
+     "source": "google_injury",
+     "outlet": "RotoBaller",
+     "title": "Malik Nabers Off Injury Report, Has Great Matchup in Week 5 - NFL News | Fantasy Football - RotoBaller",
+     "quote": "Off Injury Report",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNOXcxVXI4YWFPTmtGUS1xMmw1SUEwbWVINmJDUEtRejZuWGZMR0JFdTJHQ3dybUlZZEw2MTdyWlV1VU4zZFNsSHA0MEZ2TWRTM21LbGpHLURiZzFDQVhVbkF5emowS2Q2cUhBaDBXT292amwyeWhQYmtwSnJHdGZtRzZJcDBkcVNqNGJLN3R0WUg1SkthM21PNEU4X25SSU53aXpoMHJyaEo?oc=5",
      "player": "Malik Nabers",
      "signal": "expected_to_play"
     }
@@ -959,6 +4060,16 @@
      "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxhnskhz6k2i",
      "player": "Carlton Davis III",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Patriots won't have starting CBs Christian Gonzalez, Carlton Davis - ESPN",
+     "quote": "won't have starting CBs Carlton Davis",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPTlRCNl9zY3dNVmE4N1NPakF6UlhkVnNMemZJNGF1Mjg2b2EzS2FRLXN0OV94RG5YeUVtTTBLdVYtWnhNS3YteldmbVl3eUFBcTg4bUduU19lOEdFaHZOODJjUUIyclMyWEdJRzlCNkxRUmdfeFdYZTNhRnBIdnhrdEZOSGEtMkVxY001TzRWMThvd29iLTJxUWpxSmFjeVVy?oc=5",
+     "player": "Carlton Davis",
+     "signal": "out"
     }
    ]
   },
@@ -1082,6 +4193,36 @@
      "title": "Ben Johnson said it's \"highly likely\" one of Kyler Gordon, Noah Sewell or Shemar Turner will be activated from the PUP list this weekend, bu",
      "quote": "highly likely one of Kyler Gordon, Noah Sewell or Shemar Turner will be activated from the PUP list this weekend",
      "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3mxhgqowt522k",
+     "player": "Noah Sewell",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T18:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:kfishbain.bsky.social (CHI)",
+     "title": "Bears roster moves\u2026 LB Noah Sewell activated off PUP. RB Zavier Scott elevated from the practice squad. Kyler Gordon and Shemar Turner remai",
+     "quote": "LB Noah Sewell activated off PUP",
+     "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3mxk4qd5ly22h",
+     "player": "Noah Sewell",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bears activate LB Noah Sewell from PUP",
+     "quote": "Bears activated linebacker Noah Sewell from reserve/PUP",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bears-activate-lb-noah-sewell-from-pup",
+     "player": "Noah Sewell",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chicago Bears activate Noah Sewell from the PUP list",
+     "quote": "activated Noah Sewell from the PUP list",
+     "link": "https://sports.yahoo.com/articles/chicago-bears-activate-noah-sewell-210153081.html",
      "player": "Noah Sewell",
      "signal": "returning"
     }
@@ -1249,6 +4390,16 @@
      "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxhnskhz6k2i",
      "player": "Rhamondre Stevenson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "google_context",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Rhamondre Stevenson Slated to play Sunday - Fantasy Footballers Podcast",
+     "quote": "Rhamondre Stevenson Slated to play Sunday",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNQU04Q21KYjBrNk00N2wyOXR2M3dmZDNCNmpHTTdFTzd3QmEtZzBFT29sZHU4M0s0UF9CbVRrWE9hVFJTWGVld2c2TXY5LXhJLXB5NXQ3aUVkWnJjOGtMR1VWMko2bUw4U0JVZmV1NjBfVmdubjk3azMtWGJUUEgzRFlodGFndDI1S2dMOHhIYXdYUjlzQ0JZ?oc=5",
+     "player": "Rhamondre Stevenson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -1287,7 +4438,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 4.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1349,6 +4503,36 @@
      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPSVd4U0poM0tTWTQ3YzJoUEZNcmwzNVg0LUliZ2tKX0VWQlVsZjhDU1kwaXlYQ0NOSDZ4WVdIRHhLVmJzcU8yZ19jVUpCSGp2ekNKTlUwU3N1ZE9ldjB3ZXJILWJVb2pra2xBYzZiMjNwcWJmakVZLVJOci1vUUJMakRhMjEwZWFXdTFFSDFR?oc=5",
      "player": "CeeDee Lamb",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Injuries to LT Tyler Guyton, WR CeeDee Lamb are not serious",
+     "quote": "Injuries to LT Tyler Guyton, WR CeeDee Lamb are not serious",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/injuries-to-lt-tyler-guyton-wr-ceedee-lamb-are-not-serious",
+     "player": "CeeDee Lamb",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T01:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Good news for CeeDee Lamb",
+     "quote": "avoided serious injury",
+     "link": "https://sports.yahoo.com/articles/good-news-ceedee-lamb-010457543.html",
+     "player": "CeeDee Lamb",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T01:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys Receive Positive Injury Updates on CeeDee Lamb and Tyler Guyton - Yahoo Sports",
+     "quote": "Cowboys Receive Positive Injury Updates on CeeDee Lamb",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPeFpTTV9nMUxjOERndV9VNjZNbjZPNEF6MElpLVFoYU9QX09nOEhVaVMwSmI5UVNHbG4xUjJQNndWUDBPQ1FCQmRXR0xrUXFnQ2xwNTZjdUpDLWF4T0JXMklhZTB4bjRINEZRSlo0VGp4Mk40MGI0eTdINHp4OXZHREEzelduRVVsQlJCSHVxcTE0Zw?oc=5",
+     "player": "CeeDee Lamb",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -1374,6 +4558,16 @@
      "link": "https://sports.yahoo.com/articles/giants-center-bryan-hudson-ready-110156016.html",
      "player": "Bryan Hudson",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-10T10:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "NY Giants news: Bryan Hudson set to start again, Arvell Reese vs. Sonny Styles, more",
+     "quote": "Bryan Hudson set to start again",
+     "link": "https://sports.yahoo.com/articles/ny-giants-news-bryan-hudson-100000392.html",
+     "player": "Bryan Hudson",
+     "signal": "will_start"
     }
    ]
   },
@@ -1387,7 +4581,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 8.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1412,7 +4609,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 8.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1437,7 +4637,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 8.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1557,6 +4760,26 @@
      "title": "Injury Updates: 'As long as they progress accordingly,' Aaron Donald, Jaylen Watson and Colby Parkinson will be 'ready to go' for Week 5 against Bills, Sean McVay says - Rams",
      "quote": "will be 'ready to go' for Week 5 against Bills, Sean McVay says",
      "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxOWnNmU204LV8xMjZvTWJ6d3VRN1VoV2g5eGtzdlZtX0dqZEh3dXVqRDNYVXRxZm9FcEpGaTd6OGV4d2RGLWdOZS1UUXdKMHJ0SXhKQ3h6c1BzbGh5VzlOY1BQRzhoX05BemRBWEZRZGZWVGkwdjVoX29Fa0I4SkdxRmtlY0hMb2JUSkUzbVQ2eFZKNGxwTVZZZW1sUTB5WFNOVkFRV0Job3d6SjhRNE1HY21zcS1relJlbEgybVRYbV80V0U3N0xwelloNWYxejBRMTZ5clB1XzNsVG1QNWF5MHBpSldTa2Iwakx5MjgyYnNmajA1dHAtZl9saWlqRVM0dVpUUmdHQWlySU95VER4TC1WQ05UV00?oc=5",
+     "player": "Colby Parkinson",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Aaron Donald, Colby Parkinson and Jaylen Watson are all clear to play against Bills. No game statuses",
+     "quote": "Aaron Donald, Colby Parkinson and Jaylen Watson are all clear to play against Bills",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mxkc22efis2j",
+     "player": "Colby Parkinson",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T00:24+00:00",
+     "source": "google_injury",
+     "outlet": "Rams",
+     "title": "Rams Injury Report, Week 5 vs. Bills: Aaron Donald, Colby Parkinson and Jaylen Watson good to go for Monday Night Football; Quentin Lake questionable but 'trending in the right direction' - Rams",
+     "quote": "Aaron Donald, Colby Parkinson and Jaylen Watson good to go for Monday Night Football",
+     "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNNjNFZ19XSFFkZ0t6WmtfTUljV0lKc3B6QmJnU3hjTS1nay15bFhUemRNc3ZGMGUtVHJJRDNWWnZJcTJHS3d5NkljdVkwNFl3S3AwVnE5VzgyRndWOEFjaXJfMG10eUg5dURzbURscTFaaWJtYWQwY3F4TWR4dnJmUjgxUzlDNUpCNlhmVVdFZ2p5dmo5OENYSmlmRHFCcFZ5RV9pblNJUkJYemxDamxOQTlMWWVTZEh1VGtPcExobzl2Rm1UdDdVaG5MX2ZIWlQyMDI0VUE3VG5IUElMMUxnaGgwcDdySEk?oc=5",
      "player": "Colby Parkinson",
      "signal": "expected_to_play"
     }
@@ -1965,6 +5188,26 @@
      "link": "https://sports.yahoo.com/articles/broncos-vs-chargers-practice-report-231618775.html",
      "player": "Pat Surtain II",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Broncos rule out Pat Surtain II, Riley Moss",
+     "quote": "Broncos ruled out both of their starting cornerbacks",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/broncos-rule-out-pat-surtain-ii-riley-moss",
+     "player": "Pat Surtain II",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Denver Broncos",
+     "title": "Injury Report: CBs Pat Surtain II, Riley Moss ruled out for Broncos' Week 5 game vs. Chargers - Denver Broncos",
+     "quote": "CBs Pat Surtain II, Riley Moss ruled out for Broncos' Week 5 game",
+     "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOS0F6dVJoSnI3NEYwc1hURnd3Wm93cTdtSlBfUDY0bEh5MUxlUEM2b1BrX1VnTzVndGl0dnBXZmdKaG0xT2JHZUR0dlktSzRlRGJpTGlrZm16SWt3ZXEycjlVVjEzM0diM3p1WXZMTXhORnFZX1RoYlFwUHVHUUc4SDlicmRzaEpaYy00eWhuT0kweVZtTm02ZVcya01JV1hSbjc5T1ZqaUt0MEY5N2Z3bHRLOTRaTm1aUGJzNGx0ckRJdk0zSmVVRnV0Zl9GM1ZvMFVv?oc=5",
+     "player": "Pat Surtain II",
+     "signal": "out"
     }
    ]
   },
@@ -2068,6 +5311,16 @@
      "link": "https://sports.yahoo.com/articles/rams-major-injury-boost-ahead-011636516.html",
      "player": "Aaron Donald",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T03:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Rams Week 5 Injury Report: Aaron Donald Among Three Starters Set to Return vs. Bills - Yahoo Sports",
+     "quote": "Aaron Donald Among Three Starters Set to Return vs. Bills",
+     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1aOTRRbDROc1ZLWHU1Y2c1dDBpUkp0dkZGeDNjckxtU0dzekRzbTkwQzh5Y0xhcUdTd0dPS3ZNTndBOWZlY1EzTVNURVJlSWNrM1Z1cDh5VUV6WlFOSDVjelRKamZWak1xMUFEUUxXRVZWNnBmUHFMUzNlakZ1VW8?oc=5",
+     "player": "Aaron Donald",
+     "signal": "returning"
     }
    ]
   },
@@ -2093,6 +5346,16 @@
      "link": "https://sports.yahoo.com/articles/packers-sign-pierre-strong-jr-221606531.html",
      "player": "Chris Brooks",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T14:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Chris Brooks won&#39;t play in Week 5",
+     "quote": "Chris Brooks won't play in Week 5",
+     "link": "https://sports.yahoo.com/articles/chris-brooks-wont-play-week-134904597.html",
+     "player": "Chris Brooks",
+     "signal": "out"
     }
    ]
   },
@@ -2106,7 +5369,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 21.8,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2166,7 +5432,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 22.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2226,6 +5495,46 @@
      "title": "Josh McDaniels insists the Patriots didn't do much differently in Buffalo, but the numbers tell a different story. The Patriots are running ",
      "quote": "spoke with Brenden Schooler about his potential return",
      "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mxf74orp7k2m",
+     "player": "Brenden Schooler",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Bunch of moves from the Patriots this afternoon: \u2022 WR Mack Hollins (calf) and FB Reggie Gilliam (ankle/knee) on injured reserve. Both will m",
+     "quote": "Activated special teamer Brenden Schooler (back) from the NFI list",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxkc42oju22m",
+     "player": "Brenden Schooler",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots transactions: \ud83c\udfc8Placed on IR: WR Mack Hollins, FB Reggie Gilliam \ud83c\udfc8 Activated to 53-man roster from NFI list: ST Brenden Schooler \ud83c\udfc8 S",
+     "quote": "Activated to 53-man roster from NFI list: ST Brenden Schooler",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxkbx6vhfc2p",
+     "player": "Brenden Schooler",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Patriots activate Brenden Schooler, place two veterans on injured reserve amid series of moves",
+     "quote": "activate Brenden Schooler",
+     "link": "https://sports.yahoo.com/articles/patriots-activate-brenden-schooler-place-204612359.html",
+     "player": "Brenden Schooler",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Activate S Brenden Schooler to the 53-Man Roster; Place FB Reggie Gilliam and WR Mack Hollins on Injured Reserve; Make Additional Roster Moves - Patriots.com",
+     "quote": "Patriots Activate S Brenden Schooler to the 53-Man Roster",
+     "link": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxNVy1LeV9BWjlmYmZHWjh6MXVvdWFhOUFuUEhFOGMxUm1EblZKU05fOTFsaGd3RFRzUUtKbXEzWVlGNkQyZ0pyT2NMaWJkMTNqWml4cjlPdnVHdXNrZDgxT2ZwaENWZkFjc1puN3V1YjFaR1BjYVdYVXBudjNnU0xBb1NRU0Yta0Z3NW4tTHJmUW9Ja0xaN1pZODJyamY1Q1VDWmtFalA4WTZYV1F3c3VLQlVkS0pjS2xJYUsxQVRva2tFcEVucTBHTFkzcHZjRmJKUzE4QUhsLTN4TzE4RHRiYWU2V19iT3lxQ3hCeVdiYWt3LU9falhMeHBVdjZBNVZxemJYbWI5RG1MUkE?oc=5",
      "player": "Brenden Schooler",
      "signal": "returning"
     }
@@ -2657,6 +5966,26 @@
      "link": "https://sports.yahoo.com/articles/dolphins-news-veterans-stepping-kenneth-114529975.html",
      "player": "Kenneth Grant",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Dolphins activate Kenneth Grant from injured reserve",
+     "quote": "activate Kenneth Grant from injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dolphins-activate-kenneth-grant-from-injured-reserve",
+     "player": "Kenneth Grant",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Dolphins activate Kenneth Grant from injured reserve",
+     "quote": "activate Kenneth Grant from injured reserve",
+     "link": "https://sports.yahoo.com/articles/dolphins-activate-kenneth-grant-injured-205517798.html",
+     "player": "Kenneth Grant",
+     "signal": "returning"
     }
    ]
   },
@@ -2746,6 +6075,56 @@
      "title": "The 49ers announced they released DL Ogbo Okoronkwo. This creates a spot for DL Mykel Williams off PUP.",
      "quote": "creates a spot for DL Mykel Williams off PUP",
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxhpovlcfk2a",
+     "player": "Mykel Williams",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "49ers activate DL Mykel Williams, who will make his 2026 debut Sunday",
+     "quote": "activate DL Mykel Williams",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/49ers-activate-dl-mykel-williams-who-will-make-his-2026-debut-sunday",
+     "player": "Mykel Williams",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "49ers activate DL Mykel Williams, who will make his 2026 debut Sunday",
+     "quote": "activate DL Mykel Williams",
+     "link": "https://sports.yahoo.com/articles/49ers-activate-dl-mykel-williams-203420240.html",
+     "player": "Mykel Williams",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Mykel Williams is officially back",
+     "quote": "officially activated Mykel Williams",
+     "link": "https://sports.yahoo.com/articles/mykel-williams-officially-back-203046724.html",
+     "player": "Mykel Williams",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "49ers TE George Kittle is active despite illness; DL Mykel Williams to make his 2026 debut",
+     "quote": "DL Mykel Williams to make his 2026 debut",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/49ers-te-george-kittle-is-active-despite-illness-dl-mykel-williams-to-make-his-2026-debut",
+     "player": "Mykel Williams",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "49ers TE George Kittle is active despite illness; DL Mykel Williams to make his 2026 debut",
+     "quote": "DL Mykel Williams to make his 2026 debut",
+     "link": "https://sports.yahoo.com/articles/49ers-te-george-kittle-active-191148876.html",
      "player": "Mykel Williams",
      "signal": "returning"
     }
@@ -2896,6 +6275,16 @@
      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPdzRYaTlKdDFoTzI4VU41QzB3eDNmOVR5M0t6RFp4dTRMcjNkVkp2UG9OLUlNak9hSDFIcHF1ZDI3TUZtMWowMWpsbTBNRzNOaUE4ZFBxWTN5dTVtMDFGMTdKVUtyUGJEN2xzTzNLZXg3VXF2ZjhWY3VCd0lWWkVvOEw2dzhmNlNKd0RqN0Nocw?oc=5",
      "player": "Justin Jefferson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T15:48+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Justin Jefferson in, Jordan Addison out for Vikings; what about Odell Beckham Jr.? - Yahoo Sports",
+     "quote": "Justin Jefferson in",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNeFZRbTRNQkVrNVFlWWNaRTczTFdjRTFQV3NhQjhFaXRXczlmZWQyWTM4bjlOOHk4NGNlSTRWLVBNOFh0Z3ZMd0lucVUxbl81MzJ3aXlBdWQ1OUxyR2NmV05LRTFpRmxWSFZkS2Z0cnJUOXdPM0VTeVZYYzlWRFBnc2FKUW1mMFBfbWwwbzRNLVVUZw?oc=5",
+     "player": "Justin Jefferson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -2954,6 +6343,26 @@
      "title": "Jets Injury Updates: Breece Hall, Adonai Mitchell still week-to-week; Mason Taylor returns to practice",
      "quote": "Mason Taylor returns to practice",
      "link": "https://sports.yahoo.com/articles/jets-injury-updates-breece-hall-212006538.html",
+     "player": "Mason Taylor",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T04:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Jets finally get some good injury news with Mason Taylor set for return",
+     "quote": "Mason Taylor set for return",
+     "link": "https://sports.yahoo.com/articles/jets-finally-good-injury-news-233154837.html",
+     "player": "Mason Taylor",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jets finally get some good injury news with Mason Taylor set for return - Yahoo Sports",
+     "quote": "Jets finally get some good injury news with Mason Taylor set for return",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPMmQ3dHpaRVc4TThLUnVQSk85RVl2WlF5d1l0NWVHQW04alA5NllpcFh2UHVUNmRyZ2pmR1BzSkRTcVpmQk45dEp2aE5HendoT0J6SDVwdGphUk94eHpYby16eG55X3BmRXlpMllBNU1WalM0RmhRQlJLQnVXSU5DMkNtRkI?oc=5",
      "player": "Mason Taylor",
      "signal": "returning"
     }
@@ -3324,6 +6733,26 @@
      "link": "https://sports.yahoo.com/articles/texans-open-practice-windows-tank-181846542.html",
      "player": "Kayden McDonald",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Texans activate S M.J. Stewart, DT Kayden McDonald",
+     "quote": "activate... DT Kayden McDonald",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/texans-activate-s-m-j-stewart-dt-kayden-mcdonald",
+     "player": "Kayden McDonald",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Texans activate S M.J. Stewart, DT Kayden McDonald",
+     "quote": "activate... DT Kayden McDonald",
+     "link": "https://sports.yahoo.com/articles/texans-activate-m-j-stewart-203958795.html",
+     "player": "Kayden McDonald",
+     "signal": "returning"
     }
    ]
   },
@@ -3407,6 +6836,16 @@
      "title": "49ers injury report for Week 5 at Seattle: OUT FB Kyle Juszczyk (knee) DE Nick Bosa (knee, calf) DT James Thompson (ankle) S Marques Sigle (",
      "quote": "OUT S Marques Sigle (ankle)",
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxhueazpms2s",
+     "player": "Marques Sigle",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
      "player": "Marques Sigle",
      "signal": "out"
     }
@@ -3729,7 +7168,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 61.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3828,6 +7270,16 @@
      "title": "Commanders designate CB Trey Amos, DE Deatrich Wise, RB Jeremy McNichols for return",
      "quote": "Commanders designate DE Deatrich Wise for return",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-designate-cb-trey-amos-de-deatrich-wise-rb-jeremy-mcnichols-for-return",
+     "player": "Deatrich Wise",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "The #Commanders officially activated DE Deatrich Wise to the active roster, but CB Trey Amos and RB Jeremy McNichols were ruled out for tomo",
+     "quote": "officially activated DE Deatrich Wise to the active roster",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mxkc66ev3s26",
      "player": "Deatrich Wise",
      "signal": "returning"
     }
@@ -3933,7 +7385,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 66.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3996,7 +7451,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 69.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4683,7 +8141,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 83.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5100,6 +8561,36 @@
      "title": "NFL injury tracker Week 5: Latest news, fantasy implications as Lamar Jackson (ankle) and Saquon Barkley (hamstring) ruled out, Jayden Daniels (elbow) set to return",
      "quote": "Jayden Daniels (elbow) set to return",
      "link": "https://sports.yahoo.com/fantasy/live/nfl-injury-tracker-week-5-latest-news-fantasy-implications-as-lamar-jackson-ankle-and-saquon-barkley-hamstring-ruled-out-jayden-daniels-elbow-set-to-return-175446943.html",
+     "player": "Jayden Daniels",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-10T07:16+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "NFL predictions: Jayden Daniels has successful return as Commanders host Giants - Yahoo Sports",
+     "quote": "successful return",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNFFrZFRsRTQwZ3lYdnhRRWkwYmRzY0ktUnk0Qlk0WVVGOFM0Rm1jRFdyUHlLSFgwRFZPQVF5c0laRmwyZGl2MHJMcTd3WFFRczI4dFZOY2RPaUZHblFSakZWVnhzTkRkbGpCZTZjRklvNGY3MkRKWk9Zc2xuMFp1ZUxTTzFpOFlqRGE2RjNZSjMtTEpI?oc=5",
+     "player": "Jayden Daniels",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T12:24+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Week 5 NFL live updates, news, schedule: Jayden Daniels returns from elbow injury; Ja&#39;Marr Chase, Tee Higgins questionable",
+     "quote": "Jayden Daniels returns from elbow injury",
+     "link": "https://sports.yahoo.com/nfl/live/nfl-week-5-scores-news-live-updates-schedule-highlights-stats-where-to-watch-120000942.html",
+     "player": "Jayden Daniels",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-11T14:25+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Some doctors believe Jayden Daniels risks another elbow dislocation",
+     "quote": "Commanders quarterback Jayden Daniels returns on Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-some-doctors-believe-jayden-daniels-risks-another-elbow-dislocation",
      "player": "Jayden Daniels",
      "signal": "returning"
     }
@@ -5526,6 +9017,16 @@
      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMUJaaVVMR19NUGlhY0xJTk9oRUZFYzJGeXJZNklOSkV0NWtxMmZQNGxLbzU3azRnRzlYN2ZYZi1rZDdTeVBfNHRYQXBUSW9keld4QkNJMXkwd2xnQ1A3WGpOZkR5X1Byb3JuckhGQXlza3lNV0tiSF9WNkhjb0hzZnpFYVZRa01IOVNRWlhFODB0ZUtnN3ZjN2JhXzdjQQ?oc=5",
      "player": "Paris Johnson Jr.",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Cardinals place RG Isaiah Adams on IR",
+     "quote": "Cardinals left tackle Paris Johnson is out for the season with a torn left biceps",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cardinals-place-rg-isaiah-adams-on-ir",
+     "player": "Paris Johnson",
+     "signal": "out"
     }
    ]
   },
@@ -5591,6 +9092,16 @@
      "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOLWFmSzN2Q1d1QlBMV3BwSEtISDlqSVBQQUEyZzY1NGUtaFc5RG8zU3NRYWdRNzdfQUkxMXFqOUVSYjlZWVMyNFRTOXVjSjNZc3h4c1lXc1E3UGdYcHNxVFJKU3piZlZVNnlPejNZX3hrNTVVdkN1RUN2NHZQRm5PbEFiUHgxR25PUlMzeEg3Ty0?oc=5",
      "player": "Paris Johnson Jr.",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "After putting LT Paris Johnson Jr. on season-ending IR earlier this week, #AZCardinals put RG Isaiah Adams on IR on Saturday: www.azcardinal",
+     "quote": "After putting LT Paris Johnson Jr. on season-ending IR earlier this week",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mxkbqks5zs2n",
+     "player": "Paris Johnson Jr.",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -5632,7 +9143,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 93.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5722,7 +9236,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 94.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6043,6 +9560,26 @@
      "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxOWnNmU204LV8xMjZvTWJ6d3VRN1VoV2g5eGtzdlZtX0dqZEh3dXVqRDNYVXRxZm9FcEpGaTd6OGV4d2RGLWdOZS1UUXdKMHJ0SXhKQ3h6c1BzbGh5VzlOY1BQRzhoX05BemRBWEZRZGZWVGkwdjVoX29Fa0I4SkdxRmtlY0hMb2JUSkUzbVQ2eFZKNGxwTVZZZW1sUTB5WFNOVkFRV0Job3d6SjhRNE1HY21zcS1relJlbEgybVRYbV80V0U3N0xwelloNWYxejBRMTZ5clB1XzNsVG1QNWF5MHBpSldTa2Iwakx5MjgyYnNmajA1dHAtZl9saWlqRVM0dVpUUmdHQWlySU95VER4TC1WQ05UV00?oc=5",
      "player": "Jaylen Watson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Aaron Donald, Colby Parkinson and Jaylen Watson are all clear to play against Bills. No game statuses",
+     "quote": "Aaron Donald, Colby Parkinson and Jaylen Watson are all clear to play against Bills",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mxkc22efis2j",
+     "player": "Jaylen Watson",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-11T00:24+00:00",
+     "source": "google_injury",
+     "outlet": "Rams",
+     "title": "Rams Injury Report, Week 5 vs. Bills: Aaron Donald, Colby Parkinson and Jaylen Watson good to go for Monday Night Football; Quentin Lake questionable but 'trending in the right direction' - Rams",
+     "quote": "Aaron Donald, Colby Parkinson and Jaylen Watson good to go for Monday Night Football",
+     "link": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNNjNFZ19XSFFkZ0t6WmtfTUljV0lKc3B6QmJnU3hjTS1nay15bFhUemRNc3ZGMGUtVHJJRDNWWnZJcTJHS3d5NkljdVkwNFl3S3AwVnE5VzgyRndWOEFjaXJfMG10eUg5dURzbURscTFaaWJtYWQwY3F4TWR4dnJmUjgxUzlDNUpCNlhmVVdFZ2p5dmo5OENYSmlmRHFCcFZ5RV9pblNJUkJYemxDamxOQTlMWWVTZEh1VGtPcExobzl2Rm1UdDdVaG5MX2ZIWlQyMDI0VUE3VG5IUElMMUxnaGgwcDdySEk?oc=5",
+     "player": "Jaylen Watson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -6241,6 +9778,26 @@
      "title": "Rams Injury Report: Aaron Donald Among Three Key Starters Who Could Return vs. Bills - Yahoo Sports",
      "quote": "Could Return vs. Bills",
      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOdEZnTm5WczE2aGpBUHlCemZWOUNsaW9DMGZWWU4xVHhFR1JIelIwWHYxRks2UkxEbFJ4RDdCMl9TRk5pWWN3anlZSW9rS2pVenRwMlUzZUdSc0swV0plSDRSTXhqbkJIaEhvTDhOSXlOY2V3TVM3akRSekZ6V0JNTlZ5MlEwVUU?oc=5",
+     "player": "Aaron Donald",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T00:59+00:00",
+     "source": "yahoo",
+     "outlet": "LA Times",
+     "title": "Rams&#39; Aaron Donald expects to return from injury vs. Bills: &#39;I feel great&#39;",
+     "quote": "expects to play Sunday against the Bills",
+     "link": "https://sports.yahoo.com/articles/rams-aaron-donald-expects-return-002849086.html",
+     "player": "Aaron Donald",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T13:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Aaron Donald: No setbacks, I plan on playing Monday",
+     "quote": "No setbacks, I plan on playing Monday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/aaron-donald-no-setbacks-i-plan-on-playing-monday",
      "player": "Aaron Donald",
      "signal": "expected_to_play"
     }
@@ -7643,6 +11200,36 @@
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxhueazpms2s",
      "player": "Nick Bosa",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T05:24+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "49ers star Nick Bosa uncovers injury timeline as NFC West clash for first place approaches",
+     "quote": "set to miss his third consecutive game with a calf injury",
+     "link": "https://sports.yahoo.com/articles/49ers-star-nick-bosa-uncovers-001450740.html",
+     "player": "Nick Bosa",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T18:24+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Christian McCaffrey Returns to 49ers Lineup While Nick Bosa Remains Sidelined - Yahoo Sports",
+     "quote": "Nick Bosa Remains Sidelined",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPcnhoZmFLRUxNbWhFNFFRcGdBWFBKdWRDZjViLTRkU292ZkwyWDhuZ3hUNEZtVnhPN2hHeVFvdmlpVzRvbEV4WWZwcl9ua0pncGNwOGdFb21NNlVJMFZ2bDdsekptSUdHbFpTT3VKNnN4cjctWWFFcE84NXhveEhXUXVtTE4wdlBxc0g1cUROUXllbWs?oc=5",
+     "player": "Nick Bosa",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
+     "player": "Nick Bosa",
+     "signal": "out"
     }
    ]
   },
@@ -7698,6 +11285,16 @@
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxhueazpms2s",
      "player": "James Thompson",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
+     "player": "James Thompson Jr.",
+     "signal": "out"
     }
    ]
   },
@@ -7748,6 +11345,16 @@
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mx33dqbv5s2z",
      "player": "Tatum Bethune",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
+     "player": "Tatum Bethune",
+     "signal": "out"
     }
    ]
   },
@@ -7796,6 +11403,16 @@
      "title": "49ers inactive players for Week 4 vs. Broncos: QB Kurtis Rourke (3rd QB) DE Nick Bosa (knee/calf) DT James Thompson (ankle) RB Jordan James ",
      "quote": "inactive players for Week 4",
      "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mx33dqbv5s2z",
+     "player": "Enrique Cruz",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T19:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers inactives for today\u2019s Week 5 game at the Seahawks: FB Kyle Juszczyk (knee) S Marques Sigle (ankle) DE Nick Bosa (knee, calf) DT James ",
+     "quote": "inactives for today's Week 5 game",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mxmon2adrs23",
      "player": "Enrique Cruz",
      "signal": "out"
     }
@@ -8968,6 +12585,16 @@
      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQTy1KM09RYVhvQkphakpkS2JEMl9ITWJkM25FVEU5MXNVTzlwdWlZUUlDaUY5dXhXT1NaMVE3aGZYSnRqZDE1dTNMNWFTS19laWxJNjZwTWg2dHRaemRZLWlvT1g4UkQtLXRRVm9ZdjktNVBwM0owQWE5MExGMWRvT0FPbGtfZmtuTjUzTjNNWDFSVUM5ajdhbEs2SkJYSHJudWFhZ3hvVmpieTVEWm4xTzAyWE94UHVlR181c1V3?oc=5",
      "player": "Mike Evans",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "49ers wide receiver Mike Evans has no injury designation",
+     "quote": "has no injury designation",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/49ers-wide-receiver-mike-evans-has-no-injury-designation",
+     "player": "Mike Evans",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -9268,6 +12895,76 @@
      "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mx37lovu7s2a",
      "player": "Hollins",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Bunch of moves from the Patriots this afternoon: \u2022 WR Mack Hollins (calf) and FB Reggie Gilliam (ankle/knee) on injured reserve. Both will m",
+     "quote": "WR Mack Hollins (calf) and FB Reggie Gilliam (ankle/knee) on injured reserve",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mxkc42oju22m",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T20:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots transactions: \ud83c\udfc8Placed on IR: WR Mack Hollins, FB Reggie Gilliam \ud83c\udfc8 Activated to 53-man roster from NFI list: ST Brenden Schooler \ud83c\udfc8 S",
+     "quote": "Placed on IR: WR Mack Hollins, FB Reggie Gilliam",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mxkbx6vhfc2p",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Patriots put WR Mack Hollins on injured reserve",
+     "quote": "put WR Mack Hollins on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/patriots-put-wr-mack-hollins-on-injured-reserve",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Patriots put WR Mack Hollins on injured reserve",
+     "quote": "put WR Mack Hollins on injured reserve",
+     "link": "https://sports.yahoo.com/articles/patriots-put-wr-mack-hollins-210117647.html",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Patriots activate Brenden Schooler, place two veterans on injured reserve amid series of moves",
+     "quote": "wideout Mack Hollins have landed on injured reserve",
+     "link": "https://sports.yahoo.com/articles/patriots-activate-brenden-schooler-place-204612359.html",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Patriots place veteran WR Mack Hollins on IR with calf injury - ESPN",
+     "quote": "place veteran WR Mack Hollins on IR with calf injury",
+     "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPUkU0bVpXaFM3QjlGTV8wY1dudXJ3ejRMUW4xbE5icTladVZWUE9Kc0NnSTRMSmEtSTJwTzNMU2trMk9HOUxwcDcwaERzU1M0QjVCbTZ0c0Z6V1U4VHJZaTdEcWlRbllMYjhMNDAtZEJyMlRCck1QLXFoRVZ5cUpzanBwNkhlbngtSjBOOUxqaVNROGlNVzZnX01NOXJBeG8?oc=5",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T21:18+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Activate S Brenden Schooler to the 53-Man Roster; Place FB Reggie Gilliam and WR Mack Hollins on Injured Reserve; Make Additional Roster Moves - Patriots.com",
+     "quote": "Place FB Reggie Gilliam and WR Mack Hollins on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxNVy1LeV9BWjlmYmZHWjh6MXVvdWFhOUFuUEhFOGMxUm1EblZKU05fOTFsaGd3RFRzUUtKbXEzWVlGNkQyZ0pyT2NMaWJkMTNqWml4cjlPdnVHdXNrZDgxT2ZwaENWZkFjc1puN3V1YjFaR1BjYVdYVXBudjNnU0xBb1NRU0Yta0Z3NW4tTHJmUW9Ja0xaN1pZODJyamY1Q1VDWmtFalA4WTZYV1F3c3VLQlVkS0pjS2xJYUsxQVRva2tFcEVucTBHTFkzcHZjRmJKUzE4QUhsLTN4TzE4RHRiYWU2V19iT3lxQ3hCeVdiYWt3LU9falhMeHBVdjZBNVZxemJYbWI5RG1MUkE?oc=5",
+     "player": "Mack Hollins",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -9390,6 +13087,16 @@
      "title": "NFL Injury Report & Analysis: Lamar Jackson Ankle Sprain - RotoWire",
      "quote": "NFL Injury Report & Analysis: Lamar Jackson Ankle Sprain",
      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPTVVzbTQ4Z2RhMDV1YnhldUNBZWZhVDJWX1BPSHVYZ2xKalZCdXpkdG1CV1JwUUdJdzlnU1lWT3JMYU5uSGRpMUVnUXBxejZsb2c3MWkyMWxNMUttU3l1RWsyZG1nLXpqcWUzWjM2cV90RVBmNWh1MHBjeEVRZW5vRzhMenVZQVJ3bEJMSTdxeGxpWjA?oc=5",
+     "player": "Lamar Jackson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T11:24+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Falcons vs. Ravens: How to watch Bijan Robinson vs. Derrick Henry on 'SNF'",
+     "quote": "Tyler Huntley steps in for an injured Lamar Jackson",
+     "link": "https://www.cbssports.com/nfl/news/falcons-vs-ravens-how-to-watch-preview-prediction-odds-snf/",
      "player": "Lamar Jackson",
      "signal": "injured_reserve"
     }
@@ -9605,6 +13312,26 @@
      "title": "Seahawks injury report; DT Leonard Williams good to go for NFL Week 5 - Yahoo Sports",
      "quote": "DT Leonard Williams good to go for NFL Week 5",
      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQaHRXRzJHRXVzWnRaYWdBLUpHUDlDRFdIa1JBbEdka09RSlVOZ2xUX0hlNGp1NG4tY2dFSGtPVm1ha3ZwODI5dzVqNVR4YXhoUy1HeUp6LXo3dl9OUDBudmwwY0ZVX2dUM2hpZVB3bkRveEJDclpwckNOakcyZjVHTTF4eDhlTS0tcFE?oc=5",
+     "player": "Leonard Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Seahawks DT Leonard Williams has no injury designation",
+     "quote": "has no injury designation",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/seahawks-dt-leonard-williams-has-no-injury-designation",
+     "player": "Leonard Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-10T01:24+00:00",
+     "source": "google_injury",
+     "outlet": "Seahawks Wire",
+     "title": "Seahawks injury report; DT Leonard Williams good to go for NFL Week 5 - Seahawks Wire",
+     "quote": "good to go for NFL Week 5",
+     "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPV2ZaeXRBcjlFWjZobEx4ZFd1d2tLUFhxT2ZfYkZBZVNtckFwdzNyd3VFT2ZDbW5CcFhsM1ZHWU1DSi1kVFg4RnNCcXViN0lfNXNRaVpYbklEb3AwaThvT3VmMTRKTmdMMk0tcXFZeWZ5ckR4dDRhTzBGTkxzNVJfNVE3ZlJUUVR3bDFHMkJxUElXQllNQ2xGRG9ZdW9WNGtlMV95ekhFdWZhQWt3bWRWVjhwQWc5cVhhOWx2M1JZdVMxa2Z2YVgySndlV0dqeGp2MDFkaS16QndRcmtO?oc=5",
      "player": "Leonard Williams",
      "signal": "expected_to_play"
     }
@@ -9852,6 +13579,26 @@
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/chargers-placing-rashawn-slater-on-ir-after-ankle-procedure",
      "player": "Rashawn Slater",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T15:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Rashawn Slater expected to be placed on injured reserve",
+     "quote": "expected to be placed on injured reserve",
+     "link": "https://sports.yahoo.com/articles/rashawn-slater-expected-placed-injured-145839039.html",
+     "player": "Rashawn Slater",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T01:24+00:00",
+     "source": "google_context",
+     "outlet": "Sports Illustrated",
+     "title": "What is State of Chargers' Offensive Line Post Joe Alt and Rashawn Slater Injury News? - Sports Illustrated",
+     "quote": "Joe Alt and Rashawn Slater Injury News",
+     "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQY21VcndvQ3pRbndBU3Fwc2dqRG1SWmlxZHFacExCNWM2ZV9wdEJPU0VnV3VYVjVyb05ObDM0aWlRVkJ2cFpLcUgzNHlneUV0R0FSRnY4OW5YRlF0TlZOa0d1UzN6N1kzMThBNDUwRmVDdlc5SHdfelRxZTVpRnBzUFl2UmUtajlkN3BPNTV1UkVraGhhNWI0SjFIb25SbDdKaDF3?oc=5",
+     "player": "Rashawn Slater",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -9875,6 +13622,16 @@
      "title": "Seahawks escape Chargers 30-23",
      "quote": "lost right tackle Joe Alt (neck)",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/seahawks-escape-chargers-30-23",
+     "player": "Joe Alt",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-11T01:24+00:00",
+     "source": "google_context",
+     "outlet": "Sports Illustrated",
+     "title": "What is State of Chargers' Offensive Line Post Joe Alt and Rashawn Slater Injury News? - Sports Illustrated",
+     "quote": "Joe Alt and Rashawn Slater Injury News",
+     "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQY21VcndvQ3pRbndBU3Fwc2dqRG1SWmlxZHFacExCNWM2ZV9wdEJPU0VnV3VYVjVyb05ObDM0aWlRVkJ2cFpLcUgzNHlneUV0R0FSRnY4OW5YRlF0TlZOa0d1UzN6N1kzMThBNDUwRmVDdlc5SHdfelRxZTVpRnBzUFl2UmUtajlkN3BPNTV1UkVraGhhNWI0SjFIb25SbDdKaDF3?oc=5",
      "player": "Joe Alt",
      "signal": "injured_reserve"
     }
@@ -10025,6 +13782,26 @@
      "title": "Denver Broncos place WR Pat Bryant on short-term IR #BroncosCountry milehighsports.com/denver-bronc...",
      "quote": "place WR Pat Bryant on short-term IR",
      "link": "https://bsky.app/profile/codyroarknfl.bsky.social/post/3mxhqfsnqd22o",
+     "player": "Pat Bryant",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Broncos promote Lil\u2019Jordan Humphrey; sign safety to practice squad",
+     "quote": "Denver Broncos moved wide receiver Pat Bryant to short-term injured reserve",
+     "link": "https://sports.yahoo.com/articles/broncos-promote-lil-jordan-humphrey-230000722.html",
+     "player": "Pat Bryant",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Denver Broncos",
+     "title": "Broncos promote WR Lil\u2019Jordan Humphrey to active roster, place WR Pat Bryant on IR - Denver Broncos",
+     "quote": "place WR Pat Bryant on IR",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQSGxjMGN1bWV6RElydXQzeDlOaGZFY1pZMVo2ZmJ3Y0lKZlJaSUJ4akh3RkZ2V1NhbVJwSWVtakFzVmQwU01BdVp1dVVycnpPYl9qNkpuMWpnWkY3VHlldndaSmFDdWwxSi1sS1B1eV84REl4aU9ydDE2S1hndkpKSEEtQWpVS0NWQ3BJV2ZTRlF0NmxXUm5oNTdRT01pM2tLYVRNMnd1TTB3dEtEczNBWEdtNlp5LUk?oc=5",
      "player": "Pat Bryant",
      "signal": "injured_reserve"
     }
@@ -10194,6 +13971,16 @@
      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNaVJQTjN1eVNDVlh1QWgzdzZqSzgwSEtGcGRFLUhtbjZRdFpFMUI2NzlmdHA1VVdIMFhIY3JSb01rWWtQWV9TVXZaLTJEMmNEcE51cHVzVlMtM1VDRUxnUUt0X2JkLW1tTzZrQ0twOHRURWhKYzU0T1ZabEkwemJ0OQ?oc=5",
      "player": "Joe Alt",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T23:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chargers Injury Report: Quentin Johnston, Derwin Hames OUT vs. Broncos",
+     "quote": "The Chargers will be without Joe Alt, Derwin James, and Quentin Johnston this week",
+     "link": "https://sports.yahoo.com/articles/chargers-injury-report-quentin-johnston-223916904.html",
+     "player": "Joe Alt",
+     "signal": "out"
     }
    ]
   },
@@ -10237,6 +14024,26 @@
      "title": "Injury Report: Denver Broncos rule PS2, Riley Moss out vs. Chargers milehighsports.com/injury-repor...",
      "quote": "Denver Broncos rule PS2, Riley Moss out vs. Chargers",
      "link": "https://bsky.app/profile/codyroarknfl.bsky.social/post/3mxhv2d5st22o",
+     "player": "Riley Moss",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-09T22:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Broncos vs. Chargers injury report: Riley Moss ruled out",
+     "quote": "Riley Moss ruled out",
+     "link": "https://sports.yahoo.com/articles/broncos-vs-chargers-injury-report-215407673.html",
+     "player": "Riley Moss",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-10T09:24+00:00",
+     "source": "team_sites_2",
+     "outlet": "Denver Broncos",
+     "title": "Injury Report: CBs Pat Surtain II, Riley Moss ruled out for Broncos' Week 5 game vs. Chargers - Denver Broncos",
+     "quote": "CBs Pat Surtain II, Riley Moss ruled out for Broncos' Week 5 game",
+     "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOS0F6dVJoSnI3NEYwc1hURnd3Wm93cTdtSlBfUDY0bEh5MUxlUEM2b1BrX1VnTzVndGl0dnBXZmdKaG0xT2JHZUR0dlktSzRlRGJpTGlrZm16SWt3ZXEycjlVVjEzM0diM3p1WXZMTXhORnFZX1RoYlFwUHVHUUc4SDlicmRzaEpaYy00eWhuT0kweVZtTm02ZVcya01JV1hSbjc5T1ZqaUt0MEY5N2Z3bHRLOTRaTm1aUGJzNGx0ckRJdk0zSmVVRnV0Zl9GM1ZvMFVv?oc=5",
      "player": "Riley Moss",
      "signal": "out"
     }
@@ -11484,7 +15291,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 121.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11828,7 +15638,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 122.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12296,6 +16109,46 @@
      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNRWhIa081VVhGNDVyWG52bWYtSlkyZmRGOGhlYnJxUkVQdDVfUVR6OFNHR3g1enFvS1RHRGhQVGZhSUdkRmE1Vm9qb1B4QkNxQVRwMlVnaW9MSzVyMVE5WFhGalB4WEVodHRpdTlRM0Z4TE1QTS1jMlBjN2lYQmtSbHdvWkxGVEg4V2pGTzdaSkpIWmhPX0JnaFlFcndLTWc2WWpObnZSTnItUjREQWVoYmZaWkZqTTJRcmZJTmthZ09qMllY?oc=5",
      "player": "Caleb Williams",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "google_injury",
+     "outlet": "Sportsnet.ca",
+     "title": "Bears QB Caleb Williams misses third straight game with hamstring injury - Sportsnet.ca",
+     "quote": "Bears QB Caleb Williams misses third straight game with hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQMVVSYXowTERqTkl4ZThBUndUVjBkdmxReWhuYXZkbTJpTVRpVW80dTlINDdUVWpPN05ZZzBkVE1JbW1sbjFQekE3UlVFVnhkTm5ucWpqQlcyLThSejJiZEdaajVaYWRYeHk1M1U3MFV6cXhoUW0wTzV3UXRrWWwwM2dHMWRqOGx6Q1V5dGN6S2tTT0NjTldNMlhhRmhIR0JULW85U0MwbmFGVTZKVGpz?oc=5",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Packers Week 5 Inactives: Kevin Zeitler to make his debut",
+     "quote": "Caleb Williams is inactive for Chicago, as expected",
+     "link": "https://sports.yahoo.com/articles/packers-week-5-inactives-kevin-160713268.html",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Caleb Williams worked out on the field at Lambeau about 3 hours prior to kickoff, but he is inactive and not expected to play against the Pa",
+     "quote": "he is inactive and not expected to play against the Packers",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mxmeeks6yc2q",
+     "player": "Caleb Williams",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-11T16:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Caleb Williams officially inactive for Bears, Tyson Bagent set to start against Packers",
+     "quote": "Caleb Williams officially inactive for Bears",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/caleb-williams-officially-inactive-for-bears-tyson-bagent-set-to-start-against-packers",
+     "player": "Caleb Williams",
+     "signal": "out"
     }
    ]
   },
@@ -12309,7 +16162,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 122.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12477,7 +16333,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 122.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18949,12 +22808,12 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "17 of 25 audited starting-QB signals so far",
-   "precision 65% (needs >= 95%)"
+   "18 of 25 audited starting-QB signals so far",
+   "precision 67% (needs >= 95%)"
   ],
-  "n": 17,
-  "correct": 11,
-  "precision": 0.6471,
+  "n": 18,
+  "correct": 12,
+  "precision": 0.6667,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
