@@ -100,6 +100,10 @@ section{display:grid;gap:14px}
 .betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
 .track{display:grid;gap:10px;margin-top:8px}
 .track h3{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;display:flex;gap:10px;align-items:center}
+.track{scroll-margin-top:12px}
+a.tlink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted)}
+a.tlink:hover,a.tlink:focus-visible{color:var(--accent);border-color:var(--accent)}
+.track:target h3{color:var(--accent)}
 .keyrow{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;color:var(--muted)}
 .verdict{font:600 11px var(--mono);letter-spacing:.06em;padding:2px 7px;border-radius:2px;border:1px solid;white-space:nowrap}
 .verdict.bet{background:var(--good);border-color:var(--good);color:var(--surface)}
@@ -243,6 +247,7 @@ th{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color
 th:first-child,td:first-child{text-align:left}
 td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
 td.win{color:var(--good)}
+.stat .num.win{color:var(--good)}.stat .num.loss{color:var(--bad)}
 table.board td{vertical-align:top}
 table.board .bpick small, table.board .why{white-space:normal}
 @media (max-width:640px){
@@ -350,6 +355,7 @@ section[id]{scroll-margin-top:12px}
   <section id="mybets">
     <div class="sechead"><h2>My bets</h2><span class="pill">Real money · logged by you</span></div>
     <p class="edge" id="mybetsintro"></p>
+    <div class="strip" id="mybetsstrip"></div>
     <div class="scroll"><table class="sumtbl" id="mybetstbl"></table></div>
   </section>
 
@@ -1158,7 +1164,7 @@ const TRACK_INFO = {
     when:'Each futures snapshot (every 6 h and after QB news)',
     ev:'New 2026 test · weak fair price (no sharp book in the futures feed)',
     tip:'Futures carry 20-30% vig, so value only appears when one book is far longer than the rest. Graded after the Super Bowl; CLV vs the consensus before the playoffs.'},
-  kmk:{es:0.3, label:'Kalshi resting orders', what:'Simulated maker bids on Kalshi game winners (NFL and college) at Pinnacle fair minus 3¢; counted only when a trade prints below the bid. Paper only: Kalshi is legally contested in Arizona',
+  kmk:{es:0.3, label:'Kalshi resting orders', what:'Simulated maker bids on Kalshi NFL game winners at Pinnacle fair minus 3¢ (college orders are on the college page); counted only when a trade prints below the bid. Paper only: Kalshi is legally contested in Arizona',
     when:'Every hourly check; each bid lives about an hour',
     ev:'New 2026 test · no history',
     tip:'Research rank 2 (reports/NFL and college betting edges.md): posting orders costs a maker about 0.9% of stake vs 3.5% for a taker at 50¢, and exchanges do not limit winners. The risk is adverse selection (getting filled when the price is moving against you). Graded on closing line value vs Pinnacle (Shin) and results; 150 fills needed.'},
@@ -1207,8 +1213,18 @@ function trackWindow(key){
 (function(){
   const M=D.placed||{}, B=M.bets||[], usd=x=>x==null?'—':`${x<0?'−':''}$${Math.abs(x).toFixed(2)}`;
   const NEWU='https://github.com/hollingswood/nfl-win-probability/issues/new?template=placed_bet.yml';
-  document.getElementById('mybetsintro').innerHTML = `Bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet (board or Paper bets), fix the odds and stake you got, and submit; it shows up here after the next update. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a>.`+
-    (B.length?` <b>${M.graded||0} graded</b> · ${M.wins||0}–${M.losses||0} · profit <b>${usd(M.profit)}</b>${M.roi!=null?` (ROI ${sgn(M.roi)})`:''} · avg CLV ${M.avg_clv!=null?sgn(M.avg_clv):'—'} · your price vs the track's ${M.avg_price_vs_paper!=null?sgn(M.avg_price_vs_paper):'—'}${M.open_stake?` · ${usd(M.open_stake)} open`:''}`:'');
+  document.getElementById('mybetsintro').innerHTML = `Bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet (board or Paper bets), fix the odds and stake you got, and submit; it shows up here after the next update. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a>.`;
+  // totals across every bet you logged (CLV over graded bets that have a closing price)
+  const pushes=B.filter(b=>b.result==='push').length, nOpen=B.filter(b=>b.status==='open').length;
+  const staked=B.filter(b=>b.result==='win'||b.result==='loss').reduce((a,b)=>a+(b.stake||0),0);
+  const tile=(v,t,cls='')=>`<div class="stat"><b class="num ${cls}">${v}</b><span>${t}</span></div>`;
+  document.getElementById('mybetsstrip').innerHTML = B.length ? [
+    tile(`${M.wins||0}–${M.losses||0}${pushes?`–${pushes}`:''}`, `record · ${M.graded||0} graded${nOpen?`, ${nOpen} open`:''}`),
+    tile(usd(M.profit), `profit on ${usd(staked)} staked`, (M.profit||0)>0?'win':(M.profit||0)<0?'loss':''),
+    tile(M.roi!=null?sgn(M.roi):'—', 'ROI (profit ÷ amount staked)', (M.roi||0)>0?'win':(M.roi||0)<0?'loss':''),
+    tile(M.avg_clv!=null?sgn(M.avg_clv):'—', `avg closing line value${M.avg_price_vs_paper!=null?` · your price vs the track's ${sgn(M.avg_price_vs_paper)}`:''}`),
+    tile(M.open_stake?usd(M.open_stake):'$0.00', 'still riding (open bets)'),
+  ].join('') : '';
   const t=document.getElementById('mybetstbl');
   if(!B.length){ t.innerHTML='<tbody><tr><td style="text-align:left;font-family:var(--body)">No real bets logged yet.</td></tr></tbody>'; return; }
   const ST={open:'open',graded:'graded',check:'check result',manual:'manual',unmatched:'no matching paper bet'};
@@ -1232,15 +1248,16 @@ function trackWindow(key){
   const anyLive=tracks.some(([,B])=>B.mode==='live'), fmtP=x=>x>0?`+${x}`:`${x}`;
   document.getElementById('betsh').textContent = anyLive ? 'Bets' : 'Paper bets';
   const m=document.getElementById('betmode'); m.textContent = anyLive ? 'A track is live · validated' : 'Shadow mode · not recommendations'; if(anyLive) m.classList.add('live');
-  document.getElementById('betintro').innerHTML = `${anyLive?'Tracks marked live are validated; the rest are':'Everything here is'} paper only: logged and scored, not recommended. Each track bets under its own locked rules at the best price when it decides. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  document.getElementById('betintro').innerHTML = `${anyLive?'Tracks marked live are validated; the rest are':'Everything here is'} paper only: logged and scored, not recommended. Each track bets under its own locked rules at the best price when it decides. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit. <b>#</b> is the rank: tracks with graded bets first, by <b>score</b> = average closing-line value plus ROI, each shrunk toward 0 while the sample is small (+5% ≈ worth 5% per bet so far; a few lucky wins can't jump a track to the top), then tracks with nothing graded by their research evidence. Tap a track name to jump to its bets.${P.live_odds_available?'':' <b>Needs live odds (ODDS_API_KEY) to start.</b>'}`;
+  const ACT=new Set(tracks.filter(([,B])=>(B.open||[]).length || (B.record&&B.record.graded) || (B.recent_graded||[]).length).map(t=>t[2]));
   // summary: one row per track
   const pctS=x=>`${x>0?'+':''}${(x*100).toFixed(1)}%`;
   const rankTip='Tracks with graded bets come first, ranked by a live score: closing-line value plus profit, each shrunk toward zero while the sample is small (a few lucky wins cannot jump a track to the top). Tracks with nothing graded yet follow, ranked by the strength of their research evidence. The order updates every run.';
   document.getElementById('betsum').innerHTML = `<thead><tr><th title="${esc(rankTip)}">#</th><th>Track</th><th>What it bets</th><th>Next betting window</th><th>Open</th><th title="Graded bets / bets needed before the track is judged">Graded</th><th>W–L</th><th title="Average closing line value of graded bets">Avg CLV</th><th>Status</th><th>Evidence (holdout)</th></tr></thead><tbody>`+
     tracks.map(([,B,key,sc],i)=>{ const I=TRACK_INFO[key], r=B.record||{}, live=B.mode==='live', g=r.graded||0;
       const td=(l,html,cls='',tip='')=>`<td data-l="${l}"${cls?` class="${cls}"`:''}${tip?` title="${esc(tip)}"`:''}><div>${html}</div></td>`;
-      const rk = sc!=null ? `<b>${i+1}</b><small> live ${sc>=0?'+':'−'}${Math.abs(sc*100).toFixed(1)}</small>` : `<b>${i+1}</b><small> evidence</small>`;
-      return `<tr>${td('#',rk,'', sc!=null?`Live score ${(sc*100).toFixed(2)}: ranked on ${g} graded bet${g===1?'':'s'}`:`Nothing graded yet: ranked by research evidence (expected edge about ${I.es??0}% after discounting weak or after-the-fact findings)`)}${td('Track',`<b>${I.label}</b>`)}${td('What it bets',esc(I.what),'wr')}${td('Next window',trackWindow(key),'wr nw')}`+
+      const rk = sc!=null ? `<b>${i+1}</b><small> score ${sc>=0?'+':'−'}${Math.abs(sc*100).toFixed(1)}%</small>` : `<b>${i+1}</b><small> by evidence</small>`;
+      return `<tr>${td('#',rk,'', sc!=null?`Score ${(sc*100).toFixed(2)}%: closing-line value plus ROI on ${g} graded bet${g===1?'':'s'}, each shrunk toward 0 while the sample is small`:`Nothing graded yet: ranked by research evidence (expected edge about ${I.es??0}% after discounting weak or after-the-fact findings)`)}${td('Track',ACT.has(key)?`<a class="tlink" href="#trk-${key}" title="Jump to this track's bets"><b>${I.label}</b></a>`:`<b>${I.label}</b>`)}${td('What it bets',esc(I.what),'wr')}${td('Next window',trackWindow(key),'wr nw')}`+
         `${td('Open',(B.open||[]).length)}${td('Graded',`${g}<small> / ${r.min_bets??'—'}</small>`)}${td('W–L',g?`${r.wins}–${r.losses}`:'—')}${td('Avg CLV',g&&r.avg_clv!=null?pctS(r.avg_clv):'—')}`+
         `${td('Status',`<span class="pill ${live?'live':''}" title="${live?'Validated: bets are recommendations':'Shadow: paper bets only, not recommendations'}">${live?'live':'shadow'}</span>`)}`+
         `${td('Evidence',esc(I.ev),`wr ev${I.top?' top':''}`,I.tip)}</tr>`; }).join('')+'</tbody>';
@@ -1270,11 +1287,12 @@ function trackWindow(key){
       r.test==='roi' ? [`p = ${(r.roi_p_value??1).toFixed(2)}`, `ROI test (results, not CLV) ${ck(chk.roi_positive_and_significant,'p < 0.05')}`] :
       [`${r.avg_clv>0?'+':''}${(r.avg_clv*100).toFixed(1)}%`, `${r.test?'Avg. CLV (info) · cover-rate test':'Avg. closing line value'} ${ck(chk.clv_positive_and_significant, r.graded>1?`p = ${r.clv_p_value.toFixed(2)}`:'')}`]]
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
+    const gBadge=b=>mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th><th></th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'')}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${gBadge(b)}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
-      gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag" title="Placed under earlier rules; not counted toward v${B.rules_version}">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
+      gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${gBadge(b)}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag" title="Placed under earlier rules; not counted toward v${B.rules_version}">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';
     const flagged=new Set();
     for (const b of open) { if(b.player){ if(flagged.has(b.game_id)) continue; flagged.add(b.game_id); }
       const el=document.querySelector(`[data-gid="${b.game_id}"] .gmeta`);
@@ -1285,7 +1303,7 @@ function trackWindow(key){
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">${mlT?'Performance by moneyline grade appears here once graded paper bets carry one.':tgT?'Performance by totals grade appears here once graded paper bets carry one.':'Performance by grade appears here once paper bets are graded.'}</td></tr></tbody>`;
     const PV=B.prior_versions||[];
     const prior = PV.length ? `<p class="g2note">${PV.map(x=>`<b>Earlier rules v${x.version}:</b> ${x.graded} graded (${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}, ${x.profit_units>0?'+':x.profit_units<0?'−':''}${Math.abs(x.profit_units).toFixed(2)} units${x.avg_clv!=null?`, avg CLV ${sgn(x.avg_clv)}`:''})${x.open?`, ${x.open} still open`:''}`).join('; ')}. Shown below marked v${PV.map(x=>x.version).join('/')}, but not counted toward v${B.rules_version}'s record: the rules changed, so v${B.rules_version} starts its own count.</p>` : '';
-    return `<div class="track"><h3><span class="rkn" title="Rank in the Paper bets table">#${rkN}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div>${prior}<div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
+    return `<div class="track" id="trk-${key}"><h3><span class="rkn" title="Rank in the Paper bets table">#${rkN}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div>${prior}<div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}${gradeT?`<span class="subh">${mlT?'Paper record by moneyline grade':tgT?'Paper record by totals grade':'Paper record by grade'}</span><div class="scroll"><table>${gradeT}</table></div>`:''}</div>`;
   }).join('') : '';
 })();
 

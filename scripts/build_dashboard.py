@@ -299,9 +299,15 @@ def build_cfb(site: Path) -> Path | None:
     style = nfl.split("<style>", 1)[1].split("</style>", 1)[0]
     tpl = (ROOT / "scripts" / "cfb_template.html").read_text().replace("__STYLE__", style)
     data = json.loads(src.read_text())
+    try:   # college Kalshi resting orders (the maker test runs in the NFL step and covers both leagues)
+        km = (json.loads((ROOT / "output" / "predictions.json").read_text()).get("kalshi_maker_bets") or {}).get("cfb")
+        if km:
+            data["cfb_kalshi_maker_bets"] = km
+    except Exception as e:
+        print("cfb kalshi view skipped:", e)
     try:  # pre-filled "I placed it" forms for open college paper bets (scored on the NFL page's My bets)
         from nflpred.placed import log_url
-        data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets")
+        data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets", "cfb_kalshi_maker_bets")
                             for b in ((data.get(k) or {}).get("open") or []) if b.get("id")}
     except Exception as e:
         print("cfb log links skipped:", e)

@@ -455,3 +455,12 @@ def test_cfb_ml_counts_one_bet_per_game():
     assert next(b for b in one if b["event_id"] == "b")["side"] == "home"      # first logged counts, the later other-side bet does not
     rec = T.record(led, r)
     assert rec["graded"] == 2 and rec["wins"] == 2 and rec["by_rule"]["P2"]["graded"] == 1
+
+
+def test_kalshi_maker_record_by_league():
+    from nflpred import kalshi_maker as K
+    r = K.load_rules()
+    g = lambda sport, ticker, res: {"status": "graded", "rules_version": r["version"], "sport": sport, "ticker": ticker, "result": res,
+                                    "profit": 0.4 if res == "win" else -0.6, "cost": 0.6, "clv": 0.01}
+    led = [g("nfl", "KXNFLGAME-A", "win"), g("cfb", "KXNCAAFGAME-B", "loss"), {**g(None, "KXNCAAFGAME-C", "win"), "sport": None}]
+    assert K.record(led, r, "nfl")["graded"] == 1 and K.record(led, r, "cfb")["graded"] == 2 and K.record(led, r)["graded"] == 3

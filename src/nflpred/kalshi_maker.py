@@ -195,7 +195,13 @@ def result_of(bet: dict) -> bool | None:
         return None
 
 
-def record(ledger: list[dict], r: dict) -> dict:
+def sport_of(b: dict) -> str:
+    return b.get("sport") or ("cfb" if "NCAAF" in str(b.get("ticker", "")) else "nfl")
+
+
+def record(ledger: list[dict], r: dict, sport: str | None = None) -> dict:
+    """Track record; `sport` ('nfl' or 'cfb') limits it to one league (each page shows its own)."""
+    ledger = [b for b in ledger if sport is None or sport_of(b) == sport]
     gr = [b for b in ledger if b.get("status") == "graded" and b.get("rules_version") == r["version"]]
     pnl = [b["profit"] for b in gr]
     clv = [b["clv"] for b in gr if b.get("clv") is not None]
@@ -308,9 +314,14 @@ def process(now: datetime | None = None, getter=_get) -> dict:
                 "final": b.get("result", ""), "gameday": b["kickoff_utc"][:10], "opponent": b["away"] if b["side"] == "home" else b["home"],
                 "edge": round(b["fair"] - c, 4), "units": 1, "placed_at": b["posted_at"]}
     filled = [b for b in ledger if b.get("status") in ("filled", "graded")]
-    return {"track": "kalshi_maker", "mode": "shadow", "rules_version": r["version"], "report": rep,
-            "active": state["active"], "new": [], "open": [view(b) for b in filled if b["status"] == "filled"],
-            "recent_graded": [view(b) for b in filled if b["status"] == "graded"][-25:], "record": record(ledger, r)}
+
+    def league(sport: str) -> dict:   # each page shows only its own league's orders
+        fs = [b for b in filled if sport_of(b) == sport]
+        return {"active": [b for b in state["active"] if sport_of(b) == sport], "open": [view(b) for b in fs if b["status"] == "filled"],
+                "recent_graded": [view(b) for b in fs if b["status"] == "graded"][-25:], "record": record(ledger, r, sport)}
+    return {"track": "kalshi_maker", "mode": "shadow", "rules_version": r["version"], "report": rep, "new": [],
+            **league("nfl"), "cfb": {"track": "kalshi_maker", "mode": "shadow", "rules_version": r["version"], **league("cfb")},
+            "record_all": record(ledger, r)}
 
 
 if __name__ == "__main__":
