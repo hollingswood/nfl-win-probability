@@ -504,8 +504,10 @@ const pct = x => Math.round(x*100) + '%';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtDay = iso => new Date(iso+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 
+const fmtAZ = iso => new Date(iso).toLocaleString('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+// odds, paper bets and news refresh hourly (and every 15 min for QB news); the model itself reruns on the scheduled full runs
 document.getElementById('stamp').textContent =
-  `${P.season} season · updated ${new Date(P.generated_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}`;
+  `${P.season} season · odds and bets updated ${fmtAZ(P.odds_checked_at||P.generated_at)} AZ · model run ${fmtAZ(P.generated_at)}`;
 
 const lg = B.overall.margin, vg = B.overall.vegas, sm = P.season_to_date.model, sv = P.season_to_date.vegas;
 document.getElementById('strip').innerHTML = [
@@ -1340,7 +1342,7 @@ function trackWindow(key){
   const games = P.upcoming.filter(g => { const lo=(g.context||{}).live_odds; return lo && !started(g,lo); });
   const GM = Object.fromEntries(games.map(g=>[g.game_id,g]));
   const gLabel = g => `${g.away_team} @ ${g.home_team} · ${fmtDay(g.gameday)}`;
-  $('pcasof').textContent = new Date(P.generated_at).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  $('pcasof').textContent = new Date(P.odds_checked_at||P.generated_at).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' AZ';
 
   // spread / total numbers posted at your books: per number, the books' own median no-vig and best prices
   function lineOpts(g, mkt){
