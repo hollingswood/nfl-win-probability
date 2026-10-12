@@ -96,6 +96,11 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   scripts/extra_features.py). ADOPTED from that batch: coming off overtime (ot_diff).
   Also tried 2026-09-30 (README "Research round 2"): Wong teasers, line-movement model, QB-news timing,
   totals/wind (recorded-wind version leaks), Sunday-night openers, state-space/Kalman ratings.
+  Also tried 2026-10-02 (output/research/advanced_metrics.md, matchups_refs.md): havoc (−0.0006 both periods, below bar),
+  PROE/pace, early/late downs, drives, red zone, OL rushing, luck, 4th-down aggressiveness, pressure rate (participation
+  2016+), sacks/hits, clean-vs-pressured EPA, FTN blitz rate. And 2026-10-12 round 4 (output/research/round4/new_metrics.md,
+  pre-registered): team and starting-QB CPOE (EPA+CPOE composite), FTN charting quality (INT-worthy, catchable, drops,
+  QB-fault sacks), fading teams off a bye (arXiv 2408.10867), college havoc (CFBD stats/game/havoc) — all fail.
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist

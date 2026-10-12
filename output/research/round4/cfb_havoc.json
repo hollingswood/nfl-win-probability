@@ -1,0 +1,51 @@
+{
+ "prereg": "output/research/round4/cfb_havoc_prereg.json",
+ "havoc_games": 6677,
+ "persistence_corr": 0.233,
+ "model": {
+  "baseline": {
+   "dev_2021_22": {
+    "mae": 12.982,
+    "log_loss": 0.5646,
+    "n": 1546
+   },
+   "hold_2023_25": {
+    "mae": 12.475,
+    "log_loss": 0.538,
+    "n": 2398
+   }
+  },
+  "with_havoc": {
+   "dev_2021_22": {
+    "mae": 12.959,
+    "log_loss": 0.564,
+    "n": 1546
+   },
+   "hold_2023_25": {
+    "mae": 12.484,
+    "log_loss": 0.5382,
+    "n": 2398
+   },
+   "d_mae_dev": -0.023,
+   "d_mae_hold": 0.009,
+   "adopt": false
+  }
+ },
+ "market": {
+  "dev_2020_22": {
+   "b": 0.0579838869859093,
+   "se": 0.355327524435401,
+   "t": 0.16318433838764113,
+   "n": 2080
+  },
+  "hold_2023_25": {
+   "b": 0.21454657202572508,
+   "se": 0.3039867402052729,
+   "t": 0.7057760870781679,
+   "n": 2398
+  },
+  "tested_sign": 1,
+  "holdout_p_one_sided": 0.2402,
+  "pass": false
+ }
+}
