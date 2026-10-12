@@ -103,6 +103,35 @@ def pull_passing(years: list[int], key: str) -> dict:
     return {"passing_weeks_saved": saved, "calls": CALLS["n"]}
 
 
+def pull_havoc(years: list[int], key: str) -> dict:
+    """Per-game havoc (research, round 4): CFBD stats/game/havoc per season (one call each); if that endpoint is not
+    available, per-week team box scores (games/teams: tackles for loss, sacks, interceptions, passes deflected)."""
+    RAW.mkdir(parents=True, exist_ok=True)
+    out = {"havoc_files": 0, "teambox_files": 0}
+    for y in years:
+        for st in ("regular", "postseason"):
+            p = RAW / f"stats_game_havoc_{y}_{st}.json.gz"
+            if p.exists():
+                continue
+            data = get("stats/game/havoc", {"year": y, "seasonType": st}, key)
+            if data:
+                with gzip.open(p, "wt") as f:
+                    json.dump(data, f)
+                out["havoc_files"] += 1
+                continue
+            for wk in (range(1, 17) if st == "regular" else range(1, 2)):
+                q = RAW / f"games_teams_{y}_{st}_{wk}.json.gz"
+                if q.exists():
+                    continue
+                d2 = get("games/teams", {"year": y, "week": wk, "seasonType": st}, key)
+                if d2:
+                    with gzip.open(q, "wt") as f:
+                        json.dump(d2, f)
+                    out["teambox_files"] += 1
+    out["calls"] = CALLS["n"]
+    return out
+
+
 def pull_current(season: int, key: str, now=None, roster_max_age_days: int = 7) -> dict:
     """In-season extras for the news roster check (cfbpred.roster): the CFBD roster (weekly) and passing stats for
     every finished regular-season week not saved yet (one call each)."""
@@ -142,6 +171,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--years", default="2014-2026")
     ap.add_argument("--passing", action="store_true", help="also pull per-game passing stats (QB starters)")
+    ap.add_argument("--havoc", action="store_true", help="also pull per-game havoc (research)")
     a = ap.parse_args(argv)
     key = os.environ.get("CFBD_API_KEY")
     if not key:
@@ -154,6 +184,8 @@ def main(argv=None):
     res = pull(years, key)
     if a.passing:
         res.update(pull_passing([y for y in years if y >= 2021], key))
+    if a.havoc:
+        res.update(pull_havoc(years, key))
     print(json.dumps(res))
     summ = os.environ.get("GITHUB_STEP_SUMMARY")
     if summ:

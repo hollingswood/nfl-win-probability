@@ -12,6 +12,10 @@ on:
         description: "Also pull per-game QB passing stats (2021+)"
         type: boolean
         default: false
+      havoc:
+        description: "Also pull per-game havoc stats (research)"
+        type: boolean
+        default: false
 
 concurrency:
   group: cfb-data
@@ -37,7 +41,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Download
-        run: python -m cfbpred.fetch --years "${{ inputs.years }}" ${{ inputs.passing && '--passing' || '' }}
+        run: python -m cfbpred.fetch --years "${{ inputs.years }}" ${{ inputs.passing && '--passing' || '' }} ${{ inputs.havoc && '--havoc' || '' }}
         env:
           PYTHONPATH: src
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}

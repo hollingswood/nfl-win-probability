@@ -1,0 +1,15 @@
+{
+ "study": "round4_cfb_havoc",
+ "frozen_on": "2026-10-12",
+ "written_before_the_data_was_downloaded": true,
+ "question": "Does havoc (tackles for loss incl. sacks + interceptions + passes defensed + forced fumbles, per opponent play; Bill Connelly's definition) add to the college model or explain closing-line residuals? Popular in college betting previews (Action Network weekly 'havoc, success rate, explosiveness' columns) but never tested here.",
+ "data": "CFBD stats/game/havoc (or games/teams box scores as a fallback: TFL + INT + passes deflected, per opponent plays from stats/game/advanced), 2019-2025 FBS games",
+ "features": {
+  "havoc_d": "walk-forward decayed (half-life 6 games, prior games only, previous season carried with the same decay), shrunk toward the league rate with k=150 plays: (home defense havoc created - home offense havoc allowed) - (away defense created - away offense allowed)"
+ },
+ "tests": {
+  "model": "add havoc_d to the college margin model (cfbpred.pipeline MCOLS, fit only on earlier seasons); score margin MAE and win log loss vs the actual result; dev = 2021-2022 seasons, holdout = 2023-2025; adopt only if MAE improves by >= 0.05 pts in BOTH",
+  "market": "OLS of the closing-line residual (home margin + DraftKings/consensus closing home spread) on z(havoc_d), HC0 SE; dev 2020-22, holdout 2023-25; pass = holdout one-sided p < 0.05 with the dev sign"
+ },
+ "no_tuning": "half-life, shrinkage and seasons are fixed here; results are reported whatever they are"
+}
