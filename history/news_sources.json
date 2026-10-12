@@ -1,49 +1,49 @@
 {
- "generated_at": "2026-10-11T23:46+00:00",
+ "generated_at": "2026-10-12T00:24+00:00",
  "rule": "weight = (correct + 4) / (judged + 5); misreads are the AI's fault and not counted; muted if >= 10 judged and weight < 0.6",
  "sources": {
   "pft": {
-   "n": 98,
-   "correct": 89,
+   "n": 102,
+   "correct": 93,
    "misread": 2,
    "stale_or_hedged": 5,
    "source_wrong": 2,
    "unclassified": 0,
-   "accuracy": 0.927,
-   "weight": 0.921,
+   "accuracy": 0.93,
+   "weight": 0.924,
    "muted": false
   },
   "yahoo": {
-   "n": 86,
-   "correct": 77,
+   "n": 87,
+   "correct": 78,
    "misread": 1,
    "stale_or_hedged": 6,
    "source_wrong": 2,
    "unclassified": 0,
-   "accuracy": 0.906,
-   "weight": 0.9,
+   "accuracy": 0.907,
+   "weight": 0.901,
    "muted": false
   },
   "Yahoo Sports": {
-   "n": 62,
-   "correct": 50,
+   "n": 67,
+   "correct": 55,
    "misread": 0,
    "stale_or_hedged": 6,
    "source_wrong": 6,
    "unclassified": 0,
-   "accuracy": 0.806,
-   "weight": 0.806,
+   "accuracy": 0.821,
+   "weight": 0.819,
    "muted": false
   },
   "SB Nation": {
-   "n": 21,
-   "correct": 18,
+   "n": 25,
+   "correct": 22,
    "misread": 1,
    "stale_or_hedged": 1,
    "source_wrong": 1,
    "unclassified": 0,
-   "accuracy": 0.9,
-   "weight": 0.88,
+   "accuracy": 0.917,
+   "weight": 0.897,
    "muted": false
   },
   "cbs": {
@@ -90,6 +90,17 @@
    "weight": 0.824,
    "muted": false
   },
+  "ProFootball Talk on NBC Sports": {
+   "n": 11,
+   "correct": 9,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 1,
+   "unclassified": 0,
+   "accuracy": 0.818,
+   "weight": 0.812,
+   "muted": false
+  },
   "Sports Illustrated": {
    "n": 10,
    "correct": 7,
@@ -101,17 +112,6 @@
    "weight": 0.733,
    "muted": false
   },
-  "ProFootball Talk on NBC Sports": {
-   "n": 9,
-   "correct": 7,
-   "misread": 0,
-   "stale_or_hedged": 1,
-   "source_wrong": 1,
-   "unclassified": 0,
-   "accuracy": 0.778,
-   "weight": 0.786,
-   "muted": false
-  },
   "Tampa Bay Buccaneers": {
    "n": 7,
    "correct": 6,
@@ -121,6 +121,17 @@
    "unclassified": 0,
    "accuracy": 0.857,
    "weight": 0.833,
+   "muted": false
+  },
+  "FOX Sports": {
+   "n": 7,
+   "correct": 4,
+   "misread": 0,
+   "stale_or_hedged": 1,
+   "source_wrong": 2,
+   "unclassified": 0,
+   "accuracy": 0.571,
+   "weight": 0.667,
    "muted": false
   },
   "Sportsnet.ca": {
@@ -145,15 +156,26 @@
    "weight": 0.667,
    "muted": false
   },
-  "FOX Sports": {
+  "RotoBaller": {
    "n": 6,
-   "correct": 3,
+   "correct": 5,
+   "misread": 1,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.9,
+   "muted": false
+  },
+  "bsky:darrenurban.bsky.social": {
+   "n": 6,
+   "correct": 5,
    "misread": 0,
    "stale_or_hedged": 1,
-   "source_wrong": 2,
+   "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 0.5,
-   "weight": 0.636,
+   "accuracy": 0.833,
+   "weight": 0.818,
    "muted": false
   },
   "The New York Times": {
@@ -189,6 +211,17 @@
    "weight": 0.7,
    "muted": false
   },
+  "bsky:mattmaiocco.bsky.social": {
+   "n": 5,
+   "correct": 4,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 1,
+   "unclassified": 0,
+   "accuracy": 0.8,
+   "weight": 0.8,
+   "muted": false
+  },
   "USA TODAY Sports": {
    "n": 5,
    "correct": 5,
@@ -200,15 +233,26 @@
    "weight": 0.9,
    "muted": false
   },
-  "RotoBaller": {
+  "bsky:zacstevens.bsky.social": {
    "n": 5,
-   "correct": 4,
-   "misread": 1,
+   "correct": 3,
+   "misread": 0,
    "stale_or_hedged": 0,
+   "source_wrong": 2,
+   "unclassified": 0,
+   "accuracy": 0.6,
+   "weight": 0.7,
+   "muted": false
+  },
+  "FantasyPros": {
+   "n": 5,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 2,
    "source_wrong": 0,
    "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.889,
+   "accuracy": 0.6,
+   "weight": 0.7,
    "muted": false
   },
   "New England Patriots": {
@@ -266,15 +310,26 @@
    "weight": 0.778,
    "muted": false
   },
-  "FantasyPros": {
+  "San Francisco 49ers": {
    "n": 4,
    "correct": 3,
    "misread": 0,
-   "stale_or_hedged": 1,
-   "source_wrong": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 1,
    "unclassified": 0,
    "accuracy": 0.75,
    "weight": 0.778,
+   "muted": false
+  },
+  "RotoWire": {
+   "n": 3,
+   "correct": 3,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.875,
    "muted": false
   },
   "SNY": {
@@ -286,6 +341,17 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.875,
+   "muted": false
+  },
+  "Denver Broncos": {
+   "n": 3,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 2,
+   "unclassified": 0,
+   "accuracy": 0.333,
+   "weight": 0.625,
    "muted": false
   },
   "NY Post Sports": {
@@ -352,17 +418,6 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.875,
-   "muted": false
-  },
-  "RotoWire": {
-   "n": 2,
-   "correct": 2,
-   "misread": 0,
-   "stale_or_hedged": 0,
-   "source_wrong": 0,
-   "unclassified": 0,
-   "accuracy": 1.0,
-   "weight": 0.857,
    "muted": false
   },
   "Colts.com": {
@@ -453,6 +508,17 @@
    "weight": 0.714,
    "muted": false
   },
+  "Seattle Seahawks": {
+   "n": 2,
+   "correct": 2,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.857,
+   "muted": false
+  },
   "bsky:seanhammond.bsky.social": {
    "n": 2,
    "correct": 2,
@@ -528,6 +594,17 @@
    "unclassified": 0,
    "accuracy": 1.0,
    "weight": 0.857,
+   "muted": false
+  },
+  "49ers Webzone": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
    "muted": false
   },
   "bsky:ashleybastock42.bsky.social": {
@@ -673,7 +750,29 @@
    "weight": 0.667,
    "muted": false
   },
+  "Arizona Cardinals": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
   "bsky:antwanstaley.bsky.social": {
+   "n": 1,
+   "correct": 1,
+   "misread": 0,
+   "stale_or_hedged": 0,
+   "source_wrong": 0,
+   "unclassified": 0,
+   "accuracy": 1.0,
+   "weight": 0.833,
+   "muted": false
+  },
+  "Seahawks Wire": {
    "n": 1,
    "correct": 1,
    "misread": 0,
