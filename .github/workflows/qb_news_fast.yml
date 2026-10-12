@@ -1,0 +1,58 @@
+name: QB news check (15 min)
+
+# QB-news speed paper track (qb_news_rules.json): read new injury/QB news every 15 minutes and, when a strict
+# starting-QB call qualifies, fetch fresh odds once and log a paper bet before the spread moves half a point.
+# No other track runs here. The hourly watch runs the same check too.
+on:
+  schedule:
+    - cron: "8,38,53 * * * *"   # with the hourly watch at :23 -> about every 15 minutes
+  workflow_dispatch:
+
+concurrency:
+  group: predictions
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+  PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+  PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+jobs:
+  qbnews:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: AI news reader
+        continue-on-error: true
+        run: python -m nflpred.news_llm
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: QB-news paper track (fresh odds only when a signal qualifies)
+        id: qb
+        run: python -m nflpred.qb_news
+        env:
+          PYTHONPATH: src
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Commit
+        id: commit
+        run: |
+          git config user.name "nfl-bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add history output/predictions.json
+          if git commit -m "QB news check $(date -u +%FT%H%M)"; then
+            for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+          fi

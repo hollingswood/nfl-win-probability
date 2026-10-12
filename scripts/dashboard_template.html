@@ -561,6 +561,7 @@ const TRACKS = {
   aplus_tot:{name:'A+ totals · every totals-grade A+ offer', key:'aplus_totals_bets', short:'A+ totals'},
   pre:{name:'Preseason prior · weeks 2-8, market 4+ pts off the preseason number', key:'preseason_prior_bets', short:'Preseason'},
   tue:{name:'Tuesday move · predicted line move, top 10%', key:'tuesday_move_bets', short:'Tue move'},
+  qbn:{name:'QB news · strict QB calls before the line moves', key:'qb_news_bets', short:'QB news'},
   exch:{name:'Exchange value · Kalshi / Robinhood / Polymarket / ProphetX after fees vs Pinnacle', key:'exchange_value_bets', short:'Exchange'},
   kmk:{name:'Kalshi resting orders · simulated maker bids at Pinnacle fair − 3¢', key:'kalshi_maker_bets', short:'Kalshi maker'},
   fut:{name:'Futures line shopping · Super Bowl prices vs the all-book fair price', key:'futures_shop_bets', short:'Futures'},
@@ -573,7 +574,7 @@ const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
 const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', props_un:'Tue unders', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', fut:'Futures', pre:'Preseason', tue:'Tue move'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', props_un:'props_unders_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', props_un:'props_unders_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets', qbn:'qb_news_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
@@ -818,7 +819,9 @@ function aiNews(g){
   const rule = p.eligible ? 'promotion rule met' : `promotes to the model after ${p.min_n||25} QB signals at ≥${Math.round((p.min_precision||0.95)*100)}% (${p.n||0} so far)`;
   const S=(A.sources||[]).filter(x=>x.n>=3).slice(0,8);
   const srcT = S.length ? ` <b>By source</b> (right / judged; misreads by the AI don't count against a source): `+S.map(x=>`<span title="${x.correct} right, ${x.source_wrong} wrong as stated, ${x.stale_or_hedged} hedged/stale, ${x.misread} misread by the AI, ${x.unclassified} not yet classified · weight ${x.weight}${x.muted?' · MUTED (hidden)':''}">${esc(String(x.name).replace(/^bsky:/,'@').replace(/\.bsky\.social/,''))} ${x.accuracy==null?'—':Math.round(100*x.accuracy)+'%'}${x.muted?' (muted)':''}</span>`).join(' · ')+'.' : '';
-  el.innerHTML = `<b>AI news accuracy so far:</b> ${o.n?`${o.correct}/${o.n} correct${pct(o)}`:'no finished games yet'}; QB signals ${q.n?`${q.correct}/${q.n}`:'0 graded'}; ${esc(rule)}. ✓ verified = player is on that team's roster.${srcT}`;
+  const CX=Object.entries(A.context||{}).filter(([k,v])=>v.items>=3).sort((a,b)=>b[1].items-a[1].items).slice(0,8);
+  const cxT = CX.length ? ` <b>Team context news</b> (pre-registered audit: does the line move toward what the news implies after we see it, and does that side cover the close?): `+CX.map(([k,v])=>`<span title="${v.items} items · ${v.graded} graded vs the close · line moved ${v.avg_line_move_toward==null?'—':v.avg_line_move_toward+' pts'} toward the implied side (p ${v.move_p}) · needs 40 graded and 55%+ covers or 0.5+ pts of move to become a track">${esc(k.replace(/_/g,' '))} ${v.graded?`${Math.round(100*v.cover_rate_vs_close)}% covers`:'—'}, move ${v.avg_line_move_toward==null?'—':(v.avg_line_move_toward>0?'+':'')+v.avg_line_move_toward} (n ${v.items})${v.candidate?' · CANDIDATE':''}</span>`).join(' · ')+'.' : '';
+  el.innerHTML = `<b>AI news accuracy so far:</b> ${o.n?`${o.correct}/${o.n} correct${pct(o)}`:'no finished games yet'}; QB signals ${q.n?`${q.correct}/${q.n}`:'0 graded'}; ${esc(rule)}. ✓ verified = player is on that team's roster.${srcT}${cxT}`;
 })();
 const allRows=[];
 document.getElementById('g2games').innerHTML = `<b>Grade</b> on each box: moneyline and total grades predict closing-line value; spread grades are the original points scheme. Only <b>A+</b> has shown an edge. Hover a grade for the reason.`;
@@ -1157,6 +1160,10 @@ const TRACK_INFO = {
     when:'Tuesday 7:10am AZ run',
     ev:'+0.6 pts CLV · 62 bets 2023–25',
     tip:'Screen S3, Tuesday-only information (model margin without the Friday injury report; games with a starting-QB change skipped): 62 bets, line moved our way by +0.62 pts on average (p 0.0003; 57% our way, 23% against), 58% covers, ROI +11% ± 12%. Judged on closing line value in points.'},
+  qbn:{es:0.4, label:'QB news (speed)', what:'Strict AI starting-QB calls (certainty 0.9+, full name on the roster, accurate source, about the next game): bet the side the news favors at your books if the spread has not moved half a point yet',
+    when:'Every 15 min (news check) and hourly',
+    ev:'New 2026 test · weak evidence',
+    tip:'Pre-registered 2026-10-12 (qb_news_rules.json). News audit, 2026 weeks 1–6: spreads moved 0.58 pts on average in the 6 h after an AI QB signal vs 0.21 before, but QB calls were only 61% accurate and the move after negative calls averaged −0.08 pts. Judged on closing line value with closing prices; needs 40 bets.'},
   exch:{es:0.3, label:'Exchange value', what:'Kalshi, Robinhood, Polymarket US or ProphetX price that beats Pinnacle fair by 2%+ after fees, flat 1 unit',
     when:'Any hourly check, within 7 days of kickoff',
     ev:'New 2026 test · no history',
@@ -1282,7 +1289,7 @@ function trackWindow(key){
   const active=tracks.filter(([,B])=>(B.open||[]).length || (B.record&&B.record.graded) || (B.recent_graded||[]).length);
   document.getElementById('tracks').innerHTML = active.length ? `<span class="subh">Track details</span>`+active.map(([name,B,key,sc])=>{ const rkN=tracks.findIndex(t=>t[2]===key)+1;
     const mlT=key.startsWith('ml_')||key==='aplus_ml', tgT=key==='totals'||key==='totals_eu'||key==='aplus_tot';
-    const spread=key==='spread'||key==='night'||key==='aplus_sp'||key==='pre'||key==='tue', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
+    const spread=key==='spread'||key==='night'||key==='aplus_sp'||key==='pre'||key==='tue'||key==='qbn', live=B.mode==='live', r=B.record, open=B.open||[], gr=(B.recent_graded||[]).slice().reverse(), chk=r.checks||{};
     const stats=[[`${r.graded} / ${r.min_bets}`, ck(chk.enough_bets,'graded bets')],
       [`${r.wins}–${r.losses}`, `${r.profit_units>0?'+':''}${r.profit_units.toFixed(2)} units · ROI ${(r.roi*100).toFixed(1)}% ${ck(chk.roi_positive,'')}`],
       r.test==='roi' ? [`p = ${(r.roi_p_value??1).toFixed(2)}`, `ROI test (results, not CLV) ${ck(chk.roi_positive_and_significant,'p < 0.05')}`] :
@@ -1290,7 +1297,7 @@ function trackWindow(key){
       .map(([v,t])=>`<div class="stat"><b class="num">${v}</b><span>${t}</span></div>`).join('');
     const gBadge=b=>mlT?(b.grade_v2?g2Badge(b.grade_v2,b.predicted_clv)+' ':''):tgT?(b.totals_grade?tgBadge(b.totals_grade,b.predicted_clv)+' ':''):(b.grade?v1Badge(b.grade)+' ':'');
     const openT = open.length ? `<thead><tr><th>Game</th><th style="text-align:left">Bet</th><th>Price</th><th style="text-align:left">Book</th><th>Edge</th><th>Stake</th><th>Logged</th><th></th></tr></thead><tbody>`+
-      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${gBadge(b)}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${(b.edge*100).toFixed(1)}%</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
+      open.map(b=>`<tr><td>${fmtDay(b.gameday)}</td><td style="text-align:left">${gBadge(b)}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td style="text-align:left">${esc(b.book)}</td><td>${b.edge==null?'—':(b.edge*100).toFixed(1)+'%'}</td><td>${b.units}u</td><td>${new Date(b.placed_at).toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}</td><td>${logLink(b)}</td></tr>`).join('')+'</tbody>'
       : `<tbody><tr><td style="text-align:left;font-family:var(--body)">No open ${live?'bets':'paper bets'} right now.</td></tr></tbody>`;
     const grT = gr.length ? `<thead><tr><th>Wk</th><th style="text-align:left">Bet</th><th>Price</th><th>Final</th><th>Result</th><th>Units</th><th>CLV</th></tr></thead><tbody>`+
       gr.map(b=>`<tr><td>${b.week}</td><td style="text-align:left">${gBadge(b)}${betLabel(b,spread)}${b.rules_version!=null&&b.rules_version!==B.rules_version?` <small class="vtag" title="Placed under earlier rules; not counted toward v${B.rules_version}">v${b.rules_version}</small>`:''}</td><td>${fmtP(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv==null?'—':((b.clv>0?'+':'')+(b.clv*100).toFixed(1)+'%')}</td></tr>`).join('')+'</tbody>' : '';

@@ -402,6 +402,12 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         except Exception as e:
             result[key] = {"error": str(e)}
             print(f"{key}: failed:", e)
+    try:   # QB-news speed track (qb_news_rules.json): grades on full runs, bets from the latest snapshot
+        from . import qb_news
+        result["qb_news_bets"] = qb_news.process(result, df, ROOT / "history")
+    except Exception as e:
+        result["qb_news_bets"] = {"error": str(e)}
+        print("qb news bets: failed:", e)
     try:
         from . import exchanges
         result["exchange_value_bets"] = exchanges.process(result, df, ROOT / "history")
@@ -419,6 +425,11 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         print("news audit:", json.dumps(result["news_audit"]))
     except Exception as e:
         print("news audit failed:", e)
+    try:  # team-context news audit (context_rules.json v1; logging only)
+        from . import context_audit
+        context_audit.run(ROOT / "history")
+    except Exception as e:
+        print("context audit failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     write_alert(result)
@@ -628,7 +639,8 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
                     ("props_unders_bets", lambda p, g, h: props_unders.process(p, g, h, now=now, fetch=odds_lib.fetch_event_props)),
                     ("exchange_value_bets", lambda p, g, h: exchanges.process(p, g, h, now=now)),
                     ("preseason_prior_bets", lambda p, g, h: spread_tracks.process_preseason(p, g, h, now=now)),
-                    ("tuesday_move_bets", lambda p, g, h: spread_tracks.process_tuesday(p, g, h, now=now))):
+                    ("tuesday_move_bets", lambda p, g, h: spread_tracks.process_tuesday(p, g, h, now=now)),
+                    ("qb_news_bets", lambda p, g, h: __import__("nflpred.qb_news", fromlist=["process"]).process(p, g, h, now=now))):
         try:
             res = fn(pred, no_games, ROOT / "history")
             prev = pred.get(key) or {}

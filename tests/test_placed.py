@@ -487,3 +487,65 @@ def test_cfb_news_roster_check(tmp_path):
     assert R.verify("Tyler Brown", "Ohio State", 2026, idx)["team_verified"] is None
     assert R.verify("Nobody Here", "Iowa", 2026, idx) == {"roster": "not_found", "team_verified": None}
     assert R.verify(None, "Iowa", 2026, idx)["team_verified"] == "Iowa"                                         # team-level context
+
+
+def test_qb_news_track(tmp_path):
+    import gzip, json
+    import pandas as pd
+    from datetime import datetime, timezone
+    from nflpred import qb_news as Q
+    r = Q.load_rules()
+    now = datetime(2026, 10, 14, 18, 0, tzinfo=timezone.utc)
+    g = {"game_id": "2026_07_BUF_KC", "season": 2026, "week": 7, "gameday": "2026-10-18", "kickoff_utc": "2026-10-18T20:25:00+00:00",
+         "home_team": "KC", "away_team": "BUF", "home_qb": "Patrick Mahomes", "away_qb": "Josh Allen", "qb_status": {}}
+    sig = {"seen_at": "2026-10-14T17:30+00:00", "published": "2026-10-14T17:10+00:00", "player": "Patrick Mahomes", "team": "KC",
+           "team_verified": "KC", "verify": {"roster": "match", "roster_source": "sleeper"}, "signal": "out", "is_starting_qb_news": True,
+           "game_week_relevant": True, "certainty": 1.0, "source_weight": 0.93, "outlet": "PFT"}
+    assert Q.classify(sig, g, r)[0] == "away"                                                       # starter out: bet against KC
+    assert Q.classify({**sig, "player": "Mahomes"}, g, r)[0] is None                                # surname only
+    assert Q.classify({**sig, "certainty": 0.7}, g, r)[0] is None
+    assert Q.classify({**sig, "player": "Gardner Minshew", "signal": "will_start"}, g, r)[0] == "away"  # backup named starter
+    assert Q.classify({**sig, "signal": "expected_to_play"}, g, r)[0] is None                        # not listed: no bet
+    assert Q.classify({**sig, "signal": "expected_to_play"}, {**g, "qb_status": {"home": {"status": "Questionable"}}}, r)[0] == "home"
+
+    def ev(home_pt, book_price=-110):
+        bk = lambda key, pt, pr: {"key": key, "title": key, "markets": [{"key": "spreads", "outcomes": [
+            {"name": "Kansas City Chiefs", "point": pt, "price": pr}, {"name": "Buffalo Bills", "point": -pt, "price": pr}]}]}
+        return [{"home_team": "Kansas City Chiefs", "away_team": "Buffalo Bills",
+                 "bookmakers": [bk("fanduel", home_pt, book_price), bk("draftkings", home_pt, book_price), bk("betmgm", home_pt, -110)]}]
+    with gzip.open(tmp_path / "odds_2026-10-14T1623.json.gz", "wt") as f:
+        json.dump(ev(-3.0), f)
+    (tmp_path / "news_llm.jsonl").write_text(json.dumps(sig) + "\n")
+    sched = pd.DataFrame([{"home_team": "KC", "away_team": "LV", "gameday": "2026-10-11", "gametime": "13:00"}])
+    out = Q.process({"upcoming": [g]}, pd.DataFrame(columns=["game_id", "completed"]), tmp_path, now=now, fetch=lambda: ev(-2.8), schedule=sched)
+    assert len(out["new"]) == 1 and out["new"][0]["side"] == "away" and out["new"][0]["point"] == 2.8 and out["new"][0]["book"] in ("fanduel", "draftkings")
+    # the line already moved 1 point toward Buffalo: no bet
+    (tmp_path / r["ledger"]).unlink()
+    out = Q.process({"upcoming": [g]}, pd.DataFrame(columns=["game_id", "completed"]), tmp_path, now=now, fetch=lambda: ev(-2.0), schedule=sched)
+    assert out["new"] == [] and any("already moved" in c["reason"] for c in out["checks"])
+    # news published before the team's previous game ended does not count
+    (tmp_path / r["ledger"]).unlink(missing_ok=True)
+    old = dict(sig, published="2026-10-11T18:00+00:00")
+    (tmp_path / "news_llm.jsonl").write_text(json.dumps(old) + "\n")
+    out = Q.process({"upcoming": [g]}, pd.DataFrame(columns=["game_id", "completed"]), tmp_path, now=now, fetch=lambda: ev(-2.8), schedule=sched)
+    assert out["new"] == []
+
+
+def test_context_audit(tmp_path):
+    import gzip, json
+    import pandas as pd
+    from datetime import datetime, timezone
+    from nflpred import context_audit as CA
+    sched = pd.DataFrame([{"season": 2026, "game_id": "g1", "home_team": "KC", "away_team": "BUF", "gameday": "2026-10-18",
+                           "gametime": "16:25", "home_score": 20.0, "away_score": 27.0}])
+    item = {"seen_at": "2026-10-14T17:30+00:00", "published": "2026-10-14T17:00+00:00", "team": "KC", "category": "offensive_line_shuffle",
+            "direction": "hurts", "certainty": 0.9, "game_week_relevant": True, "summary": "two starters out"}
+    (tmp_path / "news_context.jsonl").write_text(json.dumps(item) + "\n" + json.dumps({**item, "seen_at": "2026-10-15T10:00+00:00"}) + "\n")
+    def snap(name, pt):
+        with gzip.open(tmp_path / name, "wt") as f:
+            json.dump([{"home_team": "Kansas City Chiefs", "away_team": "Buffalo Bills", "bookmakers": [{"key": "fanduel", "markets": [
+                {"key": "spreads", "outcomes": [{"name": "Kansas City Chiefs", "point": pt, "price": -110}]}]}]}], f)
+    snap("odds_2026-10-14T1623.json.gz", -3.0); snap("odds_2026-10-18T1923.json.gz", -1.5)
+    out = CA.run(tmp_path, sched, now=datetime(2026, 10, 20, tzinfo=timezone.utc))
+    c = out["categories"]["offensive_line_shuffle"]
+    assert out["items"] == 1 and c["avg_line_move_toward"] == 1.5 and c["graded"] == 1 and c["cover_rate_vs_close"] == 1.0  # BUF +1.5 won by 7

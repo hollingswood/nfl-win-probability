@@ -23,6 +23,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 MODEL = "claude-haiku-4-5"
+PROMPT_VERSION = 2   # 2 (2026-10-12): next-game-only statements, practice != returning, full names
 API_URL = "https://api.anthropic.com/v1/messages"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                     "Chrome/124.0 Safari/537.36", "Accept": "application/rss+xml, application/xml, text/xml, */*"}
@@ -73,6 +74,15 @@ Return ONLY a JSON object {"availability": [...], "context": [...]} (lists may b
 Examples of context: new offensive play-caller, coordinator fired, starter on a snap count / limited workload,
 illness going through the locker room, travel delay or relocated game, team expected to rest starters,
 contract holdout, kicker injured/released, multiple offensive-line starters changed.
+Rules (v2, 2026-10-12, from the news audit's wrong calls):
+- Only statements about the team's NEXT game. A description of a game already played or in progress ("started",
+  "was without", "benched in the third quarter") is not a signal for next week: skip it, or set
+  game_week_relevant=false if you report it.
+- "returning" means he will PLAY in the next game after missing time. "Returns to practice" / "designated to return"
+  is limited_practice or full_practice, never returning or expected_to_play.
+- player must be the FULL first and last name as the item gives it; if the item only gives a surname, skip it unless
+  the item makes the full name unambiguous.
+- is_starting_qb_news is true only for the team's starting quarterback or the player named to replace him.
 Skip items with neither (trade rumors, game recaps, fantasy advice without news). Never guess."""
 
 
@@ -205,7 +215,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                 idx = s.get("item")
                 src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
                 signals.append(roster_lib.attach({
-                    "seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
+                    "seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"), "prompt_version": PROMPT_VERSION,
                     "source": src.get("source"), "outlet": src.get("outlet"), "link": src.get("link"), "title": src.get("title"),
                     **{k: s.get(k) for k in ("player", "team", "position", "signal", "is_starting_qb_news",
                                              "game_week_relevant", "certainty", "quote")}}, roster))

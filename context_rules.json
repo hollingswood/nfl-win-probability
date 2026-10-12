@@ -1,0 +1,10 @@
+{
+ "test": "news_context",
+ "version": 1,
+ "frozen_on": "2026-10-12",
+ "note": "Pre-registered before any scoring (src/nflpred/context_audit.py). Question: does non-injury news the AI reads (play-caller changes, offensive-line shuffles, illness, travel/weather disruption, snap limits, kicker issues, coaching changes, motivation) carry information the spread hasn't priced when we first see it? For each logged context item with a stated direction (helps/hurts that team) about the next game: (1) line move = how far the consensus spread moved toward the side the news implies, from our last odds snapshot at or before the news to our last snapshot before kickoff; (2) cover rate of that side against the closing spread. A market that already priced the news shows a move near 0 and a cover rate near 50%. Logging only; nothing bets. A category becomes a paper-track candidate (a new pre-registered rules file, never this one) only if it passes the bar below. Do not edit to fit results; bump the version.",
+ "items": {"min_certainty": 0.7, "directions": ["helps", "hurts"], "game_week_relevant": true, "one_per_team_category_game": "earliest item counts"},
+ "categories": "nflpred.news_llm.CONTEXT_CATEGORIES (each judged separately; 'other' reported but never promoted)",
+ "candidate_bar": {"min_items": 40, "cover_rate_vs_close_above": 0.55, "one_sided_p_below": 0.05, "or_avg_line_move_toward_pts_at_least": 0.5, "move_p_below": 0.05},
+ "output": "history/context_audit.json"
+}

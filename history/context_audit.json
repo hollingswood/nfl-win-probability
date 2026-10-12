@@ -1,0 +1,408 @@
+{
+ "generated_at": "2026-10-12T03:31+00:00",
+ "rules_version": 1,
+ "items": 116,
+ "categories": {
+  "coach_fired_or_hired": {
+   "items": 1,
+   "graded": 1,
+   "cover_rate_vs_close": 1.0,
+   "cover_p": 0.1587,
+   "with_line_move": 1,
+   "avg_line_move_toward": 0.0,
+   "move_p": 1.0,
+   "candidate": false
+  },
+  "contract_holdout": {
+   "items": 1,
+   "graded": 1,
+   "cover_rate_vs_close": 1.0,
+   "cover_p": 0.1587,
+   "with_line_move": 1,
+   "avg_line_move_toward": 0.0,
+   "move_p": 1.0,
+   "candidate": false
+  },
+  "illness_outbreak": {
+   "items": 9,
+   "graded": 5,
+   "cover_rate_vs_close": 0.4,
+   "cover_p": 0.6726,
+   "with_line_move": 5,
+   "avg_line_move_toward": 0.0,
+   "move_p": 0.5,
+   "candidate": false
+  },
+  "kicker_or_special_teams": {
+   "items": 5,
+   "graded": 3,
+   "cover_rate_vs_close": 0.667,
+   "cover_p": 0.2819,
+   "with_line_move": 3,
+   "avg_line_move_toward": 0.33,
+   "move_p": 0.1587,
+   "candidate": false
+  },
+  "motivation_or_locker_room": {
+   "items": 6,
+   "graded": 5,
+   "cover_rate_vs_close": 0.4,
+   "cover_p": 0.6726,
+   "with_line_move": 5,
+   "avg_line_move_toward": -0.1,
+   "move_p": 0.6585,
+   "candidate": false
+  },
+  "offensive_line_shuffle": {
+   "items": 25,
+   "graded": 19,
+   "cover_rate_vs_close": 0.526,
+   "cover_p": 0.4093,
+   "with_line_move": 21,
+   "avg_line_move_toward": 0.43,
+   "move_p": 0.2455,
+   "candidate": false
+  },
+  "other": {
+   "items": 44,
+   "graded": 27,
+   "cover_rate_vs_close": 0.519,
+   "cover_p": 0.4237,
+   "with_line_move": 31,
+   "avg_line_move_toward": 0.25,
+   "move_p": 0.2286,
+   "candidate": false
+  },
+  "play_caller_change": {
+   "items": 5,
+   "graded": 3,
+   "cover_rate_vs_close": 1.0,
+   "cover_p": 0.0416,
+   "with_line_move": 4,
+   "avg_line_move_toward": -0.25,
+   "move_p": 0.8413,
+   "candidate": false
+  },
+  "scheme_or_role_change": {
+   "items": 4,
+   "graded": 4,
+   "cover_rate_vs_close": 0.75,
+   "cover_p": 0.1587,
+   "with_line_move": 4,
+   "avg_line_move_toward": 0.12,
+   "move_p": 0.3456,
+   "candidate": false
+  },
+  "snap_limit": {
+   "items": 8,
+   "graded": 6,
+   "cover_rate_vs_close": 0.333,
+   "cover_p": 0.7929,
+   "with_line_move": 8,
+   "avg_line_move_toward": 0.12,
+   "move_p": 0.2719,
+   "candidate": false
+  },
+  "travel_or_weather_disruption": {
+   "items": 8,
+   "graded": 6,
+   "cover_rate_vs_close": 0.667,
+   "cover_p": 0.2071,
+   "with_line_move": 6,
+   "avg_line_move_toward": -0.5,
+   "move_p": 0.7955,
+   "candidate": false
+  }
+ },
+ "recent": [
+  {
+   "game_id": "2026_05_CHI_GB",
+   "team": "CHI",
+   "category": "play_caller_change",
+   "direction": "hurts",
+   "seen": "2026-10-10T16:19+00:00",
+   "summary": "Ben Johnson named Tyson Bagent starter for Week 5 while Caleb Williams progresses with injury.",
+   "implied_side": "home",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
+  },
+  {
+   "game_id": "2026_05_HOU_TEN",
+   "team": "HOU",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-09T21:21+00:00",
+   "summary": "Illness hitting three offensive linemen leaves Texans uneasy about protecting C.J. Stroud.",
+   "implied_side": "home",
+   "line_move_toward": 0.5,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_05_LV_NE",
+   "team": "LV",
+   "category": "offensive_line_shuffle",
+   "direction": "helps",
+   "seen": "2026-10-10T17:26+00:00",
+   "summary": "Raiders offensive line returning to full strength.",
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_05_LV_NE",
+   "team": "LV",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-10T20:45+00:00",
+   "summary": "Raiders called up players to replace Ashton Jeanty at RB due to injury.",
+   "implied_side": "home",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
+  },
+  {
+   "game_id": "2026_05_CLE_NYJ",
+   "team": "NYJ",
+   "category": "travel_or_weather_disruption",
+   "direction": "hurts",
+   "seen": "2026-10-11T11:00+00:00",
+   "summary": "Weather expected to be a factor for Jets game against Cleveland Browns.",
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_05_MIN_NO",
+   "team": "NO",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-11T10:55+00:00",
+   "summary": "Illness added another Saints starter to the injury report.",
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
+  },
+  {
+   "game_id": "2026_06_CAR_PHI",
+   "team": "PHI",
+   "category": "travel_or_weather_disruption",
+   "direction": "hurts",
+   "seen": "2026-10-11T14:11+00:00",
+   "summary": "Eagles face Jaguars in Week 5 in London.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_05_IND_PIT",
+   "team": "IND",
+   "category": "travel_or_weather_disruption",
+   "direction": "hurts",
+   "seen": "2026-10-11T15:14+00:00",
+   "summary": "Colts playing at Steelers on Sunday after a London game presents a travel/scheduling disadvantage.",
+   "implied_side": "home",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
+  },
+  {
+   "game_id": "2026_05_CHI_GB",
+   "team": "CHI",
+   "category": "travel_or_weather_disruption",
+   "direction": "helps",
+   "seen": "2026-10-11T14:35+00:00",
+   "summary": "Bears-Packers game at Lambeau Field will be one of the warmest on record, with no frozen tundra conditions expected.",
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_05_DET_ARI",
+   "team": "ARI",
+   "category": "contract_holdout",
+   "direction": "hurts",
+   "seen": "2026-10-10T16:06+00:00",
+   "summary": "Marvin Harrison Jr. involved in NFL trade deadline buzz and sitting out.",
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
+  },
+  {
+   "game_id": "2026_06_NYJ_NE",
+   "team": "NE",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-10-11T17:23+00:00",
+   "summary": "Patriots defensive coaching staff must adjust coverage plan due to size mismatch with Marcus Jones covering tight end Brock Bowers, compounded by missing both starting cornerbacks.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_NO_NYG",
+   "team": "NO",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-11T17:00+00:00",
+   "summary": "Saints have major locker room sickness before Vikings game.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_CAR_PHI",
+   "team": "PHI",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T16:22+00:00",
+   "summary": "Eagles already depleted at RB position before Shipley injury.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "WAS",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T17:53+00:00",
+   "summary": "Pre-snap penalties, specifically back-to-back false starts in the red zone, continuing to plague the Commanders offense.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_07_IND_MIN",
+   "team": "MIN",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T17:44+00:00",
+   "summary": "Vikings have multiple offensive contributors injured.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_NYJ_NE",
+   "team": "NYJ",
+   "category": "travel_or_weather_disruption",
+   "direction": "hurts",
+   "seen": "2026-10-11T18:33+00:00",
+   "summary": "Rainy weather at MetLife Stadium has dampened offensive performance for both teams.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_NYJ_NE",
+   "team": "NE",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T18:33+00:00",
+   "summary": "Patriots have injuries to Will Campbell and TreVeyon Henderson in a battle of attrition.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_05_BAL_ATL",
+   "team": "BAL",
+   "category": "snap_limit",
+   "direction": "hurts",
+   "seen": "2026-10-11T18:53+00:00",
+   "summary": "Lamar Jackson sidelined; expect run-heavy approach.",
+   "implied_side": "home",
+   "line_move_toward": 0.0
+  },
+  {
+   "game_id": "2026_06_HOU_JAX",
+   "team": "HOU",
+   "category": "other",
+   "direction": "helps",
+   "seen": "2026-10-11T21:16+00:00",
+   "summary": "Marvin Harrison Jr. traded from ARI to HOU.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_TEN_IND",
+   "team": "TEN",
+   "category": "other",
+   "direction": "helps",
+   "seen": "2026-10-11T20:51+00:00",
+   "summary": "Robert Saleh stated the Titans will not bench Cam Ward.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_BAL_CLE",
+   "team": "CLE",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T20:40+00:00",
+   "summary": "Browns HC Todd Monken identified run game struggles as a contributing factor to 8 sacks on Watson.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_TEN_IND",
+   "team": "IND",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T21:55+00:00",
+   "summary": "The Colts defense has shown the same problems in three of five games under Lou Anarumo.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "SF",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-11T21:07+00:00",
+   "summary": "George Kittle is sick heading into Week 5 matchup vs. Seahawks.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_DAL_GB",
+   "team": "GB",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T20:57+00:00",
+   "summary": "Packers may need to make a roster move if Anthony Campbell is not healthy after Hargrave's likely torn Achilles.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "SF",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-11T22:14+00:00",
+   "summary": "49ers linebacker Dre Greenlaw ejected for head-butting Seahawks player during confrontation.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_NYJ_NE",
+   "team": "NE",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-11T23:41+00:00",
+   "summary": "Patriots have multiple new injuries compounding existing injured ranks.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_BAL_CLE",
+   "team": "CLE",
+   "category": "kicker_or_special_teams",
+   "direction": "hurts",
+   "seen": "2026-10-12T00:08+00:00",
+   "summary": "Browns committed multiple special teams mistakes that proved costly in loss to Jets.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_DAL_GB",
+   "team": "GB",
+   "category": "offensive_line_shuffle",
+   "direction": "helps",
+   "seen": "2026-10-11T23:40+00:00",
+   "summary": "Green Bay dominated the Bears with a retooled offensive line.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_BAL_CLE",
+   "team": "BAL",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-12T00:43+00:00",
+   "summary": "Ravens beset with injuries heading into prime time game vs Falcons.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_01_GB_MIN",
+   "team": "MIN",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2025-10-01T07:00+00:00",
+   "summary": "Vikings dealing with multiple offensive line injuries.",
+   "implied_side": "away"
+  }
+ ]
+}

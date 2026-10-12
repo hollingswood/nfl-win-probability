@@ -129,6 +129,10 @@ def load_news_audit(path: Path) -> dict | None:
         out["sources"] = [dict(v, name=k) for k, v in list(src.items())[:15]]
     except (OSError, json.JSONDecodeError):
         pass
+    try:   # team-context news audit (context_audit.py)
+        out["context"] = json.loads(path.with_name("context_audit.json").read_text()).get("categories")
+    except (OSError, json.JSONDecodeError):
+        pass
     return out
 
 

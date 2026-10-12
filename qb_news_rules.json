@@ -1,0 +1,29 @@
+{
+ "track": "qb_news",
+ "version": 1,
+ "frozen_on": "2026-10-12",
+ "note": "Pre-registered before any bet or backtest (src/nflpred/qb_news.py). Hypothesis: the market takes time to fully price starting-QB news, so the side the news favors, bet at our books before the consensus spread has moved half a point, beats the closing line. Evidence so far is weak and must be proven live: in the news audit (history/news_audit.json, 2026 weeks 1-6) consensus spreads moved 0.58 pts on average in the 6 h after an AI QB signal vs 0.21 pts before, but QB calls were only 61% accurate (41 graded) and the average move after negative QB signals was -0.08 pts (direction unclear). This track uses only the strictest calls (certainty >= 0.9, full name matched to the Sleeper roster, source accuracy weight >= 0.9, news about the next game published after the team's previous game ended). Paper only; judged on closing line value with closing PRICES (spread_bets.closing_margins). Do not edit to fit results; bump the version.",
+ "qualify": {
+  "signal_age_hours_max": 6,
+  "min_certainty": 0.9,
+  "min_source_weight": 0.9,
+  "roster": "verify.roster == match on a Sleeper roster, player name has first and last name",
+  "published_after_previous_game_end_hours": 3.5,
+  "starter_unavailable": ["out", "doubtful", "injured_reserve", "benched", "suspended"],
+  "backup_named_starter": ["will_start"],
+  "starter_cleared": ["expected_to_play", "will_start", "returning"],
+  "starter_cleared_needs_listed_status": ["questionable", "doubtful", "out"],
+  "starter": "the game's projected starting QB on the dashboard (game['home_qb'] / game['away_qb'])",
+  "direction": "starter unavailable or a backup named starter: bet AGAINST that team; starter cleared after being listed questionable/doubtful/out on the injury report: bet FOR that team",
+  "max_line_move_pts": 0.5,
+  "line_move": "consensus home spread (median of sportsbooks) now vs our last odds snapshot at or before the news was first published/seen, measured toward the bet side",
+  "kickoff_window_hours": [0.5, 144],
+  "one_bet_per_game": true,
+  "price": "best spread at your books (my_books.json), most favorable point then price"
+ },
+ "sizing": {"units": 1.0},
+ "checks": "every hourly watch and every 15-minute QB-news check (qb_news_fast.yml); fresh odds are fetched only when a signal qualifies",
+ "grading": {"result": "ATS at our point and price", "clv": "our point and price valued at our own last pre-kickoff snapshot's price-implied margin (spread_bets.closing_margins)"},
+ "validation": {"min_bets": 40, "avg_clv_positive_with_p_below": 0.05, "realized_roi_above": 0.0},
+ "ledger": "paper_bets_qb_news.json"
+}
