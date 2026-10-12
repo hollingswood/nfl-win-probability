@@ -103,6 +103,41 @@ def pull_passing(years: list[int], key: str) -> dict:
     return {"passing_weeks_saved": saved, "calls": CALLS["n"]}
 
 
+def pull_current(season: int, key: str, now=None, roster_max_age_days: int = 7) -> dict:
+    """In-season extras for the news roster check (cfbpred.roster): the CFBD roster (weekly) and passing stats for
+    every finished regular-season week not saved yet (one call each)."""
+    import time as _t
+    from datetime import datetime, timedelta, timezone
+    now = now or datetime.now(timezone.utc)
+    RAW.mkdir(parents=True, exist_ok=True)
+    out, n0 = {"roster": False, "passing_weeks": []}, CALLS["n"]
+    p = RAW / f"roster_{season}.json.gz"
+    if not p.exists() or _t.time() - p.stat().st_mtime > roster_max_age_days * 86400:
+        data = get("roster", {"year": season}, key)
+        if data:
+            with gzip.open(p, "wt") as f:
+                json.dump(data, f)
+            out["roster"] = len(data)
+    gp = _name("games", season, "regular")
+    if gp.exists():
+        last: dict = {}
+        for g in json.load(gzip.open(gp)):
+            if g.get("week") and g.get("startDate"):
+                t = datetime.fromisoformat(g["startDate"].replace("Z", "+00:00"))
+                last[g["week"]] = max(last.get(g["week"], t), t)
+        for wk in sorted(w for w, t in last.items() if t + timedelta(hours=8) < now):
+            f = RAW / f"games_players_passing_{season}_regular_{wk}.json.gz"
+            if f.exists():
+                continue
+            data = get("games/players", {"year": season, "week": wk, "seasonType": "regular", "category": "passing"}, key)
+            if data:
+                with gzip.open(f, "wt") as fh:
+                    json.dump(data, fh)
+                out["passing_weeks"].append(wk)
+    out["calls"] = CALLS["n"] - n0
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--years", default="2014-2026")

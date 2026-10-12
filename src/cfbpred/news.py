@@ -84,7 +84,10 @@ def due(now: datetime) -> bool:
 def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: float = 90):
     system = ("You extract COLLEGE FOOTBALL (FBS) injury, quarterback and availability news for a betting model. "
               "Only report facts stated in the items; never guess. The team field must be EXACTLY one of these school "
-              "names: " + "; ".join(teams) + ". Skip NFL, recruiting and high-school items.")
+              "names: " + "; ".join(teams) + ". Players transfer every year: take each player's CURRENT school from the "
+              "item itself, never from memory; in a story about a matchup, check which of the two teams the player is on. "
+              "If the item does not make the player's current team clear, skip that player. "
+              "Skip NFL, recruiting and high-school items, and recaps of games already played.")
     instr = INSTR
     body = "\n\n".join(f"[{i}] ({it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
                        for i, it in enumerate(items))
@@ -142,9 +145,15 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
                     src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
                     keep = ("player", "team", "position", "signal", "is_starting_qb_news", "game_week_relevant", "certainty", "quote") if kind == "av" \
                         else ("team", "category", "summary", "player", "direction", "game_week_relevant", "certainty", "quote", "line_move")
-                    out.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
-                                "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
-                                **{k: s.get(k) for k in keep}})
+                    row = {"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
+                           "source": src.get("source"), "link": src.get("link"), "title": src.get("title"),
+                           **{k: s.get(k) for k in keep}}
+                    try:   # roster check (cfbpred.roster); the AI's own team field is kept as-is
+                        from . import roster as R
+                        row["verify"] = R.verify(row.get("player"), row.get("team"), now.year if now.month >= 7 else now.year - 1)
+                    except Exception:
+                        pass
+                    out.append(row)
             seen.update(x["key"] for x in batch)
         except Exception as e:
             rep.setdefault("errors", []).append(str(e)[:160])
@@ -159,9 +168,13 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
     return rep
 
 
-def recent_by_team(days: int = 7, now: datetime | None = None) -> dict:
-    """team -> recent availability/context items (newest first), for the college page."""
+def recent_by_team(days: int = 7, now: datetime | None = None, idx: dict | None = None, cap: int | None = 6) -> dict:
+    """team -> recent availability/context items (newest first), for the college page. Items naming a player are
+    filed under the team the roster check finds (cfbpred.roster: this season's passing stats, CFBD roster, transfer
+    portal); items whose player can't be placed on a team are left off the page."""
+    from . import roster as R
     now = now or datetime.now(timezone.utc)
+    season = now.year if now.month >= 7 else now.year - 1
     out: dict = {}
     for name, kind in (("news_llm.jsonl", "av"), ("news_context.jsonl", "cx")):
         p = HIST / name
@@ -175,9 +188,17 @@ def recent_by_team(days: int = 7, now: datetime | None = None) -> dict:
                 continue
             if (now - t).days > days or not r.get("game_week_relevant", True):
                 continue
-            out.setdefault(r["team"], []).append({**r, "kind": kind})
-    for t in out:
-        out[t] = sorted(out[t], key=lambda r: r["seen_at"], reverse=True)[:6]
+            v = R.verify(r.get("player"), r.get("team"), season, idx)    # re-checked on every build (rosters update)
+            if not v["team_verified"]:
+                continue
+            out.setdefault(v["team_verified"], []).append({**r, "kind": kind, "verify": v})
+    for t in out:   # newest first; one line per player+signal (or per context category without a player)
+        keep, dup = [], set()
+        for r in sorted(out[t], key=lambda r: r["seen_at"], reverse=True):
+            k = (R.norm(r.get("player")), r.get("signal") or r.get("category"))
+            if k not in dup:
+                dup.add(k); keep.append(r)
+        out[t] = keep[:cap] if cap else keep
     return out
 
 

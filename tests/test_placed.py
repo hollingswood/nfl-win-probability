@@ -129,8 +129,10 @@ def test_cfb_news_scan_logs_valid_teams(tmp_path, monkeypatch):
                  {"item": 0, "player": "X", "team": "Nowhere State", "signal": "out"}][:1], [])
     rep = CN.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: items, llm=llm, force=True)
     assert rep["signals"] == 1 and rep["qb_signals"] == ["QB One (Texas): out"]
-    rec = CN.recent_by_team(7, datetime(2026, 10, 9, tzinfo=timezone.utc))
+    idx = {"qb one": {"played": "Texas", "roster": set(), "portal": None}}
+    rec = CN.recent_by_team(7, datetime(2026, 10, 9, tzinfo=timezone.utc), idx=idx)
     assert rec["Texas"][0]["player"] == "QB One"
+    assert CN.recent_by_team(7, datetime(2026, 10, 9, tzinfo=timezone.utc), idx={}) == {}   # player not on any roster: left off
     assert CN.scan(now=datetime(2026, 10, 8, 18, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: items, llm=llm, force=True)["new_items"] == 0
 
 
@@ -464,3 +466,24 @@ def test_kalshi_maker_record_by_league():
                                     "profit": 0.4 if res == "win" else -0.6, "cost": 0.6, "clv": 0.01}
     led = [g("nfl", "KXNFLGAME-A", "win"), g("cfb", "KXNCAAFGAME-B", "loss"), {**g(None, "KXNCAAFGAME-C", "win"), "sport": None}]
     assert K.record(led, r, "nfl")["graded"] == 1 and K.record(led, r, "cfb")["graded"] == 2 and K.record(led, r)["graded"] == 3
+
+
+def test_cfb_news_roster_check(tmp_path):
+    import gzip, json
+    from cfbpred import roster as R
+    wk = [{"teams": [{"team": "Oregon", "categories": [{"types": [{"name": "C/ATT", "athletes": [{"name": "Dylan Raiola", "stat": "11/11"}]}]}]}]}]
+    with gzip.open(tmp_path / "games_players_passing_2026_regular_4.json.gz", "wt") as f:
+        json.dump(wk, f)
+    with gzip.open(tmp_path / "roster_2026.json.gz", "wt") as f:
+        json.dump([{"firstName": "Tyler", "lastName": "Brown", "team": "Iowa"}, {"firstName": "Tyler", "lastName": "Brown", "team": "James Madison"},
+                   {"firstName": "Dante", "lastName": "Moore", "team": "Oregon"}], f)
+    with gzip.open(tmp_path / "player_portal_2026.json.gz", "wt") as f:
+        json.dump([{"firstName": "Nico", "lastName": "Iamaleava", "origin": "Tennessee", "destination": "UCLA"}], f)
+    idx = R.index(2026, str(tmp_path))
+    assert R.verify("Dylan Raiola", "Nebraska", 2026, idx) == {"roster": "corrected", "team_verified": "Oregon"}   # transferred
+    assert R.verify("Dante Moore", "Nebraska", 2026, idx)["team_verified"] == "Oregon"                          # matchup story
+    assert R.verify("Nico Iamaleava Jr.", "Tennessee", 2026, idx)["team_verified"] == "UCLA"                    # portal
+    assert R.verify("Tyler Brown", "Iowa", 2026, idx)["roster"] == "match"                                      # same name, two schools
+    assert R.verify("Tyler Brown", "Ohio State", 2026, idx)["team_verified"] is None
+    assert R.verify("Nobody Here", "Iowa", 2026, idx) == {"roster": "not_found", "team_verified": None}
+    assert R.verify(None, "Iowa", 2026, idx)["team_verified"] == "Iowa"                                         # team-level context

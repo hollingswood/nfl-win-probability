@@ -179,7 +179,7 @@ def forecast(games: list[dict], now: datetime, getter=_get) -> dict[int, dict]:
             continue
         if v["dome"]:
             out[g["game_id"]] = {"dome": True}; continue
-        if g["game_id"] in tbd:
+        if g["game_id"] in tbd and g.get("start_source") != "odds":   # kickoff known from the odds feed -> forecast it
             out[g["game_id"]] = {"tbd": True}; continue
         try:
             pay = getter(FCST_URL, {"latitude": v["lat"], "longitude": v["lon"], "hourly": ",".join(VARS), "forecast_days": 16,

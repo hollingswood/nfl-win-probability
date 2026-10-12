@@ -221,10 +221,19 @@ def refresh(now: datetime, force: bool = False) -> bool:
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
     last = datetime.fromisoformat(state["cfbd"]) if state.get("cfbd") else None
     key = os.environ.get("CFBD_API_KEY")
+    if key and not (F.RAW / f"roster_{season_now(now)}.json.gz").exists():   # first run after the roster check shipped
+        try:
+            print("cfb roster:", F.pull_current(season_now(now), key, now))
+        except Exception as e:
+            print("cfb roster pull failed:", e)
     if not key or (not force and last and now - last < refresh_interval(now) - timedelta(minutes=10)):
         return False
     s = season_now(now)
     res = F.pull([s], key)
+    try:   # roster (weekly) + finished weeks' passing stats for the AI-news team check
+        res["current"] = F.pull_current(s, key, now)
+    except Exception as e:
+        print("cfb roster/passing pull failed:", e)
     state["cfbd"] = now.isoformat(timespec="minutes"); state["cfbd_calls"] = res["calls"]
     STATE.parent.mkdir(parents=True, exist_ok=True); STATE.write_text(json.dumps(state, indent=1))
     print("cfb: CFBD refreshed", res)
@@ -282,7 +291,13 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
             if match(ev["home_team"]) != r.home:   # feed lists the teams the other way round (neutral site)
                 o = None
         mm = float(r.model_margin) if not pd.isna(r.model_margin) else None
-        g = {"game_id": int(r.game_id), "start": r.start.isoformat(), "week": int(r.week), "home": r.home, "away": r.away,
+        start, start_src = r.start, "cfbd"
+        ev_any = by_pair.get((r.home, r.away))
+        if ev_any:   # CFBD often holds a placeholder (midnight ET) while the kickoff time is TBA; the odds feed has the real one
+            ko = pd.Timestamp(ev_any["commence_time"])
+            if abs((ko - r.start).total_seconds()) > 1800 and abs((ko - r.start).total_seconds()) < 3 * 86400:
+                start, start_src = ko, "odds"
+        g = {"game_id": int(r.game_id), "start": start.isoformat(), "start_source": start_src, "week": int(r.week), "home": r.home, "away": r.away,
              "home_abbr": abbr.get(r.home), "away_abbr": abbr.get(r.away),
              "home_conf": r.home_conf, "away_conf": r.away_conf, "neutral": bool(r.neutral), "conf_game": bool(r.conf_game),
              "completed": bool(r.completed), "home_pts": None if pd.isna(r.home_pts) else int(r.home_pts),
@@ -297,9 +312,19 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
         games.append(g)
     try:   # AI-read college news per team (logging only), shown on the cards
         from . import news as cnews
-        recent = cnews.recent_by_team(7, now)
+        recent = cnews.recent_by_team(7, now, cap=None)
+        # only news since each team's previous game (older items describe last week's game, not this one)
+        prev = {}
+        for r in G[G.start < now - timedelta(hours=3)].itertuples():
+            for t in (r.home, r.away):
+                prev[t] = max(prev.get(t, r.start), r.start)
+        def fresh(team, start):
+            p = prev.get(team)
+            p = p.isoformat() if p is not None and p.to_pydatetime() < start else None
+            return [x for x in recent.get(team, []) if not p or (x.get("published") or x["seen_at"])[:16] >= p[:16]][:6]
         for g in games:
-            g["news"] = {"home": recent.get(g["home"], []), "away": recent.get(g["away"], [])}
+            st = datetime.fromisoformat(g["start"])
+            g["news"] = {"home": fresh(g["home"], st), "away": fresh(g["away"], st)}
     except Exception as e:
         print("cfb news attach failed:", e)
     try:   # kickoff-window forecast for open-air games (display + logged for a later honest test)
