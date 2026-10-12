@@ -1,0 +1,38 @@
+{
+ "study": "round4_new_metrics",
+ "frozen_on": "2026-10-12",
+ "written_before_any_computation": true,
+ "context": "Havoc (team TFL/sack/FF/INT/PD rate) and pressure rate (nflverse participation was_pressure, 2016+), sacks, QB hits, clean-vs-pressured EPA, blitz rate (FTN) were already tested on 2026-10-02 (output/research/advanced_metrics.md, matchups_refs.md): havoc improved log loss ~0.0006 in both periods (below the 0.001 bar), pressure/matchup sets made validation worse, market residual tests were at chance. This study tests what has NOT been tested.",
+ "candidates": {
+  "A_qb_composite": {
+   "source": "Baldwin's EPA+CPOE composite (nflverse/rbsdm.com); nfeloapp: EPA best balances predictiveness and stability, CPOE more stable but less predictive of single games",
+   "features": {
+    "m_cpoe": "team pass offense CPOE minus pass CPOE allowed by its defense, decayed (half-life 8 games) over strictly earlier games, shrunk toward 0 with k=150 attempts; home net minus away net",
+    "qb_cpoe_diff": "starting QB (schedule home_qb_id/away_qb_id) CPOE over his strictly earlier attempts, decayed (half-life 20 games), shrunk with k=200 attempts; home minus away"
+   },
+   "model_test": "experiment.py protocol (ridge margin model, train on earlier seasons): add both features; adopt only if log loss improves by >= 0.001 on BOTH validation 2015-19 and holdout 2020-25",
+   "market_test": "OLS of closing-line residual (home margin - spread_line) on z(feature), HC0 SE; dev 2012-19, holdout 2020-25; pass = holdout one-sided p < 0.05/k with the dev sign"
+  },
+  "B_ftn_quality": {
+   "source": "FTN charting via nflverse (2022+): interception-worthy throws (decision quality; INTs themselves are mostly luck), catchable-ball rate (accuracy), drop rate (receiver luck), QB-fault sacks",
+   "features": {
+    "m_iw": "INT-worthy throws per dropback: defense forced minus offense allowed (good-oriented), net home minus away",
+    "m_catch": "catchable-ball rate of aimed passes: offense minus allowed by defense, net",
+    "m_drop": "drop rate on catchable balls: offense minus defense-induced, net (luck hypothesis: expected sign NEGATIVE on the residual)",
+    "m_qbfault": "QB-fault sacks per dropback: defense minus offense, net"
+   },
+   "warmup": 2022,
+   "market_test": "closing-line residual on z(feature); dev 2023, holdout 2024-25 (too few seasons for a model test); pass = holdout one-sided p < 0.05/k with the dev sign (m_drop: pre-specified negative)"
+  },
+  "C_bye_overpricing": {
+   "source": "arXiv 2408.10867 (Bye-Bye, Bye Advantage, 2024): since the 2011 CBA the bye is worth ~+0.3 pts (CI includes 0) while point spreads price ~+1.0",
+   "rule": "fade a team coming off a bye (13+ days rest, regular season, opponent not also off a bye): bet the opponent ATS at the nflverse closing spread_line",
+   "dev": "2012-2019",
+   "holdout": "2020-2025",
+   "metric": "ATS cover rate of the faded side vs 52.38% (one-sided binomial) and ROI at -110; also margin residual (points) for teams off a bye",
+   "pass": "holdout cover rate > 52.38% with one-sided p < 0.05 AND dev cover rate > 50%"
+  }
+ },
+ "multiple_comparisons": "k = number of market-test features evaluated on a holdout within each candidate family",
+ "no_tuning": "no thresholds, half-lives or shrinkage values are changed after seeing results; failures are reported as failures"
+}
