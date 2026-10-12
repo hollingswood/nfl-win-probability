@@ -549,3 +549,18 @@ def test_context_audit(tmp_path):
     out = CA.run(tmp_path, sched, now=datetime(2026, 10, 20, tzinfo=timezone.utc))
     c = out["categories"]["offensive_line_shuffle"]
     assert out["items"] == 1 and c["avg_line_move_toward"] == 1.5 and c["graded"] == 1 and c["cover_rate_vs_close"] == 1.0  # BUF +1.5 won by 7
+
+
+def test_watch_results_only_when_a_game_ended(tmp_path):
+    import json
+    import datetime as dt
+    import pandas as pd
+    from nflpred import pipeline as P
+    now = dt.datetime(2026, 10, 12, 4, 30, tzinfo=dt.timezone.utc)
+    sched = pd.DataFrame([{"game_id": "g1", "season": 2026, "week": 5, "gameday": "2026-10-11", "home_team": "ATL", "away_team": "BAL",
+                           "home_score": 23.0, "away_score": 30.0}])
+    (tmp_path / "paper_bets_x.json").write_text(json.dumps([{"status": "open", "kickoff_utc": "2026-10-12T02:00:00+00:00"}]))
+    assert len(P.watch_results(tmp_path, now, loader=lambda: sched)) == 0          # kicked off 2.5 h ago: not yet
+    (tmp_path / "paper_bets_x.json").write_text(json.dumps([{"status": "open", "kickoff_utc": "2026-10-12T00:20:00+00:00"}]))
+    g = P.watch_results(tmp_path, now, loader=lambda: sched)
+    assert bool(g.completed.iloc[0]) and g.home_win.iloc[0] == 0.0

@@ -587,6 +587,44 @@ def predict_games_with_p(d: pd.DataFrame) -> list[dict]:
             for r in d.itertuples()]
 
 
+def watch_results(history_dir: Path, now: dt.datetime, after_hours: float = 3.5, loader=None) -> pd.DataFrame:
+    """Final scores for the hourly watch, so paper bets are graded within the hour after a game instead of waiting
+    for the next full run (e.g. Sunday/Monday night games). Fetched only when an open paper bet's game kicked off
+    more than `after_hours` ago; otherwise an empty frame (no grading)."""
+    empty = pd.DataFrame(columns=["game_id", "completed"])
+    cutoff = now - dt.timedelta(hours=after_hours)
+    due = False
+    for f in list(history_dir.glob("paper_bets*.json")):
+        try:
+            led = json.loads(f.read_text())
+        except Exception:
+            continue
+        for b in led if isinstance(led, list) else []:
+            if b.get("status") not in ("open", "filled"):
+                continue
+            k = b.get("kickoff_utc")
+            try:
+                t = dt.datetime.fromisoformat(str(k).replace("Z", "+00:00")) if k else None
+            except ValueError:
+                t = None
+            if t and t.tzinfo and t < cutoff:
+                due = True; break
+        if due:
+            break
+    if not due:
+        return empty
+    try:
+        g = (loader or (lambda: data.load_schedules(refresh=True)))()
+    except Exception as e:
+        print("watch: schedule refresh failed:", e)
+        return empty
+    g = g[g.season >= now.year - 1].copy()
+    g["gameday"] = pd.to_datetime(g["gameday"])
+    g["completed"] = g["home_score"].notna() & g["away_score"].notna()
+    g["home_win"] = (g["home_score"] > g["away_score"]).astype(float).where(g["completed"])
+    return g
+
+
 def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     """Hourly odds watch (no retraining): refresh live prices on the last published predictions and
     run the tracks whose edge depends on catching prices quickly or on set windows (moneyline v2-v4,
@@ -629,7 +667,9 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     pred["odds_checked_at"] = now.isoformat(timespec="minutes")
     pred["grade_v2"] = _grade_v2_attach(pred, now)
     pred["totals_grade"] = _totals_grade_attach(pred, now)
-    no_games = pd.DataFrame(columns=["game_id", "completed"])  # grading happens on full runs
+    no_games = watch_results(ROOT / "history", now)   # finals for games that ended since the last full run
+    if len(no_games):
+        print(f"watch: grading open paper bets with {int(no_games.completed.sum())} final scores")
 
     def props_fn(p, g, h):
         return props_receptions.process(p, g, h, now=now, fetch=odds_lib.fetch_event_props)
@@ -644,7 +684,8 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
         try:
             res = fn(pred, no_games, ROOT / "history")
             prev = pred.get(key) or {}
-            res["recent_graded"] = prev.get("recent_graded", res.get("recent_graded", []))
+            if not len(no_games):   # nothing graded this hour: keep the last graded list
+                res["recent_graded"] = prev.get("recent_graded", res.get("recent_graded", []))
             pred[key] = res
             for b in res.get("new", []):
                 print(f"watch: new {key} paper bet {b['id']} {b['price']:+d} at {b['book']}")
