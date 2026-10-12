@@ -197,7 +197,7 @@ def load_placed() -> dict | None:
     """Real bets you logged (history/placed_bets.json), scored against their paper bets."""
     try:
         from nflpred import placed
-        return placed.summary(ROOT / "history")
+        return placed.summary(ROOT / "history", "nfl")
     except Exception as e:
         print("placed bets: skipped:", e)
         return None
@@ -305,7 +305,13 @@ def build_cfb(site: Path) -> Path | None:
             data["cfb_kalshi_maker_bets"] = km
     except Exception as e:
         print("cfb kalshi view skipped:", e)
-    try:  # pre-filled "I placed it" forms for open college paper bets (scored on the NFL page's My bets)
+    try:   # your real college bets, and published college pickers
+        from nflpred import placed
+        data["placed"] = placed.summary(ROOT / "history", "cfb")
+    except Exception as e:
+        print("cfb placed bets skipped:", e)
+    data["picks"] = _json_or_none(ROOT / "history" / "picks_scores.json")
+    try:  # pre-filled "I placed it" forms for open college paper bets
         from nflpred.placed import log_url
         data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets", "cfb_kalshi_maker_bets")
                             for b in ((data.get(k) or {}).get("open") or []) if b.get("id")}

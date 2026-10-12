@@ -163,6 +163,36 @@ def _p_cover(w: int, n: int, p0: float) -> float:
     return 0.5 * math.erfc(((w - 0.5) - mu) / sd / math.sqrt(2))
 
 
+def table(graded: list[dict], logged: dict) -> list[dict]:
+    """Per-picker records from graded picks, plus pickers whose logged picks are all still pending."""
+    by: dict = {}
+    for x in graded:
+        b = by.setdefault(x["picker"], {"picker": x["picker"], "outlet": x["outlet"], "n": 0, "w": 0, "l": 0, "p": 0, "units": 0.0,
+                                        "lv": [], "sports": set()})
+        b["n"] += 1; b["sports"].add(x["sport"])
+        b[{"win": "w", "loss": "l", "push": "p"}[x["result"]]] += 1
+        b["units"] += x.get("units") or 0.0
+        if x.get("line_value") is not None:
+            b["lv"].append(x["line_value"])
+    pickers = []
+    for b in by.values():
+        d = b["w"] + b["l"]
+        pickers.append({"picker": b["picker"], "outlet": b["outlet"], "sports": sorted(b["sports"]), "graded": b["n"], "wins": b["w"],
+                        "losses": b["l"], "pushes": b["p"], "win_pct": round(b["w"] / d, 3) if d else None, "units": round(b["units"], 2),
+                        "avg_line_value": round(sum(b["lv"]) / len(b["lv"]), 2) if b["lv"] else None, "n_line_value": len(b["lv"])})
+    have = {x["picker"] for x in pickers}
+    for x in pickers:
+        lg = logged.get(x["picker"], {})
+        x["logged"], x["pending"] = lg.get("n", x["graded"]), max(0, lg.get("n", x["graded"]) - x["graded"] - lg.get("late", 0))
+    for k, lg in logged.items():      # pickers with nothing graded yet (their games are still to be played)
+        if isinstance(k, str) and k not in have:
+            pickers.append({"picker": k, "outlet": lg["outlet"], "sports": sorted(lg["sports"]), "graded": 0, "wins": 0, "losses": 0,
+                            "pushes": 0, "win_pct": None, "units": 0.0, "avg_line_value": None, "n_line_value": 0,
+                            "logged": lg["n"], "pending": max(0, lg["n"] - lg["late"])})
+    pickers.sort(key=lambda x: (-(x["graded"] > 0), -(x["units"]), -x["graded"], -x["logged"]))
+    return pickers
+
+
 def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> dict:
     now = now or datetime.now(timezone.utc)
     r = load_rules()
@@ -184,8 +214,9 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             continue
         seen_keys.add(k)
         if p.get("sport") in ("nfl", "cfb"):
-            lg = logged.setdefault(picker_of(p), {"n": 0, "outlet": p.get("outlet") or p.get("source"), "sports": set(), "late": 0})
-            lg["n"] += 1; lg["sports"].add(p.get("sport"))
+            for key in (picker_of(p), (picker_of(p), p.get("sport"))):     # all sports, and per sport
+                lg = logged.setdefault(key, {"n": 0, "outlet": p.get("outlet") or p.get("source"), "sports": set(), "late": 0})
+                lg["n"] += 1; lg["sports"].add(p.get("sport"))
         try:
             g = grade_pick(p, nfl, cfb, cmatch)
         except Exception:
@@ -194,37 +225,13 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             continue
         if g.get("late"):
             late += 1
-            if picker_of(p) in logged:
-                logged[picker_of(p)]["late"] += 1
+            for key in (picker_of(p), (picker_of(p), p.get("sport"))):
+                if key in logged:
+                    logged[key]["late"] += 1
             continue
         graded.append({**g, "picker": picker_of(p), "sport": p.get("sport"), "market": p.get("market"), "pick": p.get("pick"),
                        "line": p.get("line"), "seen_at": p["seen_at"], "outlet": p.get("outlet") or p.get("source")})
-    # per picker
-    by: dict = {}
-    for x in graded:
-        b = by.setdefault(x["picker"], {"picker": x["picker"], "outlet": x["outlet"], "n": 0, "w": 0, "l": 0, "p": 0, "units": 0.0,
-                                        "lv": [], "sports": set()})
-        b["n"] += 1; b["sports"].add(x["sport"])
-        b[{"win": "w", "loss": "l", "push": "p"}[x["result"]]] += 1
-        b["units"] += x.get("units") or 0.0
-        if x.get("line_value") is not None:
-            b["lv"].append(x["line_value"])
-    pickers = []
-    for b in by.values():
-        d = b["w"] + b["l"]
-        pickers.append({"picker": b["picker"], "outlet": b["outlet"], "sports": sorted(b["sports"]), "graded": b["n"], "wins": b["w"],
-                        "losses": b["l"], "pushes": b["p"], "win_pct": round(b["w"] / d, 3) if d else None, "units": round(b["units"], 2),
-                        "avg_line_value": round(sum(b["lv"]) / len(b["lv"]), 2) if b["lv"] else None, "n_line_value": len(b["lv"])})
-    have = {x["picker"] for x in pickers}
-    for x in pickers:
-        lg = logged.get(x["picker"], {})
-        x["logged"], x["pending"] = lg.get("n", x["graded"]), max(0, lg.get("n", x["graded"]) - x["graded"] - lg.get("late", 0))
-    for k, lg in logged.items():      # pickers with nothing graded yet (their games are still to be played)
-        if k not in have:
-            pickers.append({"picker": k, "outlet": lg["outlet"], "sports": sorted(lg["sports"]), "graded": 0, "wins": 0, "losses": 0,
-                            "pushes": 0, "win_pct": None, "units": 0.0, "avg_line_value": None, "n_line_value": 0,
-                            "logged": lg["n"], "pending": max(0, lg["n"] - lg["late"])})
-    pickers.sort(key=lambda x: (-(x["graded"] > 0), -(x["units"]), -x["graded"], -x["logged"]))
+    pickers = table(graded, {k: v for k, v in logged.items() if isinstance(k, str)})
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
     H = r["hot"]
     test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0}
@@ -266,7 +273,18 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         for k, (w, l) in rec.items():
             if w + l >= 8 and w / (w + l) >= 0.60:
                 hot_now.append({"picker": k, "sport": sport, "week": nxt, "record": f"{w}-{l}"})
-    out = {"generated_at": now.isoformat(timespec="minutes"), "rules_version": r["version"], "picks_logged": len(picks),
+    by_sport = {}
+    for sport in ("nfl", "cfb"):   # each page shows its own league
+        gs = [x for x in graded if x["sport"] == sport]
+        lg = {k[0]: v for k, v in logged.items() if isinstance(k, tuple) and k[1] == sport}
+        tb = table(gs, lg)
+        by_sport[sport] = {"pickers": tb[:250], "n_pickers": len(tb), "picks_graded": len(gs),
+                           "picks_logged": sum(v["n"] for v in lg.values()), "hot_now": [h for h in hot_now if h["sport"] == sport],
+                           "overall": {"w": sum(x["result"] == "win" for x in gs), "l": sum(x["result"] == "loss" for x in gs),
+                                       "units": round(sum(x.get("units") or 0 for x in gs), 2),
+                                       "avg_line_value": round(sum(x["line_value"] for x in gs if x.get("line_value") is not None) /
+                                                               max(1, sum(x.get("line_value") is not None for x in gs)), 2)}}
+    out = {"generated_at": now.isoformat(timespec="minutes"), "rules_version": r["version"], "picks_logged": len(picks), "by_sport": by_sport,
            "picks_graded": len(graded), "late_picks_dropped": late, "pickers": pickers[:250], "n_pickers": len(pickers), "hot_now": hot_now, "hot_test": test,
            "overall": {"w": sum(x["result"] == "win" for x in graded), "l": sum(x["result"] == "loss" for x in graded),
                        "units": round(sum(x.get("units") or 0 for x in graded), 2),

@@ -43,6 +43,29 @@ def games(years) -> pd.DataFrame:
 PREFERRED_PROVIDERS = ("DraftKings", "ESPN Bet", "Bovada", "consensus")   # a real book's closing number
 
 
+def _imp(a: float) -> float:
+    return 100 / (a + 100) if a > 0 else -a / (-a + 100)
+
+
+def _amer(p: float) -> float:
+    return round(-100 * p / (1 - p), 1) if p >= 0.5 else round(100 * (1 - p) / p, 1)
+
+
+def moneylines(L: list[dict], prefer: tuple | None = None) -> dict:
+    """Closing moneylines: both sides from the first preferred provider that has them; otherwise the median IMPLIED
+    probability across providers, converted back to American odds. (A median of American odds is meaningless across
+    the +/- divide: -110 and +105 averaged to -2.5, i.e. +4000.)"""
+    for pv in prefer or ():
+        for x in L:
+            if x.get("provider") == pv and x.get("homeMoneyline") and x.get("awayMoneyline"):
+                return {"home_ml": x["homeMoneyline"], "away_ml": x["awayMoneyline"]}
+    out = {}
+    for side in ("home", "away"):
+        ps = [_imp(x[f"{side}Moneyline"]) for x in L if x.get(f"{side}Moneyline") not in (None, 0)]
+        out[f"{side}_ml"] = _amer(statistics.median(ps)) if ps else None
+    return out
+
+
 def lines(years, prefer: tuple | None = None) -> pd.DataFrame:
     """One row per game: closing spread/total (home line: + = home underdog), opening spread/total where any provider
     reports one, and per-provider counts. Default: median across providers (with two providers that is their average,
@@ -68,7 +91,7 @@ def lines(years, prefer: tuple | None = None) -> pd.DataFrame:
                 rows.append({"game_id": g["id"], "spread_close": pick("spread"), "spread_open": med("spreadOpen"),
                              "total_close": pick("overUnder"), "total_open": med("overUnderOpen"),
                              "n_providers": len(L), "providers": ",".join(sorted({x["provider"] for x in L})),
-                             "home_ml": med("homeMoneyline"), "away_ml": med("awayMoneyline"), "line_source": src})
+                             **moneylines(L, prefer), "line_source": src})
     return pd.DataFrame(rows)
 
 

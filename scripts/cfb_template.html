@@ -27,7 +27,7 @@ header .xlink{justify-self:start}
     <p>A bet is only worth making when the <b>price</b> beats the chance the sharpest book (<b>Pinnacle</b>) gives it; that gap is the <b>edge</b>, and the <b>grade</b> says how big it is. In 2021–25 testing, college prices that beat Pinnacle's line went on to beat its closing line too. Our stats model is shown next to Vegas for context, but it does not beat the closing line, so no bet uses it. Everything is <b>paper</b> (logged and scored, not recommended) until a track passes its live test. Not financial advice.</p>
     <div class="keyrow"><span><span class="st st-bet">PAPER BET</span> logged by a track's locked rules</span> <span><span class="st st-watch">WATCH</span> clears the bar, logs at the next odds check</span> <span><span class="st st-no">NO</span> below the bar (reason shown)</span> <span><span class="chip">A+</span>track that logged it</span> <span><span class="chip grd">A+</span>track that would log it</span></div>
     <a class="xlink" href="../">← NFL board</a>
-    <nav class="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#promos">Promo calculator</a><a href="#betswrap">Paper bets</a><a href="#sec-season">Season so far</a><a href="#sec-test">Model vs Vegas</a><a href="#sec-research">Testing</a><a href="#sec-notes">How to read</a></nav>
+    <nav class="jump" aria-label="Sections"><a href="#sec-board">Board</a><a href="#sec-games">Games</a><a href="#mybets">My bets</a><a href="#betswrap">Paper bets</a><a href="#pickers">Pickers</a><a href="#sec-season">Season so far</a><a href="#sec-test">Model vs Vegas</a><a href="#sec-research">Testing</a><a href="#promos">Promo calculator</a><a href="#sec-notes">How to read</a></nav>
   </header>
 
   <div class="strip" id="strip"></div>
@@ -52,6 +52,45 @@ header .xlink{justify-self:start}
       <label class="chk"><input type="checkbox" id="f-past"> Show games already started</label>
     </div>
     <div class="games" id="games"></div>
+  </section>
+
+  <section id="mybets">
+    <div class="sechead"><h2>My bets</h2><span class="pill">Real money · logged by you</span></div>
+    <p class="edge" id="mybetsintro"></p>
+    <div class="strip" id="mybetsstrip"></div>
+    <div class="scroll"><table class="sumtbl" id="mybetstbl"></table></div>
+  </section>
+
+  <section id="betswrap">
+    <div class="sechead"><h2>Paper bets</h2><span class="pill">Shadow mode · not recommendations</span></div>
+    <p class="edge" id="betintro"></p>
+    <div class="scroll"><table class="sumtbl" id="betsum"></table></div>
+    <div id="tracks"></div>
+  </section>
+
+  <section id="pickers" hidden>
+    <div class="sechead"><h2>Published pickers</h2><span class="pill">Logged and scored · not bets</span></div>
+    <p class="edge" id="pickintro"></p>
+    <div class="strip" id="pickstrip"></div>
+    <div class="scroll"><table class="sumtbl" id="picktbl"></table></div>
+  </section>
+
+  <section id="sec-season">
+    <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
+    <div class="strip" id="stdstrip"></div>
+    <p class="stdnote" id="stdnote"></p>
+    <div class="wks" id="std"></div>
+  </section>
+
+  <section id="sec-test">
+    <div class="sechead"><h2>Model vs Vegas, past seasons</h2><span class="pill">fit only on earlier seasons</span></div>
+    <p class="edge" id="bttxt"></p>
+    <div class="scroll"><table class="bttbl" id="bt"></table></div>
+  </section>
+
+  <section id="sec-research" class="research">
+    <div class="sechead"><h2>What the testing says</h2></div>
+    <div id="resmd"></div>
   </section>
 
   <section id="promos">
@@ -82,31 +121,6 @@ header .xlink{justify-self:start}
     <h3 class="pch">Best places for a bonus bet this week</h3>
     <p class="edge">A bonus bet returns only the profit, so it keeps the most value at longer prices: expected cash per $1 of bonus = fair win chance × (decimal odds − 1). Prices +150 to +500 at your books, valued at Pinnacle's fair price. Treat the longest prices with care: in 2021–25, +300 and longer college dogs won a little less often than Pinnacle's price implied.</p>
     <div class="scroll"><table class="sumtbl" id="cp-best"></table></div>
-  </section>
-
-  <section id="betswrap">
-    <div class="sechead"><h2>Paper bets</h2><span class="pill">Shadow mode · not recommendations</span></div>
-    <p class="edge" id="betintro"></p>
-    <div class="scroll"><table class="sumtbl" id="betsum"></table></div>
-    <div id="tracks"></div>
-  </section>
-
-  <section id="sec-season">
-    <div class="sechead"><h2 id="stdh">This season so far</h2><span class="edge" id="stdsum"></span></div>
-    <div class="strip" id="stdstrip"></div>
-    <p class="stdnote" id="stdnote"></p>
-    <div class="wks" id="std"></div>
-  </section>
-
-  <section id="sec-test">
-    <div class="sechead"><h2>Model vs Vegas, past seasons</h2><span class="pill">fit only on earlier seasons</span></div>
-    <p class="edge" id="bttxt"></p>
-    <div class="scroll"><table class="bttbl" id="bt"></table></div>
-  </section>
-
-  <section id="sec-research" class="research">
-    <div class="sechead"><h2>What the testing says</h2></div>
-    <div id="resmd"></div>
   </section>
 
   <section class="notes" id="sec-notes">
@@ -337,7 +351,7 @@ renderGames();
     if(k==='clock') return roi*n/(n+100); return (r.avg_clv||0)*n/(n+20) + roi*n/(n+200); };
   T.forEach(t=>t.push(liveScore(t[0],t[1])));
   T.sort((a,b)=>(a[6]==null)-(b[6]==null) || (a[6]!=null ? b[6]-a[6] : ES[b[0]]-ES[a[0]]));
-  $('betintro').innerHTML = `Everything here is paper: logged and scored, not recommended. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit. Shop-vs-sharp stakes are quarter Kelly against Pinnacle's fair price, capped at 2% of bankroll; the other tracks are flat 1 unit. <b>#</b> is the rank: tracks with graded bets first, by <b>score</b> = average closing-line value plus ROI, each shrunk toward 0 while the sample is small (+5% ≈ worth 5% per bet so far), then the rest by research evidence. Tap a track name to jump to its bets. Placed a bet? Tap <b>I placed it</b> next to it (or on the phone alert); your real bets are scored on the <a href="../#mybets">NFL page under My bets</a>.`;
+  $('betintro').innerHTML = `Everything here is paper: logged and scored, not recommended. A track becomes a recommendation only after enough bets beat the closing line by more than luck explains <b>and</b> make a profit. Shop-vs-sharp stakes are quarter Kelly against Pinnacle's fair price, capped at 2% of bankroll; the other tracks are flat 1 unit. <b>#</b> is the rank: tracks with graded bets first, by <b>score</b> = average closing-line value plus ROI, each shrunk toward 0 while the sample is small (+5% ≈ worth 5% per bet so far), then the rest by research evidence. Tap a track name to jump to its bets. Placed a bet? Tap <b>I placed it</b> next to it (or on the phone alert); your real college bets show under <a href="#mybets">My bets</a> above.`;
   const td=(l,h,c='')=>`<td data-l="${l}"${c?` class="${c}"`:''}><div>${h}</div></td>`;
   const rankTip='Tracks with graded bets come first, ranked by a live score: closing-line value plus profit, each shrunk toward zero while the sample is small. Tracks with nothing graded yet follow, ranked by their research evidence. The order updates every run.';
   $('betsum').innerHTML = `<thead><tr><th title="${esc(rankTip)}">#</th><th>Track</th><th>What it bets</th><th>When</th><th>Open</th><th>Graded</th><th>W–L</th><th>Avg CLV</th><th>Status</th><th>Evidence</th></tr></thead><tbody>`+
@@ -360,6 +374,49 @@ renderGames();
       gr.map(b=>`<tr><td style="text-align:left;font-family:var(--body)">${esc(b.away)} @ ${esc(b.home)}</td><td style="text-align:left">${label(b)}</td><td>${od(b.price)}</td><td>${esc(b.final||'')}</td><td class="${b.result==='win'?'win':b.result==='loss'?'loss':''}">${b.result}</td><td>${b.profit_units>0?'+':''}${b.profit_units}</td><td>${b.clv!=null?sgn(b.clv):'—'}</td></tr>`).join('')+'</tbody>' : '';
     return `<div class="track" id="trk-${k}"><h3><span class="rkn">#${i+1}</span> ${name} <span class="pill ${live?'live':''}">${live?'live':'shadow'}</span></h3><div class="strip">${stats}</div><div class="scroll"><table>${openT}</table></div>${grT?`<div class="scroll"><table>${grT}</table></div>`:''}</div>`;
   }).join('');
+})();
+
+// My bets: your real college bets (logged through the "I placed it" form), scored against the paper bet they came from
+(function(){
+  const M=C.placed||{}, B=M.bets||[], usd=x=>x==null?'—':`${x<0?'−':''}$${Math.abs(x).toFixed(2)}`;
+  const NEWU='https://github.com/hollingswood/nfl-win-probability/issues/new?template=placed_bet.yml';
+  $('mybetsintro').innerHTML = `College bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet, fix the odds and stake you got, and submit; it shows up here after the next update. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a> and write <b>college</b> in the notes. NFL bets are on the <a href="../#mybets">NFL page</a>.`;
+  const pushes=B.filter(b=>b.result==='push').length, nOpen=B.filter(b=>b.status==='open').length;
+  const staked=B.filter(b=>b.result==='win'||b.result==='loss').reduce((a,b)=>a+(b.stake||0),0);
+  const tile=(v,t,cls='')=>`<div class="stat"><b class="num ${cls}">${v}</b><span>${t}</span></div>`;
+  $('mybetsstrip').innerHTML = B.length ? [
+    tile(`${M.wins||0}–${M.losses||0}${pushes?`–${pushes}`:''}`, `record · ${M.graded||0} graded${nOpen?`, ${nOpen} open`:''}`),
+    tile(usd(M.profit), `profit on ${usd(staked)} staked`, (M.profit||0)>0?'win':(M.profit||0)<0?'loss':''),
+    tile(M.roi!=null?sgn(M.roi):'—', 'ROI (profit ÷ amount staked)', (M.roi||0)>0?'win':(M.roi||0)<0?'loss':''),
+    tile(M.avg_clv!=null?sgn(M.avg_clv):'—', `avg closing line value${M.avg_price_vs_paper!=null?` · your price vs the track's ${sgn(M.avg_price_vs_paper)}`:''}`),
+    tile(M.open_stake?usd(M.open_stake):'$0.00', 'still riding (open bets)'),
+  ].join('') : '';
+  const t=$('mybetstbl');
+  if(!B.length){ t.innerHTML='<tbody><tr><td style="text-align:left;font-family:var(--body)">No college bets logged yet.</td></tr></tbody>'; return; }
+  const ST={open:'open',graded:'graded',check:'check result',manual:'manual',unmatched:'no matching paper bet'};
+  const td=(l,h,c='')=>`<td data-l="${l}"${c?` class="${c}"`:''}><div>${h}</div></td>`;
+  t.innerHTML=`<thead><tr><th>Game</th><th>Logged</th><th>Pick</th><th>Book</th><th>Your odds</th><th>Stake</th><th title="Your payout vs the price the paper track logged">vs track</th><th>CLV</th><th>Result</th><th>Profit</th></tr></thead><tbody>`+
+    B.map(b=>`<tr>${td('Game', b.kickoff_utc ? new Date(b.kickoff_utc).toLocaleString('en-US',{...AZT,weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : b.gameday||'—')}${td('Logged',new Date(b.logged_at).toLocaleString('en-US',{...AZT,month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}${td('Pick',`<b>${esc(b.pick)}</b>${b.point!=null?` (${b.point})`:''}${b.track?`<small> · ${esc(b.track)}</small>`:''}`,'wr')}${td('Book',esc(b.book))}${td('Your odds',esc(b.odds))}${td('Stake',usd(b.stake))}${td('vs track',b.price_vs_paper!=null?sgn(b.price_vs_paper):'—')}${td('CLV',b.clv!=null?sgn(b.clv):'—')}${td('Result',b.result||ST[b.status]||b.status,b.result==='win'?'win':b.result==='loss'?'loss':'')}${td('Profit',b.profit!=null?usd(b.profit):'—')}</tr>`).join('')+'</tbody>';
+})();
+
+// published college pickers (picks_score.py): graded at the closing line
+(function(){
+  const K0=C.picks; if(!K0) return;
+  const K={...K0, ...((K0.by_sport||{}).cfb||{})};
+  if(!K.picks_graded && !(K.pickers||[]).length) return;
+  $('pickers').hidden=false;
+  const t=K0.hot_test||{}, o=K.overall||{}, wl=(w,l)=>`${w}–${l}`;
+  $('pickintro').innerHTML=`College picks published by CBS, Yahoo, ESPN, Fox, SI, team sites and betting sites, plus Bluesky accounts that post picks, read by AI with the time we first saw them and graded at the <b>closing</b> line (DraftKings close from CollegeFootballData). Spreads and totals count 1 unit at −110; moneylines at the closing price. <b>Line value</b> = points the market moved toward the pick after it was posted. The pre-registered <b>hot-picker test</b> (NFL and college pooled) follows anyone who went 60%+ on 8+ picks over the previous 4 weeks; it needs 200 followed picks covering over 52.4% (p < 0.05) and beating everyone else. Logging only; nothing bets.`;
+  $('pickstrip').innerHTML=[
+    [wl(o.w||0,o.l||0), `college picks vs the close · ${(o.units||0)>0?'+':''}${(o.units||0).toFixed(1)} units`],
+    [o.avg_line_value!=null?`${o.avg_line_value>0?'+':''}${o.avg_line_value}`:'—', 'avg. line value, pts'],
+    [t.followed?wl(t.w,t.l):'—', `hot-picker test (pooled): ${t.followed||0} / 200 followed${t.cover_rate!=null?` · ${Math.round(t.cover_rate*100)}% (everyone else ${t.others_rate!=null?Math.round(t.others_rate*100)+'%':'—'})`:''}`],
+    [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot this week: ${K.hot_now.map(h=>`${esc(h.picker)} (${h.record})`).join(', ')}`:'hot college pickers this week'],
+  ].map(([b,x])=>`<div class="stat"><b class="num">${esc(String(b))}</b><span>${x}</span></div>`).join('');
+  const ALL=K.pickers||[], R=ALL.slice(0,40);
+  const row=x=>`<tr><td style="text-align:left"><b>${esc(x.picker)}</b></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
+  $('picktbl').innerHTML = R.length ? `<caption style="text-align:left;caption-side:top;font:13px var(--body);color:var(--muted);padding-bottom:6px">${K.n_pickers||ALL.length} college pickers tracked · graded records first, best units on top${ALL.length>R.length?` · top ${R.length} shown`:''}</caption><thead><tr><th style="text-align:left">Picker</th><th style="text-align:left">Outlet</th><th>Picks logged</th><th>Graded</th><th>W–L vs close</th><th>Units</th><th title="Points the market moved toward the pick after it was posted">Line value</th></tr></thead><tbody>`+R.map(row).join('')+'</tbody>'
+    : '<tbody><tr><td style="text-align:left;font-family:var(--body)">No college picks logged yet.</td></tr></tbody>';
 })();
 
 // promo & boost calculator (college): fair win chance from Pinnacle via the graded offers

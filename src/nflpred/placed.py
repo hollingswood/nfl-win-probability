@@ -202,11 +202,24 @@ def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     return r
 
 
-def summary(hist: Path = HIST) -> dict:
+def sport_of(rec: dict, paper: dict | None) -> str:
+    """'cfb' for college bets (college ledgers, cfb* ids, Kalshi NCAAF tickers or a college note), else 'nfl'."""
+    bid = str(rec.get("bet_id") or "")
+    if paper and (paper.get("sport") == "cfb" or str(paper.get("track") or "").startswith("cfb")):
+        return "cfb"
+    if bid.startswith("cfb") or "NCAAF" in bid or re.search(r"\b(college|ncaa|cfb)\b", f"{rec.get('notes', '')} {rec.get('pick', '')}", re.I):
+        return "cfb"
+    return "nfl"
+
+
+def summary(hist: Path = HIST, sport: str | None = None) -> dict:
+    """Your logged bets scored; sport='nfl' / 'cfb' keeps one league (each page shows its own)."""
     rows = json.loads((hist / "placed_bets.json").read_text()) if (hist / "placed_bets.json").exists() else []
     led = load_ledgers(hist)
     sched = _schedule(hist.parent)
-    bets = [score(x, led, sched) for x in rows]
+    bets = [dict(score(x, led, sched), sport=sport_of(x, led.get(x.get("bet_id") or ""))) for x in rows]
+    if sport:
+        bets = [b for b in bets if b["sport"] == sport]
     g = [b for b in bets if b.get("status") == "graded"]
     staked = sum(b.get("stake") or 0 for b in g if b.get("result") != "push")
     profit = sum(b.get("profit") or 0 for b in g)
