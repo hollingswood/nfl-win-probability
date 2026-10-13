@@ -21,8 +21,10 @@ ROOT = Path(__file__).resolve().parents[2]
 HIST = ROOT / "history"
 LOG = HIST / "placed_bets.json"
 REPO_URL = "https://github.com/hollingswood/nfl-win-probability"
-FIELDS = {"Bet ID": "bet_id", "Pick": "pick", "Book": "book", "Odds you got": "odds", "Line you got": "point",
-          "Stake ($)": "stake", "Notes": "notes"}
+FIELDS = {"Bet ID": "bet_id", "Pick": "pick", "Book": "book", "Odds": "odds", "Stake ($)": "stake", "Notes": "notes",
+          "Different book? (optional)": "alt_book", "Different odds? (optional)": "alt_odds",
+          "Different line? (optional)": "point", "Notes (optional)": "notes",
+          "Odds you got": "odds", "Line you got": "point"}    # last two: labels of the first version of the form
 
 
 # ------------------------------------------------------------------------------------- links
@@ -42,11 +44,10 @@ def pick_text(b: dict) -> str:
 def log_url(b: dict) -> str:
     """Pre-filled 'I placed a bet' form for a paper bet."""
     price = b.get("price")
-    px = f"{price:+d}" if isinstance(price, int) else str(price or "")
-    # Book and odds are NOT pre-filled: GitHub's form (mobile web) reverts edited pre-filled fields to the URL
-    # value, so you couldn't change them. The track's price is shown in the title for reference instead.
-    q = {"template": "placed_bet.yml", "title": f"Placed: {pick_text(b)} (track: {px} {b.get('book', '')})".strip(),
-         "bet_id": b.get("id", ""), "pick": pick_text(b)}
+    # Pre-filled fields can't be edited reliably (GitHub's form puts the URL value back), so they are never meant
+    # to be edited: a different book / odds / line goes in the empty 'Different ...' boxes, which override them.
+    q = {"template": "placed_bet.yml", "title": f"Placed: {pick_text(b)}", "bet_id": b.get("id", ""),
+         "pick": pick_text(b), "book": b.get("book", ""), "odds": f"{price:+d}" if isinstance(price, int) else str(price or "")}
     return f"{REPO_URL}/issues/new?" + urllib.parse.urlencode(q)
 
 
@@ -110,6 +111,10 @@ def record_from_issue(issue: dict) -> dict:
 
 def _record_from_issue(issue: dict) -> dict:
     f = parse_form(issue.get("body", ""))
+    if f.get("alt_book"):   # 'Different ...' boxes override the pre-filled values
+        f["book"] = f["alt_book"]
+    if f.get("alt_odds"):
+        f["odds"] = f["alt_odds"]
     dec = to_decimal(f.get("odds", ""))
     return {"issue": issue.get("number"), "logged_at": issue.get("created_at") or datetime.now(timezone.utc).isoformat(timespec="minutes"),
             "bet_id": f.get("bet_id") or None, "pick": f.get("pick", ""), "book": f.get("book", ""),
