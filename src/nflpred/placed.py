@@ -123,6 +123,51 @@ def load_ledgers(hist: Path = HIST) -> dict:
     return out
 
 
+SPREAD_TRACKS = ("spread", "night_west", "preseason", "tuesday", "qb_news", "clock", "aplus_sp")
+
+
+def bet_key(b: dict) -> tuple | None:
+    """Same real-world bet across tracks: game, market, side (and player for props). Different numbers or prices of
+    the same side still count as the same bet (you shouldn't bet it twice)."""
+    game = b.get("game_id") or b.get("event_id")
+    if not game:
+        return None
+    m, t, side = str(b.get("market") or "").lower(), str(b.get("track") or "").lower(), str(b.get("side") or "").lower()
+    if b.get("player"):
+        cls = "prop:" + m
+    elif side in ("over", "under") or m in ("total", "totals") or "total" in t:
+        cls = "total"
+    elif m in ("spread", "spreads") or any(k in t for k in SPREAD_TRACKS):
+        cls = "spread"
+    else:
+        cls = "ml"
+    who = side if side in ("home", "away", "over", "under") else str(b.get("team") or "").lower()
+    return (str(game), cls, who, str(b.get("player") or "").lower())
+
+
+def placed_index(hist: Path = HIST) -> dict:
+    """paper bet id -> what you placed, for every paper bet (any track, NFL or college) that is the same bet as one
+    you logged, so the page can show 'placed' instead of 'I placed it' and you don't bet it twice."""
+    rows = json.loads((hist / "placed_bets.json").read_text()) if (hist / "placed_bets.json").exists() else []
+    led = load_ledgers(hist)
+    keyed: dict = {}
+    for b in led.values():
+        k = bet_key(b)
+        if k:
+            keyed.setdefault(k, []).append(b["id"])
+    out = {}
+    for r in rows:
+        src = led.get(r.get("bet_id") or "")
+        k = bet_key(src) if src else None
+        info = {"stake": r.get("stake"), "odds": r.get("odds"), "book": r.get("book"), "logged_at": r.get("logged_at"),
+                "via": src.get("track") if src else None, "pick": r.get("pick")}
+        if r.get("bet_id"):
+            out[r["bet_id"]] = info
+        for bid in keyed.get(k, []) if k else []:
+            out.setdefault(bid, dict(info, same_bet=True))
+    return out
+
+
 def _paper_decimal(b: dict) -> float | None:
     if b.get("all_in_cost"):
         return 1 / b["all_in_cost"]

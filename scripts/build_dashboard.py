@@ -179,7 +179,7 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_audit": news_audit,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules,
-            "placed": load_placed(), "log_urls": log_urls(predictions), "my_books": load_my_books(),
+            "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "my_books": load_my_books(),
             "picks": _json_or_none(ROOT / "history" / "picks_scores.json")}
 
 
@@ -195,6 +195,15 @@ def _json_or_none(path: Path):
         return json.loads(path.read_text())
     except (OSError, json.JSONDecodeError):
         return None
+
+
+def load_placed_index() -> dict:
+    try:
+        from nflpred import placed
+        return placed.placed_index(ROOT / "history")
+    except Exception as e:
+        print("placed index: skipped:", e)
+        return {}
 
 
 def load_placed() -> dict | None:
@@ -312,6 +321,7 @@ def build_cfb(site: Path) -> Path | None:
     try:   # your real college bets, and published college pickers
         from nflpred import placed
         data["placed"] = placed.summary(ROOT / "history", "cfb")
+        data["placed_index"] = placed.placed_index(ROOT / "history")
     except Exception as e:
         print("cfb placed bets skipped:", e)
     data["picks"] = _json_or_none(ROOT / "history" / "picks_scores.json")

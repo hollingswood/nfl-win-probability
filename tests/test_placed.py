@@ -564,3 +564,16 @@ def test_watch_results_only_when_a_game_ended(tmp_path):
     (tmp_path / "paper_bets_x.json").write_text(json.dumps([{"status": "open", "kickoff_utc": "2026-10-12T00:20:00+00:00"}]))
     g = P.watch_results(tmp_path, now, loader=lambda: sched)
     assert bool(g.completed.iloc[0]) and g.home_win.iloc[0] == 0.0
+
+
+def test_placed_index_marks_same_bet_across_tracks(tmp_path):
+    import json
+    from nflpred import placed as PL
+    (tmp_path / "paper_bets_aplus_ml.json").write_text(json.dumps([{"id": "G1:aplus_ml:away", "track": "aplus_ml", "game_id": "G1", "side": "away", "team": "WAS"}]))
+    (tmp_path / "paper_bets_ml_v4.json").write_text(json.dumps([{"id": "G1:ml_v4:away", "track": "ml_v4", "game_id": "G1", "side": "away", "team": "WAS"},
+                                                               {"id": "G1:ml_v4:home", "track": "ml_v4", "game_id": "G1", "side": "home", "team": "SF"}]))
+    (tmp_path / "paper_bets_spread.json").write_text(json.dumps([{"id": "G1:spread:away", "track": "spread", "game_id": "G1", "side": "away", "point": 7.5}]))
+    (tmp_path / "placed_bets.json").write_text(json.dumps([{"bet_id": "G1:aplus_ml:away", "pick": "WAS ML", "book": "FanDuel", "odds": "+350", "stake": 25}]))
+    ix = PL.placed_index(tmp_path)
+    assert set(ix) == {"G1:aplus_ml:away", "G1:ml_v4:away"}           # same game/market/side; not the other side or the spread
+    assert ix["G1:ml_v4:away"]["same_bet"] and ix["G1:ml_v4:away"]["stake"] == 25
