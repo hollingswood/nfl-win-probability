@@ -71,8 +71,11 @@ def test_regrade_at_other_point():
 def test_log_url_prefills_form():
     u = PL.log_url({"id": "g:ml_v4:home", "team": "WAS", "price": 188, "book": "FanDuel", "side": "home"})
     q = parse_qs(urlparse(u).query)
-    assert q["template"] == ["placed_bet.yml"] and q["bet_id"] == ["g:ml_v4:home"] and q["odds"] == ["+188"]
-    assert q["pick"] == ["WAS ML"]
+    assert q["template"] == ["placed_bet.yml"] and q["bet_id"] == ["g:ml_v4:home"] and q["pick"] == ["WAS ML"]
+    assert "odds" not in q and "book" not in q and "+188 FanDuel" in q["title"][0]   # editable: you type what you got
+    r = PL.normalize({"odds": "-142", "decimal": 1.704, "point": -140.0, "notes": ""})   # odds typed in the line field
+    assert r["odds"] == "-140" and r["point"] is None and abs(r["decimal"] - 1.7143) < 1e-3
+    assert PL.normalize({"odds": "-105", "point": 53.5})["point"] == 53.5
 
 
 def test_spread_tracks_preseason_and_tuesday():

@@ -19,14 +19,14 @@ body:
     id: book
     attributes:
       label: Book
-      description: Where you placed it (DraftKings, FanDuel, theScore Bet, Kalshi, Robinhood...)
+      description: Where you actually placed it (DraftKings, FanDuel, theScore Bet, Kalshi, Robinhood...); the track's book is in the title
     validations:
       required: true
   - type: input
     id: odds
     attributes:
       label: Odds you got
-      description: American odds (e.g. +188 or -110). For Kalshi/Robinhood you can enter the contract price in cents (e.g. 35c).
+      description: American odds you actually got (e.g. +188 or -110); the track's price is in the title. For Kalshi/Robinhood you can enter the contract price in cents (e.g. 35c).
     validations:
       required: true
   - type: input

@@ -42,8 +42,11 @@ def pick_text(b: dict) -> str:
 def log_url(b: dict) -> str:
     """Pre-filled 'I placed a bet' form for a paper bet."""
     price = b.get("price")
-    q = {"template": "placed_bet.yml", "title": f"Placed: {pick_text(b)}", "bet_id": b.get("id", ""),
-         "pick": pick_text(b), "book": b.get("book", ""), "odds": f"{price:+d}" if isinstance(price, int) else str(price or "")}
+    px = f"{price:+d}" if isinstance(price, int) else str(price or "")
+    # Book and odds are NOT pre-filled: GitHub's form (mobile web) reverts edited pre-filled fields to the URL
+    # value, so you couldn't change them. The track's price is shown in the title for reference instead.
+    q = {"template": "placed_bet.yml", "title": f"Placed: {pick_text(b)} (track: {px} {b.get('book', '')})".strip(),
+         "bet_id": b.get("id", ""), "pick": pick_text(b)}
     return f"{REPO_URL}/issues/new?" + urllib.parse.urlencode(q)
 
 
@@ -89,7 +92,23 @@ def _num(s: str) -> float | None:
         return None
 
 
+def normalize(rec: dict) -> dict:
+    """Odds typed into the 'Line you got' field (the form wouldn't let the odds field change): a 'line' of 100+ in
+    absolute value is American odds, not a spread/total number."""
+    p = rec.get("point")
+    if p is not None and abs(p) >= 100:
+        odds = f"{p:+.0f}"
+        dec = to_decimal(odds)
+        rec = dict(rec, odds=odds, decimal=round(dec, 4) if dec else rec.get("decimal"), point=None,
+                   notes=((rec.get("notes") or "") + " (odds taken from the line field)").strip())
+    return rec
+
+
 def record_from_issue(issue: dict) -> dict:
+    return normalize(_record_from_issue(issue))
+
+
+def _record_from_issue(issue: dict) -> dict:
     f = parse_form(issue.get("body", ""))
     dec = to_decimal(f.get("odds", ""))
     return {"issue": issue.get("number"), "logged_at": issue.get("created_at") or datetime.now(timezone.utc).isoformat(timespec="minutes"),
@@ -156,7 +175,7 @@ def placed_index(hist: Path = HIST) -> dict:
         if k:
             keyed.setdefault(k, []).append(b["id"])
     out = {}
-    for r in rows:
+    for r in map(normalize, rows):
         src = led.get(r.get("bet_id") or "")
         k = bet_key(src) if src else None
         info = {"stake": r.get("stake"), "odds": r.get("odds"), "book": r.get("book"), "logged_at": r.get("logged_at"),
@@ -225,6 +244,9 @@ def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     if not b:
         r["status"] = "manual" if not rec.get("bet_id") else "unmatched"
         return r
+    away, home = b.get("away_team") or b.get("away"), b.get("home_team") or b.get("home")
+    if away and home:
+        r["matchup"] = f"{away} @ {home}"
     r.update(track=b.get("track"), paper_price=b.get("price"), paper_book=b.get("book"), game_id=b.get("game_id"),
              gameday=b.get("gameday"), paper_point=b.get("point"), kickoff_utc=kickoff_of(b, schedule))
     pd_, ud = _paper_decimal(b), rec.get("decimal")
@@ -262,7 +284,7 @@ def summary(hist: Path = HIST, sport: str | None = None) -> dict:
     rows = json.loads((hist / "placed_bets.json").read_text()) if (hist / "placed_bets.json").exists() else []
     led = load_ledgers(hist)
     sched = _schedule(hist.parent)
-    bets = [dict(score(x, led, sched), sport=sport_of(x, led.get(x.get("bet_id") or ""))) for x in rows]
+    bets = [dict(score(normalize(x), led, sched), sport=sport_of(x, led.get(x.get("bet_id") or ""))) for x in rows]
     if sport:
         bets = [b for b in bets if b["sport"] == sport]
     g = [b for b in bets if b.get("status") == "graded"]
