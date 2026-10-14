@@ -116,11 +116,12 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
         ml = {home: _dec(r.home_ml), away: _dec(r.away_ml)}
         picked = cmatch(side)
         gid, week, kick = str(r.game_id), int(r.week), r.kick
-    out = {"game_id": str(gid), "week": week, "kick": kick.isoformat()}
+    out = {"game_id": str(gid), "week": week, "kick": kick.isoformat(), "away_actual": away, "home_actual": home}
     if mk == "total":
         if total is None or side.lower() not in ("over", "under"):
             return None
         d = (hs + as_ - total) * (1 if side.lower() == "over" else -1)
+        out["close_line"], out["final"] = total, f"{int(as_)}-{int(hs)}"
         out["result"] = "push" if d == 0 else "win" if d > 0 else "loss"
         out["units"] = 0.0 if d == 0 else (WIN_110 if d > 0 else -1.0)
         st = p.get("line")
@@ -135,6 +136,7 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
             return None
         close_pick = -home_margin_line if picked == home else home_margin_line    # picked team's spread at the close
         d = pm + close_pick
+        out["close_line"], out["final"] = close_pick, f"{int(as_)}-{int(hs)}"
         out["result"] = "push" if d == 0 else "win" if d > 0 else "loss"
         out["units"] = 0.0 if d == 0 else (WIN_110 if d > 0 else -1.0)
         st = p.get("line")
@@ -142,6 +144,9 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
             out["line_value"] = round(st - close_pick, 2)    # + = picker's number was better than the close
         return out
     if mk == "moneyline":
+        out["final"] = f"{int(as_)}-{int(hs)}"
+        d0 = ml.get(picked)
+        out["close_line"] = (round((d0 - 1) * 100) if d0 >= 2 else round(-100 / (d0 - 1))) if d0 else None
         out["result"] = "win" if pm > 0 else "loss" if pm < 0 else "push"
         d = ml.get(picked)
         out["units"] = (round(d - 1, 3) if pm > 0 else -1.0 if pm < 0 else 0.0) if d else None
@@ -161,6 +166,12 @@ def _p_cover(w: int, n: int, p0: float) -> float:
         return 1.0
     mu, sd = n * p0, math.sqrt(n * p0 * (1 - p0))
     return 0.5 * math.erfc(((w - 0.5) - mu) / sd / math.sqrt(2))
+
+
+def _detail(p: dict) -> dict:
+    return {"picker": picker_of(p), "sport": p.get("sport"), "seen_at": p.get("seen_at"), "away": p.get("away_team"),
+            "home": p.get("home_team"), "market": p.get("market"), "pick": p.get("pick"), "line": p.get("line"),
+            "link": p.get("link"), "quote": (p.get("confidence_words") or "")[:160]}
 
 
 def table(graded: list[dict], logged: dict) -> list[dict]:
@@ -208,6 +219,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     cmatch = team_matcher(sorted(set(cfb.home) | set(cfb.away))) if len(cfb) else (lambda s: None)
     graded, seen_keys, late = [], set(), 0
     logged: dict = {}                 # every distinct NFL / college pick per picker (graded, pending or late)
+    pending: list = []                # recent picks whose games haven't been graded yet (shown when you open a picker)
     for p in picks:
         k = (picker_of(p), p.get("sport"), p.get("home_team"), p.get("away_team"), p.get("market"), str(p.get("pick")).lower())
         if k in seen_keys:            # the same pick repeated in another article / run
@@ -222,6 +234,8 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         except Exception:
             g = None
         if not g:
+            if p.get("sport") in ("nfl", "cfb") and now - datetime.fromisoformat(p["seen_at"]) <= timedelta(days=12):
+                pending.append(_detail(p))      # game not played yet (or not matched yet)
             continue
         if g.get("late"):
             late += 1
@@ -230,7 +244,9 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
                     logged[key]["late"] += 1
             continue
         graded.append({**g, "picker": picker_of(p), "sport": p.get("sport"), "market": p.get("market"), "pick": p.get("pick"),
-                       "line": p.get("line"), "seen_at": p["seen_at"], "outlet": p.get("outlet") or p.get("source")})
+                       "line": p.get("line"), "seen_at": p["seen_at"], "outlet": p.get("outlet") or p.get("source"),
+                       "away": g.get("away_actual") or p.get("away_team"), "home": g.get("home_actual") or p.get("home_team"),
+                       "link": p.get("link")})
     pickers = table(graded, {k: v for k, v in logged.items() if isinstance(k, str)})
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
     H = r["hot"]
@@ -278,7 +294,32 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         gs = [x for x in graded if x["sport"] == sport]
         lg = {k[0]: v for k, v in logged.items() if isinstance(k, tuple) and k[1] == sport}
         tb = table(gs, lg)
-        by_sport[sport] = {"pickers": tb[:250], "n_pickers": len(tb), "picks_graded": len(gs),
+        shown = {x["picker"] for x in tb[:250]}
+        detail: dict = {}
+        norm = (lambda t: nfl_abbr(t) or str(t)) if sport == "nfl" else (lambda t: cmatch(t or "") or str(t))
+        gseen = set()
+        for x in sorted(gs, key=lambda x: x["kick"], reverse=True):
+            gk = (x["picker"], x["game_id"], x["market"], norm(x["pick"]))
+            if gk in gseen:      # same pick logged twice with home/away swapped
+                continue
+            gseen.add(gk)
+            if x["picker"] in shown:
+                d = detail.setdefault(x["picker"], {"pending": [], "graded": []})
+                if len(d["graded"]) < 40:
+                    d["graded"].append({k: x.get(k) for k in ("kick", "week", "away", "home", "market", "pick", "line", "close_line",
+                                                              "result", "units", "line_value", "final", "link")})
+        done = {(x["picker"], x["market"], norm(x["pick"])) for x in gs}
+        seen_p = set()
+        for x in sorted((y for y in pending if y["sport"] == sport), key=lambda y: y["seen_at"], reverse=True):
+            key = (x["picker"], x["market"], norm(x["pick"]), norm(x["home"]))
+            if key[:3] in done or key in seen_p:     # already graded under another spelling, or a repeat
+                continue
+            seen_p.add(key)
+            if x["picker"] in shown:
+                d = detail.setdefault(x["picker"], {"pending": [], "graded": []})
+                if len(d["pending"]) < 30:
+                    d["pending"].append(x)
+        by_sport[sport] = {"pickers": tb[:250], "picks_by_picker": detail, "n_pickers": len(tb), "picks_graded": len(gs),
                            "picks_logged": sum(v["n"] for v in lg.values()), "hot_now": [h for h in hot_now if h["sport"] == sport],
                            "overall": {"w": sum(x["result"] == "win" for x in gs), "l": sum(x["result"] == "loss" for x in gs),
                                        "units": round(sum(x.get("units") or 0 for x in gs), 2),

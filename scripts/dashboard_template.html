@@ -98,6 +98,30 @@ section{display:grid;gap:14px}
   .sumtbl td.nw,.sumtbl td.ev{min-width:0}
 }
 .betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
+.pkbtn{font:inherit;font-weight:700;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left;border-bottom:1px dotted var(--muted)}
+.pkbtn:hover,.pkbtn:focus-visible{color:var(--accent);border-color:var(--accent)}
+dialog.pkdlg{max-width:860px;width:calc(100% - 24px);max-height:86vh;padding:0;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+dialog.pkdlg::backdrop{background:rgba(0,0,0,.55)}
+.pkdlg .pkh{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.pkdlg .pkh h3{margin:0;font:700 20px/1.2 var(--display);text-transform:uppercase}
+.pkdlg .pkh small{display:block;color:var(--muted);font:13px var(--body);margin-top:4px}
+.pkdlg .pkx{font:700 20px var(--mono);background:none;border:1px solid var(--line);color:var(--ink);border-radius:2px;width:36px;height:36px;cursor:pointer}
+.pkdlg .pkb{padding:12px 16px 18px;display:grid;gap:10px}
+.pkdlg table{width:100%;border-collapse:collapse;font:13px var(--body)}
+.pkdlg th{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 6px;border-bottom:1px solid var(--line)}
+.pkdlg td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.pkdlg td,.pkdlg th{text-align:left}
+.pkdlg td.n,.pkdlg th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.pkdlg .q{color:var(--muted);font-size:12px}
+@media (max-width:640px){
+  .pkdlg thead{display:none}
+  .pkdlg table,.pkdlg tbody{display:block}
+  .pkdlg tr{display:flex;flex-wrap:wrap;gap:2px 10px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .pkdlg td{display:block;border:0;padding:0}
+  .pkdlg td:first-child{width:100%;color:var(--muted);font-size:12px}
+  .pkdlg td.n{text-align:left}
+  .pkdlg td[data-l]::before{content:attr(data-l) ' ';color:var(--muted);font-size:11px}
+}
 .track{display:grid;gap:10px;margin-top:8px}
 .track h3{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;display:flex;gap:10px;align-items:center}
 .track{scroll-margin-top:12px}
@@ -1075,6 +1099,23 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
     `<details class="wk"${i===0?' open':''}><summary><b>Week ${wk}</b><span>${W.rows.length} game${W.rows.length===1?'':'s'} · picks ${wl(W.ml)} · spread ${wl(W.ats)} · over/under ${wl(W.ou)}</span></summary>${head}${W.rows.join('')}</details>`).join('');
 })();
 
+
+// picker detail pop-up: pending picks (games not played yet) + graded picks, from picks_score.py
+function pickerDialog(K, name){
+  let d=document.getElementById('pkdlg');
+  if(!d){ d=document.createElement('dialog'); d.id='pkdlg'; d.className='pkdlg'; document.body.appendChild(d);
+    d.addEventListener('click', e=>{ if(e.target===d || e.target.closest('.pkx')) d.close(); }); }
+  const P=(K.picks_by_picker||{})[name]||{pending:[],graded:[]}, x=(K.pickers||[]).find(p=>p.picker===name)||{};
+  const sg=v=>v==null?'—':(v>0?'+':'')+v, dt=s=>s?new Date(s).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric'}):'—';
+  const game=p=>`${esc(p.away||'')} @ ${esc(p.home||'')}`;
+  const pick=p=>`<b>${esc(p.pick||'')}</b>${p.market==='moneyline'?' ML':''}${p.line!=null&&p.market!=='moneyline'?` ${sg(p.line)}`:p.line!=null?` (${sg(p.line)})`:''}`;
+  const src=p=>p.link?` <a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">source</a>`:'';
+  const pend=P.pending.length?`<table><thead><tr><th>Seen</th><th>Game</th><th>Pick</th><th>Why (their words)</th></tr></thead><tbody>${P.pending.map(p=>`<tr><td>${dt(p.seen_at)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="q">${esc(p.quote||'')}</td></tr>`).join('')}</tbody></table>`:'<p class="q">No pending picks right now.</p>';
+  const grd=P.graded.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th title="Closing line the pick is graded against">Close</th><th>Final</th><th>Result</th><th class="n">Units</th></tr></thead><tbody>${P.graded.map(p=>`<tr><td>${dt(p.kick)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="n" data-l="close">${sg(p.close_line)}</td><td class="n" data-l="final">${esc(p.final||'')}</td><td class="${p.result==='win'?'win':p.result==='loss'?'loss':''}">${esc(p.result||'')}</td><td class="n" data-l="units">${p.units==null?'—':sg(Number(p.units).toFixed(2))}</td></tr>`).join('')}</tbody></table>`:'<p class="q">Nothing graded yet.</p>';
+  d.innerHTML=`<div class="pkh"><div><h3>${esc(name)}</h3><small>${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky'))} · ${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''} vs the close · ${x.units>0?'+':''}${(x.units||0).toFixed(2)} units`:'no graded picks yet'}${x.pending?` · ${x.pending} pending`:''}</small></div><button class="pkx" aria-label="Close">×</button></div>
+    <div class="pkb"><span class="subh">Pending (${P.pending.length})</span>${pend}<span class="subh">Graded (${P.graded.length}${x.graded>P.graded.length?`, latest ${P.graded.length} of ${x.graded}`:''})</span>${grd}</div>`;
+  d.showModal(); d.scrollTop=0;
+}
 // published pickers (picks_score.py, picks_hot_rules.json): graded at the closing line
 (function(){
   const K0=D.picks; if(!K0||!K0.picks_graded) return;
@@ -1089,9 +1130,10 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
     [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot now: ${K.hot_now.map(h=>`${esc(h.picker)} (${h.record})`).join(', ')}`:'hot pickers now (none yet: needs 8+ graded picks in 4 weeks)'],
   ].map(([b,x])=>`<div class="stat"><b class="num">${esc(String(b))}</b><span>${x}</span></div>`).join('');
   const ALL=K.pickers||[], R=ALL.slice(0,40);
-  const row=x=>`<tr><td style="text-align:left"><b>${esc(x.picker)}</b></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
+  const row=x=>`<tr><td style="text-align:left"><button type="button" class="pkbtn" data-picker="${esc(x.picker)}" title="See their pending and graded picks">${esc(x.picker)}</button></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
   document.getElementById('picktbl').innerHTML = R.length ? `<caption style="text-align:left;caption-side:top;font:13px var(--body);color:var(--muted);padding-bottom:6px">${K.n_pickers||ALL.length} pickers tracked · graded records first, best units on top · picks are graded once their games are played${ALL.length>R.length?` · top ${R.length} shown`:''}</caption><thead><tr><th style="text-align:left">Picker</th><th style="text-align:left">Outlet</th><th>Picks logged</th><th>Graded</th><th>W–L vs close</th><th>Units</th><th title="Points the market moved toward the pick after it was posted">Line value</th></tr></thead><tbody>`+R.map(row).join('')+'</tbody>'
     : '<tbody><tr><td style="text-align:left;font-family:var(--body)">No picks logged yet.</td></tr></tbody>';
+  document.getElementById('picktbl').addEventListener('click', e=>{ const b=e.target.closest('.pkbtn'); if(b) pickerDialog(K, b.dataset.picker); });
 })();
 
 // vs Vegas

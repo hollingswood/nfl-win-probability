@@ -404,6 +404,23 @@ renderGames();
     B.map(b=>`<tr>${td('Game', b.kickoff_utc ? new Date(b.kickoff_utc).toLocaleString('en-US',{...AZT,weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : b.gameday||'—')}${td('Logged',new Date(b.logged_at).toLocaleString('en-US',{...AZT,month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}${td('Pick',`<b>${esc(b.pick)}</b>${b.point!=null?` (${b.point})`:''}${b.track?`<small> · ${esc(b.track)}</small>`:''}${b.matchup?`<br><small>${esc(b.matchup)}</small>`:''}`,'wr')}${td('Book',esc(b.book))}${td('Your odds',esc(b.odds))}${td('Stake',usd(b.stake))}${td('vs track',b.price_vs_paper!=null?sgn(b.price_vs_paper):'—')}${td('CLV',b.clv!=null?sgn(b.clv):'—')}${td('Result',b.result||ST[b.status]||b.status,b.result==='win'?'win':b.result==='loss'?'loss':'')}${td('Profit',b.profit!=null?usd(b.profit):'—')}</tr>`).join('')+'</tbody>';
 })();
 
+
+// picker detail pop-up: pending picks (games not played yet) + graded picks, from picks_score.py
+function pickerDialog(K, name){
+  let d=document.getElementById('pkdlg');
+  if(!d){ d=document.createElement('dialog'); d.id='pkdlg'; d.className='pkdlg'; document.body.appendChild(d);
+    d.addEventListener('click', e=>{ if(e.target===d || e.target.closest('.pkx')) d.close(); }); }
+  const P=(K.picks_by_picker||{})[name]||{pending:[],graded:[]}, x=(K.pickers||[]).find(p=>p.picker===name)||{};
+  const sg=v=>v==null?'—':(v>0?'+':'')+v, dt=s=>s?new Date(s).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric'}):'—';
+  const game=p=>`${esc(p.away||'')} @ ${esc(p.home||'')}`;
+  const pick=p=>`<b>${esc(p.pick||'')}</b>${p.market==='moneyline'?' ML':''}${p.line!=null&&p.market!=='moneyline'?` ${sg(p.line)}`:p.line!=null?` (${sg(p.line)})`:''}`;
+  const src=p=>p.link?` <a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">source</a>`:'';
+  const pend=P.pending.length?`<table><thead><tr><th>Seen</th><th>Game</th><th>Pick</th><th>Why (their words)</th></tr></thead><tbody>${P.pending.map(p=>`<tr><td>${dt(p.seen_at)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="q">${esc(p.quote||'')}</td></tr>`).join('')}</tbody></table>`:'<p class="q">No pending picks right now.</p>';
+  const grd=P.graded.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th title="Closing line the pick is graded against">Close</th><th>Final</th><th>Result</th><th class="n">Units</th></tr></thead><tbody>${P.graded.map(p=>`<tr><td>${dt(p.kick)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="n" data-l="close">${sg(p.close_line)}</td><td class="n" data-l="final">${esc(p.final||'')}</td><td class="${p.result==='win'?'win':p.result==='loss'?'loss':''}">${esc(p.result||'')}</td><td class="n" data-l="units">${p.units==null?'—':sg(Number(p.units).toFixed(2))}</td></tr>`).join('')}</tbody></table>`:'<p class="q">Nothing graded yet.</p>';
+  d.innerHTML=`<div class="pkh"><div><h3>${esc(name)}</h3><small>${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky'))} · ${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''} vs the close · ${x.units>0?'+':''}${(x.units||0).toFixed(2)} units`:'no graded picks yet'}${x.pending?` · ${x.pending} pending`:''}</small></div><button class="pkx" aria-label="Close">×</button></div>
+    <div class="pkb"><span class="subh">Pending (${P.pending.length})</span>${pend}<span class="subh">Graded (${P.graded.length}${x.graded>P.graded.length?`, latest ${P.graded.length} of ${x.graded}`:''})</span>${grd}</div>`;
+  d.showModal(); d.scrollTop=0;
+}
 // published college pickers (picks_score.py): graded at the closing line
 (function(){
   const K0=C.picks; if(!K0) return;
@@ -419,9 +436,10 @@ renderGames();
     [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot this week: ${K.hot_now.map(h=>`${esc(h.picker)} (${h.record})`).join(', ')}`:'hot college pickers this week'],
   ].map(([b,x])=>`<div class="stat"><b class="num">${esc(String(b))}</b><span>${x}</span></div>`).join('');
   const ALL=K.pickers||[], R=ALL.slice(0,40);
-  const row=x=>`<tr><td style="text-align:left"><b>${esc(x.picker)}</b></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
+  const row=x=>`<tr><td style="text-align:left"><button type="button" class="pkbtn" data-picker="${esc(x.picker)}" title="See their pending and graded picks">${esc(x.picker)}</button></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
   $('picktbl').innerHTML = R.length ? `<caption style="text-align:left;caption-side:top;font:13px var(--body);color:var(--muted);padding-bottom:6px">${K.n_pickers||ALL.length} college pickers tracked · graded records first, best units on top${ALL.length>R.length?` · top ${R.length} shown`:''}</caption><thead><tr><th style="text-align:left">Picker</th><th style="text-align:left">Outlet</th><th>Picks logged</th><th>Graded</th><th>W–L vs close</th><th>Units</th><th title="Points the market moved toward the pick after it was posted">Line value</th></tr></thead><tbody>`+R.map(row).join('')+'</tbody>'
     : '<tbody><tr><td style="text-align:left;font-family:var(--body)">No college picks logged yet.</td></tr></tbody>';
+  $('picktbl').addEventListener('click', e=>{ const b=e.target.closest('.pkbtn'); if(b) pickerDialog(K, b.dataset.picker); });
 })();
 
 // promo & boost calculator (college): fair win chance from Pinnacle via the graded offers
