@@ -106,6 +106,10 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   QB-fault sacks), fading teams off a bye (arXiv 2408.10867), college havoc (CFBD stats/game/havoc) — all fail.
   2026-10-15 (output/research/round5/ppp_totals.md, pre-registered): college totals from points per play × plays
   (season-to-date offense/defense PPP × plays, averaged) — FAIL vs the close and the opener.
+  v2 (round5/ppp_totals_v2.md): opponent-adjusted, last-season blend, both — the gap to the close predicts the
+  result slightly in 2021-25 (T2 pass, ~0.15 pt per pt) but no bet rule clears -110 (T3 FAIL); only usable as a filter
+  on price-edge bets after its own pre-registered test. Parlays (round5/parlays.md): straight and round robin on
+  ordinary legs lose more per leg; on shop-vs-sharp edge legs they raise CLV-implied ROI but drawdowns 2-5x: all FAIL.
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist

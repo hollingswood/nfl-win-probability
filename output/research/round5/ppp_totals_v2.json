@@ -1,0 +1,1107 @@
+{
+ "prereg": "output/research/round5/ppp_totals_v2_prereg.json",
+ "alpha_each_version": 0.0167,
+ "versions": {
+  "A_opponent_adjusted": {
+   "lambda": 1000,
+   "dev_mae_by_lambda": {
+    "100": 14.788,
+    "300": 14.259,
+    "1000": 14.228
+   },
+   "periods": {
+    "development_2014_20": {
+     "games": 3968,
+     "mae_projection": 14.228,
+     "mae_close": 13.27,
+     "avg_projection_minus_close": 0.86,
+     "regression_resid_on_gap": {
+      "b": 0.0025,
+      "t": 0.06,
+      "n": 3968
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 3929,
+       "wins": 1964,
+       "losses": 1965,
+       "win_rate": 0.4999,
+       "p_vs_52.38": 0.9987,
+       "overs": 2244,
+       "over_wins": 1088,
+       "unders": 1685,
+       "under_wins": 876
+      },
+      {
+       "k": 3,
+       "bets": 2565,
+       "wins": 1294,
+       "losses": 1271,
+       "win_rate": 0.5045,
+       "p_vs_52.38": 0.9761,
+       "overs": 1530,
+       "over_wins": 749,
+       "unders": 1035,
+       "under_wins": 545
+      },
+      {
+       "k": 5,
+       "bets": 1816,
+       "wins": 913,
+       "losses": 903,
+       "win_rate": 0.5028,
+       "p_vs_52.38": 0.9656,
+       "overs": 1068,
+       "over_wins": 523,
+       "unders": 748,
+       "under_wins": 390
+      },
+      {
+       "k": 7,
+       "bets": 1152,
+       "wins": 572,
+       "losses": 580,
+       "win_rate": 0.4965,
+       "p_vs_52.38": 0.9701,
+       "overs": 682,
+       "over_wins": 321,
+       "unders": 470,
+       "under_wins": 251
+      },
+      {
+       "k": 10,
+       "bets": 463,
+       "wins": 230,
+       "losses": 233,
+       "win_rate": 0.4968,
+       "p_vs_52.38": 0.8871,
+       "overs": 273,
+       "over_wins": 122,
+       "unders": 190,
+       "under_wins": 108
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 3,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 5,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 7,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 10,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      }
+     ]
+    },
+    "holdout_2021_25": {
+     "games": 3158,
+     "mae_projection": 13.264,
+     "mae_close": 12.583,
+     "avg_projection_minus_close": 0.42,
+     "regression_resid_on_gap": {
+      "b": 0.1205,
+      "t": 2.53,
+      "n": 3158
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 3116,
+       "wins": 1612,
+       "losses": 1504,
+       "win_rate": 0.5173,
+       "p_vs_52.38": 0.7707,
+       "overs": 1693,
+       "over_wins": 875,
+       "unders": 1423,
+       "under_wins": 737
+      },
+      {
+       "k": 3,
+       "bets": 1894,
+       "wins": 997,
+       "losses": 897,
+       "win_rate": 0.5264,
+       "p_vs_52.38": 0.4194,
+       "overs": 1064,
+       "over_wins": 553,
+       "unders": 830,
+       "under_wins": 444
+      },
+      {
+       "k": 5,
+       "bets": 1235,
+       "wins": 642,
+       "losses": 593,
+       "win_rate": 0.5198,
+       "p_vs_52.38": 0.6207,
+       "overs": 679,
+       "over_wins": 338,
+       "unders": 556,
+       "under_wins": 304
+      },
+      {
+       "k": 7,
+       "bets": 727,
+       "wins": 378,
+       "losses": 349,
+       "win_rate": 0.5199,
+       "p_vs_52.38": 0.5969,
+       "overs": 395,
+       "over_wins": 193,
+       "unders": 332,
+       "under_wins": 185
+      },
+      {
+       "k": 10,
+       "bets": 268,
+       "wins": 131,
+       "losses": 137,
+       "win_rate": 0.4888,
+       "p_vs_52.38": 0.8865,
+       "overs": 129,
+       "over_wins": 58,
+       "unders": 139,
+       "under_wins": 73
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 3131,
+       "wins": 1617,
+       "losses": 1514,
+       "win_rate": 0.5164,
+       "p_vs_52.38": 0.8,
+       "overs": 1582,
+       "over_wins": 797,
+       "unders": 1549,
+       "under_wins": 820
+      },
+      {
+       "k": 3,
+       "bets": 1819,
+       "wins": 962,
+       "losses": 857,
+       "win_rate": 0.5289,
+       "p_vs_52.38": 0.3413,
+       "overs": 920,
+       "over_wins": 468,
+       "unders": 899,
+       "under_wins": 494
+      },
+      {
+       "k": 5,
+       "bets": 1117,
+       "wins": 592,
+       "losses": 525,
+       "win_rate": 0.53,
+       "p_vs_52.38": 0.3504,
+       "overs": 558,
+       "over_wins": 283,
+       "unders": 559,
+       "under_wins": 309
+      },
+      {
+       "k": 7,
+       "bets": 629,
+       "wins": 332,
+       "losses": 297,
+       "win_rate": 0.5278,
+       "p_vs_52.38": 0.4356,
+       "overs": 313,
+       "over_wins": 152,
+       "unders": 316,
+       "under_wins": 180
+      },
+      {
+       "k": 10,
+       "bets": 201,
+       "wins": 110,
+       "losses": 91,
+       "win_rate": 0.5473,
+       "p_vs_52.38": 0.2758,
+       "overs": 105,
+       "over_wins": 50,
+       "unders": 96,
+       "under_wins": 60
+      }
+     ]
+    }
+   },
+   "T2": {
+    "dev_sign": 1,
+    "holdout_t": 2.53,
+    "p_one_sided": 0.0057,
+    "pass": true
+   },
+   "T3": {
+    "k_from_dev": 3,
+    "holdout": {
+     "k": 3,
+     "bets": 1894,
+     "wins": 997,
+     "losses": 897,
+     "win_rate": 0.5264,
+     "p_vs_52.38": 0.4194,
+     "overs": 1064,
+     "over_wins": 553,
+     "unders": 830,
+     "under_wins": 444
+    },
+    "pass": false
+   },
+   "season_2026_info": {
+    "games": 173,
+    "bets_vs_close": [
+     {
+      "k": 0,
+      "bets": 173,
+      "wins": 77,
+      "losses": 96,
+      "win_rate": 0.4451,
+      "p_vs_52.38": 0.9842,
+      "overs": 130,
+      "over_wins": 60,
+      "unders": 43,
+      "under_wins": 17
+     },
+     {
+      "k": 3,
+      "bets": 94,
+      "wins": 44,
+      "losses": 50,
+      "win_rate": 0.4681,
+      "p_vs_52.38": 0.882,
+      "overs": 81,
+      "over_wins": 38,
+      "unders": 13,
+      "under_wins": 6
+     },
+     {
+      "k": 5,
+      "bets": 60,
+      "wins": 28,
+      "losses": 32,
+      "win_rate": 0.4667,
+      "p_vs_52.38": 0.845,
+      "overs": 56,
+      "over_wins": 28,
+      "unders": 4,
+      "under_wins": 0
+     },
+     {
+      "k": 7,
+      "bets": 34,
+      "wins": 19,
+      "losses": 15,
+      "win_rate": 0.5588,
+      "p_vs_52.38": 0.4062,
+      "overs": 34,
+      "over_wins": 19,
+      "unders": 0,
+      "under_wins": 0
+     },
+     {
+      "k": 10,
+      "bets": 12,
+      "wins": 8,
+      "losses": 4,
+      "win_rate": 0.6667,
+      "p_vs_52.38": 0.2414,
+      "overs": 12,
+      "over_wins": 8,
+      "unders": 0,
+      "under_wins": 0
+     }
+    ]
+   }
+  },
+  "B_last_season_blend": {
+   "w": 4,
+   "dev_mae_by_w": {
+    "2": 13.851,
+    "4": 13.822,
+    "8": 13.851
+   },
+   "periods": {
+    "development_2014_20": {
+     "games": 4966,
+     "mae_projection": 13.822,
+     "mae_close": 13.239,
+     "avg_projection_minus_close": 1.01,
+     "regression_resid_on_gap": {
+      "b": 0.0059,
+      "t": 0.12,
+      "n": 4966
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 4915,
+       "wins": 2473,
+       "losses": 2442,
+       "win_rate": 0.5032,
+       "p_vs_52.38": 0.9982,
+       "overs": 2898,
+       "over_wins": 1417,
+       "unders": 2017,
+       "under_wins": 1056
+      },
+      {
+       "k": 3,
+       "bets": 2718,
+       "wins": 1349,
+       "losses": 1369,
+       "win_rate": 0.4963,
+       "p_vs_52.38": 0.9981,
+       "overs": 1722,
+       "over_wins": 825,
+       "unders": 996,
+       "under_wins": 524
+      },
+      {
+       "k": 5,
+       "bets": 1542,
+       "wins": 768,
+       "losses": 774,
+       "win_rate": 0.4981,
+       "p_vs_52.38": 0.9798,
+       "overs": 1004,
+       "over_wins": 480,
+       "unders": 538,
+       "under_wins": 288
+      },
+      {
+       "k": 7,
+       "bets": 809,
+       "wins": 399,
+       "losses": 410,
+       "win_rate": 0.4932,
+       "p_vs_52.38": 0.9623,
+       "overs": 530,
+       "over_wins": 246,
+       "unders": 279,
+       "under_wins": 153
+      },
+      {
+       "k": 10,
+       "bets": 218,
+       "wins": 97,
+       "losses": 121,
+       "win_rate": 0.445,
+       "p_vs_52.38": 0.9918,
+       "overs": 138,
+       "over_wins": 57,
+       "unders": 80,
+       "under_wins": 40
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 3,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 5,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 7,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 10,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      }
+     ]
+    },
+    "holdout_2021_25": {
+     "games": 3935,
+     "mae_projection": 13.056,
+     "mae_close": 12.561,
+     "avg_projection_minus_close": 1.51,
+     "regression_resid_on_gap": {
+      "b": 0.1486,
+      "t": 2.86,
+      "n": 3935
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 3883,
+       "wins": 2017,
+       "losses": 1866,
+       "win_rate": 0.5194,
+       "p_vs_52.38": 0.7121,
+       "overs": 2478,
+       "over_wins": 1263,
+       "unders": 1405,
+       "under_wins": 754
+      },
+      {
+       "k": 3,
+       "bets": 2050,
+       "wins": 1066,
+       "losses": 984,
+       "win_rate": 0.52,
+       "p_vs_52.38": 0.643,
+       "overs": 1477,
+       "over_wins": 751,
+       "unders": 573,
+       "under_wins": 315
+      },
+      {
+       "k": 5,
+       "bets": 1111,
+       "wins": 562,
+       "losses": 549,
+       "win_rate": 0.5059,
+       "p_vs_52.38": 0.8903,
+       "overs": 824,
+       "over_wins": 401,
+       "unders": 287,
+       "under_wins": 161
+      },
+      {
+       "k": 7,
+       "bets": 528,
+       "wins": 277,
+       "losses": 251,
+       "win_rate": 0.5246,
+       "p_vs_52.38": 0.5023,
+       "overs": 390,
+       "over_wins": 197,
+       "unders": 138,
+       "under_wins": 80
+      },
+      {
+       "k": 10,
+       "bets": 128,
+       "wins": 61,
+       "losses": 67,
+       "win_rate": 0.4766,
+       "p_vs_52.38": 0.8767,
+       "overs": 95,
+       "over_wins": 43,
+       "unders": 33,
+       "under_wins": 18
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 3900,
+       "wins": 2028,
+       "losses": 1872,
+       "win_rate": 0.52,
+       "p_vs_52.38": 0.6884,
+       "overs": 2429,
+       "over_wins": 1219,
+       "unders": 1471,
+       "under_wins": 809
+      },
+      {
+       "k": 3,
+       "bets": 1765,
+       "wins": 915,
+       "losses": 850,
+       "win_rate": 0.5184,
+       "p_vs_52.38": 0.6833,
+       "overs": 1213,
+       "over_wins": 611,
+       "unders": 552,
+       "under_wins": 304
+      },
+      {
+       "k": 5,
+       "bets": 839,
+       "wins": 435,
+       "losses": 404,
+       "win_rate": 0.5185,
+       "p_vs_52.38": 0.6344,
+       "overs": 612,
+       "over_wins": 303,
+       "unders": 227,
+       "under_wins": 132
+      },
+      {
+       "k": 7,
+       "bets": 332,
+       "wins": 174,
+       "losses": 158,
+       "win_rate": 0.5241,
+       "p_vs_52.38": 0.5176,
+       "overs": 239,
+       "over_wins": 120,
+       "unders": 93,
+       "under_wins": 54
+      },
+      {
+       "k": 10,
+       "bets": 82,
+       "wins": 40,
+       "losses": 42,
+       "win_rate": 0.4878,
+       "p_vs_52.38": 0.7773,
+       "overs": 57,
+       "over_wins": 25,
+       "unders": 25,
+       "under_wins": 15
+      }
+     ]
+    }
+   },
+   "T2": {
+    "dev_sign": 1,
+    "holdout_t": 2.86,
+    "p_one_sided": 0.0021,
+    "pass": true
+   },
+   "T3": {
+    "k_from_dev": 0,
+    "holdout": {
+     "k": 0,
+     "bets": 3883,
+     "wins": 2017,
+     "losses": 1866,
+     "win_rate": 0.5194,
+     "p_vs_52.38": 0.7121,
+     "overs": 2478,
+     "over_wins": 1263,
+     "unders": 1405,
+     "under_wins": 754
+    },
+    "pass": false
+   },
+   "season_2026_info": {
+    "games": 333,
+    "bets_vs_close": [
+     {
+      "k": 0,
+      "bets": 333,
+      "wins": 158,
+      "losses": 175,
+      "win_rate": 0.4745,
+      "p_vs_52.38": 0.9684,
+      "overs": 242,
+      "over_wins": 118,
+      "unders": 91,
+      "under_wins": 40
+     },
+     {
+      "k": 3,
+      "bets": 169,
+      "wins": 75,
+      "losses": 94,
+      "win_rate": 0.4438,
+      "p_vs_52.38": 0.9846,
+      "overs": 140,
+      "over_wins": 67,
+      "unders": 29,
+      "under_wins": 8
+     },
+     {
+      "k": 5,
+      "bets": 86,
+      "wins": 41,
+      "losses": 45,
+      "win_rate": 0.4767,
+      "p_vs_52.38": 0.8369,
+      "overs": 72,
+      "over_wins": 37,
+      "unders": 14,
+      "under_wins": 4
+     },
+     {
+      "k": 7,
+      "bets": 34,
+      "wins": 18,
+      "losses": 16,
+      "win_rate": 0.5294,
+      "p_vs_52.38": 0.5423,
+      "overs": 32,
+      "over_wins": 18,
+      "unders": 2,
+      "under_wins": 0
+     },
+     {
+      "k": 10,
+      "bets": 9,
+      "wins": 3,
+      "losses": 6,
+      "win_rate": 0.3333,
+      "p_vs_52.38": 0.9303,
+      "overs": 8,
+      "over_wins": 3,
+      "unders": 1,
+      "under_wins": 0
+     }
+    ]
+   }
+  },
+  "C_both": {
+   "lambda": 1000,
+   "dev_mae_by_lambda": {
+    "100": 14.846,
+    "300": 14.223,
+    "1000": 14.002
+   },
+   "periods": {
+    "development_2014_20": {
+     "games": 4966,
+     "mae_projection": 14.002,
+     "mae_close": 13.239,
+     "avg_projection_minus_close": 0.45,
+     "regression_resid_on_gap": {
+      "b": 0.0294,
+      "t": 0.76,
+      "n": 4966
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 4915,
+       "wins": 2474,
+       "losses": 2441,
+       "win_rate": 0.5034,
+       "p_vs_52.38": 0.998,
+       "overs": 2671,
+       "over_wins": 1304,
+       "unders": 2244,
+       "under_wins": 1170
+      },
+      {
+       "k": 3,
+       "bets": 3023,
+       "wins": 1532,
+       "losses": 1491,
+       "win_rate": 0.5068,
+       "p_vs_52.38": 0.9707,
+       "overs": 1682,
+       "over_wins": 819,
+       "unders": 1341,
+       "under_wins": 713
+      },
+      {
+       "k": 5,
+       "bets": 2029,
+       "wins": 1047,
+       "losses": 982,
+       "win_rate": 0.516,
+       "p_vs_52.38": 0.7655,
+       "overs": 1155,
+       "over_wins": 572,
+       "unders": 874,
+       "under_wins": 475
+      },
+      {
+       "k": 7,
+       "bets": 1265,
+       "wins": 657,
+       "losses": 608,
+       "win_rate": 0.5194,
+       "p_vs_52.38": 0.6345,
+       "overs": 702,
+       "over_wins": 348,
+       "unders": 563,
+       "under_wins": 309
+      },
+      {
+       "k": 10,
+       "bets": 510,
+       "wins": 275,
+       "losses": 235,
+       "win_rate": 0.5392,
+       "p_vs_52.38": 0.257,
+       "overs": 258,
+       "over_wins": 122,
+       "unders": 252,
+       "under_wins": 153
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 3,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 5,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 7,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      },
+      {
+       "k": 10,
+       "bets": 0,
+       "wins": 0,
+       "losses": 0,
+       "win_rate": null,
+       "p_vs_52.38": 1.0,
+       "overs": 0,
+       "over_wins": 0,
+       "unders": 0,
+       "under_wins": 0
+      }
+     ]
+    },
+    "holdout_2021_25": {
+     "games": 3935,
+     "mae_projection": 13.159,
+     "mae_close": 12.561,
+     "avg_projection_minus_close": -0.39,
+     "regression_resid_on_gap": {
+      "b": 0.1567,
+      "t": 3.54,
+      "n": 3935
+     },
+     "bets_vs_close": [
+      {
+       "k": 0,
+       "bets": 3883,
+       "wins": 2004,
+       "losses": 1879,
+       "win_rate": 0.5161,
+       "p_vs_52.38": 0.8358,
+       "overs": 1875,
+       "over_wins": 955,
+       "unders": 2008,
+       "under_wins": 1049
+      },
+      {
+       "k": 3,
+       "bets": 2293,
+       "wins": 1217,
+       "losses": 1076,
+       "win_rate": 0.5307,
+       "p_vs_52.38": 0.2594,
+       "overs": 1088,
+       "over_wins": 558,
+       "unders": 1205,
+       "under_wins": 659
+      },
+      {
+       "k": 5,
+       "bets": 1427,
+       "wins": 757,
+       "losses": 670,
+       "win_rate": 0.5305,
+       "p_vs_52.38": 0.316,
+       "overs": 658,
+       "over_wins": 339,
+       "unders": 769,
+       "under_wins": 418
+      },
+      {
+       "k": 7,
+       "bets": 821,
+       "wins": 455,
+       "losses": 366,
+       "win_rate": 0.5542,
+       "p_vs_52.38": 0.0437,
+       "overs": 355,
+       "over_wins": 183,
+       "unders": 466,
+       "under_wins": 272
+      },
+      {
+       "k": 10,
+       "bets": 318,
+       "wins": 167,
+       "losses": 151,
+       "win_rate": 0.5252,
+       "p_vs_52.38": 0.5031,
+       "overs": 109,
+       "over_wins": 46,
+       "unders": 209,
+       "under_wins": 121
+      }
+     ],
+     "bets_vs_open": [
+      {
+       "k": 0,
+       "bets": 3900,
+       "wins": 2028,
+       "losses": 1872,
+       "win_rate": 0.52,
+       "p_vs_52.38": 0.6884,
+       "overs": 1739,
+       "over_wins": 874,
+       "unders": 2161,
+       "under_wins": 1154
+      },
+      {
+       "k": 3,
+       "bets": 2198,
+       "wins": 1165,
+       "losses": 1033,
+       "win_rate": 0.53,
+       "p_vs_52.38": 0.2866,
+       "overs": 921,
+       "over_wins": 465,
+       "unders": 1277,
+       "under_wins": 700
+      },
+      {
+       "k": 5,
+       "bets": 1269,
+       "wins": 673,
+       "losses": 596,
+       "win_rate": 0.5303,
+       "p_vs_52.38": 0.3306,
+       "overs": 512,
+       "over_wins": 250,
+       "unders": 757,
+       "under_wins": 423
+      },
+      {
+       "k": 7,
+       "bets": 719,
+       "wins": 400,
+       "losses": 319,
+       "win_rate": 0.5563,
+       "p_vs_52.38": 0.0437,
+       "overs": 261,
+       "over_wins": 137,
+       "unders": 458,
+       "under_wins": 263
+      },
+      {
+       "k": 10,
+       "bets": 256,
+       "wins": 144,
+       "losses": 112,
+       "win_rate": 0.5625,
+       "p_vs_52.38": 0.1196,
+       "overs": 79,
+       "over_wins": 39,
+       "unders": 177,
+       "under_wins": 105
+      }
+     ]
+    }
+   },
+   "T2": {
+    "dev_sign": 1,
+    "holdout_t": 3.54,
+    "p_one_sided": 0.0002,
+    "pass": true
+   },
+   "T3": {
+    "k_from_dev": 10,
+    "holdout": {
+     "k": 10,
+     "bets": 318,
+     "wins": 167,
+     "losses": 151,
+     "win_rate": 0.5252,
+     "p_vs_52.38": 0.5031,
+     "overs": 109,
+     "over_wins": 46,
+     "unders": 209,
+     "under_wins": 121
+    },
+    "pass": false
+   },
+   "season_2026_info": {
+    "games": 333,
+    "bets_vs_close": [
+     {
+      "k": 0,
+      "bets": 333,
+      "wins": 178,
+      "losses": 155,
+      "win_rate": 0.5345,
+      "p_vs_52.38": 0.3679,
+      "overs": 240,
+      "over_wins": 127,
+      "unders": 93,
+      "under_wins": 51
+     },
+     {
+      "k": 3,
+      "bets": 179,
+      "wins": 88,
+      "losses": 91,
+      "win_rate": 0.4916,
+      "p_vs_52.38": 0.8256,
+      "overs": 152,
+      "over_wins": 75,
+      "unders": 27,
+      "under_wins": 13
+     },
+     {
+      "k": 5,
+      "bets": 98,
+      "wins": 48,
+      "losses": 50,
+      "win_rate": 0.4898,
+      "p_vs_52.38": 0.7809,
+      "overs": 92,
+      "over_wins": 45,
+      "unders": 6,
+      "under_wins": 3
+     },
+     {
+      "k": 7,
+      "bets": 64,
+      "wins": 33,
+      "losses": 31,
+      "win_rate": 0.5156,
+      "p_vs_52.38": 0.6011,
+      "overs": 59,
+      "over_wins": 31,
+      "unders": 5,
+      "under_wins": 2
+     },
+     {
+      "k": 10,
+      "bets": 18,
+      "wins": 8,
+      "losses": 10,
+      "win_rate": 0.4444,
+      "p_vs_52.38": 0.8186,
+      "overs": 18,
+      "over_wins": 8,
+      "unders": 0,
+      "under_wins": 0
+     }
+    ]
+   }
+  }
+ }
+}
