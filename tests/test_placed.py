@@ -634,3 +634,16 @@ def test_watch_results_has_closing_moneyline(tmp_path):
                            "home_moneyline": -175, "away_moneyline": 145}])
     g = P.watch_results(tmp_path, dt.datetime(2026, 10, 12, tzinfo=dt.timezone.utc), loader=lambda: sched)
     assert 0.6 < float(g.vegas_home_prob.iloc[0]) < 0.65
+
+
+def test_same_bet_from_two_tracks_is_one_alert(monkeypatch):
+    from nflpred import notify as N
+    sent = []
+    monkeypatch.setattr(N, "send", lambda t, m, *a, **k: sent.append((t, m)) or True)
+    monkeypatch.setattr(N, "account_names", lambda: None)
+    b1 = {"id": "a", "game_id": "2026_07_ATL_NO", "side": "away", "team": "ATL", "price": 112, "book": "FanDuel", "units": 0.8}
+    b2 = {**b1, "id": "b", "price": 110, "book": "DraftKings"}
+    N.new_bets({"upcoming": [], "ml_v2_bets": {"new": [b1]}, "ml_v3_bets": {"new": [b2]}})
+    assert len(sent) == 1
+    t, m = sent[0]
+    assert "+112" in t and "Moneyline v2, Moneyline v3" in m and "0.8 units" in m

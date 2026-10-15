@@ -346,10 +346,6 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     try:   # college paper track (P1/P2 moneyline price rules) + phone alerts for new bets
         from . import tracks
         res["cfb_ml_bets"] = tracks.process(now)
-        if res["cfb_ml_bets"]["new"]:
-            from nflpred import notify
-            prev = set()
-            notify.new_bets({"upcoming": [], "cfb_ml_bets": res["cfb_ml_bets"]}, prev)
     except Exception as e:
         res["cfb_ml_bets"] = {"error": str(e)}
         print("cfb track failed:", e)
@@ -362,14 +358,8 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
             res["cfb_shop_v3_bets"] = {"error": str(e)}
         try:   # A+ track: every A+ offer at your books (cfb_aplus_rules.json)
             res["cfb_aplus_bets"] = shop.process(now, shop.RULES_APLUS)
-            if res["cfb_aplus_bets"]["new"]:
-                from nflpred import notify
-                notify.new_bets({"upcoming": [], "cfb_aplus_bets": res["cfb_aplus_bets"]}, set())
         except Exception as e:
             res["cfb_aplus_bets"] = {"error": str(e)}
-        if res["cfb_shop_bets"]["new"]:
-            from nflpred import notify
-            notify.new_bets({"upcoming": [], "cfb_shop_bets": res["cfb_shop_bets"]}, set())
     except Exception as e:
         res["cfb_shop_bets"] = {"error": str(e)}
         print("cfb shop track failed:", e)
@@ -394,12 +384,17 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     try:   # body-clock paper track (rule F2; failed its screen, tracked on request)
         from . import bodyclock
         res["cfb_body_clock_bets"] = bodyclock.process(now)
-        if res["cfb_body_clock_bets"]["new"]:
-            from nflpred import notify
-            notify.new_bets({"upcoming": [], "cfb_body_clock_bets": res["cfb_body_clock_bets"]}, set())
     except Exception as e:
         res["cfb_body_clock_bets"] = {"error": str(e)}
         print("cfb body clock failed:", e)
+    try:   # one phone alert per real bet: tracks that picked the same bet this run are merged into one push
+        alerts = {k: res[k] for k in ("cfb_ml_bets", "cfb_shop_bets", "cfb_aplus_bets", "cfb_body_clock_bets")
+                  if isinstance(res.get(k), dict) and res[k].get("new")}
+        if alerts:
+            from nflpred import notify
+            notify.new_bets({"upcoming": [], **alerts}, set())
+    except Exception as e:
+        print("cfb alerts failed:", e)
     (OUT / "cfb_predictions.json").write_text(json.dumps(res, indent=1, default=str))
     print(f"cfb: {len(games)} games this week, {res['matched_odds']} with live odds")
     return res

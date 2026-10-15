@@ -147,7 +147,7 @@ def pick_of(key: str, b: dict) -> str:
     return str(team)
 
 
-def alert(key: str, b: dict, pred: dict) -> tuple[str, str]:
+def alert(key: str, b: dict, pred: dict, also_keys: list[str] | None = None) -> tuple[str, str]:
     """(title, body) for one new paper bet: what to bet, which game and when, where, how good, how much."""
     price = b.get("price")
     px = f"{price:+d}" if isinstance(price, int) else str(price or "")
@@ -160,16 +160,18 @@ def alert(key: str, b: dict, pred: dict) -> tuple[str, str]:
     if gr:
         extra.append(f"Grade {gr}")
     if b.get("edge") is not None:
-        extra.append(f"edge {b['edge']:+.1%}")
+        e = b["edge"]
+        extra.append(f"edge {e:+.1%}" if e >= 0 else f"price value {e:+.1%} (this rule bets regardless)")
     if b.get("kelly_pct") is not None:
         extra.append(f"stake {b['kelly_pct']:g}% of bankroll")
     elif b.get("units") is not None:
-        extra.append(f"{b['units']:g} unit")
+        extra.append(f"stake {b['units']:g} unit{'' if b['units'] == 1 else 's'}")
     if extra:
         lines.append(" · ".join(extra))
     if b.get("why"):
         lines.append(str(b["why"]))
-    lines.append(f"Track: {TRACK_NAMES.get(key, key)} (paper, not yet validated)")
+    names = [TRACK_NAMES.get(k, k) for k in (also_keys or [key])]
+    lines.append(f"Track{'s' if len(names) > 1 else ''}: {', '.join(dict.fromkeys(names))} (paper, not yet validated)")
     return title, "\n".join(l for l in lines if l)
 
 
@@ -215,6 +217,29 @@ def new_ids(pred: dict) -> set:
     return {b.get("id") for _, b in collect(pred)}
 
 
+def _dec(price) -> float:
+    try:
+        p = float(price)
+    except (TypeError, ValueError):
+        return 0.0
+    return 1 + (p / 100 if p > 0 else 100 / -p) if p else 0.0
+
+
+def group_same_bet(items: list[tuple[str, dict]]) -> list[tuple[str, dict, list[str]]]:
+    """One alert per real-world bet: tracks that picked the same game, market and side in this run are merged
+    (the best price is shown; the alert lists every track)."""
+    from .placed import bet_key
+    groups: dict = {}
+    for k, b in items:
+        gk = bet_key(b) or ("id", b.get("id"))
+        groups.setdefault(gk, []).append((k, b))
+    out = []
+    for g in groups.values():
+        k, b = max(g, key=lambda kb: (_dec(kb[1].get("price")), kb[0] in PRIORITY_TRACKS))
+        out.append((k, b, [k] + [x for x, _ in g if x != k]))
+    return out
+
+
 def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) -> bool:
     """exclude_ids: 'new' bets already present before this run (blocks a watch run did not refresh).
     Up to `max_single` bets: one push each with an "I placed it" button (pre-filled log form).
@@ -231,13 +256,14 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
              + "\n\nList on the dashboard (Paper bets). Paper track, not yet validated. Not financial advice.", priority=2, tags=["football"])
     if not items:
         return bool(quiet)
+    items = group_same_bet(items)
     accts = account_names()
     note = "Paper track, not yet validated. Not financial advice."
     sent = 0
     if len(items) <= max_single:
-        for k, b in items:
-            hot = k in PRIORITY_TRACKS
-            title, body = alert(k, b, pred)
+        for k, b, keys in items:
+            hot = any(x in PRIORITY_TRACKS for x in keys)
+            title, body = alert(k, b, pred, keys)
             if accts is not None and _norm(b.get("book", "")) not in accts:
                 body += "\n(no account at this book)"
             ok = send(title, f"{body}\n\nPrices move within hours. Not financial advice.",
@@ -246,8 +272,9 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
                                {"action": "view", "label": "Dashboard", "url": DASHBOARD}])
             sent += bool(ok)
     else:
-        hot = any(k in PRIORITY_TRACKS for k, _ in items)
-        lines = [bet_line(k, b, pred) for k, b in items]
+        hot = any(x in PRIORITY_TRACKS for _, _, keys in items for x in keys)
+        lines = [bet_line(k, b, pred) + (f" (also {', '.join(TRACK_NAMES.get(x, x) for x in keys if x != k)})" if len(keys) > 1 else "")
+                 for k, b, keys in items]
         ok = send(f"{len(items)} new paper bets",
                   "\n".join(lines) + f"\n\nLog the ones you place from the dashboard (Log bet links). {note}",
                   priority=4 if hot else 3, tags=["football"])
