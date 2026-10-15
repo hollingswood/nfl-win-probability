@@ -66,17 +66,45 @@ skip straight-up win predictions that give no betting line unless they say "mone
 Use full team names. Return {"picks": []} if there are none."""
 
 
-def _text(url: str, timeout: float = 20, limit: int = 15000) -> str:
+def _text(url: str, timeout: float = 20, limit: int = 90000) -> str:
     req = urllib.request.Request(url, headers=N.UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        raw = r.read(600_000).decode("utf-8", "ignore")
+        raw = r.read(2_000_000).decode("utf-8", "ignore")
     raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", raw)
     t = html.unescape(re.sub(r"<[^>]+>", " ", raw))
     return re.sub(r"\s+", " ", t)[:limit]
 
 
-def call_claude(text: str, api_key: str, timeout: float = 90) -> list[dict]:
-    payload = {"model": N.MODEL, "max_tokens": 3000, "system": "You extract published betting picks. Never invent picks.",
+CHUNK = 14000
+
+
+def chunks(text: str, size: int = CHUNK, overlap: int = 600, most: int = 7) -> list[str]:
+    """Long expert-picks pages (CBS lists every game with several analysts each) are read in pieces: one call on the
+    first 15,000 characters used to miss most of the page and cut the answer off."""
+    out, i = [], 0
+    while i < len(text) and len(out) < most:
+        out.append(text[i:i + size]); i += size - overlap
+    return out or [""]
+
+
+def pick_key(p: dict) -> tuple:
+    return (str(p.get("analyst") or "").strip().lower(), str(p.get("away_team") or "").lower(), str(p.get("home_team") or "").lower(),
+            p.get("market"), str(p.get("pick") or "").strip().lower())
+
+
+def extract(text: str, api_key: str, llm=None) -> list[dict]:
+    llm = llm or call_claude
+    got, keys = [], set()
+    for part in chunks(text):
+        for p in llm(part, api_key):
+            k = pick_key(p)
+            if k not in keys:
+                keys.add(k); got.append(p)
+    return got
+
+
+def call_claude(text: str, api_key: str, timeout: float = 120) -> list[dict]:
+    payload = {"model": N.MODEL, "max_tokens": 8000, "system": "You extract published betting picks. Never invent picks.",
                "messages": [{"role": "user", "content": INSTR + "\n\nARTICLE:\n" + text}]}
     req = urllib.request.Request(N.API_URL, data=json.dumps(payload).encode(), method="POST", headers={
         "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
@@ -135,6 +163,28 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         rep["skipped"] = "not due this hour"; return rep
     seen_p = HIST / "picks_seen.json"
     seen = set(json.loads(seen_p.read_text())) if seen_p.exists() else set()
+    # articles are re-read (picks pages get more analysts added over the week): up to 4 reads, 12+ h apart, within 4 days
+    reads_p = HIST / "picks_reads.json"
+    reads = json.loads(reads_p.read_text()) if reads_p.exists() else {}
+    def reread_due(k):
+        r = reads.get(k)
+        if not r:
+            return False
+        first, last = datetime.fromisoformat(r["first"]), datetime.fromisoformat(r["last"])
+        return r.get("n", 1) < 4 and now - first <= timedelta(days=4) and now - last >= timedelta(hours=12)
+    logged_keys = set()
+    lp = HIST / "picks_log.jsonl"
+    if lp.exists():
+        for line in lp.read_text().splitlines()[-6000:]:
+            try:
+                row = json.loads(line)
+            except Exception:
+                continue
+            logged_keys.add(pick_key(row))
+            if not reads_p.exists() and row.get("link") and row.get("source") != "bluesky" and row.get("seen_at", "") >= (now - timedelta(days=4)).isoformat():
+                k0 = hashlib.sha1(row["link"].encode()).hexdigest()[:16]     # first run: articles read under the old 15k-char limit
+                reads.setdefault(k0, {"first": row["seen_at"], "last": row["seen_at"], "n": 1, "link": row["link"],
+                                      "source": row.get("source"), "title": row.get("title"), "published": row.get("published")})
     cands = []
     for name, url in FEEDS.items():
         try:
@@ -143,19 +193,29 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             rep["feeds"][name] = f"failed: {str(e)[:60]}"; continue
         for it in items:
             k = hashlib.sha1((it.get("link") or it.get("title", "")).encode()).hexdigest()[:16]
-            if k in seen or k in {c["key"] for c in cands} or not PICKY.search(it.get("title", "")) or "news.google.com" in (it.get("link") or "") \
-                    or any(b in (it.get("link") or "") for b in BLOCKED):
+            if (k in seen and not reread_due(k)) or k in {c["key"] for c in cands} or not PICKY.search(it.get("title", "")) \
+                    or "news.google.com" in (it.get("link") or "") or any(b in (it.get("link") or "") for b in BLOCKED):
                 continue
             cands.append(dict(it, source=name, key=k))
+    for k, r in reads.items():      # due re-reads even after the article left its RSS feed
+        if reread_due(k) and k not in {c["key"] for c in cands} and r.get("link"):
+            cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
+                          "published": r.get("published")})
     rows = []
     for it in cands[:max_articles]:
         seen.add(it["key"])
+        r = reads.setdefault(it["key"], {"first": now.isoformat(timespec="minutes"), "n": 0, "link": it.get("link"),
+                                         "source": it.get("source"), "title": it.get("title"), "published": it.get("published")})
+        r["last"], r["n"] = now.isoformat(timespec="minutes"), r.get("n", 0) + 1
         try:
-            picks = llm(texter(it["link"]), api_key)
+            picks = extract(texter(it["link"]), api_key, llm)
         except Exception as e:
             rep.setdefault("errors", []).append(str(e)[:100]); continue
         rep["articles"] += 1
-        for p in picks:
+        new = [p for p in picks if pick_key(p) not in logged_keys]   # a re-read logs only picks we hadn't seen
+        r["picks_found"], r["picks_new"] = len(picks), len(new)
+        for p in new:
+            logged_keys.add(pick_key(p))
             rows.append({"seen_at": now.isoformat(timespec="minutes"), "published": it.get("published"), "source": it["source"],
                          "title": it.get("title"), "link": it.get("link"), **p})
     # Bluesky accounts that post picks: recent posts that look like a bet, read in batches (analyst = @handle)
@@ -194,6 +254,8 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             for r in rows:
                 f.write(json.dumps(r) + "\n")
     seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
+    cut = (now - timedelta(days=10)).isoformat()
+    reads_p.write_text(json.dumps({k: v for k, v in reads.items() if v.get("last", "") >= cut}, indent=0))
     rep["picks"] = len(rows)
     if texter is _text:   # live runs: which feeds Actions can reach, readable without log access
         (HIST / "picks_probe.json").write_text(json.dumps({"checked_at": now.isoformat(timespec="minutes"), "feeds": rep["feeds"]}, indent=1))

@@ -89,8 +89,10 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
         if g.empty:
             return None
         r = g.sort_values("kick").iloc[0]
-        if pd.isna(r.home_score) or r.kick <= pd.Timestamp(seen):
-            return {"late": True} if r.kick <= pd.Timestamp(seen) else None
+        if r.kick <= pd.Timestamp(seen):
+            return {"late": True}
+        if pd.isna(r.home_score):
+            return {"pending": True, "kick": r.kick.isoformat(), "away_actual": r.away_team, "home_actual": r.home_team}
         hs, as_, home, away = float(r.home_score), float(r.away_score), r.home_team, r.away_team
         home_margin_line = float(r.spread_line) if pd.notna(r.spread_line) else None     # + = home favored
         total = float(r.total_line) if pd.notna(r.total_line) else None
@@ -109,7 +111,7 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
         if r.kick <= pd.Timestamp(seen):
             return {"late": True}
         if not r.completed or pd.isna(r.home_pts):
-            return None
+            return {"pending": True, "kick": r.kick.isoformat(), "away_actual": r.away, "home_actual": r.home}
         hs, as_, home, away = float(r.home_pts), float(r.away_pts), r.home, r.away
         home_margin_line = -float(r.spread_close) if pd.notna(r.spread_close) else None
         total = float(r.total_close) if pd.notna(r.total_close) else None
@@ -233,9 +235,10 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             g = grade_pick(p, nfl, cfb, cmatch)
         except Exception:
             g = None
-        if not g:
-            if p.get("sport") in ("nfl", "cfb") and now - datetime.fromisoformat(p["seen_at"]) <= timedelta(days=12):
-                pending.append(_detail(p))      # game not played yet (or not matched yet)
+        if g and g.get("pending"):                # matched to a game not played yet
+            pending.append(dict(_detail(p), kick=g["kick"], away=g["away_actual"], home=g["home_actual"]))
+            continue
+        if not g:                                  # no matching game (not counted, not shown as pending)
             continue
         if g.get("late"):
             late += 1

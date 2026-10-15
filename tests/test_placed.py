@@ -588,3 +588,16 @@ def test_placed_index_marks_same_bet_across_tracks(tmp_path):
     ix = PL.placed_index(tmp_path)
     assert set(ix) == {"G1:aplus_ml:away", "G1:ml_v4:away"}           # same game/market/side; not the other side or the spread
     assert ix["G1:ml_v4:away"]["same_bet"] and ix["G1:ml_v4:away"]["stake"] == 25
+
+
+def test_picks_long_articles_read_in_chunks():
+    from nflpred import picks_log as PL
+    text = "x" * 40000
+    parts = PL.chunks(text)
+    assert len(parts) == 3 and all(len(p) <= PL.CHUNK for p in parts)
+    calls = []
+    def llm(part, key):
+        calls.append(len(part))
+        return [{"analyst": "Chris Hummer", "away_team": "Notre Dame", "home_team": "BYU", "market": "spread", "pick": "BYU", "line": 11.5}]
+    got = PL.extract(text, "k", llm)
+    assert len(calls) == 3 and len(got) == 1          # same pick seen in overlapping pieces is kept once
