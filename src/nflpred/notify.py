@@ -99,8 +99,78 @@ def _kick(b: dict, pred: dict) -> str:
         k = g.get("kickoff_utc")
     if not k:
         return ""
-    t = datetime.fromisoformat(k).astimezone(AZ)
-    return t.strftime("%a %-I:%M%p").replace("AM", "am").replace("PM", "pm")
+    t = datetime.fromisoformat(str(k).replace("Z", "+00:00")).astimezone(AZ)
+    return t.strftime("%a %b %-d, %-I:%M%p").replace("AM", "am").replace("PM", "pm") + " AZ"
+
+
+def is_college(key: str, b: dict) -> bool:
+    return key.startswith("cfb_") or b.get("sport") == "cfb" or "NCAAF" in str(b.get("ticker", ""))
+
+
+def matchup(b: dict, pred: dict) -> str:
+    """'Away @ Home' for any track's bet (NFL abbreviations, college names, props' 'BAL@ATL')."""
+    a, h = b.get("away_team") or b.get("away"), b.get("home_team") or b.get("home")
+    if not (a and h):
+        g = next((g for g in pred.get("upcoming", []) if g.get("game_id") == b.get("game_id")), None)
+        if g:
+            a, h = g.get("away_team"), g.get("home_team")
+    if not (a and h) and "@" in str(b.get("opponent") or ""):
+        a, h = str(b["opponent"]).split("@", 1)
+    if not (a and h) and str(b.get("game_id", "")).count("_") >= 3:
+        _, _, a, h = str(b["game_id"]).split("_")[:4]
+    return f"{a} @ {h}" if a and h else ""
+
+
+def grade_of(key: str, b: dict) -> str | None:
+    g = b.get("grade_v2") or b.get("totals_grade") or b.get("grade")
+    if g:
+        return str(g)
+    if key.startswith("cfb_") and b.get("edge") is not None and b.get("market") in ("spread", "total", "ml"):
+        e = b["edge"]
+        return "A+" if e >= 0.04 else "A" if e >= 0.02 else "B" if e >= 0 else "C"
+    return None
+
+
+def pick_of(key: str, b: dict) -> str:
+    """'Over 69.5', 'WAS +3.5', 'LSU ML', 'Bijan Robinson Under 3.5' (no price, no book)."""
+    if b.get("player"):
+        return f"{b['player']} {str(b.get('side', '')).title()} {b.get('point')} {b.get('stat_label') or 'rec'}"
+    side = str(b.get("side") or "")
+    if side in ("over", "under"):
+        return f"{side.title()} {b.get('point'):g}" if b.get("point") is not None else side.title()
+    team = b.get("team") or side
+    if b.get("market") in ("h2h", "ml") or key in ("bets", "ml_v2_bets", "ml_v3_bets", "ml_v4_bets", "aplus_ml_bets", "exchange_value_bets", "cfb_ml_bets", "kalshi_maker_bets") \
+            or (b.get("point") is None and side in ("home", "away")):
+        return f"{team} ML"
+    if b.get("point") is not None:
+        return f"{team} {b['point']:+g}"
+    return str(team)
+
+
+def alert(key: str, b: dict, pred: dict) -> tuple[str, str]:
+    """(title, body) for one new paper bet: what to bet, which game and when, where, how good, how much."""
+    price = b.get("price")
+    px = f"{price:+d}" if isinstance(price, int) else str(price or "")
+    sport = "College" if is_college(key, b) else "NFL"
+    pick = pick_of(key, b)
+    title = f"{sport} · {pick} {px}".strip()
+    lines = [f"{matchup(b, pred)}{' · ' + _kick(b, pred) if _kick(b, pred) else ''}".strip(" ·"),
+             f"Bet: {pick} at {px} on {b.get('book', '?')}"]
+    gr, extra = grade_of(key, b), []
+    if gr:
+        extra.append(f"Grade {gr}")
+    if b.get("edge") is not None:
+        extra.append(f"edge {b['edge']:+.1%}")
+    if b.get("kelly_pct") is not None:
+        extra.append(f"stake {b['kelly_pct']:g}% of bankroll")
+    elif b.get("units") is not None:
+        extra.append(f"{b['units']:g} unit")
+    if extra:
+        lines.append(" · ".join(extra))
+    if b.get("why"):
+        lines.append(str(b["why"]))
+    lines.append(f"Track: {TRACK_NAMES.get(key, key)} (paper, not yet validated)")
+    return title, "\n".join(l for l in lines if l)
 
 
 def bet_line(key: str, b: dict, pred: dict) -> str:
@@ -123,6 +193,9 @@ def bet_line(key: str, b: dict, pred: dict) -> str:
         parts.append(f"{b['units']:g}u")
     if key == "qb_news_bets" and b.get("why"):
         parts.append(b["why"])
+    mu = matchup(b, pred)
+    if mu:
+        parts.append(mu)
     kk = _kick(b, pred)
     if kk:
         parts.append(kk)
@@ -164,10 +237,10 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
     if len(items) <= max_single:
         for k, b in items:
             hot = k in PRIORITY_TRACKS
-            line = bet_line(k, b, pred)
+            title, body = alert(k, b, pred)
             if accts is not None and _norm(b.get("book", "")) not in accts:
-                line += " (no account at this book)"
-            ok = send(f"{'A+/top: ' if hot else ''}{TRACK_NAMES.get(k, k)}", f"{line}\n\nPrices move within hours. {note}",
+                body += "\n(no account at this book)"
+            ok = send(title, f"{body}\n\nPrices move within hours. Not financial advice.",
                       priority=4 if hot else 3, tags=["football"],
                       actions=[{"action": "view", "label": "I placed it", "url": log_url(b)},
                                {"action": "view", "label": "Dashboard", "url": DASHBOARD}])
@@ -175,7 +248,7 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
     else:
         hot = any(k in PRIORITY_TRACKS for k, _ in items)
         lines = [bet_line(k, b, pred) for k, b in items]
-        ok = send(f"{len(items)} new paper bets" + (" (A+/top track)" if hot else ""),
+        ok = send(f"{len(items)} new paper bets",
                   "\n".join(lines) + f"\n\nLog the ones you place from the dashboard (Log bet links). {note}",
                   priority=4 if hot else 3, tags=["football"])
         sent += bool(ok)

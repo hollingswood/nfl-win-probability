@@ -601,3 +601,14 @@ def test_picks_long_articles_read_in_chunks():
         return [{"analyst": "Chris Hummer", "away_team": "Notre Dame", "home_team": "BYU", "market": "spread", "pick": "BYU", "line": 11.5}]
     got = PL.extract(text, "k", llm)
     assert len(calls) == 3 and len(got) == 1          # same pick seen in overlapping pieces is kept once
+
+
+def test_alert_names_the_game():
+    from nflpred import notify as N
+    b = {"market": "total", "side": "over", "team": "Over", "point": 69.5, "price": -105, "book": "theScore Bet", "edge": 0.022,
+         "kelly_pct": 0.57, "home": "Memphis Tigers", "away": "Navy Midshipmen", "kickoff_utc": "2026-10-16T00:00:00+00:00"}
+    t, body = N.alert("cfb_shop_bets", b, {})
+    assert t == "College · Over 69.5 -105" and "Navy Midshipmen @ Memphis Tigers · Thu Oct 15, 5:00pm AZ" in body
+    assert "Grade A" in body and "theScore Bet" in body and "A+/top" not in t
+    t2, body2 = N.alert("aplus_ml_bets", {"game_id": "2026_06_WAS_SF", "side": "away", "team": "WAS", "price": 350, "book": "FanDuel"}, {})
+    assert t2 == "NFL · WAS ML +350" and body2.startswith("WAS @ SF")
