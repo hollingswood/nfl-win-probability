@@ -1,0 +1,13 @@
+{
+ "test": "parlays_straight_and_round_robin",
+ "version": 1,
+ "frozen_on": "2026-10-15",
+ "requested_by": "Tyler: 'run a test on parlays, both straight and round robin'",
+ "written_before_running": true,
+ "payout": "parlay odds = product of each leg's decimal odds (how DraftKings, FanDuel and theScore Bet price standard parlays); a pushed leg drops out and the parlay is re-priced without it; any losing leg loses the parlay. Legs from the same game are never combined (standard parlays don't allow it; same-game parlays are priced with the correlation built in).",
+ "P1_no_edge_legs": "baseline: legs = closing spreads at -110 (both leagues, FBS vs FBS for college), 2021-2025. Report the leg cover rate and the expected and realized ROI of 2- to 6-leg parlays and round robins, built from random same-weekend games (20,000 parlays per size, fixed random seed 7). Shows what vig does to parlays.",
+ "P2_edge_legs": "legs = the college shop-vs-sharp research bets at your books (output/research/cfb/shop_bets.parquet, rule 'MINE', the live track's thresholds: spreads EV >= 4%, totals and moneylines EV >= 2%, one per game per market, price -200..+200). Slates = each week's legs (Mon-Sun of kickoff). Straight parlays: every 2-, 3- and 4-leg combination of different games within a week. Round robins: each week's top N legs by EV (N = 4, 5, 6) by 2s and by 3s, same total stake as betting the N legs as singles. Compare with singles on the same legs: ROI, CLV-implied ROI (product of (1 + leg CLV) - 1), share of losing weeks, worst week and largest drawdown, all in units of total weekly stake. Development 2021-2022, holdout 2023-2025.",
+ "P2_pass": "a parlay format 'beats singles' only if, in the holdout, its CLV-implied ROI is higher than singles' AND its realized ROI is higher than singles' AND its largest drawdown is no more than 1.5x singles'",
+ "P3_correlated_same_game": "information on why books restrict same-game spread+total parlays: for every game with closing spread and total (college FBS vs FBS 2014-2025, NFL 2013-2025), the hit rate of each pairing (favorite+over, favorite+under, underdog+over, underdog+under) by |spread|/total bucket (<0.15, 0.15-0.30, >=0.30) vs 27.5% (what a +264 two-leg parlay at -110 needs). Best pairing and bucket picked on 2014-2020 (college) / 2013-2019 (NFL); holdout 2021-2025 reported. Logged only: standard parlays don't allow these.",
+ "do_not_edit": "do not change after seeing results"
+}

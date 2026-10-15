@@ -1,0 +1,16 @@
+{
+ "test": "college_ppp_totals_v2",
+ "version": 1,
+ "frozen_on": "2026-10-15",
+ "requested_by": "Tyler, after v1 failed: 'test a version that adjusts for opponent strength and another version that blends in last season'",
+ "written_before_running": true,
+ "data_periods_lines_tests": "identical to ppp_totals_prereg.json (development 2014-2020, holdout 2021-2025; T1 accuracy, T2 gap-predicts-result regression, T3 over/under rule with k from {0,3,5,7,10} picked on development; opener comparison is information only)",
+ "versions": {
+  "A_opponent_adjusted": "points per play and plays per game are each fit as league average + offense rating + opposing defense rating (weighted least squares, weights = plays, ridge shrink toward 0 with strength lambda), on all games (FBS and FCS) of the same season played on earlier dates. Team A points = (avg PPP + A offense + B defense) x (avg plays + A pace + B pace allowed); total = A + B. lambda picked on development from {100, 300, 1000} (in plays) by MAE. Games: FBS vs FBS, both teams with >= 3 earlier games this season",
+  "B_last_season_blend": "v1 formula, but each team's offensive PPP, defensive PPP and plays per game = (n x this season's value + w x last season's full-season value) / (n + w), n = this season's earlier games. w picked on development from {2, 4, 8} by MAE. Teams with no last-season FBS data need >= 3 games this season. Games: FBS vs FBS where both teams have last-season data or >= 3 games this season (so weeks 1-3 are included)",
+  "C_both": "version A, but the ratings are shrunk toward last season's full-season ratings (same model fit on all of last season) instead of toward 0; teams without last-season ratings shrink toward 0. lambda picked on development from {100, 300, 1000}. Games as in B"
+ },
+ "multiple_testing": "three versions are tried, so a version passes T2 or T3 only at one-sided p < 0.05 / 3 = 0.0167",
+ "pass_means": "candidate for a new pre-registered college paper track; nothing bets from this test",
+ "do_not_edit": "do not change after seeing results"
+}
