@@ -50,9 +50,4 @@ jobs:
       - name: Commit
         id: commit
         run: |
-          git config user.name "nfl-bot"
-          git config user.email "nfl-bot@users.noreply.github.com"
-          git add history output/predictions.json
-          if git commit -m "QB news check $(date -u +%FT%H%M)"; then
-            for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
-          fi
+          bash scripts/push_results.sh "QB news check $(date -u +%FT%H%M)" history output/predictions.json

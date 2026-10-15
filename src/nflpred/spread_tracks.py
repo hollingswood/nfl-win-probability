@@ -186,7 +186,7 @@ def preseason_evaluate(g: dict, r: dict, now: datetime) -> dict | None:
         reasons.append("no spread at your books"); return None
     qbc = (g.get("qb_change") or {}).get(side)
     return _bet(g, r, now, side, best, {"gap": round(gap, 2), "pre_home_margin": round(pre, 2), "market_home_margin": mkt,
-                                         "edge": round(abs(gap) / 100, 4), "qb_changed_label": bool(qbc and abs(qbc) > 0.01)})
+                                         "edge": round(abs(gap) / 100, 4), "qb_changed_label": bool(qbc and abs(qbc) > 0.05)})
 
 
 def process_preseason(pred: dict, games: pd.DataFrame, history_dir: Path, now: datetime | None = None) -> dict:
@@ -236,7 +236,10 @@ def tuesday_evaluate(g: dict, r: dict, now: datetime) -> dict | None:
     if abs(pred) < q["min_abs_predicted_move_pts"]:
         reasons.append(f"predicted move {abs(pred):.2f} pts (needs {q['min_abs_predicted_move_pts']:g})")
     qc = g.get("qb_change") or {}; qs = g.get("qb_status") or {}
-    if any(abs(qc.get(s) or 0) > 0.01 for s in ("home", "away")) or any((qs.get(s) or {}).get("play_prob", 1) < 1 for s in ("home", "away")):
+    # QB change as the research defined it (scripts/research/openers_hourly.py: |qb_change| <= 0.05 counts as the same
+    # starter; small values are rating drift). The live check used > 0.01, which flagged nearly every game, so the track
+    # never bet (fixed 2026-10-15; the rule itself is unchanged).
+    if any(abs(qc.get(s) or 0) > 0.05 for s in ("home", "away")) or any((qs.get(s) or {}).get("play_prob", 1) < 1 for s in ("home", "away")):
         reasons.append("starting QB uncertain or changed")
     ko = kickoff(g)
     if ko is None or not (q["kickoff_hours"][0] <= (ko - now).total_seconds() / 3600 <= q["kickoff_hours"][1]):

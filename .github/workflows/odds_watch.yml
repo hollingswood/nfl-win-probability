@@ -133,13 +133,9 @@ jobs:
       - name: Commit
         id: commit
         run: |
-          git config user.name "nfl-bot"
-          git config user.email "nfl-bot@users.noreply.github.com"
-          git add history output/predictions.json output/cfb_predictions.json output/cfb_model.json output/cfb_features.parquet data/cfb 2>/dev/null || git add history output/predictions.json
-          if git commit -m "Odds watch $(date -u +%FT%H%M)"; then
-            for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
+          out=$(bash scripts/push_results.sh "Odds watch $(date -u +%FT%H%M)" history output/predictions.json output/cfb_predictions.json output/cfb_model.json output/cfb_features.parquet data/cfb) || { echo "$out"; exit 1; }
+          echo "$out"
+          case "$out" in pushed*) echo "changed=true" >> "$GITHUB_OUTPUT" ;; esac
       - uses: actions/upload-pages-artifact@v3
         if: steps.commit.outputs.changed == 'true'
         with:
