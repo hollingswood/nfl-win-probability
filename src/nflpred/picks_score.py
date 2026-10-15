@@ -258,6 +258,16 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     graded, seen_keys, late = [], set(), 0
     logged: dict = {}                 # every distinct NFL / college pick per picker (graded, pending or late)
     pending: list = []                # recent picks whose games haven't been graded yet (shown when you open a picker)
+    # last-name-only bylines ("Hummer") -> the full name the same outlet uses elsewhere ("Chris Hummer")
+    full: dict = {}
+    for p in picks:
+        n = (p.get("analyst") or "").strip()
+        if len(n.split()) >= 2:
+            full.setdefault((p.get("source"), n.split()[-1].lower()), set()).add(n)
+    for p in picks:
+        n = (p.get("analyst") or "").strip()
+        if n and len(n.split()) == 1 and len(full.get((p.get("source"), n.lower()), ())) == 1:
+            p["analyst"] = next(iter(full[(p.get("source"), n.lower())]))
     skipped: dict = {}
     for p in picks:
         why = not_a_pick(p)
