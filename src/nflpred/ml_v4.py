@@ -112,7 +112,7 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
     path = history_dir / r["ledger"]
     ledger = json.loads(path.read_text()) if path.exists() else []
     if len(games):
-        ledger = [ML.grade(b, games) if b.get("status") == "open" else b for b in ledger]
+        ledger = [ML.grade(b, games) if ML.needs_grade(b) else b for b in ledger]
     have = {b["game_id"] for b in ledger if b.get("status") != "void"}
     cands = []
     for g in pred.get("upcoming", []):

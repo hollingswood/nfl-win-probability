@@ -622,6 +622,9 @@ def watch_results(history_dir: Path, now: dt.datetime, after_hours: float = 3.5,
     g["gameday"] = pd.to_datetime(g["gameday"])
     g["completed"] = g["home_score"].notna() & g["away_score"].notna()
     g["home_win"] = (g["home_score"] > g["away_score"]).astype(float).where(g["completed"])
+    from .features import vegas_prob
+    if {"home_moneyline", "away_moneyline"} <= set(g.columns):
+        g["vegas_home_prob"] = vegas_prob(g["home_moneyline"], g["away_moneyline"])  # moneyline CLV (bets.grade)
     return g
 
 

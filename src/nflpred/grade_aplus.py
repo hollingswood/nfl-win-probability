@@ -196,9 +196,9 @@ def process(market: str, pred: dict, games: pd.DataFrame, history_dir: Path, r: 
         from . import spread_bets as SB
         sr = SB.load_rules()
         first = SB.first_seen_margin(history_dir)
-    if len(games) and any(b.get("status") == "open" for b in ledger):
+    if len(games) and any(b.get("status") == "open" or (market == "ml" and ML.needs_grade(b)) for b in ledger):
         if market == "ml":
-            ledger = [ML.grade(b, games) if b.get("status") == "open" else b for b in ledger]
+            ledger = [ML.grade(b, games) if ML.needs_grade(b) else b for b in ledger]
         elif market == "spread":
             closes = SB.closing_margins(history_dir, sr)
             ledger = [SB.grade(b, games, sr, closes) if b.get("status") == "open" else b for b in ledger]

@@ -222,7 +222,35 @@ def _closing_fair(bet: dict, files: list[Path], cache: dict) -> float | None:
     return None
 
 
-def grade(bet: dict, games: pd.DataFrame, files: list[Path], cache: dict) -> dict:
+def _moved_point_close(bet: dict, row, history_dir: Path, cache: dict) -> tuple[float, str] | None:
+    """Closing probability of our side at OUR point when Pinnacle's closing number moved off it: priced from our own
+    last pre-kickoff snapshot's price-implied margin / total (same method as spread_bets / totals CLV)."""
+    try:
+        if bet["market"] == "spreads":
+            from . import spread_bets as SB
+            if "_sp" not in cache:
+                sr = SB.load_rules(); cache["_sp"] = (sr, SB.closing_margins(history_dir, sr))
+            sr, closes = cache["_sp"]
+            c = SB._find_close(closes, row.get("home_team"), row.get("away_team"), row.get("gameday"))
+            if c is None:
+                return None
+            _, pw, pu = SB.side_ev(c["mu"], bet["point"], -110, bet["side"], sr)
+            return pw / (1 - pu) if pu < 1 else None, f"closing margin {c['mu']:+.1f} (own snapshot, point moved)"
+        if bet["market"] == "totals":
+            from . import totals as T
+            if "_tot" not in cache:
+                d = T.default_dist(); cache["_tot"] = (d, T.closing_totals(history_dir, d))
+            d, closes = cache["_tot"]
+            for c in closes.get((row.get("home_team"), row.get("away_team")), []):
+                if abs((pd.Timestamp(c["commence"]).tz_convert(None).normalize() - pd.Timestamp(row["gameday"])).days) <= 1:
+                    pw, pu = d.probs(c["mu"], bet["point"], bet["side"])
+                    return pw / (1 - pu) if pu < 1 else None, f"closing total {c['mu']:.1f} (own snapshot, point moved)"
+    except Exception as e:  # CLV is informational; never block grading
+        print("exchange CLV fallback failed:", e)
+    return None
+
+
+def grade(bet: dict, games: pd.DataFrame, files: list[Path], cache: dict, history_dir: Path | None = None) -> dict:
     g = games[games["game_id"] == bet["game_id"]] if len(games) else games
     if g.empty or not bool(g["completed"].iloc[0]):
         return bet
@@ -240,6 +268,10 @@ def grade(bet: dict, games: pd.DataFrame, files: list[Path], cache: dict) -> dic
     b["result"] = "push" if diff == 0 else ("win" if diff > 0 else "loss")
     b["profit_units"] = 0.0 if diff == 0 else round(bet["units"] * (dec - 1) if diff > 0 else -bet["units"], 3)
     cf = _closing_fair(bet, files, cache)
+    if cf is None and history_dir is not None and bet["market"] in ("spreads", "totals"):
+        fb = _moved_point_close(bet, row, history_dir, cache)
+        if fb and fb[0] is not None:
+            cf = fb[0]; b["clv_source"] = fb[1]
     if cf is not None:
         b["closing_prob"] = round(cf, 4)
         b["clv"] = round(dec * cf - 1, 4)
@@ -290,7 +322,8 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, r: dict | None =
     files = snapshot_files(history_dir)
     cache: dict = {}
     if len(games):
-        ledger = [grade(b, games, files, cache) if b.get("status") == "open" else b for b in ledger]
+        ledger = [grade(b, games, files, cache, history_dir) if b.get("status") == "open" or (b.get("status") == "graded" and "clv" not in b)
+                  else b for b in ledger]
     new = []
     if files:
         snap_at = _snap_time(files[-1])

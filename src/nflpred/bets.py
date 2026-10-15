@@ -129,6 +129,11 @@ def _grade_v2_fields(game: dict, side: str, price) -> dict:
         return {"grade_v2": None, "predicted_clv": None}
 
 
+def needs_grade(bet: dict) -> bool:
+    """Open bets, plus graded bets whose closing line was not out yet when they were graded (CLV filled later)."""
+    return bet.get("status") == "open" or (bet.get("status") == "graded" and "clv" not in bet)
+
+
 def grade(bet: dict, games: pd.DataFrame) -> dict:
     g = games[games["game_id"] == bet["game_id"]]
     if g.empty or not bool(g["completed"].iloc[0]):
@@ -183,7 +188,7 @@ def process(pred: dict, games: pd.DataFrame, history_dir: Path, rules: dict | No
     history_dir.mkdir(parents=True, exist_ok=True)
     path = history_dir / "paper_bets.json"
     ledger = json.loads(path.read_text()) if path.exists() else []
-    ledger = [grade(b, games) if b.get("status") == "open" else b for b in ledger]
+    ledger = [grade(b, games) if needs_grade(b) else b for b in ledger]
     have = {b["game_id"] for b in ledger if b.get("status") != "void"}
     first = first_seen_market(history_dir)
     cands = []

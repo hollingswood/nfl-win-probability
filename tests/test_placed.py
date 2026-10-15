@@ -612,3 +612,25 @@ def test_alert_names_the_game():
     assert "Grade A" in body and "theScore Bet" in body and "A+/top" not in t
     t2, body2 = N.alert("aplus_ml_bets", {"game_id": "2026_06_WAS_SF", "side": "away", "team": "WAS", "price": 350, "book": "FanDuel"}, {})
     assert t2 == "NFL · WAS ML +350" and body2.startswith("WAS @ SF")
+
+
+def test_moneyline_clv_filled_after_early_grading():
+    import pandas as pd
+    from nflpred import bets as ML
+    bet = {"game_id": "g1", "side": "away", "price": 170, "units": 1.0, "status": "graded", "result": "loss", "profit_units": -1.0}
+    assert ML.needs_grade(bet) and not ML.needs_grade({**bet, "clv": 0.1})
+    games = pd.DataFrame([{"game_id": "g1", "completed": True, "home_score": 20, "away_score": 23, "vegas_home_prob": 0.4}])
+    out = ML.grade(bet, games)
+    assert out["result"] == "win" and abs(out["clv"] - (2.7 * 0.6 - 1)) < 1e-3
+
+
+def test_watch_results_has_closing_moneyline(tmp_path):
+    import datetime as dt
+    import json
+    import pandas as pd
+    from nflpred import pipeline as P
+    (tmp_path / "paper_bets.json").write_text(json.dumps([{"status": "open", "kickoff_utc": "2026-10-11T17:00:00+00:00"}]))
+    sched = pd.DataFrame([{"season": 2026, "game_id": "g1", "gameday": "2026-10-11", "home_score": 20, "away_score": 23,
+                           "home_moneyline": -175, "away_moneyline": 145}])
+    g = P.watch_results(tmp_path, dt.datetime(2026, 10, 12, tzinfo=dt.timezone.utc), loader=lambda: sched)
+    assert 0.6 < float(g.vegas_home_prob.iloc[0]) < 0.65
