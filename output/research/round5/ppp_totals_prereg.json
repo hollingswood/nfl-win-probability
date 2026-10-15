@@ -1,0 +1,26 @@
+{
+ "test": "college_ppp_totals",
+ "version": 1,
+ "frozen_on": "2026-10-15",
+ "requested_by": "Tyler: 'Defensive points per play x opposite team average offense plays run, offensive points per play x offense team average plays run. Calculate for both teams, average together to determine total.'",
+ "written_before_running": true,
+ "data": "CFBD games (points) + CFBD stats/game/advanced (offense.plays per team-game), 2014-2026 regular + postseason; closing and opening totals from CFBD lines (first available of DraftKings, ESPN Bet, Bovada, consensus, else median of providers: cfbpred.data.PREFERRED_PROVIDERS)",
+ "definitions": {
+  "season_to_date": "only games of the same season with an earlier kickoff than the game being projected (no carry-over from last season)",
+  "OPPP": "points scored / own offensive plays, season to date",
+  "DPPP": "points allowed / opponent offensive plays, season to date",
+  "PLAYS": "average own offensive plays per game, season to date",
+  "team_points": "A = average of (OPPP_A x PLAYS_A) and (DPPP_B x PLAYS_A); B the same way",
+  "projected_total": "A + B",
+  "eligible_games": "FBS vs FBS, both teams with >= 3 earlier games this season that have play counts, closing total available"
+ },
+ "periods": {"development": "2014-2020 seasons", "holdout": "2021-2025 seasons"},
+ "tests": {
+  "T1_accuracy": "mean absolute error of the projection vs the actual total, next to the closing total's MAE (information only)",
+  "T2_new_information": "regress (actual - close) on (projection - close); sign taken from development; PASS if the holdout one-sided p < 0.05",
+  "T3_bet_rule": "over when projection - close >= k, under when <= -k; k chosen on development from {0,3,5,7,10} (highest win rate with >= 200 bets); PASS if the holdout win rate at that k > 52.38% (break-even at -110) with one-sided binomial p < 0.05, pushes excluded",
+  "secondary_info": "the same T3 rule against the OPENING total (what an early-week bettor could get); reported, not used to pass"
+ },
+ "pass_means": "the strategy becomes a candidate for a new pre-registered college paper track; nothing bets from this test",
+ "do_not_edit": "do not change after seeing results; a different version = new file"
+}

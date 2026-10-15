@@ -104,6 +104,8 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   2016+), sacks/hits, clean-vs-pressured EPA, FTN blitz rate. And 2026-10-12 round 4 (output/research/round4/new_metrics.md,
   pre-registered): team and starting-QB CPOE (EPA+CPOE composite), FTN charting quality (INT-worthy, catchable, drops,
   QB-fault sacks), fading teams off a bye (arXiv 2408.10867), college havoc (CFBD stats/game/havoc) — all fail.
+  2026-10-15 (output/research/round5/ppp_totals.md, pre-registered): college totals from points per play × plays
+  (season-to-date offense/defense PPP × plays, averaged) — FAIL vs the close and the opener.
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist
