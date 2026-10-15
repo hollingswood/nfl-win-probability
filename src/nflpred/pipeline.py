@@ -205,6 +205,20 @@ def predict_games(model: M.MarginModel, games: pd.DataFrame, forecasts: dict | N
     return out
 
 
+def attach_prev_game_ends(ups: list[dict], df: pd.DataFrame, hours: float = 3.5) -> None:
+    """Each team's previous game end (kickoff + 3.5 h, UTC) on every upcoming game, so news from before that game
+    (about last week's game) is not shown as this week's news."""
+    from .qb_news import prev_game_end
+    for g in ups:
+        ko = dt.datetime.fromisoformat(g["kickoff_utc"])
+        for side in ("home", "away"):
+            try:
+                pe = prev_game_end(g[f"{side}_team"], ko, df[df.season == g["season"]], hours)
+            except Exception:
+                pe = None
+            g[f"{side}_prev_end"] = pe.isoformat(timespec="minutes") if pe else None
+
+
 def season_to_date(df: pd.DataFrame, season: int) -> pd.DataFrame:
     """Walk-forward predictions for completed games this season: each week's model is trained
     only on games before that week's first kickoff (what we would have published live)."""
@@ -321,6 +335,7 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
     vegas_score = M.score(std["home_win"], std["vegas_home_prob"]) if len(std) else {}
     ups = predict_games(model, upcoming, forecasts, live)
     attach_model_totals(ups, df, upcoming)
+    attach_prev_game_ends(ups, df)
     result = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "season": season,
@@ -430,6 +445,11 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         context_audit.run(ROOT / "history")
     except Exception as e:
         print("context audit failed:", e)
+    try:  # per-game warnings (QB ruled out in the news, books split): display + alerts only
+        from . import heads_up
+        heads_up.annotate(result, ROOT / "history")
+    except Exception as e:
+        print("heads-up failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     write_alert(result)
@@ -698,6 +718,11 @@ def cmd_watch(now: dt.datetime | None = None) -> dict | None:
     _grade_v2_record(pred)
     _totals_grade_record(pred)
     _exchange_display(pred)
+    try:
+        from . import heads_up
+        heads_up.annotate(pred, ROOT / "history", now)
+    except Exception as e:
+        print("watch: heads-up failed:", e)
     M.save_json(pred, path)
     _notify_new_bets(pred, already_new)
     if write_alert(pred, OUT / "alert_watch.md"):

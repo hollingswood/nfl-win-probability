@@ -168,8 +168,9 @@ def apply_to_schedule(games: pd.DataFrame, starters: dict, live: pd.DataFrame,
             if pd.isna(listed) or status.get(listed) == "Out":
                 if proj["starter_id"] and proj["starter_id"] != listed:
                     log.append({"game_id": g.at[i, "game_id"], "team": team, "type": "starter",
-                                "text": f"{team}: {g.at[i, f'{side}_qb_name'] or 'listed QB'} is Out; "
-                                        f"{proj['starter']} projected to start"})
+                                "text": (f"{team}: {nm} is Out; {proj['starter']} projected to start"
+                                         if isinstance(nm := g.at[i, f'{side}_qb_name'], str) and nm.strip()
+                                         else f"{team}: {proj['starter']} projected to start (from the depth chart)")})
                     g.at[i, f"{side}_qb_id"] = proj["starter_id"]
                     g.at[i, f"{side}_qb_name"] = proj["starter"]
     return g, log
@@ -186,6 +187,7 @@ def status_changes(nflverse_inj: pd.DataFrame, live_rows: pd.DataFrame, upcoming
     for r in qbs.itertuples():
         k = (r.season, r.week, r.team, r.gsis_id)
         prev = old["report_status"].get(k) if k in old.index else None
+        prev = prev if isinstance(prev, str) and prev.strip() else None   # NaN -> "not listed"
         if prev != r.report_status:
             log.append({"team": r.team, "type": "qb_status",
                         "text": f"{r.full_name} ({r.team}): {prev or 'not listed'} → {r.report_status}"

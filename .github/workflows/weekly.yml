@@ -45,7 +45,7 @@ env:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       skip: ${{ steps.dedupe.outputs.skip }}
     steps:
@@ -53,7 +53,7 @@ jobs:
       # starts second skips itself so odds-API credits aren't spent twice. Manual runs never skip.
       # scripts/dedupe_run.py: only runs whose predict job actually ran count, and GitHub's late scheduled
       # copies are matched to their own slot (cron time - 15 min), so a copy arriving hours late skips.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: github.event_name == 'schedule' || inputs.run_type != 'manual'
         with:
           sparse-checkout: scripts/dedupe_run.py
@@ -72,10 +72,10 @@ jobs:
   predict:
     needs: check
     if: needs.check.outputs.skip != 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -145,7 +145,7 @@ jobs:
 
   deploy:
     needs: predict
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

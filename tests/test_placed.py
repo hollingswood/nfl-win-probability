@@ -647,3 +647,23 @@ def test_same_bet_from_two_tracks_is_one_alert(monkeypatch):
     assert len(sent) == 1
     t, m = sent[0]
     assert "+112" in t and "Moneyline v2, Moneyline v3" in m and "0.8 units" in m
+
+
+def test_heads_up_flags_qb_out_and_book_split(tmp_path):
+    import json
+    from datetime import datetime, timezone
+    from nflpred import heads_up as H
+    (tmp_path / "news_llm.jsonl").write_text(json.dumps({
+        "seen_at": "2026-10-15T17:11+00:00", "published": "2026-10-15T17:00+00:00", "player": "Jalen Hurts", "team": "PHI",
+        "team_verified": "PHI", "is_starting_qb_news": True, "game_week_relevant": True, "certainty": 1.0, "signal": "out",
+        "verify": {"roster": "match"}, "source": "pft", "link": "https://x"}) + "\n")
+    g = {"game_id": "g", "home_team": "PHI", "away_team": "CAR", "home_qb": "Jalen Hurts", "away_qb": "Bryce Young",
+         "home_prev_end": "2026-10-11T20:30+00:00", "away_prev_end": "2026-10-11T20:30+00:00",
+         "context": {"live_odds": {"consensus_home_margin": -3.5, "sharp_spreads": [[2.0, -105, -105], [1.0, -105, -115]]}}}
+    pred = {"upcoming": [g]}
+    H.annotate(pred, tmp_path, datetime(2026, 10, 15, 18, tzinfo=timezone.utc))
+    kinds = [h["kind"] for h in g["heads_up"]]
+    assert kinds == ["qb_out", "split"] and "Hurts" in g["heads_up"][0]["text"] and "CAR −3.5" in g["heads_up"][1]["text"]
+    g["home_prev_end"] = "2026-10-15T18:00+00:00"   # news from before the team's last game is ignored
+    H.annotate(pred, tmp_path, datetime(2026, 10, 15, 18, tzinfo=timezone.utc))
+    assert [h["kind"] for h in g["heads_up"]] == ["split"]

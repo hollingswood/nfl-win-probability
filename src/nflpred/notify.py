@@ -170,6 +170,9 @@ def alert(key: str, b: dict, pred: dict, also_keys: list[str] | None = None) -> 
         lines.append(" · ".join(extra))
     if b.get("why"):
         lines.append(str(b["why"]))
+    g = next((g for g in pred.get("upcoming", []) if g.get("game_id") and g.get("game_id") == b.get("game_id")), {})
+    for h in g.get("heads_up") or []:   # heads_up.py: QB reported out, books split
+        lines.append(f"⚠ {h['text']}")
     names = [TRACK_NAMES.get(k, k) for k in (also_keys or [key])]
     lines.append(f"Track{'s' if len(names) > 1 else ''}: {', '.join(dict.fromkeys(names))} (paper, not yet validated)")
     return title, "\n".join(l for l in lines if l)

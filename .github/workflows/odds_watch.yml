@@ -31,10 +31,10 @@ env:
 
 jobs:
   watch:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -67,6 +67,13 @@ jobs:
           urllib.request.urlopen(req, timeout=30)
           print("started the daily full run (backup)")
           PY
+      - name: AI news reader (first, so this hour's QB-news check and game warnings see the newest news)
+        continue-on-error: true
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then python -m nflpred.news_llm; else python -m nflpred.news_llm --probe; fi
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Refresh odds and run price-sensitive tracks
         run: python -m nflpred.pipeline watch
         env:
@@ -79,13 +86,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue create --title "New bets $(date -u +%FT%H%M)" --body-file output/alert_watch.md
-      - name: AI news reader (logs injury/QB signals with first-seen time; no bets)
-        continue-on-error: true
-        run: |
-          if [ -n "$ANTHROPIC_API_KEY" ]; then python -m nflpred.news_llm; else python -m nflpred.news_llm --probe; fi
-        env:
-          PYTHONPATH: src
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Futures snapshot (every 6 h, plus after starting-QB news; logging only)
         continue-on-error: true
         run: python -m nflpred.futures
@@ -136,6 +136,17 @@ jobs:
           out=$(bash scripts/push_results.sh "Odds watch $(date -u +%FT%H%M)" history output/predictions.json output/cfb_predictions.json output/cfb_model.json output/cfb_features.parquet data/cfb) || { echo "$out"; exit 1; }
           echo "$out"
           case "$out" in pushed*) echo "changed=true" >> "$GITHUB_OUTPUT" ;; esac
+      - name: Queue two QB-news checks for later this hour (GitHub drops most high-frequency cron runs)
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for w in 12 27; do
+            curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows/qb_news_fast.yml/dispatches" \
+              -d "{\"ref\":\"main\",\"inputs\":{\"wait_minutes\":\"$w\"}}" && echo "queued QB-news check in $w min"
+          done
       - uses: actions/upload-pages-artifact@v3
         if: steps.commit.outputs.changed == 'true'
         with:
@@ -154,7 +165,7 @@ jobs:
   deploy:
     needs: watch
     if: needs.watch.outputs.changed == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

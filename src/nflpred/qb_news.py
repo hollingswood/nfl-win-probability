@@ -270,6 +270,11 @@ def main() -> int:
     prev = pred.get("qb_news_bets") or {}
     res["recent_graded"] = prev.get("recent_graded", res["recent_graded"])
     pred["qb_news_bets"] = res
+    try:
+        from . import heads_up
+        heads_up.annotate(pred, ROOT / "history")
+    except Exception as e:
+        print("heads-up failed:", e)
     pp.write_text(json.dumps(pred, indent=1, default=str))
     if res["new"]:
         notify.new_bets({"upcoming": pred.get("upcoming", []), "qb_news_bets": res}, set())

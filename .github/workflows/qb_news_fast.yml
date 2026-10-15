@@ -3,14 +3,16 @@ name: QB news check (15 min)
 # QB-news speed paper track (qb_news_rules.json): read new injury/QB news every 15 minutes and, when a strict
 # starting-QB call qualifies, fetch fresh odds once and log a paper bet before the spread moves half a point.
 # No other track runs here. The hourly watch runs the same check too.
+# GitHub drops most of these cron runs (they ran every 3-7 h), so the hourly watch also queues two checks
+# (wait_minutes 12 and 27) when it finishes: with the watch itself that is a check about every 15-20 minutes.
 on:
   schedule:
-    - cron: "8,38,53 * * * *"   # with the hourly watch at :23 -> about every 15 minutes
+    - cron: "8,38,53 * * * *"
   workflow_dispatch:
-
-concurrency:
-  group: predictions
-  cancel-in-progress: false
+    inputs:
+      wait_minutes:
+        description: "Minutes to wait before checking (the wait holds no lock)"
+        default: "0"
 
 permissions:
   contents: write
@@ -25,12 +27,21 @@ env:
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
 jobs:
-  qbnews:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+  wait:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - run: sleep $(( ${{ inputs.wait_minutes || 0 }} * 60 ))
+  qbnews:
+    needs: wait
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:          # the lock is taken only after the wait, so waiting never blocks other runs
+      group: predictions
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip

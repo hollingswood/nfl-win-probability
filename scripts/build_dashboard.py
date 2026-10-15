@@ -44,6 +44,18 @@ def _ts(s: str | None) -> dt.datetime | None:
     return t if t.tzinfo else t.replace(tzinfo=dt.timezone.utc)
 
 
+def _since(g: dict) -> dict:
+    """Team -> end of that team's previous game (pipeline.attach_prev_game_ends); news from before it is last week's."""
+    return {g.get("home_team"): _ts(g.get("home_prev_end")), g.get("away_team"): _ts(g.get("away_prev_end"))}
+
+
+def _after(s: dict, since: dt.datetime | None) -> bool:
+    if since is None:
+        return True
+    t = _ts(s.get("published")) or _ts(s.get("seen_at"))
+    return t is not None and t >= since
+
+
 def load_news_signals(path: Path) -> list[dict]:
     """AI-read news signals (history/news_llm.jsonl, one JSON object per line). Bad lines are skipped."""
     if not path.exists():
@@ -73,9 +85,10 @@ def news_by_game(signals: list[dict], upcoming: list[dict], now: dt.datetime | N
     out = {}
     for g in upcoming:
         teams = {g.get("home_team"), g.get("away_team")}
+        since = _since(g)
         latest: dict[tuple, dict] = {}
         for s in recent:
-            if news_team(s) not in teams:
+            if news_team(s) not in teams or not _after(s, since.get(news_team(s))):
                 continue
             k = (news_team(s), (s.get("verify") or {}).get("gsis_id") or s.get("player") or s.get("title"))
             rank = (_ts(s["seen_at"]), float(s.get("certainty") or 0))
@@ -101,7 +114,8 @@ def context_by_game(items: list[dict], upcoming: list[dict], now: dt.datetime | 
     out = {}
     for g in upcoming:
         teams = {g.get("home_team"), g.get("away_team")}
-        cs = sorted((c for c in recent if c["team"] in teams), key=lambda c: (
+        since = _since(g)
+        cs = sorted((c for c in recent if c["team"] in teams and _after(c, since.get(c["team"]))), key=lambda c: (
             bool(c.get("game_week_relevant")), float(c.get("certainty") or 0), _ts(c["seen_at"])), reverse=True)
         seen, keep = set(), []
         for c in cs:

@@ -156,11 +156,47 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
     return None
 
 
+# Display/cleaning only (frozen hot-picker rule v1 counts "named analysts or accounts"): one name per person or
+# outlet, and items that are not anyone's pick (market prices quoted in an article, fan-forum predictions) are skipped.
+NAME_ALIASES = {"zach cohen": "Zachary Cohen", "sportsline": "SportsLine Projection Model"}
+OUTLET_ALIASES = {"yahoo_nfl": "Yahoo Sports", "yahoo_cfb": "Yahoo Sports", "cbs_nfl": "CBS Sports", "cbs_cfb": "CBS Sports",
+                  "CBS Sports (SportsLine)": "SportsLine", "vsin": "VSiN", "sdsouth": "Saturday Down South", "fox_nfl": "FOX Sports",
+                  "pfn": "Pro Football Network"}
+MARKET_OUTLETS = {"polymarket", "kalshi", "betmgm", "caesars sports", "draftkings", "fanduel", "fanatics", "espn bet", "thescore bet"}
+
+
+def outlet_of(p: dict) -> str:
+    o = p.get("outlet") or p.get("source") or ""
+    if str(o).startswith("bsky:"):
+        return "Bluesky"
+    return OUTLET_ALIASES.get(o, o)
+
+
+def not_a_pick(p: dict) -> str | None:
+    """Why a logged item isn't anyone's pick (None = it is): odds/market prices quoted in an article, fan-forum posts."""
+    words = f"{p.get('confidence_words') or ''}".lower()
+    if not (p.get("analyst") or "").strip() and str(p.get("outlet") or "").lower() in MARKET_OUTLETS:
+        return "market price, not a pick"
+    if "per share" in words or "trading at $" in words:
+        return "market price, not a pick"
+    if " fans:" in f" {(p.get('title') or '').lower()}" or "fans divid" in (p.get("title") or "").lower():
+        return "fan-forum prediction"
+    return None
+
+
 def picker_of(p: dict) -> str:
     a = (p.get("analyst") or "").strip()
     if p.get("source") == "bluesky":
-        return (p.get("outlet") or "bluesky").split(" (")[0]
-    return a or f"{p.get('outlet') or p.get('source')} (unnamed)"
+        h = (p.get("outlet") or "bluesky").split(" (")[0]
+        return "@" + h[5:].replace(".bsky.social", "") if h.startswith("bsky:") else h
+    if a:
+        return NAME_ALIASES.get(a.lower(), a)
+    o = outlet_of(p)
+    return o if "model" in o.lower() else f"{o} staff"
+
+
+def is_named(picker: str) -> bool:
+    return not picker.endswith(" staff")
 
 
 def _p_cover(w: int, n: int, p0: float) -> float:
@@ -222,14 +258,19 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     graded, seen_keys, late = [], set(), 0
     logged: dict = {}                 # every distinct NFL / college pick per picker (graded, pending or late)
     pending: list = []                # recent picks whose games haven't been graded yet (shown when you open a picker)
+    skipped: dict = {}
     for p in picks:
+        why = not_a_pick(p)
+        if why:
+            skipped[why] = skipped.get(why, 0) + 1
+            continue
         k = (picker_of(p), p.get("sport"), p.get("home_team"), p.get("away_team"), p.get("market"), str(p.get("pick")).lower())
         if k in seen_keys:            # the same pick repeated in another article / run
             continue
         seen_keys.add(k)
         if p.get("sport") in ("nfl", "cfb"):
             for key in (picker_of(p), (picker_of(p), p.get("sport"))):     # all sports, and per sport
-                lg = logged.setdefault(key, {"n": 0, "outlet": p.get("outlet") or p.get("source"), "sports": set(), "late": 0})
+                lg = logged.setdefault(key, {"n": 0, "outlet": outlet_of(p), "sports": set(), "late": 0})
                 lg["n"] += 1; lg["sports"].add(p.get("sport"))
         try:
             g = grade_pick(p, nfl, cfb, cmatch)
@@ -247,12 +288,11 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
                     logged[key]["late"] += 1
             continue
         graded.append({**g, "picker": picker_of(p), "sport": p.get("sport"), "market": p.get("market"), "pick": p.get("pick"),
-                       "line": p.get("line"), "seen_at": p["seen_at"], "outlet": p.get("outlet") or p.get("source"),
+                       "line": p.get("line"), "seen_at": p["seen_at"], "outlet": outlet_of(p),
                        "away": g.get("away_actual") or p.get("away_team"), "home": g.get("home_actual") or p.get("home_team"),
                        "link": p.get("link")})
     pickers = table(graded, {k: v for k, v in logged.items() if isinstance(k, str)})
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
-    H = r["hot"]
     test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0}
     for sport in ("nfl", "cfb"):
         rows = [x for x in graded if x["sport"] == sport]
@@ -261,7 +301,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             rec: dict = {}
             for x in prior:
                 t = rec.setdefault(x["picker"], [0, 0]); t[0] += x["result"] == "win"; t[1] += x["result"] == "loss"
-            hot = {k for k, (w, l) in rec.items() if w + l >= 8 and w / (w + l) >= 0.60}
+            hot = {k for k, (w, l) in rec.items() if is_named(k) and w + l >= 8 and w / (w + l) >= 0.60}
             for x in rows:
                 if x["week"] != wk or x["result"] == "push":
                     continue
@@ -290,7 +330,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             if nxt - 4 <= x["week"] < nxt:
                 t = rec.setdefault(x["picker"], [0, 0]); t[0] += x["result"] == "win"; t[1] += x["result"] == "loss"
         for k, (w, l) in rec.items():
-            if w + l >= 8 and w / (w + l) >= 0.60:
+            if is_named(k) and w + l >= 8 and w / (w + l) >= 0.60:
                 hot_now.append({"picker": k, "sport": sport, "week": nxt, "record": f"{w}-{l}"})
     by_sport = {}
     for sport in ("nfl", "cfb"):   # each page shows its own league
@@ -328,7 +368,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
                                        "units": round(sum(x.get("units") or 0 for x in gs), 2),
                                        "avg_line_value": round(sum(x["line_value"] for x in gs if x.get("line_value") is not None) /
                                                                max(1, sum(x.get("line_value") is not None for x in gs)), 2)}}
-    out = {"generated_at": now.isoformat(timespec="minutes"), "rules_version": r["version"], "picks_logged": len(picks), "by_sport": by_sport,
+    out = {"generated_at": now.isoformat(timespec="minutes"), "rules_version": r["version"], "picks_logged": len(picks), "not_picks_skipped": skipped, "by_sport": by_sport,
            "picks_graded": len(graded), "late_picks_dropped": late, "pickers": pickers[:250], "n_pickers": len(pickers), "hot_now": hot_now, "hot_test": test,
            "overall": {"w": sum(x["result"] == "win" for x in graded), "l": sum(x["result"] == "loss" for x in graded),
                        "units": round(sum(x.get("units") or 0 for x in graded), 2),

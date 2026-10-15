@@ -243,6 +243,16 @@ def _schedule(root: Path = ROOT) -> dict:
         return {}
 
 
+TRACK_LABELS = {None: "Moneyline v1", "spread": "Spread v1", "moneyline_v2": "Moneyline v2", "moneyline_v3": "Moneyline v3",
+                "moneyline_v4": "Moneyline v4", "aplus_ml": "A+ moneyline", "aplus_spread": "A+ spread", "aplus_totals": "A+ totals",
+                "totals_wind": "Wind unders", "totals_early_under": "Early unders", "night_west": "Night games",
+                "props_receptions": "Receptions props", "props_unders_tue": "Tuesday star unders", "preseason_prior": "Preseason prior",
+                "tuesday_move": "Tuesday move", "qb_news": "QB news", "exchange_value": "Exchange value",
+                "kalshi_maker": "Kalshi resting orders", "futures_shop": "Futures", "cfb_shop": "Shop vs sharp",
+                "cfb_shop_v3": "Stricter overs (test)", "cfb_aplus": "College A+", "cfb_ml": "College moneyline",
+                "cfb_body_clock": "Body clock"}
+
+
 def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     r = dict(rec)
     b = ledgers.get(rec.get("bet_id") or "")
@@ -250,8 +260,11 @@ def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
         r["status"] = "manual" if not rec.get("bet_id") else "unmatched"
         return r
     away, home = b.get("away_team") or b.get("away"), b.get("home_team") or b.get("home")
+    if not (away and home) and str(b.get("game_id", "")).count("_") >= 3:
+        away, home = str(b["game_id"]).split("_")[2:4]
     if away and home:
         r["matchup"] = f"{away} @ {home}"
+    r["track_name"] = TRACK_LABELS.get(b.get("track"), str(b.get("track") or "").replace("_", " "))
     r.update(track=b.get("track"), paper_price=b.get("price"), paper_book=b.get("book"), game_id=b.get("game_id"),
              gameday=b.get("gameday"), paper_point=b.get("point"), kickoff_utc=kickoff_of(b, schedule))
     pd_, ud = _paper_decimal(b), rec.get("decimal")

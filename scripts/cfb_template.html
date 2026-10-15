@@ -58,7 +58,7 @@ header .xlink{justify-self:start}
     <div class="sechead"><h2>My bets</h2><span class="pill">Real money · logged by you</span></div>
     <p class="edge" id="mybetsintro"></p>
     <div class="strip" id="mybetsstrip"></div>
-    <div class="scroll"><table class="sumtbl" id="mybetstbl"></table></div>
+    <div class="mbl" id="mybetstbl"></div>
   </section>
 
   <section id="betswrap">
@@ -143,7 +143,7 @@ const pct = x => Math.round(x*100)+'%';
 const sgn = (x,d=1) => x==null ? '—' : `${x>0?'+':x<0?'−':''}${Math.abs(x*100).toFixed(d)}%`;
 const cap1 = s => s ? s[0].toUpperCase()+s.slice(1) : s;
 const AZT = {timeZone:'America/Phoenix'};
-const when = iso => new Date(iso).toLocaleString('en-US',{...AZT, weekday:'short', hour:'numeric', minute:'2-digit'});
+const when = iso => new Date(iso).toLocaleString('en-US',{...AZT, weekday:'short', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
 const dayKey = iso => new Date(iso).toLocaleDateString('en-US',{...AZT, weekday:'long', month:'short', day:'numeric'});
 const gTier = gr => !gr ? 'none' : gr==='A+' ? 'top' : /^[AB]/.test(gr) ? 'mid' : 'low';
 const gradeBadge = (gr, tip, big) => `<span class="gb gb-${gTier(gr)}${big?' big':''}" title="${esc(tip||'Not graded')}">${gr||'—'}</span>`;
@@ -216,7 +216,7 @@ function marketRows(g){
       const blocked = priced && x.edge>=BAR[m] && !would.length ? (done('aplus')||done('shop')) : null;
       let st;
       if(bets.length){ const b=bets[0];
-        st={k:'bet', t:'PAPER BET', d:`${[...new Set(bets.map(trkName))].join(', ')}${b.rule?` (${b.rule})`:''}: logged ${when(b.placed_at)} at ${m==='total'?`${cap1(b.side)} ${b.point} `:m==='spread'&&b.point!=null?ptd(b.point)+' ':''}${od(b.price)} ${b.book}${would.length&&!soon?` · ${names(would)} would also log it`:''}${big}`}; }
+        st={k:'bet', t:'PAPER BET', d:`${[...new Set(bets.map(trkName))].join(', ')}${b.rule?` (${b.rule})`:''}: logged ${when(b.placed_at)} AZ at ${m==='total'?`${cap1(b.side)} ${b.point} `:m==='spread'&&b.point!=null?ptd(b.point)+' ':''}${od(b.price)} ${b.book}${would.length&&!soon?` · ${names(would)} would also log it`:''}${big}`}; }
       else if(x.edge==null) st={k:'no', t:'NO', d:'no sharp line to compare yet'};
       else if(soon && (would.length||clockRow)) st={k:'no', t:'NO', d:'tracks stop logging 60 min before kickoff'};
       else if(would.length) st={k:'watch', t:'WATCH', d:`${names(would)} would log this; logs at the next odds check if the price holds${far&&would.some(k=>k!=='ml')?' and kickoff is within 7 days':''}${big}`};
@@ -296,7 +296,7 @@ function card(g){
   const clock=(CLK.qualifying_games||[]).find(x=>x.game_id===g.game_id);
   const N=g.news||{}, news=[...(N.away||[]).map(x=>({...x,t:g.away})),...(N.home||[]).map(x=>({...x,t:g.home}))].slice(0,5);
   const ago=t=>{ const h=(Date.now()-Date.parse(t||''))/36e5; return !Number.isFinite(h)?'':h<1?' · seen <1 h ago':h<48?` · seen ${Math.round(h)} h ago`:` · seen ${Math.round(h/24)} d ago`; };
-  const src=n=>(n.link?` · <a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">${esc(String(n.source||'source').replace(/_/g,' '))}</a>`:'')+ago(n.seen_at);
+  const src=n=>(n.link?` · <a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">${esc((/^google/.test(n.source||'')?'Google News':/^team_sites/.test(n.source||'')?'Team site':String(n.source||'source').replace(/_/g,' ')))}</a>`:'')+ago(n.seen_at);
   const newsHtml = news.length ? `<div class="ainews"><span class="subh" title="Read from public feeds by an AI; logged only, not used by any track">AI-read news (logged only)</span>${news.map(n=>n.kind==='av'
       ? `<div class="an">${n.is_starting_qb_news?'<span class="qb">QB</span>':''}<b>${esc(n.t)}</b> ${esc(n.player||'')}${n.position?` (${esc(n.position)})`:''}: <b>${esc(String(n.signal||'').replace(/_/g,' '))}</b>${src(n)}</div>`
       : `<div class="an"><span class="qb">CTX</span><b>${esc(n.t)}</b> ${esc(String(n.category||'').replace(/_/g,' '))}: ${esc(n.summary||'')}${src(n)}</div>`).join('')}</div>` : '';
@@ -385,7 +385,7 @@ renderGames();
 (function(){
   const M=C.placed||{}, B=M.bets||[], usd=x=>x==null?'—':`${x<0?'−':''}$${Math.abs(x).toFixed(2)}`;
   const NEWU='https://github.com/hollingswood/nfl-win-probability/issues/new?template=placed_bet.yml';
-  $('mybetsintro').innerHTML = `College bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet, fix the odds and stake you got, and submit; it shows up here after the next update. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a> and write <b>college</b> in the notes. NFL bets are on the <a href="../#mybets">NFL page</a>.`;
+  $('mybetsintro').innerHTML = `College bets you actually placed. Tap <b>I placed it</b> on a phone alert or next to any paper bet, fix the odds and stake you got, and submit; it shows up here within a few minutes. A bet no track made: <a href="${NEWU}" target="_blank" rel="noopener">log it here</a> and write <b>college</b> in the notes. NFL bets are on the <a href="../#mybets">NFL page</a>.`;
   const pushes=B.filter(b=>b.result==='push').length, nOpen=B.filter(b=>b.status==='open').length;
   const staked=B.filter(b=>b.result==='win'||b.result==='loss').reduce((a,b)=>a+(b.stake||0),0);
   const tile=(v,t,cls='')=>`<div class="stat"><b class="num ${cls}">${v}</b><span>${t}</span></div>`;
@@ -397,11 +397,16 @@ renderGames();
     tile(M.open_stake?usd(M.open_stake):'$0.00', 'still riding (open bets)'),
   ].join('') : '';
   const t=$('mybetstbl');
-  if(!B.length){ t.innerHTML='<tbody><tr><td style="text-align:left;font-family:var(--body)">No college bets logged yet.</td></tr></tbody>'; return; }
+  if(!B.length){ t.innerHTML='<p class="edge">No college bets logged yet.</p>'; return; }
   const ST={open:'open',graded:'graded',check:'check result',manual:'manual',unmatched:'no matching paper bet'};
-  const td=(l,h,c='')=>`<td data-l="${l}"${c?` class="${c}"`:''}><div>${h}</div></td>`;
-  t.innerHTML=`<thead><tr><th>Game</th><th>Logged</th><th>Pick</th><th>Book</th><th>Your odds</th><th>Stake</th><th title="Your payout vs the price the paper track logged">vs track</th><th>CLV</th><th>Result</th><th>Profit</th></tr></thead><tbody>`+
-    B.map(b=>`<tr>${td('Game', b.kickoff_utc ? new Date(b.kickoff_utc).toLocaleString('en-US',{...AZT,weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : b.gameday||'—')}${td('Logged',new Date(b.logged_at).toLocaleString('en-US',{...AZT,month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}${td('Pick',`<b>${esc(b.pick)}</b>${b.point!=null?` (${b.point})`:''}${b.track?`<small> · ${esc(b.track)}</small>`:''}${b.matchup?`<br><small>${esc(b.matchup)}</small>`:''}`,'wr')}${td('Book',esc(b.book))}${td('Your odds',esc(b.odds))}${td('Stake',usd(b.stake))}${td('vs track',b.price_vs_paper!=null?sgn(b.price_vs_paper):'—')}${td('CLV',b.clv!=null?sgn(b.clv):'—')}${td('Result',b.result||ST[b.status]||b.status,b.result==='win'?'win':b.result==='loss'?'loss':'')}${td('Profit',b.profit!=null?usd(b.profit):'—')}</tr>`).join('')+'</tbody>';
+  const kick=b=> b.kickoff_utc ? new Date(b.kickoff_utc).toLocaleString('en-US',{...AZT,weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' AZ' : (b.gameday||'');
+  const pv=x=>`${x>0?'+':x<0?'−':''}${Math.abs(x*100).toFixed(1)}%`;
+  t.innerHTML = B.map(b=>{ const res=b.result||ST[b.status]||b.status, cls=b.result==='win'?'win':b.result==='loss'?'loss':'';
+    const extra=[b.profit!=null?`<b class="${cls}">${usd(b.profit)}</b>`:'', b.clv!=null?`CLV ${pv(b.clv)}`:'',
+      b.price_vs_paper!=null&&Math.abs(b.price_vs_paper)>=0.0005?`${pv(b.price_vs_paper)} vs the track's price`:''].filter(Boolean);
+    return `<div class="mb"><div class="mb1"><b>${esc(b.pick)}${b.point!=null&&!String(b.pick).includes(String(b.point))?` (${b.point})`:''}</b> <span class="num">${esc(b.odds)}</span> · ${esc(b.book)} · ${usd(b.stake)}<span class="mbr ${cls}">${esc(res)}</span></div>
+      <div class="mb2">${[b.matchup?esc(b.matchup):'', kick(b), b.track_name?esc(b.track_name):'', `logged ${when(b.logged_at)} AZ`].filter(Boolean).join(' · ')}</div>
+      ${extra.length?`<div class="mb2">${extra.join(' · ')}</div>`:''}</div>`; }).join('');
 })();
 
 
