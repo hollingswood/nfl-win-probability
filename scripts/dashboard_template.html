@@ -142,7 +142,8 @@ a.tlink:hover,a.tlink:focus-visible{color:var(--accent);border-color:var(--accen
 .g2note{font-size:12px;color:var(--muted);margin:0}
 .g2c{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .markets{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
-@media (max-width:420px){.markets{grid-template-columns:1fr}}
+@media (max-width:420px){.markets{grid-template-columns:minmax(0,1fr)}}
+.why{overflow-wrap:anywhere}
 .mkt{border:1px solid var(--line);padding:8px 10px;display:grid;gap:3px;font-size:13px;min-width:0;overflow-wrap:break-word}
 .mkt.is-bet{border-color:var(--good);box-shadow:inset 3px 0 0 var(--good)}
 .mkt.is-lean{border-color:#C98A12;box-shadow:inset 3px 0 0 #C98A12}
