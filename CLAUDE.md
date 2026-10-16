@@ -112,6 +112,10 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   ordinary legs lose more per leg; on shop-vs-sharp edge legs they raise CLV-implied ROI but drawdowns 2-5x: all FAIL.
   Round robin grid 2026-10-16 (round5/round_robin_grid.md): every 2-6 leg combination of each week's top 4-10 / all picks:
   0 of 45 edge formats and 0 of 22 ordinary formats pass (parlays amplify the week's singles result; small samples).
+  Extended 2026-10-16 (round5/round_robin_more.md; legs rebuilt in round5/legs/): NFL A+ (ML/spread/totals), college A+,
+  college ML track, all college, all A+, everything, ordinary NFL; compared with singles on the SAME weeks
+  (round_robin_matched.py): only 4 of 315 formats pass, all college A+ top-5/6 on 3-6 weeks = chance. A+ parlays raise
+  CLV-implied ROI (2 legs ~2x singles) but drawdowns 2-5x.
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist
