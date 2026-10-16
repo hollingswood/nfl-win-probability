@@ -15,6 +15,7 @@ on:
         default: "0"
 
 permissions:
+  actions: read
   contents: write
   pages: write
   id-token: write
@@ -36,29 +37,53 @@ jobs:
     needs: wait
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    concurrency:          # the lock is taken only after the wait, so waiting never blocks other runs
-      group: predictions
-      cancel-in-progress: false
+    # No concurrency group on purpose: GitHub keeps only one waiting run per group, so a queued QB check could cancel a
+    # waiting full run (it did, 2026-10-16). Instead the check stands aside while a full run or hourly watch is going
+    # (they run the same QB check), and it never commits output/predictions.json (the watch refreshes it hourly).
     steps:
+      - name: Stand aside if a full run or the hourly watch is queued or running
+        id: busy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=0
+          for wf in weekly.yml odds_watch.yml; do
+            for st in queued in_progress; do
+              c=$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/${{ github.repository }}/actions/workflows/$wf/runs?status=$st&per_page=1" | python3 -c "import sys,json; print(json.load(sys.stdin).get('total_count',0))")
+              n=$((n + c))
+            done
+          done
+          echo "busy=$([ "$n" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          [ "$n" -gt 0 ] && echo "::notice title=QB news::a full run or the hourly watch is going; it runs this check itself, so this one stands aside" || true
       - uses: actions/checkout@v5
+        if: steps.busy.outputs.busy != 'true'
+        with:
+          ref: main   # latest main when the job starts (a queued run's own snapshot goes stale while it waits)
       - uses: actions/setup-python@v6
+        if: steps.busy.outputs.busy != 'true'
         with:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
+        if: steps.busy.outputs.busy != 'true'
       - name: AI news reader
+        if: steps.busy.outputs.busy != 'true'
         continue-on-error: true
         run: python -m nflpred.news_llm
         env:
           PYTHONPATH: src
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: QB-news paper track (fresh odds only when a signal qualifies)
+        if: steps.busy.outputs.busy != 'true'
         id: qb
         run: python -m nflpred.qb_news
         env:
           PYTHONPATH: src
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
       - name: Commit
+        if: steps.busy.outputs.busy != 'true'
         id: commit
         run: |
-          bash scripts/push_results.sh "QB news check $(date -u +%FT%H%M)" history output/predictions.json
+          git checkout -- output/predictions.json 2>/dev/null || true    # the hourly watch owns this file
+          bash scripts/push_results.sh "QB news check $(date -u +%FT%H%M)" history

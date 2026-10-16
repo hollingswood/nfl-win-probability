@@ -31,6 +31,8 @@ jobs:
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main   # latest main when the job starts (a queued run's own snapshot goes stale while it waits)
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
