@@ -1,19 +1,19 @@
 {
- "generated_at": "2026-10-15T23:10+00:00",
- "signals": 3677,
- "units": 1366,
+ "generated_at": "2026-10-16T00:12+00:00",
+ "signals": 3696,
+ "units": 1372,
  "skipped": {
-  "team_unclear": 68,
+  "team_unclear": 69,
   "no_game": 91,
   "not_game_week": 106
  },
  "roster_check": {
-  "match": 3485,
+  "match": 3503,
   "team_mismatch": 120,
-  "not_found": 72
+  "not_found": 73
  },
  "graded": 535,
- "pending": 159,
+ "pending": 160,
  "overall": {
   "n": 535,
   "correct": 421,
@@ -74,17 +74,42 @@
   "pct": 71.8
  },
  "lead_vs_report_hours": {
-  "n": 694,
-  "median": 51.1,
-  "share_before_report": 74.9
+  "n": 695,
+  "median": 50.6,
+  "share_before_report": 75.0
  },
  "qb_line_move_6h": {
-  "n": 106,
+  "n": 107,
   "avg_abs_after": 0.46,
-  "avg_abs_before": 0.26,
-  "avg_after_negative_signals": -0.06
+  "avg_abs_before": 0.28,
+  "avg_after_negative_signals": -0.05
  },
  "rows": [
+  {
+   "seen_at": "2026-10-15T23:42+00:00",
+   "player": "Kam Curl",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_06_ARI_LA",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 20.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-15T23:42+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "Rams safety Kam Curl suffered an ankle injury in today\u2019s practice. We\u2019ll find out more about it from Sean McVay tomorrow.",
+     "quote": "suffered an ankle injury in today's practice",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3mxx7vb2su223",
+     "player": "Kam Curl",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-15T22:23+00:00",
    "player": "Tank Dell",
@@ -362,7 +387,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 26.8,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": -2.5
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1979,6 +2007,16 @@
      "title": "Thursday Night Football: Broncos CB Riley Moss is active",
      "quote": "Broncos will have cornerback Riley Moss in the lineup against the Seahawks tonight",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/thursday-night-football-broncos-cb-riley-moss-is-active",
+     "player": "Riley Moss",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-15T23:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Thursday Night Football: Broncos CB Riley Moss is active",
+     "quote": "The Broncos will have cornerback Riley Moss in the lineup against the Seahawks tonight",
+     "link": "https://sports.yahoo.com/articles/thursday-night-football-broncos-cb-225335717.html",
      "player": "Riley Moss",
      "signal": "expected_to_play"
     }
