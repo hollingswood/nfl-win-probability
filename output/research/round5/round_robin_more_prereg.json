@@ -1,0 +1,31 @@
+{
+ "test": "round_robin_grid_more_pools",
+ "version": 1,
+ "frozen_on": "2026-10-16",
+ "requested_by": "Tyler: 'Test all of the left out items' (NFL bets, other college tracks, college + NFL mixed, A+-only pools, NFL ordinary legs)",
+ "written_before_running": true,
+ "method": "identical to round_robin_grid_prereg.json (N = 4..10 top picks by edge or all picks; every k-leg combination k = 2..6 and 2-6 together; same-game legs never combined; product of leg odds; pushes drop out; equal stake per parlay, 1 unit per week; compared with the same picks as singles; pass = beats singles on realized ROI and CLV-implied ROI in BOTH periods with drawdown <= 1.5x singles)",
+ "slates": "Tuesday-Monday weeks of kickoff (so Monday Night Football joins its Sunday)",
+ "periods": {"development": "2021-2022", "holdout": "2023-2025"},
+ "legs": {
+  "nfl_aplus_ml": "A+ moneyline track rule on history: first snapshot per game where the best allowed-book offer's frozen grade v2 predicted CLV >= 2.5% (scripts/research/grade_v2.py table/candidates/best_offers/first_with, frozen model grade_v2_frozen.json); edge = predicted CLV",
+  "nfl_aplus_spread": "A+ spread track rule: grade v1 A+ at its first appearance among research-filtered prices -145..+125 (scripts/research/grade_v2_spread.py v1_eval selection); edge = v1 blend EV",
+  "nfl_aplus_totals": "A+ totals track rule: first snapshot per game where the best totals offer's frozen totals-grade predicted CLV >= 0 (scripts/research/grade_granular.py tcandidates/best_per_snapshot/first_with, grade_totals_frozen.json); edge = predicted CLV",
+  "college_shop": "as before (shop vs sharp at your books)",
+  "college_aplus": "college shop legs with EV >= 4% only",
+  "college_ml": "College moneyline track v3 on history: P1 (EV >= 2% vs Pinnacle no-vig) or P2 (EV >= 2% vs Pinnacle's spread-implied price and >= 0 vs its moneyline) at your books, -300..+300, >= 1 h before kickoff, one bet per game at the first qualifying snapshot (scripts/research/cfb/price_screen.py logic)",
+  "ordinary_nfl": "closing spreads at -110, random side (seed 7)"
+ },
+ "pools": {
+  "1 NFL A+ (ML + spread + totals)": ["nfl_aplus_ml", "nfl_aplus_spread", "nfl_aplus_totals"],
+  "2 College A+ only": ["college_aplus"],
+  "3 College moneyline track": ["college_ml"],
+  "4 All college tracks": ["college_shop", "college_ml"],
+  "5 All A+ (college A+ + NFL A+)": ["college_aplus", "nfl_aplus_ml", "nfl_aplus_spread", "nfl_aplus_totals"],
+  "6 Everything (all college + NFL A+)": ["college_shop", "college_ml", "nfl_aplus_ml", "nfl_aplus_spread", "nfl_aplus_totals"],
+  "7 Ordinary NFL legs": ["ordinary_nfl"]
+ },
+ "dedupe": "within a pool, one leg per game per market (the earliest); a game's moneyline and spread are the same market family, so if both appear only the earliest is kept",
+ "caveat_declared_in_advance": "the NFL grade models were fit on 2020-2022, so NFL legs in the 2021-22 development period are in-sample for the grade; 2023-25 is clean",
+ "do_not_edit": "do not change after seeing results"
+}
