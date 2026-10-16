@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-16T00:12+00:00",
+ "generated_at": "2026-10-16T17:06+00:00",
  "rules_version": 1,
- "items": 141,
+ "items": 145,
  "categories": {
   "coach_fired_or_hired": {
    "items": 1,
@@ -54,7 +54,7 @@
    "candidate": false
   },
   "offensive_line_shuffle": {
-   "items": 33,
+   "items": 35,
    "graded": 22,
    "cover_rate_vs_close": 0.5,
    "cover_p": 0.5,
@@ -64,37 +64,37 @@
    "candidate": false
   },
   "other": {
-   "items": 52,
-   "graded": 30,
-   "cover_rate_vs_close": 0.5,
-   "cover_p": 0.5,
-   "with_line_move": 33,
-   "avg_line_move_toward": 0.27,
-   "move_p": 0.201,
+   "items": 53,
+   "graded": 31,
+   "cover_rate_vs_close": 0.484,
+   "cover_p": 0.5713,
+   "with_line_move": 34,
+   "avg_line_move_toward": 0.24,
+   "move_p": 0.2153,
    "candidate": false
   },
   "play_caller_change": {
    "items": 6,
-   "graded": 3,
-   "cover_rate_vs_close": 1.0,
-   "cover_p": 0.0416,
-   "with_line_move": 4,
-   "avg_line_move_toward": -0.25,
+   "graded": 4,
+   "cover_rate_vs_close": 0.75,
+   "cover_p": 0.1587,
+   "with_line_move": 5,
+   "avg_line_move_toward": -0.2,
    "move_p": 0.8413,
    "candidate": false
   },
   "scheme_or_role_change": {
    "items": 5,
-   "graded": 4,
-   "cover_rate_vs_close": 0.75,
-   "cover_p": 0.1587,
-   "with_line_move": 4,
-   "avg_line_move_toward": 0.12,
-   "move_p": 0.3456,
+   "graded": 5,
+   "cover_rate_vs_close": 0.6,
+   "cover_p": 0.3274,
+   "with_line_move": 5,
+   "avg_line_move_toward": 0.1,
+   "move_p": 0.3415,
    "candidate": false
   },
   "snap_limit": {
-   "items": 9,
+   "items": 10,
    "graded": 7,
    "cover_rate_vs_close": 0.286,
    "cover_p": 0.8716,
@@ -105,52 +105,16 @@
   },
   "travel_or_weather_disruption": {
    "items": 11,
-   "graded": 6,
-   "cover_rate_vs_close": 0.667,
-   "cover_p": 0.2071,
-   "with_line_move": 6,
+   "graded": 7,
+   "cover_rate_vs_close": 0.571,
+   "cover_p": 0.3527,
+   "with_line_move": 7,
    "avg_line_move_toward": -0.5,
-   "move_p": 0.7955,
+   "move_p": 0.8357,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_06_NYJ_NE",
-   "team": "NE",
-   "category": "illness_outbreak",
-   "direction": "hurts",
-   "seen": "2026-10-11T23:41+00:00",
-   "summary": "Patriots have multiple new injuries compounding existing injured ranks.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_06_BAL_CLE",
-   "team": "CLE",
-   "category": "kicker_or_special_teams",
-   "direction": "hurts",
-   "seen": "2026-10-12T00:08+00:00",
-   "summary": "Browns committed multiple special teams mistakes that proved costly in loss to Jets.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_06_DAL_GB",
-   "team": "GB",
-   "category": "offensive_line_shuffle",
-   "direction": "helps",
-   "seen": "2026-10-11T23:40+00:00",
-   "summary": "Green Bay dominated the Bears with a retooled offensive line.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_06_BAL_CLE",
-   "team": "BAL",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-10-12T00:43+00:00",
-   "summary": "Ravens beset with injuries heading into prime time game vs Falcons.",
-   "implied_side": "home"
-  },
   {
    "game_id": "2026_01_GB_MIN",
    "team": "MIN",
@@ -167,7 +131,9 @@
    "direction": "hurts",
    "seen": "2026-10-12T01:22+00:00",
    "summary": "Broncos' offensive struggles continue in Sean Payton's return to play-calling.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_06_HOU_JAX",
@@ -216,7 +182,9 @@
    "direction": "hurts",
    "seen": "2026-10-12T20:50+00:00",
    "summary": "Broncos have a short week hosting Seahawks on Thursday Night Football.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": -0.5,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_06_LAC_KC",
@@ -254,7 +222,9 @@
    "direction": "hurts",
    "seen": "2026-10-13T02:10+00:00",
    "summary": "Sean Payton not giving levels of confidence on Bo Nix's status.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": -0.5,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_06_ARI_LA",
@@ -335,7 +305,9 @@
    "direction": "helps",
    "seen": "2026-10-14T12:52+00:00",
    "summary": "Seahawks tailoring playbook to help Sam Darnold make swift decisions and avoid turnovers.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_06_PIT_TB",
@@ -389,6 +361,42 @@
    "direction": "hurts",
    "seen": "2026-10-15T22:16+00:00",
    "summary": "Texans will play Week 6 in London against JAX without 3 starters.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_BUF_LV",
+   "team": "BUF",
+   "category": "snap_limit",
+   "direction": "hurts",
+   "seen": "2026-10-16T12:14+00:00",
+   "summary": "Offensive coordinator Joe Brady warned James Cook about fumbles and indicated he will reduce his touches if the problem continues.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_NYJ_NE",
+   "team": "NYJ",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-16T14:50+00:00",
+   "summary": "Jets will be without three offensive starters for their first divisional game of the season in New England.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "WAS",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-10-16T15:56+00:00",
+   "summary": "WAS offensive line shows inconsistent pass-blocking performance with LT Brandon Coleman at 171st of 175 in pressure rate.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_CAR_PHI",
+   "team": "CAR",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-10-16T16:33+00:00",
+   "summary": "Panthers missing multiple offensive line starters: Monroe Freeling doubtful, Taylor Moton out with blood clot.",
    "implied_side": "home"
   }
  ]
