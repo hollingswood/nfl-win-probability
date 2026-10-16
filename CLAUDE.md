@@ -110,6 +110,8 @@ predictions.json. Never report a betting edge from in-sample or tuned-on-holdout
   result slightly in 2021-25 (T2 pass, ~0.15 pt per pt) but no bet rule clears -110 (T3 FAIL); only usable as a filter
   on price-edge bets after its own pre-registered test. Parlays (round5/parlays.md): straight and round robin on
   ordinary legs lose more per leg; on shop-vs-sharp edge legs they raise CLV-implied ROI but drawdowns 2-5x: all FAIL.
+  Round robin grid 2026-10-16 (round5/round_robin_grid.md): every 2-6 leg combination of each week's top 4-10 / all picks:
+  0 of 45 edge formats and 0 of 22 ordinary formats pass (parlays amplify the week's singles result; small samples).
 - Spread CLV must use closing PRICES (spread_bets.closing_margins / edge_lab.closing_fair), never spread_line alone.
 - Leads to paper-track: moneyline v2 (live), Tuesday forecast-wind unders (needs totals odds + logged forecast), hourly price checks.
 - Measure "favorites early, dogs late" from history/odds_*.json once ~6 weeks of snapshots exist
