@@ -1,0 +1,17 @@
+{
+ "test": "round_robin_grid",
+ "version": 1,
+ "frozen_on": "2026-10-16",
+ "requested_by": "Tyler: 'Test 2, 3, 4, 5, and 6 leg parlays as round robins with every combination of bets'",
+ "written_before_running": true,
+ "legs": {
+  "edge": "same as parlays_prereg.json P2: college shop-vs-sharp research bets at your books (spreads EV >= 4%, totals/moneylines EV >= 2%, -200..+200, one per game per market, first sight), 2021-2025; slate = kickoff week (Mon-Sun)",
+  "ordinary": "same as parlays_prereg.json P1: closing spreads at -110 with a random side (seed 7), college FBS vs FBS 2021-2025; each week N games drawn at random (seed 7)"
+ },
+ "formats": "for each week, take N picks (edge: the N highest-EV legs from different games; N = 4..10, plus 'all' = every leg that week); bet EVERY combination of k legs from different games, k = 2, 3, 4, 5, 6 (k <= N), and 'k = 2-6' = every combination of every size together (one round robin with all of them). Equal stake per parlay, total weekly stake = 1 unit. Compared with the same N picks bet as singles (1 unit split evenly).",
+ "payout": "as parlays_prereg.json: product of leg odds; pushed legs drop out; same-game legs never combined",
+ "metrics": "per format and period: realized ROI, CLV-implied ROI (product of (1 + leg CLV) - 1, averaged), share of losing weeks, worst week, largest drawdown (weeks of stake)",
+ "periods": {"development": "2021-2022", "holdout": "2023-2025"},
+ "pass": "a format beats singles only if in BOTH development and holdout its realized ROI and CLV-implied ROI exceed singles' (same N) and its largest drawdown is <= 1.5x singles'. Many formats are tried (about 45), so a single pass is weak evidence; any pass becomes a candidate for its own pre-registered paper track, not a recommendation.",
+ "do_not_edit": "do not change after seeing results"
+}
