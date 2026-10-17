@@ -76,6 +76,33 @@ def fbs_teams() -> list[str]:
     return []
 
 
+_NAMES: dict | None = None
+
+
+def team_names() -> dict:
+    """school -> lowercase names a story might use (school, abbreviation, alternate names, mascot)."""
+    global _NAMES
+    if _NAMES is None:
+        _NAMES = {}
+        now = datetime.now(timezone.utc)
+        y = now.year if now.month >= 7 else now.year - 1
+        for yy in (y, y - 1):
+            for x in D._load(f"teams_fbs_{yy}.json.gz") or []:
+                n = {x["school"], x.get("abbreviation"), x.get("mascot"), *(x.get("alternateNames") or [])}
+                _NAMES.setdefault(x["school"], set()).update(str(v).lower() for v in n if v and len(str(v)) >= 3)
+    return _NAMES
+
+
+def names_team(r: dict, team: str) -> bool:
+    """Team-level context must name its team in the story: the AI has to pick an FBS school, so a story about an FCS
+    team (e.g. UMaine) could be filed under a look-alike FBS school (Massachusetts). Unknown teams pass."""
+    names = team_names().get(team)
+    if not names:
+        return True
+    text = f" {r.get('title') or ''} {r.get('summary') or ''} ".lower()
+    return any(re.search(rf"(?<![a-z]){re.escape(n)}(?![a-z])", text) for n in names)
+
+
 def due(now: datetime) -> bool:
     from .odds_live import due as odds_due
     return odds_due(now)
@@ -86,7 +113,9 @@ def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: floa
               "Only report facts stated in the items; never guess. The team field must be EXACTLY one of these school "
               "names: " + "; ".join(teams) + ". Players transfer every year: take each player's CURRENT school from the "
               "item itself, never from memory; in a story about a matchup, check which of the two teams the player is on. "
-              "If the item does not make the player's current team clear, skip that player. "
+              "If the item does not make the player's current team clear, skip that player. If the team is not one of these "
+              "FBS schools (an FCS or lower-division team such as UMaine or Bryant), skip the item: never substitute a "
+              "school with a similar name. "
               "Skip NFL, recruiting and high-school items, and recaps of games already played.")
     instr = INSTR
     body = "\n\n".join(f"[{i}] ({it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
@@ -189,7 +218,7 @@ def recent_by_team(days: int = 7, now: datetime | None = None, idx: dict | None 
             if (now - t).days > days or not r.get("game_week_relevant", True):
                 continue
             v = R.verify(r.get("player"), r.get("team"), season, idx)    # re-checked on every build (rosters update)
-            if not v["team_verified"]:
+            if not v["team_verified"] or (kind == "cx" and not r.get("player") and not names_team(r, v["team_verified"])):
                 continue
             out.setdefault(v["team_verified"], []).append({**r, "kind": kind, "verify": v})
     for t in out:   # newest first; one line per player+signal (or per context category without a player)

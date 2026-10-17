@@ -225,7 +225,7 @@ function marketRows(g){
       else if(!inRange(x) && !(m==='ml' && inRangeML(x))) st={k:'no', t:'NO', d:`${od(x.price)} is outside the tested price range (${od(PR[0])} to ${od(PR[1])}${m==='ml'?`; the moneyline track goes to ${od(PR_ML[0])} to ${od(PR_ML[1])}`:''}); long shots and heavy favorites are never bet`};
       else st={k:'no', t:'NO', d:`${sgn(x.edge)} vs Pinnacle; ${MKT[m].toLowerCase()} bets need ${Math.round(BAR[m]*100)}%+ (the A+ track 4%+)`};
       const tk=[...new Set(bets.map(b=>b._k))];
-      rows.push({g, m, side, x, st, grade:inRange(x)?x.grade:null, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet:bets[0], aplusLogged:tk.includes('aplus'), aplusBet:bets.find(b=>b._k==='aplus'),
+      rows.push({g, m, side, x, st, grade:inRange(x)?x.grade:null, edge:x.edge??-9, pick:pickTxt(g,m,side,x), book:x.book, bet:bets[0],
                  chips: chips(tk) + chips(soon?[]:would.filter(k=>!tk.includes(k)), true)});
     }
   }
@@ -252,16 +252,16 @@ $('strip').innerHTML=[
   const R=allRows.filter(r=>['A+','A','B'].includes(r.grade) || r.bet).sort(rowSort);
   const gt = g => `${esc(g.away)} @ ${esc(g.home)} · ${when(g.start)} AZ`;
   const head = `<div class="brow bh"><span>Grade</span><span>Pick</span><span>Why</span><span>Status</span></div>`;
-  const row = r => `<div class="brow"><span>${r.aplusLogged&&r.grade!=='A+' ? gradeBadge('A+', `A+ when the A+ track logged it (${sgn(r.aplusBet.edge)} vs Pinnacle at ${od(r.aplusBet.price)}); the price now is ${r.grade||'ungraded'} (${sgn(r.x.edge)})`, true) : gradeBadge(r.grade, gradeTip(r.x,r.m), true)}</span>
-    <span class="bpk"><b>${esc(r.pick)}</b>${r.aplusLogged&&r.grade!=='A+'?`<small>A+ when logged: ${esc(shortBet(r.aplusBet))} ${od(r.aplusBet.price)} ${esc(r.aplusBet.book)} · now ${r.grade||'—'} at ${od(r.x.price)}</small>`:''}<small>${MKT[r.m]} · ${esc(r.book)}</small><small>${gt(r.g)}</small></span>
+  const row = r => `<div class="brow"><span>${gradeBadge(r.grade, gradeTip(r.x,r.m), true)}</span>
+    <span class="bpk"><b>${esc(r.pick)}</b><small>${MKT[r.m]} · ${esc(r.book)}</small><small>${gt(r.g)}</small></span>
     <span class="bwhy">${r.chips?`<span class="wl">${r.chips}</span>`:''}<span class="wl"><span class="chip grd">Vs Pinnacle</span>${sgn(r.x.edge)} expected value at this price${r.x.p_win!=null?` · wins ${pct(r.x.p_win)} of the time`:''}</span></span>
     <span class="bst">${stPill(r.st)}<small>${esc(r.st.d)}</small>${r.bet?logLink(r.bet):''}</span></div>`;
   const list=(rows,cls,empty)=>`<div class="blist ${cls}">${rows.length?head+rows.map(row).join(''):`<div class="bempty">${empty}</div>`}</div>`;
-  const top=R.filter(r=>r.grade==='A+'||r.aplusLogged), mid=R.filter(r=>r.grade==='A'&&!top.includes(r)), rest=R.filter(r=>!top.includes(r)&&!mid.includes(r));
+  const top=R.filter(r=>r.grade==='A+'), mid=R.filter(r=>r.grade==='A'), rest=R.filter(r=>!top.includes(r)&&!mid.includes(r));
   const n=x=>`${x} pick${x===1?'':'s'}`;
   const restBets=rest.filter(r=>r.bet).length;
   $('board').innerHTML = `
-    <section class="bgroup"><div class="bgh"><h3>Bet-worthy · A+</h3><span class="cnt">${n(top.length)}</span></div><p class="gi">Beats Pinnacle by 4%+. At your three books in 2021–25, A+ prices beat Pinnacle's closing line by +7.6% (totals), +4.4% (moneylines) and +2.1% (spreads). The A+ track logs every one, −200 to +200. A+ prices usually appear when Pinnacle first posts (Sunday/Monday) and are gone by midweek, so bets the A+ track already logged stay listed here with their price then and now.</p>
+    <section class="bgroup"><div class="bgh"><h3>Bet-worthy · A+</h3><span class="cnt">${n(top.length)}</span></div><p class="gi">Beats Pinnacle by 4%+. At your three books in 2021–25, A+ prices beat Pinnacle's closing line by +7.6% (totals), +4.4% (moneylines) and +2.1% (spreads). The A+ track logs every one, −200 to +200. A+ prices usually appear when Pinnacle first posts (Sunday/Monday) and are gone by midweek; once a price drops below A+ it leaves this list, and bets already logged stay in Paper bets (College A+) and My bets.</p>
       ${list(top,'top','Nothing graded A+ right now. Prices are re-checked every hour Sunday afternoon–Monday morning (when Pinnacle posts), Thursday–Saturday, and every 3 hours otherwise; the best spots usually show up 3–7 days before kickoff.')}</section>
     <section class="bgroup"><div class="bgh"><h3>Watchlist · A</h3><span class="cnt">${n(mid.length)}</span></div><p class="gi">Beats Pinnacle by 2–4%. Also beat the close in testing, by less (about +1% spreads and totals, +2.5% moneylines). Shop vs sharp logs totals and moneylines at A; spreads need A+.</p>
       ${list(mid,'','No A grades right now.')}</section>

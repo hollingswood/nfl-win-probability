@@ -149,7 +149,17 @@ a.tlink:hover,a.tlink:focus-visible{color:var(--accent);border-color:var(--accen
 .g2note{font-size:12px;color:var(--muted);margin:0}
 .g2c{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .markets{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
-@media (max-width:420px){.markets{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.markets{grid-template-columns:minmax(0,1fr)}}
+.mkt{grid-template-columns:minmax(0,1fr)}
+.mkt>*{min-width:0;max-width:100%}
+.mkt .mhr{flex-wrap:wrap;justify-content:flex-end}
+.mkt .why,.mkt .wl,.mkt .odds,.mkt .cmp,.mkt .vm span{overflow-wrap:anywhere}
+.mkt .chip{display:inline-block;margin-bottom:3px;white-space:normal;max-width:100%}
+.chip{display:inline-block;margin-bottom:2px}
+.bwhy>*,.bpk>*,.bst>*{min-width:0;overflow-wrap:anywhere}
+.placedtag{display:inline-block;max-width:100%;white-space:normal}
+.gmeta{flex-wrap:wrap;gap:4px 8px}
+.betflag{display:inline-block;max-width:100%}
 .why{overflow-wrap:anywhere}
 .mkt{border:1px solid var(--line);padding:8px 10px;display:grid;gap:3px;font-size:13px;min-width:0;overflow-wrap:break-word}
 .mkt.is-bet{border-color:var(--good);box-shadow:inset 3px 0 0 var(--good)}
