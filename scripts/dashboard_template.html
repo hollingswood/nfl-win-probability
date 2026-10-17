@@ -120,6 +120,9 @@ dialog.pkdlg::backdrop{background:rgba(0,0,0,.55)}
 .pkdlg td,.pkdlg th{text-align:left}
 .pkdlg td.n,.pkdlg th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
 .pkdlg .q{color:var(--muted);font-size:12px}
+.pkdlg tr.hw td{border-bottom:0}
+.pkdlg tr.pkwhy td{padding-top:0;color:var(--muted);font-size:12.5px;line-height:1.45;white-space:normal;overflow-wrap:anywhere}
+.pkdlg tr.pkwhy i{color:var(--ink);opacity:.8}
 @media (max-width:640px){
   .pkdlg thead{display:none}
   .pkdlg table,.pkdlg tbody{display:block}
@@ -128,6 +131,9 @@ dialog.pkdlg::backdrop{background:rgba(0,0,0,.55)}
   .pkdlg td:first-child{width:100%;color:var(--muted);font-size:12px}
   .pkdlg td.n{text-align:left}
   .pkdlg td[data-l]::before{content:attr(data-l) ' ';color:var(--muted);font-size:11px}
+  .pkdlg tr.hw{border-bottom:0;padding-bottom:3px}
+  .pkdlg tr.pkwhy{padding-top:0}
+  .pkdlg tr.pkwhy td{font-size:12.5px;color:var(--muted)}
 }
 .track{display:grid;gap:10px;margin-top:8px}
 .track h3{font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;display:flex;gap:10px;align-items:center}
@@ -1132,9 +1138,14 @@ function pickerDialog(K, name){
   const sg=v=>v==null?'—':(v>0?'+':'')+v, dt=s=>s?new Date(s).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric'}):'—';
   const game=p=>`${esc(p.away||'')} @ ${esc(p.home||'')}`;
   const pick=p=>`<b>${esc(p.pick||'')}</b>${p.market==='moneyline'?' ML':''}${p.line!=null&&p.market!=='moneyline'?` ${sg(p.line)}`:p.line!=null?` (${sg(p.line)})`:''}`;
+  // why they picked it: AI summary (only kept if its words are in the article) + their own words; shown in full
+  const whyRow=(p,n)=>{ const r=(p.reason||'').trim(), q0=(p.quote||'').trim(), q=q0.split(/\s+/).length>=4?q0:'';   // a bare team name or number adds nothing
+    if(!r && !q) return '';
+    const same=r && q && r.toLowerCase().replace(/\W/g,'')===q.toLowerCase().replace(/\W/g,'');
+    return `<tr class="pkwhy"><td colspan="${n}"><b>Why:</b> ${r?esc(r):''}${q&&!same?`${r?' ':''}<i>“${esc(q.replace(/^["“”]+|["“”]+$/g,''))}”</i>`:''}</td></tr>`; };
   const src=p=>p.link?` <a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">source</a>`:'';
-  const pend=P.pending.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th>Why (their words)</th></tr></thead><tbody>${P.pending.map(p=>`<tr><td>${dt(p.kick||p.seen_at)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="q">${esc(p.quote||'')}</td></tr>`).join('')}</tbody></table>`:'<p class="q">No pending picks right now.</p>';
-  const grd=P.graded.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th title="Closing line the pick is graded against">Close</th><th>Final</th><th>Result</th><th class="n">Units</th></tr></thead><tbody>${P.graded.map(p=>`<tr><td>${dt(p.kick)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="n" data-l="close">${sg(p.close_line)}</td><td class="n" data-l="final">${esc(p.final||'')}</td><td class="${p.result==='win'?'win':p.result==='loss'?'loss':''}">${esc(p.result||'')}</td><td class="n" data-l="units">${p.units==null?'—':sg(Number(p.units).toFixed(2))}</td></tr>`).join('')}</tbody></table>`:'<p class="q">Nothing graded yet.</p>';
+  const pend=P.pending.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th></tr></thead><tbody>${P.pending.map(p=>`<tr${whyRow(p,3)?' class="hw"':''}><td>${dt(p.kick||p.seen_at)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td></tr>${whyRow(p,3)}`).join('')}</tbody></table>`:'<p class="q">No pending picks right now.</p>';
+  const grd=P.graded.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th title="Closing line the pick is graded against">Close</th><th>Final</th><th>Result</th><th class="n">Units</th></tr></thead><tbody>${P.graded.map(p=>`<tr${whyRow(p,7)?' class="hw"':''}><td>${dt(p.kick)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="n" data-l="close">${sg(p.close_line)}</td><td class="n" data-l="final">${esc(p.final||'')}</td><td class="${p.result==='win'?'win':p.result==='loss'?'loss':''}">${esc(p.result||'')}</td><td class="n" data-l="units">${p.units==null?'—':sg(Number(p.units).toFixed(2))}</td></tr>${whyRow(p,7)}`).join('')}</tbody></table>`:'<p class="q">Nothing graded yet.</p>';
   d.innerHTML=`<div class="pkh"><div><h3>${esc(name)}</h3><small>${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky'))} · ${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''} vs the close · ${x.units>0?'+':''}${(x.units||0).toFixed(2)} units`:'no graded picks yet'}${x.pending?` · ${x.pending} pending`:''}</small></div><button class="pkx" aria-label="Close">×</button></div>
     <div class="pkb"><span class="subh">Pending (${P.pending.length})</span>${pend}<span class="subh">Graded (${P.graded.length}${x.graded>P.graded.length?`, latest ${P.graded.length} of ${x.graded}`:''})</span>${grd}</div>`;
   d.showModal(); d.scrollTop=0;

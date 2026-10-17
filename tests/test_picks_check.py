@@ -93,3 +93,24 @@ def test_articles_read_before_the_checks_are_reread_once(tmp_path, monkeypatch):
     assert len(calls) == 1 and rep["picks"] == 0 and reads["k1"]["checks"] == PC.VERSION and reads["k1"]["keys"] == []
     PL.scan(now=now, api_key="k", fetcher=lambda u: [], texter=lambda u: PC.html_to_text(CBS), llm=llm)
     assert len(calls) == 1                                   # once per checks version
+
+
+def test_reason_is_kept_only_when_the_article_says_it():
+    t = ("Fornelli: Tennessee's secondary has allowed explosive plays all season and Alabama's receivers should feast. "
+         "Pick: Alabama -8.5")
+    ok = dict(GAME, analyst="Tom Fornelli", market="spread", pick="Alabama", line=-8.5, confidence_words="Pick: Alabama -8.5",
+              reason="Tennessee's secondary keeps allowing explosive plays, so Alabama's receivers should feast.")
+    made_up = dict(ok, pick="Alabama", market="moneyline", reason="Nico Iamaleava returns from injury and the weather favors the defense.")
+    kept, rej = PC.validate([ok, made_up], t)
+    assert not rej and kept[0]["reason"].startswith("Tennessee's secondary") and kept[1]["reason"] == ""
+
+
+def test_scores_carry_reasons_found_on_a_later_read(tmp_path):
+    from nflpred import picks_score as S
+    from nflpred.picks_log import pick_key
+    p = dict(GAME, analyst="Tom Fornelli", market="spread", pick="Alabama", line=-8.5, confidence_words="")
+    (tmp_path / "picks_reasons.json").write_text(json.dumps({"|".join(map(str, pick_key(p))): {
+        "reason": "Bama's receivers should feast.", "quote": "Pick: Alabama -8.5", "at": "2026-10-17T00:00"}}))
+    assert S._why(dict(p, reason="x"))["reason"] == "x"
+    import inspect
+    assert "picks_reasons.json" in inspect.getsource(S.run)

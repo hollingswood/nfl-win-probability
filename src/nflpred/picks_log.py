@@ -63,13 +63,18 @@ college football game: a side against the spread, a moneyline winner pick, or an
 skip straight-up win predictions that give no betting line unless they say "moneyline". Return ONLY JSON:
 {"picks": [{"analyst": str or null, "outlet": str or null, "sport": "nfl" or "cfb", "away_team": str, "home_team": str,
   "market": "spread" | "moneyline" | "total", "pick": team name for spread/moneyline, or "over"/"under",
-  "line": number or null (spread from the picked team's side, e.g. -3.5; or the total), "confidence_words": short quote}]}
+  "line": number or null (spread from the picked team's side, e.g. -3.5; or the total), "confidence_words": quote,
+  "reason": why}]}
 Use full team names. Return {"picks": []} if there are none.
 Lines starting with [PICKS TABLE] are rows of a picks table, already matched to each analyst: the row label gives the
 market ("against the spread" rows: the team named is that analyst's side at the row's number, from the side of the team in
 the label; "straight up" rows: moneyline winner; "total" rows: over/under). Copy them exactly; never shift a pick to a
 neighbouring analyst. Only game lines: skip team totals, player props, first-half/quarter bets and parlay legs.
-"confidence_words" must be copied word for word from the article (or "" for a table row)."""
+"confidence_words": the sentence(s) where the analyst states the pick or its main reason, copied WORD FOR WORD from the
+article (up to 2 sentences; "" if there is no such sentence).
+"reason": 1-2 plain sentences (max 45 words) summarizing WHY this analyst likes this pick, using only reasons the article
+gives for it (matchups, injuries, stats, trends, coaching, weather, line value). For a table row, use that analyst's own
+write-up elsewhere in the article if it has one. "" if the article gives no reason; never invent one."""
 
 
 def _text(url: str, timeout: float = 20, limit: int = 90000) -> str:
@@ -218,6 +223,8 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
                           "published": r.get("published")})
     rows, rej_rows = [], []
+    why_p = HIST / "picks_reasons.json"
+    why = json.loads(why_p.read_text()) if why_p.exists() else {}
     for it in cands[:max_articles]:
         seen.add(it["key"])
         r = reads.setdefault(it["key"], {"first": now.isoformat(timespec="minutes"), "n": 0, "link": it.get("link"),
@@ -231,6 +238,13 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         rep["articles"] += 1
         r["keys"] = sorted("|".join(map(str, pick_key(p))) for p in picks)      # layer 4: this read's full pick list
         r["checks"] = PC.VERSION
+        for p in picks:                     # why each pick was made, also for picks logged on an earlier read
+            if p.get("reason") or p.get("confidence_words"):
+                kk = "|".join(map(str, pick_key(p)))
+                old = why.get(kk) or {}
+                if len(p.get("reason") or "") >= len(old.get("reason") or ""):
+                    why[kk] = {"reason": p.get("reason") or "", "quote": (p.get("confidence_words") or "")[:400],
+                               "at": now.isoformat(timespec="minutes")}
         for x in rejected:
             rej_rows.append({"seen_at": now.isoformat(timespec="minutes"), "link": it.get("link"), "title": it.get("title"), **x})
         new = [p for p in picks if pick_key(p) not in logged_keys]   # a re-read logs only picks we hadn't seen
@@ -284,6 +298,8 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
     seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
     cut = (now - timedelta(days=10)).isoformat()
     reads_p.write_text(json.dumps({k: v for k, v in reads.items() if v.get("last", "") >= cut}, indent=0))
+    wcut = (now - timedelta(days=120)).isoformat()
+    why_p.write_text(json.dumps({k: v for k, v in why.items() if v.get("at", "") >= wcut}, indent=0))
     rep["picks"] = len(rows)
     if texter is _text:   # live runs: which feeds Actions can reach, readable without log access
         (HIST / "picks_probe.json").write_text(json.dumps({"checked_at": now.isoformat(timespec="minutes"), "feeds": rep["feeds"]}, indent=1))

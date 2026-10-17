@@ -8,6 +8,8 @@ Layer 2 (after the AI, needs the article text) -> `validate`: a pick is dropped,
           - the picked side is not one of the two teams (players, props);
           - it contradicts that analyst's row in a picks table, or labels a spread row as a moneyline (or the reverse);
           - the same analyst has both sides of the same game and market in the article.
+          The AI's 'reason' (a short summary of why the analyst likes the pick) is kept only if most of its words are
+          in the article (`ground_reason`); otherwise it's blanked, so a made-up rationale is never shown.
 Layer 3 (at grading, needs the closing line; picks_score) -> `grade_check`: a stated total far from the game total is a team
           total or prop; a stated spread far from the game's spread is a different line; such picks are not graded.
 Layer 4 (re-reads; picks_score) -> picks an article no longer shows on its latest read are dropped (self-correcting).
@@ -15,7 +17,7 @@ Layer 4 (re-reads; picks_score) -> picks an article no longer shows on its lates
 """
 from __future__ import annotations
 
-VERSION = 1   # bump when a check changes: picks_log re-reads recent articles once under the new checks (layer 4)
+VERSION = 2   # 2: picks carry a grounded 'reason' summary. bump when a check changes: picks_log re-reads recent articles once under the new checks (layer 4)
 
 import html
 import re
@@ -170,6 +172,21 @@ def _analyst_cell(rec: dict, analyst: str) -> str | None:
     return None
 
 
+STOP = set("about after again against their there these those which while would could should being other since still where "
+           "because think thinks likes expect expects should going point points games teams their's".split())
+
+
+def ground_reason(reason, text_n: str, need: float = 0.6) -> str:
+    """The AI's summary of why, kept only if >= 60% of its content words (5+ letters) appear in the article."""
+    r = re.sub(r"\s+", " ", str(reason or "")).strip()
+    words = [w.strip(".'%/+-") for w in _norm(r).split()]
+    words = [w for w in words if len(w) >= 5 and w not in STOP]
+    if not r or not words:
+        return ""
+    hit = sum(w in text_n or w.rstrip("s") in text_n for w in words) / len(words)
+    return r[:400] if hit >= need else ""
+
+
 def validate(picks: list[dict], text: str) -> tuple[list[dict], list[dict]]:
     """-> (kept, rejected); each rejected pick carries 'reject_reason'."""
     text_n = _norm(text)
@@ -205,6 +222,7 @@ def validate(picks: list[dict], text: str) -> tuple[list[dict], list[dict]]:
                 bad = f"the table row is {r['kind']}, not {mk}"
         if bad:
             drop(p, bad); continue
+        p = dict(p, reason=ground_reason(p.get("reason"), text_n))
         kept.append(p)
     # same analyst, same game and market, both sides -> drop both
     by = {}

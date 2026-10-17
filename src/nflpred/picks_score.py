@@ -235,7 +235,13 @@ def _p_cover(w: int, n: int, p0: float) -> float:
 def _detail(p: dict) -> dict:
     return {"picker": picker_of(p), "sport": p.get("sport"), "seen_at": p.get("seen_at"), "away": p.get("away_team"),
             "home": p.get("home_team"), "market": p.get("market"), "pick": p.get("pick"), "line": p.get("line"),
-            "link": p.get("link"), "quote": (p.get("confidence_words") or "")[:160]}
+            "link": p.get("link"), **_why(p)}
+
+
+def _why(p: dict) -> dict:
+    """Why the picker made it: the grounded AI summary and their own words (picks_reasons.json fills in reasons found on a
+    later read of the article)."""
+    return {"reason": (p.get("reason") or "")[:400], "quote": (p.get("confidence_words") or "")[:400]}
 
 
 def table(graded: list[dict], logged: dict) -> list[dict]:
@@ -274,6 +280,17 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     path = hist / "picks_log.jsonl"
     picks = [json.loads(x) for x in path.read_text().splitlines() if x.strip()] if path.exists() else []
     picks, superseded = drop_superseded(picks, hist)          # picks_check layer 4: an article's latest read wins
+    wp = hist / "picks_reasons.json"
+    why = json.loads(wp.read_text()) if wp.exists() else {}
+    if why:
+        from .picks_log import pick_key
+        for p in picks:                      # reasons found on a later read of the article (grounded at read time)
+            w = why.get("|".join(map(str, pick_key(p))))
+            if w:
+                if len(w.get("reason") or "") > len(p.get("reason") or ""):
+                    p["reason"] = w["reason"]
+                if len(w.get("quote") or "") > len(p.get("confidence_words") or ""):
+                    p["confidence_words"] = w["quote"]
     nfl = nfl if nfl is not None else nfl_games()
     try:
         cfb = cfb if cfb is not None else cfb_games()
@@ -332,7 +349,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         graded.append({**g, "picker": picker_of(p), "sport": p.get("sport"), "market": p.get("market"), "pick": p.get("pick"),
                        "line": p.get("line"), "seen_at": p["seen_at"], "outlet": outlet_of(p),
                        "away": g.get("away_actual") or p.get("away_team"), "home": g.get("home_actual") or p.get("home_team"),
-                       "link": p.get("link")})
+                       "link": p.get("link"), **_why(p)})
     pickers = table(graded, {k: v for k, v in logged.items() if isinstance(k, str)})
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
     test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0}
@@ -392,7 +409,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
                 d = detail.setdefault(x["picker"], {"pending": [], "graded": []})
                 if len(d["graded"]) < 40:
                     d["graded"].append({k: x.get(k) for k in ("kick", "week", "away", "home", "market", "pick", "line", "close_line",
-                                                              "result", "units", "line_value", "final", "link")})
+                                                              "result", "units", "line_value", "final", "link", "reason", "quote")})
         done = {(x["picker"], x["market"], norm(x["pick"])) for x in gs}
         seen_p = set()
         for x in sorted((y for y in pending if y["sport"] == sport), key=lambda y: y["seen_at"], reverse=True):
