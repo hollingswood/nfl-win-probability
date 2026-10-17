@@ -1,19 +1,20 @@
 {
- "generated_at": "2026-10-16T21:45+00:00",
- "signals": 3993,
- "units": 1468,
+ "generated_at": "2026-10-17T14:35+00:00",
+ "signals": 4108,
+ "units": 1501,
  "skipped": {
-  "team_unclear": 72,
+  "team_unclear": 74,
   "no_game": 91,
-  "not_game_week": 110
+  "not_game_week": 116
  },
  "roster_check": {
-  "match": 3783,
-  "team_mismatch": 134,
-  "not_found": 76
+  "match": 3884,
+  "team_mismatch": 144,
+  "not_found": 79,
+  "ambiguous": 1
  },
  "graded": 543,
- "pending": 204,
+ "pending": 220,
  "overall": {
   "n": 543,
   "correct": 429,
@@ -60,13 +61,13 @@
   "n": 48,
   "correct": 31,
   "pct": 64.6,
-  "pending": 29
+  "pending": 31
  },
  "rule_population": {
   "n": 39,
   "correct": 26,
   "pct": 66.7,
-  "pending": 24
+  "pending": 25
  },
  "official_report_agreement": {
   "n": 459,
@@ -74,17 +75,432 @@
   "pct": 72.1
  },
  "lead_vs_report_hours": {
-  "n": 747,
-  "median": 47.9,
-  "share_before_report": 76.3
+  "n": 763,
+  "median": 46.6,
+  "share_before_report": 74.8
  },
  "qb_line_move_6h": {
-  "n": 110,
-  "avg_abs_after": 0.45,
+  "n": 114,
+  "avg_abs_after": 0.44,
   "avg_abs_before": 0.3,
   "avg_after_negative_signals": -0.05
  },
  "rows": [
+  {
+   "seen_at": "2026-10-17T14:16+00:00",
+   "player": "Jalen Hurts",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -18.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T14:16+00:00",
+     "source": "google_injury",
+     "outlet": "RotoWire",
+     "title": "Jalen Hurts Injury: IR stint not expected - RotoWire",
+     "quote": "IR stint not expected",
+     "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQWXNvYVBmUmdDdlUxTVVBM0JGMGlxVS1OTDRub1Izak92bHVhdURydUdoODl4T3FTNndQTDZHWWlHX1cxVXlXSmVtS0hxbDktQ2JIRGJUSTAwYXFSbFBnZHBwb2l0R2NLcEZrSUFvX3Y4VVhYZm0ydFJ3bzlxdnhXLW1OMHlFbnItMVdGeC1BSGp6SlJXbHc?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T11:58+00:00",
+   "player": "Blake Grupe",
+   "team": "LA",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_ARI_LA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -16.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T11:58+00:00",
+     "source": "google_context",
+     "outlet": "Yahoo Sports",
+     "title": "Why Sean McVay feels \u2018confident\u2019 about new Rams kicker Blake Grupe - Yahoo Sports",
+     "quote": "Sean McVay feels 'confident' about new Rams kicker Blake Grupe",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNX0d5bEtPOFM0bTdnUzN5U0YwM2RVRlo3STdPTGd1WGVLbHdyR1RmeUxwS2R3TUZ6TS1PRnVjX0JKaDZVOU5mclZjVDF6OVR4VTlWTnUxc3dhZWpkU2Fwb3d2NmdaTEVzSVlkMUIzN0hMT3h0SGF6WC01eGItNkNTQmtpUUNnQQ?oc=5",
+     "player": "Blake Grupe",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T11:43+00:00",
+   "player": "Brian Branch",
+   "team": "DET",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_GB_DET",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 152.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T11:43+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Lions fans\u2019 confidence on the rise; anticipate immediate impact from Brian Branch",
+     "quote": "anticipate immediate impact from Brian Branch",
+     "link": "https://sports.yahoo.com/articles/lions-fans-confidence-rise-anticipate-112155912.html",
+     "player": "Brian Branch",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T11:23+00:00",
+   "player": "Jonathan Greenard",
+   "team": "PHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": -15.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T11:23+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Eagles&#39; Jonathan Greenard hungry as he makes his return in frustrating season",
+     "quote": "makes his return on Sunday",
+     "link": "https://sports.yahoo.com/articles/eagles-jonathan-greenard-hungry-makes-070000792.html",
+     "player": "Jonathan Greenard",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T11:12+00:00",
+   "player": "Dylan Parham",
+   "team": "NYJ",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NYJ_NE",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -15.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T11:12+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "New York Jets Flight Connections 10/17/26",
+     "quote": "will continue to be without starters Dylan Parham",
+     "link": "https://sports.yahoo.com/articles/york-jets-flight-connections-10-110000078.html",
+     "player": "Dylan Parham",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T10:44+00:00",
+   "player": "JJ Jansen",
+   "team": "CAR",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -14.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T10:44+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Panthers' JJ Jansen to play his 282nd game, most ever for a long snapper",
+     "quote": "will become the NFL's all-time record holder for games played by a long snapper on Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/panthers-jj-jansen-to-play-his-282nd-game-most-ever-for-a-long-snapper",
+     "player": "JJ Jansen",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T03:23+00:00",
+   "player": "Jason Pinnock",
+   "team": "NYG",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_NO_NYG",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": -7.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Jason Pinnock gets chance to claim Giants starting job with Tyler Nubin sidelined",
+     "quote": "gets chance to claim Giants starting job",
+     "link": "https://sports.yahoo.com/articles/jason-pinnock-gets-chance-claim-224531651.html",
+     "player": "Jason Pinnock",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T03:23+00:00",
+   "player": "Tyler Nubin",
+   "team": "NYG",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NO_NYG",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -7.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Jason Pinnock gets chance to claim Giants starting job with Tyler Nubin sidelined",
+     "quote": "sidelined",
+     "link": "https://sports.yahoo.com/articles/jason-pinnock-gets-chance-claim-224531651.html",
+     "player": "Tyler Nubin",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T02:23+00:00",
+   "player": "Josh Jacobs",
+   "team": "GB",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": -6.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T02:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Josh Jacobs getting pulled off commissioner\u2019s exempt list amid NFL investigation",
+     "quote": "Josh Jacobs getting pulled off commissioner's exempt list",
+     "link": "https://sports.yahoo.com/articles/josh-jacobs-getting-pulled-off-215327859.html",
+     "player": "Josh Jacobs",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-17T00:23+00:00",
+   "player": "Joe Milton",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": -4.4,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-17T00:23+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles sign QB Joe Milton from Cowboys' practice squad with Jalen Hurts out - Yahoo Sports",
+     "quote": "Eagles sign QB Joe Milton from Cowboys' practice squad",
+     "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPV3VEUERBRFlNc0FHT21RWWRyNTZ6S3FKVTNTNmo5aFVaNE5GMjV6ZlF5cGxrQWZmeDRfZlRwa3VmQUxWNXA3MEExd04wV3N1aHc0ZjFadDVxODkyS2pRSzBXRWVkdHN2TlRIVkNMc0dOVS1ZNVVFbHU5cVVoUW9WdXM3dDhPLVh2cDV0R19qYjFraUFuTkZLTXJCS01nVEZBMy1QTkhlLW1LQkVLSXhXM2FyZnhudDBJZWMyRXJEeExmVFg2?oc=5",
+     "player": "Joe Milton",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T23:23+00:00",
+   "player": "Theo Johnson",
+   "team": "NYG",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_NO_NYG",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -3.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T23:23+00:00",
+     "source": "google_injury",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Theo Johnson Ruled out against New Orleans - Fantasy Footballers Podcast",
+     "quote": "Ruled out against New Orleans",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNWDU1V3pyTHpLUWxlSkNQckctZVpwWEdQV2VXZFBWeFYwMUs2Qm1KdWNPU0NWMFhMRzRTWVFuTWJUYVVNbzFDTHRoMk16UUVDam01TG1lWGo3cXFKYkNrRXNMQ0VUWTNPWTF6c0h5emFXdXdoWlJHamFMZXBEQjNCejdObHQ2eXJnWHpldGJTcWVLZ3hMV2d0LQ?oc=5",
+     "player": "Theo Johnson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T22:39+00:00",
+   "player": "Cam Jurgens",
+   "team": "BAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_BAL_CLE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -2.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T22:39+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Ravens rule out QB Lamar Jackson, C Cam Jurgens for Week 6 vs. Browns",
+     "quote": "Ravens rule out QB Lamar Jackson, C Cam Jurgens for Week 6 vs. Browns",
+     "link": "https://sports.yahoo.com/articles/ravens-rule-qb-lamar-jackson-222523805.html",
+     "player": "Cam Jurgens",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T22:23+00:00",
+   "player": "Jaylon Carlies",
+   "team": "IND",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_TEN_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -2.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T22:23+00:00",
+     "source": "team_sites_2",
+     "outlet": "Colts.com",
+     "title": "Colts rule out LB Jaylon Carlies, WR Ashton Dulin ahead for Week 6 - Colts.com",
+     "quote": "rule out LB Jaylon Carlies",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNWklOTHZCbUJDanpOWVZqblVPVUlwOER3NmRXY25IWGZhMFdxU0hQZHR0aW4zVzFZRlBhRTRuemZObTVJWEN5X1d2N1RNSFlQRHFiN2xZWFk1dml1N1liZjBNcG1VaWlteUh4Wm82ZElXQ040clhJRjFEcDYyNnpXOGhXX2x6dFFsZkl6Z3pneE41cFNFMjFz?oc=5",
+     "player": "Jaylon Carlies",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T22:23+00:00",
+   "player": "Ashton Dulin",
+   "team": "IND",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_TEN_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -2.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T22:23+00:00",
+     "source": "team_sites_2",
+     "outlet": "Colts.com",
+     "title": "Colts rule out LB Jaylon Carlies, WR Ashton Dulin ahead for Week 6 - Colts.com",
+     "quote": "rule out LB Jaylon Carlies, WR Ashton Dulin",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNWklOTHZCbUJDanpOWVZqblVPVUlwOER3NmRXY25IWGZhMFdxU0hQZHR0aW4zVzFZRlBhRTRuemZObTVJWEN5X1d2N1RNSFlQRHFiN2xZWFk1dml1N1liZjBNcG1VaWlteUh4Wm82ZElXQ040clhJRjFEcDYyNnpXOGhXX2x6dFFsZkl6Z3pneE41cFNFMjFz?oc=5",
+     "player": "Ashton Dulin",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T21:59+00:00",
+   "player": "Kevin Winston Jr.",
+   "team": "TEN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_TEN_IND",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -2.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T21:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Titans' Jordan Elliot, Kevin Winston Jr. out, Tyjae Spears questionable - Yahoo Sports",
+     "quote": "Titans' Jordan Elliot, Kevin Winston Jr. out",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQTVZRZTBrSU9PbzdDeUdzY05HYWVFc1RRMW80WFc5OE1pQ2JRYnY5a25SNGJoU29FUUU0ZHBuZmhjMlpTR2ZMTFU5clI0cUZTMkNhZDF4RXBad1dhR1pUM25SOF9UTzFCQW9SbklMUk9xczg1YUl0dlN6VEQtb0lkYmdsSTVhbVk4dXRV?oc=5",
+     "player": "Kevin Winston Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-16T21:59+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_06_CAR_PHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -2.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-16T21:59+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Eagles-Panthers Final Injury Report: DeVonta Smith will play, Saquon Barkley out",
+     "quote": "DeVonta Smith will play",
+     "link": "https://sports.yahoo.com/articles/eagles-panthers-final-injury-report-211315959.html",
+     "player": "DeVonta Smith",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-16T21:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles-Panthers Final Injury Report: DeVonta Smith will play, Saquon Barkley out - Yahoo Sports",
+     "quote": "DeVonta Smith will play",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOZHU0cGJCX3FDRlRKR0VyN25rVUdLcndqcmdYM1RFWG1tZHRhR3BIYWg5VjZNam9aR0lqcmdsdjhUVmk3VXhOX3Q4VHRsNkI2Q2szWW1WSVlkSldDTG9TT3dRUGRHdElZbUhjTjVPUkF5b0tMcWQ2VjRDLWh4RUd6azRHeEhrLU5fRm1McA?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "will_start"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-16T21:23+00:00",
    "player": "DeVonta Smith",
@@ -180,6 +596,16 @@
      "title": "Broncos OLB Jonathon Cooper has been removed from the Commissioner\u2019s exempt list",
      "quote": "removed from the Commissioner's exempt list...will be eligible to play vs. the Cardinals next week",
      "link": "https://sports.yahoo.com/articles/broncos-olb-jonathon-cooper-removed-194438382.html",
+     "player": "Jonathon Cooper",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-17T01:41+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:zacstevens.bsky.social (DEN)",
+     "title": "What we learned w/Broncos today: -Jonathon Cooper removed from NFL Commissioner\u2019s Exempt list -Cooper eligible to play next week vs Cardinal",
+     "quote": "Cooper eligible to play next week vs Cardinals",
+     "link": "https://bsky.app/profile/zacstevens.bsky.social/post/3mxzxgt63wk25",
      "player": "Jonathon Cooper",
      "signal": "expected_to_play"
     }
@@ -360,7 +786,10 @@
    "roster": "team_mismatch",
    "certainty": 0.8,
    "lead_vs_report_h": 0.3,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": 0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -1041,7 +1470,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 3.3,
-   "line_move": null,
+   "line_move": {
+    "after": -0.5,
+    "before": -0.5
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1104,6 +1536,16 @@
      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQeUFfZnhnZWZFNlhYNmR0X2VJdmR3TzlaVzNlMjdYNVV2RmdqVDJvWDlNakZqc3BoVkZVcWt5TGMtekpTS1F4UkxRQ3FRaENRa1M0NW42ZllqLU5KbXlJRXdPYTNLcDIxYXVqLVQtTFZDaks1b3BxTWkzVVd4bklnVDkwbC16Zkl2VlNORUFIYkhCT2hGdmxpS00ySjlsTk5Lb0tLdVMwYw?oc=5",
      "player": "Tyler Huntley",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-16T22:39+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Ravens rule out QB Lamar Jackson, C Cam Jurgens for Week 6 vs. Browns",
+     "quote": "The Ravens will start Tyler 'Snoop' Huntley at quarterback for a second straight week",
+     "link": "https://sports.yahoo.com/articles/ravens-rule-qb-lamar-jackson-222523805.html",
+     "player": "Tyler Huntley",
+     "signal": "will_start"
     }
    ]
   },
@@ -1129,6 +1571,36 @@
      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPNFJIVi0wWVBSY1ZHbWNlNGJILXJZYi04d0R6dlpUNDJxbGlMbHlBaF9vcFM0bU9Ua3FhYlk2Q1h3OWdPc1dxQ1h2WjlPN3h1M1JzbFBDVTV5NGFiSE1OS0dNbG9wU0p4c0VNSDJFU0dKdENLTzF6dXd3VjV1YzVXQ0NnV2MxXy0xOF93UlRqakVkNlBfbHdacnhqVHQtTlZNa2dVbVRFaEJqckRwRTZjajczVnV6Y3pvVzJjYmRGNlFpLWd1aW12SGZGYVBGZw?oc=5",
      "player": "Omar Cooper Jr.",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T03:49+00:00",
+     "source": "team_sites_4",
+     "outlet": "New York Jets",
+     "title": "Jets Notebook | WR Omar Cooper Jr. Set to Return Sunday vs. Patriots, Team Will Be Without Breece Hall - New York Jets",
+     "quote": "Set to Return Sunday vs. Patriots",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQcnFhQmFxTnQtRmxUWFRMZVloRFBJd0RhckVoNUxET3lnV2VFMEgzV0VVbnN2MmR1MlU5bXl0Wk9HSUtPaWwzblNENTFWUFUwYW1Sa1hTSlVNY1RqUlRCcm5GaXR5bTNQaTRidFpqSzdrS1BDY25oRG1nenFJMDBDNXJ0RVpEUnh6Q1FTeXhXLXZoLWsySTJRQ1gtaDRUM0E4VGdJbFc1Wks?oc=5",
+     "player": "Omar Cooper Jr.",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T05:59+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Jets getting much-needed offensive boost with Omar Cooper Jr., Kenyon Sadiq returning",
+     "quote": "Omar Cooper Jr., Kenyon Sadiq returning",
+     "link": "https://sports.yahoo.com/articles/jets-getting-much-needed-offensive-013630625.html",
+     "player": "Omar Cooper Jr.",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T11:12+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "New York Jets Flight Connections 10/17/26",
+     "quote": "Omar Cooper will return to the lineup for the first time since Week 1",
+     "link": "https://sports.yahoo.com/articles/york-jets-flight-connections-10-110000078.html",
+     "player": "Omar Cooper",
+     "signal": "returning"
     }
    ]
   },
@@ -1152,6 +1624,16 @@
      "title": "Jets WR Omar Cooper Jr. coming off IR, TE Kenyon Sadiq back from concussion for banged-up offense - FOX Sports",
      "quote": "TE Kenyon Sadiq back from concussion",
      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPNFJIVi0wWVBSY1ZHbWNlNGJILXJZYi04d0R6dlpUNDJxbGlMbHlBaF9vcFM0bU9Ua3FhYlk2Q1h3OWdPc1dxQ1h2WjlPN3h1M1JzbFBDVTV5NGFiSE1OS0dNbG9wU0p4c0VNSDJFU0dKdENLTzF6dXd3VjV1YzVXQ0NnV2MxXy0xOF93UlRqakVkNlBfbHdacnhqVHQtTlZNa2dVbVRFaEJqckRwRTZjajczVnV6Y3pvVzJjYmRGNlFpLWd1aW12SGZGYVBGZw?oc=5",
+     "player": "Kenyon Sadiq",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T05:59+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Jets getting much-needed offensive boost with Omar Cooper Jr., Kenyon Sadiq returning",
+     "quote": "Omar Cooper Jr., Kenyon Sadiq returning",
+     "link": "https://sports.yahoo.com/articles/jets-getting-much-needed-offensive-013630625.html",
      "player": "Kenyon Sadiq",
      "signal": "returning"
     }
@@ -1337,7 +1819,10 @@
    "roster": "team_mismatch",
    "certainty": 0.85,
    "lead_vs_report_h": 3.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": 0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -1473,6 +1958,26 @@
      "title": "Jets&#39; Breece Hall, Adonai Mitchell remain out; rookie WR Omar Cooper Jr. to play Sunday vs. Patriots",
      "quote": "will once again be without star running back Breece Hall",
      "link": "https://sports.yahoo.com/articles/jets-breece-hall-adonai-mitchell-152026465.html",
+     "player": "Breece Hall",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-17T03:49+00:00",
+     "source": "team_sites_4",
+     "outlet": "New York Jets",
+     "title": "Jets Notebook | WR Omar Cooper Jr. Set to Return Sunday vs. Patriots, Team Will Be Without Breece Hall - New York Jets",
+     "quote": "Team Will Be Without Breece Hall",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQcnFhQmFxTnQtRmxUWFRMZVloRFBJd0RhckVoNUxET3lnV2VFMEgzV0VVbnN2MmR1MlU5bXl0Wk9HSUtPaWwzblNENTFWUFUwYW1Sa1hTSlVNY1RqUlRCcm5GaXR5bTNQaTRidFpqSzdrS1BDY25oRG1nenFJMDBDNXJ0RVpEUnh6Q1FTeXhXLXZoLWsySTJRQ1gtaDRUM0E4VGdJbFc1Wks?oc=5",
+     "player": "Breece Hall",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-17T11:12+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "New York Jets Flight Connections 10/17/26",
+     "quote": "will continue to be without starters Breece Hall",
+     "link": "https://sports.yahoo.com/articles/york-jets-flight-connections-10-110000078.html",
      "player": "Breece Hall",
      "signal": "out"
     }
@@ -1677,6 +2182,16 @@
      "title": "What Happened to Jadarian Price? Latest Update on the Seahawks RB\u2019s Injury and Why He\u2019s Out for Week 6 vs. Broncos on TNF - Yahoo Sports",
      "quote": "Out for Week 6 vs. Broncos on TNF",
      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPbjhSMEpiU1pManc1RkxHUTNYaVN5UWhIV0hlR3dXdmN1MUV5UmpMTy1Pa04tNnVJdXAwbFFWdWZyOHhHSDg2RFA2UzdHSHZvLVhtZ0FfQV94WjAwMFdRU1ZQRXhpaHM1REU0RlVOQ1dYdEZDTE5zQ0R4TnB4TGtTc3BzZTM5ZlFlRTA0RVlOZUZMQQ?oc=5",
+     "player": "Jadarian Price",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-17T14:16+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Seahawks injury update: Jadarian Price return timeline sounds promising",
+     "quote": "can't return until at least Week 8",
+     "link": "https://sports.yahoo.com/articles/seahawks-injury-jadarian-price-return-140000583.html",
      "player": "Jadarian Price",
      "signal": "out"
     }
@@ -2280,6 +2795,16 @@
      "link": "https://sports.yahoo.com/articles/jets-breece-hall-adonai-mitchell-152026465.html",
      "player": "Adonai Mitchell",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-17T11:12+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "New York Jets Flight Connections 10/17/26",
+     "quote": "will continue to be without starters Adonai Mitchell",
+     "link": "https://sports.yahoo.com/articles/york-jets-flight-connections-10-110000078.html",
+     "player": "Adonai Mitchell",
+     "signal": "out"
     }
    ]
   },
@@ -2303,6 +2828,16 @@
      "title": "Latest on Bills RT Spencer Brown, WR Joshua Palmer injuries",
      "quote": "Buffalo Bills RT Spender Brown...bring some good news to a lengthy injury report",
      "link": "https://sports.yahoo.com/articles/latest-bills-rt-spencer-brown-022301347.html",
+     "player": "Spencer Brown",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-17T02:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Spencer Brown is good to go, but five Bills remain questionable for Sunday\u2019s game against the Raiders",
+     "quote": "Spencer Brown is good to go",
+     "link": "https://sports.yahoo.com/articles/spencer-brown-good-five-bills-015744143.html",
      "player": "Spencer Brown",
      "signal": "expected_to_play"
     }
@@ -2859,6 +3394,36 @@
      "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mxudwfpg422m",
      "player": "A.J. Brown",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T13:08+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "He's back. The Patriots will activate A.J. Brown and he'll return tomorrow against the Jets www.masslive.com/patriots/202...",
+     "quote": "The Patriots will activate A.J. Brown and he'll return tomorrow against the Jets",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3my35nxqoz22m",
+     "player": "A.J. Brown",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T13:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Patriots will reportedly activate receiver A.J. Brown from injured reserve after 4-game absence",
+     "quote": "will reportedly activate receiver A.J. Brown from injured reserve after 4-game absence",
+     "link": "https://sports.yahoo.com/nfl/article/patriots-will-reportedly-activate-receiver-aj-brown-from-injured-reserve-after-4-game-absence-130822664.html",
+     "player": "A.J. Brown",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-17T13:57+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Patriots to active A.J. Brown off injured reserve, per report",
+     "quote": "expected to return against the Jets on Sunday",
+     "link": "https://sports.yahoo.com/articles/patriots-active-j-brown-off-134252191.html",
+     "player": "A.J. Brown",
+     "signal": "returning"
     }
    ]
   },
@@ -3066,6 +3631,16 @@
      "title": "Falcons QB Michael Penix Jr. (ribs) to start vs. Bears - Wichita Eagle",
      "quote": "to start vs. Bears",
      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE93dGxlUHl4M25MSTRFTnRrUldDYnRPdG9aZTdJVHZiN0tNbnh3Qi1oRU1sdlFLNmotelYtOTQwT3ZHS0o5M3o4Tk83bFFpZFROc0FjOERKbkZJNmRXeHFfRk1jTkZVZw?oc=5",
+     "player": "Michael Penix Jr.",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-17T08:42+00:00",
+     "source": "google_qb",
+     "outlet": "Reuters",
+     "title": "Falcons QB Michael Penix Jr. (ribs) to start vs. Bears - Reuters",
+     "quote": "to start vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxONkVUTzFqNTNMbldWaTQ1OXhWdkxDZXBaeE1fY0xFN09xNnBzSTd2Um5nd2N2R1loSDhwSHdqWVIzVWNsSUlKaFZDNUpPOE5Gamxaa0UyOG5NZngxT2RmT3ZwX2ozUzdNdFMwWGpvWHNoLUlQbTh4ZTA2bVFFa3JoeGZVWE1PbWZFeVZRMmwxX1hSNTh3T3hhdXljbw?oc=5",
      "player": "Michael Penix Jr.",
      "signal": "will_start"
     }
@@ -4235,6 +4810,16 @@
      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNeUp3VkQ1VS1oMVo0RG12LU1qaUVJamMtcWxVeEZqU08yNjY4VUdFMGlrSWI4dFZlRUxoYXF5eHRvX0l3LXllV2NRemozU1cxNjhiYldpYjR6cHY0cTQtdTF2alcteFNOLWh6cnBOcGN1czRrMVBQeDJrbmxmQmZiQ2RIU1pQNXA0QnNWMWx5Ykx2OHJNODRBTmkxSGtrTnhFN25hd3ExaFh3amd20gGsAUFVX3lxTE15SndWRDVVLWgxWjREbXYtTWppRUlqYy1xbFV4RmpTTzI2NjhVR0UwaWtJYjh0VmVFTGhhcXl4dG9fSXcteWVXY1F6ajNTVzE2OGJiV2liNHpwdjRxNC11MXZqVy14U04taHpycE5wY3VzNGsxUFB4MmtubGZCZmJDZEhTWlA1cDRCc1YxbHliTHY4ck04NEFOaTFIa2tOeEU3bmF3cTFoWHdqZ3Y?oc=5",
      "player": "Lamar Jackson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-16T22:08+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens Star Quarterback Lamar Jackson Carrying Injury Into Bengals Game Week - Yahoo Sports",
+     "quote": "Carrying Injury Into Bengals Game Week",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNb3ZuUkV0SHBWTlk3VzNxdlFWUFNuV3Q5YWZqQmZvdVJEa1ROTUNlNFR1YVllUmFhQ003VjcxY2F4bGNFU0RXVHVOSTNKblpFVmF4WjdVZFVOZWotY29jbWQ0dmJiMFpNM29ic0Q0bGN0bzFBd2hYVktBcFZ6S21vdGs0aGlhajVrRWRLeXNOMA?oc=5",
+     "player": "Lamar Jackson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -4625,6 +5210,16 @@
      "title": "Eagles\u2019 running back position completely decimated with Will Shipley injury - Yahoo Sports",
      "quote": "running back position completely decimated with Will Shipley injury",
      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQZzRybWQ3M1U4RlhWYm5qM3BXMVRnTWk3ckZBOGh2SEpGamNoTFZrSXltb2JPdFJ0R0JMa0Y4VXkwbVhSb0dtMXBiNXVkbnlVVGZPbjM0YzdlQUdQS1BtQVNXdnZsOEpXYk9CVHNTSURPdWNUeE0ySHBCWXZ3dFhCZExqUlZlYzJiUWhfdTd2Y0J1Zw?oc=5",
+     "player": "Will Shipley",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-17T04:40+00:00",
+     "source": "team_sites_4",
+     "outlet": "Philadelphia Eagles",
+     "title": "Eagles place RB Will Shipley on Injured Reserve - Philadelphia Eagles",
+     "quote": "Eagles place RB Will Shipley on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNR0R2a1MxNXFNSFVmQzUydVdrWVpxSmY4bmFlSkF5OEtKbzU5UWI3dmwxQ3lXQVprV3hZVzZnX3J2c3VNZVVaMGY4bGpvTFZNUUplNVY5RlAtSlQxQ0pZM3NUd19vSGk1MEdQalliRXFGRHVpV3F4U21idjVYV3hSMUgxcU5YR2Zwa3ZhOTZJZzRJWHBNYlR2aG1RV0ExTGtG?oc=5",
      "player": "Will Shipley",
      "signal": "injured_reserve"
     }
@@ -5078,6 +5673,16 @@
      "title": "Mike Vrabel said there's a chance A.J. Brown returns this week. The coach also gave updates on Will Campbell and TreVeyon Henderson, plus mo",
      "quote": "Mike Vrabel said there's a chance A.J. Brown returns this week",
      "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mxowwpnfh22m",
+     "player": "A.J. Brown",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-17T13:42+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "News story: Patriots likely to activate WR A.J. Brown, as QB Drake Maye compares Brown\u2019s presence to a top NBA player and how that impacts o",
+     "quote": "Patriots likely to activate WR A.J. Brown for Sunday's game vs. Jets",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3my37cx5pos2b",
      "player": "A.J. Brown",
      "signal": "expected_to_play"
     }
@@ -6078,6 +6683,16 @@
      "title": "Quinshon Judkins, Carson Schwesinger left Sunday's game in walking boots",
      "quote": "Quinshon Judkins, Carson Schwesinger left Sunday's game in walking boots",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/quinshon-judkins-carson-schwesinger-left-sundays-game-in-walking-boots",
+     "player": "Quinshon Judkins",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-17T12:48+00:00",
+     "source": "google_injury",
+     "outlet": "Broncos Wire",
+     "title": "Browns sign ex-Broncos running back after Quinshon Judkins injury - Broncos Wire",
+     "quote": "after Quinshon Judkins injury",
+     "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOV2M3ZlJab1Y3YVRXUkpjTVBaUDV1RGNwRXlpZHhfaXBTWTBqdVQwcWtUTUFtLXVSWWF3dDRnNW9xZnBaWmllR3NmWXFodkx6Um9palRVMFZFZV9mVnVpWThTdkRuQ1E4U1NqQUc0bldadGhCUDdza3N4NFQ2cTNxS3hNcFZlVGk1c3ZuQ1VvLWk5UEw1MVdzRzRLa3RUOXl1eHlkNm5HQUROR2lYRndUbHZYMFk4bGxjTWt4Y1FyRDZyeWdGbjhPcHBRanRYT0FQ?oc=5",
      "player": "Quinshon Judkins",
      "signal": "injured_reserve"
     }
@@ -8836,6 +9451,26 @@
      "title": "Eagles' Saquon Barkley ruled out; DeVonta Smith to return - ESPN",
      "quote": "Eagles' Saquon Barkley ruled out; DeVonta Smith to return",
      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOcy1BOGdyeDFPV1prZlR0ZFNHeS1QWTQ2SEVKWUF6RGx2WFFDWTNDdTVOdHZMTVc5amtZT0NCVTdkZVBBZ2hfOFdXV2FZYXlDQUJUcHVZLXViN1N1ektkNWRzSW9RanA5MWpBdzN4QW80T3FnREZSSFE3YnZvbWZCbXdXQmlYMGdpNE9vVzVndjFiQTJFamQ1aw?oc=5",
+     "player": "Saquon Barkley",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-16T21:59+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Eagles-Panthers Final Injury Report: DeVonta Smith will play, Saquon Barkley out",
+     "quote": "Saquon Barkley out",
+     "link": "https://sports.yahoo.com/articles/eagles-panthers-final-injury-report-211315959.html",
+     "player": "Saquon Barkley",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-16T21:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles-Panthers Final Injury Report: DeVonta Smith will play, Saquon Barkley out - Yahoo Sports",
+     "quote": "Saquon Barkley out",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOZHU0cGJCX3FDRlRKR0VyN25rVUdLcndqcmdYM1RFWG1tZHRhR3BIYWg5VjZNam9aR0lqcmdsdjhUVmk3VXhOX3Q4VHRsNkI2Q2szWW1WSVlkSldDTG9TT3dRUGRHdElZbUhjTjVPUkF5b0tMcWQ2VjRDLWh4RUd6azRHeEhrLU5fRm1McA?oc=5",
      "player": "Saquon Barkley",
      "signal": "out"
     }
@@ -12637,6 +13272,16 @@
      "title": "Bucs OC Zac Robinson: Baker Mayfield \"just not quite ready\" to return this week",
      "quote": "Baker Mayfield \"just not quite ready\" to return this week",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bucs-oc-zac-robinson-baker-mayfield-just-not-quite-ready-to-return-this-week",
+     "player": "Baker Mayfield",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-16T23:45+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Buccaneers vs. Steelers: Final injury report for Week 6",
+     "quote": "officially been ruled out",
+     "link": "https://sports.yahoo.com/articles/buccaneers-vs-steelers-final-injury-231020302.html",
      "player": "Baker Mayfield",
      "signal": "out"
     }
