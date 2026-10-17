@@ -11,7 +11,7 @@ with their line. Saved to history/picks_log.jsonl (one row per pick) and history
 from __future__ import annotations
 
 import hashlib
-import html
+import html  # noqa: F401
 import json
 import os
 import re
@@ -21,6 +21,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from . import news_llm as N
+from . import picks_check as PC
 
 ROOT = Path(__file__).resolve().parents[2]
 HIST = ROOT / "history"
@@ -63,16 +64,21 @@ skip straight-up win predictions that give no betting line unless they say "mone
 {"picks": [{"analyst": str or null, "outlet": str or null, "sport": "nfl" or "cfb", "away_team": str, "home_team": str,
   "market": "spread" | "moneyline" | "total", "pick": team name for spread/moneyline, or "over"/"under",
   "line": number or null (spread from the picked team's side, e.g. -3.5; or the total), "confidence_words": short quote}]}
-Use full team names. Return {"picks": []} if there are none."""
+Use full team names. Return {"picks": []} if there are none.
+Lines starting with [PICKS TABLE] are rows of a picks table, already matched to each analyst: the row label gives the
+market ("against the spread" rows: the team named is that analyst's side at the row's number, from the side of the team in
+the label; "straight up" rows: moneyline winner; "total" rows: over/under). Copy them exactly; never shift a pick to a
+neighbouring analyst. Only game lines: skip team totals, player props, first-half/quarter bets and parlay legs.
+"confidence_words" must be copied word for word from the article (or "" for a table row)."""
 
 
 def _text(url: str, timeout: float = 20, limit: int = 90000) -> str:
+    """Article text for the AI; picks tables are rewritten as explicit analyst -> pick rows (picks_check layer 1)."""
+    from .picks_check import html_to_text
     req = urllib.request.Request(url, headers=N.UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         raw = r.read(2_000_000).decode("utf-8", "ignore")
-    raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", raw)
-    t = html.unescape(re.sub(r"<[^>]+>", " ", raw))
-    return re.sub(r"\s+", " ", t)[:limit]
+    return html_to_text(raw, limit)
 
 
 CHUNK = 14000
@@ -201,17 +207,32 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         if reread_due(k) and k not in {c["key"] for c in cands} and r.get("link"):
             cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
                           "published": r.get("published")})
-    rows = []
+    # picks_check layer 4: articles with picks that were read before the current checks are re-read once (newest first,
+    # at most 15 a run) so a pick the checks would now reject drops out of the record
+    old = sorted((r.get("first", ""), k) for k, r in reads.items()
+                 if r.get("checks") != PC.VERSION and r.get("picks_found") and r.get("link")
+                 and now - datetime.fromisoformat(r["first"]) <= timedelta(days=4))
+    for _, k in reversed(old[-15:]):
+        if k not in {c["key"] for c in cands}:
+            r = reads[k]
+            cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
+                          "published": r.get("published")})
+    rows, rej_rows = [], []
     for it in cands[:max_articles]:
         seen.add(it["key"])
         r = reads.setdefault(it["key"], {"first": now.isoformat(timespec="minutes"), "n": 0, "link": it.get("link"),
                                          "source": it.get("source"), "title": it.get("title"), "published": it.get("published")})
         r["last"], r["n"] = now.isoformat(timespec="minutes"), r.get("n", 0) + 1
         try:
-            picks = extract(texter(it["link"]), api_key, llm)
+            text = texter(it["link"])
+            picks, rejected = PC.validate(extract(text, api_key, llm), text)     # picks_check layer 2
         except Exception as e:
             rep.setdefault("errors", []).append(str(e)[:100]); continue
         rep["articles"] += 1
+        r["keys"] = sorted("|".join(map(str, pick_key(p))) for p in picks)      # layer 4: this read's full pick list
+        r["checks"] = PC.VERSION
+        for x in rejected:
+            rej_rows.append({"seen_at": now.isoformat(timespec="minutes"), "link": it.get("link"), "title": it.get("title"), **x})
         new = [p for p in picks if pick_key(p) not in logged_keys]   # a re-read logs only picks we hadn't seen
         r["picks_found"], r["picks_new"] = len(picks), len(new)
         for p in new:
@@ -239,7 +260,9 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
                 text = "Bluesky posts. Each post's author is the @handle in brackets; use it as the analyst and 'Bluesky' as outlet.\n\n" + \
                     "\n\n".join(f"[@{it['outlet'].split(':', 1)[1]}] ({it.get('published')}) {it['summary']}" for it in batch)
                 try:
-                    for p in llm(text, api_key):
+                    ok, bad = PC.validate(llm(text, api_key), text)
+                    rej_rows.extend({"seen_at": now.isoformat(timespec="minutes"), "source": "bluesky", **x} for x in bad)
+                    for p in ok:
                         h = str(p.get("analyst") or "").lstrip("@")
                         src = next((it for it in batch if it["outlet"].endswith(":" + h)), None)
                         rows.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published") if src else None,
@@ -249,6 +272,11 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
                     rep.setdefault("errors", []).append(str(e)[:100])
         except Exception as e:
             rep["feeds"]["bluesky"] = f"failed: {str(e)[:80]}"
+    if rej_rows:
+        with (HIST / "picks_rejected.jsonl").open("a") as f:
+            for r in rej_rows:
+                f.write(json.dumps(r) + "\n")
+    rep["rejected"] = len(rej_rows)
     if rows:
         with (HIST / "picks_log.jsonl").open("a") as f:
             for r in rows:

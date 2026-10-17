@@ -16,6 +16,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from . import picks_check as PC
+
 ROOT = Path(__file__).resolve().parents[2]
 HIST = ROOT / "history"
 RULES = ROOT / "picks_hot_rules.json"
@@ -76,6 +78,24 @@ def cfb_games() -> pd.DataFrame:
     return g
 
 
+def drop_superseded(picks: list[dict], hist: Path) -> tuple[list[dict], int]:
+    """An article's latest read lists every pick it still shows (picks_reads.json 'keys'); picks logged from that article
+    earlier but missing from its latest read were misreads and are dropped (picks_check layer 4)."""
+    try:
+        reads = json.loads((hist / "picks_reads.json").read_text())
+    except (OSError, ValueError):
+        return picks, 0
+    latest = {r["link"]: (r.get("last", ""), set(r["keys"])) for r in reads.values() if r.get("link") and "keys" in r}
+    from .picks_log import pick_key
+    keep, n = [], 0
+    for p in picks:
+        lk = latest.get(p.get("link"))
+        if lk and p.get("seen_at", "") <= lk[0] and "|".join(map(str, pick_key(p))) not in lk[1]:
+            n += 1; continue
+        keep.append(p)
+    return keep, n
+
+
 def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | None:
     """-> {game_id, week, kick, result: 'win'|'loss'|'push', units, line_value} or None (unmatched / not final / late)."""
     seen = datetime.fromisoformat(p["seen_at"])
@@ -122,6 +142,9 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
     if mk == "total":
         if total is None or side.lower() not in ("over", "under"):
             return None
+        why = PC.grade_check("total", p.get("line"), total)
+        if why:
+            return {"excluded": why}
         d = (hs + as_ - total) * (1 if side.lower() == "over" else -1)
         out["close_line"], out["final"] = total, f"{int(as_)}-{int(hs)}"
         out["result"] = "push" if d == 0 else "win" if d > 0 else "loss"
@@ -137,6 +160,9 @@ def grade_pick(p: dict, nfl: pd.DataFrame, cfb: pd.DataFrame, cmatch) -> dict | 
         if home_margin_line is None:
             return None
         close_pick = -home_margin_line if picked == home else home_margin_line    # picked team's spread at the close
+        why = PC.grade_check("spread", p.get("line"), close_pick)
+        if why:
+            return {"excluded": why}
         d = pm + close_pick
         out["close_line"], out["final"] = close_pick, f"{int(as_)}-{int(hs)}"
         out["result"] = "push" if d == 0 else "win" if d > 0 else "loss"
@@ -247,6 +273,7 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
     r = load_rules()
     path = hist / "picks_log.jsonl"
     picks = [json.loads(x) for x in path.read_text().splitlines() if x.strip()] if path.exists() else []
+    picks, superseded = drop_superseded(picks, hist)          # picks_check layer 4: an article's latest read wins
     nfl = nfl if nfl is not None else nfl_games()
     try:
         cfb = cfb if cfb is not None else cfb_games()
@@ -268,9 +295,11 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         n = (p.get("analyst") or "").strip()
         if n and len(n.split()) == 1 and len(full.get((p.get("source"), n.lower()), ())) == 1:
             p["analyst"] = next(iter(full[(p.get("source"), n.lower())]))
-    skipped: dict = {}
+    skipped: dict = {"dropped when the article was re-read": superseded} if superseded else {}
+    for p, why in zip(picks, PC.offline_reasons(picks)):     # picks_check: wrong side / both sides, also for old picks
+        p["_check"] = why
     for p in picks:
-        why = not_a_pick(p)
+        why = p.pop("_check", None) or not_a_pick(p)
         if why:
             skipped[why] = skipped.get(why, 0) + 1
             continue
@@ -286,6 +315,9 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
             g = grade_pick(p, nfl, cfb, cmatch)
         except Exception:
             g = None
+        if g and g.get("excluded"):               # picks_check layer 3: the stated line can't be this game's
+            skipped[g["excluded"]] = skipped.get(g["excluded"], 0) + 1
+            continue
         if g and g.get("pending"):                # matched to a game not played yet
             pending.append(dict(_detail(p), kick=g["kick"], away=g["away_actual"], home=g["home_actual"]))
             continue

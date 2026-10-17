@@ -252,9 +252,10 @@ def test_picks_logger_and_futures_view(tmp_path, monkeypatch):
     def llm(text, key):
         calls.append(text)
         return [{"analyst": "A", "sport": "nfl", "away_team": "Dallas Cowboys", "home_team": "Houston Texans", "market": "spread", "pick": "Houston Texans", "line": -3.5}]
-    rep = PL.scan(now=datetime(2026, 10, 8, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: feed, texter=lambda u: "text", llm=llm)
+    art = "A: Houston Texans -3.5 over the Dallas Cowboys."
+    rep = PL.scan(now=datetime(2026, 10, 8, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: feed, texter=lambda u: art, llm=llm)
     assert rep["picks"] == 1 and len(calls) == 1          # same article across feeds is read once
-    assert PL.scan(api_key="k", fetcher=lambda u: feed, texter=lambda u: "t", llm=llm)["picks"] == 0
+    assert PL.scan(api_key="k", fetcher=lambda u: feed, texter=lambda u: art, llm=llm)["picks"] == 0
     snap = {"markets": {"m": [{"bookmakers": [
         {"key": k, "title": k, "markets": [{"key": "outrights", "outcomes": [{"name": "A", "price": p}, {"name": "B", "price": -120}]}]}
         for k, p in (("draftkings", 300), ("fanduel", 140), ("betmgm", 150), ("pinnacle", 150))]}]}}
