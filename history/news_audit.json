@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-10-18T19:09+00:00",
- "signals": 4460,
- "units": 1613,
+ "generated_at": "2026-10-18T20:09+00:00",
+ "signals": 4490,
+ "units": 1617,
  "skipped": {
   "team_unclear": 81,
   "no_game": 91,
-  "not_game_week": 161
+  "not_game_week": 180
  },
  "roster_check": {
-  "match": 4204,
-  "team_mismatch": 169,
+  "match": 4231,
+  "team_mismatch": 172,
   "not_found": 86,
   "ambiguous": 1
  },
- "graded": 543,
- "pending": 303,
+ "graded": 547,
+ "pending": 302,
  "overall": {
-  "n": 543,
-  "correct": 429,
+  "n": 547,
+  "correct": 432,
   "pct": 79.0
  },
  "by_signal": {
@@ -32,9 +32,9 @@
    "pct": 75.0
   },
   "expected_to_play": {
-   "n": 138,
-   "correct": 106,
-   "pct": 76.8
+   "n": 140,
+   "correct": 107,
+   "pct": 76.4
   },
   "injured_reserve": {
    "n": 77,
@@ -42,9 +42,9 @@
    "pct": 85.7
   },
   "out": {
-   "n": 187,
-   "correct": 162,
-   "pct": 86.6
+   "n": 188,
+   "correct": 163,
+   "pct": 86.7
   },
   "returning": {
    "n": 101,
@@ -52,40 +52,146 @@
    "pct": 64.4
   },
   "will_start": {
-   "n": 31,
-   "correct": 24,
-   "pct": 77.4
+   "n": 32,
+   "correct": 25,
+   "pct": 78.1
   }
  },
  "qb": {
-  "n": 48,
-  "correct": 31,
-  "pct": 64.6,
-  "pending": 39
+  "n": 52,
+  "correct": 34,
+  "pct": 65.4,
+  "pending": 36
  },
  "rule_population": {
-  "n": 39,
-  "correct": 26,
-  "pct": 66.7,
-  "pending": 35
+  "n": 42,
+  "correct": 29,
+  "pct": 69.0,
+  "pending": 33
  },
  "official_report_agreement": {
-  "n": 459,
-  "agree": 331,
+  "n": 463,
+  "agree": 334,
   "pct": 72.1
  },
  "lead_vs_report_hours": {
-  "n": 846,
+  "n": 849,
   "median": 32.6,
-  "share_before_report": 70.6
+  "share_before_report": 70.4
  },
  "qb_line_move_6h": {
-  "n": 119,
-  "avg_abs_after": 0.46,
+  "n": 120,
+  "avg_abs_after": 0.59,
   "avg_abs_before": 0.3,
-  "avg_after_negative_signals": -0.05
+  "avg_after_negative_signals": 0.68
  },
  "rows": [
+  {
+   "seen_at": "2026-10-18T19:41+00:00",
+   "player": "Tyler Shough",
+   "team": "NO",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_07_PIT_NO",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 120.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T19:41+00:00",
+     "source": "google_injury",
+     "outlet": "New York Post",
+     "title": "Saints QB Tyler Shough playing through broken hand bones vs. Giants - New York Post",
+     "quote": "Saints QB Tyler Shough playing through broken hand bones vs. Giants",
+     "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZmRmMmxPMEpsVzFLT3QzUmFBN0NnclU1NHh6LTRLdXNFa3hfYVpiT0Y5NVhpR0hxUGJNZldGTWdxNzV1YWN6OS1MLUNOSWlFYmNSTnczTHAxQ2RSU1c1dFZESDQtZzJXTlNaaFh5UVh0UmZyS0JFV2M4SmhCdVhnS1pDWFVWTlAyaVRycG5uQTNYWm9GZVA4SHEydHpIbDZzRS10MTJucw?oc=5",
+     "player": "Tyler Shough",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T19:23+00:00",
+   "player": "L'Jarius Sneed",
+   "team": "KC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_LAC_KC",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "L'Jarius Sneed active for Chiefs, Bud Dupree inactive for Chargers",
+     "quote": "Cornerback L'Jarius Sneed is in the Chiefs' lineup on Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/ljarius-sneed-active-for-chiefs-bud-dupree-inactive-for-chargers",
+     "player": "L'Jarius Sneed",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "L&#39;Jarius Sneed active for Chiefs, Bud Dupree inactive for Chargers",
+     "quote": "active for Chiefs",
+     "link": "https://sports.yahoo.com/articles/ljarius-sneed-active-chiefs-bud-190724798.html",
+     "player": "L'Jarius Sneed",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-18T19:41+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chiefs-Chargers Inactives: CB L\u2019Jarius Sneed will play",
+     "quote": "CB L'Jarius Sneed will play",
+     "link": "https://sports.yahoo.com/articles/chiefs-chargers-inactives-cb-l-191500033.html",
+     "player": "L'Jarius Sneed",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T19:23+00:00",
+   "player": "Bud Dupree",
+   "team": "LAC",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_06_LAC_KC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -47.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "L'Jarius Sneed active for Chiefs, Bud Dupree inactive for Chargers",
+     "quote": "Bud Dupree inactive for Chargers",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/ljarius-sneed-active-for-chiefs-bud-dupree-inactive-for-chargers",
+     "player": "Bud Dupree",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "L&#39;Jarius Sneed active for Chiefs, Bud Dupree inactive for Chargers",
+     "quote": "inactive for Chargers",
+     "link": "https://sports.yahoo.com/articles/ljarius-sneed-active-chiefs-bud-190724798.html",
+     "player": "Bud Dupree",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-18T19:00+00:00",
    "player": "Jude Bowry",
@@ -158,6 +264,16 @@
      "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3my6bs6ha4k24",
      "player": "Ed Oliver",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "DJ Moore, Ed Oliver inactive for Bills vs. Raiders",
+     "quote": "DJ Moore, Ed Oliver inactive for Bills vs. Raiders",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dj-moore-ed-oliver-inactive-for-bills-vs-raiders",
+     "player": "Ed Oliver",
+     "signal": "out"
     }
    ]
   },
@@ -216,6 +332,26 @@
      "title": "Trent McDuffie inactive for Week 6 due to groin injury",
      "quote": "Trent McDuffie inactive for Week 6 due to groin injury",
      "link": "https://sports.yahoo.com/articles/trent-mcduffie-inactive-week-6-185149512.html",
+     "player": "Trent McDuffie",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-18T19:41+00:00",
+     "source": "google_injury",
+     "outlet": "LancasterOnline",
+     "title": "Star Rams CB Trent McDuffie inactive vs Cardinals after injury during practice - LancasterOnline",
+     "quote": "Star Rams CB Trent McDuffie inactive vs Cardinals after injury during practice",
+     "link": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxOWllONU9yd3dCekl2WkoyNm5tOTdIOXZJamJNb2Q5SlFXWGJ4S3NtbVVDUDItWThCYU9HRFIxSzVYRjN0WWJvMG9ueU5UTWE2eDNOdzdQck9yby1iQzluRUhualQwd09NR0NBWWhlMXdoTDBvSm9xTmgwNGY5N1ZlWmxoemkxU2J0MlN2M3VWa2JwU3lfSW9mZWpfakNOaVlIczlydkw5WC1QU1BSMU5HTGl5d0J5VTJITjZBOTEzdFpBMFZpRTg4TjNCd2gzZTVWMXJJSnhmVGJ5RVhXaGxsMlh4VnIySElWSkZRb2IxX25ZZllqVmxuR1BmMA?oc=5",
+     "player": "Trent McDuffie",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-18T19:56+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "Star Rams CB Trent McDuffie inactive vs Cardinals after injury during practice - FOX Sports",
+     "quote": "Star Rams CB Trent McDuffie inactive vs Cardinals after injury during practice",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNUNjNWFkNnlaU1Bzc1JrZEJlVHJqQllKTE5MRTI1Nk1MZTVYMXFoWW5KUFpOZE1PYWpRdlFlclNlSHhRd2FpTTh0X1dqdUNWS3Z0ZndFem5EV2VHd05HOUVjc3JZMjRIM1JmZkN0ME5pVWdTVnk2eEljRmRDV0JER1lyRUFneGxFRGoxcGR0THZ6NDVVNEQ1M1NwVXZqdnZWM2VlODloZzNmUlFTc1VvX0NmVGJlSnBB?oc=5",
      "player": "Trent McDuffie",
      "signal": "out"
     }
@@ -934,7 +1070,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -43.7,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -969,7 +1108,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -43.7,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1254,7 +1396,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -41.6,
-   "line_move": null,
+   "line_move": {
+    "after": 16.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -3100,7 +3245,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -2.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3744,7 +3892,10 @@
    "roster": "team_mismatch",
    "certainty": 0.85,
    "lead_vs_report_h": 1.2,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4082,7 +4233,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4107,7 +4261,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4132,7 +4289,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4271,7 +4431,10 @@
     "after": -0.5,
     "before": -0.5
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -4476,7 +4639,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4501,7 +4667,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4526,7 +4695,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4551,7 +4723,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4576,7 +4751,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4611,7 +4789,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5426,7 +5607,10 @@
     "after": -0.5,
     "before": -0.5
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -5724,7 +5908,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 42.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6670,7 +6857,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 51.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6887,7 +7077,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 69.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7776,7 +7969,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7930,6 +8126,16 @@
      "title": "Bills inactives vs. Raiders (Week 6, 2026): WR DJ Moore OT Jude Bowry G Ar'maj Reed-Adams DL Ed Oliver OLB Mike Danna",
      "quote": "Bills inactives vs. Raiders (Week 6, 2026): WR DJ Moore",
      "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3my6bs6ha4k24",
+     "player": "DJ Moore",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-18T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "DJ Moore, Ed Oliver inactive for Bills vs. Raiders",
+     "quote": "DJ Moore, Ed Oliver inactive for Bills vs. Raiders",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dj-moore-ed-oliver-inactive-for-bills-vs-raiders",
      "player": "DJ Moore",
      "signal": "out"
     }
@@ -8573,7 +8779,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 96.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8598,7 +8807,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 96.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8633,7 +8845,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 96.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9338,7 +9553,10 @@
     "after": -0.0,
     "before": 1.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -9840,7 +10058,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 117.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9875,7 +10096,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 117.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9900,7 +10124,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 117.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10552,7 +10779,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 119.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11514,7 +11744,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 121.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11779,7 +12012,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 121.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -35182,11 +35418,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 67% (needs >= 95%)"
+   "precision 69% (needs >= 95%)"
   ],
-  "n": 39,
-  "correct": 26,
-  "precision": 0.6667,
+  "n": 42,
+  "correct": 29,
+  "precision": 0.6905,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
