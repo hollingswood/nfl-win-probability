@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-17T14:35+00:00",
+ "generated_at": "2026-10-18T14:33+00:00",
  "rules_version": 1,
- "items": 148,
+ "items": 152,
  "categories": {
   "coach_fired_or_hired": {
    "items": 1,
@@ -24,7 +24,7 @@
    "candidate": false
   },
   "illness_outbreak": {
-   "items": 10,
+   "items": 11,
    "graded": 5,
    "cover_rate_vs_close": 0.4,
    "cover_p": 0.6726,
@@ -38,9 +38,9 @@
    "graded": 4,
    "cover_rate_vs_close": 0.75,
    "cover_p": 0.1587,
-   "with_line_move": 4,
-   "avg_line_move_toward": 0.25,
-   "move_p": 0.1587,
+   "with_line_move": 5,
+   "avg_line_move_toward": 0.3,
+   "move_p": 0.0668,
    "candidate": false
   },
   "motivation_or_locker_room": {
@@ -58,19 +58,19 @@
    "graded": 22,
    "cover_rate_vs_close": 0.5,
    "cover_p": 0.5,
-   "with_line_move": 22,
-   "avg_line_move_toward": 0.41,
-   "move_p": 0.2454,
+   "with_line_move": 23,
+   "avg_line_move_toward": 0.39,
+   "move_p": 0.2453,
    "candidate": false
   },
   "other": {
-   "items": 53,
+   "items": 54,
    "graded": 31,
    "cover_rate_vs_close": 0.484,
    "cover_p": 0.5713,
-   "with_line_move": 34,
-   "avg_line_move_toward": 0.24,
-   "move_p": 0.2153,
+   "with_line_move": 35,
+   "avg_line_move_toward": 0.25,
+   "move_p": 0.2015,
    "candidate": false
   },
   "play_caller_change": {
@@ -81,6 +81,16 @@
    "with_line_move": 5,
    "avg_line_move_toward": -0.2,
    "move_p": 0.8413,
+   "candidate": false
+  },
+  "resting_starters": {
+   "items": 1,
+   "graded": 0,
+   "cover_rate_vs_close": null,
+   "cover_p": 1.0,
+   "with_line_move": 0,
+   "avg_line_move_toward": null,
+   "move_p": 1.0,
    "candidate": false
   },
   "scheme_or_role_change": {
@@ -94,7 +104,7 @@
    "candidate": false
   },
   "snap_limit": {
-   "items": 10,
+   "items": 11,
    "graded": 7,
    "cover_rate_vs_close": 0.286,
    "cover_p": 0.8716,
@@ -108,55 +118,13 @@
    "graded": 7,
    "cover_rate_vs_close": 0.571,
    "cover_p": 0.3527,
-   "with_line_move": 7,
-   "avg_line_move_toward": -0.5,
-   "move_p": 0.8357,
+   "with_line_move": 8,
+   "avg_line_move_toward": -0.44,
+   "move_p": 0.8358,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_05_BUF_LA",
-   "team": "LA",
-   "category": "kicker_or_special_teams",
-   "direction": "hurts",
-   "seen": "2026-10-12T19:06+00:00",
-   "summary": "Special teams problems have been a concern for the Rams.",
-   "implied_side": "away",
-   "line_move_toward": 0.0,
-   "result_vs_close": "win"
-  },
-  {
-   "game_id": "2026_06_CHI_ATL",
-   "team": "CHI",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-10-12T20:07+00:00",
-   "summary": "Bears head coach Ben Johnson has not committed to starting quarterback for next week; Caleb Williams' status uncertain with two backup options in consideration.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_05_BUF_LA",
-   "team": "BUF",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-10-12T21:15+00:00",
-   "summary": "Bills elevated wide receiver and defensive tackle from practice squad for Monday Night Football.",
-   "implied_side": "away",
-   "line_move_toward": 0.0,
-   "result_vs_close": "win"
-  },
-  {
-   "game_id": "2026_06_SEA_DEN",
-   "team": "DEN",
-   "category": "travel_or_weather_disruption",
-   "direction": "hurts",
-   "seen": "2026-10-12T20:50+00:00",
-   "summary": "Broncos have a short week hosting Seahawks on Thursday Night Football.",
-   "implied_side": "away",
-   "line_move_toward": -0.5,
-   "result_vs_close": "loss"
-  },
   {
    "game_id": "2026_06_LAC_KC",
    "team": "KC",
@@ -222,7 +190,8 @@
    "direction": "hurts",
    "seen": "2026-10-13T12:52+00:00",
    "summary": "Left tackle Anton Harrison undergoing knee surgery with unclear return timeline.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.0
   },
   {
    "game_id": "2026_06_CAR_PHI",
@@ -332,7 +301,8 @@
    "direction": "hurts",
    "seen": "2026-10-15T22:16+00:00",
    "summary": "Texans will play Week 6 in London against JAX without 3 starters.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.0
   },
   {
    "game_id": "2026_06_BUF_LV",
@@ -395,6 +365,42 @@
    "direction": "hurts",
    "seen": "2026-10-17T00:23+00:00",
    "summary": "Seahawks offense is non-functioning under new play-caller Brian Fleury.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_06_CHI_ATL",
+   "team": "CHI",
+   "category": "snap_limit",
+   "direction": "hurts",
+   "seen": "2026-10-17T17:56+00:00",
+   "summary": "Kyler Gordon activated but expected on limited snap count.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "WAS",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-17T19:03+00:00",
+   "summary": "Multiple Commanders players are questionable due to illness affecting the roster.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_NO_NYG",
+   "team": "NO",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-18T12:36+00:00",
+   "summary": "Saints QB Tyler Shough is playing through two broken fingers on his non-throwing hand.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_06_WAS_SF",
+   "team": "SF",
+   "category": "resting_starters",
+   "direction": "hurts",
+   "seen": "2026-10-18T13:24+00:00",
+   "summary": "49ers resting starters ahead of Monday Night Football.",
    "implied_side": "away"
   }
  ]
