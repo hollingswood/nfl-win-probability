@@ -65,7 +65,8 @@ skip straight-up win predictions that give no betting line unless they say "mone
   "market": "spread" | "moneyline" | "total", "pick": team name for spread/moneyline, or "over"/"under",
   "line": number or null (spread from the picked team's side, e.g. -3.5; or the total), "confidence_words": quote,
   "reason": why}]}
-Use full team names. Return {"picks": []} if there are none.
+Use full team names. Return {"picks": []} if there are none. Skip betting-system matches, public betting splits,
+odds or prediction-market prices quoted as numbers, and anything that isn't a person's or a named model's own pick.
 Lines starting with [PICKS TABLE] are rows of a picks table, already matched to each analyst: the row label gives the
 market ("against the spread" rows: the team named is that analyst's side at the row's number, from the side of the team in
 the label; "straight up" rows: moneyline winner; "total" rows: over/under). Copy them exactly; never shift a pick to a
@@ -244,6 +245,9 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             rep.setdefault("errors", []).append(str(e)[:100]); continue
         rep["articles"] += 1
         r["keys"] = sorted("|".join(map(str, pick_key(p))) for p in picks)      # layer 4: this read's full pick list
+        mini = lambda p: {k: p.get(k) for k in ("analyst", "sport", "away_team", "home_team", "market", "pick", "line")}
+        r["picks"] = [mini(p) for p in picks]                                     # layer 4 compares sides, not spellings
+        r["rejected"] = [dict(mini(x), why=x["reject_reason"]) for x in rejected]
         r["checks"] = PC.VERSION
         for p in picks:                     # why each pick was made, also for picks logged on an earlier read
             if p.get("reason") or p.get("confidence_words"):
@@ -318,7 +322,10 @@ if __name__ == "__main__":
     try:   # score logged picks + hot-pickers test (picks_hot_rules.json) whenever new results may be in
         from . import picks_score
         res = picks_score.run()
-        print("picks scored:", res["picks_graded"], "hot test:", json.dumps(res["hot_test"]))
-    except Exception as e:
-        print("picks scoring failed:", e)
+        print("picks scored:", res["picks_graded"], "audit:", json.dumps(res.get("audit")), "hot test:", json.dumps(res["hot_test"]))
+    except Exception as e:      # a crash is a failed check too: the page says so and the phone gets one alert
+        import traceback
+        traceback.print_exc()
+        from . import picks_score
+        picks_score.record_failure(f"scoring crashed: {type(e).__name__}: {e}")
     sys.exit(0)

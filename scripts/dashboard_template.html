@@ -103,6 +103,7 @@ section{display:grid;gap:14px}
   .sumtbl td:first-child{display:block;font-size:16px;padding-bottom:4px}
   .sumtbl td:first-child::before{content:none}
   .sumtbl td.nw,.sumtbl td.ev{min-width:0}
+  .sumtbl caption{display:block;width:auto}
 }
 .betflag{font:600 11px var(--mono);color:var(--accent);border:1px solid var(--accent);padding:1px 5px;border-radius:2px}
 .pkbtn{font:inherit;font-weight:700;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left;border-bottom:1px dotted var(--muted)}
@@ -120,6 +121,9 @@ dialog.pkdlg::backdrop{background:rgba(0,0,0,.55)}
 .pkdlg td,.pkdlg th{text-align:left}
 .pkdlg td.n,.pkdlg th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
 .pkdlg .q{color:var(--muted);font-size:12px}
+.pkhow{margin-top:8px}
+.pkhow summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.pkhow p{margin:6px 0 0}
 .pkdlg tr.hw td{border-bottom:0}
 .pkdlg tr.pkwhy td{padding-top:0;color:var(--muted);font-size:12.5px;line-height:1.45;white-space:normal;overflow-wrap:anywhere}
 .pkdlg tr.pkwhy i{color:var(--ink);opacity:.8}
@@ -423,7 +427,7 @@ section[id]{scroll-margin-top:12px}
 
   <section id="pickers" hidden>
     <div class="sechead"><h2>Published pickers</h2><span class="pill">Logged and scored · not bets</span></div>
-    <p class="edge" id="pickintro"></p>
+    <div class="edge" id="pickintro"></div>
     <div class="strip" id="pickstrip"></div>
     <div class="scroll"><table class="sumtbl" id="picktbl"></table></div>
   </section>
@@ -1129,46 +1133,9 @@ if(ANY_LIVE) document.getElementById('betkey').textContent='BET';
 })();
 
 
-// picker detail pop-up: pending picks (games not played yet) + graded picks, from picks_score.py
-function pickerDialog(K, name){
-  let d=document.getElementById('pkdlg');
-  if(!d){ d=document.createElement('dialog'); d.id='pkdlg'; d.className='pkdlg'; document.body.appendChild(d);
-    d.addEventListener('click', e=>{ if(e.target===d || e.target.closest('.pkx')) d.close(); }); }
-  const P=(K.picks_by_picker||{})[name]||{pending:[],graded:[]}, x=(K.pickers||[]).find(p=>p.picker===name)||{};
-  const sg=v=>v==null?'—':(v>0?'+':'')+v, dt=s=>s?new Date(s).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric'}):'—';
-  const game=p=>`${esc(p.away||'')} @ ${esc(p.home||'')}`;
-  const pick=p=>`<b>${esc(p.pick||'')}</b>${p.market==='moneyline'?' ML':''}${p.line!=null&&p.market!=='moneyline'?` ${sg(p.line)}`:p.line!=null?` (${sg(p.line)})`:''}`;
-  // why they picked it: AI summary (only kept if its words are in the article) + their own words; shown in full
-  const whyRow=(p,n)=>{ const r=(p.reason||'').trim(), q0=(p.quote||'').trim(), q=q0.split(/\s+/).length>=4?q0:'';   // a bare team name or number adds nothing
-    if(!r && !q) return '';
-    const same=r && q && r.toLowerCase().replace(/\W/g,'')===q.toLowerCase().replace(/\W/g,'');
-    return `<tr class="pkwhy"><td colspan="${n}"><b>Why:</b> ${r?esc(r):''}${q&&!same?`${r?' ':''}<i>“${esc(q.replace(/^["“”]+|["“”]+$/g,''))}”</i>`:''}</td></tr>`; };
-  const src=p=>p.link?` <a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">source</a>`:'';
-  const pend=P.pending.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th></tr></thead><tbody>${P.pending.map(p=>`<tr${whyRow(p,3)?' class="hw"':''}><td>${dt(p.kick||p.seen_at)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td></tr>${whyRow(p,3)}`).join('')}</tbody></table>`:'<p class="q">No pending picks right now.</p>';
-  const grd=P.graded.length?`<table><thead><tr><th>Game day</th><th>Game</th><th>Pick</th><th title="Closing line the pick is graded against">Close</th><th>Final</th><th>Result</th><th class="n">Units</th></tr></thead><tbody>${P.graded.map(p=>`<tr${whyRow(p,7)?' class="hw"':''}><td>${dt(p.kick)}</td><td>${game(p)}</td><td>${pick(p)}${src(p)}</td><td class="n" data-l="close">${sg(p.close_line)}</td><td class="n" data-l="final">${esc(p.final||'')}</td><td class="${p.result==='win'?'win':p.result==='loss'?'loss':''}">${esc(p.result||'')}</td><td class="n" data-l="units">${p.units==null?'—':sg(Number(p.units).toFixed(2))}</td></tr>${whyRow(p,7)}`).join('')}</tbody></table>`:'<p class="q">Nothing graded yet.</p>';
-  d.innerHTML=`<div class="pkh"><div><h3>${esc(name)}</h3><small>${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky'))} · ${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''} vs the close · ${x.units>0?'+':''}${(x.units||0).toFixed(2)} units`:'no graded picks yet'}${x.pending?` · ${x.pending} pending`:''}</small></div><button class="pkx" aria-label="Close">×</button></div>
-    <div class="pkb"><span class="subh">Pending (${P.pending.length})</span>${pend}<span class="subh">Graded (${P.graded.length}${x.graded>P.graded.length?`, latest ${P.graded.length} of ${x.graded}`:''})</span>${grd}</div>`;
-  d.showModal(); d.scrollTop=0;
-}
-// published pickers (picks_score.py, picks_hot_rules.json): graded at the closing line
-(function(){
-  const K0=D.picks; if(!K0||!K0.picks_graded) return;
-  const K={...K0, ...((K0.by_sport||{}).nfl||{})};   // NFL pickers only (college pickers are on the college page)
-  document.getElementById('pickers').hidden=false;
-  const t=K.hot_test||{}, o=K.overall||{}, wl=(w,l)=>`${w}–${l}`;
-  document.getElementById('pickintro').innerHTML=`Picks published by CBS, Yahoo, VSiN, USA Today, Fox, SI and other betting sites, plus Bluesky accounts that post picks, read by AI with the time we first saw them, and graded at the <b>closing</b> line (the price a follower could still get). <b>Line value</b> = points the market moved toward the pick after it was posted. The pre-registered <b>hot-picker test</b> follows anyone who went 60%+ on 8+ picks over the previous 4 weeks; it needs 200 followed picks covering over 52.4% (p < 0.05) and beating everyone else before it means anything. Studies so far say streaks don't predict the next week. ${K.late_picks_dropped?`${K.late_picks_dropped} picks first seen after kickoff are not counted.`:''}${(()=>{const S=K0.not_picks_skipped||{},n=Object.values(S).reduce((a,b)=>a+b,0);return n?` <b>Checked every time:</b> picks tables are read row by row, and each AI-read pick must match the article (quote, analyst, team, the table's row) and the game's line; ${n} items were left out (${Object.entries(S).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>`${v} ${esc(k)}`).join('; ')}).`:''})()}`;
-  document.getElementById('pickstrip').innerHTML=[
-    [wl(o.w||0,o.l||0), `all graded picks vs the close · ${(o.units||0)>0?'+':''}${(o.units||0).toFixed(1)} units`],
-    [o.avg_line_value!=null?`${o.avg_line_value>0?'+':''}${o.avg_line_value}`:'—', 'avg. line value, pts'],
-    [t.followed?wl(t.w,t.l):'—', `hot-picker test (NFL + college pooled): ${t.followed||0} / 200 followed picks${t.cover_rate!=null?` · ${Math.round(t.cover_rate*100)}% (everyone else ${t.others_rate!=null?Math.round(t.others_rate*100)+'%':'—'})`:''}`],
-    [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot now: ${K.hot_now.map(h=>`${esc(h.picker)} (${h.record})`).join(', ')}`:'hot pickers now (none yet: needs 8+ graded picks in 4 weeks)'],
-  ].map(([b,x])=>`<div class="stat"><b class="num">${esc(String(b))}</b><span>${x}</span></div>`).join('');
-  const ALL=K.pickers||[], R=ALL.slice(0,40);
-  const row=x=>`<tr><td style="text-align:left"><button type="button" class="pkbtn" data-picker="${esc(x.picker)}" title="See their pending and graded picks">${esc(x.picker)}</button></td><td style="text-align:left;font-family:var(--body)">${esc(String(x.outlet||'').replace(/^bsky:.*/,'Bluesky').replace(/_/g,' '))}</td><td>${x.logged??x.graded}</td><td>${x.graded}${x.pending?`<small> · ${x.pending} pending</small>`:''}</td><td>${x.graded?`${x.wins}–${x.losses}${x.pushes?`–${x.pushes}`:''}`:'—'}</td><td class="${x.units>=0?'win':'loss'}">${x.graded?(x.units>0?'+':'')+x.units.toFixed(2):'—'}</td><td>${x.avg_line_value!=null?(x.avg_line_value>0?'+':'')+x.avg_line_value:'—'}</td></tr>`;
-  document.getElementById('picktbl').innerHTML = R.length ? `<caption style="text-align:left;caption-side:top;font:13px var(--body);color:var(--muted);padding-bottom:6px">${K.n_pickers||ALL.length} pickers tracked · graded records first, best units on top · picks are graded once their games are played${ALL.length>R.length?` · top ${R.length} shown`:''}</caption><thead><tr><th style="text-align:left">Picker</th><th style="text-align:left">Outlet</th><th>Picks logged</th><th>Graded</th><th>W–L vs close</th><th>Units</th><th title="Points the market moved toward the pick after it was posted">Line value</th></tr></thead><tbody>`+R.map(row).join('')+'</tbody>'
-    : '<tbody><tr><td style="text-align:left;font-family:var(--body)">No picks logged yet.</td></tr></tbody>';
-  document.getElementById('picktbl').addEventListener('click', e=>{ const b=e.target.closest('.pkbtn'); if(b) pickerDialog(K, b.dataset.picker); });
-})();
+// published pickers: shared code in scripts/pickers.js (inlined by build_dashboard.py)
+__PICKERS_JS__
+renderPickers(D.picks, 'nfl', D.picks_audit, {who:'NFL pickers', label:'all graded NFL picks', lead:`Picks published by CBS, Yahoo, VSiN, USA Today, Fox, SI, other betting sites and Bluesky cappers, read by AI with the time we first saw them.`, intro:`Spreads and totals count 1 unit at −110; moneylines at the closing price (the price a follower could still get). The pre-registered <b>hot-picker test</b> follows anyone who went 60%+ on 8+ picks over the previous 4 weeks; it needs 200 followed picks covering over 52.4% (p < 0.05) and beating everyone else before it means anything. Studies so far say streaks don't predict the next week. Logging only; nothing bets.`});
 
 // vs Vegas
 (function(){

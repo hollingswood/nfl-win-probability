@@ -17,7 +17,7 @@ Layer 4 (re-reads; picks_score) -> picks an article no longer shows on its lates
 """
 from __future__ import annotations
 
-VERSION = 2   # 2: picks carry a grounded 'reason' summary. bump when a check changes: picks_log re-reads recent articles once under the new checks (layer 4)
+VERSION = 3   # 2: picks carry a grounded 'reason' summary. 3: fuzzy quote match; each read stores its picks + rejections. bump when a check changes: picks_log re-reads recent articles once under the new checks (layer 4)
 
 import html
 import re
@@ -176,6 +176,19 @@ STOP = set("about after again against their there these those which while would 
            "because think thinks likes expect expects should going point points games teams their's".split())
 
 
+def quote_found(q: str, text_n: str, k: int = 5, need: float = 0.6) -> bool:
+    """The quote is in the article: exactly, or (AI quotes drift a word or two: 158 real picks were rejected for that by
+    2026-10-18) at least 60% of its 5-word runs appear in it. An invented quote shares almost none."""
+    q = _norm(q)
+    if not q or q in text_n:
+        return True
+    w = q.split()
+    if len(w) < k + 1:
+        return False
+    runs = [" ".join(w[i:i + k]) for i in range(len(w) - k + 1)]
+    return sum(r in text_n for r in runs) / len(runs) >= need
+
+
 def ground_reason(reason, text_n: str, need: float = 0.6) -> str:
     """The AI's summary of why, kept only if >= 60% of its content words (5+ letters) appear in the article."""
     r = re.sub(r"\s+", " ", str(reason or "")).strip()
@@ -200,7 +213,7 @@ def validate(picks: list[dict], text: str) -> tuple[list[dict], list[dict]]:
         mk, side = p.get("market"), _pick_side(p)
         teams = [p.get("away_team") or "", p.get("home_team") or ""]
         q = _norm(p.get("confidence_words"))
-        if q and len(q) >= 8 and q not in text_n:
+        if q and len(q) >= 8 and not quote_found(q, text_n):
             drop(p, "quote not found in the article"); continue
         if p.get("analyst") and not _name_in(p["analyst"], text_n):
             drop(p, "analyst not named in the article"); continue
@@ -239,78 +252,34 @@ def validate(picks: list[dict], text: str) -> tuple[list[dict], list[dict]]:
     return final, rej
 
 
-def _days(a: str, b: str) -> float:
-    from datetime import date
-    try:
-        return (date.fromisoformat(b) - date.fromisoformat(a)).days
-    except ValueError:
-        return 0
-
-
 def offline_reasons(picks: list[dict], norm=None) -> list[str | None]:
-    """Checks that need no article text, for picks already logged (also run at grading):
-    - the picked side is one of the two teams, and the two teams differ ('LSU @ LSU');
-    - an analyst isn't on both sides of one game and market in one article;
-    - an analyst's picks on one game don't contradict each other across articles and re-reads (`norm` maps a team name
-      to one spelling, e.g. 'Florida Gators' -> 'Florida'; home/away order doesn't matter): both sides of a market, or a
-      moneyline on one team with the other team laying points (Tennessee ML + Alabama -8.5). Nobody can tell which of the
-      two reads is right, so neither is graded."""
-    norm = norm or (lambda t: _norm(t))
+    """Text checks that need neither the article nor the schedule, for picks already logged (run at every scoring):
+    the two teams differ ('LSU @ LSU'), the picked side is one of them, a total is over/under, and an analyst isn't on both
+    sides of one game and market in one read of one article. Contradictions ACROSS articles and reads are checked after
+    each pick is matched to its real game (picks_score.contradictions)."""
+    norm = norm or (lambda t: None)
     def gk(p):
-        return (p.get("link"), _norm(p.get("analyst")), _norm(p.get("away_team")), _norm(p.get("home_team")), p.get("market"))
-    def game(p):
-        return (_norm(p.get("analyst")), frozenset(str(norm(t) or _norm(t)) for t in (p.get("away_team"), p.get("home_team"))))
-    def side(p):
-        if p.get("market") == "total":
-            return _pick_side(p)
-        for t in (p.get("away_team"), p.get("home_team")):
-            if t and same_team(p.get("pick") or "", t):
-                return str(norm(t) or _norm(t))
-        return _pick_side(p)
-    sides, by_game = {}, {}
+        return (p.get("link"), p.get("seen_at"), _norm(p.get("analyst")), _norm(p.get("away_team")), _norm(p.get("home_team")),
+                p.get("market"))
+    sides = {}
     for p in picks:
         if p.get("analyst") and p.get("link"):
             sides.setdefault(gk(p), set()).add(_pick_side(p))
-        if p.get("analyst"):
-            by_game.setdefault(game(p), []).append(p)
-    conflict = set()
-    groups = []
-    for ps in by_game.values():          # one game = picks within 8 days of the first (rematches are weeks apart)
-        cur, t0 = [], None
-        for p in sorted(ps, key=lambda p: str(p.get("seen_at") or "")):
-            t = str(p.get("seen_at") or "")[:10]
-            if cur and t0 and t and _days(t0, t) > 8:
-                groups.append(cur); cur = []
-            if not cur:
-                t0 = t
-            cur.append(p)
-        if cur:
-            groups.append(cur)
-    for ps in groups:
-        mk = {}
-        for p in ps:
-            mk.setdefault(p.get("market"), set()).add(side(p))
-        bad = {m for m, ss in mk.items() if len(ss) > 1}
-        ml = mk.get("moneyline", set())
-        fav = {side(p) for p in ps if p.get("market") == "spread" and isinstance(p.get("line"), (int, float)) and p["line"] < 0}
-        if len(ml) == 1 and fav and not (fav <= ml):
-            bad |= {"moneyline", "spread"}
-        for p in ps:
-            if p.get("market") in bad:
-                conflict.add(id(p))
     out = []
     for p in picks:
         mk, teams = p.get("market"), [p.get("away_team") or "", p.get("home_team") or ""]
-        if teams[0] and teams[1] and (_norm(teams[0]) == _norm(teams[1]) or norm(teams[0]) == norm(teams[1])):
+        same = teams[0] and teams[1] and (_norm(teams[0]) == _norm(teams[1]) or
+                                          (norm(teams[0]) is not None and norm(teams[0]) == norm(teams[1])))
+        if same:
             out.append("the two teams are the same")
         elif mk in ("spread", "moneyline") and not any(same_team(p.get("pick") or "", t) for t in teams if t):
             out.append("picked side is not one of the two teams")
         elif mk == "total" and _pick_side(p) not in ("over", "under"):
             out.append("total pick is not over/under")
+        elif mk not in ("spread", "moneyline", "total"):
+            out.append("not a game line")
         elif p.get("analyst") and p.get("link") and len(sides.get(gk(p), ())) > 1:
             out.append("the article has this analyst on both sides")
-        elif id(p) in conflict:
-            out.append("this analyst's picks on the game contradict each other (different articles or reads)")
         else:
             out.append(None)
     return out
@@ -328,4 +297,6 @@ def grade_check(market: str, stated, close_for_side) -> str | None:
         return "stated total is far from the game total (team total or prop)"
     if market == "spread" and abs(stated - close_for_side) > SPREAD_GAP:
         return "stated spread doesn't match this game's line"
+    if market == "spread" and abs(stated) >= 3 and abs(close_for_side) >= 3 and (stated > 0) != (close_for_side > 0):
+        return "stated spread is the other team's (side likely swapped)"
     return None

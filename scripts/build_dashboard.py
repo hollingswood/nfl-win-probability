@@ -194,7 +194,7 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules,
             "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "my_books": load_my_books(),
-            "picks": _json_or_none(ROOT / "history" / "picks_scores.json")}
+            "picks": picks_view("nfl"), "picks_audit": _json_or_none(ROOT / "history" / "picks_audit.json")}
 
 
 def load_my_books() -> list:
@@ -245,8 +245,23 @@ def log_urls(predictions: dict) -> dict:
     return out
 
 
+def PICKERS_JS() -> str:
+    """The pickers section's script, shared by both pages (one copy: scripts/pickers.js)."""
+    return (ROOT / "scripts" / "pickers.js").read_text()
+
+
+def picks_view(sport: str) -> dict | None:
+    """Only this page's league from picks_scores.json (the file holds both), plus the pooled hot test and the checks."""
+    P = _json_or_none(ROOT / "history" / "picks_scores.json")
+    if not P:
+        return None
+    keep = ("generated_at", "rules_version", "hot_test", "not_picks_skipped", "audit", "late_picks_dropped")
+    return {**{k: P.get(k) for k in keep}, "by_sport": {sport: (P.get("by_sport") or {}).get(sport) or {}}}
+
+
 def render(payload: dict, template: str | None = None) -> str:
     tpl = template if template is not None else (ROOT / "scripts" / "dashboard_template.html").read_text()
+    tpl = tpl.replace("__PICKERS_JS__", PICKERS_JS())
     return tpl.replace("__DATA__", json.dumps(clean_json(payload), allow_nan=False).replace("</", "<\\/"))
 
 
@@ -324,7 +339,7 @@ def build_cfb(site: Path) -> Path | None:
         return None
     nfl = (ROOT / "scripts" / "dashboard_template.html").read_text()
     style = nfl.split("<style>", 1)[1].split("</style>", 1)[0]
-    tpl = (ROOT / "scripts" / "cfb_template.html").read_text().replace("__STYLE__", style)
+    tpl = (ROOT / "scripts" / "cfb_template.html").read_text().replace("__STYLE__", style).replace("__PICKERS_JS__", PICKERS_JS())
     data = json.loads(src.read_text())
     try:   # college Kalshi resting orders (the maker test runs in the NFL step and covers both leagues)
         km = (json.loads((ROOT / "output" / "predictions.json").read_text()).get("kalshi_maker_bets") or {}).get("cfb")
@@ -338,7 +353,8 @@ def build_cfb(site: Path) -> Path | None:
         data["placed_index"] = placed.placed_index(ROOT / "history")
     except Exception as e:
         print("cfb placed bets skipped:", e)
-    data["picks"] = _json_or_none(ROOT / "history" / "picks_scores.json")
+    data["picks"] = picks_view("cfb")
+    data["picks_audit"] = _json_or_none(ROOT / "history" / "picks_audit.json")
     try:  # pre-filled "I placed it" forms for open college paper bets
         from nflpred.placed import log_url
         data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets", "cfb_kalshi_maker_bets")

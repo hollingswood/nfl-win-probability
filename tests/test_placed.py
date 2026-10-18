@@ -301,7 +301,7 @@ def test_picks_score_grades_at_close_and_hot_test(tmp_path):
     assert PS.grade_pick(dict(p, market="total", pick="under", line=51.5), nfl, cfb, lambda s: None)["result"] == "win"
     ml = PS.grade_pick(dict(p, market="moneyline", pick="Detroit Lions", line=None), nfl, cfb, lambda s: None)
     assert ml["result"] == "loss" and ml["units"] == -1.0
-    assert PS.grade_pick(dict(p, seen_at=(kick + pd.Timedelta(minutes=5)).isoformat()), nfl, cfb, lambda s: None) == {"late": True}
+    assert PS.grade_pick(dict(p, seen_at=(kick + pd.Timedelta(minutes=5)).isoformat()), nfl, cfb, lambda s: None)["late"] is True
     # hot test: 'Hot Hand' goes 9-1 over weeks 1-4, then picks week 5; 'Cold' does the opposite
     rows = []
     for w in range(1, 6):
@@ -310,7 +310,8 @@ def test_picks_score_grades_at_close_and_hot_test(tmp_path):
             rows.append({**p, "analyst": "Hot Hand", "seen_at": seen(w), "pick": "Kansas City Chiefs" if win else "Detroit Lions", "line": None, "x": i})
             rows.append({**p, "analyst": "Cold", "seen_at": seen(w), "pick": "Detroit Lions", "line": None, "x": i})
     (tmp_path / "picks_log.jsonl").write_text("\n".join(json.dumps(r) for r in rows))
-    out = PS.run(tmp_path, nfl=nfl, cfb=cfb)
+    out = PS.run(tmp_path, nfl=nfl, cfb=cfb, notify=False)
+    assert out["audit"]["ok"], out
     # repeated identical picks are de-duplicated per picker+game+market+side; one row per week per side survives
     t = out["hot_test"]
     assert out["picks_graded"] > 0 and t["passed"] is False
