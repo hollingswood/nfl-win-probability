@@ -313,7 +313,9 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
         if n and len(n.split()) == 1 and len(full.get((p.get("source"), n.lower()), ())) == 1:
             p["analyst"] = next(iter(full[(p.get("source"), n.lower())]))
     skipped: dict = {"dropped when the article was re-read": superseded} if superseded else {}
-    for p, why in zip(picks, PC.offline_reasons(picks)):     # picks_check: wrong side / both sides, also for old picks
+    def _team1(t):
+        return nfl_abbr(t) or cmatch(t or "") or t
+    for p, why in zip(picks, PC.offline_reasons(picks, norm=_team1)):     # picks_check: wrong side / both sides, also for old picks
         p["_check"] = why
     for p in picks:
         why = p.pop("_check", None) or not_a_pick(p)
@@ -410,17 +412,22 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None) -> d
                 if len(d["graded"]) < 40:
                     d["graded"].append({k: x.get(k) for k in ("kick", "week", "away", "home", "market", "pick", "line", "close_line",
                                                               "result", "units", "line_value", "final", "link", "reason", "quote")})
-        done = {(x["picker"], x["market"], norm(x["pick"])) for x in gs}
-        seen_p = set()
+        done = {(x["picker"], x["market"], norm(x["pick"]), str(x.get("kick"))[:10]) for x in gs}
+        seen_p, pend_rows = set(), []
         for x in sorted((y for y in pending if y["sport"] == sport), key=lambda y: y["seen_at"], reverse=True):
             key = (x["picker"], x["market"], norm(x["pick"]), norm(x["home"]))
-            if key[:3] in done or key in seen_p:     # already graded under another spelling, or a repeat
+            if key[:3] + (str(x.get("kick"))[:10],) in done or key in seen_p:   # graded under another spelling, or a repeat
                 continue
-            seen_p.add(key)
+            seen_p.add(key); pend_rows.append(x)
             if x["picker"] in shown:
                 d = detail.setdefault(x["picker"], {"pending": [], "graded": []})
                 if len(d["pending"]) < 30:
                     d["pending"].append(x)
+        npend = {}
+        for x in pend_rows:
+            npend[x["picker"]] = npend.get(x["picker"], 0) + 1
+        for x in tb:                 # pending = picks still waiting on their game (the same list the popup shows)
+            x["pending"] = npend.get(x["picker"], 0)
         by_sport[sport] = {"pickers": tb[:250], "picks_by_picker": detail, "n_pickers": len(tb), "picks_graded": len(gs),
                            "picks_logged": sum(v["n"] for v in lg.values()), "hot_now": [h for h in hot_now if h["sport"] == sport],
                            "overall": {"w": sum(x["result"] == "win" for x in gs), "l": sum(x["result"] == "loss" for x in gs),

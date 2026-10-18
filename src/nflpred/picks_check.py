@@ -239,24 +239,78 @@ def validate(picks: list[dict], text: str) -> tuple[list[dict], list[dict]]:
     return final, rej
 
 
-def offline_reasons(picks: list[dict]) -> list[str | None]:
-    """Checks that need no article text, for picks already logged (also run at grading): the picked side is one of the
-    two teams, and an analyst isn't on both sides of one game and market in one article."""
+def _days(a: str, b: str) -> float:
+    from datetime import date
+    try:
+        return (date.fromisoformat(b) - date.fromisoformat(a)).days
+    except ValueError:
+        return 0
+
+
+def offline_reasons(picks: list[dict], norm=None) -> list[str | None]:
+    """Checks that need no article text, for picks already logged (also run at grading):
+    - the picked side is one of the two teams, and the two teams differ ('LSU @ LSU');
+    - an analyst isn't on both sides of one game and market in one article;
+    - an analyst's picks on one game don't contradict each other across articles and re-reads (`norm` maps a team name
+      to one spelling, e.g. 'Florida Gators' -> 'Florida'; home/away order doesn't matter): both sides of a market, or a
+      moneyline on one team with the other team laying points (Tennessee ML + Alabama -8.5). Nobody can tell which of the
+      two reads is right, so neither is graded."""
+    norm = norm or (lambda t: _norm(t))
     def gk(p):
         return (p.get("link"), _norm(p.get("analyst")), _norm(p.get("away_team")), _norm(p.get("home_team")), p.get("market"))
-    sides = {}
+    def game(p):
+        return (_norm(p.get("analyst")), frozenset(str(norm(t) or _norm(t)) for t in (p.get("away_team"), p.get("home_team"))))
+    def side(p):
+        if p.get("market") == "total":
+            return _pick_side(p)
+        for t in (p.get("away_team"), p.get("home_team")):
+            if t and same_team(p.get("pick") or "", t):
+                return str(norm(t) or _norm(t))
+        return _pick_side(p)
+    sides, by_game = {}, {}
     for p in picks:
         if p.get("analyst") and p.get("link"):
             sides.setdefault(gk(p), set()).add(_pick_side(p))
+        if p.get("analyst"):
+            by_game.setdefault(game(p), []).append(p)
+    conflict = set()
+    groups = []
+    for ps in by_game.values():          # one game = picks within 8 days of the first (rematches are weeks apart)
+        cur, t0 = [], None
+        for p in sorted(ps, key=lambda p: str(p.get("seen_at") or "")):
+            t = str(p.get("seen_at") or "")[:10]
+            if cur and t0 and t and _days(t0, t) > 8:
+                groups.append(cur); cur = []
+            if not cur:
+                t0 = t
+            cur.append(p)
+        if cur:
+            groups.append(cur)
+    for ps in groups:
+        mk = {}
+        for p in ps:
+            mk.setdefault(p.get("market"), set()).add(side(p))
+        bad = {m for m, ss in mk.items() if len(ss) > 1}
+        ml = mk.get("moneyline", set())
+        fav = {side(p) for p in ps if p.get("market") == "spread" and isinstance(p.get("line"), (int, float)) and p["line"] < 0}
+        if len(ml) == 1 and fav and not (fav <= ml):
+            bad |= {"moneyline", "spread"}
+        for p in ps:
+            if p.get("market") in bad:
+                conflict.add(id(p))
     out = []
     for p in picks:
         mk, teams = p.get("market"), [p.get("away_team") or "", p.get("home_team") or ""]
-        if mk in ("spread", "moneyline") and not any(same_team(p.get("pick") or "", t) for t in teams if t):
+        if teams[0] and teams[1] and (_norm(teams[0]) == _norm(teams[1]) or norm(teams[0]) == norm(teams[1])):
+            out.append("the two teams are the same")
+        elif mk in ("spread", "moneyline") and not any(same_team(p.get("pick") or "", t) for t in teams if t):
             out.append("picked side is not one of the two teams")
         elif mk == "total" and _pick_side(p) not in ("over", "under"):
             out.append("total pick is not over/under")
         elif p.get("analyst") and p.get("link") and len(sides.get(gk(p), ())) > 1:
             out.append("the article has this analyst on both sides")
+        elif id(p) in conflict:
+            out.append("this analyst's picks on the game contradict each other (different articles or reads)")
         else:
             out.append(None)
     return out

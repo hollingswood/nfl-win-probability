@@ -208,20 +208,27 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
                     or "news.google.com" in (it.get("link") or "") or any(b in (it.get("link") or "") for b in BLOCKED):
                 continue
             cands.append(dict(it, source=name, key=k))
-    for k, r in reads.items():      # due re-reads even after the article left its RSS feed
-        if reread_due(k) and k not in {c["key"] for c in cands} and r.get("link"):
-            cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
-                          "published": r.get("published")})
-    # picks_check layer 4: articles with picks that were read before the current checks are re-read once (newest first,
-    # at most 15 a run) so a pick the checks would now reject drops out of the record
+    # order: articles never read, then (picks_check layer 4) articles with picks read before the current checks (newest
+    # first, up to 20 a run, 8 days back: a wrong pick has to drop even after its game was graded), then regular re-reads.
+    # 2026-10-18: regular re-reads used to come first and filled every run's 30 slots, so old-check articles never got read
+    new_c = [c for c in cands if c["key"] not in reads]
+    due_c = [c for c in cands if c["key"] in reads]
     old = sorted((r.get("first", ""), k) for k, r in reads.items()
                  if r.get("checks") != PC.VERSION and r.get("picks_found") and r.get("link")
-                 and now - datetime.fromisoformat(r["first"]) <= timedelta(days=4))
-    for _, k in reversed(old[-15:]):
-        if k not in {c["key"] for c in cands}:
-            r = reads[k]
-            cands.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
+                 and now - datetime.fromisoformat(r["first"]) <= timedelta(days=8))
+    ver_c = []
+    for _, k in reversed(old[-20:]):
+        r = reads[k]
+        ver_c.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
+                      "published": r.get("published")})
+    for k, r in reads.items():      # due re-reads even after the article left its RSS feed
+        if reread_due(k) and k not in {c["key"] for c in due_c} and r.get("link"):
+            due_c.append({"link": r["link"], "key": k, "source": r.get("source") or "reread", "title": r.get("title"),
                           "published": r.get("published")})
+    cands, ks = [], set()
+    for c in new_c + ver_c + due_c:
+        if c["key"] not in ks:
+            ks.add(c["key"]); cands.append(c)
     rows, rej_rows = [], []
     why_p = HIST / "picks_reasons.json"
     why = json.loads(why_p.read_text()) if why_p.exists() else {}

@@ -114,3 +114,21 @@ def test_scores_carry_reasons_found_on_a_later_read(tmp_path):
     assert S._why(dict(p, reason="x"))["reason"] == "x"
     import inspect
     assert "picks_reasons.json" in inspect.getsource(S.run)
+
+
+def test_contradictions_across_articles_and_same_team_games():
+    base = dict(sport="cfb", analyst="Brandon Marcello", seen_at="2026-10-16T09:57")
+    rows = [dict(base, away_team="Alabama", home_team="Tennessee", market="moneyline", pick="Tennessee", line=None, link="A"),
+            dict(base, away_team="Tennessee", home_team="Alabama", market="spread", pick="Alabama", line=-8.5, link="B",
+                 seen_at="2026-10-18T03:28"),
+            dict(base, away_team="Indiana", home_team="Ohio State", market="spread", pick="Indiana", line=3.5, link="A"),
+            dict(base, away_team="Ohio State", home_team="Indiana", market="spread", pick="Ohio State", line=-3.5, link="B"),
+            dict(base, away_team="LSU", home_team="LSU", market="spread", pick="LSU", line=-14, link="B"),
+            dict(base, away_team="Georgia", home_team="Alabama", market="spread", pick="Georgia", line=1.5, link="C"),
+            dict(base, away_team="Georgia", home_team="Alabama", market="moneyline", pick="Alabama", line=None, link="C"),
+            # a rematch weeks later on the other side is fine
+            dict(base, away_team="Indiana", home_team="Ohio State", market="spread", pick="Ohio State", line=-3, link="D",
+                 seen_at="2026-12-05T10:00")]
+    why = PC.offline_reasons(rows)
+    assert all(w and "contradict" in w for w in why[:4]) and why[4] == "the two teams are the same"
+    assert why[5] is None and why[6] is None and why[7] is None     # Georgia +1.5 and Alabama ML can both be right
