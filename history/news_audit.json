@@ -1,30 +1,30 @@
 {
- "generated_at": "2026-10-18T23:11+00:00",
- "signals": 4534,
- "units": 1623,
+ "generated_at": "2026-10-19T00:11+00:00",
+ "signals": 4553,
+ "units": 1631,
  "skipped": {
   "team_unclear": 81,
-  "no_game": 92,
-  "not_game_week": 215
+  "no_game": 93,
+  "not_game_week": 221
  },
  "roster_check": {
-  "match": 4273,
+  "match": 4292,
   "team_mismatch": 174,
   "not_found": 86,
   "ambiguous": 1
  },
- "graded": 638,
- "pending": 216,
+ "graded": 659,
+ "pending": 202,
  "overall": {
-  "n": 638,
-  "correct": 493,
-  "pct": 77.3
+  "n": 659,
+  "correct": 510,
+  "pct": 77.4
  },
  "by_signal": {
   "benched": {
-   "n": 3,
+   "n": 4,
    "correct": 1,
-   "pct": 33.3
+   "pct": 25.0
   },
   "doubtful": {
    "n": 8,
@@ -32,24 +32,24 @@
    "pct": 75.0
   },
   "expected_to_play": {
-   "n": 172,
-   "correct": 136,
-   "pct": 79.1
+   "n": 181,
+   "correct": 145,
+   "pct": 80.1
   },
   "injured_reserve": {
-   "n": 90,
-   "correct": 67,
-   "pct": 74.4
+   "n": 92,
+   "correct": 68,
+   "pct": 73.9
   },
   "out": {
-   "n": 200,
+   "n": 201,
    "correct": 165,
-   "pct": 82.5
+   "pct": 82.1
   },
   "returning": {
-   "n": 119,
-   "correct": 83,
-   "pct": 69.7
+   "n": 123,
+   "correct": 87,
+   "pct": 70.7
   },
   "suspended": {
    "n": 2,
@@ -57,40 +57,228 @@
    "pct": 0.0
   },
   "will_start": {
-   "n": 44,
-   "correct": 35,
-   "pct": 79.5
+   "n": 48,
+   "correct": 38,
+   "pct": 79.2
   }
  },
  "qb": {
-  "n": 75,
-  "correct": 48,
-  "pct": 64.0,
-  "pending": 14
+  "n": 79,
+  "correct": 50,
+  "pct": 63.3,
+  "pending": 13
  },
  "rule_population": {
-  "n": 64,
-  "correct": 43,
-  "pct": 67.2,
-  "pending": 12
+  "n": 68,
+  "correct": 45,
+  "pct": 66.2,
+  "pending": 10
  },
  "official_report_agreement": {
-  "n": 539,
-  "agree": 397,
-  "pct": 73.7
+  "n": 557,
+  "agree": 414,
+  "pct": 74.3
  },
  "lead_vs_report_hours": {
-  "n": 854,
-  "median": 33.6,
+  "n": 861,
+  "median": 37.6,
   "share_before_report": 70.6
  },
  "qb_line_move_6h": {
-  "n": 120,
-  "avg_abs_after": 0.59,
+  "n": 122,
+  "avg_abs_after": 0.6,
   "avg_abs_before": 0.3,
   "avg_after_negative_signals": 0.68
  },
  "rows": [
+  {
+   "seen_at": "2026-10-18T23:39+00:00",
+   "player": "Blake Grupe",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_07_LA_LV",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 116.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:39+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Rams kicker Blake Grupe leaves with knee injury after attempting tackle on kickoff return, forcing punter to kick go-ahead extra point",
+     "quote": "Rams kicker Blake Grupe leaves with knee injury",
+     "link": "https://sports.yahoo.com/nfl/article/rams-kicker-blake-grupe-leaves-with-knee-injury-after-attempting-tackle-on-kickoff-return-forcing-punter-to-kick-go-ahead-extra-point-233448702.html",
+     "player": "Blake Grupe",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:27+00:00",
+   "player": "Tanner McKee",
+   "team": "PHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_07_DAL_PHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 140.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:27+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:jeff-neiburg.bsky.social (PHI)",
+     "title": "\u201cMy team needs me to be better,\u201d Tanner McKee said. McKee will see his first extended run as a starter since he was at Stanford, and he vowe",
+     "quote": "McKee will see his first extended run as a starter",
+     "link": "https://bsky.app/profile/jeff-neiburg.bsky.social/post/3my6r34jr3c2d",
+     "player": "Tanner McKee",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:21+00:00",
+   "player": "Joey Porter Jr.",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -51.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Joey Porter Jr. is active for the Cowboys on Sunday night",
+     "quote": "will have cornerback Joey Porter Jr. in the lineup",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/joey-porter-jr-is-active-for-the-cowboys-on-sunday-night",
+     "player": "Joey Porter Jr.",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-18T23:27+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Joey Porter Jr. is active for the Cowboys on Sunday night",
+     "quote": "Joey Porter Jr. is active for the Cowboys on Sunday night",
+     "link": "https://sports.yahoo.com/articles/joey-porter-jr-active-cowboys-231722288.html",
+     "player": "Joey Porter Jr.",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:21+00:00",
+   "player": "Davante Adams",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_07_LA_LV",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": 116.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Davante Adams injury update as Rams WR leaves after non-contact injury",
+     "quote": "Rams wide receiver Davante Adams exited the teams Week 6 game vs. Cardinals after a strange non-contact injury",
+     "link": "https://sports.yahoo.com/articles/davante-adams-injury-rams-wr-230121232.html",
+     "player": "Davante Adams",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:21+00:00",
+   "player": "Brandon Cisse",
+   "team": "GB",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_06_DAL_GB",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -51.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Packers announce Week 6 inactives vs. the Cowboys",
+     "quote": "Cornerback Brandon Cisse will play for Green Bay",
+     "link": "https://sports.yahoo.com/articles/packers-announce-week-6-inactives-225959197.html",
+     "player": "Brandon Cisse",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:21+00:00",
+   "player": "J.J. McCarthy",
+   "team": "NYG",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_07_NYG_HOU",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 116.7,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "yahoo",
+     "outlet": "SNY",
+     "title": "J.J. McCarthy creates QB dilemma for John Harbaugh after sparking Giants&#39; fourth-quarter rally against Saints",
+     "quote": "benching Jameis Winston for J.J. McCarthy",
+     "link": "https://sports.yahoo.com/articles/j-j-mccarthy-creates-qb-225514037.html",
+     "player": "J.J. McCarthy",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-18T23:21+00:00",
+   "player": "Jameis Winston",
+   "team": "NYG",
+   "signal": "benched",
+   "qb": true,
+   "game_id": "2026_07_NYG_HOU",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 116.7,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "yahoo",
+     "outlet": "SNY",
+     "title": "J.J. McCarthy creates QB dilemma for John Harbaugh after sparking Giants&#39; fourth-quarter rally against Saints",
+     "quote": "benching Jameis Winston for J.J. McCarthy",
+     "link": "https://sports.yahoo.com/articles/j-j-mccarthy-creates-qb-225514037.html",
+     "player": "Jameis Winston",
+     "signal": "benched"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-18T22:23+00:00",
    "player": "Blake Grupe",
@@ -189,6 +377,16 @@
      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNU1F2SjU5LUFhTnZ5dW5ZVi1URE94V1ppQkxUcC1WeUhXbU5MaElWbUxoMklvd29zQzNmV1pNODFzY2dZay00RVkzTFNfdHBzTnZjbVcyZGVvR00yWDVVZnRjNFRON0h5SnhPRlJLblhFT1FPNlN0MGFRa01UMGRUV3FlX2NmU2Rhc1hFRVlMX3Y0eDN1Um1oalZoQjR0NFQ4MVln?oc=5",
      "player": "Caleb Williams",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-19T00:03+00:00",
+     "source": "google_qb",
+     "outlet": "104.1 WIKY",
+     "title": "Report: Bears QB Caleb Williams to start vs. Falcons - 104.1 WIKY",
+     "quote": "Report: Bears QB Caleb Williams to start vs. Falcons",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQeXlBdzR0ZDBIZUE2WlFoQmRrOFNlYWhKRkg2aVZ5Q1hRbDQ5WGc4RFFXTnYtbTEyMkxzeFAxOVltMkN0aGNQeHR3VWpSVHRaX09mMFpmRGN6M3RwcjFTR0VIWm5IbGpHbUZDMlhRcW9nZ3RKTGFMYUlILTM0QmN6RXZKU1pkZw?oc=5",
+     "player": "Caleb Williams",
+     "signal": "will_start"
     }
    ]
   },
@@ -253,7 +451,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -47.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -298,7 +499,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -333,7 +537,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -358,7 +565,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -383,7 +593,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -418,7 +631,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -443,7 +659,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -658,7 +877,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 74.0,
-   "line_move": null,
+   "line_move": {
+    "after": 1.5,
+    "before": -0.75
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -752,6 +974,26 @@
      "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1CbzB1dHhEeEtEaWNWSEFGRzIteW1ILS12NXRvaU95UGJNQmVTTFVVdTlqTi00aFVsMHl2d2RpVXA5bENIZHJCazd3LWxKVS1TdEpJbXNVOEVuSl9Ic1N5Zy1QaHh2dnRnM3FWXzAwanNyMzREcEFuRk13?oc=5",
      "player": "Jalen Hurts",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Philadelphia Eagles putting QB Jalen Hurts on IR due to blood clot - Yahoo Sports",
+     "quote": "Philadelphia Eagles putting QB Jalen Hurts on IR due to blood clot",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQazdCZHFBUWhJOEF6aWNwYXM3VEpCbmt3dExkYkdncmNtV05uNThFeGVWQS1YazQzY3kzakxkT0ZoRlNFeDRJZzRfSTlZc1BOZnRMMVFIOWRfU3I3YVpHMklydzVxMXBHQ0JxeG1mcTNwTUQyU0pwWmFDQVhSTjZtY0xxaVFLM2ZGc2ZpQmdB?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-18T23:21+00:00",
+     "source": "google_qb",
+     "outlet": "Chicago Tribune",
+     "title": "Philadelphia Eagles QB Jalen Hurts placed on injured reserve with superficial blood clot in right calf - Chicago Tribune",
+     "quote": "Philadelphia Eagles QB Jalen Hurts placed on injured reserve with superficial blood clot in right calf",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNZ092OG9JU1RxMl9QTkJCRHVVdkpfRDlBdHZHdk1rdUVUUTRrQm5jVERvU2FFSndSQ2tScGpfc3dLbHVYUlNCa0ZhQ0VFYlNuU0JqMC1pczAtVllFNEhDT0VRQWJ4d1R4WExTTkJSNl82QjBXOFJpVlRtLW9COE9HWGxWakF1WHU3ZC1YSG9mSXpjd0Rh?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -790,7 +1032,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 74.6,
-   "line_move": null,
+   "line_move": {
+    "after": 1.5,
+    "before": -0.25
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -2303,7 +2548,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -24.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2338,7 +2586,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -24.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2604,7 +2855,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -22.8,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2639,7 +2893,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -22.8,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2712,7 +2969,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -21.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2737,7 +2997,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -21.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3259,7 +3522,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": -16.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3737,7 +4003,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -1.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3927,7 +4196,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 0.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4001,7 +4273,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 0.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4180,7 +4455,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 1.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4271,7 +4549,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4336,7 +4617,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4409,7 +4693,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5442,7 +5729,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 15.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5520,7 +5810,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 18.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5633,7 +5926,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 20.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5790,7 +6086,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 23.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6224,7 +6523,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 40.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6259,7 +6561,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 40.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6560,7 +6865,10 @@
    "roster": "team_mismatch",
    "certainty": 0.85,
    "lead_vs_report_h": 46.9,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6595,7 +6903,10 @@
    "roster": "team_mismatch",
    "certainty": 0.95,
    "lead_vs_report_h": 47.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6620,7 +6931,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 47.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7416,7 +7730,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 67.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7455,7 +7772,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": true,
    "evidence": [
     {
@@ -7508,7 +7828,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 69.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8091,7 +8414,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 77.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8186,7 +8512,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 77.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8516,7 +8845,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 91.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8581,7 +8913,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 91.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8606,7 +8941,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 91.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9133,7 +9471,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 94.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9742,7 +10083,10 @@
     "after": 0.0,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -9771,7 +10115,10 @@
     "after": 0.0,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": true,
    "evidence": [
     {
@@ -10443,7 +10790,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 116.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10816,7 +11166,10 @@
    "certainty": 0.8,
    "lead_vs_report_h": 117.6,
    "line_move": null,
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -11414,7 +11767,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 119.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12974,7 +13330,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 122.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -36013,11 +36372,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 67% (needs >= 95%)"
+   "precision 66% (needs >= 95%)"
   ],
-  "n": 64,
-  "correct": 43,
-  "precision": 0.6719,
+  "n": 68,
+  "correct": 45,
+  "precision": 0.6618,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
