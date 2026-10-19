@@ -2,14 +2,13 @@
 to every open paper bet on both pages.
 
 The Odds API returns sportsbook links when asked (includeLinks / includeSids, set in odds.fetch and
-cfbpred.odds_live.fetch): an OUTCOME link adds that exact selection to the book's bet slip (FanDuel addToBetslip,
-DraftKings ?outcomes=), so only the stake is left to enter. theScore Bet has no bet-slip links (no book exposes them for
-it), so its button opens the game or the book.
+cfbpred.odds_live.fetch; same credit cost): an OUTCOME link adds that exact selection to the book's bet slip, so only
+the stake is left to enter. Checked live 2026-10-19: DraftKings (?outcomes=), FanDuel (addToBetslip) and theScore Bet
+(market_selection_id) all return one for every NFL moneyline, spread and total; Pinnacle returns none.
 
 link_for(bet) -> {"url", "kind": "slip" | "game" | "book", "book", "note"} or None, from the newest saved odds snapshot:
   slip  the same side AT THE SAME NUMBER is on the slip (the price shown there is the live one: check it),
-  game  the book's page for the game: the number moved, or the book gives no slip link,
-  book  the book's own page (no event link in the feed).
+  game  the book's page for the game: the number moved, a prop, or no slip link for that outcome.
 Never a slip at a different number: the alert would say one line and the slip another.
 """
 from __future__ import annotations
