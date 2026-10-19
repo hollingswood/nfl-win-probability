@@ -20,6 +20,7 @@ jobs:
       - name: Send test push
         run: |
           python -m nflpred.notify "NFL predictor: test alert" "If you can read this, phone alerts work. Paper bets, failed runs and finished backfills will arrive here." 3
+          python -m nflpred.notify --sample-bet || true
         env:
           PYTHONPATH: src
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}

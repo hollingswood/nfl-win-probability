@@ -50,6 +50,10 @@ def send(title: str, message: str, priority: int = 3, tags: list[str] | None = N
     if topic or e.get("NTFY_TOPIC"):
         payload = {"topic": topic or e["NTFY_TOPIC"], "title": title, "message": message, "priority": priority,
                    "tags": tags or [], "click": click}
+        if any(x.get("url") for x in (actions or [])):     # the same links in the text: buttons can be hidden (iPhone)
+            payload["markdown"] = True
+            payload["message"] = message + "\n\n" + " · ".join(f"[{x.get('label', 'Open')}]({x['url']})"
+                                                                for x in actions if x.get("url"))
         if actions:
             payload["actions"] = actions[:3]
         try:
@@ -58,8 +62,16 @@ def send(title: str, message: str, priority: int = 3, tags: list[str] | None = N
             print("ntfy failed:", ex)
     link = next((a for a in (actions or []) if a.get("url")), None)
     if e.get("PUSHOVER_USER") and e.get("PUSHOVER_TOKEN"):
-        form = {"token": e["PUSHOVER_TOKEN"], "user": e["PUSHOVER_USER"], "title": title[:250], "message": message[:1024],
-                "priority": 1 if priority >= 4 else 0, "url": (link or {}).get("url", click),
+        # Pushover has ONE link button (the first action: the bet slip); every action is also a tappable link in the
+        # message (html=1), so 'I placed it' is never lost (2026-10-19: the slip button had pushed it out)
+        import html as H
+        links = " · ".join(f'<a href="{H.escape(a["url"], quote=True)}">{H.escape(a.get("label", "Open"))}</a>'
+                           for a in (actions or []) if a.get("url"))
+        body = H.escape(message)
+        if links:
+            body = body[:1024 - len(links) - 4] + "\n\n" + links
+        form = {"token": e["PUSHOVER_TOKEN"], "user": e["PUSHOVER_USER"], "title": title[:250], "message": body[:1024],
+                "html": 1, "priority": 1 if priority >= 4 else 0, "url": (link or {}).get("url", click),
                 "url_title": (link or {}).get("label", "Dashboard")}
         try:
             ok |= _post("https://api.pushover.net/1/messages.json", urllib.parse.urlencode(form).encode(),
@@ -246,6 +258,29 @@ def group_same_bet(items: list[tuple[str, dict]]) -> list[tuple[str, dict, list[
 from . import betslip  # noqa: E402
 
 
+def send_bet(k: str, b: dict, keys: list[str], pred: dict, accts=None, prefix: str = "") -> bool:
+    """One alert for one bet: tapping it opens the bet at the book; buttons Bet at <book> · I placed it · Dashboard
+    (also as links in the text, for apps that hide or limit buttons)."""
+    from .placed import log_url
+    hot = any(x in PRIORITY_TRACKS for x in keys)
+    title, body = alert(k, b, pred, keys)
+    if accts is not None and _norm(b.get("book", "")) not in accts:
+        body += "\n(no account at this book)"
+    slip = betslip.for_bet(b, pred, college=is_college(k, b))
+    acts = [{"action": "view", "label": "I placed it", "url": log_url(b)},
+            {"action": "view", "label": "Dashboard", "url": DASHBOARD}]
+    how = ""
+    if slip:   # main button: the bet on the book's slip (enter the stake); tapping the alert opens it too
+        acts = [{"action": "view", "label": betslip.label(slip), "url": slip["url"]}] + acts
+        how = ("\nTap to open it on the " + slip["short"] + " bet slip; enter your stake and check the price. "
+               "Then tap I placed it to log it."
+               if slip["kind"] == "slip" else f"\nOpens {slip['short']} on this game ({slip['note'] or 'no bet-slip link from this book'}); "
+               "pick the bet there, then tap I placed it to log it.")
+    return send(prefix + title, f"{body}{how}\n\nPrices move within hours. Not financial advice.",
+              priority=4 if hot else 3, tags=["football"], click=slip["url"] if slip else DASHBOARD,
+              actions=acts)
+
+
 def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) -> bool:
     """exclude_ids: 'new' bets already present before this run (blocks a watch run did not refresh).
     Up to `max_single` bets: one push each with an "I placed it" button (pre-filled log form).
@@ -268,22 +303,7 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
     sent = 0
     if len(items) <= max_single:
         for k, b, keys in items:
-            hot = any(x in PRIORITY_TRACKS for x in keys)
-            title, body = alert(k, b, pred, keys)
-            if accts is not None and _norm(b.get("book", "")) not in accts:
-                body += "\n(no account at this book)"
-            slip = betslip.for_bet(b, pred, college=is_college(k, b))
-            acts = [{"action": "view", "label": "I placed it", "url": log_url(b)},
-                    {"action": "view", "label": "Dashboard", "url": DASHBOARD}]
-            how = ""
-            if slip:   # main button: the bet on the book's slip (enter the stake); tapping the alert opens it too
-                acts = [{"action": "view", "label": betslip.label(slip), "url": slip["url"]}] + acts
-                how = ("\nTap to open it on the " + slip["short"] + " bet slip; enter your stake and check the price."
-                       if slip["kind"] == "slip" else f"\nOpens {slip['short']} on this game ({slip['note'] or 'no bet-slip link from this book'}); "
-                       "pick the bet there.")
-            ok = send(title, f"{body}{how}\n\nPrices move within hours. Not financial advice.",
-                      priority=4 if hot else 3, tags=["football"], click=slip["url"] if slip else DASHBOARD,
-                      actions=acts)
+            ok = send_bet(k, b, keys, pred, accts)
             sent += bool(ok)
     else:
         hot = any(x in PRIORITY_TRACKS for _, _, keys in items for x in keys)
@@ -297,6 +317,17 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
     return bool(sent)
 
 
+if __name__ == "__main__" and sys.argv[1:2] == ["--sample-bet"]:
+    # real alert for a currently open paper bet, marked TEST (workflow 'Test phone alert')
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    pred = json.loads((root / "output" / "predictions.json").read_text())
+    cands = [(k, b) for k, v in pred.items() if k.endswith("_bets") and isinstance(v, dict) for b in (v.get("open") or [])
+             if not b.get("player") and b.get("game_id")]
+    pick = next(((k, b) for k, b in cands if (betslip.for_bet(b, pred) or {}).get("kind") == "slip"), cands[0] if cands else None)
+    ok = bool(pick) and send_bet(pick[0], pick[1], [pick[0]], pred, None, prefix="TEST · ")
+    print("sample bet alert", "sent" if ok else "NOT sent", pick[1].get("id") if pick else "(no open bet)", "via", channels())
+    sys.exit(0 if ok else 1)
 if __name__ == "__main__":
     a = sys.argv[1:]
     ok = send(a[0] if a else "NFL predictor", a[1] if len(a) > 1 else "test", int(a[2]) if len(a) > 2 else 3,

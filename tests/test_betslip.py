@@ -53,3 +53,24 @@ def test_alert_uses_the_slip_as_main_button(monkeypatch):
     title, msg, k = sent[-1]
     assert k["click"].startswith("https://sportsbook.fanduel.com/addToBetslip") and k["actions"][0]["label"] == "Bet at FanDuel"
     assert [a["label"] for a in k["actions"]] == ["Bet at FanDuel", "I placed it", "Dashboard"] and "enter your stake" in msg
+
+
+def test_every_channel_keeps_i_placed_it(monkeypatch):
+    import json, urllib.parse
+    from nflpred import notify as N
+    posts = []
+    monkeypatch.setattr(N, "_post", lambda url, data, headers: posts.append((url, data)) or True)
+    for k, v in {"NTFY_TOPIC": "t", "PUSHOVER_USER": "u", "PUSHOVER_TOKEN": "k", "TELEGRAM_BOT_TOKEN": "b",
+                 "TELEGRAM_CHAT_ID": "c"}.items():
+        monkeypatch.setenv(k, v)
+    acts = [{"action": "view", "label": "Bet at FanDuel", "url": "https://sportsbook.fanduel.com/addToBetslip?marketId=1&selectionId=2"},
+            {"action": "view", "label": "I placed it", "url": "https://github.com/x/issues/new?template=placed_bet.yml&bet_id=a"},
+            {"action": "view", "label": "Dashboard", "url": "https://d/"}]
+    assert N.send("NFL · WAS ML +330", "Bet: WAS ML <+330> & more", click=acts[0]["url"], actions=acts)
+    ntfy = json.loads(next(d for u, d in posts if "ntfy" in u))
+    po = dict(urllib.parse.parse_qsl(next(d for u, d in posts if "pushover" in u).decode()))
+    tg = json.loads(next(d for u, d in posts if "telegram" in u))
+    assert [a["label"] for a in ntfy["actions"]] == ["Bet at FanDuel", "I placed it", "Dashboard"] and "[I placed it](" in ntfy["message"]
+    assert po["url"].startswith("https://sportsbook.fanduel.com") and po["html"] == "1"
+    assert '>I placed it</a>' in po["message"] and "&lt;+330&gt; &amp; more" in po["message"] and "&amp;selectionId=2" in po["message"]
+    assert [b[0]["text"] for b in tg["reply_markup"]["inline_keyboard"]] == ["Bet at FanDuel", "I placed it", "Dashboard"]
