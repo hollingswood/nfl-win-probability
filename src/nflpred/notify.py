@@ -243,6 +243,9 @@ def group_same_bet(items: list[tuple[str, dict]]) -> list[tuple[str, dict, list[
     return out
 
 
+from . import betslip  # noqa: E402
+
+
 def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) -> bool:
     """exclude_ids: 'new' bets already present before this run (blocks a watch run did not refresh).
     Up to `max_single` bets: one push each with an "I placed it" button (pre-filled log form).
@@ -269,10 +272,18 @@ def new_bets(pred: dict, exclude_ids: set | None = None, max_single: int = 5) ->
             title, body = alert(k, b, pred, keys)
             if accts is not None and _norm(b.get("book", "")) not in accts:
                 body += "\n(no account at this book)"
-            ok = send(title, f"{body}\n\nPrices move within hours. Not financial advice.",
-                      priority=4 if hot else 3, tags=["football"],
-                      actions=[{"action": "view", "label": "I placed it", "url": log_url(b)},
-                               {"action": "view", "label": "Dashboard", "url": DASHBOARD}])
+            slip = betslip.for_bet(b, pred, college=is_college(k, b))
+            acts = [{"action": "view", "label": "I placed it", "url": log_url(b)},
+                    {"action": "view", "label": "Dashboard", "url": DASHBOARD}]
+            how = ""
+            if slip:   # main button: the bet on the book's slip (enter the stake); tapping the alert opens it too
+                acts = [{"action": "view", "label": betslip.label(slip), "url": slip["url"]}] + acts
+                how = ("\nTap to open it on the " + slip["short"] + " bet slip; enter your stake and check the price."
+                       if slip["kind"] == "slip" else f"\nOpens {slip['short']} on this game ({slip['note'] or 'no bet-slip link from this book'}); "
+                       "pick the bet there.")
+            ok = send(title, f"{body}{how}\n\nPrices move within hours. Not financial advice.",
+                      priority=4 if hot else 3, tags=["football"], click=slip["url"] if slip else DASHBOARD,
+                      actions=acts)
             sent += bool(ok)
     else:
         hot = any(x in PRIORITY_TRACKS for _, _, keys in items for x in keys)

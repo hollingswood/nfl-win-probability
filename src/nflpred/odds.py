@@ -56,7 +56,8 @@ def fetch(api_key: str | None = None, timeout: float = 20) -> list[dict]:
     key = api_key or os.environ.get("ODDS_API_KEY")
     if not key:
         raise RuntimeError("ODDS_API_KEY not set")
-    base = {"apiKey": key, "markets": "h2h,spreads,totals", "oddsFormat": "american"}
+    base = {"apiKey": key, "markets": "h2h,spreads,totals", "oddsFormat": "american",
+            "includeLinks": "true", "includeSids": "true"}   # bet-slip links for alerts (betslip.py)
     # us + us2 = regulated US books (us2 adds e.g. ESPN BET, Fanatics, Hard Rock): 6 credits.
     events = _get({**base, "regions": "us,us2"}, timeout)
     # + Pinnacle and exchanges: 3 credits. Merged into the same events so snapshots keep everything.

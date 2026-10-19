@@ -373,6 +373,8 @@ section[id]{scroll-margin-top:12px}
 .pcnote code{font:12px var(--mono);color:var(--ink);white-space:normal}
 .pcwarn{font-size:13px;color:var(--vegas);margin:0}
 .loglink{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--accent);text-decoration:underline;white-space:nowrap}
+.sliplink{display:inline-block;margin:4px 8px 0 0;font:600 12px var(--body);color:#fff;background:var(--accent);border-radius:3px;padding:3px 8px;text-decoration:none;white-space:nowrap}
+.sliplink:hover,.sliplink:focus-visible{filter:brightness(1.1)}
 .xlink{display:inline-block;margin:10px 0 4px;font:600 13px var(--mono);letter-spacing:.04em;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:2px;padding:4px 10px}
 .xlink:hover{background:var(--accent-soft)}
 .mkt .vm{display:grid;gap:2px;padding-bottom:8px;margin-bottom:6px;border-bottom:1px dashed var(--line)}
@@ -753,12 +755,16 @@ const gradeBadge = (gr, tip, big, tier) => `<span class="gb gb-${tier||gTier(gr)
 const stPill = st => `<span class="st st-${st.k}">${st.t}</span>`;
 // pre-filled "I placed a bet" form for a paper bet (GitHub issue; saved by the placed_bet workflow)
 const LOGU = D.log_urls || {};
+const SLIP = D.slip_urls || {};   // betslip.py: opens the bet at its book (on the slip when the book allows)
 const PLACED = D.placed_index || {};
 // already placed (this bet, or the same game/market/side from another track): show it instead of the log link
 const placedTag = b => { const x=b&&PLACED[b.id]; if(!x) return '';
   const tip=`You logged ${x.pick||'this bet'}${x.via?` (from ${x.via})`:''}${x.same_bet?' — same game, market and side as this paper bet':''}. Don't bet it again.`;
   return `<span class="placedtag" title="${esc(tip)}">✓ placed${x.stake!=null?` $${Number(x.stake).toFixed(0)}`:''}${x.odds?` ${esc(x.odds)}`:''}${x.book?` ${esc(x.book)}`:''}</span>`; };
-const logLink = b => b && PLACED[b.id] ? placedTag(b) : b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : '';
+const slipLink = b => { const s=b&&SLIP[b.id]; if(!s) return '';
+  const tip = s.kind==='slip' ? `Opens ${s.book} with this bet on the slip: enter your stake and check the price` : `Opens this game at ${s.book}${s.note?` (${s.note})`:''}: pick the bet there`;
+  return `<a class="sliplink" href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(tip)}">${s.kind==='slip'?'Bet at':'Open'} ${esc(s.short||s.book)}</a> `; };
+const logLink = b => b && PLACED[b.id] ? placedTag(b) : (slipLink(b) + (b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : ''));
 const chip = key => `<span class="chip ${key==='ml_v1'||key==='spread'?'orig':''}">${CHIP[key]}</span>`;
 const pickOf = s => s.mkt==='ml' ? `${s.team} ${od(s.price)}` : s.mkt==='sp' ? `${s.team} ${ptd(s.point)} (${od(s.price)})` : s.mkt==='prop' ? `${s.team} (${od(s.price)})` : `${s.team||'Under'} ${s.point} (${od(s.price)})`;
 // totals grade of the offer a track or box is showing (same side, number and price), else null

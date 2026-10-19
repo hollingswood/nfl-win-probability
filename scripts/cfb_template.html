@@ -176,12 +176,16 @@ const TRK = {aplus:'A+', shop:'Shop vs sharp', shop3:'Stricter overs (test)', ml
 const trkName = b => TRK[b._k];
 const chips = (ks, would) => ks.map(k=>`<span class="chip${would?' grd':''}" title="${would?'Would log this price at the next odds check':'Logged this bet'}">${esc(k in TRK?TRK[k]:k)}</span>`).join('');
 const LOGU = C.log_urls || {};
+const SLIP = C.slip_urls || {};   // betslip.py: opens the bet at its book (on the slip when the book allows)
 const PLACED = C.placed_index || {};
 // already placed (this bet, or the same game/market/side from another track): show it instead of the log link
 const placedTag = b => { const x=b&&PLACED[b.id]; if(!x) return '';
   const tip=`You logged ${x.pick||'this bet'}${x.via?` (from ${x.via})`:''}${x.same_bet?' — same game, market and side as this paper bet':''}. Don't bet it again.`;
   return `<span class="placedtag" title="${esc(tip)}">✓ placed${x.stake!=null?` $${Number(x.stake).toFixed(0)}`:''}${x.odds?` ${esc(x.odds)}`:''}${x.book?` ${esc(x.book)}`:''}</span>`; };
-const logLink = b => b && PLACED[b.id] ? placedTag(b) : b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : '';
+const slipLink = b => { const s=b&&SLIP[b.id]; if(!s) return '';
+  const tip = s.kind==='slip' ? `Opens ${s.book} with this bet on the slip: enter your stake and check the price` : `Opens this game at ${s.book}${s.note?` (${s.note})`:''}: pick the bet there`;
+  return `<a class="sliplink" href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(tip)}">${s.kind==='slip'?'Bet at':'Open'} ${esc(s.short||s.book)}</a> `; };
+const logLink = b => b && PLACED[b.id] ? placedTag(b) : (slipLink(b) + (b && LOGU[b.id] ? `<a class="loglink" href="${esc(LOGU[b.id])}" target="_blank" rel="noopener" title="Log the real bet you placed: book, odds, stake">I placed it</a>` : ''));
 
 // per game: best offer per market and side at your books, graded vs Pinnacle
 function pickTxt(g, m, side, o){ if(!o) return '—';

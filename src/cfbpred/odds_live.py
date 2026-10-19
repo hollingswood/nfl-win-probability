@@ -30,7 +30,8 @@ def due(now: datetime) -> bool:
 
 
 def fetch(key: str) -> list[dict]:
-    base = {"apiKey": key, "markets": "h2h,spreads,totals", "oddsFormat": "american"}
+    base = {"apiKey": key, "markets": "h2h,spreads,totals", "oddsFormat": "american",
+            "includeLinks": "true", "includeSids": "true"}   # bet-slip links for alerts (betslip.py)
     events = O._get({**base, "regions": "us,us2"}, 30, url=URL)
     try:
         extra = {e["id"]: e for e in O._get({**base, "bookmakers": O.EXTRA_BOOKS}, 30, url=URL)}

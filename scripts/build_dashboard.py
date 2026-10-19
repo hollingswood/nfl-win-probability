@@ -193,7 +193,7 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_audit": news_audit,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules,
-            "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "my_books": load_my_books(),
+            "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "slip_urls": slip_urls(predictions), "my_books": load_my_books(),
             "picks": picks_view("nfl"), "picks_audit": _json_or_none(ROOT / "history" / "picks_audit.json")}
 
 
@@ -228,6 +228,16 @@ def load_placed() -> dict | None:
     except Exception as e:
         print("placed bets: skipped:", e)
         return None
+
+
+def slip_urls(predictions: dict) -> dict:
+    """paper bet id -> link that opens the bet at its book (bet slip when the book supports it); fail-safe {}."""
+    try:
+        from nflpred import betslip
+        return betslip.urls(predictions, predictions, college=False)
+    except Exception as e:
+        print("slip links skipped:", e)
+        return {}
 
 
 def log_urls(predictions: dict) -> dict:
@@ -361,6 +371,11 @@ def build_cfb(site: Path) -> Path | None:
                             for b in ((data.get(k) or {}).get("open") or []) if b.get("id")}
     except Exception as e:
         print("cfb log links skipped:", e)
+    try:  # 'Bet at <book>' links (bet-slip deep links from the newest college odds snapshot)
+        from nflpred import betslip
+        data["slip_urls"] = betslip.urls({k: v for k, v in data.items() if k.startswith("cfb_")}, None, college=True)
+    except Exception as e:
+        print("cfb slip links skipped:", e)
     body = tpl.replace("__DATA__", json.dumps(clean_json(data), allow_nan=False).replace("</", "<\\/"))
     return write_site(body, site / "cfb")
 
