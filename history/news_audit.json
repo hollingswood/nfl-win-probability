@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-10-20T00:09+00:00",
- "signals": 4817,
- "units": 1691,
+ "generated_at": "2026-10-20T14:32+00:00",
+ "signals": 5164,
+ "units": 1721,
  "skipped": {
-  "team_unclear": 88,
-  "no_game": 100,
-  "not_game_week": 254
+  "team_unclear": 94,
+  "no_game": 114,
+  "not_game_week": 329
  },
  "roster_check": {
-  "match": 4543,
-  "team_mismatch": 179,
-  "not_found": 94,
+  "match": 4873,
+  "team_mismatch": 190,
+  "not_found": 100,
   "ambiguous": 1
  },
- "graded": 799,
- "pending": 102,
+ "graded": 837,
+ "pending": 75,
  "overall": {
-  "n": 799,
-  "correct": 624,
-  "pct": 78.1
+  "n": 837,
+  "correct": 658,
+  "pct": 78.6
  },
  "by_signal": {
   "benched": {
@@ -32,65 +32,634 @@
    "pct": 81.8
   },
   "expected_to_play": {
-   "n": 202,
-   "correct": 155,
-   "pct": 76.7
+   "n": 217,
+   "correct": 168,
+   "pct": 77.4
   },
   "injured_reserve": {
-   "n": 113,
-   "correct": 89,
-   "pct": 78.8
+   "n": 116,
+   "correct": 92,
+   "pct": 79.3
   },
   "out": {
-   "n": 276,
-   "correct": 237,
-   "pct": 85.9
+   "n": 286,
+   "correct": 247,
+   "pct": 86.4
   },
   "returning": {
-   "n": 135,
-   "correct": 90,
-   "pct": 66.7
+   "n": 143,
+   "correct": 96,
+   "pct": 67.1
   },
   "suspended": {
-   "n": 4,
-   "correct": 2,
-   "pct": 50.0
+   "n": 5,
+   "correct": 3,
+   "pct": 60.0
   },
   "will_start": {
-   "n": 54,
-   "correct": 41,
-   "pct": 75.9
+   "n": 55,
+   "correct": 42,
+   "pct": 76.4
   }
  },
  "qb": {
-  "n": 81,
-  "correct": 50,
-  "pct": 61.7,
-  "pending": 15
- },
- "rule_population": {
-  "n": 68,
-  "correct": 45,
-  "pct": 66.2,
+  "n": 84,
+  "correct": 53,
+  "pct": 63.1,
   "pending": 13
  },
+ "rule_population": {
+  "n": 71,
+  "correct": 48,
+  "pct": 67.6,
+  "pending": 10
+ },
  "official_report_agreement": {
-  "n": 676,
-  "agree": 490,
-  "pct": 72.5
+  "n": 711,
+  "agree": 519,
+  "pct": 73.0
  },
  "lead_vs_report_hours": {
-  "n": 901,
-  "median": 40.9,
-  "share_before_report": 70.5
+  "n": 912,
+  "median": 45.1,
+  "share_before_report": 70.8
  },
  "qb_line_move_6h": {
-  "n": 130,
-  "avg_abs_after": 0.61,
-  "avg_abs_before": 0.31,
+  "n": 136,
+  "avg_abs_after": 0.59,
+  "avg_abs_before": 0.3,
   "avg_after_negative_signals": 0.65
  },
  "rows": [
+  {
+   "seen_at": "2026-10-20T13:23+00:00",
+   "player": "Mike Evans",
+   "team": "SF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 78.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T13:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "How long is Mike Evans out? Updates on 49ers WR's Achilles injury - Yahoo Sports",
+     "quote": "Updates on 49ers WR's Achilles injury",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQX1U3OVdtbmZnS3NSenc4cEM3enRMRVdPTmhHLUVrWkhNYWNDN0tVNW9JWFROYnRqLXRlLWZlcXZvT0w2bkNDVWJUQjVUVUVvcVZqQVVleDNTaUM3UGtlejhPVUVJdjQ0cWl1MEJscjhlSlpZX2JXTlBJMXBaRDNZRkhQN1E?oc=5",
+     "player": "Mike Evans",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T11:23+00:00",
+   "player": "C.J. Henderson",
+   "team": "ATL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 80.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T11:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "C.J. Henderson ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T11:42+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "C.J. Henderson ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T11:49+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T11:57+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T12:05+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T12:17+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "C.J. Henderson ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T12:20+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T12:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons injury report: C.J. Henderson ruled out of Week 6 matchup vs. Bears - Atlanta Falcons",
+     "quote": "ruled out of Week 6 matchup vs. Bears",
+     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNZWVSc0tLNUs1MWdkWWtMQ0Y4MFFaNHFkeGE1TGZ2OVJ4YlAtOFhCWlQ5UmFIbDRDeExPX1Jna0xBdm9ELXVhTHhyek1HdnN0S0JST2ZmOWFCSkdoZjg1WU1CSjdEai1MaGZXWE01enFzNFJWTFJBbnFjcURuNno3TU5SdEF3TUtNU2tiWHZaR25McHc0bzRQQk93dk94ZVVnbWs1d3FfV01BRHpa?oc=5",
+     "player": "C.J. Henderson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T09:23+00:00",
+   "player": "Mike Evans",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 82.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T09:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Kyle Shanahan: Mike Evans injury is not a long-term thing, hopeful he can play Sunday",
+     "quote": "hopeful he can play Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kyle-shanahan-mike-evans-injury-is-not-a-long-term-thing-hopeful-he-can-play-sunday",
+     "player": "Mike Evans",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T13:53+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Kyle Shanahan: Mike Evans injury is not a long-term thing, hopeful he can play Sunday - NBC Sports",
+     "quote": "hopeful he can play Sunday",
+     "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNRkJuTlNKSklsMkFYSW80MXZWUXZTb19Yb1lCSVE5dGdjWldWbVgtWXFfTzZIZ1Rpa05sOWl4VXdiQURIYnJCb1pySmhGMWRwZlRsYkN4dFdxbGhjS0hHYlAxY0JzbGdmc2RraGYxSUd3cW96SFZLempObnVDemZrZTRLZWttWGtGVy1xMERaNWQxSWFEekFySUxtYTF2ejY5YzhYUF91SmMzSldCaGN4MFdUOU5fcGI5SDdUWVBRN2Zja0JNYmRNTHJaTlVPNm9jYXJXTDBFbGIzaDkybnc?oc=5",
+     "player": "Mike Evans",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T09:23+00:00",
+   "player": "Cobie Durant",
+   "team": "DAL",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_DAL_PHI",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 106.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T09:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "making progress toward a return",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T05:56+00:00",
+   "player": "Elliott Davison",
+   "team": "NE",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_NE_CHI",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 38.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T05:56+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - Patriots.com",
+     "quote": "Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Elliott Davison",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T03:23+00:00",
+   "player": "Andy Dalton",
+   "team": "ATL",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 88.6,
+   "line_move": {
+    "after": 1.0,
+    "before": 0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T03:23+00:00",
+     "source": "google_qb",
+     "outlet": "FOX Sports",
+     "title": "Falcons Sign Veteran QB Andy Dalton, Release Cooper Rush - FOX Sports",
+     "quote": "Falcons Sign Veteran QB Andy Dalton",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOb1cxd1VJV3EtYjBjOXpacUxrTkZoeXgxRkVYNGQ2dGd5UDR4MkVlTmZldFRjTS1JVDlVWXYwNmN5M1hTRjBJRUswbWlkZXVLbkNPQzMwWDhPU2Rha0lfNlo0WmJoOEllRmhJRWFQUElQS3Vpcl8yVFAtVmhzX3FpSGh4Q0pGY2vSAYcBQVVfeXFMTmMyWGViVW82YnlHMFlkLUpHOU1jc1BZLTZ6cmFHbldUc2ZDZl84ZllCSk51TEdQa2xZWUtpT0FhZWp1eDRZVkN2X0U3by1qVkQwckZMck5wNlQ1NE5oTnFIMzVyai1mbTdfSkRWWFNHX2JuZGlSQUV1WGNtNnhFUHJDVWFsb2ZZ?oc=5",
+     "player": "Andy Dalton",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T02:53+00:00",
+   "player": "DeMarvion Overshown",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_DAL_PHI",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 113.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T02:53+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Hopeful DeMarvion Overshown can return in Week 7",
+     "quote": "might be able to return in Week 7",
+     "link": "https://sports.yahoo.com/articles/hopeful-demarvion-overshown-return-week-003004605.html",
+     "player": "DeMarvion Overshown",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T01:06+00:00",
+   "player": "Cobie Durant",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_DAL_PHI",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 114.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T01:06+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T06:41+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T06:42+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T06:44+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T06:59+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "making progress toward a return",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T07:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "making progress toward a return",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T07:40+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T07:55+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Cobie Durant might be able to return soon",
+     "quote": "might be able to return soon",
+     "link": "https://sports.yahoo.com/articles/cobie-durant-might-able-return-004751421.html",
+     "player": "Cobie Durant",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T01:06+00:00",
+   "player": "Jalen Graham",
+   "team": "SF",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T01:06+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham from Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T01:44+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham...From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T02:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T03:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "49ers Activate LB Jalen Graham",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T05:56+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T06:41+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T07:55+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "49ers Activate LB Jalen Graham From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T11:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate LB Jalen Graham From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Jalen Graham",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T01:06+00:00",
+   "player": "Malik Turner",
+   "team": "SF",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_SF_ATL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T01:06+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T01:44+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate...WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T02:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T03:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "49ers Activate WR Malik Turner",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T05:56+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T06:41+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T07:55+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "49ers Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T11:23+00:00",
+     "source": "team_sites_4",
+     "outlet": "San Francisco 49ers",
+     "title": "49ers Activate LB Jalen Graham and WR Malik Turner From Practice Squad; Other Moves - San Francisco 49ers",
+     "quote": "Activate WR Malik Turner From Practice Squad",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQbTVpa3hEOEVTblVpY3FEcVgtTXItb0hNNDJ5YjRhMDRveGFqOG1JVXFRazJHWENZWXNRRlRPR2pJZkkxa0ZaeHdmR05XTEFKN25kYlFMN3JGY0I5RHQxbTBMZXQybk9YU2lDa3BHNXJhQmJnZkNsaXJUWjJqRmZ2ZmdBVTlLUngwVnlQRFRKMl9UQVlqMFBYSk83WjRCOFVVT3lya0ZGa2tpR05JLWc?oc=5",
+     "player": "Malik Turner",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-20T00:23+00:00",
+   "player": "Zach Charbonnet",
+   "team": "SEA",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_KC_SEA",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 91.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-20T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Zach Charbonnet might be back for Sunday Night in Week 7",
+     "quote": "might be able to make his regular-season debut in Week 7",
+     "link": "https://sports.yahoo.com/articles/zach-charbonnet-might-back-sunday-235007761.html",
+     "player": "Zach Charbonnet",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-19T23:55+00:00",
    "player": "Anthony Bradford",
@@ -126,7 +695,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -50.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -161,7 +733,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -50.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -186,7 +761,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -50.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -211,7 +789,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -50.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -246,7 +827,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -50.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -411,7 +995,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -49.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -436,7 +1023,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -49.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -673,6 +1263,26 @@
      "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQaFcyVmYtSm1ad253WUZ2RUJlMmxURTNncDBJeUdhWjVBSkZUcVBiQl9NVVllQ1RDSUlRM1JhX3RHczNGLV9saGtIVE1wR3JBQ1JIRDJ2MWxHTURsLTQ5Z3NFTW5BeE12eE84RkpfbFpFWGYybnJDbFA0dlB3TzhnNzdTaFo0dDVvRlVCYzRfNHBPakN4eFpoaEVBVktvOW5YenVpY2hhZnlfOXFLT2tESExScmwzOXh2T2czN21QYjJCaG1zU1F3YTlQQ0Q5X3FCODBCX2RR?oc=5",
      "player": "Poona Ford",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-20T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Bozeman Daily Chronicle",
+     "title": "Rams WR Davante Adams out 6-10 weeks with hamstring injury. DT Poona Ford out for season - Bozeman Daily Chronicle",
+     "quote": "out for season",
+     "link": "https://news.google.com/rss/articles/CBMihwJBVV95cUxOa29XMEpqLUZrNkc1OXUzUlAzUW1EOFhJS3NZaGVNQUNhR3ZZcllHcElHajVnSnh5LTNnOGNxQWN5SmdwTGN6T3NXVWNBNlZWZXJ5NEhRaFJZdTh1RDROcFNkRlFDQ1NoeGMyM0dXeWI0OUNKZXpXemhUWjI3T2Q0QkFWOGZUT0RsbGpGM3VlRVZoNVE5OTU3NklPVms2NWRzQk1NWDR3ZFdia2FfVXVfWnBHQkhMUnBFNERZY1RYZjQ5UW15aDV2UEo4N3JfYXR1YVZVS1NRa0VELWt0c1dLdVJOQXF5dUpSN0xiTHpMT0phT2hfbWhMY0t5TzdteGstZWhBdmFIUQ?oc=5",
+     "player": "Poona Ford",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-20T02:23+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "Rams WR Davante Adams out 6-10 weeks with hamstring injury. DT Poona Ford out for season - FOX Sports",
+     "quote": "out for season",
+     "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNaURpa25nZXdpcEIwUEZ0azZpUUJsRVROblo3Ti1KY1phMHhVRUVaMWg2SVdJNGFvRFQzYndUcm4zRm9oSUwwd0kyOFhlZk15ZnoyVTNpeUNXcmhidEFucTl0TXFwTnBWMmJBUDJxOExfdnJWNVFCcXlCakZ3S1MxbkoyNi1kdGV1NHN1Njc2QjNwYlRKVFNBQ3QxTTl3YjFtbmZpSm1QQUNOa0NtbmFDQm10Tkg1dEpfbnpkdDRLM3FrNVU?oc=5",
+     "player": "Poona Ford",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -686,7 +1296,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -711,7 +1324,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -736,7 +1352,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -761,7 +1380,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.7,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -786,7 +1408,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.7,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -843,6 +1468,16 @@
      "link": "https://sports.yahoo.com/nfl/breaking-news/article/texans-wr-tank-dell-to-return-from-gruesome-2024-knee-injury-on-sunday-vs-giants-194644238.html",
      "player": "Tank Dell",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-20T05:41+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: Bills' C.J. Gardner-Johnson suspended one game; Texans' Tank Dell to play Week 7 - NFL.com",
+     "quote": "Texans' Tank Dell to play Week 7",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSDlSdnRaNXhfck4wWXZhRlhiVzBjX1RTVExaeWdqaGdxdnJkS3A4RXFHQ3c2VlN3R0lQRGZKNGIxVlJBVF9FUDRQbVh0a2Z4R0pnYjhuemRPazg0dFdZSWRUNlFjVkw0SjFLMnFFcHJmajBJRTNpX3QzZ1dPdVVfT0R4RzZvS2w0bWc?oc=5",
+     "player": "Tank Dell",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -856,7 +1491,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -48.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1073,6 +1711,16 @@
      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQUVdWeEsxWGhSX2NXOFdUVDBkNzJaMXZrZzdETy1XdC1fZlJCd0hRdWtnZUFfZzVpeWZrMWJ0LXl2cm9YNzhkV2VvdDBhWmJMWE45Z21wX2lBb0ZDYVRfRFZOUnJLR3M5Q1hDSDlMY0NxZ2RXX1hrSVQzM0Zvd1NNc1FwX25HSWQ1REwtQi1zUUd3MUpY?oc=5",
      "player": "Tank Dell",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-20T13:23+00:00",
+     "source": "team_sites_2",
+     "outlet": "Houston Texans",
+     "title": "Tank Dell Will Return vs. the Giants, DeMeco Ryans Confirms - Houston Texans",
+     "quote": "Tank Dell Will Return vs. the Giants, DeMeco Ryans Confirms",
+     "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBfWHZITmNZT3BjeEJXWWRwTU1kWUo0aFJSVm9xTWlKR3hOVENjSkN1YjZjQTFhdXFDaG1iOGpKb1AtUWRZeWlnWTUtYW1IUkw4SW94RC1MR3czbXFDdkJVQ1F2RjVnc3R1NW1oQ2FJWDVzWWE1RkxNM2oyRQ?oc=5",
+     "player": "Tank Dell",
+     "signal": "returning"
     }
    ]
   },
@@ -1106,6 +1754,16 @@
      "title": "Cowboys expect Dee Winters to miss time with Achilles strain",
      "quote": "expect Dee Winters to miss time with Achilles strain",
      "link": "https://sports.yahoo.com/articles/cowboys-expect-dee-winters-miss-192102383.html",
+     "player": "Dee Winters",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T00:51+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Dee Winters could miss Week 7 vs. Eagles",
+     "quote": "expected to miss the Week 7 game",
+     "link": "https://sports.yahoo.com/articles/dee-winters-could-miss-week-004141592.html",
      "player": "Dee Winters",
      "signal": "out"
     }
@@ -1508,6 +2166,66 @@
      "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
      "quote": "to stick with Daniel Jones at quarterback vs. Vikings",
      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T08:40+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
+     "quote": "Colts to stick with Daniel Jones at quarterback vs. Vikings",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T08:55+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
+     "quote": "Colts to stick with Daniel Jones at quarterback vs. Vikings",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T09:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
+     "quote": "Colts to stick with Daniel Jones at quarterback vs. Vikings",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T09:45+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
+     "quote": "Colts to stick with Daniel Jones at quarterback vs. Vikings",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T10:00+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Colts to stick with Daniel Jones at quarterback vs. Vikings - ESPN",
+     "quote": "Colts to stick with Daniel Jones at quarterback vs. Vikings",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeV82WktLd0xVaG9vdXJRbUNpZnJ5bUpPRDl4RkJaX25pTVZDMjkwYmktcm04ek5JNE10YW9SZFVja09kNHBsTFFVQ3o1UkFwZlRJVDlOVC1ESExoZ2Y0U3A3Ml9hdlRoTTdOeWlkQV9OSGpjdHpvUlFPaVlhelJMT3ozWC1tbkxpRUNzM1ptZ2xZcm9NMWJJ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T10:23+00:00",
+     "source": "google_injury",
+     "outlet": "Bozeman Daily Chronicle",
+     "title": "Harbaugh says the Giants are 'honing in on a decision' at quarterback between McCarthy and Winston - Bozeman Daily Chronicle",
+     "quote": "honing in on a decision at quarterback between McCarthy and Winston",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPQWhnbmppMnpsOUVscnRBQjhrTWpXTVBhbE5LNFhqSTQxODN0Y1c5RHJ4dGNpRDJGc3FSb1UyUFpILUgwYU5VYTBQdldjLUlFUElfMGZfNkg3Yk14VmhIc01Ud01oV014Q3RJVGd1ems3Vk5JdXpBclk3SnFXU2I1QURCdkMwX2x1N2UyaWEzel9OOTN4NG5jVzJuTkxwNjBFT09IRHhENDFNOFYtYXFKSlNfU1BETjR0T1dmWWVtOGc3MV94S244U1FfdkIycGVlZDVwekF6cXg1REViMm9vSzd4RHdibEtCOG1weEZsOTNrQWgzQ19jVTA2YUt2aklIVDgxWnhXVVo2d3ZzMU5yelN0VVA3djQ?oc=5",
      "player": "Daniel Jones",
      "signal": "will_start"
     }
@@ -1952,6 +2670,16 @@
      "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3myb5tul2bk2i",
      "player": "Blake Grupe",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-20T12:17+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "Rams WR Davante Adams Out 6-10 Weeks; K Blake Grupe Done For Season - FOX Sports",
+     "quote": "Done For Season",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPUmhmaURjRFRKSTF1N1RHbjNFYnY2aGcxZDZyOHpaUk45WWRaaW9QX1cwTkJ1eU5PdVVGMk5ZQnloUGFoLWU1WWoteV9RdzFDd05oU3IwNnR0MGZudE5mY2U3REd2VXVXcFFkaG9PaTM5TF8yMmU4QXVTLWhwcGlYcEkzQ2d4Y2fSAYcBQVVfeXFMTXkwckFfQUsxVjBrbVZ6NDdoTkFnVGl1ZzhXREt1c291RHVWbXNSN25KZG14czR0TG9WUTlaVmh6Z2Zfdkc1aVE4MURMTHUtNWtKU2ZNUzhfUXNWc3pyM0ZhWmZ1d1dMaGhwTXl1aVRPSjZWc3l4SVdoNTZHbEJhcWh6cnFnUTFJ?oc=5",
+     "player": "Blake Grupe",
+     "signal": "out"
     }
    ]
   },
@@ -2056,6 +2784,16 @@
      "title": "Bears QB Caleb Williams is active and expected to start against Falcons after missing 3 games - The Washington Post",
      "quote": "active and expected to start against Falcons after missing 3 games",
      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxORFBjajhENXdjRWJVNXlmZ19DdlJFNnRKNG5HM3kwUGRiRGN2YWxwb1FxOXpHSEQ3Wkw4ckVLVk54U2Nub2p1d2Y0cjJpQ1JVcXJTdkdpR1pqbXBqeHd4TjE4S3VUS1d2TUF3SUNxal8teG5HbmhvSnlhRENDbi1vYTl1R0hvU1BkWHZUS2g3UVFRRF9WQVhUbHNmd1p2VE91QmlKa3ZnUVVzbUhXR3BQdmZzY2RXbzdMWE04NmItd1J2OElvc2VMbw?oc=5",
+     "player": "Caleb Williams",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-20T10:00+00:00",
+     "source": "google_qb",
+     "outlet": "Field Level Media",
+     "title": "Report: Bears QB Caleb Williams to start vs. Falcons - Field Level Media",
+     "quote": "Bears QB Caleb Williams to start vs. Falcons",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQOXdQaDJSbE5qMGVEdFdmZXpqZC1EdV9xcG43eTRITkV5MUdKM3dzaHhRUFBqRjFBLUJkVFp2WndyV1QySE9WSWxZZ3FId3BNWGV6OXY1QmVqOVU3bDNPNDFaOE5VWWRHc0htREpqalRtekU0NVE1Q2g5LUtxNGZlQ2dERlpxdk9CYzc1Rg?oc=5",
      "player": "Caleb Williams",
      "signal": "will_start"
     }
@@ -2726,6 +3464,26 @@
      "title": "Eagles QB Jalen Hurts placed on injured reserve with blood clot in his calf - LancasterOnline",
      "quote": "placed on injured reserve with blood clot in his calf",
      "link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxNZ0Q0bkt4NHRyZVh3TnBKaG84ZHd4UjZtd0FjejdVcDc2aEFzakNwZ2tGTkZ4U216UnhLWWJxS2lvdlhjRENzTmg5THJLbUdLSlRRMWlxSjlrWjl1TkQ0bi1EQklSUmgxeEFIaEJGam1aanVzYXRwcGc1Mld0LWVUazZxcHc0WlhjVk44YkFyZmZQdjNqNTU5MjI1Mkl4dmQ1LWxNUDNzNnRqTGNiWV9LTWFPT2poZWUwYWVjSzhjRWlWV01hSVFuNGdPWV9FbTR6LXhkeWt1SmlBci1nMEpieVNBVmxQNnVUUFdQNldxOWRLQTZaaHFB?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-20T02:23+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "Philadelphia Eagles quarterback Jalen Hurts out for the season with multiple blood clots in lungs | 'The NFL Report' - NFL.com",
+     "quote": "Philadelphia Eagles quarterback Jalen Hurts out for the season with multiple blood clots in lungs",
+     "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPV0tYVmhOcFY2THBQSFB2OFdaTWhZZEJMV1RLdGQ4azROSjNwYW5CSzlRRUNNT0dsRU1vbVJxamhwWTZ6RzlfRkNFUExOT2VjbEVQY3ZDTHJKOUNmTWl0cENBU0FmU3JvRGNZVk8xVVlkZnB1UUh1bVFMUjFTZ3BXdlV0aThfNWhfUXBpMkRwazYyU20zZ1Z5V3dCUUd2ZnptMWJQZnZNUi1TTlk?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-20T02:23+00:00",
+     "source": "google_injury",
+     "outlet": "OU Daily",
+     "title": "Former OU quarterback Jalen Hurts set to miss rest of NFL season due to blood clots - OU Daily",
+     "quote": "set to miss rest of NFL season due to blood clots",
+     "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPRXUwbnRpamlJSG9KVDNsc0R3ZThJdHAyWExSTXAxcERmaG5xcGdfY19WOTVfZXI1dDRZRlVHUTJPY3pFQktYaFFDLWw2UFpsdUxjMXVJUkR6cVpPbVN4MkY2VmlPT1Q5bW53VkRlQ24tVXRxOUxoYlliY3NibDZ2R1lOOFhiS2ZCNGN5NzVHeDduSDFqVkxubVNoeWx2eWJnRjlvaGs1ZTBPVjVST1ZHOHZCeDJVWV8tVTBDSWNvaGNmU3k2ek9tNXRNN0RfZzBKNHZZU3RQUUlXWTIyZTYxeWRvR0ZJNFF1eGc?oc=5",
      "player": "Jalen Hurts",
      "signal": "injured_reserve"
     }
@@ -3900,7 +4658,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -3.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3945,7 +4706,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -1.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3970,7 +4734,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -1.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4407,7 +5174,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 0.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4432,7 +5202,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 0.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4457,7 +5230,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 1.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4502,7 +5278,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 1.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4587,7 +5366,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 1.2,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5030,7 +5812,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 3.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5055,7 +5840,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 3.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5080,7 +5868,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 3.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5109,7 +5900,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -5212,7 +6006,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 4.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7923,7 +8720,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 47.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10632,7 +11432,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -11065,7 +11868,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 117.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11100,7 +11906,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 118.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11317,7 +12126,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 119.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11964,7 +12776,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 138.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12345,7 +13160,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 140.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12440,7 +13258,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 140.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12799,7 +13620,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 141.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13026,7 +13850,10 @@
    "certainty": 0.75,
    "lead_vs_report_h": 141.6,
    "line_move": null,
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -13089,7 +13916,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 142.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -15084,7 +15914,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 146.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -38217,11 +39050,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 66% (needs >= 95%)"
+   "precision 68% (needs >= 95%)"
   ],
-  "n": 68,
-  "correct": 45,
-  "precision": 0.6618,
+  "n": 71,
+  "correct": 48,
+  "precision": 0.6761,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
