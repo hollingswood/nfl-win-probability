@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-23T00:09+00:00",
+ "generated_at": "2026-10-23T14:34+00:00",
  "rules_version": 1,
- "items": 214,
+ "items": 218,
  "categories": {
   "coach_fired_or_hired": {
    "items": 1,
@@ -34,7 +34,7 @@
    "candidate": false
   },
   "kicker_or_special_teams": {
-   "items": 12,
+   "items": 13,
    "graded": 8,
    "cover_rate_vs_close": 0.625,
    "cover_p": 0.2398,
@@ -44,7 +44,7 @@
    "candidate": false
   },
   "motivation_or_locker_room": {
-   "items": 9,
+   "items": 10,
    "graded": 6,
    "cover_rate_vs_close": 0.333,
    "cover_p": 0.7929,
@@ -54,23 +54,23 @@
    "candidate": false
   },
   "offensive_line_shuffle": {
-   "items": 49,
-   "graded": 32,
-   "cover_rate_vs_close": 0.531,
-   "cover_p": 0.3618,
-   "with_line_move": 33,
-   "avg_line_move_toward": 0.32,
-   "move_p": 0.225,
+   "items": 51,
+   "graded": 34,
+   "cover_rate_vs_close": 0.559,
+   "cover_p": 0.2464,
+   "with_line_move": 35,
+   "avg_line_move_toward": 0.34,
+   "move_p": 0.1947,
    "candidate": false
   },
   "other": {
    "items": 74,
-   "graded": 49,
-   "cover_rate_vs_close": 0.51,
-   "cover_p": 0.4432,
-   "with_line_move": 53,
-   "avg_line_move_toward": 0.32,
-   "move_p": 0.0788,
+   "graded": 50,
+   "cover_rate_vs_close": 0.52,
+   "cover_p": 0.3886,
+   "with_line_move": 54,
+   "avg_line_move_toward": 0.34,
+   "move_p": 0.0627,
    "candidate": false
   },
   "play_caller_change": {
@@ -115,52 +115,16 @@
   },
   "travel_or_weather_disruption": {
    "items": 16,
-   "graded": 10,
-   "cover_rate_vs_close": 0.5,
-   "cover_p": 0.5,
-   "with_line_move": 11,
-   "avg_line_move_toward": 0.14,
-   "move_p": 0.4077,
+   "graded": 11,
+   "cover_rate_vs_close": 0.455,
+   "cover_p": 0.6185,
+   "with_line_move": 12,
+   "avg_line_move_toward": 0.12,
+   "move_p": 0.4074,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_07_NYG_HOU",
-   "team": "NYG",
-   "category": "offensive_line_shuffle",
-   "direction": "hurts",
-   "seen": "2026-10-21T20:20+00:00",
-   "summary": "Giants offensive line thinned by injuries.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_07_TB_CAR",
-   "team": "CAR",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-10-21T21:04+00:00",
-   "summary": "Panthers continue to deal with multiple OLB injuries this week.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_07_SF_ATL",
-   "team": "SF",
-   "category": "resting_starters",
-   "direction": "hurts",
-   "seen": "2026-10-21T20:39+00:00",
-   "summary": "49ers resting Trent Williams and Christian McCaffrey in Week 7 practice.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_07_SF_ATL",
-   "team": "SF",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-10-21T21:12+00:00",
-   "summary": "49ers expect Christian Kirk, Demarcus Robinson, Deebo Samuel, and De'Zhaun Stribling to return to action.",
-   "implied_side": "away"
-  },
   {
    "game_id": "2026_07_NE_CHI",
    "team": "CHI",
@@ -168,7 +132,9 @@
    "direction": "helps",
    "seen": "2026-10-21T19:22+00:00",
    "summary": "Bears offensive lineman Jonah Jackson set to play against Patriots after earlier uncertainty.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_07_CIN_BAL",
@@ -339,7 +305,9 @@
    "direction": "helps",
    "seen": "2026-10-22T17:31+00:00",
    "summary": "Patriots-Bears at Soldier Field has ideal weather: 60 degrees, clear, no precipitation, 3-4 mph winds.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_07_MIA_NYJ",
@@ -394,6 +362,42 @@
    "seen": "2026-10-20T14:35+00:00",
    "summary": "Steelers playing at Saints in Paris, requiring international travel for Week 7 game.",
    "implied_side": "home"
+  },
+  {
+   "game_id": "2026_07_NYG_HOU",
+   "team": "NYG",
+   "category": "motivation_or_locker_room",
+   "direction": "hurts",
+   "seen": "2026-10-23T00:39+00:00",
+   "summary": "Defensive coordinator Dennard Wilson criticized players for unacceptable lack of hustle.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_07_NYG_HOU",
+   "team": "NYG",
+   "category": "kicker_or_special_teams",
+   "direction": "hurts",
+   "seen": "2026-10-23T03:30+00:00",
+   "summary": "Giants' special teams unit has a weakness in personnel counting on field.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_08_NE_MIA",
+   "team": "NE",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-10-23T11:10+00:00",
+   "summary": "Wide receiver group short-handed with only 4 active receivers following Romeo Doubs' absence.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_08_IND_JAX",
+   "team": "JAX",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-10-23T12:16+00:00",
+   "summary": "Starting left tackle Anton Harrison lost for the season with torn ACL.",
+   "implied_side": "away"
   }
  ]
 }

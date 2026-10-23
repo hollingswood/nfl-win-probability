@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-10-23T00:09+00:00",
- "signals": 11544,
- "units": 2008,
+ "generated_at": "2026-10-23T14:33+00:00",
+ "signals": 12310,
+ "units": 2043,
  "skipped": {
   "team_unclear": 325,
-  "no_game": 346,
-  "not_game_week": 450
+  "no_game": 351,
+  "not_game_week": 485
  },
  "roster_check": {
-  "match": 10981,
-  "team_mismatch": 231,
+  "match": 11744,
+  "team_mismatch": 234,
   "not_found": 330,
   "ambiguous": 2
  },
- "graded": 837,
- "pending": 179,
+ "graded": 884,
+ "pending": 153,
  "overall": {
-  "n": 837,
-  "correct": 658,
-  "pct": 78.6
+  "n": 884,
+  "correct": 703,
+  "pct": 79.5
  },
  "by_signal": {
   "benched": {
@@ -27,29 +27,29 @@
    "pct": 25.0
   },
   "doubtful": {
-   "n": 11,
-   "correct": 9,
-   "pct": 81.8
+   "n": 14,
+   "correct": 12,
+   "pct": 85.7
   },
   "expected_to_play": {
-   "n": 217,
-   "correct": 168,
-   "pct": 77.4
+   "n": 229,
+   "correct": 180,
+   "pct": 78.6
   },
   "injured_reserve": {
-   "n": 116,
-   "correct": 92,
-   "pct": 79.3
+   "n": 119,
+   "correct": 94,
+   "pct": 79.0
   },
   "out": {
-   "n": 286,
-   "correct": 247,
-   "pct": 86.4
+   "n": 301,
+   "correct": 262,
+   "pct": 87.0
   },
   "returning": {
-   "n": 143,
-   "correct": 96,
-   "pct": 67.1
+   "n": 147,
+   "correct": 99,
+   "pct": 67.3
   },
   "suspended": {
    "n": 5,
@@ -57,40 +57,839 @@
    "pct": 60.0
   },
   "will_start": {
-   "n": 55,
-   "correct": 42,
-   "pct": 76.4
+   "n": 65,
+   "correct": 52,
+   "pct": 80.0
   }
  },
  "qb": {
-  "n": 84,
-  "correct": 53,
-  "pct": 63.1,
-  "pending": 20
+  "n": 88,
+  "correct": 57,
+  "pct": 64.8,
+  "pending": 17
  },
  "rule_population": {
-  "n": 71,
-  "correct": 48,
-  "pct": 67.6,
-  "pending": 16
+  "n": 75,
+  "correct": 52,
+  "pct": 69.3,
+  "pending": 13
  },
  "official_report_agreement": {
-  "n": 711,
-  "agree": 519,
-  "pct": 73.0
+  "n": 755,
+  "agree": 555,
+  "pct": 73.5
  },
  "lead_vs_report_hours": {
-  "n": 1016,
-  "median": 44.6,
-  "share_before_report": 71.9
+  "n": 1037,
+  "median": 45.0,
+  "share_before_report": 72.4
  },
  "qb_line_move_6h": {
-  "n": 151,
-  "avg_abs_after": 0.58,
-  "avg_abs_before": 0.28,
+  "n": 157,
+  "avg_abs_after": 0.57,
+  "avg_abs_before": 0.31,
   "avg_after_negative_signals": 0.65
  },
  "rows": [
+  {
+   "seen_at": "2026-10-23T14:05+00:00",
+   "player": "Anton Harrison",
+   "team": "JAX",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_IND_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 173.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T14:05+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Jaguars LT Anton Harrison done for season with torn ACL, per report: options for Jaguars at the trade deadline",
+     "quote": "Jaguars LT Anton Harrison done for season with torn ACL",
+     "link": "https://www.cbssports.com/nfl/news/anton-harrison-injury-jaguars-lt-out-for-season-torn-acl/",
+     "player": "Anton Harrison",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T13:34+00:00",
+   "player": "Kaden Elliss",
+   "team": "NO",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_PIT_NO",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 6.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T13:34+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Kaden Elliss set to return for Saints, Cesar Ruiz listed as questionable",
+     "quote": "The Saints are set to get linebacker Kaden Elliss back in the lineup",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kaden-elliss-set-to-return-for-saints-cesar-ruiz-listed-as-questionable",
+     "player": "Kaden Elliss",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T12:45+00:00",
+   "player": "Anton Harrison",
+   "team": "JAX",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_IND_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 175.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T12:45+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jaguars LT Anton Harrison Reportedly Out For The Year",
+     "quote": "out for the year",
+     "link": "https://sports.yahoo.com/articles/jaguars-lt-anton-harrison-reportedly-121633734.html",
+     "player": "Anton Harrison",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T12:23+00:00",
+   "player": "T.J. Watt",
+   "team": "PIT",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_PIT_NO",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 7.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T12:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Steelers don't expect T.J. Watt's calf injury to affect Sunday availability",
+     "quote": "Steelers don't expect T.J. Watt's calf injury to affect Sunday availability",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/steelers-dont-expect-t-j-watts-calf-injury-to-affect-sunday-availability",
+     "player": "T.J. Watt",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T11:39+00:00",
+   "player": "T.J. Watt",
+   "team": "PIT",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_07_PIT_NO",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 8.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T11:39+00:00",
+     "source": "google_injury",
+     "outlet": "Steelers Wire",
+     "title": "Steelers' T.J. Watt dealing with surprise injury before Week 7 Paris game vs. Saints - Steelers Wire",
+     "quote": "dealing with surprise injury before Week 7 Paris game",
+     "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxONEdSX3N4cEdXbHN3QUI5Q2ZSbzZicC1JNWVfSGZpbllNVDFiSVc5MncwM0pmY3drZ0VxSDdNOTN2eUNwLW9mNFhrYkVKM1BKd3l0U3RRbWtCaUZ0c0FQd1VzNGFxMEFDYVF1VjUtMjJzTWNpdmFUcWE5WS1nRVJSQlpvc1I5THlDZDBOakhnSXR5bElrNC1Jb3JZVGFGeHFfWlByd0UxZ28yZUxIT2tHeVVweV9zaFV0MEN4dkhoQ1V2Y19zbmx0Q0FQdVQ3Zw?oc=5",
+     "player": "T.J. Watt",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T11:23+00:00",
+   "player": "Rhamondre Stevenson",
+   "team": "NE",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 176.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T11:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Offensive snaps vs. Bears: \ud83c\udfc8 54 a season low (had been averaging 68) \ud83c\udfc8 Rhamondre Stevenson leads RBs with 37, as TreVeyon Henderson\u2019s time d",
+     "quote": "Rhamondre Stevenson leads RBs with 37",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3myk266ojj22i",
+     "player": "Rhamondre Stevenson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T04:00+00:00",
+   "player": "Brock Bowers",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_LA_LV",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 16.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T04:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Raiders TE Brock Bowers gets eye-opening upgrade on injury report before Rams game - Yahoo Sports",
+     "quote": "gets eye-opening upgrade on injury report before Rams game",
+     "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPVnVOR1RtR1RXYWszY1JvYnJaVzVZQ28wUXRzSzQxUHVMR0xCQ0hQU3JiNUttTUptZUhNZ01TZ3Y0QzJoMGRZSHJwNFdzNjNkSHVGdVJoeEZaWVlsdTBlOW55a3A5eHpZcmhGUlRPemFWS1A0aEJKcXhOWmhoQTRNVG5QUQ?oc=5",
+     "player": "Brock Bowers",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T02:09+00:00",
+   "player": "David Montgomery",
+   "team": "HOU",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_07_NYG_HOU",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 17.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T02:09+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Texans lose RB David Montgomery in Week 7 with groin injury - Yahoo Sports",
+     "quote": "Texans lose RB David Montgomery in Week 7 with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT1FBTTdJdER6Uk00NjhST2gzWGNrZ1hCc2p6TDc0WW5Xd3ZzcVFxcW1uc2FTaUJBZzRVTVJpenpBc1lKTXEzQVZFc3VXLTExSzE0bEhVRmpjamlTbjVZR2k3RXRpc0Exd0d1R2dCSUQ4SDg2S1VBQ1hESVJNM3gyQjljTEQ1c2c?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T02:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Texans lose RB David Montgomery in Week 7 with groin injury - Yahoo Sports",
+     "quote": "Texans lose RB David Montgomery in Week 7 with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT1FBTTdJdER6Uk00NjhST2gzWGNrZ1hCc2p6TDc0WW5Xd3ZzcVFxcW1uc2FTaUJBZzRVTVJpenpBc1lKTXEzQVZFc3VXLTExSzE0bEhVRmpjamlTbjVZR2k3RXRpc0Exd0d1R2dCSUQ4SDg2S1VBQ1hESVJNM3gyQjljTEQ1c2c?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T03:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Texans lose RB David Montgomery in Week 7 with groin injury - Yahoo Sports",
+     "quote": "Texans lose RB David Montgomery in Week 7 with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT1FBTTdJdER6Uk00NjhST2gzWGNrZ1hCc2p6TDc0WW5Xd3ZzcVFxcW1uc2FTaUJBZzRVTVJpenpBc1lKTXEzQVZFc3VXLTExSzE0bEhVRmpjamlTbjVZR2k3RXRpc0Exd0d1R2dCSUQ4SDg2S1VBQ1hESVJNM3gyQjljTEQ1c2c?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T03:45+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Texans lose RB David Montgomery in Week 7 with groin injury - Yahoo Sports",
+     "quote": "Texans lose RB David Montgomery in Week 7 with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT1FBTTdJdER6Uk00NjhST2gzWGNrZ1hCc2p6TDc0WW5Xd3ZzcVFxcW1uc2FTaUJBZzRVTVJpenpBc1lKTXEzQVZFc3VXLTExSzE0bEhVRmpjamlTbjVZR2k3RXRpc0Exd0d1R2dCSUQ4SDg2S1VBQ1hESVJNM3gyQjljTEQ1c2c?oc=5",
+     "player": "David Montgomery",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T01:00+00:00",
+   "player": "Breece Hall",
+   "team": "NYJ",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_MIA_NYJ",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 19.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T01:00+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Breece Hall returns to Jets practice",
+     "quote": "Breece Hall returns to Jets practice",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/breece-hall-returns-to-jets-practice",
+     "player": "Breece Hall",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-23T03:45+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Breece Hall returns to Jets practice",
+     "quote": "returns to Jets practice",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/breece-hall-returns-to-jets-practice",
+     "player": "Breece Hall",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T01:00+00:00",
+   "player": "Bucky Irving",
+   "team": "TB",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_TB_CAR",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 19.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T01:00+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bucky Irving returns to Bucs practice, Emeka Egbuka is still out",
+     "quote": "running back Bucky Irving is moving in the same direction",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bucky-irving-returns-to-bucs-practice-emeka-egbuka-is-still-out",
+     "player": "Bucky Irving",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Drake Maye",
+   "team": "NE",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "line_move": {
+    "after": 1.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots offensive starters: LT: Will Campbell LG: Walter Rouse C: Jared Wilson RG: Matt Pryor RT: Morgan Moses TE: Hunter Henry QB: Drake M",
+     "quote": "QB: Drake Maye",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3myivp7cdgs2u",
+     "player": "Drake Maye",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Christian Gonzalez",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Patriots CB Christian Gonzalez is active - Yahoo Sports",
+     "quote": "is active",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXpzT1pLeFhkNmljZ2dyTGRaQXpURDhYUzVtSFllbjNlMFo2aGc0S0pLREo4RmhJekozRkJBWWZ5MW04YkdPbU14MjJSdllneGQ0ODVXM2FTeGRnYlBvS1FjQXJtMmt0cGFvdmJuSVlxTmZRTS1YV0VDSTBEdGtpSVc4T0NEVGZqZHEwSg?oc=5",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Patriots CB Christian Gonzalez is active - Yahoo Sports",
+     "quote": "is active",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXpzT1pLeFhkNmljZ2dyTGRaQXpURDhYUzVtSFllbjNlMFo2aGc0S0pLREo4RmhJekozRkJBWWZ5MW04YkdPbU14MjJSdllneGQ0ODVXM2FTeGRnYlBvS1FjQXJtMmt0cGFvdmJuSVlxTmZRTS1YV0VDSTBEdGtpSVc4T0NEVGZqZHEwSg?oc=5",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Patriots CB Christian Gonzalez is active - Yahoo Sports",
+     "quote": "Patriots CB Christian Gonzalez is active",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXpzT1pLeFhkNmljZ2dyTGRaQXpURDhYUzVtSFllbjNlMFo2aGc0S0pLREo4RmhJekozRkJBWWZ5MW04YkdPbU14MjJSdllneGQ0ODVXM2FTeGRnYlBvS1FjQXJtMmt0cGFvdmJuSVlxTmZRTS1YV0VDSTBEdGtpSVc4T0NEVGZqZHEwSg?oc=5",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Patriots CB Christian Gonzalez is active - Yahoo Sports",
+     "quote": "Patriots CB Christian Gonzalez is active",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXpzT1pLeFhkNmljZ2dyTGRaQXpURDhYUzVtSFllbjNlMFo2aGc0S0pLREo4RmhJekozRkJBWWZ5MW04YkdPbU14MjJSdllneGQ0ODVXM2FTeGRnYlBvS1FjQXJtMmt0cGFvdmJuSVlxTmZRTS1YV0VDSTBEdGtpSVc4T0NEVGZqZHEwSg?oc=5",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T01:37+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Patriots CB Christian Gonzalez is active - Yahoo Sports",
+     "quote": "Patriots CB Christian Gonzalez is active",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXpzT1pLeFhkNmljZ2dyTGRaQXpURDhYUzVtSFllbjNlMFo2aGc0S0pLREo4RmhJekozRkJBWWZ5MW04YkdPbU14MjJSdllneGQ0ODVXM2FTeGRnYlBvS1FjQXJtMmt0cGFvdmJuSVlxTmZRTS1YV0VDSTBEdGtpSVc4T0NEVGZqZHEwSg?oc=5",
+     "player": "Christian Gonzalez",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Morgan Moses",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Morgan Moses",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Morgan Moses",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-23T00:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:andrewcallahan.bsky.social (NE)",
+     "title": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE.",
+     "quote": "#Patriots CB Christian Gonzalez (illness) and Morgan Moses (foot) are ACTIVE",
+     "link": "https://bsky.app/profile/andrewcallahan.bsky.social/post/3myiqx33hok2k",
+     "player": "Morgan Moses",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Carlton Davis",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives CB Carlton Davis",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Carlton Davis",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Karon Prunty",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives CB Karon Prunty",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Karon Prunty",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Channing Canada",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives CB Channing Canada",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Channing Canada",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Ben Brown",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives G Ben Brown",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Ben Brown",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Joshua Farmer",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives DT Joshua Farmer",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Joshua Farmer",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Behren Morton",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "Pats inactives CB Carlton Davis CB Karon Prunty CB Channing Canada G Ben Brown DT Joshua Farmer QB Behren Morton",
+     "quote": "inactives QB Behren Morton",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3myiqmknyks2t",
+     "player": "Behren Morton",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Alijah Vera-Tucker",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T00:59+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:00+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:37+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place G Alijah Vera-Tucker on Injured Reserve; Announce Additional Roster Moves - New England Patriots",
+     "quote": "Patriots Place G Alijah Vera-Tucker on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOOERPNmJJZzZWNTVBS2R1MkRidllOaFJSREV4eWF4VlcwZTlFc2NqMGdIbksxRVprWHJYQkpBOEZvNm9sYWoxS1lwN3hvWEhXYmVVenBVb2FUd2JNQnBWSXplRkFrdUtkVm41NW15S281dzZBeFRNSENsbUpwQ1V3UjdyV1dpN2FwOG5heUtzcmhtaDFibjAyVk51aV9EU0J4VFg4QkJKZ0lpQkVMRE9GR1BObl9wUkNN?oc=5",
+     "player": "Alijah Vera-Tucker",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-23T00:23+00:00",
+   "player": "Romeo Doubs",
+   "team": "NE",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_NE_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 187.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Patriots Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Patriots Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T00:59+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:00+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:37+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
+     "source": "team_sites_3",
+     "outlet": "New England Patriots",
+     "title": "Patriots Place WR Romeo Doubs on Injured Reserve; Sign DB Elliott Davison to the 53-Man Roster from the Practice Squad; Announce Additional Practice Squad Moves - New England Patriots",
+     "quote": "Patriots Place WR Romeo Doubs on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPSXpwdnU1T1pSRGI4dEpsUVU2eVZBdnVJbjdkN3FtaHVCMHFIQlNoM01nbW5NZXI2QU8zSWdpTncwemU3NHc1STZKZ2hneU81bjZ1YzhuNkJsTXQxRF9obUhrdGNmR3N3bzdEb3pqLU5wbmN2MXB1emUzT3lET3l5cVM2NXNxWFdqdFdFNlhkTmtxS1RnNXZfRmVLTmU2QXRNU0pjaUdORU9BMzZpTkM4WlBJRVh1aXhCT3o0Z3FRdzRXY3EydWpnVjIyTUxvS1VkU2Jkblp0MjJoWnlSWjlaQ21IcmV0aUJ1dGxQTDJFYTJkTDhZSHFpRjVlckJlczk1V0F1Y2NNZEE1YkxWLXJpVEJRZ0F2VHc?oc=5",
+     "player": "Romeo Doubs",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-22T23:55+00:00",
    "player": "Malik Muhammad",
@@ -101,7 +900,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -126,7 +928,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -151,7 +956,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -176,7 +984,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -201,7 +1012,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -226,7 +1040,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -27.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -301,7 +1118,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -386,7 +1206,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -421,7 +1244,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -456,7 +1282,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -481,7 +1310,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -506,7 +1338,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -531,7 +1366,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Doubtful",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -566,7 +1404,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -591,7 +1432,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -26.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -636,6 +1480,36 @@
      "title": "Puka Nacua leaves practice early with calf injury",
      "quote": "leaves practice early with calf injury",
      "link": "https://sports.yahoo.com/articles/puka-nacua-leaves-practice-early-223734301.html",
+     "player": "Puka Nacua",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "More Bad News For Rams: Star WR Puka Nacua Leaves Practice Early With Calf Injury - FOX Sports",
+     "quote": "Star WR Puka Nacua Leaves Practice Early With Calf Injury",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQcmVjbHROYU5oTlFJajJQVy1aY2Z2cm8zVmVCazhMTkI3YXBidmUxWG1TZlBqVHRGWjBMcDB3RXVlSXNLSk1oTTU1TDZwNE5nWk1YNmZDYUhlQjZTRVVVNEVYUk1WVnkxVjNwRnFkT05WdEJkZkJxZXFYdnhwUHBDN3hodkFWdlhOM0xBQVppQTNDTlZHR1lqRzdWWdIBmwFBVV95cUxQMDVSOXlGNDBSTGdJYjFOc2VEY1o3U2xYRVNhTFoxOEZIbFNudzZCOHo4ZUc3LXNwbkh2bFc3cjQ0UVNGel92SjRnYVN6dlZYX2t4YnVWM0tnb00yVS0xeGtvMl85d25sSWFQTlZSa3lYUDU1MU5IUk83TTVJdFJxeWxKaXpVTjYyNWZCQzhoOS1lM0NTQ2tsR0MwMA?oc=5",
+     "player": "Puka Nacua",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Puka Nacua leaves practice early with calf injury - NBC Sports",
+     "quote": "Puka Nacua leaves practice early with calf injury",
+     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNZ2psWlhiRXNrWkd3MHVZM24zblRTME1kTEQ2TFkxNVJFNi1na19jTUhfNXpiTHhicnZ0ZkdBOXVtcW9udGM1U21Cam5CNFFFaWJzY3lHckY4d0k2TmRyY0JMdEwzWTkxQkZ4TmJoTEgxSmZ4Rjhyak9SZkg5WFNmdTV5TkNPSU5rMDB6V2c0aFMtWW9yNGE4QnVLWkptY1Q5Q1NEbHZfX3lGSXpnWkRxNw?oc=5",
+     "player": "Puka Nacua",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-23T02:42+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Puka Nacua leaves practice early with calf injury - NBC Sports",
+     "quote": "leaves practice early with calf injury",
+     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNZ2psWlhiRXNrWkd3MHVZM24zblRTME1kTEQ2TFkxNVJFNi1na19jTUhfNXpiTHhicnZ0ZkdBOXVtcW9udGM1U21Cam5CNFFFaWJzY3lHckY4d0k2TmRyY0JMdEwzWTkxQkZ4TmJoTEgxSmZ4Rjhyak9SZkg5WFNmdTV5TkNPSU5rMDB6V2c0aFMtWW9yNGE4QnVLWkptY1Q5Q1NEbHZfX3lGSXpnWkRxNw?oc=5",
      "player": "Puka Nacua",
      "signal": "injured_reserve"
     }
@@ -693,6 +1567,26 @@
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bucky-irving-returns-to-bucs-practice-emeka-egbuka-is-still-out",
      "player": "Emeka Egbuka",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T00:43+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bucky Irving returns to Bucs practice, Emeka Egbuka is still out",
+     "quote": "Emeka Egbuka is still out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bucky-irving-returns-to-bucs-practice-emeka-egbuka-is-still-out",
+     "player": "Emeka Egbuka",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T02:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bucky Irving returns to Bucs practice, Emeka Egbuka is still out",
+     "quote": "Emeka Egbuka is still out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bucky-irving-returns-to-bucs-practice-emeka-egbuka-is-still-out",
+     "player": "Emeka Egbuka",
+     "signal": "out"
     }
    ]
   },
@@ -706,7 +1600,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -24.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -801,7 +1698,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -24.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -826,7 +1726,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -24.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -948,6 +1851,16 @@
      "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPYUYxRnFITEJTRDM3d1ZTRS1fYUlUZ1RnMms1T21nSnhXeUYzNkxnVjR5WUF5R0hFTWRxU0lta0VTMlJkS2c3MkYtTXJSUW1BNUZJX0owQ3c5V0dBT1M3RjlkcFEwS21IMEcxQ0UzRlMwdlptaC1mNkNTdTh3V0xpVXdfUjB5SlJkaUJreUREVW0?oc=5",
      "player": "Jeremiyah Love",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Fantasy Football Impact: Jeremiyah Love Missing Week 7, Makes Tyler Allgeier And Bam Knight Flex Starts - Yahoo Sports",
+     "quote": "Jeremiyah Love Missing Week 7",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPYUYxRnFITEJTRDM3d1ZTRS1fYUlUZ1RnMms1T21nSnhXeUYzNkxnVjR5WUF5R0hFTWRxU0lta0VTMlJkS2c3MkYtTXJSUW1BNUZJX0owQ3c5V0dBT1M3RjlkcFEwS21IMEcxQ0UzRlMwdlptaC1mNkNTdTh3V0xpVXdfUjB5SlJkaUJreUREVW0?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "out"
     }
    ]
   },
@@ -961,7 +1874,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 25.6,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": 2.5
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1655,7 +2571,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -1943,7 +2862,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -4.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2978,6 +3900,16 @@
      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPVlVDX281dHc2QTA5LW81UG10NGVJYVBzT1E2UmlvbmlnSDRDZVhDYjBUeEFlMWZ6SHVnNktzNFVqOXlXcTNYR3J6LVdqVC15RjF3TjdMb2M0YXF3YWJuMzNydXBZZW1GX0NiR18wTlN4SlJ6dDZSTlYzQUxZM2RjTzVSQlI0VmttOEpyOGQ2ZXhPRktSelJvT01YUTQ?oc=5",
      "player": "Abraham Lucas",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
+     "source": "team_sites_4",
+     "outlet": "Seattle Seahawks",
+     "title": "Seahawks vs. Steelers Injury Updates: Abraham Lucas, Evan Brown Both Ruled Out - Seattle Seahawks",
+     "quote": "Ruled Out",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPVlVDX281dHc2QTA5LW81UG10NGVJYVBzT1E2UmlvbmlnSDRDZVhDYjBUeEFlMWZ6SHVnNktzNFVqOXlXcTNYR3J6LVdqVC15RjF3TjdMb2M0YXF3YWJuMzNydXBZZW1GX0NiR18wTlN4SlJ6dDZSTlYzQUxZM2RjTzVSQlI0VmttOEpyOGQ2ZXhPRktSelJvT01YUTQ?oc=5",
+     "player": "Abraham Lucas",
+     "signal": "out"
     }
    ]
   },
@@ -2991,7 +3923,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 0.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3086,7 +4021,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3181,7 +4119,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3226,7 +4167,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Doubtful",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3331,7 +4275,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3386,7 +4333,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3431,7 +4381,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4013,6 +4966,16 @@
      "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3myfewbja3c2j",
      "player": "Cade Mays",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-23T10:41+00:00",
+     "source": "team_sites_2",
+     "outlet": "Detroit Lions",
+     "title": "Detroit ready to 'rip this Band-Aid off,' start Cade Mays at center - Detroit Lions",
+     "quote": "start Cade Mays at center",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPX2dHNjBCVFVRTUNCVjA3X0xNYmhYa0Y1SGxaQjJBall3UjB5QnFLSVJUc21PaGxMTzQweU85dVpPOWI4ZjNQcXZLenBFSzcxYUZpTlBUWFZ2clU3S2NYMHR4S3BBZWVhUHAyUEZYMjN0NGFseVp5MHdndGNpZlpjYVA2VUsyejVBdXozY2piVUh0bmU4Rk9RSnJOWmhMdnQyYWZORF9CVTlSZTBjLU9F?oc=5",
+     "player": "Cade Mays",
+     "signal": "will_start"
     }
    ]
   },
@@ -4376,7 +5339,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 24.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4571,7 +5537,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 25.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4666,7 +5635,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 25.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4761,7 +5733,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 25.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4796,7 +5771,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 25.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5046,6 +6024,16 @@
     },
     {
      "seen_at": "2026-10-22T23:00+00:00",
+     "source": "team_sites_4",
+     "outlet": "Seattle Seahawks",
+     "title": "Seahawks vs. Steelers Injury Updates: Abraham Lucas, Evan Brown Both Ruled Out - Seattle Seahawks",
+     "quote": "Ruled Out",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPVlVDX281dHc2QTA5LW81UG10NGVJYVBzT1E2UmlvbmlnSDRDZVhDYjBUeEFlMWZ6SHVnNktzNFVqOXlXcTNYR3J6LVdqVC15RjF3TjdMb2M0YXF3YWJuMzNydXBZZW1GX0NiR18wTlN4SlJ6dDZSTlYzQUxZM2RjTzVSQlI0VmttOEpyOGQ2ZXhPRktSelJvT01YUTQ?oc=5",
+     "player": "Evan Brown",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-23T01:54+00:00",
      "source": "team_sites_4",
      "outlet": "Seattle Seahawks",
      "title": "Seahawks vs. Steelers Injury Updates: Abraham Lucas, Evan Brown Both Ruled Out - Seattle Seahawks",
@@ -5376,7 +6364,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 38.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6924,7 +7915,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 47.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8061,6 +9055,16 @@
      "link": "https://bsky.app/profile/jeff-neiburg.bsky.social/post/3my6r34jr3c2d",
      "player": "Tanner McKee",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-23T11:23+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "How Tanner McKee is learning to think like a starter instead of a backup",
+     "quote": "Tanner McKee will make his second start on Monday Night Football",
+     "link": "https://sports.yahoo.com/articles/tanner-mckee-learning-think-starter-070000004.html",
+     "player": "Tanner McKee",
+     "signal": "will_start"
     }
    ]
   },
@@ -8519,7 +9523,10 @@
    "certainty": 0.9,
    "lead_vs_report_h": 70.8,
    "line_move": null,
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -8584,7 +9591,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 71.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8904,7 +9914,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.2,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8939,7 +9952,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.2,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9069,7 +10085,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9104,7 +10123,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9129,7 +10151,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9178,7 +10203,10 @@
     "after": 1.5,
     "before": -0.75
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -9374,7 +10402,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 74.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9403,7 +10434,10 @@
     "after": 1.5,
     "before": -0.25
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -9448,7 +10482,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 74.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9498,7 +10535,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 74.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9523,7 +10563,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 74.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -44945,11 +45988,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 68% (needs >= 95%)"
+   "precision 69% (needs >= 95%)"
   ],
-  "n": 71,
-  "correct": 48,
-  "precision": 0.6761,
+  "n": 75,
+  "correct": 52,
+  "precision": 0.6933,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
