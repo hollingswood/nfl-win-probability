@@ -122,6 +122,7 @@ def call_claude(text: str, api_key: str, timeout: float = 120) -> list[dict]:
         "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         resp = json.load(r)
+    N.log_usage("picks", resp, {"chars": len(text)})
     out = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     m = re.search(r"\{.*\}", out, re.S)
     try:

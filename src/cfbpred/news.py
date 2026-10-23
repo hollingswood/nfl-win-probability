@@ -126,6 +126,7 @@ def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: floa
         "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         resp = json.load(r)
+    N.log_usage("cfb_news", resp, {"items": len(items)})
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     m = re.search(r"\{.*\}", text, re.S)
     try:

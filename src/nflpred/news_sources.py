@@ -216,6 +216,8 @@ def _claude(prompt: str, api_key: str, model: str) -> str:
                                  headers={"x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=90) as r:
         resp = json.load(r)
+    from . import news_llm as NL
+    NL.log_usage("news_error_review", resp)
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     return text or f"(no text; stop_reason={resp.get('stop_reason')}, blocks={[b.get('type') for b in resp.get('content', [])]})"
 

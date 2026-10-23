@@ -25,6 +25,26 @@ from pathlib import Path
 MODEL = "claude-haiku-4-5"
 PROMPT_VERSION = 2   # 2 (2026-10-12): next-game-only statements, practice != returning, full names
 API_URL = "https://api.anthropic.com/v1/messages"
+# USD per million tokens (Claude Haiku 4.5: $1 input, $5 output; cache reads 10%, cache writes 125%)
+PRICE = {"input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25}
+
+
+def log_usage(component: str, resp: dict, extra: dict | None = None) -> None:
+    """One line per Claude call -> history/claude_usage.jsonl (tokens and cost per component; never raises)."""
+    try:
+        from datetime import datetime, timezone
+        u = resp.get("usage") or {}
+        row = {"at": datetime.now(timezone.utc).isoformat(timespec="minutes"), "component": component,
+               "model": resp.get("model"), "in": u.get("input_tokens", 0), "out": u.get("output_tokens", 0),
+               "cache_read": u.get("cache_read_input_tokens", 0), "cache_write": u.get("cache_creation_input_tokens", 0),
+               "stop": resp.get("stop_reason"), **(extra or {})}
+        row["usd"] = round((row["in"] * PRICE["input"] + row["out"] * PRICE["output"] + row["cache_read"] * PRICE["cache_read"]
+                            + row["cache_write"] * PRICE["cache_write"]) / 1e6, 5)
+        p = Path(__file__).resolve().parents[2] / "history" / "claude_usage.jsonl"
+        with p.open("a") as f:
+            f.write(json.dumps(row) + "\n")
+    except Exception as e:
+        print("usage log failed:", e)
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                     "Chrome/124.0 Safari/537.36", "Accept": "application/rss+xml, application/xml, text/xml, */*"}
 
@@ -137,6 +157,7 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
         "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         resp = json.load(r)
+    log_usage("nfl_news", resp, {"items": len(items)})
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     out, ctx = [], []
     m = re.search(r"\{.*\}", text, re.S)
