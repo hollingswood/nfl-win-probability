@@ -212,12 +212,8 @@ def classify_errors(history_dir: Path, api_key: str, llm=None, model: str = "cla
 
 def _claude(prompt: str, api_key: str, model: str) -> str:
     payload = {"model": model, "max_tokens": 2000, "messages": [{"role": "user", "content": prompt}]}
-    req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=json.dumps(payload).encode(), method="POST",
-                                 headers={"x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
-    with urllib.request.urlopen(req, timeout=90) as r:
-        resp = json.load(r)
     from . import news_llm as NL
-    NL.log_usage("news_error_review", resp)
+    resp = NL.claude_request(payload, api_key, "news_error_review", 90)
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     return text or f"(no text; stop_reason={resp.get('stop_reason')}, blocks={[b.get('type') for b in resp.get('content', [])]})"
 

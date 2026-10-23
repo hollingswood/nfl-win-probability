@@ -193,7 +193,7 @@ def build_payload(predictions: dict, backtest: dict, vs_vegas: dict | None,
             "news_audit": news_audit,
             "news_context": context_by_game(news_context or [], predictions.get("upcoming", []), now),
             "rules": load_rule_limits() if rules is None else rules,
-            "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "slip_urls": slip_urls(predictions), "my_books": load_my_books(),
+            "placed": load_placed(), "placed_index": load_placed_index(), "log_urls": log_urls(predictions), "slip_urls": slip_urls(predictions), "claude_budget": claude_budget_view(), "my_books": load_my_books(),
             "picks": picks_view("nfl"), "picks_audit": _json_or_none(ROOT / "history" / "picks_audit.json")}
 
 
@@ -227,6 +227,20 @@ def load_placed() -> dict | None:
         return placed.summary(ROOT / "history", "nfl")
     except Exception as e:
         print("placed bets: skipped:", e)
+        return None
+
+
+def claude_budget_view() -> dict | None:
+    """Claude credit spend since the last top-up (claude_budget.json); fail-safe None."""
+    try:
+        from nflpred import claude_budget
+        s = claude_budget.status(ROOT / "history")
+        st = claude_budget._state(ROOT / "history")
+        if s and st.get("topup_at") == s["topup_at"] and st.get("empty_at"):
+            s["empty_seen_at"] = st["empty_at"]
+        return s
+    except Exception as e:
+        print("claude budget skipped:", e)
         return None
 
 

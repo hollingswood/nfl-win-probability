@@ -122,11 +122,7 @@ def call_claude(items: list[dict], api_key: str, teams: list[str], timeout: floa
                        for i, it in enumerate(items))
     payload = {"model": N.MODEL, "max_tokens": 4000, "system": system,
                "messages": [{"role": "user", "content": instr + "\n\nITEMS:\n" + body}]}
-    req = urllib.request.Request(N.API_URL, data=json.dumps(payload).encode(), method="POST", headers={
-        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        resp = json.load(r)
-    N.log_usage("cfb_news", resp, {"items": len(items)})
+    resp = N.claude_request(payload, api_key, "cfb_news", timeout, {"items": len(items)})
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     m = re.search(r"\{.*\}", text, re.S)
     try:

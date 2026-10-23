@@ -565,7 +565,10 @@ const fmtDay = iso => new Date(iso+'T12:00:00').toLocaleDateString('en-US',{week
 const fmtAZ = iso => new Date(iso).toLocaleString('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 // odds, paper bets and news refresh hourly (and every 15 min for QB news); the model itself reruns on the scheduled full runs
 document.getElementById('stamp').textContent =
-  `${P.season} season · odds and bets updated ${fmtAZ(P.odds_checked_at||P.generated_at)} AZ · model run ${fmtAZ(P.generated_at)}`;
+  `${P.season} season · odds and bets updated ${fmtAZ(P.odds_checked_at||P.generated_at)} AZ · model run ${fmtAZ(P.generated_at)}`
+  + (()=>{ const B=D.claude_budget; if(!B) return '';   // claude_budget.py: AI news + picks readers' credit
+      if(B.empty_seen_at) return ` · AI readers out of Claude credits since ${fmtAZ(B.empty_seen_at)} AZ`;
+      return ` · Claude credits $${B.spent.toFixed(2)} of $${B.topup_usd} used${B.days_left!=null?` (~${B.days_left} days left at $${B.per_day}/day)`:''}`; })();
 
 const lg = B.overall.margin, vg = B.overall.vegas, sm = P.season_to_date.model, sv = P.season_to_date.vegas;
 document.getElementById('strip').innerHTML = [

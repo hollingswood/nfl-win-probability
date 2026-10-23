@@ -118,11 +118,7 @@ def extract(text: str, api_key: str, llm=None) -> list[dict]:
 def call_claude(text: str, api_key: str, timeout: float = 120) -> list[dict]:
     payload = {"model": N.MODEL, "max_tokens": 8000, "system": "You extract published betting picks. Never invent picks.",
                "messages": [{"role": "user", "content": INSTR + "\n\nARTICLE:\n" + text}]}
-    req = urllib.request.Request(N.API_URL, data=json.dumps(payload).encode(), method="POST", headers={
-        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        resp = json.load(r)
-    N.log_usage("picks", resp, {"chars": len(text)})
+    resp = N.claude_request(payload, api_key, "picks", timeout, {"chars": len(text)})
     out = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     m = re.search(r"\{.*\}", out, re.S)
     try:

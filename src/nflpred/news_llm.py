@@ -65,6 +65,31 @@ class Seen(dict):
         path.write_text(json.dumps({k: v for k, v in sorted(self.items()) if v >= cut}, separators=(",", ":")))
 
 
+def claude_request(payload: dict, api_key: str, component: str, timeout: float = 60, extra: dict | None = None) -> dict:
+    """POST to the Messages API, log tokens + cost, and flag 'out of credits' replies (claude_budget alert)."""
+    import urllib.error
+    req = urllib.request.Request(API_URL, data=json.dumps(payload).encode(), method="POST", headers={
+        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            resp = json.load(r)
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "ignore")
+        except Exception:
+            pass
+        if "credit balance" in body.lower() or "billing" in body.lower():
+            try:
+                from . import claude_budget
+                claude_budget.out_of_credits(component, body)
+            except Exception as ex:
+                print("credit alert failed:", ex)
+        raise RuntimeError(f"Claude API {e.code}: {body[:200]}") from e
+    log_usage(component, resp, extra)
+    return resp
+
+
 def log_usage(component: str, resp: dict, extra: dict | None = None) -> None:
     """One line per Claude call -> history/claude_usage.jsonl (tokens and cost per component; never raises)."""
     try:
@@ -189,11 +214,7 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
                        for i, it in enumerate(items))
     payload = {"model": MODEL, "max_tokens": 4000, "system": SYSTEM,
                "messages": [{"role": "user", "content": INSTRUCTIONS + "\n\nITEMS:\n" + body}]}
-    req = urllib.request.Request(API_URL, data=json.dumps(payload).encode(), method="POST", headers={
-        "x-api-key": api_key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        resp = json.load(r)
-    log_usage("nfl_news", resp, {"items": len(items)})
+    resp = claude_request(payload, api_key, "nfl_news", timeout, {"items": len(items)})
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     out, ctx = [], []
     m = re.search(r"\{.*\}", text, re.S)
@@ -327,6 +348,11 @@ def main():
         print("roster backfill:", roster_lib.backfill(root / "history", roster_lib.load(root / "history")))
     except Exception as e:
         print("roster backfill failed:", e)
+    try:  # Claude credit budget: phone alert at 50/75/90% of the last top-up (claude_budget.json)
+        from . import claude_budget
+        print("claude budget:", json.dumps(claude_budget.check(root / "history")))
+    except Exception as e:
+        print("claude budget check failed:", e)
     try:  # per-source accuracy (classifies new wrong calls once, then reweights sources)
         from . import news_sources as NS
         out = NS.refresh(root / "history", os.environ.get("ANTHROPIC_API_KEY"))
