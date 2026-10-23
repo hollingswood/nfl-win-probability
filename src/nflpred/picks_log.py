@@ -175,7 +175,7 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
     if now.hour % 3 != 0 and texter is _text:      # live runs: every 3 hours (picks articles change slowly)
         rep["skipped"] = "not due this hour"; return rep
     seen_p = HIST / "picks_seen.json"
-    seen = set(json.loads(seen_p.read_text())) if seen_p.exists() else set()
+    seen = N.Seen(seen_p, now.date().isoformat())
     # articles are re-read (picks pages get more analysts added over the week): up to 4 reads, 12+ h apart, within 4 days
     reads_p = HIST / "picks_reads.json"
     reads = json.loads(reads_p.read_text()) if reads_p.exists() else {}
@@ -307,7 +307,7 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         with (HIST / "picks_log.jsonl").open("a") as f:
             for r in rows:
                 f.write(json.dumps(r) + "\n")
-    seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
+    seen.save(seen_p, keep_days=60)
     cut = (now - timedelta(days=10)).isoformat()
     reads_p.write_text(json.dumps({k: v for k, v in reads.items() if v.get("last", "") >= cut}, indent=0))
     wcut = (now - timedelta(days=120)).isoformat()

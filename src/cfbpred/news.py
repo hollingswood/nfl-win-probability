@@ -14,7 +14,7 @@ import re
 import sys
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from nflpred import news_llm as N
@@ -151,15 +151,18 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
     teams = fbs_teams()
     HIST.mkdir(parents=True, exist_ok=True)
     seen_p = HIST / "news_seen.json"
-    seen = set(json.loads(seen_p.read_text())) if seen_p.exists() else set()
+    seen = N.Seen(seen_p)
     new = []
     for name, url in FEEDS.items():
         try:
             items = fetcher(url); rep["feeds"][name] = len(items)
         except Exception as e:
             rep["feeds"][name] = f"failed: {str(e)[:80]}"; continue
+        stale = (datetime.now(timezone.utc) - timedelta(days=20)).isoformat()
         for it in items:
             k = N._key(it)
+            if (it.get("published") or "9") < stale:
+                continue
             if k not in seen and k not in {x["key"] for x in new}:
                 new.append(dict(it, source=name, key=k))
     rep["new_items"] = len(new)
@@ -192,7 +195,7 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             with path.open("a") as f:
                 for r in rows:
                     f.write(json.dumps(r) + "\n")
-    seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
+    seen.save(seen_p)
     rep["signals"], rep["context_items"] = len(sig), len(ctx)
     rep["qb_signals"] = [f"{s['player']} ({s['team']}): {s['signal']}" for s in sig if s.get("is_starting_qb_news")][:20]
     return rep

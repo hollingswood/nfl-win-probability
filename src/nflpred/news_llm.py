@@ -29,6 +29,42 @@ API_URL = "https://api.anthropic.com/v1/messages"
 PRICE = {"input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25}
 
 
+class Seen(dict):
+    """'Already read' ids -> day first seen. Trimmed by AGE when saved, never by id order.
+    2026-10-22: the old `sorted(seen)[-20000:]` kept the 20,000 alphabetically LAST ids once full, so every new item
+    whose id sorted below the creeping cutoff (~15% of them) was forgotten as it was saved and re-sent to Claude on
+    every run (~160 items a run, ~90 runs a day): most of the automation's Claude spend."""
+
+    def __init__(self, path: Path, today: str | None = None):
+        from datetime import datetime, timezone
+        super().__init__()
+        self.today = today or datetime.now(timezone.utc).date().isoformat()
+        try:
+            raw = json.loads(path.read_text()) if path.exists() else {}
+        except ValueError:
+            raw = {}
+        if isinstance(raw, list):                  # the old id list: start every id's clock today
+            raw = {str(k): self.today for k in raw}
+        self.update_from(raw)
+
+    def update_from(self, d: dict) -> None:
+        for k, v in d.items():
+            if k not in self or str(v) < str(self[k]):
+                dict.__setitem__(self, k, str(v))
+
+    def add(self, k: str) -> None:
+        self.setdefault(k, self.today)
+
+    def update(self, keys) -> None:               # set-style: seen.update(ids)
+        for k in keys:
+            self.add(k)
+
+    def save(self, path: Path, keep_days: int = 30) -> None:
+        from datetime import date, timedelta
+        cut = (date.fromisoformat(self.today) - timedelta(days=keep_days)).isoformat()
+        path.write_text(json.dumps({k: v for k, v in sorted(self.items()) if v >= cut}, separators=(",", ":")))
+
+
 def log_usage(component: str, resp: dict, extra: dict | None = None) -> None:
     """One line per Claude call -> history/claude_usage.jsonl (tokens and cost per component; never raises)."""
     try:
@@ -193,7 +229,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
     now = now or datetime.now(timezone.utc)
     roster = roster if roster is not None else roster_lib.load(history_dir)
     seen_p, log_p = history_dir / "news_seen.json", history_dir / "news_llm.jsonl"
-    seen = set(json.loads(seen_p.read_text())) if seen_p.exists() else set()
+    seen = Seen(seen_p, now.date().isoformat())
     new = []
     for name, url in FEEDS.items():
         try:
@@ -202,8 +238,11 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
         except Exception as e:
             report["feeds"][name] = f"failed: {str(e)[:80]}"
             continue
+        stale = (now - timedelta(days=20)).isoformat()      # older than the seen list's memory: never re-read
         for it in items:
             k = _key(it)
+            if (it.get("published") or "9") < stale:
+                continue
             if k not in seen and k not in {x["key"] for x in new}:
                 new.append(dict(it, source=name, key=k))
     # Bluesky reporters and team accounts (public API, no login); bluesky=False turns it off (tests)
@@ -263,7 +302,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
         with (history_dir / "news_context.jsonl").open("a") as f:
             for c in contexts:
                 f.write(json.dumps(c) + "\n")
-    seen_p.write_text(json.dumps(sorted(seen)[-20000:]))
+    seen.save(seen_p)
     report["signals"] = len(signals)
     report["context_items"] = len(contexts)
     report["qb_signals"] = [f"{s['player']} ({s['team']}): {s['signal']}" for s in signals if s.get("is_starting_qb_news")][:20]
