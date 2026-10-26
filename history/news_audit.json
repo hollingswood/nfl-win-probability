@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-10-25T23:10+00:00",
- "signals": 12976,
- "units": 2202,
+ "generated_at": "2026-10-26T00:10+00:00",
+ "signals": 12984,
+ "units": 2207,
  "skipped": {
   "team_unclear": 333,
   "no_game": 374,
-  "not_game_week": 547
+  "not_game_week": 548
  },
  "roster_check": {
-  "match": 12370,
+  "match": 12378,
   "team_mismatch": 266,
   "not_found": 338,
   "ambiguous": 2
  },
- "graded": 952,
+ "graded": 956,
  "pending": 194,
  "overall": {
-  "n": 952,
-  "correct": 763,
-  "pct": 80.1
+  "n": 956,
+  "correct": 767,
+  "pct": 80.2
  },
  "by_signal": {
   "benched": {
@@ -32,9 +32,9 @@
    "pct": 85.7
   },
   "expected_to_play": {
-   "n": 264,
-   "correct": 213,
-   "pct": 80.7
+   "n": 266,
+   "correct": 215,
+   "pct": 80.8
   },
   "injured_reserve": {
    "n": 121,
@@ -47,9 +47,9 @@
    "pct": 85.9
   },
   "returning": {
-   "n": 167,
-   "correct": 119,
-   "pct": 71.3
+   "n": 168,
+   "correct": 120,
+   "pct": 71.4
   },
   "suspended": {
    "n": 5,
@@ -57,32 +57,32 @@
    "pct": 60.0
   },
   "will_start": {
-   "n": 70,
-   "correct": 57,
-   "pct": 81.4
+   "n": 71,
+   "correct": 58,
+   "pct": 81.7
   }
  },
  "qb": {
-  "n": 100,
-  "correct": 67,
-  "pct": 67.0,
-  "pending": 14
+  "n": 104,
+  "correct": 71,
+  "pct": 68.3,
+  "pending": 10
  },
  "rule_population": {
-  "n": 85,
-  "correct": 61,
-  "pct": 71.8,
-  "pending": 13
+  "n": 88,
+  "correct": 64,
+  "pct": 72.7,
+  "pending": 10
  },
  "official_report_agreement": {
-  "n": 819,
-  "agree": 615,
-  "pct": 75.1
+  "n": 823,
+  "agree": 619,
+  "pct": 75.2
  },
  "lead_vs_report_hours": {
-  "n": 1146,
-  "median": 27.5,
-  "share_before_report": 68.6
+  "n": 1150,
+  "median": 27.1,
+  "share_before_report": 68.4
  },
  "qb_line_move_6h": {
   "n": 163,
@@ -91,6 +91,116 @@
   "avg_after_negative_signals": 0.54
  },
  "rows": [
+  {
+   "seen_at": "2026-10-25T23:39+00:00",
+   "player": "Drew Lock",
+   "team": "SEA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_07_KC_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -51.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-25T23:39+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Seahawks-Chiefs inactives: Drew Lock sidelined, Jalen Milroe to slot in as backup",
+     "quote": "will not be available unless both Sam Darnold and Jalen Milroe get injured",
+     "link": "https://sports.yahoo.com/articles/seahawks-chiefs-inactives-drew-lock-231706428.html",
+     "player": "Drew Lock",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-25T23:39+00:00",
+   "player": "Jalen Milroe",
+   "team": "SEA",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_07_KC_SEA",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": -51.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-25T23:39+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Seahawks-Chiefs inactives: Drew Lock sidelined, Jalen Milroe to slot in as backup",
+     "quote": "Jalen Milroe to slot in as backup",
+     "link": "https://sports.yahoo.com/articles/seahawks-chiefs-inactives-drew-lock-231706428.html",
+     "player": "Jalen Milroe",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-25T23:39+00:00",
+   "player": "Jared Wiley",
+   "team": "KC",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_07_KC_SEA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -51.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-25T23:39+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chiefs-Seahawks Inactives: TE Jared Wiley active for first time in 2026",
+     "quote": "TE Jared Wiley active for first time in 2026",
+     "link": "https://sports.yahoo.com/articles/chiefs-seahawks-inactives-te-jared-231500702.html",
+     "player": "Jared Wiley",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-25T23:23+00:00",
+   "player": "Aaron Jones",
+   "team": "MIN",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_MIN_DET",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 116.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-25T23:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Aaron Jones will have an MRI on his knee",
+     "quote": "made an early exit after a 17-yard gain in the fourth quarter",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/aaron-jones-will-have-an-mri-on-his-knee",
+     "player": "Aaron Jones",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-25T23:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Aaron Jones will have an MRI on his knee",
+     "quote": "made an early exit after a 17-yard gain in the fourth quarter",
+     "link": "https://sports.yahoo.com/articles/aaron-jones-mri-knee-231407950.html",
+     "player": "Aaron Jones",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-25T22:39+00:00",
    "player": "Puka Nacua",
@@ -527,7 +637,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -552,7 +665,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -577,7 +693,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -602,7 +721,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -627,7 +749,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -652,7 +777,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -47.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1067,7 +1195,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -41.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1388,7 +1519,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -25.2,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1575,7 +1709,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -24.7,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1625,7 +1762,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -24.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1650,7 +1790,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": -24.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2634,7 +2777,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -6.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2999,7 +3145,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -2.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3624,7 +3773,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3883,7 +4035,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3908,7 +4063,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4077,7 +4235,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 3.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4172,7 +4333,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 3.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4690,7 +4854,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 16.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5546,7 +5713,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 20.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5961,7 +6131,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 21.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6402,7 +6575,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 25.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6900,7 +7076,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 29.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7424,7 +7603,10 @@
     "after": -0.5,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -7625,7 +7807,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 44.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8092,7 +8277,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 45.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8191,7 +8379,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -8386,7 +8577,10 @@
     "after": -0.5,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9120,7 +9314,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 49.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9425,7 +9622,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 51.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9855,7 +10055,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 55.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9900,7 +10103,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 65.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9953,7 +10159,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 70.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9978,7 +10187,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 70.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10033,7 +10245,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 71.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10134,7 +10349,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 71.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10337,7 +10555,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 73.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10983,7 +11204,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 74.2,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12079,7 +12303,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 93.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12174,7 +12401,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 94.0,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12325,7 +12555,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 94.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12420,7 +12653,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 95.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12515,7 +12751,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 95.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13264,7 +13503,10 @@
     "after": -0.0,
     "before": 0.5
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -13289,7 +13531,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 98.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13334,7 +13579,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 98.4,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13499,7 +13747,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 99.1,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13683,7 +13934,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 104.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13733,7 +13987,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 113.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13984,7 +14241,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 116.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -14156,7 +14416,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 116.7,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -14433,7 +14696,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 117.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -14556,7 +14822,10 @@
    "roster": "team_mismatch",
    "certainty": 1.0,
    "lead_vs_report_h": 118.8,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18146,7 +18415,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 152.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18693,7 +18965,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 167.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18763,7 +19038,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 167.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18798,7 +19076,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 167.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -18833,7 +19114,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 167.6,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -20382,7 +20666,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 177.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -20473,7 +20760,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 186.3,
+   "truth": null,
    "verdict": "pending",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -51212,11 +51502,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 72% (needs >= 95%)"
+   "precision 73% (needs >= 95%)"
   ],
-  "n": 85,
-  "correct": 61,
-  "precision": 0.7176,
+  "n": 88,
+  "correct": 64,
+  "precision": 0.7273,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
