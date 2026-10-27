@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-10-27T00:10+00:00",
- "signals": 13141,
- "units": 2267,
+ "generated_at": "2026-10-27T14:34+00:00",
+ "signals": 13184,
+ "units": 2279,
  "skipped": {
   "team_unclear": 334,
-  "no_game": 380,
-  "not_game_week": 576
+  "no_game": 382,
+  "not_game_week": 588
  },
  "roster_check": {
-  "match": 12527,
-  "team_mismatch": 273,
-  "not_found": 339,
+  "match": 12568,
+  "team_mismatch": 274,
+  "not_found": 340,
   "ambiguous": 2
  },
- "graded": 1094,
- "pending": 81,
+ "graded": 1122,
+ "pending": 63,
  "overall": {
-  "n": 1094,
-  "correct": 883,
-  "pct": 80.7
+  "n": 1122,
+  "correct": 907,
+  "pct": 80.8
  },
  "by_signal": {
   "benched": {
@@ -32,24 +32,24 @@
    "pct": 86.7
   },
   "expected_to_play": {
-   "n": 298,
-   "correct": 235,
-   "pct": 78.9
+   "n": 310,
+   "correct": 246,
+   "pct": 79.4
   },
   "injured_reserve": {
-   "n": 144,
-   "correct": 114,
-   "pct": 79.2
+   "n": 147,
+   "correct": 116,
+   "pct": 78.9
   },
   "out": {
-   "n": 365,
-   "correct": 319,
-   "pct": 87.4
+   "n": 370,
+   "correct": 323,
+   "pct": 87.3
   },
   "returning": {
-   "n": 188,
-   "correct": 136,
-   "pct": 72.3
+   "n": 194,
+   "correct": 142,
+   "pct": 73.2
   },
   "suspended": {
    "n": 5,
@@ -57,40 +57,295 @@
    "pct": 60.0
   },
   "will_start": {
-   "n": 74,
-   "correct": 61,
-   "pct": 82.4
+   "n": 76,
+   "correct": 62,
+   "pct": 81.6
   }
  },
  "qb": {
-  "n": 104,
+  "n": 107,
   "correct": 71,
-  "pct": 68.3,
-  "pending": 13
+  "pct": 66.4,
+  "pending": 12
  },
  "rule_population": {
-  "n": 88,
+  "n": 91,
   "correct": 64,
-  "pct": 72.7,
-  "pending": 11
+  "pct": 70.3,
+  "pending": 9
  },
  "official_report_agreement": {
-  "n": 937,
-  "agree": 703,
-  "pct": 75.0
+  "n": 962,
+  "agree": 727,
+  "pct": 75.6
  },
  "lead_vs_report_hours": {
-  "n": 1175,
-  "median": 27.6,
-  "share_before_report": 68.5
+  "n": 1185,
+  "median": 30.6,
+  "share_before_report": 68.8
  },
  "qb_line_move_6h": {
-  "n": 168,
-  "avg_abs_after": 0.56,
+  "n": 172,
+  "avg_abs_after": 0.55,
   "avg_abs_before": 0.33,
   "avg_after_negative_signals": 0.54
  },
  "rows": [
+  {
+   "seen_at": "2026-10-27T12:41+00:00",
+   "player": "Vega Ioane",
+   "team": "BAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_BAL_BUF",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 79.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T12:41+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Ravens G Vega Ioane has an MCL sprain",
+     "quote": "he'll miss some more time before returning to action",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-ravens-g-vega-ioane-has-an-mcl-sprain",
+     "player": "Vega Ioane",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T09:57+00:00",
+   "player": "Jalen Hurts",
+   "team": "PHI",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 82.0,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T09:57+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jalen Hurts\u2019 Season May Be OVER \u2014 Now the NFL Is Investigating What Happened to Philadelphia\u2019s Superstar QB - Yahoo Sports",
+     "quote": "Season May Be OVER",
+     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQTThZMDgxczRreHdhekl1SjU2RnpuVDgwaUh0UFdLeWE3NVFYS0ZzYXBqMkl6TmJNbWFYNDNKTklCRk9SNlJVelNPa3hGTHUtc0NDR3FucmVvaVpPOW1ZY0ZUdC11MDRxVGZIRDB4WUN0Sng5Y3lRcHoweFIzV1lvQXh3?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T09:42+00:00",
+   "player": "Saquon Barkley",
+   "team": "PHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 82.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T09:42+00:00",
+     "source": "google_injury",
+     "outlet": "The New York Times",
+     "title": "Saquon Barkley\u2019s back injury hamstrings Eagles, another setback for decimated lineup - The New York Times",
+     "quote": "back injury hamstrings Eagles",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPTXVMdFNfdm4tXzBkeFREczkwZG1RaldBSkhtQ25QeVJ0aXBmT1labXNBeExmc3hUenV6Q0NTODJLWk5XYm8wellpNDU3RDd1RS0zWTQ1TnhxRno1dEhUVjhhcllpRlJzcUFHbTc0WDc5NzJ5YUlLaFJQeHVRazBDV3R2eVNoMHJZVnd2R0ZRQ0V2OG04Ukl5T3J3eFZhUk51NnJnTldtU0tQdnhDN0E?oc=5",
+     "player": "Saquon Barkley",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T03:23+00:00",
+   "player": "Jalen Brooks",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_08_ARI_DAL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 88.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Cardinals receiver out for the season",
+     "quote": "Cardinals receiver out for the season",
+     "link": "https://sports.yahoo.com/articles/cardinals-receiver-season-025939413.html",
+     "player": "Jalen Brooks",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T02:23+00:00",
+   "player": "Jacoby Brissett",
+   "team": "ARI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_08_ARI_DAL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 89.6,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T02:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "As Jacoby Brissett Remains QB1, Carson Beck Remains Topic - Arizona Cardinals",
+     "quote": "As Jacoby Brissett Remains QB1",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxObHRzU3N0ZG9pclplOWNFOW91WWZoQjNhbGd2YkVubnI0T2ppZ3N0LW9ab3Nwa01pSklmcHl4cnpVSVZKZkZpbmFkRERwUHhETFJoMDQ4a2U3bXdWUHU4LV85TENfeGJCUkN4blhRb25XMkRXLTRxWXBkeVdkUE5mWGpUaXc1YzFMamZ3MlhNd3NYU0k?oc=5",
+     "player": "Jacoby Brissett",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T01:23+00:00",
+   "player": "Britain Covey",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 90.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T01:23+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Eagles&#39; Britain Covey ruled out against Cowboys",
+     "quote": "ruled out against Cowboys",
+     "link": "https://sports.yahoo.com/articles/eagles-britain-covey-ruled-against-210500877.html",
+     "player": "Britain Covey",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T00:56+00:00",
+   "player": "Grant Calcaterra",
+   "team": "PHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T00:56+00:00",
+     "source": "team_sites_4",
+     "outlet": "Philadelphia Eagles",
+     "title": "Eagles activate Grant Calcaterra, Landon Dickerson, and Eli Stowers from Injured Reserve - Philadelphia Eagles",
+     "quote": "Eagles activate Grant Calcaterra from Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOazI1d3dEZi12YWE1SUlaVXh3bGRPcDJXR1p2YkNmWE1Rd1cxWGFpcnZTMElOR1FkNFBVQXh1YndQakpLeHFvdkh1cUhKZEsyVW9hMGVDaXlyMzJSMmxzN1J1ak5sTzF2QUxtMk9sX205b2VKQTNKSUJaNmFHaDROYUVKVGxpcHV5djh3QjEzQlhtbWhRMEZJSDVIMEdIa3RlN2NncjdJQjVWME1VM1V5WU1KLXM3TTNhMUp2YVNnVTI3MHBD?oc=5",
+     "player": "Grant Calcaterra",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T00:56+00:00",
+   "player": "Landon Dickerson",
+   "team": "PHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T00:56+00:00",
+     "source": "team_sites_4",
+     "outlet": "Philadelphia Eagles",
+     "title": "Eagles activate Grant Calcaterra, Landon Dickerson, and Eli Stowers from Injured Reserve - Philadelphia Eagles",
+     "quote": "Eagles activate Landon Dickerson from Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOazI1d3dEZi12YWE1SUlaVXh3bGRPcDJXR1p2YkNmWE1Rd1cxWGFpcnZTMElOR1FkNFBVQXh1YndQakpLeHFvdkh1cUhKZEsyVW9hMGVDaXlyMzJSMmxzN1J1ak5sTzF2QUxtMk9sX205b2VKQTNKSUJaNmFHaDROYUVKVGxpcHV5djh3QjEzQlhtbWhRMEZJSDVIMEdIa3RlN2NncjdJQjVWME1VM1V5WU1KLXM3TTNhMUp2YVNnVTI3MHBD?oc=5",
+     "player": "Landon Dickerson",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T00:56+00:00",
+   "player": "Eli Stowers",
+   "team": "PHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T00:56+00:00",
+     "source": "team_sites_4",
+     "outlet": "Philadelphia Eagles",
+     "title": "Eagles activate Grant Calcaterra, Landon Dickerson, and Eli Stowers from Injured Reserve - Philadelphia Eagles",
+     "quote": "Eagles activate Eli Stowers from Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOazI1d3dEZi12YWE1SUlaVXh3bGRPcDJXR1p2YkNmWE1Rd1cxWGFpcnZTMElOR1FkNFBVQXh1YndQakpLeHFvdkh1cUhKZEsyVW9hMGVDaXlyMzJSMmxzN1J1ak5sTzF2QUxtMk9sX205b2VKQTNKSUJaNmFHaDROYUVKVGxpcHV5djh3QjEzQlhtbWhRMEZJSDVIMEdIa3RlN2NncjdJQjVWME1VM1V5WU1KLXM3TTNhMUp2YVNnVTI3MHBD?oc=5",
+     "player": "Eli Stowers",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-10-27T00:41+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_PHI_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-10-27T00:41+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "What Happened to DeVonta Smith and When Will He Return? Latest on Eagles WR\u2019s Injury and Why He\u2019s Out for Week 7 vs. Cowboys - Yahoo Sports",
+     "quote": "Out for Week 7 vs. Cowboys",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOVGtjRDduV0xvSTkyVzBHeFdqUDdjNTk0b1VaUjZpU2hFUmZLQy1NWWcwV1UtZ0tPVThrcWhvNHJDMU92ekJDMWY1S3dMOWZ6T0ZnT2hoTU15akxVLUV4aUR2VjY3SGE2NS1qT2hhYklPYS02bEd2UjZqa010N0JJRGZzQkpBRXo2cjJTTlZ3?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-10-26T23:23+00:00",
    "player": "Jonathan Greenard",
@@ -101,7 +356,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -51.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -193,6 +451,26 @@
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/browns-activate-dillon-gabriel-from-injured-reserve",
      "player": "Dillon Gabriel",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-27T00:56+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Dillon Gabriel activated from injured reserve to give Browns 4 QBs - Yahoo Sports",
+     "quote": "Dillon Gabriel activated from injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQX1NQM0ZqS3pTNFZkN2tQeDVfRHZSa3U1NU8zMk0yNExKV0pwYU5KT1ZDdU9vMmdDaUltOFpHQjZjVkphNU9oOXNxUDB6dXlTd19nZE4zRDdoYmV2RzBUaXBUNmFleGZ5eEJCdkV6Mlk4YmEzRDI1T19MQlA3Y0JWc2FySmtpVWp1cEdmRDA5cU5aQQ?oc=5",
+     "player": "Dillon Gabriel",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-10-27T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "News-Herald",
+     "title": "Browns activate quarterback Dillon Gabriel with Nov. 10 trade deadline looming - News-Herald",
+     "quote": "Browns activate quarterback Dillon Gabriel",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNYTBIc1lfTXNRX0d6TlZQa3hmaWVIVHROSlN1QTlwUWJwOHF6VTFnZFh5UXhoUUxJUll6UlE5Szc4U25PMWRMdDl1Z1BrdzdfTGFLN09VSWQzajhERUYxcWNoYksweHh3ZXNqUlJqM095T3NBODNLc0JBUWhlbTRqRHFEaF84X09UZ1NvOFFYaC1GR0Noby1kUjFvZFlvcmlfUjlRTXF2UTlVVkdOQ1ZFN0NyVzh1eWVp?oc=5",
+     "player": "Dillon Gabriel",
+     "signal": "returning"
     }
    ]
   },
@@ -206,7 +484,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -48.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -231,7 +512,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -48.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -281,7 +565,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -48.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -306,7 +593,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -48.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -353,6 +643,16 @@
      "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mysodxkrfs2n",
      "player": "Jalen Brooks",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-27T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Cardinals WR Jalen Brooks to miss rest of season with wrist injury - ESPN",
+     "quote": "to miss rest of season with wrist injury",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNbDNSb2dTSnQyUXRwcDBkRjJrT1l3WHJiQVZjX2F2My1qbEQ0c2FoQ2NOQUd2RGxyNW10dVhXWFpqcC1FblpyeFJaZF9NaGZyVE9XZnJoTjVaY1JWOHBHcjViM3FncEFLRDRUNnZGQnNtSDc3SnZNOWY0RW8xQ0QxeFdjbndZS1E5QWg4TEUwWlRTdjg2?oc=5",
+     "player": "Jalen Brooks",
+     "signal": "out"
     }
    ]
   },
@@ -391,7 +691,10 @@
    "roster": "team_mismatch",
    "certainty": 1.0,
    "lead_vs_report_h": 95.7,
-   "line_move": null,
+   "line_move": {
+    "after": 1.0,
+    "before": -1.25
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -424,6 +727,56 @@
      "link": "https://sports.yahoo.com/articles/klint-kubiak-says-kirk-cousins-210136252.html",
      "player": "Kirk Cousins",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Klint Kubiak Backs Kirk Cousins as Raiders\u2019 Starting Quarterback - Yahoo Sports",
+     "quote": "Klint Kubiak Backs Kirk Cousins as Raiders' Starting Quarterback",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQME5yc3prY0hfTnFiLXd4ZXRaWGZEZHE4bVVyV042WDI4bzRGdXhWY21oYVJqamlaNzFRLW1ETkZMbkk1UDU1cEdWdzVhUzdfOUhnSDBWSk5ZckJGbnpPdndsQ0J5MG1lVFl0NUlPbW4wbEZDU2w1N1hCdWFkN0phaVFZdjE5WDA?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T02:23+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Raiders coach keeping Kirk Cousins as starting QB despite 4-game win streak, top pick Fernando Mendoza waiting - Yahoo Sports",
+     "quote": "Raiders coach keeping Kirk Cousins as starting QB despite 4-game win streak",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQZkpnblpCQU9nLTI4Mkx4NllNamF2Um5yNldyZzZkODVaVWdIN2xXeTdCZWRmLWVfZVlURjdhRENuUnh6bGVUV0JkdFFKX2VxamtzMnZEamwxUXB1SmI5VnlwYzJoa3JWcUk2V2hvNFR1Vm1VeGdtZWZZR0hpLTRlSnFYVHVfdjFfZEtV?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T02:23+00:00",
+     "source": "google_injury",
+     "outlet": "Fantasy Footballers Podcast",
+     "title": "Kirk Cousins Remaining starting quarterback in Week 8 - Fantasy Footballers Podcast",
+     "quote": "Kirk Cousins Remaining starting quarterback in Week 8",
+     "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPV2xJd0tNMjdTa2tiLU54MTV2NWFXZ1ZpNVQ5Smk2alNYWXQ3UXc2Qm9wd0hnenNxM3hNajVkanl2UWRUajFJV282QW5fYUJKNktfRGd3WmNNT1B0bThaQWtHdkw3czVBUXR6VXN1ZHJUWFk1bkFQbzI1ckg1aXlNZE9BQ3NyV0dsUVF6QnAxc3FKbEhTaUVwc09wZnUzMnFkd1hKLWNISQ?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T03:56+00:00",
+     "source": "google_qb",
+     "outlet": "ESPN",
+     "title": "Kirk Cousins to remain Raiders' starting QB vs. Jets, Klint Kubiak says - ESPN",
+     "quote": "Kirk Cousins to remain Raiders' starting QB vs. Jets",
+     "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOM3N0dllEc2dRRzg2YnhvQXZSSV9BQmx2U09aRXJ0eEJMWVZlTllmRmRDSkRRWnhqSzFJWkVjREMtYTU3ZmFPbmUycTlkcTM4NkZEZTJKbG1WaHhRdDVkTm53eG1mQ25lNURFYkhkZFdRQzRPam5Xbl9HaFl6UlpGY3BBVHJYSnAzb2VDX2lLS0RsWWkyRmppb3h0cUg4TFQ5VVo3eA?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T12:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jets won\u2019t face Fernando Mendoza when they play the Raiders in Week 8 action",
+     "quote": "the team has decided to stick with veteran Kirk Cousins at quarterback",
+     "link": "https://sports.yahoo.com/articles/jets-won-t-face-fernando-120000397.html",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
     }
    ]
   },
@@ -437,7 +790,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 96.1,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -458,6 +814,16 @@
      "title": "Jesse Minter says Lamar Jackson in a 'decent spot' to play in Week 8 - USA Today",
      "quote": "in a 'decent spot' to play in Week 8",
      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQMXBDMk9fY0JJRnNGWE9pQzF3SF9ITUh5NnRHZEFlLTZvbjl4dFJtU1dmcnlNdWJya0JWX2Fhb0tuUDJSeWpYd1pPajQ3WW5UUEtISzZMalp6QlRPUlBUYkZNM2RUZ3NGXzNXQmc0bEdmdHhXN2dHSHVrZ09RaUJtNVJkM3d1ODBRaFpTZXNMX0M4eTZXMURvU0FIUm9zR1Nmc3BCdHUzVTVNV0M3YVAzdTRiYUhfemwyY1pmcw?oc=5",
+     "player": "Lamar Jackson",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-27T00:41+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Ravens' Jesse Minter optimistic QB Lamar Jackson can return vs. Bills - ESPN",
+     "quote": "optimistic QB Lamar Jackson can return vs. Bills",
+     "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPQTZ1Wl9ITnlNTm13TE83WnlQNnczV3FLR2xxR2VHc19PWmlNa0RQelJXSXByZkd6N0U5dTJ1LWlqRVRTTS1uSnFKekhJVTR6azdqaEZzQ20wcjBDN3hGZHhCOGpVdWdPc25Gd1otcFRCNzNvb3FRand3bEd4LWRaNV9xd2I0Z2VCRjlPT0NBS0xCMFdjV3FCT0RmYldONU5aVzlfell3?oc=5",
      "player": "Lamar Jackson",
      "signal": "expected_to_play"
     }
@@ -570,6 +936,16 @@
      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNQmxqdmJ5MFhXaE4yRUI2eVFfQzRnTm0ybVp2eDRVYUpSNGJfQlE5NWcySzhuVWlucVVTVll6Zi1uTlJOQ09BS2FDV3hpUGZnV3hFUDhvZ1l4Q0o4S3VOOFhRRncyUVpYMmxoc01IeF9XMkItZ0hCUGtsRU9pTjRwUTFPdzF0Tld1ZXVCUFE5STZra2I2V1lBZFhmUXEyRG1xb3E1MWJyUi1SMXJRVlhZ?oc=5",
      "player": "Rashid Shaheed",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-10-27T00:41+00:00",
+     "source": "google_injury",
+     "outlet": "National Football Post",
+     "title": "Early returns on Seahawks WR Rashid Shaheed's knee injury \u2018positive\u2019 - National Football Post",
+     "quote": "Early returns on Seahawks WR Rashid Shaheed's knee injury 'positive'",
+     "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOMmZHTENUYmZDRllyS1h3VmZpTFBDeTBRdzRta0xVa0swM2t1bEdHM1ZjNHdSTHk3VWVqVUJIOGR3TV94cm1qNGlacGQyUW9fd1JvcFpCWVZfb3hyX0hjRS0yaG9YWVVkVENOV1RXdmNyVWI2aEhKSXVlWm5pYmp1bTZMU29OTy1OV0g2V1dOd2NvX2dxenBaOWpJaU9yWEQ3QzRidg?oc=5",
+     "player": "Rashid Shaheed",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -663,7 +1039,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": -43.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -762,7 +1141,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": -41.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1231,6 +1613,16 @@
      "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNajhmNkRCa2ViV18wMFhkZURJQ3BHV3U3clI3TmhSZTEzMW42MV9Sb0xKSGdzY01HQy1NTmp2aUU3R2tJMC1wUGpsRFNsRlVEU2pZSm9mYWVZajloN0FnMFhuLU1QYnRxaXExU2s1LWtjRms1TzkzNGVVeHQyR1A2d3puMEpaR21vdFExNExtNUNQN0tUR01ISEVIdFpGTE10eXVQekwxVUJUZ3lSbWhCLV9IWVBKemlnQVVqUDJQdWROeWpGN2NB?oc=5",
      "player": "Daniel Jones",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-10-27T04:23+00:00",
+     "source": "google_qb",
+     "outlet": "Jacksonville Journal-Courier",
+     "title": "Colts coach Shane Steichen continues to show faith in QB Daniel Jones by keeping him the starter - Jacksonville Journal-Courier",
+     "quote": "keeping him the starter",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQNVV2NVg0WlFTUkwxaGVIOUZ2UVFVcS16ZVpfdlE4U3RHQk5nTzVqRkJvcEpRLWJvMEFkcE0wZlFWUVFJYXZuQmt4R0pfSWZmYmJ1UGI4OGJyWnBhaDZHMjhET0V2SzVmMFdiSGhoSVMyUE00RjY4UWRIbzVCRGJEb2d5aFVsVGlENWRTbVdURm9KLUg5NV9qdHZoTXVBdURpMXpYZVNYM0Y?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
     }
    ]
   },
@@ -1359,6 +1751,16 @@
      "title": "#Panthers RT Taylor Moton is out for the season after an inspired by short-lived comeback. What that means for Carolina heading into a Week ",
      "quote": "out for the season after an inspired by short-lived comeback",
      "link": "https://bsky.app/profile/mikekayefootball.bsky.social/post/3mystpypkts2e",
+     "player": "Taylor Moton",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-10-27T06:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Carolina Panthers",
+     "title": "Panthers place right tackle Taylor Moton on injured reserve - Carolina Panthers",
+     "quote": "place right tackle Taylor Moton on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPeE5nSFpSOXAzTWh2NFdlZzBYR25PY3dhaENuYUtKaGRzM04yT1BWblJiMF9QRnpMeHNSdEVFQ0lfdnNuM3h3OXBJRXdIb2laRXNPMTdlZncyZktpQ0I3X0o5dURNM3ctYnZvMjhQX0NlZjRPNE0yZmJ5NG5MMG5udllXY0hmZzFTUlEwUjVYS3RFSE0?oc=5",
      "player": "Taylor Moton",
      "signal": "injured_reserve"
     }
@@ -1558,6 +1960,16 @@
      "title": "Panthers RT Taylor Moton carted off field with ankle and fibula injury - ESPN",
      "quote": "carted off field with ankle and fibula injury",
      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOX0lVY0ZONDMxcEFpRUFXMUZmM3lMbkJiOUdCQkNpSlFmTjMxWFZfT083MG9SMmJnZVJzaUhiTVIwNFJOVzVjYVl2Ylk5Z1FzaUdlVTB0MGN1alk4Wl9DZk9lNG1fNWlfTHhZbWRkUk1iejkxYUJneDg0NEdvNlZubE42MFFnWEpRb3NKbTNNT0FrUXRDOEppVFA5bUo?oc=5",
+     "player": "Taylor Moton",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-27T00:56+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Panthers lose veteran tackle Taylor Moton indefinitely to leg injury - Yahoo Sports",
+     "quote": "lose veteran tackle Taylor Moton indefinitely to leg injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNSDV2emFfZ3lkSUd5bF9xY3IyaU05bTFseXNKbTFzcXVqU3k3bmhVOVdnOW9ERHpyM3l0NF82OGRKTFNmdWhHOU96YnRpWUVYbkRZV0RUc2hENG01LWk2ZFU4RGU5VlFsblJkVWJGOWhjNWF3d09SdHZMM09vLS1PWFRGQk12Z201cVRrTw?oc=5",
      "player": "Taylor Moton",
      "signal": "out"
     }
@@ -2311,7 +2723,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": -12.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2486,7 +2901,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -0.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2531,7 +2949,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -0.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2676,7 +3097,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": -0.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2757,7 +3181,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -0.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2852,7 +3279,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -0.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3654,6 +4084,16 @@
      "title": "Without tight end Cole Kmet, Bears may run more jumbo six-lineman formations",
      "quote": "tight end Cole Kmet suffered a season-ending knee injury",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/without-tight-end-cole-kmet-bears-may-run-more-jumbo-six-lineman-formations",
+     "player": "Cole Kmet",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-10-27T14:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "How do the Chicago Bears move on without TE Cole Kmet? \u2018I don\u2019t see us really changing who we are.\u2019 www.chicagotribune.com/2026/10/27/c...",
+     "quote": "How do the Chicago Bears move on without TE Cole Kmet?",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3myug6c7rxc2v",
      "player": "Cole Kmet",
      "signal": "out"
     }
@@ -8099,7 +8539,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 53.8,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8242,7 +8685,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 54.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10981,7 +11427,10 @@
    "roster": "match",
    "certainty": 0.5,
    "lead_vs_report_h": 76.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11376,7 +11825,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 95.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11411,7 +11863,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 96.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11652,7 +12107,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 97.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12501,7 +12959,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 106.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12656,7 +13117,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 113.1,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -12751,7 +13215,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 114.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -14384,7 +14851,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 120.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -14973,7 +15443,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 134.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -15128,7 +15601,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 138.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -15157,7 +15633,10 @@
     "after": 1.5,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": true,
    "evidence": [
     {
@@ -15354,7 +15833,10 @@
     "after": 1.5,
     "before": null
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -16715,7 +17197,10 @@
    "certainty": 1.0,
    "lead_vs_report_h": 146.3,
    "line_move": null,
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": true,
    "evidence": [
     {
@@ -52552,11 +53037,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 73% (needs >= 95%)"
+   "precision 70% (needs >= 95%)"
   ],
-  "n": 88,
+  "n": 91,
   "correct": 64,
-  "precision": 0.7273,
+  "precision": 0.7033,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
