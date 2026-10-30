@@ -1,0 +1,101 @@
+{
+ "n_games": {
+  "2023": 285,
+  "2024": 285,
+  "2025": 285
+ },
+ "headlines_per_team_game": {
+  "median": 56.0,
+  "share_zero": 0.0023391812865497076
+ },
+ "tests": {
+  "T1_cover": {
+   "dev_2023": {
+    "n": 285,
+    "slope": 18.246393035972115,
+    "se": 6.562614037175028,
+    "t": 2.780354433860099,
+    "sd_x": 0.12621717461752763,
+    "effect_pts_per_sd": 2.3030081759613323
+   },
+   "holdout_2024_25": {
+    "n": 570,
+    "slope": 12.775006059915011,
+    "se": 4.469866485803694,
+    "t": 2.8580285564431196,
+    "sd_x": 0.12191562980235973,
+    "effect_pts_per_sd": 1.5574729095235007
+   },
+   "holdout_one_sided_p": 0.0021314101339577037,
+   "pass": true
+  },
+  "T2_neg": {
+   "dev_2023": {
+    "n": 285,
+    "slope": -5.479184275263435,
+    "se": 4.518337354160359,
+    "t": -1.2126549758880567,
+    "sd_x": 0.15913101316213557,
+    "effect_pts_per_sd": -0.8719081450247119
+   },
+   "holdout_2024_25": {
+    "n": 570,
+    "slope": -7.8431797138904855,
+    "se": 2.771650873561656,
+    "t": -2.829786315695584,
+    "sd_x": 0.15835701938224733,
+    "effect_pts_per_sd": -1.2420225619710048
+   },
+   "holdout_one_sided_p": 0.0023289551103321585,
+   "pass": true
+  },
+  "T3_volume_total": {
+   "dev_2023": {
+    "n": 285,
+    "slope": 0.39430979479113515,
+    "se": 0.3884884833896518,
+    "t": 1.014984514729217,
+    "sd_x": 1.7975721839833294,
+    "effect_pts_per_sd": 0.7088003189887192
+   },
+   "holdout_2024_25": {
+    "n": 570,
+    "slope": -0.25267925187383866,
+    "se": 0.28575510663966475,
+    "t": -0.8842510457475935,
+    "sd_x": 1.7770833244952728,
+    "effect_pts_per_sd": -0.4490320849509396
+   },
+   "holdout_one_sided_p": 0.8117196458326759,
+   "pass": false
+  }
+ },
+ "T4_rule": "see T4",
+ "verdict": "INVALID - leakage. T1/T2 'passed' only because post-game recaps carried day-level placeholder timestamps (95.5% of kept items are exactly on the hour; 2,761 titles contain THIS game's final score yet are dated before kickoff, 2,712 of them 2-24 h before). Kill-check (post-hoc, can only kill): items >= 30 h before kickoff -> holdout slope 0.6, t 0.21; >= 30 h without score/recap titles -> t 0.06. Headline tone has no information beyond the closing spread. T4 not run (its precondition is a valid T1/T2 pass).",
+ "kill_checks": {
+  "pre_registered_2h": {
+   "holdout_slope": 12.6,
+   "t": 2.81
+  },
+  "minus_this_games_final_score": {
+   "holdout_slope": 9.9,
+   "t": 2.45
+  },
+  "minus_score_or_recap_titles": {
+   "holdout_slope": 4.9,
+   "t": 1.23
+  },
+  "only_30h_plus": {
+   "holdout_slope": 0.6,
+   "t": 0.21
+  },
+  "30h_plus_not_on_hour": {
+   "holdout_slope": 1.5,
+   "t": 0.5
+  },
+  "30h_plus_no_recaps": {
+   "holdout_slope": 0.2,
+   "t": 0.06
+  }
+ }
+}
