@@ -1,0 +1,16 @@
+{
+ "written": "2026-10-30, before any headline was fetched or scored",
+ "question": "Does the tone of each team's headlines in the 7 days before an NFL game predict the result beyond the closing line?",
+ "data": "Google News RSS search \"<full team name>\" for kickoff-7d .. kickoff+1d, 2023-2025 regular season + playoffs; only items published >= 2 h before kickoff count; duplicate titles count once",
+ "score": "VADER compound score of each title (vaderSentiment, default lexicon). Per team-game: tone = mean compound; neg_share = share of titles with compound <= -0.05; volume = log(1 + count)",
+ "features": "home minus away of tone, neg_share and volume",
+ "targets": {"cover": "home margin minus the closing home spread (nflverse spread_line: home margin + spread_line > 0 = home covers)", "total": "points minus closing total (nflverse total_line)"},
+ "tests": {
+  "T1_cover": "OLS of cover margin on diff_tone (one feature, no other tuning). Dev = 2023 (look freely). Holdout = 2024-25, run once. Pass: holdout slope has the dev sign and one-sided p < 0.025, and |slope| x SD(diff_tone) >= 0.25 pts",
+  "T2_neg": "same with diff_neg_share",
+  "T3_volume_total": "OLS of total residual on (home + away volume): media-heavy games go over/under? Same pass rule",
+  "T4_rule": "only if T1 or T2 pass: bet the side the tone favours when |diff| is in the top 20% of 2023's distribution, at the closing line, -110; holdout ROI one-sided p < 0.05 over all 2024-25 qualifiers"
+ },
+ "multiple_testing": "3 primary tests; each needs one-sided p < 0.025 (Bonferroni-ish 0.05/2 per direction-fixed test)",
+ "not_tested": "No refits, no lexicon changes, no other windows after seeing the holdout. A different design = a new pre-registration."
+}
