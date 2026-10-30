@@ -1,0 +1,9 @@
+{
+ "frozen": "2026-10-30T06:30+00:00, after exploring picks first seen before 2026-10-26 (output/research/round6/pick_steam_dev.json)",
+ "dev_finding": "After we first see a published pick, US consensus lines barely move toward it overall (spreads +0.02 pts, t 0.8, n 1235; moneylines -0.08 pp, t -1.2, n 955). The +0.21 pt 'line value' vs the writer's quoted number mostly happened before we could bet. One cell stood out among ~15 explored: NFL totals, +0.25 pts, t 3.5, n 114.",
+ "rule_S1": "NFL total picks (over/under) by any picker the scorer counts, first seen >= 2 h before kickoff: follow at the first odds snapshot after first sight. Value = points the US consensus total moves toward the pick between that snapshot and the last one before kickoff.",
+ "secondary_S2": "College spreads, same measure (dev +0.06 pts, t 1.6): reported, not a pass candidate",
+ "holdout": "picks first seen from 2026-10-30T06:30Z; evaluated once when S1 has >= 100 holdout picks or on 2027-01-06, whichever comes first (scripts/research/round6/pick_steam.py with DEV_END moved to the freeze time, nothing else changed)",
+ "pass_S1": "mean value > 0 with one-sided p < 0.01 (strict: the cell was picked from ~15 explored) AND share moving toward > share moving away. A pass makes it a candidate for a NEW pre-registered paper track at your books with real prices; it does not bet by itself.",
+ "not_changed_after_seeing_holdout": "universe, snapshot rule, consensus books, measure"
+}
