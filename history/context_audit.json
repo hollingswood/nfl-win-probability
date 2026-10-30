@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-30T01:21+00:00",
+ "generated_at": "2026-10-30T19:36+00:00",
  "rules_version": 1,
- "items": 268,
+ "items": 273,
  "categories": {
   "coach_fired_or_hired": {
    "items": 2,
@@ -24,7 +24,7 @@
    "candidate": false
   },
   "illness_outbreak": {
-   "items": 16,
+   "items": 17,
    "graded": 12,
    "cover_rate_vs_close": 0.417,
    "cover_p": 0.7181,
@@ -35,9 +35,9 @@
   },
   "kicker_or_special_teams": {
    "items": 19,
-   "graded": 13,
-   "cover_rate_vs_close": 0.538,
-   "cover_p": 0.3908,
+   "graded": 14,
+   "cover_rate_vs_close": 0.5,
+   "cover_p": 0.5,
    "with_line_move": 13,
    "avg_line_move_toward": 0.69,
    "move_p": 0.109,
@@ -55,19 +55,19 @@
   },
   "offensive_line_shuffle": {
    "items": 68,
-   "graded": 47,
-   "cover_rate_vs_close": 0.574,
-   "cover_p": 0.1536,
+   "graded": 49,
+   "cover_rate_vs_close": 0.571,
+   "cover_p": 0.1587,
    "with_line_move": 50,
    "avg_line_move_toward": 0.22,
    "move_p": 0.2193,
    "candidate": false
   },
   "other": {
-   "items": 90,
-   "graded": 69,
-   "cover_rate_vs_close": 0.536,
-   "cover_p": 0.2736,
+   "items": 94,
+   "graded": 71,
+   "cover_rate_vs_close": 0.535,
+   "cover_p": 0.2765,
    "with_line_move": 74,
    "avg_line_move_toward": 0.25,
    "move_p": 0.0634,
@@ -126,51 +126,6 @@
  },
  "recent": [
   {
-   "game_id": "2026_08_PHI_WAS",
-   "team": "PHI",
-   "category": "snap_limit",
-   "direction": "hurts",
-   "seen": "2026-10-27T02:39+00:00",
-   "summary": "Saquon Barkley was unable to handle a full workload in Week 7 due to hamstring issues.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_09_LV_SF",
-   "team": "SF",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-10-27T01:16+00:00",
-   "summary": "Multiple 49ers players expected to return from injuries after bye week.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_08_LAC_LA",
-   "team": "LA",
-   "category": "kicker_or_special_teams",
-   "direction": "hurts",
-   "seen": "2026-10-27T14:13+00:00",
-   "summary": "Rams have made several special teams changes but continue to struggle with poor kickoff coverage.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_08_IND_JAX",
-   "team": "IND",
-   "category": "offensive_line_shuffle",
-   "direction": "hurts",
-   "seen": "2026-10-27T16:43+00:00",
-   "summary": "Colts traded star lineman Quenton Nelson to the Seahawks as part of a reshaping after firing GM Chris Ballard.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_08_ARI_DAL",
-   "team": "ARI",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-10-27T18:48+00:00",
-   "summary": "Tyrone Tracy Jr. placed on IR; Cam Skattebo becomes workhorse running back.",
-   "implied_side": "home"
-  },
-  {
    "game_id": "2026_08_CAR_GB",
    "team": "CAR",
    "category": "other",
@@ -178,7 +133,8 @@
    "seen": "2026-10-27T20:45+00:00",
    "summary": "Panthers have the worst run defense in the NFL, which opposing offenses will exploit in game planning.",
    "implied_side": "home",
-   "line_move_toward": 0.0
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_08_MIN_DET",
@@ -260,7 +216,8 @@
    "seen": "2026-10-28T20:00+00:00",
    "summary": "Packers ruled out 3 starters for upcoming game vs. Panthers.",
    "implied_side": "away",
-   "line_move_toward": 0.0
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_09_LV_SF",
@@ -395,6 +352,51 @@
    "direction": "hurts",
    "seen": "2026-10-30T00:42+00:00",
    "summary": "Three starting offensive linemen are injured for the Cardinals.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_08_TEN_CIN",
+   "team": "TEN",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-30T11:00+00:00",
+   "summary": "Jeffery Simmons traded to Bears, signaling roster moves ahead of Week 8 matchup vs. Bengals.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_09_DEN_CAR",
+   "team": "CAR",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-30T15:47+00:00",
+   "summary": "Bryce Young's left knee injury has noticeably affected his mobility; head coach observed a difference in performance.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_08_ATL_TB",
+   "team": "TB",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-30T16:30+00:00",
+   "summary": "Mike Evans is dealing with an Achilles injury that the team is working to manage.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_08_CHI_SEA",
+   "team": "SEA",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-10-30T17:27+00:00",
+   "summary": "Leonard Williams joins Jadarian Price on injury report before Bears game.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_08_IND_JAX",
+   "team": "IND",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-10-30T02:26+00:00",
+   "summary": "TreVeyon Henderson added to injury report with illness and did not practice.",
    "implied_side": "home"
   }
  ]
