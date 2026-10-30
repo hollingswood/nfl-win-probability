@@ -1,0 +1,38 @@
+name: Research - news headlines
+
+# Round 6 news-tone study (scripts/research/round6/news_headlines.py): Google News RSS is reachable from Actions,
+# not from the research sandbox. Resumable; commits data/research/news_headlines/.
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: "probe or fetch"
+        required: true
+        default: "probe"
+      seasons:
+        description: "seasons for fetch, e.g. 2023,2024,2025"
+        required: false
+        default: "2023,2024,2025"
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Run stage
+        run: python scripts/research/round6/news_headlines.py ${{ inputs.stage }} ${{ inputs.seasons }}
+        env:
+          PYTHONPATH: src
+      - name: Save
+        if: always()
+        run: bash scripts/push_results.sh "Research: news headlines ${{ inputs.stage }}" data/research/news_headlines
