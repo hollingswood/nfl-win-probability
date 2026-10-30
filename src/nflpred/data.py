@@ -37,7 +37,11 @@ def load_schedules(refresh: bool = False, raw_dir: Path = RAW_DIR) -> pd.DataFra
 
 
 def load_pbp(seasons, refresh_current: int | None = None, raw_dir: Path = RAW_DIR) -> pd.DataFrame:
-    """Load play-by-play for the given seasons. `refresh_current` forces a re-download of that season."""
+    """Load play-by-play for the given seasons. `refresh_current` forces a re-download of that season.
+    The blind vault seasons (blind.VAULT) are refused outside blind.open_vault."""
+    from . import blind
+    seasons = list(seasons)
+    blind.guard(seasons)
     frames = []
     for s in seasons:
         path = _download(
@@ -53,6 +57,9 @@ def _release(tag: str, name: str, seasons=None, refresh_current=None, raw_dir: P
     if seasons is None:
         return pd.read_parquet(_download(f"{BASE}/{tag}/{name}.parquet", raw_dir / f"{name}.parquet",
                                          refresh_current is not None))
+    from . import blind
+    seasons = list(seasons)
+    blind.guard(seasons)
     frames = []
     for s in seasons:
         try:

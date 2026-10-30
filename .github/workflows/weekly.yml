@@ -126,7 +126,7 @@ jobs:
         run: |
           mkdir -p history
           cp output/predictions.json "history/predictions_$(date -u +%FT%H%M).json"
-          bash scripts/push_results.sh "Weekly predictions $(date -u +%F)" history output/predictions.json output/backtest.json output/vs_vegas.json
+          bash scripts/push_results.sh "Weekly predictions $(date -u +%F)" history output/predictions.json output/backtest.json output/vs_vegas.json blind
       - name: Alert on new bets (only once the model has passed validation)
         if: hashFiles('output/alert.md') != ''
         env:

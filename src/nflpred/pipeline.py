@@ -450,11 +450,44 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         heads_up.annotate(result, ROOT / "history")
     except Exception as e:
         print("heads-up failed:", e)
+    try:  # blind prospective log (blind.py): pre-kickoff probabilities, scored only at the checkpoints
+        _blind_log(result)
+    except Exception as e:
+        print("blind log failed:", e)
     OUT.mkdir(exist_ok=True)
     M.save_json(result, OUT / "predictions.json")
     write_alert(result)
     _notify_new_bets(result)
     return result
+
+
+def _kickoff(g: dict) -> str | None:
+    lo = (g.get("context") or {}).get("live_odds") or {}
+    if lo.get("commence_time"):
+        return lo["commence_time"].replace("Z", "+00:00")
+    try:
+        import pandas as pd
+        t = pd.Timestamp(f"{g['gameday']} {g.get('gametime') or '13:00'}").tz_localize("America/New_York").tz_convert("UTC")
+        return t.isoformat()
+    except Exception:
+        return None
+
+
+def _blind_log(result: dict) -> None:
+    """Production model + every registered live candidate (blind/registry.json, kinds incl. 'prospective', with a
+    `live` hook in blind_candidates.py) -> blind/prospective/<name>.jsonl."""
+    from . import blind
+    rows = [{"game_id": g["game_id"], "kickoff": _kickoff(g), "home_win_prob": g["home_win_prob"]}
+            for g in result.get("upcoming", []) if g.get("home_win_prob") is not None]
+    n = blind.log_prospective("production", rows)
+    try:
+        from . import blind_candidates as BC
+        for name, fn in BC.LIVE.items():
+            n_c = blind.log_prospective(name, [r for r in fn(result) if r.get("home_win_prob") is not None])
+            print(f"blind log: {name} {n_c} games")
+    except ImportError:
+        pass
+    print(f"blind log: production {n} games")
 
 
 def _exchange_display(pred: dict) -> None:
