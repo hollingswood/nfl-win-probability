@@ -1,0 +1,8 @@
+{
+ "written": "2026-10-30, before the blind vault (NFL 2002-2011) was ever loaded",
+ "model": "ensemble_v1 = mean of the win probabilities of three models trained on the same rows and production FEATURES: model.make_model('margin') (production), 'logistic', 'gbm' (model.py, unchanged)",
+ "why": "each alternative alone failed to beat production on 2020-25; averaging different model families often lowers log loss, and the average was never tested",
+ "evaluation": "blind.open_vault, once: walk-forward 2005-2011 (train on vault seasons before S), vs production rebuilt the same way, paired log loss; plus the prospective log if it passes",
+ "pass": "vault log loss better than production with z >= 2; then it is added to the prospective log (blind_candidates) and must also beat production at the final checkpoint before any change to production",
+ "vault_use_count": "this is vault look #1; every later model opened in the vault must clear a z bar raised for the number of looks so far (Bonferroni: z >= 2 + adjustment recorded in blind/registry.json)"
+}
