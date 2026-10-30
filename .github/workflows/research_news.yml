@@ -30,9 +30,11 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Run stage
-        run: python scripts/research/round6/news_headlines.py ${{ inputs.stage }} ${{ inputs.seasons }}
+        run: |
+          python scripts/research/round6/news_headlines.py ${{ inputs.stage }} ${{ inputs.seasons }}
         env:
           PYTHONPATH: src
       - name: Save
         if: always()
-        run: bash scripts/push_results.sh "Research: news headlines ${{ inputs.stage }}" data/research/news_headlines
+        run: |
+          bash scripts/push_results.sh "Research - news headlines ${{ inputs.stage }}" data/research/news_headlines
