@@ -1,0 +1,14 @@
+{
+ "written": "2026-10-30, before any per-team outlook (prompt v3) data existed",
+ "question": "Does the AI news reader's read of each team's week (point impact, sentiment, context) improve on the production model's win probabilities, judged blind and prospectively?",
+ "features": "src/nflpred/news_features.py game_features(home, away, cutoff = time of the full run, since = each team's previous game end); items count only if published AND seen by us before the cutoff, 7-day window",
+ "candidates": {
+  "news_new_v1": "production home margin + 1.0 x diff_impact_new (AI point estimates of news marked new), win prob = Phi(margin / sigma) with sigma implied by the production margin and probability for that game (13.5 if the margin is ~0)",
+  "news_all_half_v1": "production home margin + 0.5 x diff_impact_all",
+  "news_sent_v1": "production home margin + 1.0 x diff_sentiment + 0.5 x diff_ctx_net"
+ },
+ "evaluation": "blind/prospective log, last probability logged before kickoff; scored only at blind/checkpoints.json dates; log loss and Brier vs production (paired SE) and vs the closing line",
+ "pass": "log loss better than production with z >= 2 at the final checkpoint (2027-02-16) AND better at every checkpoint after the first; a candidate that passes becomes a model + news variant shown next to the model (never replaces it without a new pre-registration)",
+ "multiple_testing": "3 candidates: the z >= 2 bar is used per candidate; with 3 tries one false pass is ~7% likely, so a pass is a lead, not proof",
+ "also_logged": "the same features for every game (history/news_game_features.jsonl) for later pre-registered tests (cover vs close)"
+}

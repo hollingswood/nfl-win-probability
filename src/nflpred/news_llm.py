@@ -23,7 +23,8 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 MODEL = "claude-haiku-4-5"
-PROMPT_VERSION = 2   # 2 (2026-10-12): next-game-only statements, practice != returning, full names
+PROMPT_VERSION = 3   # 2 (2026-10-12): next-game-only statements, practice != returning, full names
+#                      3 (2026-10-30): + (C) per-team outlook (sentiment, point impact, novelty, factors) -> news_outlook.jsonl
 API_URL = "https://api.anthropic.com/v1/messages"
 # USD per million tokens (Claude Haiku 4.5: $1 input, $5 output; cache reads 10%, cache writes 125%)
 PRICE = {"input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25}
@@ -138,7 +139,7 @@ SYSTEM = ("You extract NFL injury and depth-chart news for a betting model. Only
 
 INSTRUCTIONS = """For each news item below, extract (A) every concrete player-availability or starter signal and
 (B) team-level context that could change how a team plays this week.
-Return ONLY a JSON object {"availability": [...], "context": [...]} (lists may be empty).
+Return ONLY a JSON object {"availability": [...], "context": [...], "outlook": [...]} (lists may be empty).
 (A) availability element:
 {"item": <item number>, "player": str, "team": str, "position": str or null,
  "signal": one of ["out", "doubtful", "questionable", "game_time_decision", "expected_to_play", "will_start",
@@ -152,6 +153,14 @@ Return ONLY a JSON object {"availability": [...], "context": [...]} (lists may b
  "summary": one short factual sentence, "player": str or null, "game_week_relevant": true/false,
  "direction": "helps" | "hurts" | "unclear" (for that team this week, only if the item itself implies it),
  "certainty": number 0-1, "quote": short exact phrase supporting it}
+(C) outlook element: one per team the item says something about for its NEXT game (any position, any topic):
+{"item": <item number>, "team": str, "sentiment": integer -2..2 (how the item portrays this team's chances this week:
+ -2 clearly worse, 0 neutral, 2 clearly better), "impact_pts": number (your estimate of the effect on this team's
+ point margin this week, e.g. -3 for a starting QB out with a weak backup, -0.5 for a depth receiver out, +1 for a
+ key starter returning; 0 if negligible), "novelty": "new" | "expected" | "stale" (new = not yet widely known when
+ published, expected = already announced or obvious from earlier reports, stale = old news restated),
+ "factors": list of any of ["injury", "depth", "coaching", "scheme", "motivation", "morale", "travel", "weather",
+ "rest", "matchup", "form", "discipline", "other"], "certainty": number 0-1, "quote": short exact phrase}
 Examples of context: new offensive play-caller, coordinator fired, starter on a snap count / limited workload,
 illness going through the locker room, travel delay or relocated game, team expected to rest starters,
 contract holdout, kicker injured/released, multiple offensive-line starters changed.
@@ -212,7 +221,7 @@ def _key(item: dict) -> str:
 def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[dict]:
     body = "\n\n".join(f"[{i}] ({it.get('outlet') or it['source']}, {it.get('published') or 'time unknown'}) {it['title']}\n{it['summary']}"
                        for i, it in enumerate(items))
-    payload = {"model": MODEL, "max_tokens": 4000, "system": SYSTEM,
+    payload = {"model": MODEL, "max_tokens": 8000, "system": SYSTEM,
                "messages": [{"role": "user", "content": INSTRUCTIONS + "\n\nITEMS:\n" + body}]}
     resp = claude_request(payload, api_key, "nfl_news", timeout, {"items": len(items)})
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
@@ -222,6 +231,7 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
         obj = json.loads(m.group(0)) if m else {}
         if isinstance(obj, dict):
             out, ctx = obj.get("availability") or [], obj.get("context") or []
+            LAST_OUTLOOK[:] = [x for x in obj.get("outlook") or [] if isinstance(x, dict) and x.get("team") in TEAMS]
     except Exception:
         m = re.search(r"\[.*\]", text, re.S)   # older array-only answers
         try:
@@ -234,6 +244,7 @@ def call_claude(items: list[dict], api_key: str, timeout: float = 60) -> list[di
 
 
 LAST_CONTEXT: list = []   # context items from the most recent call_claude (read by scan)
+LAST_OUTLOOK: list = []   # (C) per-team outlook items from the most recent call_claude
 
 
 def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = None, fetcher=fetch_feed,
@@ -284,7 +295,7 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
             report["feeds"]["bluesky"] = f"failed: {str(e)[:80]}"
     report["new_items"] = len(new)
     sw = NS.weights(history_dir)
-    signals, contexts = [], []
+    signals, contexts, outlooks = [], [], []
     # newest first; only items actually sent to the model are marked seen (the rest wait for next run)
     new.sort(key=lambda x: x.get("published") or "", reverse=True)
     for i in range(0, min(len(new), max_items), 30):  # batches of 30 items
@@ -311,6 +322,20 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
                                  **{k: c.get(k) for k in ("team", "category", "summary", "player", "direction",
                                                           "game_week_relevant", "certainty", "quote")}})
             LAST_CONTEXT.clear()
+            for o in LAST_OUTLOOK:
+                idx = o.get("item")
+                src = batch[idx] if isinstance(idx, int) and 0 <= idx < len(batch) else {}
+                try:
+                    sent, imp = int(o.get("sentiment") or 0), float(o.get("impact_pts") or 0)
+                except (TypeError, ValueError):
+                    continue
+                outlooks.append({"seen_at": now.isoformat(timespec="minutes"), "published": src.get("published"),
+                                 "source": src.get("source"), "outlet": src.get("outlet"), "link": src.get("link"),
+                                 "title": src.get("title"), "team": o["team"], "sentiment": max(-2, min(2, sent)),
+                                 "impact_pts": max(-10.0, min(10.0, imp)), "novelty": o.get("novelty"),
+                                 "factors": [f for f in (o.get("factors") or []) if isinstance(f, str)][:6],
+                                 "certainty": o.get("certainty"), "quote": o.get("quote"), "prompt_version": PROMPT_VERSION})
+            LAST_OUTLOOK.clear()
             seen.update(x["key"] for x in batch)
         except Exception as e:
             report.setdefault("errors", []).append(str(e)[:160])
@@ -323,7 +348,12 @@ def scan(history_dir: Path, api_key: str | None = None, now: datetime | None = N
         with (history_dir / "news_context.jsonl").open("a") as f:
             for c in contexts:
                 f.write(json.dumps(c) + "\n")
+    if outlooks:  # (C) per-team outlook: sentiment / point impact / novelty (news_features.py turns it into game features)
+        with (history_dir / "news_outlook.jsonl").open("a") as f:
+            for o in outlooks:
+                f.write(json.dumps(o) + "\n")
     seen.save(seen_p)
+    report["outlook_items"] = len(outlooks)
     report["signals"] = len(signals)
     report["context_items"] = len(contexts)
     report["qb_signals"] = [f"{s['player']} ({s['team']}): {s['signal']}" for s in signals if s.get("is_starting_qb_news")][:20]
