@@ -246,7 +246,7 @@ def _schedule(root: Path = ROOT) -> dict:
 TRACK_LABELS = {None: "Moneyline v1", "spread": "Spread v1", "moneyline_v2": "Moneyline v2", "moneyline_v3": "Moneyline v3",
                 "moneyline_v4": "Moneyline v4", "aplus_ml": "A+ moneyline", "aplus_spread": "A+ spread", "aplus_totals": "A+ totals",
                 "totals_wind": "Wind unders", "totals_early_under": "Early unders", "night_west": "Night games",
-                "props_receptions": "Receptions props", "props_unders_tue": "Tuesday star unders", "preseason_prior": "Preseason prior",
+                "props_receptions": "Receptions props", "props_unders_tue": "Tuesday star unders", "props_news": "Props + news", "preseason_prior": "Preseason prior",
                 "tuesday_move": "Tuesday move", "qb_news": "QB news", "exchange_value": "Exchange value",
                 "kalshi_maker": "Kalshi resting orders", "futures_shop": "Futures", "cfb_shop": "Shop vs sharp",
                 "cfb_shop_v3": "Stricter overs (test)", "cfb_aplus": "College A+", "cfb_ml": "College moneyline",

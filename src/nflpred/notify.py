@@ -21,7 +21,7 @@ AZ = timezone(timedelta(hours=-7))  # America/Phoenix, no DST
 TRACK_NAMES = {
     "bets": "Moneyline v1", "spread_bets": "Spread v1", "ml_v2_bets": "Moneyline v2", "ml_v3_bets": "Moneyline v3",
     "ml_v4_bets": "Moneyline v4", "night_west_bets": "Night west", "totals_wind_bets": "Wind under",
-    "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop", "props_unders_bets": "Tuesday under",
+    "totals_early_under_bets": "Early under", "props_receptions_bets": "Receptions prop", "props_unders_bets": "Tuesday under", "props_news_bets": "Props + news",
     "aplus_ml_bets": "A+ moneyline", "aplus_spread_bets": "A+ spread", "aplus_totals_bets": "A+ total",
     "exchange_value_bets": "Exchange value", "preseason_prior_bets": "Preseason prior", "tuesday_move_bets": "Tuesday move", "cfb_ml_bets": "College ML", "cfb_shop_bets": "College shop vs sharp", "cfb_shop_v3_bets": "College shop, stricter overs (test)", "cfb_aplus_bets": "College A+", "qb_news_bets": "QB news (speed)", "cfb_body_clock_bets": "College body clock (unvalidated)",
 }

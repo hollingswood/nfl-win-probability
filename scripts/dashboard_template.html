@@ -618,6 +618,7 @@ const TRACKS = {
   totals_eu:{name:'Totals · early-week unders (Tuesday, new 2026 test)', key:'totals_early_under_bets', short:'Early under'},
   props_rec:{name:'Props · receptions line shopping (Friday)', key:'props_receptions_bets', short:'Rec props'},
   props_un:{name:'Props · Tuesday star unders (rush yds, receptions, rec yds)', key:'props_unders_bets', short:'Tue unders'},
+  props_news:{name:'Props + news · next man up when a regular WR/TE/RB is reported out (new 2026 test)', key:'props_news_bets', short:'Props + news'},
   night:{name:'Night games · western team', key:'night_west_bets', short:'Night game'},
   aplus_ml:{name:'A+ moneyline · every moneyline-grade A+ offer', key:'aplus_ml_bets', short:'A+ ML'},
   aplus_sp:{name:'A+ spread · every spread-grade A+ offer', key:'aplus_spread_bets', short:'A+ spread'},
@@ -636,8 +637,8 @@ const od = x => x==null ? '' : x>0 ? `+${x}` : `−${Math.abs(x)}`;          // 
 const ptd = x => x>0 ? `+${x}` : x<0 ? `−${Math.abs(x)}` : 'PK';
 const niceReason = r => plain(r, null);
 const RULES = D.rules || {};
-const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', props_un:'Tue unders', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', fut:'Futures', pre:'Preseason', tue:'Tue move'};
-const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', props_un:'props_unders_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets', qbn:'qb_news_bets'};
+const CHIP = {ml_v2:'ML v2', ml_v3:'ML v3', ml_v23:'ML v2 + v3', ml_v4:'ML v4', ml_v1:'Original model', spread:'Original model', night:'Night game', totals:'Wind under', totals_eu:'Early under', props_rec:'Rec props', props_un:'Tue unders', props_news:'Props + news', aplus_ml:'A+ ML', aplus_sp:'A+ spread', aplus_tot:'A+ totals', exch:'Exchange', kmk:'Kalshi maker', fut:'Futures', pre:'Preseason', tue:'Tue move'};
+const LEDGER = {ml_v2:'ml_v2_bets', ml_v3:'ml_v3_bets', ml_v23:'ml_v2_bets', ml_v4:'ml_v4_bets', ml_v1:'bets', spread:'spread_bets', night:'night_west_bets', totals:'totals_wind_bets', totals_eu:'totals_early_under_bets', props_rec:'props_receptions_bets', props_un:'props_unders_bets', props_news:'props_news_bets', aplus_ml:'aplus_ml_bets', aplus_sp:'aplus_spread_bets', aplus_tot:'aplus_totals_bets', exch:'exchange_value_bets', kmk:'kalshi_maker_bets', fut:'futures_shop_bets', pre:'preseason_prior_bets', tue:'tuesday_move_bets', qbn:'qb_news_bets'};
 const TIMING = /injury report not out|starting QB not confirmed|only bets at the|bets only in the last/;
 const rangeTxt = k => { const r=RULES[k==='ml_v23'?'ml_v2':k]; return r&&r.min_odds!=null&&r.max_odds!=null ? ` (${od(r.min_odds)} to ${od(r.max_odds)})` : ''; };
 const fmtWhen = ms => new Date(ms).toLocaleString('en-US',{timeZone:'America/Phoenix',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' AZ';
@@ -1187,6 +1188,9 @@ const TRACK_INFO = {
   props_un:{es:1.0, label:'Tuesday star unders', what:"Under on every rush yds / receptions / rec yds prop already posted Tuesday morning (best number at your books)",
     when:'Tue 7:10am AZ', ev:'+4% to +14% ROI · 2024–25 · found after the fact',
     tip:'Found in the 2024-25 holdout (output/research/props_full.md), not pre-registered: players with props posted by Tuesday open went under 54-60% of the time; blind unders returned rush yds +13.8% ± 5.1, receptions +6.0% ± 2.9, rec yds +4.2% ± 3.2 ROI. Graded on results (the close carries the same bias, so CLV is not the test). 2026 is its first clean test: 150 bets, ROI > 0 at p < 0.05.'},
+  props_news:{es:0, label:'Props + news', what:"Over on the next men up when our news reader learns a regular WR, TE or RB is out, before the books adjust",
+    when:'Within minutes of the news', ev:'New 2026 test · no history',
+    tip:'Pre-registered 2026-10-30 (props_news_rules.json): the 2023-25 props studies used the official injury report and found the closing prop line efficient; this tests the window between the news and the books. Graded on closing-line value and how far the books move the line after we bet; 100 bets needed.'},
   props_rec:{es:2.7, label:'Receptions props', what:"Receptions over/under priced 2%+ better than other books' median", top:true,
     ev:'+2.7% CLV · 278 bets 2024–25',
     tip:'Rule set on 2023, tested once on 2024–25: 278 bets, +2.7% ± 0.4 closing line value; realized ROI −6% ± 6.5 (44% hit rate), about 6.5 bets a week.'},
@@ -1261,6 +1265,7 @@ function trackWindow(key){
   const R=RULES[key]||{}, I=TRACK_INFO[key], ko=g=>Date.parse(g.kickoff_utc||''), now=Date.now();
   const slot=(w,t)=>w?`<b>${w.now?'Open now':fmtWhen(w.at)}</b><small>${t}</small>`:`<small>${t}</small>`;
   if(key==='ml_v4') return slot(nextSlot(R.windows_utc||[['Tue','14:10'],['Fri','21:40'],['Sun','14:10']], R.window_tolerance_minutes??50), 'Tue & Sun 7:10am, Fri 2:40pm AZ');
+  if(key==='props_news') return slot(null, 'When the news breaks (checked every ~15 min)');
   if(key==='props_un') return slot(nextSlot(R.window_utc?[R.window_utc]:[['Tue','14:10']], R.window_tolerance_minutes??50), 'Tue 7:10am AZ');
   if(key==='totals_eu') return slot(nextSlot(R.windows_utc||[['Tue','14:10']], R.window_tolerance_minutes??50), 'Tue 7:10am AZ');
   if(key==='props_rec'){

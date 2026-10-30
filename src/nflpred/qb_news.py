@@ -270,6 +270,16 @@ def main() -> int:
     prev = pred.get("qb_news_bets") or {}
     res["recent_graded"] = prev.get("recent_graded", res["recent_graded"])
     pred["qb_news_bets"] = res
+    try:  # props + news track (props_news_rules.json): next men up when a regular WR/TE/RB is reported out
+        from . import props_news
+        pn = props_news.process(pred, ROOT / "history", fetch=lambda eid, mk: O.fetch_event_props(eid, mk))
+        prev_pn = pred.get("props_news_bets") or {}
+        pn["recent_graded"] = prev_pn.get("recent_graded", pn["recent_graded"])
+        pred["props_news_bets"] = pn
+        if pn["new"]:
+            notify.new_bets({"upcoming": pred.get("upcoming", []), "props_news_bets": pn}, set())
+    except Exception as e:
+        print("props news failed:", e)
     try:
         from . import heads_up
         heads_up.annotate(pred, ROOT / "history")

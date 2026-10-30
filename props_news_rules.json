@@ -1,0 +1,31 @@
+{
+ "track": "props_news",
+ "version": 1,
+ "frozen_on": "2026-10-30",
+ "note": "NEW 2026 hypothesis (round 6), pre-registered before any bet: when our AI news reader learns that a regular WR/TE/RB is out, the books are slow to raise his teammates' props, so the next men up are worth an OVER before the market adjusts. The 2023-25 props studies only used the official injury report and found the closing prop line efficient; this tests the window between the news and the books. Paper only. Do not edit to fit results; bump version instead.",
+ "trigger": {
+  "source": "history/news_llm.jsonl availability signals",
+  "signals": ["out", "doubtful", "injured_reserve", "suspended"],
+  "min_certainty": 0.9,
+  "positions": ["WR", "TE", "RB"],
+  "roster_match_required": true,
+  "game_week_relevant": true,
+  "published_after_previous_game": true,
+  "first_seen_within_hours": 6,
+  "min_hours_before_kickoff": 2,
+  "regular": "player's average offensive snap share over his team's last 3 games this season >= 50% (nflverse snap counts)",
+  "one_trigger_per_player_game": true
+ },
+ "beneficiaries": "same team and same position (WR->WR, TE->TE, RB->RB), average snap share over the last 3 games between 15% and 85%, not themselves reported out; the top 2 by snap share",
+ "markets": {"WR": ["player_receptions", "player_reception_yds"], "TE": ["player_receptions", "player_reception_yds"], "RB": ["player_rush_yds", "player_receptions"]},
+ "bet": "OVER on each beneficiary x market at the allowed books (my_books.json): lowest point first, then best price; main line only (both prices within -200..+170); 1 unit; one bet per beneficiary-market-game",
+ "grading": {
+  "close": "our props fetch of the same event and markets 10-90 min before kickoff (fetched only for games with open bets)",
+  "clv": "price x median no-vig P(over) among close books quoting the SAME point - 1; also points_moved = median close point (all books) - our point (positive = the market raised the line after we bet)",
+  "result": "nflverse weekly player stats vs the point; no offensive snap = void"
+ },
+ "validation": {"min_bets": 100, "avg_clv_positive_with_p_below": 0.05, "report": ["points_moved mean and t", "ROI", "hit rate"]},
+ "cost": "Odds API event call, 2 markets x regions=us = 2 credits per trigger, plus 2 at the close for games with open bets (~15 triggers/week ~ 60 credits/week)",
+ "ledger": "paper_bets_props_news.json",
+ "state": "props_news_state.json"
+}

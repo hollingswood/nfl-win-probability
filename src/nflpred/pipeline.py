@@ -404,6 +404,11 @@ def cmd_update(df: pd.DataFrame, today: dt.date, horizon_days: int = 9, offline:
         result["props_receptions_bets"] = {"error": str(e)}
         print("props receptions bets: failed:", e)
     try:
+        from . import props_news   # grading + record (triggers run in the QB-news check)
+        result["props_news_bets"] = props_news.process(result, ROOT / "history", games=df)
+    except Exception as e:
+        print("props news failed:", e)
+    try:
         from . import props_unders
         result["props_unders_bets"] = props_unders.process(
             result, df, ROOT / "history", fetch=None if offline else odds_lib.fetch_event_props)
