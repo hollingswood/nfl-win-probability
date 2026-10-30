@@ -154,7 +154,7 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
             items = fetcher(url); rep["feeds"][name] = len(items)
         except Exception as e:
             rep["feeds"][name] = f"failed: {str(e)[:80]}"; continue
-        stale = (datetime.now(timezone.utc) - timedelta(days=20)).isoformat()
+        stale = (now - timedelta(days=20)).isoformat()   # the run's time (tests pass a fixed one)
         for it in items:
             k = N._key(it)
             if (it.get("published") or "9") < stale:
