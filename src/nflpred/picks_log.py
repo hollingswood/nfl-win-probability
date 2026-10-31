@@ -180,6 +180,10 @@ def scan(now: datetime | None = None, api_key: str | None = None, fetcher=N.fetc
         if not r:
             return False
         first, last = datetime.fromisoformat(r["first"]), datetime.fromisoformat(r["last"])
+        # 2026-10-31 (credits): an article with no picks gets ONE re-read, not three. Of 1,666 reads Oct 24-31, ~500 were
+        # re-reads of articles that never had picks; the few that later yielded any were mostly after kickoff
+        if not r.get("picks_found", 1) and r.get("n", 1) >= 2:
+            return False
         return r.get("n", 1) < 4 and now - first <= timedelta(days=4) and now - last >= timedelta(hours=12)
     logged_keys = set()
     lp = HIST / "picks_log.jsonl"

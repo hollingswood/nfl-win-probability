@@ -269,3 +269,18 @@ def test_single_names_stay_separate_per_outlet():
     from nflpred import picks_score as S
     assert S.picker_of({"analyst": "Jon", "source": "yahoo_nfl"}) != S.picker_of({"analyst": "Jon", "outlet": "Corn Nation Staff"})
     assert S.picker_of({"analyst": "Chris Hummer", "source": "cbs_cfb"}) == "Chris Hummer"
+
+
+def test_articles_without_picks_get_one_reread_only(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    from nflpred import picks_log as PL
+    monkeypatch.setattr(PL, "HIST", tmp_path)
+    base = {"first": "2026-10-30T00:00+00:00", "last": "2026-10-30T00:00+00:00", "link": "L", "checks": PC.VERSION}
+    (tmp_path / "picks_seen.json").write_text(json.dumps(["none1", "none2", "has2"]))
+    (tmp_path / "picks_reads.json").write_text(json.dumps({
+        "none1": dict(base, n=1, picks_found=0), "none2": dict(base, n=2, picks_found=0, link="L2"),
+        "has2": dict(base, n=2, picks_found=3, link="L3")}))
+    read = []
+    PL.scan(now=datetime(2026, 10, 31, 0, tzinfo=timezone.utc), api_key="k", fetcher=lambda u: [],
+            texter=lambda u: (read.append(u), "no picks here")[1], llm=lambda t, k: [])
+    assert sorted(read) == ["L", "L3"]          # zero-pick article read twice already is skipped
