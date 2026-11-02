@@ -9,6 +9,7 @@ Writes:
 from __future__ import annotations
 
 import argparse
+import collections
 import datetime as dt
 import json
 import sys
@@ -356,6 +357,58 @@ def main(argv=None) -> int:
     return 0
 
 
+def _cfb_games(seasons) -> list[dict]:
+    import gzip
+    out = []
+    for s in seasons:
+        for kind in ("regular", "postseason"):
+            p = ROOT / "data" / "cfb" / "raw" / f"games_{s}_{kind}.json.gz"
+            try:
+                for g in json.load(gzip.open(p)):
+                    t = _ts(g.get("startDate"))
+                    if t and g.get("homeTeam") and g.get("awayTeam"):
+                        out.append({"id": str(g.get("id")), "t": t, "home": g["homeTeam"], "away": g["awayTeam"],
+                                    "week": g.get("week"), "post": kind == "postseason"})
+            except (OSError, ValueError):
+                continue
+    return out
+
+
+def add_cfb_weeks(data: dict, games: list[dict] | None = None) -> dict:
+    """College paper bets carry no week (odds-feed ids): add `week` (CFBD week number, 'Bowl' in the postseason) to
+    every open/graded bet, like the NFL board's Wk column. Match: CFBD game id, else the same two teams (the feed's
+    full names start with CFBD's school names, longest school name wins) kicking off within a day."""
+    bets = [b for k, v in data.items() if k.startswith("cfb_") and isinstance(v, dict)
+            for b in (v.get("open") or []) + (v.get("recent_graded") or [])]
+    if not bets:
+        return data
+    if games is None:
+        yrs = {(_ts(b.get("kickoff_utc")) or dt.datetime.now(dt.timezone.utc)).year for b in bets}
+        games = _cfb_games(sorted(yrs | {y - 1 for y in yrs}))
+    by_id = {g["id"]: g for g in games}
+    norm = lambda s: " ".join(str(s or "").lower().replace("&", "and").replace("(", "").replace(")", "").replace(".", "").split())
+    starts = lambda full, school: norm(full) == norm(school) or norm(full).startswith(norm(school) + " ")
+    for b in bets:
+        g = by_id.get(str(b.get("game_id")))
+        t = _ts(b.get("kickoff_utc"))
+        if not g and t:
+            near = [x for x in games if abs((x["t"] - t).total_seconds()) <= 86400
+                    and starts(b.get("home"), x["home"]) and starts(b.get("away"), x["away"])]
+            near.sort(key=lambda x: -(len(x["home"]) + len(x["away"])))
+            g = near[0] if near else None
+        if not g and t:     # names the feed spells differently (Hawai'i, San José State, UMass): the week of that day
+            same = [x for x in games if abs((x["t"] - t).total_seconds()) <= 12 * 3600]
+            if same:
+                wk = collections.Counter(("Bowl" if x["post"] else x["week"]) for x in same).most_common(1)[0][0]
+                b["week"] = wk
+                continue
+        if g:
+            b["week"] = "Bowl" if g["post"] else g["week"]
+        elif not isinstance(b.get("week"), int):
+            b.pop("week", None)
+    return data
+
+
 def build_cfb(site: Path) -> Path | None:
     """College football page (site/cfb/index.html) from output/cfb_predictions.json; shares the NFL page's styles."""
     src = ROOT / "output" / "cfb_predictions.json"
@@ -371,6 +424,10 @@ def build_cfb(site: Path) -> Path | None:
             data["cfb_kalshi_maker_bets"] = km
     except Exception as e:
         print("cfb kalshi view skipped:", e)
+    try:   # week of each college paper bet (the NFL board shows Wk)
+        add_cfb_weeks(data)
+    except Exception as e:
+        print("cfb weeks skipped:", e)
     try:   # your real college bets, and published college pickers
         from nflpred import placed
         data["placed"] = placed.summary(ROOT / "history", "cfb")
