@@ -1,13 +1,13 @@
 {
- "generated_at": "2026-11-01T23:13+00:00",
+ "generated_at": "2026-11-02T00:16+00:00",
  "rules_version": 1,
- "items": 290,
+ "items": 291,
  "categories": {
   "coach_fired_or_hired": {
    "items": 2,
-   "graded": 1,
-   "cover_rate_vs_close": 1.0,
-   "cover_p": 0.1587,
+   "graded": 2,
+   "cover_rate_vs_close": 0.5,
+   "cover_p": 0.5,
    "with_line_move": 2,
    "avg_line_move_toward": 0.25,
    "move_p": 0.1587,
@@ -35,9 +35,9 @@
   },
   "kicker_or_special_teams": {
    "items": 20,
-   "graded": 16,
-   "cover_rate_vs_close": 0.5,
-   "cover_p": 0.5,
+   "graded": 17,
+   "cover_rate_vs_close": 0.471,
+   "cover_p": 0.5958,
    "with_line_move": 18,
    "avg_line_move_toward": 0.78,
    "move_p": 0.0371,
@@ -55,9 +55,9 @@
   },
   "offensive_line_shuffle": {
    "items": 70,
-   "graded": 59,
-   "cover_rate_vs_close": 0.576,
-   "cover_p": 0.1207,
+   "graded": 60,
+   "cover_rate_vs_close": 0.567,
+   "cover_p": 0.1508,
    "with_line_move": 62,
    "avg_line_move_toward": 0.25,
    "move_p": 0.1505,
@@ -65,16 +65,16 @@
   },
   "other": {
    "items": 102,
-   "graded": 82,
+   "graded": 84,
    "cover_rate_vs_close": 0.476,
-   "cover_p": 0.6707,
+   "cover_p": 0.6687,
    "with_line_move": 91,
    "avg_line_move_toward": 0.27,
    "move_p": 0.0287,
    "candidate": false
   },
   "play_caller_change": {
-   "items": 9,
+   "items": 10,
    "graded": 8,
    "cover_rate_vs_close": 0.75,
    "cover_p": 0.0786,
@@ -125,15 +125,6 @@
   }
  },
  "recent": [
-  {
-   "game_id": "2026_08_CHI_SEA",
-   "team": "CHI",
-   "category": "offensive_line_shuffle",
-   "direction": "helps",
-   "seen": "2026-10-29T17:15+00:00",
-   "summary": "Bears acquired defensive lineman Jeffery Simmons in a trade deadline deal.",
-   "implied_side": "away"
-  },
   {
    "game_id": "2026_08_BAL_BUF",
    "team": "BAL",
@@ -195,7 +186,8 @@
    "seen": "2026-10-29T23:32+00:00",
    "summary": "Dylan McMahon would step in at center if Shelton can't go; Jake McQuaide signed to practice squad if Cardona is out.",
    "implied_side": "away",
-   "line_move_toward": 0.0
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_08_ARI_DAL",
@@ -317,7 +309,8 @@
    "seen": "2026-10-31T20:54+00:00",
    "summary": "Derwin James' setback is one of multiple injuries affecting the Chargers.",
    "implied_side": "home",
-   "line_move_toward": 0.0
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_08_KC_DEN",
@@ -424,6 +417,15 @@
    "direction": "hurts",
    "seen": "2026-11-01T21:23+00:00",
    "summary": "Colts traded Quenton Nelson and DeForest Buckner this week, signaling intent to quit on the season.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_09_JAX_BAL",
+   "team": "BAL",
+   "category": "play_caller_change",
+   "direction": "hurts",
+   "seen": "2026-11-01T21:44+00:00",
+   "summary": "Starting quarterback Lamar Jackson out for season; Ravens will need backup QB for next game.",
    "implied_side": "away"
   }
  ]
