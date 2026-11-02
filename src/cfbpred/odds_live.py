@@ -52,6 +52,11 @@ def run(now: datetime | None = None, force: bool = False) -> Path | None:
     if not (force or due(now)):
         print("cfb odds: not due this hour")
         return None
+    wd, h = now.weekday(), now.hour
+    peak = (wd == 3 and h >= 12) or wd in (4, 5) or (wd == 6 and h < 8) or (wd == 6 and h >= 16) or (wd == 0 and 13 <= h < 17)
+    if not force and not O.odds_budget_allow("cfb", now, peak):
+        print("cfb odds: skipped (Odds API credits tight; only busy/posting windows until renewal)")
+        return None
     events = fetch(key)
     HIST.mkdir(parents=True, exist_ok=True)
     path = HIST / f"odds_{now:%Y-%m-%dT%H%M}.json.gz"

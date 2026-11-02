@@ -44,6 +44,14 @@ EXCHANGES = {"kalshi", "prophetx", "polymarket", "novig", "betopenly"}
 CREDITS: dict = {}
 
 
+def odds_budget_allow(kind: str, now=None, peak: bool = False) -> bool:
+    try:
+        from . import odds_budget
+        return odds_budget.allow(kind, now=now, peak=peak)
+    except Exception:
+        return True
+
+
 def _get(params: dict, timeout: float, url: str = URL):
     with urllib.request.urlopen(f"{url}?{urllib.parse.urlencode(params)}", timeout=timeout) as r:
         for h in ("x-requests-remaining", "x-requests-used", "x-requests-last"):
@@ -220,6 +228,11 @@ def _write_credits(history_dir: Path) -> None:
     if CREDITS:  # Odds API balance after the last call, readable in the repo
         (history_dir / "odds_credits.json").write_text(json.dumps(
             {"checked_at": datetime.now(timezone.utc).isoformat(timespec="minutes"), **CREDITS}, indent=1))
+        try:  # 20k plan since 2026-11-02: alerts + throttle state (odds_budget.py)
+            from . import odds_budget
+            odds_budget.check(history_dir)
+        except Exception as e:
+            print("odds budget check failed:", e)
 
 
 def save_props_snapshot(history_dir: Path, entries: list[dict], now: datetime | None = None) -> Path | None:
@@ -245,6 +258,10 @@ def save_props_snapshot(history_dir: Path, entries: list[dict], now: datetime | 
 
 def snapshot(history_dir: Path) -> dict | None:
     """Fetch, save raw snapshot, return summary. Returns None if no key / request fails."""
+    from . import odds_budget
+    if not odds_budget.allow("nfl", history_dir):
+        print("odds: skipped this hour (Odds API credits critical; NFL odds every other hour until renewal)")
+        return None
     try:
         events = fetch()
     except Exception as e:

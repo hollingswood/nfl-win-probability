@@ -106,6 +106,10 @@ def run(now: datetime | None = None, force: bool = False) -> Path | None:
     if not why:
         print("futures: not due")
         return None
+    from . import odds_budget
+    if not force and not odds_budget.allow("futures", now=now):
+        print("futures: skipped (Odds API credits tight; futures snapshots paused until renewal)")
+        return None
     snap, hdr = fetch(key)
     if not snap:
         return None
