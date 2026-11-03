@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-11-03T00:15+00:00",
- "signals": 14672,
- "units": 2796,
+ "generated_at": "2026-11-03T14:41+00:00",
+ "signals": 14759,
+ "units": 2826,
  "skipped": {
-  "team_unclear": 377,
+  "team_unclear": 380,
   "no_game": 394,
-  "not_game_week": 781
+  "not_game_week": 798
  },
  "roster_check": {
-  "match": 13914,
-  "team_mismatch": 367,
-  "not_found": 389,
+  "match": 13995,
+  "team_mismatch": 370,
+  "not_found": 392,
   "ambiguous": 2
  },
- "graded": 1344,
- "pending": 87,
+ "graded": 1373,
+ "pending": 74,
  "overall": {
-  "n": 1344,
-  "correct": 1091,
-  "pct": 81.2
+  "n": 1373,
+  "correct": 1116,
+  "pct": 81.3
  },
  "by_signal": {
   "benched": {
@@ -27,14 +27,14 @@
    "pct": 33.3
   },
   "doubtful": {
-   "n": 21,
-   "correct": 18,
-   "pct": 85.7
+   "n": 22,
+   "correct": 19,
+   "pct": 86.4
   },
   "expected_to_play": {
-   "n": 372,
-   "correct": 299,
-   "pct": 80.4
+   "n": 380,
+   "correct": 304,
+   "pct": 80.0
   },
   "injured_reserve": {
    "n": 174,
@@ -42,55 +42,519 @@
    "pct": 80.5
   },
   "out": {
-   "n": 442,
-   "correct": 388,
-   "pct": 87.8
+   "n": 456,
+   "correct": 402,
+   "pct": 88.2
   },
   "returning": {
-   "n": 230,
-   "correct": 165,
-   "pct": 71.7
+   "n": 234,
+   "correct": 169,
+   "pct": 72.2
   },
   "suspended": {
-   "n": 5,
+   "n": 6,
    "correct": 3,
-   "pct": 60.0
+   "pct": 50.0
   },
   "will_start": {
-   "n": 94,
-   "correct": 76,
-   "pct": 80.9
+   "n": 95,
+   "correct": 77,
+   "pct": 81.1
   }
  },
  "qb": {
-  "n": 124,
-  "correct": 82,
-  "pct": 66.1,
+  "n": 125,
+  "correct": 83,
+  "pct": 66.4,
   "pending": 16
  },
  "rule_population": {
-  "n": 106,
-  "correct": 75,
-  "pct": 70.8,
+  "n": 107,
+  "correct": 76,
+  "pct": 71.0,
   "pending": 12
  },
  "official_report_agreement": {
-  "n": 1156,
-  "agree": 873,
-  "pct": 75.5
+  "n": 1185,
+  "agree": 888,
+  "pct": 74.9
  },
  "lead_vs_report_hours": {
-  "n": 1431,
-  "median": 25.6,
-  "share_before_report": 67.1
+  "n": 1447,
+  "median": 26.8,
+  "share_before_report": 67.4
  },
  "qb_line_move_6h": {
-  "n": 191,
-  "avg_abs_after": 0.78,
-  "avg_abs_before": 0.31,
+  "n": 200,
+  "avg_abs_after": 0.76,
+  "avg_abs_before": 0.3,
   "avg_after_negative_signals": -0.65
  },
  "rows": [
+  {
+   "seen_at": "2026-11-03T13:43+00:00",
+   "player": "Jack Campbell",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_DET_MIA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 79.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T13:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Lions sign LB K.J. Britt off Patriots practice squad after injuries to Jack Campbell, Jimmy Rolder www.freep.com/story/sports...",
+     "quote": "after injuries to Jack Campbell",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwvfcbwk2c",
+     "player": "Jack Campbell",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T13:43+00:00",
+   "player": "Jimmy Rolder",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_DET_MIA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 79.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T13:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Lions sign LB K.J. Britt off Patriots practice squad after injuries to Jack Campbell, Jimmy Rolder www.freep.com/story/sports...",
+     "quote": "after injuries to Jack Campbell, Jimmy Rolder",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwvfcbwk2c",
+     "player": "Jimmy Rolder",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T13:43+00:00",
+   "player": "K.J. Britt",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_09_GB_NE",
+   "roster": "team_mismatch",
+   "certainty": 0.85,
+   "lead_vs_report_h": 79.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T13:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Lions sign LB K.J. Britt off Patriots practice squad after injuries to Jack Campbell, Jimmy Rolder www.freep.com/story/sports...",
+     "quote": "Lions sign LB K.J. Britt off Patriots practice squad",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwvfcbwk2c",
+     "player": "K.J. Britt",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T13:23+00:00",
+   "player": "Kerby Joseph",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_DET_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 79.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T13:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Dan Campbell confirms KerbyJoseph will not play this weekend against the Dolphins. He said the Lions will try to get Joseph scout team reps ",
+     "quote": "Dan Campbell confirms KerbyJoseph will not play this weekend against the Dolphins",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwg4icxk2h",
+     "player": "Kerby Joseph",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T11:57+00:00",
+   "player": "Cashius Howell",
+   "team": "CIN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_CIN_ATL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 81.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T11:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bengals DE Cashius Howell had wrist surgery",
+     "quote": "set to be without rookie defensive end Cashius Howell in the coming weeks",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bengals-de-cashius-howell-had-wrist-surgery",
+     "player": "Cashius Howell",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T10:44+00:00",
+   "player": "Carson Beck",
+   "team": "ARI",
+   "signal": "benched",
+   "qb": true,
+   "game_id": "2026_09_ARI_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 82.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T10:44+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Gardner Minshew Named Cardinals Starting Quarterback, Carson Beck Made Backup - Arizona Cardinals",
+     "quote": "Carson Beck Made Backup",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPdTdzb1BBTk1rc3Q0aHFsTHVPQXIydjFfMnh0QU5xbW9kTVA3WHJTQlJySFBtVnRqU3pONl9kcDBZOTRDeGVLVVVteV9TejdveG9pNlBLOFNZMklReE5oeWV0aU9QazdfNl9VbG44Qk9FWmJDNHpXakZXenZaZXN4bExtb3N4d0ZlODZzdFFTcUI1d3J0cmpwLXJKQ05vX045R0lWc2JUWTBFTWVGV0E?oc=5",
+     "player": "Carson Beck",
+     "signal": "benched"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T04:43+00:00",
+   "player": "Tyler Loop",
+   "team": "BAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 40.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T04:43+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Ravens K Tyler Loop could be headed for injured reserve with groin injury",
+     "quote": "could be headed for injured reserve with groin injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/ravens-k-tyler-loop-could-be-headed-for-injured-reserve-with-groin-injury",
+     "player": "Tyler Loop",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T11:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Ravens could place Tyler Loop on IR, Jake Moody to kick vs. Jaguars",
+     "quote": "Ravens could place Tyler Loop on IR",
+     "link": "https://sports.yahoo.com/articles/ravens-could-place-tyler-loop-110000435.html",
+     "player": "Tyler Loop",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T01:19+00:00",
+   "player": "Malik Muhammad",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_TB_CHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 91.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Jeffery Simmons is on the field for the first snap. CB Tyrique Stevenson starts at outside corner with Malik Muhammad sidelined by a toe inj",
+     "quote": "Malik Muhammad sidelined by a toe injury",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mzeo5gscf227",
+     "player": "Malik Muhammad",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T01:19+00:00",
+   "player": "Tyrique Stevenson",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_09_TB_CHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 91.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Jeffery Simmons is on the field for the first snap. CB Tyrique Stevenson starts at outside corner with Malik Muhammad sidelined by a toe inj",
+     "quote": "CB Tyrique Stevenson starts at outside corner",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mzeo5gscf227",
+     "player": "Tyrique Stevenson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T01:19+00:00",
+   "player": "Jeffery Simmons",
+   "team": "CHI",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_09_TB_CHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 91.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Jeffery Simmons is on the field for the first snap. CB Tyrique Stevenson starts at outside corner with Malik Muhammad sidelined by a toe inj",
+     "quote": "Jeffery Simmons is on the field for the first snap",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3mzeo5gscf227",
+     "player": "Jeffery Simmons",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:kfishbain.bsky.social (CHI)",
+     "title": "Jeffery Simmons gets the start in his Bears debut.",
+     "quote": "Jeffery Simmons gets the start in his Bears debut",
+     "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3mzeo42e3nc2n",
+     "player": "Jeffery Simmons",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T01:19+00:00",
+   "player": "James Pearce Jr.",
+   "team": "ATL",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_09_CIN_ATL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 91.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "NFL reinstates James Pearce Jr. after eight-game suspension: Why EDGE returns at critical time for Falcons",
+     "quote": "NFL reinstates James Pearce Jr. after eight-game suspension",
+     "link": "https://www.cbssports.com/nfl/news/nfl-reinstates-james-pearce-jr-after-eight-game-suspension-falcons/",
+     "player": "James Pearce Jr.",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T01:19+00:00",
+   "player": "Malachi Lawrence",
+   "team": "DAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_DAL_IND",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 91.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "team_sites_2",
+     "outlet": "Dallas Cowboys | Official Site of the Dallas Cowboys",
+     "title": "Cowboys OLB Malachi Lawrence could miss multiple weeks with ankle injury - Dallas Cowboys | Official Site of the Dallas Cowboys",
+     "quote": "Cowboys OLB Malachi Lawrence could miss multiple weeks with ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOX2ZfT21XczJiTlRzclRWR1drNWZuVU1VekkxRmtzVzRJNFZNbGlMQ0FNVXFCdmZjVTJkOUVBcXUxOGlCWk12U0FWaldpOEktWGxRT2hpTU56SDA0S2tlYTEtWG1nYzlEQXFJZ1hQa01MRXo2eVJTaFpnQUlCZkR4WFk3czFxdTB2YWowbGsxblNqUFhfQmdzbkdsS1ZVcktXbGJqUkFZQTBkUjg?oc=5",
+     "player": "Malachi Lawrence",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T00:46+00:00",
+   "player": "Tyler Loop",
+   "team": "BAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 44.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T00:46+00:00",
+     "source": "google_context",
+     "outlet": "ClutchPoints",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - ClutchPoints",
+     "quote": "Ravens' Tyler Loop out for Thursday Night Football",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZXhRYXJMQ2Z5SkhSbUphTXFJOUhqX21BSkNlZkJYSGpIZ25jVkd5SEdfU3h0UmtGUHVnNXZ1X3RmWEhWdzY2RHhmRjIzSG9aVUZjdkZiV3B0ZjA3bEZCOWZqMXZlM0ozVTJZSVQzUVVjblg4cDF2R04tYkd1RlpDZzFEczl4dHV4YllLbTlDMWFxaUxGUk1FaGxwenhscm5qVy1WRTQ5OTE?oc=5",
+     "player": "Tyler Loop",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "google_context",
+     "outlet": "ClutchPoints",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - ClutchPoints",
+     "quote": "Ravens' Tyler Loop out for Thursday Night Football",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPRXJQeXZReEN6VWY1M1dVUkVPT2hSMGRqazVfUC14cWNWZTVZVGc3MFpTVEZMLVVpZXo2VGx0Q1cwRm5NajlPSGw1WUhiYUlZUWp4TFU2ZjB4RkdYdXpiZTZrb25DOTBTTUZKMjJ1dHhZeVUxT25GUDBrOHpkZTNUWXB2d2dJT0ZRN2Z0RXpEck4tN0IxSkFMeWN4eTFqRlFZWmFhbXJsYjRwRTdHSXk3aEMyNl8zVW82S3JpcGUwTQ?oc=5",
+     "player": "Tyler Loop",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T02:23+00:00",
+     "source": "google_context",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - Yahoo Sports",
+     "quote": "Ravens' Tyler Loop out for Thursday Night Football",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOYXUwQ2Q2b29jYXBBTElBUmJWNmc1UHpqTGdCMnUzVnRITjR6YjFaX2JBaTFYVERNVEVQX2tQZTNaOGhrUDBOVjd1MEkzMTctYWJfZXZKcnFaVllneXF2Z0dtMFpteUd4TFQ2SzQ0dEFjTTVjYTF3dWVZbDc5dUFlRXd2UXA0X1Bl?oc=5",
+     "player": "Tyler Loop",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T00:46+00:00",
+   "player": "Jake Moody",
+   "team": "BAL",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 44.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T00:46+00:00",
+     "source": "google_context",
+     "outlet": "ClutchPoints",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - ClutchPoints",
+     "quote": "Jake Moody set to take over as kicker",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZXhRYXJMQ2Z5SkhSbUphTXFJOUhqX21BSkNlZkJYSGpIZ25jVkd5SEdfU3h0UmtGUHVnNXZ1X3RmWEhWdzY2RHhmRjIzSG9aVUZjdkZiV3B0ZjA3bEZCOWZqMXZlM0ozVTJZSVQzUVVjblg4cDF2R04tYkd1RlpDZzFEczl4dHV4YllLbTlDMWFxaUxGUk1FaGxwenhscm5qVy1WRTQ5OTE?oc=5",
+     "player": "Jake Moody",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "google_context",
+     "outlet": "ClutchPoints",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - ClutchPoints",
+     "quote": "Jake Moody set to take over as kicker",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPRXJQeXZReEN6VWY1M1dVUkVPT2hSMGRqazVfUC14cWNWZTVZVGc3MFpTVEZMLVVpZXo2VGx0Q1cwRm5NajlPSGw1WUhiYUlZUWp4TFU2ZjB4RkdYdXpiZTZrb25DOTBTTUZKMjJ1dHhZeVUxT25GUDBrOHpkZTNUWXB2d2dJT0ZRN2Z0RXpEck4tN0IxSkFMeWN4eTFqRlFZWmFhbXJsYjRwRTdHSXk3aEMyNl8zVW82S3JpcGUwTQ?oc=5",
+     "player": "Jake Moody",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T02:23+00:00",
+     "source": "google_context",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens\u2019 Tyler Loop out for Thursday Night Football, Jake Moody set to take over as kicker - Yahoo Sports",
+     "quote": "Jake Moody set to take over as kicker",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOYXUwQ2Q2b29jYXBBTElBUmJWNmc1UHpqTGdCMnUzVnRITjR6YjFaX2JBaTFYVERNVEVQX2tQZTNaOGhrUDBOVjd1MEkzMTctYWJfZXZKcnFaVllneXF2Z0dtMFpteUd4TFQ2SzQ0dEFjTTVjYTF3dWVZbDc5dUFlRXd2UXA0X1Bl?oc=5",
+     "player": "Jake Moody",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T00:46+00:00",
+   "player": "Uchenna Nwosu",
+   "team": "SEA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_08_CHI_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -52.8,
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Doubtful",
+   "report_agrees": false,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T00:46+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Seahawks-Bears inactives: Uchenna Nwosu sidelined with ankle injury",
+     "quote": "Uchenna Nwosu sidelined with ankle injury",
+     "link": "https://sports.yahoo.com/articles/seahawks-bears-inactives-uchenna-nwosu-001653911.html",
+     "player": "Uchenna Nwosu",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T00:23+00:00",
+   "player": "Jeremy McNichols",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_LA_WAS",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 92.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T00:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "While #Commanders RB Jeremy McNichols is getting additional opinions on his foot injury tomorrow, he's expected to miss multiple months, per",
+     "quote": "expected to miss multiple months",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mzekyizgfc2m",
+     "player": "Jeremy McNichols",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-02T23:58+00:00",
    "player": "Drew Lock",
@@ -101,7 +565,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -126,7 +593,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -151,7 +621,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -176,7 +649,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -201,7 +677,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -226,7 +705,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -251,7 +733,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -52.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -311,6 +796,16 @@
      "title": "Cardinals' Mike LaFleur: Jeremiyah Love's injury to 'new portion' of his ankle - ESPN",
      "quote": "injury to 'new portion' of his ankle",
      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPUS05VFI0RFJtQ0UyRHJuMVlrRnZOdV9FMHJsa0Mtazl3VUJTbG9uRXhrT3FNTEl1Vll2eHktM0h3R1lDRjU4ZWczclhmdEtrUVZmRGR2cnhpQy1JZktYV0dhU1FNZDNtbHRDOXNPVUhFcklubllHMTVMY3lwWFY4cGpOZFMtQkV4dDRrMzNFdjZCN1pHUW9J?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T03:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jeremiyah Love injury: Arizona Cardinals RB has new ankle injury - Yahoo Sports",
+     "quote": "Arizona Cardinals RB has new ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUDljQTlTWEwtVGVhQjJueXR2SnJfNlR6eHVPc3NwMVpfOTRvV04zTDRhcHJldkRiQXl5b2FsZThTR1lEYXE1RXhJMGI1R3JQZjdJSjF2TEZoWnBKcHhmMFBqT3RUT3RtREV6WGdTUnpCZzZUbkFXOUhQUXFfOGZOM2dkbXNDc1RZTGtTb0RJWjVqdw?oc=5",
      "player": "Jeremiyah Love",
      "signal": "injured_reserve"
     }
@@ -451,7 +946,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -561,7 +1059,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 120.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.5,
+    "before": 0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -667,7 +1168,10 @@
    "roster": "team_mismatch",
    "certainty": 0.8,
    "lead_vs_report_h": 97.3,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -698,6 +1202,26 @@
      "title": "Daniel Jones will start in Week 9 against Cowboys - NBC Sports",
      "quote": "Daniel Jones will start in Week 9 against Cowboys",
      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOWjZyRXlGeWZaYjJlYmdFX3JHOVpSTUg5S2FobFVTbVNmbjdJOGFveXBwbC01MVVISUtWem9Nc3R5XzM5dWRNQ3BEa0RGMjdPQV92UVBydXdySDhOYmtvRnpPaFJ0QW91bENvZnZMeWt4NnphdDlnXzlDRG9UbEJRRE0zY0tybTFtMkVCelFNOV9aa0hmYm5mZUVsSXlFS1cwVjg3dDJ5eXhwV0VhZi1ZS1BnWDVRUQ?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T01:19+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Shane Steichen sticking with Daniel Jones as Colts' QB1 for Week 9 vs. Cowboys - ESPN",
+     "quote": "Shane Steichen sticking with Daniel Jones as Colts' QB1 for Week 9 vs. Cowboys",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOcC15YTU4alhnV3p6VXlrZ2VGV09teFVFcXhzQVNUSldQeUZRWTBQTVVwTzh6Wkl5TGRTdjlkWE5nLU0yZElCSW5tR2YwTm02dDZjSHZ1c1NCSTU2SDlyOXRidXBVRXhpZmlIYUV0Wm85eHRJdkxYclFUS1diT3JnYXE5WG5UYXNEZlVr?oc=5",
+     "player": "Daniel Jones",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T11:57+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: Rams LB Myles Garrett will practice this week; Daniel Jones to start Week 9 - NFL.com",
+     "quote": "Daniel Jones to start Week 9",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQM0V1VkQ4S2tpQmV0VnA0dGxwTE5mQ1c1Wm44empjYjUwOW5wdHhHcEk4azFYbDdjaHVoNjh5Mi0zN0cxOTRicm9RVHNCVWJDTkpvbkp0TEtZbHI0M1hSbVkySlpZTGIwbGRzUkNYbW13ODUybmZjV2hnQU5fVEltbHhpelYwZWFF?oc=5",
      "player": "Daniel Jones",
      "signal": "will_start"
     }
@@ -750,6 +1274,16 @@
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-rule-de-samson-ebukam-wr-zachariah-branch-out-for-week-9",
      "player": "Samson Ebukam",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T04:10+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons WR Zachariah Branch, DE Samson Ebukam out vs. Bengals due to injury - Atlanta Falcons",
+     "quote": "Falcons WR Zachariah Branch, DE Samson Ebukam out vs. Bengals due to injury",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxON2J0elkwYmVYcWM0dmRySWxDV2JmNl9JVFZMMElzU2owV21TSS1scjZqQjY3ZkFfYm1RaWdQQWZlWUlOREg5OVJtanBlVVdxbFBvWXVFQUtfQ0N2YWtwZ1lrSVhwaUhkb3UxUko4eVFtRnh0dktKaUdtWVA1RjV4MzdURnBtcExLd1h5XzVVZmJYemd0OExaSjVINkw?oc=5",
+     "player": "Samson Ebukam",
+     "signal": "out"
     }
    ]
   },
@@ -773,6 +1307,16 @@
      "title": "Falcons rule DE Samson Ebukam, WR Zachariah Branch out for Week 9",
      "quote": "ruled out",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-rule-de-samson-ebukam-wr-zachariah-branch-out-for-week-9",
+     "player": "Zachariah Branch",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T04:10+00:00",
+     "source": "team_sites_1",
+     "outlet": "Atlanta Falcons",
+     "title": "Falcons WR Zachariah Branch, DE Samson Ebukam out vs. Bengals due to injury - Atlanta Falcons",
+     "quote": "Falcons WR Zachariah Branch, DE Samson Ebukam out vs. Bengals due to injury",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxON2J0elkwYmVYcWM0dmRySWxDV2JmNl9JVFZMMElzU2owV21TSS1scjZqQjY3ZkFfYm1RaWdQQWZlWUlOREg5OVJtanBlVVdxbFBvWXVFQUtfQ0N2YWtwZ1lrSVhwaUhkb3UxUko4eVFtRnh0dktKaUdtWVA1RjV4MzdURnBtcExLd1h5XzVVZmJYemd0OExaSjVINkw?oc=5",
      "player": "Zachariah Branch",
      "signal": "out"
     }
@@ -998,6 +1542,16 @@
      "title": "Rams finally share good news about Myles Garrett",
      "quote": "Garrett will return to Rams practice this week",
      "link": "https://sports.yahoo.com/articles/rams-finally-share-good-news-224250396.html",
+     "player": "Myles Garrett",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Rams get massive boost as Myles Garrett\u2019s long-awaited return draws near",
+     "quote": "Rams star Myles Garrett will return to practice for the first time in nearly two months",
+     "link": "https://sports.yahoo.com/articles/rams-massive-boost-myles-garrett-224421025.html",
      "player": "Myles Garrett",
      "signal": "returning"
     }
@@ -2506,6 +3060,36 @@
      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPcjZyU2JiamFwajJmNXZtOHBpQlRKNUtTdjVjOGl2UEtWVkdqd0lNck9CZEtyNEpuT2tPcmViX3liRHNCWlY1S3RwWXNma2VnNEdJLTBtVTkxUDgwelFHTzcyb2FWRU5qNHdhS0NLQUJZVUdLMkM3U2pzTEx1bVpfdGdBZ2JDV0xpQk5KN3NrcjA5aDFGQWxyR0FwcGYyY0haUmp2STV3?oc=5",
      "player": "Tyler Huntley",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T01:43+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "QB Joe Fagnano estimated as limited in Ravens' practice with ankle injury",
+     "quote": "Tyler Huntley (toe) won't play Thursday night",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/qb-joe-fagnano-estimated-as-limited-in-ravens-practice-with-ankle-injury",
+     "player": "Tyler Huntley",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T01:43+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "QB Joe Fagnano estimated as limited in Ravens&#39; practice with ankle injury",
+     "quote": "Tyler Huntley (toe) won't play Thursday night",
+     "link": "https://sports.yahoo.com/articles/qb-joe-fagnano-estimated-limited-013319968.html",
+     "player": "Tyler Huntley",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T12:42+00:00",
+     "source": "google_injury",
+     "outlet": "SportsGrid",
+     "title": "Tyler Huntley Out: Ravens Face Quarterback Dilemma - SportsGrid",
+     "quote": "Tyler Huntley Out",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOUkoxaHJWazFsd2hZcHNaSkNEa2EzZjR0U2FNTDBQS2dlZmc0WHdVZ01jam5zQVpFS2hIc3JVMTMyaDdMRktwU2h5UFluSmNXZVJhV3l0WGxHNGIxeXl6X2VYaXMySzZON0JIbVc4MlB0ZjdOVTlSVVI0WVVKTHptN1RfTFlRSmg1aURXS3lZZw?oc=5",
+     "player": "Tyler Huntley",
+     "signal": "out"
     }
    ]
   },
@@ -2970,7 +3554,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": -20.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3379,7 +3966,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -3.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3444,7 +4034,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -3.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3537,7 +4130,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -3.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3858,7 +4454,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 0.9,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4223,7 +4822,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 3.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7055,7 +7657,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 39.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7150,7 +7755,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 42.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7175,7 +7783,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 42.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -7229,7 +7840,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -7938,7 +8552,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 54.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8907,7 +9524,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 76.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9130,7 +9750,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 94.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -9447,7 +10070,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 96.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10588,7 +11214,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 122.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10643,7 +11272,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 122.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10990,7 +11622,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 130.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -11025,7 +11660,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 130.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13512,7 +14150,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 169.2,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13975,7 +14616,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 175.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -62998,9 +63642,9 @@
   "reasons": [
    "precision 71% (needs >= 95%)"
   ],
-  "n": 106,
-  "correct": 75,
-  "precision": 0.7075,
+  "n": 107,
+  "correct": 76,
+  "precision": 0.7103,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
