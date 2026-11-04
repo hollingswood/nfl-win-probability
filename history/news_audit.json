@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-03T14:41+00:00",
- "signals": 14759,
- "units": 2826,
+ "generated_at": "2026-11-04T14:41+00:00",
+ "signals": 14937,
+ "units": 2865,
  "skipped": {
-  "team_unclear": 380,
+  "team_unclear": 381,
   "no_game": 394,
-  "not_game_week": 798
+  "not_game_week": 812
  },
  "roster_check": {
-  "match": 13995,
-  "team_mismatch": 370,
-  "not_found": 392,
+  "match": 14158,
+  "team_mismatch": 382,
+  "not_found": 395,
   "ambiguous": 2
  },
  "graded": 1373,
- "pending": 74,
+ "pending": 96,
  "overall": {
   "n": 1373,
   "correct": 1116,
@@ -66,13 +66,13 @@
   "n": 125,
   "correct": 83,
   "pct": 66.4,
-  "pending": 16
+  "pending": 19
  },
  "rule_population": {
   "n": 107,
   "correct": 76,
   "pct": 71.0,
-  "pending": 12
+  "pending": 13
  },
  "official_report_agreement": {
   "n": 1185,
@@ -80,17 +80,719 @@
   "pct": 74.9
  },
  "lead_vs_report_hours": {
-  "n": 1447,
-  "median": 26.8,
-  "share_before_report": 67.4
+  "n": 1469,
+  "median": 27.6,
+  "share_before_report": 67.9
  },
  "qb_line_move_6h": {
-  "n": 200,
-  "avg_abs_after": 0.76,
+  "n": 206,
+  "avg_abs_after": 0.75,
   "avg_abs_before": 0.3,
-  "avg_after_negative_signals": -0.65
+  "avg_after_negative_signals": -0.62
  },
  "rows": [
+  {
+   "seen_at": "2026-11-04T13:23+00:00",
+   "player": "Mack Hollins",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_09_GB_NE",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 55.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-04T13:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Patriots WR Mack Hollins is expected to practice on Wednesday",
+     "quote": "expected to practice on Wednesday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/patriots-wr-mack-hollins-is-expected-to-practice-on-wednesday",
+     "player": "Mack Hollins",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-04T05:40+00:00",
+   "player": "Jake Ferguson",
+   "team": "DAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_09_DAL_IND",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 63.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-04T05:40+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Jake Ferguson gets good prognosis on ankle injury",
+     "quote": "head coach Brian Schottenheimer said the initial feedback was good",
+     "link": "https://sports.yahoo.com/articles/jake-ferguson-gets-good-prognosis-051557667.html",
+     "player": "Jake Ferguson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-04T05:40+00:00",
+   "player": "Kyle Monangai",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_TB_CHI",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": 63.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-04T05:40+00:00",
+     "source": "google_injury",
+     "outlet": "RotoWire",
+     "title": "Kyle Monangai Injury: Ruled out for Monday - RotoWire",
+     "quote": "Ruled out for Monday",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOSjJmaXZCZW5IZHFUTVZWSUg0OTdzbllqanhDSUhtazBEWVdkRzRrcXFhdjVpbnNVbkE3X0ZBX3RoajRTbjZYakEzYWZRTWNFZWtTOTJWdXZwaVZKcUFLTHZ3bnE4RjRLOUpTRHVYRTk1MWVpY0dMNTRrM0hHOTR6NUktU3k0Nk1EbmVkRkFJNWFnT3BvbzZB?oc=5",
+     "player": "Kyle Monangai",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-04T01:23+00:00",
+   "player": "Joe Fagnano",
+   "team": "BAL",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 19.6,
+   "line_move": {
+    "after": 0.0,
+    "before": -0.5
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-04T01:23+00:00",
+     "source": "google_qb",
+     "outlet": "Capital Gazette",
+     "title": "Ravens sign another QB ahead of Joe Fagnano\u2019s expected first start - Capital Gazette",
+     "quote": "expected first start",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQdTI4akp5RGNqYlBEX1lEY2pPNE1RN3F0SFplRDdTcDFQU1hYbThnMTFfT2lnR0VhNlNZLWJzU3k5Y2NpRjFGSmVtMFV5NGxaOTV2SWhaTndGZXZHUks2T2dPTVo4RnZOeXJobnJZQTRBN2hiSGdSUGZRbjBMTDdsZUxNMnBFdw?oc=5",
+     "player": "Joe Fagnano",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T23:44+00:00",
+   "player": "Eric Murray",
+   "team": "JAX",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 21.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T23:44+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jaguars Place 2 Key Defensive Players on Injured Reserve",
+     "quote": "Eric Murray and DaVon Hamilton were officially placed on IR today",
+     "link": "https://sports.yahoo.com/articles/jaguars-place-2-key-defensive-231523385.html",
+     "player": "Eric Murray",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T23:44+00:00",
+   "player": "Daniel Carlson",
+   "team": "NO",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_CLE_NO",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 69.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T23:44+00:00",
+     "source": "google_context",
+     "outlet": "Yahoo Sports",
+     "title": "Report: Saints already know which kicker will replace Daniel Carlson - Yahoo Sports",
+     "quote": "Saints already know which kicker will replace Daniel Carlson",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQSUtJVTFHTURhdmcwM3FrSzBsN1c0azJXWXlLLVo4TGIxNDJVaG1IVk8tN3VPZ1Q0eXU0Mmtudk5Oc0kyWTN6bHBuNG9aMDdITURfNEpfOGJuRGgzVFp5bVA5X0t1WXQyOGVYUE5UZ0RCdnpjTktaMWJ5dnNHN1dnaUE2czROWHA1Y0E?oc=5",
+     "player": "Daniel Carlson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T22:23+00:00",
+   "player": "Samson Ebukam",
+   "team": "ATL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_CIN_ATL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 70.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T22:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Falcons place DE Samson Ebukam on IR",
+     "quote": "Falcons placed defensive end Samson Ebukam on injured reserve Tuesday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-place-de-samson-ebukam-on-ir",
+     "player": "Samson Ebukam",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T21:57+00:00",
+   "player": "Daron Payne",
+   "team": "WAS",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_LA_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T21:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "placed defensive lineman Daron Payne on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-place-daron-payne-javon-kinlaw-jeremy-mcnichols-on-ir",
+     "player": "Daron Payne",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T22:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "Commanders have placed defensive lineman Daron Payne on injured reserve",
+     "link": "https://sports.yahoo.com/articles/commanders-place-daron-payne-javon-215344681.html",
+     "player": "Daron Payne",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T21:57+00:00",
+   "player": "Javon Kinlaw",
+   "team": "WAS",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_LA_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T21:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "placed defensive lineman Javon Kinlaw on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-place-daron-payne-javon-kinlaw-jeremy-mcnichols-on-ir",
+     "player": "Javon Kinlaw",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T22:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "Commanders have placed defensive lineman Javon Kinlaw on injured reserve",
+     "link": "https://sports.yahoo.com/articles/commanders-place-daron-payne-javon-215344681.html",
+     "player": "Javon Kinlaw",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-04T13:02+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Commanders DT Javon Kinlaw had MCL surgery, is expected to miss rest of season",
+     "quote": "had MCL surgery, is expected to miss rest of season",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-dt-javon-kinlaw-had-mcl-surgery-is-expected-to-miss-rest-of-season",
+     "player": "Javon Kinlaw",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-04T13:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Commanders DT Javon Kinlaw had MCL surgery, is expected to miss rest of season",
+     "quote": "is expected to miss rest of season",
+     "link": "https://sports.yahoo.com/articles/commanders-dt-javon-kinlaw-had-125358426.html",
+     "player": "Javon Kinlaw",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-04T13:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "#Commanders DT Javon Kinlaw had season-ending MCL surgery, per source. Washington will now be without Kinlaw and Daron Payne for the rest of",
+     "quote": "had season-ending MCL surgery",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mzihocnlbc2h",
+     "player": "Javon Kinlaw",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T21:57+00:00",
+   "player": "Jeremy McNichols",
+   "team": "WAS",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_LA_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T21:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "placed running back Jeremy McNichols on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-place-daron-payne-javon-kinlaw-jeremy-mcnichols-on-ir",
+     "player": "Jeremy McNichols",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T22:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Commanders place Daron Payne, Javon Kinlaw, Jeremy McNichols on IR",
+     "quote": "Commanders have placed running back Jeremy McNichols on injured reserve",
+     "link": "https://sports.yahoo.com/articles/commanders-place-daron-payne-javon-215344681.html",
+     "player": "Jeremy McNichols",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T21:49+00:00",
+   "player": "Kendrick Bourne",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_ARI_SEA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T21:49+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Cardinals officially place Jeremiyah Love, Kendrick Bourne on IR",
+     "quote": "Cardinals officially place Jeremiyah Love, Kendrick Bourne on IR",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cardinals-officially-place-jeremiyah-love-kendrick-bourne-on-ir",
+     "player": "Kendrick Bourne",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T23:01+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Jeremiyah Love, Kendrick Bourne Placed On Injured Reserve - Arizona Cardinals",
+     "quote": "Jeremiyah Love, Kendrick Bourne Placed On Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPUGtnT3JXa2oxRVVzdDVtc0t6MUw4QlVzSGM3VGZmUlphMkl4ZnMzd2hROUt0TTlreUkxZGxUWUNIZ3A2Y1IwQzhiM3NMNUFMZDAxcWhGX0kyMm1CYk83ZndnSjM3SWQ5ZDFhWTh2ZW9hVzBaejBRVTVKalg3cTg3SnVDcUwyc3NMRUdad2VidjNYNE0?oc=5",
+     "player": "Kendrick Bourne",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T21:25+00:00",
+   "player": "Marcus Bryant",
+   "team": "NE",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_09_GB_NE",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T21:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "The Patriots announced today that OT Marcus Bryant has been activated to the 53-man roster from injured reserve. In addition, they released ",
+     "quote": "activated to the 53-man roster from injured reserve",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3mzgqqr6nkc2s",
+     "player": "Marcus Bryant",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T21:25+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots transactions: \ud83c\udfc8 Released from 53-man roster: CB Kindle Vildor \ud83c\udfc8 Activated to 53-man roster from IR: OT Marcus Bryant \ud83c\udfc8 Released fro",
+     "quote": "Activated to 53-man roster from IR: OT Marcus Bryant",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mzgqjbbsek2s",
+     "player": "Marcus Bryant",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T21:49+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Activate T Marcus Bryant to the 53-Man Roster from Injured Reserve; Release CB Kindle Vildor; Announce Practice Squad Moves - Patriots.com",
+     "quote": "Patriots Activate T Marcus Bryant to the 53-Man Roster from Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPcElMRl8yWHdWMFNNYTVVaUJDNGpLeFU2NWNpbVl6bnp3THNBVzU5cG5VUG5GSDF5bUpoeTRwX1diNHU4NF8zcDJhb0k0YWF5bGI4UmY4d05rQUo2R3c1cjZXdnNkNjNXS1JLYmY5WUxrbjJHeHF4MXQ3MThza3ZWWW9SeEtzMk1ZNHdibW9lSkF1OUFMZEhrUW1pX1RrZlU4UHNlLXIxR1h1RlAybW1CVFNocTlQU1BnbWNnbG5VTlRaQ3BKZzJINUxGVDNBWUFNekF0TFNUUl9vMU9JYWRsbXJDMzZVd3JWT3dyRE16dmRwQQ?oc=5",
+     "player": "Marcus Bryant",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T21:57+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Patriots activate offensive tackle Marcus Bryant from injured reserve amid series of moves",
+     "quote": "Patriots activate offensive tackle Marcus Bryant from injured reserve",
+     "link": "https://sports.yahoo.com/articles/patriots-activate-offensive-tackle-marcus-213928080.html",
+     "player": "Marcus Bryant",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T23:44+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "What activating Marcus Bryant, releasing Kindle Vildor means for the Patriots",
+     "quote": "activating Marcus Bryant, releasing Kindle Vildor",
+     "link": "https://sports.yahoo.com/articles/activating-marcus-bryant-releasing-kindle-230611744.html",
+     "player": "Marcus Bryant",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T20:23+00:00",
+   "player": "Jeremiyah Love",
+   "team": "ARI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_ARI_SEA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 72.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T20:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "\u201cIt\u2019s New\u201d: Cardinals\u2019 Jeremiyah Love Hit With Third Separate Ankle Injury - Yahoo Sports",
+     "quote": "Jeremiyah Love Hit With Third Separate Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOLXBKVC03QU9HUFZFOFcwVEhDNk5FeFNDT0pYWmV0Si1YUU5vSk4xUm00ZThKNHZxRGVqTGltNkpXcHlsWnhFaTFRcVV0UW5sTGFCdFdiNnFLQzNXeHVxR3ZZWUVkN2ZwMGxnN3hxMFdIaGZ6dDRTNmJ5TzA0WG5HVDJsZ3lDY0xuelYw?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T22:23+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Cardinals RB Jeremiyah Love Will Miss More Time With Ankle Injury - Sports Illustrated",
+     "quote": "Cardinals RB Jeremiyah Love Will Miss More Time With Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNQWFuVmNHWElPQWNNZXpRbFRhY0h2dmE4RGduVkJOSEQxWUZ3YWpfdHJsdjZVWUNiY3BFSWlUemlWODFpc05aNFdOMzFMU0c2bnM4OFVqMHRxR1Bzcm9FVFVDVngtcXdkQlAyd0pBeTJ6OTY0VTZkaXNIUVBkVnFrZHlwT3FWcVdWdU8xZERNbXZYUjUyLTNzbVI3RXY3V1JJSmtOTXFYck13S2xIMEtpbQ?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T23:44+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals RB Jeremiyah Love Will Miss More Time With Ankle Injury - Yahoo Sports",
+     "quote": "Cardinals RB Jeremiyah Love Will Miss More Time With Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNdDdDQTBXQk8zbXliZm9Hd01DUHZ0WFFXdzRvc3REa2JqMFVwRzVTNFhaYVNqeUpJYktCVUNEcUpPek9ZNmkyb0dueGdBQVdya2ZSaXppQTBXYzZrMENOZzBqUDNJYXI3NkhRNFMtdE9zSEIzcENRb251X3NhYTZleTNWOFhiUnVO?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T20:23+00:00",
+   "player": "Breece Hall",
+   "team": "NYJ",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_09_NYJ_KC",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 72.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T20:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "How former Cyclones performed in Week 8 of the NFL",
+     "quote": "Hall did not play against the Las Vegas Raiders due to a quad injury",
+     "link": "https://sports.yahoo.com/articles/former-cyclones-performed-week-8-200210952.html",
+     "player": "Breece Hall",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T20:23+00:00",
+   "player": "Caleb Downs",
+   "team": "DAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_DAL_IND",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 72.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T20:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Cowboys rookie report: Caleb Downs, Malachi Lawrence hurt",
+     "quote": "Caleb Downs hurt",
+     "link": "https://sports.yahoo.com/articles/cowboys-rookie-report-caleb-downs-200000907.html",
+     "player": "Caleb Downs",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T20:23+00:00",
+   "player": "Malachi Lawrence",
+   "team": "DAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_DAL_IND",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 72.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T20:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Cowboys rookie report: Caleb Downs, Malachi Lawrence hurt",
+     "quote": "Malachi Lawrence hurt",
+     "link": "https://sports.yahoo.com/articles/cowboys-rookie-report-caleb-downs-200000907.html",
+     "player": "Malachi Lawrence",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T19:48+00:00",
+   "player": "Andrew Vorhees",
+   "team": "BAL",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_09_JAX_BAL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 25.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T19:48+00:00",
+     "source": "team_sites_1",
+     "outlet": "Baltimore Ravens",
+     "title": "Andrew Vorhees Set to Start vs. Bills - Baltimore Ravens",
+     "quote": "Set to Start vs. Bills",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPZkJGNDJJSHVGajVTQ0NWS0Y2WWg2ZWhxTGhsSkhNd0d3OUhtSUVGNVppRXkzX09rRnNmN0oxSUUzTEZCdVlBeUN3ZFNFclBzT2JUXzFWZkNlZkN3TEtzMF9QZnN5cXVwMmtwS21FLUNzaUZ4bXo3QzJmMzl6VndnV0IyV041Z2tIX21jMGVOalBfS1F2ZjJScGhLNkNPaWdTM3c?oc=5",
+     "player": "Andrew Vorhees",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T18:48+00:00",
+   "player": "Kobie Turner",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_LA_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 74.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T18:48+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "Rams DE and captain Kobie Turner has been as active and present in the locker room and community as any player I can recall while being on i",
+     "quote": "on injured reserve",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3mzghkx25kk24",
+     "player": "Kobie Turner",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T15:47+00:00",
+   "player": "Juice Scruggs",
+   "team": "DET",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_09_DET_MIA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 77.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T15:47+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Detroit Lions injury updates: Kerby Joseph won't play vs. Dolphins; Juice Scruggs back at center? www.freep.com/story/sports...",
+     "quote": "Juice Scruggs back at center",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzg5ulajik2w",
+     "player": "Juice Scruggs",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T15:47+00:00",
+   "player": "Kedon Slovis",
+   "team": "GB",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_09_GB_NE",
+   "roster": "team_mismatch",
+   "certainty": 0.6,
+   "lead_vs_report_h": 77.2,
+   "line_move": {
+    "after": -0.5,
+    "before": 0.5
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T15:47+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Ravens add possible starting QB just two days ahead of Week 9 showdown with Jaguars",
+     "quote": "Baltimore could turn to Kedon Slovis",
+     "link": "https://www.cbssports.com/nfl/news/ravens-add-starting-qb-kedon-slovis-week-9/",
+     "player": "Kedon Slovis",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-04T00:41+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Lamar Jackson Headed to Injured Reserve as Ravens Sign Quarterback Kedon Slovis - Yahoo Sports",
+     "quote": "Ravens Sign Quarterback Kedon Slovis",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUDBRaGFabGJvYjZHaFgtNUZQTjRsS25NcHVQY3o0OGdkU2hmS3hpd2pfd3hweHgzUEVHY2xSX3pvNHd6ZG1yZ1dCT2ZkZ1F0LW4wUTJQMUdsa21iVXBSNVFnakl0R05OSEJyWktraEE1emtaRWpvVG9nZ2tYWWxRZjZKVUN6NHJwMWVCUA?oc=5",
+     "player": "Kedon Slovis",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T15:47+00:00",
+   "player": "Tanner McKee",
+   "team": "PHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_09_NYG_PHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 77.2,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T15:47+00:00",
+     "source": "google_qb",
+     "outlet": "roundtable.io",
+     "title": "Sean Mannion Will Remain Eagles' OC, Tanner McKee to Start Again Next Week - roundtable.io",
+     "quote": "Tanner McKee to Start Again Next Week",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNjBsRm8yNTdCRXhFRGRmU3NBWjY5MDV2RUh5dGpTR2RUTkE3S0w1Q1FvSnEyVmkzZER2S3hlbjBySzZJRHNMMmNFOENMd09jSzdLUmhFaXN0N2pfTWVfcmNubm13T0QxeHdhMS1VdVBfUV81a1p4Yk9hVTgwNVNvbmx1ckY4QzRmb0pzMld4dmhlQjh3RzBxck1qNjFXOG10NVFkWEZlU2FpSzdCU2NEWGtTSHExb0FT?oc=5",
+     "player": "Tanner McKee",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-03T15:23+00:00",
+   "player": "Cade Mays",
+   "team": "DET",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_09_DET_MIA",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 77.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-03T15:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Film study: Cade Mays is still the Detroit Lions\u2019 best center",
+     "quote": "cut short with an ankle injury",
+     "link": "https://sports.yahoo.com/articles/film-study-cade-mays-still-150000385.html",
+     "player": "Cade Mays",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-03T13:43+00:00",
    "player": "Jack Campbell",
@@ -111,6 +813,26 @@
      "title": "Lions sign LB K.J. Britt off Patriots practice squad after injuries to Jack Campbell, Jimmy Rolder www.freep.com/story/sports...",
      "quote": "after injuries to Jack Campbell",
      "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwvfcbwk2c",
+     "player": "Jack Campbell",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T20:46+00:00",
+     "source": "google_injury",
+     "outlet": "WBAL-TV",
+     "title": "Detroit Lions LB Jack Campbell remains hospitalized with a neck injury - WBAL-TV",
+     "quote": "remains hospitalized with a neck injury",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPQ1NET25MeDhhMy1SdDEzVEFlaVZvOTJ5bWMwYzJGZHNDUTJLNnlXZ3hqeFBKUEQxRm1vTG5BVHJwQk5hZEN1dlhaczlzREVMZTVaeUFtdFcyZF9oQkc2alZNODdlMS1HQzE3akRKR2ZualN1Z01MUEs5RnZWLUNwaHFpVjY?oc=5",
+     "player": "Jack Campbell",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-04T01:01+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Injury Central",
+     "title": "Lions LB Jack Campbell Remains Hospitalized With Neck Injury, Condition Improving - Sports Injury Central",
+     "quote": "Lions LB Jack Campbell Remains Hospitalized With Neck Injury",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPZTBueHp1VUJ2TGo0V3gzLWJSZUlKZVN3VDNzTTBsYVlRNThJc3Q0Zk8xbTVxMVVjNjFOY2hhTU9xM3Q5bmExNUxXRUZRa0JwakVtQXRLdENqb2RNVE9sR2NxblJoTVRxbUExRENkakgtTTk3S0txVXBydE0tOWtJdjF3NlVUczhrTlhoWFpJZ2VFRXgtOExHc2d0Zy15TmR1YmZIejRpdEF4dw?oc=5",
      "player": "Jack Campbell",
      "signal": "out"
     }
@@ -188,6 +910,16 @@
      "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzfwg4icxk2h",
      "player": "Kerby Joseph",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T15:47+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Detroit Lions injury updates: Kerby Joseph won't play vs. Dolphins; Juice Scruggs back at center? www.freep.com/story/sports...",
+     "quote": "Kerby Joseph won't play vs. Dolphins",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzg5ulajik2w",
+     "player": "Kerby Joseph",
+     "signal": "out"
     }
    ]
   },
@@ -226,7 +958,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 82.3,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": null
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -272,6 +1007,26 @@
      "title": "Ravens could place Tyler Loop on IR, Jake Moody to kick vs. Jaguars",
      "quote": "Ravens could place Tyler Loop on IR",
      "link": "https://sports.yahoo.com/articles/ravens-could-place-tyler-loop-110000435.html",
+     "player": "Tyler Loop",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T15:23+00:00",
+     "source": "google_injury",
+     "outlet": "NFLTradeRumors.co",
+     "title": "Ravens K Tyler Loop Could Go On IR With Groin Injury - NFLTradeRumors.co",
+     "quote": "Could Go On IR With Groin Injury",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQVl9QbXN5cXpSYWhab1B6TktmTHJia3ZmNFNfTzFXNjVybE5EdlRRb1p6bE5iSUN5VmMwUHBLZG95NFdCeTM4LWtqcWFFd3lPd0M5WWlUenJ5UGFsb1VWeWFhYWpOUG5zdFBzTjhtSjFBVHY4V1pFcEdCanhDNV9yVGEyOHNfUQ?oc=5",
+     "player": "Tyler Loop",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T21:49+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Ravens put Tyler Loop on injured reserve",
+     "quote": "Ravens put Tyler Loop on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/ravens-put-tyler-loop-on-injured-reserve",
      "player": "Tyler Loop",
      "signal": "injured_reserve"
     }
@@ -773,6 +1528,16 @@
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-kendrick-bourne-has-a-fractured-tibia-will-miss-the-rest-of-the-season",
      "player": "Kendrick Bourne",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-03T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals WR Kendrick Bourne\u2019s 2026 season is over after ankle injury - Yahoo Sports",
+     "quote": "Cardinals WR Kendrick Bourne's 2026 season is over after ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQbGhaT25XX0xoalAxd0wxTVZHckxaU1V5QU1ySGZvLUl5Ym52dkJpb0lzRk9tcXp2WHNNTWRjUU9kSTFhSHNzc1RYbHl3NlZPeFR6bWxtWTZNZUpZNTUtZU44cnhrdWpNa3NNdmJkcFBYdXhfVmJLMzR6dEwtQjIwXzIwM2w2THktT1E?oc=5",
+     "player": "Kendrick Bourne",
+     "signal": "out"
     }
    ]
   },
@@ -806,6 +1571,66 @@
      "title": "Jeremiyah Love injury: Arizona Cardinals RB has new ankle injury - Yahoo Sports",
      "quote": "Arizona Cardinals RB has new ankle injury",
      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUDljQTlTWEwtVGVhQjJueXR2SnJfNlR6eHVPc3NwMVpfOTRvV04zTDRhcHJldkRiQXl5b2FsZThTR1lEYXE1RXhJMGI1R3JQZjdJSjF2TEZoWnBKcHhmMFBqT3RUT3RtREV6WGdTUnpCZzZUbkFXOUhQUXFfOGZOM2dkbXNDc1RZTGtTb0RJWjVqdw?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T19:02+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals RB Jeremiyah Love reportedly headed to injured reserve with high-ankle sprain",
+     "quote": "headed to injured reserve with a high-ankle sprain",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/cardinals-rb-jeremiyah-love-reportedly-headed-to-injured-reserve-with-high-ankle-sprain-185652450.html",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T19:26+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Jeremiyah Love headed to IR with high-ankle sprain",
+     "quote": "Jeremiyah Love headed to IR with high-ankle sprain",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-jeremiyah-love-headed-to-ir-with-high-ankle-sprain",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T19:40+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Jeremiyah Love's difficult rookie season takes another hit with trip to injured reserve",
+     "quote": "heads to injured reserve",
+     "link": "https://www.cbssports.com/nfl/news/cardinals-jeremiyah-loves-injured-reserve-ankle-2026/",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T19:40+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals RB Jeremiyah Love reportedly headed to injured reserve with high-ankle sprain, the third ankle injury of his rookie season",
+     "quote": "reportedly headed to injured reserve with high-ankle sprain",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/cardinals-rb-jeremiyah-love-reportedly-headed-to-injured-reserve-with-high-ankle-sprain-the-third-ankle-injury-of-his-rookie-season-192641170.html",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T19:40+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals RB Jeremiyah Love reportedly headed to injured reserve with high-ankle sprain, the third ankle injury of his rookie season - Yahoo Sports",
+     "quote": "reportedly headed to injured reserve with high-ankle sprain",
+     "link": "https://news.google.com/rss/articles/CBMiowJBVV95cUxNYzN2M1R3RGtvMENhQWU0UFNxN2JFNk9JREIxWE9henpnbjdSWWNxS2pLTVJfRmI1VDhFUjRPblo0YTQ1dGZUQ3pIYUNNeldVMEp0QklhV2RoUHIyRGgwQ3pwZ1JOVXRrTFlJNGdEVG5MTUptMXdoblRXLWN1b05wMkRWTWs0aWhCbFFWQXRyb1NRWDVmVE1SVjQ2Y3NvbHpoTmlfb2NDYUxQTkU0SjBHeDRkUkJNM0dTanpYckJIdVVtdGRnM25zOU5zaTlEWjZkeHFHSTVjOHBLbEdldFNJOFlFUFhuTWsteE1WbGhWMURJSzhtTm9kb1JOQlV2OG5LRjl5eXZEQ1BPRzlKbGRTekMxdW5wSWItR0N5MFVjMFoxclE?oc=5",
+     "player": "Jeremiyah Love",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T20:01+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jeremiyah Love is heading to injured reserve with ankle injury",
+     "quote": "placing rookie running back Jeremiyah Love on inured reserve",
+     "link": "https://sports.yahoo.com/articles/jeremiyah-love-heading-injured-ankle-192745829.html",
      "player": "Jeremiyah Love",
      "signal": "injured_reserve"
     }
@@ -1100,6 +1925,36 @@
      "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mze4dscazs26",
      "player": "Jack Campbell",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-03T16:45+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Dan Campbell: Jack Campbell is \"improving\"",
+     "quote": "improving",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dan-campbell-jack-campbell-is-improving",
+     "player": "Jack Campbell",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-03T20:01+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jack Campbell injury update: Lions coach says LB 'improving' after neck injury - Yahoo Sports",
+     "quote": "Lions coach says LB 'improving' after neck injury",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOVmpRd2tJU2NSVXREaVdMZC11SFlOYnRRam9UT3RwUUJNLVZ0NjFuTkw5cG84aGFQYThkT09tRzBvVnRxQmcyOXZRRFpvRkl6Wlg3MFdveFNGclByMDVnQ3VxX0xfQTB2eWtNZWpKWG1jdjY4QzhUSWhvZ2x5QmkzNXdiNHZoTVZp?oc=5",
+     "player": "Jack Campbell",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-03T20:13+00:00",
+     "source": "google_injury",
+     "outlet": "Hawk Central",
+     "title": "Former Iowa star Jack Campbell 'improving' after injury, Lions coach says - Hawk Central",
+     "quote": "'improving' after injury, Lions coach says",
+     "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOX3g4WWx0SW1aTHFGc3A3emVDMGV6dzFDdFlXdHVjY3N5dWpmYmU1OW5wemludy1Md0FtS0Vsdy1sYWRjRnZmU1hxZm9rLWI3VVdpZllnTGhBT1VVZFIzZDBKbmlqMUphLXZRNXJ2dkpQWDIxdktxLWRlWV82T19GNmIxU20tTTZMTXpzc1hVbWxOenJRSlpUd2RWb2pSZGJoc2tMQ25sWm4wek5sU2FmMVFMY2dBZlNIY2hPYnpBZWluTzBIdzl6empPWHowYjFPWHJaTkhGUzg?oc=5",
+     "player": "Jack Campbell",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -1153,6 +2008,36 @@
      "title": "Lions lost linebacker Jimmy Rolder to season-ending hamstring injury vs. Vikings",
      "quote": "will miss the rest of the season after suffering a hamstring injury",
      "link": "https://sports.yahoo.com/articles/lions-lost-linebacker-jimmy-rolder-223650607.html",
+     "player": "Jimmy Rolder",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T21:57+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Detroit Lions create 2 roster spots, place Jimmy Rolder on IR",
+     "quote": "placing LB Jimmy Rolder on injured reserve",
+     "link": "https://sports.yahoo.com/articles/detroit-lions-create-2-roster-214521014.html",
+     "player": "Jimmy Rolder",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T23:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Lions put LB Jimmy Rolder on IR, waive DB Bishop Fitzgerald",
+     "quote": "season-ending hamstring injury during Sunday's win over the Vikings and they moved him to the injured reserve list",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/lions-put-lb-jimmy-rolder-on-ir-waive-db-bishop-fitzgerald",
+     "player": "Jimmy Rolder",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T23:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Lions put LB Jimmy Rolder on IR, waive DB Bishop Fitzgerald",
+     "quote": "season-ending hamstring injury during Sunday's win over the Vikings and they moved him to the injured reserve list",
+     "link": "https://sports.yahoo.com/articles/lions-put-lb-jimmy-rolder-230432821.html",
      "player": "Jimmy Rolder",
      "signal": "injured_reserve"
     }
@@ -1247,6 +2132,16 @@
      "title": "Jaguars DT DaVon Hamilton likely out for season with torn quad, sources say - ESPN",
      "quote": "Jaguars DT DaVon Hamilton likely out for season with torn quad",
      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQQ0NGcDV4Uk53a24zX08tY1hYLS1sU3dKZGFub3JaRndYVWEtQWgxUWYyTEk2a3dhcGFnU0tEUnNVOXNMZURDRXhQNDBIQTZmUnVRRmdrTk5RU3ZCSXEzQWY4VnBEWUoyX2hncU8zVjM4SnZhbXdJOUl6dTdfbUF4Zm8wWHpHWkNmVW0wU3pzZ2RsMmNidkhUZ2sxcWc?oc=5",
+     "player": "DaVon Hamilton",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T23:44+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jaguars Place 2 Key Defensive Players on Injured Reserve",
+     "quote": "Eric Murray and DaVon Hamilton were officially placed on IR today",
+     "link": "https://sports.yahoo.com/articles/jaguars-place-2-key-defensive-231523385.html",
      "player": "DaVon Hamilton",
      "signal": "injured_reserve"
     }
@@ -1377,6 +2272,16 @@
      "title": "Bengals DE Cashius Howell had surgery to repair his wrist. Probably trending toward IR. CB DJ Turner II (heel) will be day-to-day. DE Cedric",
      "quote": "had surgery to repair his wrist. Probably trending toward IR",
      "link": "https://bsky.app/profile/bbaby41.bsky.social/post/3mzdvo4loic2t",
+     "player": "Cashius Howell",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-03T16:02+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bengals place DE Cashius Howell on injured reserve",
+     "quote": "place DE Cashius Howell on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bengals-place-de-cashius-howell-on-injured-reserve",
      "player": "Cashius Howell",
      "signal": "injured_reserve"
     }
@@ -3127,6 +4032,66 @@
      "title": "Who is Joe Fagnano? Meet Ravens undrafted QB replacing injured Lamar Jackson, Tyler Huntley - Yahoo Sports",
      "quote": "undrafted QB replacing injured Lamar Jackson, Tyler Huntley",
      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOdGlSYWZ6aVE4M0F4dnZvT0ljcTYxZEhVWWg3VkNIT3VoT3Y1QXFaZmlfVGYwRV8xTE5KUnZaZGVCSC1kaFU0SnFZMjZsOEtXNEdGbnZtRHl1Z2lCSjM4bXJ0UmFVbEVJSkQ0aThfSDdtaHRCNWdNUXgzVUlmNGVIanhuSmRHRFRnNlE?oc=5",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T20:46+00:00",
+     "source": "google_injury",
+     "outlet": "Ravens Wire",
+     "title": "Ravens' name Joe Fagnano starting QB for Thursday night vs. Jaguars - Ravens Wire",
+     "quote": "Ravens' name Joe Fagnano starting QB for Thursday night vs. Jaguars",
+     "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOZXIxTzlGSlhabW95S255MHl5OGZmN1NtaTdnUzZfVV9aYkdPMzVLcy04a0pHRGdqdUJtVGw2b0Zya0VCdDV2VUxjazJBUlZSRWJ1YmZMT0V5ODlMT0h0alVGMmcwcHFCZkFhcWRrVXFtTm1ZbVBVR19BQmRINjB4MlN3QnVMWm44WHE5cTZMRVYtT0R6c3pKZTByQUJtTVNFWVJ0VjNSaXZoM0QtUTFWMW9zZ1NkaGhXSUxwTkVmYWRTekVSOFpfSFBpZlRvbEk?oc=5",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T21:01+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens name undrafted rookie Joe Fagnano Thursday's starting QB vs. Jaguars - Yahoo Sports",
+     "quote": "Ravens name undrafted rookie Joe Fagnano Thursday's starting QB vs. Jaguars",
+     "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPaURPMWhaYVQyUGlOaEg2R2xfVzVBYk13SVloTHBlTkhITXlSSmN6dGpGd2dTLUZjWXkzMzQ3STFaS3lSOXRqeDVPa1JsN0JJMkV0SXMydDdJZjlDMXlSRDFHenNsUGd4SktzTHNfbnB0N0ZBeVZscVJndGpERU9vc0syY0p2UDl4MWxUSFRfM1pUXzgxS1dJZW1GZXV4NkZZY3pfNUhIOUpjLW9oeW1BWDJFR0J3N1NXQlFuUzJ0cTFiaVk?oc=5",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T21:01+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens name undrafted rookie Joe Fagnano Thursday&#39;s starting QB vs. Jaguars",
+     "quote": "Joe Fagnano's first career start",
+     "link": "https://sports.yahoo.com/nfl/article/ravens-name-undrafted-rookie-joe-fagnano-thursdays-starting-qb-vs-jaguars-204738388.html",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T21:01+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Joe Fagnano will be the Ravens QB on Thursday night",
+     "quote": "Joe Fagnano will be the Ravens QB on Thursday night",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jesse-minter-says-joe-fagnano-will-be-ravens-qb-on-thursday-night",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T21:01+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Joe Fagnano will be the Ravens QB on Thursday night",
+     "quote": "Joe Fagnano will be the Ravens QB on Thursday night",
+     "link": "https://sports.yahoo.com/articles/joe-fagnano-ravens-qb-thursday-204441557.html",
+     "player": "Joe Fagnano",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-03T21:01+00:00",
+     "source": "google_qb",
+     "outlet": "theScore",
+     "title": "Ravens to start Fagnano at QB on TNF vs. Jaguars - theScore",
+     "quote": "Ravens to start Fagnano at QB on TNF vs. Jaguars",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPaGlSeGFUMkctLWtJd20yVTlwSV9BNDc3amlnOHdZRnBKaFRuTXhFUnF6V3dyNzhtWExXWVdLRk5XUmpvcnV0OE5ZR2duR01ycGdrZEJYaXNzT1F3OEdsVklSOFpRT2Jjb0ZLbm5aRmVxdF8xck9oQjJFd2k1SmNtZENtTjQ4a0lVV1RnZjhDbThsOFk?oc=5",
      "player": "Joe Fagnano",
      "signal": "will_start"
     }
@@ -7740,6 +8705,16 @@
      "title": "Packers WR Christian Watson returns vs. Panthers after leaving game in ambulance coughing up blood with broken rib - Yahoo Sports",
      "quote": "returns vs. Panthers after leaving game in ambulance coughing up blood with broken rib",
      "link": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxPOHc4OV9YNUMzX0JfYVJCbGN4M0FwRERBWk9mWHpfNmdtWTdXSkprMjlzUVVkaE5mMFNidTRuTi0xYUJyMmotQkVsMXE0a3VJLWRuWlUxVUlSRUdQQnpCcGJnQzdEbnR5SV9XUTdXd3Z5Q3NQTVJjU2s5WEZnWTBvNGJCTHRwa05VX1U4Rjl5U2VKZUlRVGtQdXdUc3RiN3dwZkhVTGVOTkt3Nl9iTFNuTDNSYnBQNkJNaXd6d2oySjlKeXhQQlFUWUZHY3B3RlVPMzI3Z1JOQy1PV1VzbVFsdnR5dWhqRDBReklEaW1IQ0tyTXpkV0pEZW96ajJfdHVMbDJmLTNRNHJGSDg?oc=5",
+     "player": "Christian Watson",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-03T18:48+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Week 9 fantasy wide receiver rankings: Top WR streamers, starts",
+     "quote": "After leaving his Week 8 game with a broken rib, Packers WR Christian Watson returned to top the 100-yard mark",
+     "link": "https://sports.yahoo.com/articles/week-9-fantasy-wide-receiver-182253570.html",
      "player": "Christian Watson",
      "signal": "returning"
     }
