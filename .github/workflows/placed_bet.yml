@@ -69,3 +69,9 @@ jobs:
       - id: deployment_retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
+        # 2026-11-04: both tries timed out during a GitHub Pages hiccup; the next hourly run publishes anyway, so a
+        # missed publish is a warning, not a failed run. A site that stays stale is caught by the freshness check
+        # in the hourly watch (alert + failed run after 3 h).
+        continue-on-error: true
+      - if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
+        run: echo "::warning::GitHub Pages publish failed twice; the next run will publish"

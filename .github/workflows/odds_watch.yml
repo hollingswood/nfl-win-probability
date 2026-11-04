@@ -153,6 +153,13 @@ jobs:
         if: steps.commit.outputs.changed == 'true'
         with:
           path: site
+      - name: Site freshness check (fails the run if the live page hasn't been republished for 3+ hours)
+        run: |
+          lm=$(curl -sI "https://hollingswood.github.io/nfl-win-probability/" | tr -d '\r' | awk -F': ' 'tolower($1)=="last-modified"{print $2}')
+          if [ -z "$lm" ]; then echo "::warning::could not read the live page's Last-Modified"; exit 0; fi
+          age=$(( ( $(date -u +%s) - $(date -u -d "$lm" +%s) ) / 60 ))
+          echo "live page last published $age min ago ($lm)"
+          if [ "$age" -gt 180 ]; then echo "::error::live page is $age min old: GitHub Pages publishing keeps failing"; exit 1; fi
       - name: Phone alert if this run failed
         if: failure()
         continue-on-error: true
@@ -182,3 +189,9 @@ jobs:
       - id: deployment_retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
+        # 2026-11-04: both tries timed out during a GitHub Pages hiccup; the next hourly run publishes anyway, so a
+        # missed publish is a warning, not a failed run. A site that stays stale is caught by the freshness check
+        # in the hourly watch (alert + failed run after 3 h).
+        continue-on-error: true
+      - if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
+        run: echo "::warning::GitHub Pages publish failed twice; the next run will publish"
