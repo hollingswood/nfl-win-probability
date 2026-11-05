@@ -22,3 +22,11 @@ contested (2+ against): 47% (n 114).
 
 Reading: published pickers agreeing tells you nothing the closing line doesn't; heavy agreement may be a mild fade
 signal (consistent with the public piling onto popular sides) but this sample can't separate that from noise.
+
+## Follow-up: unanimous HOT pickers (hot_consensus_prereg.json) — FAIL
+
+Hot = frozen rule v1 (named, 60%+ on 8+ picks over the prior 4 weeks); 4-15 hot pickers per week from NFL wk 6 / college wk 7.
+- 2+ hot pickers on a side, none hot against (primary): 16-22, 42.1% (n 38), one-sided p 0.90 -> FAIL
+- 3+ hot, none hot against: 8-16, 33% (n 24)
+- 2+ hot and nobody at all against: 3-2 (n 5)
+- exactly 1 hot picker, none hot against: 55.8% (n 43, p 0.33)
