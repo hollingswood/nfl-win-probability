@@ -1,0 +1,17 @@
+{
+ "name": "picker_consensus_v1",
+ "registered": "2026-11-05, before any consensus result was computed (only pick counts per game were looked at: NFL ~170 game-markets, median 6 pickers; college ~370, median 2)",
+ "question": "Tyler 2026-11-05: is there an edge when several published pickers take the same bet, and how do opposing picks change it?",
+ "data": "every pick picks_score.run counts (matched to its real game, first seen before kickoff, deduped per picker), NFL + college, all graded games to date",
+ "unit": "one row per (sport, game, class). class 'side' pools spread and moneyline picks by team (a picker on the same team in both counts once); class 'total' = over/under. A picker counts once per direction; '<outlet> staff' counts as one picker",
+ "variables": {"F": "pickers on the majority direction", "A": "pickers on the other direction", "net": "F - A", "share": "F / (F + A)"},
+ "ties": "F == A rows are dropped (no majority)",
+ "bet_graded": "majority direction at the CLOSE: side = spread cover at the closing spread (NFL nflverse spread_line, college CFBD close), total = over/under at the closing total; pushes dropped; break-even 52.38% at -110",
+ "tests": {
+  "T1_primary": "one test: linear probability of majority cover on net (all sports and classes pooled, one row per unit). Two-sided p < 0.05 on the slope (direction unknown: follow or fade)",
+  "T2_grid": "descriptive grid by sport x class x F bucket (1, 2, 3, 4-5, 6+) x A bucket (0, 1, 2+): cover rate, n, two-sided binomial p vs 50%. A cell counts as a LEAD only if it is significant after Bonferroni over all non-empty cells with n >= 20, OR it has p < 0.05 in the dev period (games before 2026-10-20) and replicates in the same direction with p < 0.05 in the holdout (games from 2026-10-20)",
+  "T3_bettable": "for leads only: NFL line move from the moment the majority first reached its F (first-seen time of the F-th picker) to the last snapshot before kickoff (pick_steam.Snaps US consensus); positive = betting at that moment beats the close further",
+  "follow_up": "a lead is NOT an edge: it is frozen (rule written down) and judged only on games after 2026-11-05 before any paper track or alert is built"
+ },
+ "notes": "Small samples: with ~500 units, a cell needs roughly 60%+ over 100+ games to mean anything. Expect most cells to be noise."
+}
