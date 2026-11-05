@@ -1,0 +1,13 @@
+{
+ "name": "hot_consensus_v1",
+ "registered": "2026-11-05, before computing it (follow-up to consensus_v1 at Tyler's request: 'what about unanimous hot pickers?')",
+ "hot": "exactly the frozen hot-picker rule v1 (picks_hot_rules.json): a NAMED picker with >= 60% on >= 8 graded picks in the same sport over the 4 previous weeks is hot for the next week",
+ "unit_and_grading": "same as consensus_v1: one row per (sport, game, class side|total), direction graded at the close, pushes dropped, break-even 52.38%",
+ "groups": {
+  "H2": ">= 2 hot pickers on one direction and 0 hot pickers on the other (primary)",
+  "H2_all": "H2 and nobody (hot or not) on the other direction",
+  "H3": ">= 3 hot pickers, 0 hot against",
+  "H1": "exactly 1 hot picker on the direction, 0 hot against (comparison)"
+ },
+ "test": "primary H2: one-sided binomial p < 0.05 for cover > 52.38%; the other groups are descriptive. A pass is a lead to freeze and judge on games after 2026-11-05, not an edge"
+}
