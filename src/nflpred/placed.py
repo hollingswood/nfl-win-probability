@@ -253,10 +253,59 @@ TRACK_LABELS = {None: "Moneyline v1", "spread": "Spread v1", "moneyline_v2": "Mo
                 "cfb_body_clock": "Body clock"}
 
 
+_FINALS: dict = {}
+
+
+def finals(sport: str, root: Path = ROOT) -> dict:
+    """game_id -> (away_pts, home_pts) for finished games (college: CFBD cache; NFL: nflverse games.parquet)."""
+    if sport not in _FINALS:
+        out = {}
+        try:
+            if sport == "cfb":
+                import gzip
+                for p in sorted((root / "data" / "cfb" / "raw").glob("games_*_*.json.gz")):
+                    for g in json.load(gzip.open(p)):
+                        if g.get("completed") and g.get("homePoints") is not None and g.get("awayPoints") is not None:
+                            out[str(g["id"])] = (float(g["awayPoints"]), float(g["homePoints"]))
+            else:
+                import pandas as pd
+                g = pd.read_parquet(root / "data" / "raw" / "games.parquet", columns=["game_id", "home_score", "away_score"])
+                out = {r.game_id: (float(r.away_score), float(r.home_score)) for r in g.itertuples() if pd.notna(r.home_score)}
+        except Exception as e:
+            print("placed: finals unavailable for", sport, e)
+        _FINALS[sport] = out
+    return _FINALS[sport]
+
+
+def score_manual(rec: dict, root: Path = ROOT) -> dict:
+    """A bet with no paper twin (e.g. a Robinhood spread) graded from the final score. rec['game'] = {sport, game_id,
+    away, home, kickoff_utc, market: ml|spread|total, side: home|away|over|under, point (that side's spread / total)}."""
+    r, g = dict(rec), rec["game"]
+    r.update(matchup=f"{g['away']} @ {g['home']}", game_id=g["game_id"], kickoff_utc=g.get("kickoff_utc"),
+             track_name="Your own pick", track=None)
+    f = finals(g.get("sport", "nfl"), root).get(str(g["game_id"]))
+    if not f:
+        r["status"] = "open"
+        return r
+    a, h = f
+    r["final"] = f"{int(a)}-{int(h)}"
+    if g["market"] == "total":
+        d = (a + h - g["point"]) * (1 if g["side"] == "over" else -1)
+    else:
+        d = (h - a if g["side"] == "home" else a - h) + (g.get("point") or 0 if g["market"] == "spread" else 0)
+    res = "push" if d == 0 else "win" if d > 0 else "loss"
+    r["status"], r["result"] = "graded", res
+    if rec.get("decimal") and rec.get("stake"):
+        r["profit"] = round(0.0 if res == "push" else rec["stake"] * (rec["decimal"] - 1) if res == "win" else -rec["stake"], 2)
+    return r
+
+
 def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     r = dict(rec)
     b = ledgers.get(rec.get("bet_id") or "")
     if not b:
+        if not rec.get("bet_id") and isinstance(rec.get("game"), dict):
+            return score_manual(rec)
         r["status"] = "manual" if not rec.get("bet_id") else "unmatched"
         return r
     away, home = b.get("away_team") or b.get("away"), b.get("home_team") or b.get("home")
@@ -292,6 +341,8 @@ def sport_of(rec: dict, paper: dict | None) -> str:
     bid = str(rec.get("bet_id") or "")
     if paper and (paper.get("sport") == "cfb" or str(paper.get("track") or "").startswith("cfb")):
         return "cfb"
+    if isinstance(rec.get("game"), dict) and rec["game"].get("sport"):
+        return rec["game"]["sport"]
     if bid.startswith("cfb") or "NCAAF" in bid or re.search(r"\b(college|ncaa|cfb)\b", f"{rec.get('notes', '')} {rec.get('pick', '')}", re.I):
         return "cfb"
     return "nfl"
