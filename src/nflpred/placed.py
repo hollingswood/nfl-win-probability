@@ -282,7 +282,7 @@ def score_manual(rec: dict, root: Path = ROOT) -> dict:
     away, home, kickoff_utc, market: ml|spread|total, side: home|away|over|under, point (that side's spread / total)}."""
     r, g = dict(rec), rec["game"]
     r.update(matchup=f"{g['away']} @ {g['home']}", game_id=g["game_id"], kickoff_utc=g.get("kickoff_utc"),
-             track_name="Your own pick", track=None)
+             track_name=f"{rec['picker']} pick" if rec.get("picker") else "Your own pick", track=None)
     f = finals(g.get("sport", "nfl"), root).get(str(g["game_id"]))
     if not f:
         r["status"] = "open"
