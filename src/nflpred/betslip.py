@@ -144,7 +144,7 @@ def urls(blocks: dict, pred: dict | None, college: bool) -> dict:
     events = latest_events(ROOT / "history" / ("cfb" if college else ""))
     out = {}
     for k, block in blocks.items():
-        if not (k.endswith("_bets") and isinstance(block, dict)):
+        if not ((k == "bets" or k.endswith("_bets")) and isinstance(block, dict)):   # "bets" = Moneyline v1
             continue
         for b in (block.get("open") or []) + (block.get("new") or []):
             if b.get("id") and b["id"] not in out and b.get("status", "open") == "open":

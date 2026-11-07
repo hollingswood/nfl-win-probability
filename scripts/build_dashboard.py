@@ -263,7 +263,7 @@ def log_urls(predictions: dict) -> dict:
         return {}
     out = {}
     for k, block in predictions.items():
-        if k.endswith("_bets") and isinstance(block, dict):
+        if (k == "bets" or k.endswith("_bets")) and isinstance(block, dict):   # "bets" = Moneyline v1
             for b in block.get("open") or []:
                 if b.get("id"):
                     out[b["id"]] = log_url(b)
@@ -305,7 +305,7 @@ def add_prior_versions(pred: dict, history: Path = ROOT / "history") -> dict:
     current version's validation, so the track record would otherwise look empty after a version bump).
     Ledger = history/paper_bets_<key without _bets>.json (paper_bets.json for the v1 moneyline 'bets')."""
     for key, B in pred.items():
-        if not (key.endswith("_bets") and isinstance(B, dict) and B.get("rules_version") is not None):
+        if not ((key == "bets" or key.endswith("_bets")) and isinstance(B, dict) and B.get("rules_version") is not None):
             continue
         path = history / ("paper_bets.json" if key == "bets" else f"paper_bets_{key[:-5]}.json")
         try:

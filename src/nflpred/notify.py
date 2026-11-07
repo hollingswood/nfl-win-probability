@@ -219,10 +219,16 @@ def bet_line(key: str, b: dict, pred: dict) -> str:
     return " · ".join(parts)
 
 
+def is_bet_block(key: str) -> bool:
+    """Paper-track blocks in predictions.json: '<track>_bets', plus 'bets' = Moneyline v1 (its key predates the
+    naming; until 2026-11-07 every '_bets' filter skipped it: no v1 phone alerts, no I placed it / slip links)."""
+    return key == "bets" or key.endswith("_bets")
+
+
 def collect(pred: dict) -> list[tuple[str, dict]]:
     out = []
     for key, block in pred.items():
-        if key.endswith("_bets") and isinstance(block, dict):
+        if is_bet_block(key) and isinstance(block, dict):
             for b in block.get("new") or []:
                 out.append((key, b))
     return out
@@ -322,7 +328,7 @@ if __name__ == "__main__" and sys.argv[1:2] == ["--sample-bet"]:
     from pathlib import Path
     root = Path(__file__).resolve().parents[2]
     pred = json.loads((root / "output" / "predictions.json").read_text())
-    cands = [(k, b) for k, v in pred.items() if k.endswith("_bets") and isinstance(v, dict) for b in (v.get("open") or [])
+    cands = [(k, b) for k, v in pred.items() if is_bet_block(k) and isinstance(v, dict) for b in (v.get("open") or [])
              if not b.get("player") and b.get("game_id")]
     pick = next(((k, b) for k, b in cands if (betslip.for_bet(b, pred) or {}).get("kind") == "slip"), cands[0] if cands else None)
     ok = bool(pick) and send_bet(pick[0], pick[1], [pick[0]], pred, None, prefix="TEST · ")

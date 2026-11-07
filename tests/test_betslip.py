@@ -74,3 +74,12 @@ def test_every_channel_keeps_i_placed_it(monkeypatch):
     assert po["url"].startswith("https://sportsbook.fanduel.com") and po["html"] == "1"
     assert '>I placed it</a>' in po["message"] and "&lt;+330&gt; &amp; more" in po["message"] and "&amp;selectionId=2" in po["message"]
     assert [b[0]["text"] for b in tg["reply_markup"]["inline_keyboard"]] == ["Bet at FanDuel", "I placed it", "Dashboard"]
+
+
+def test_moneyline_v1_block_gets_alerts_and_links():
+    # Moneyline v1 lives under "bets" (not "<track>_bets"); every filter used to skip it (2026-11-07)
+    from nflpred import notify as N
+    pred = {"bets": {"new": [{"id": "g:home"}], "open": [{"id": "g:home"}]}, "spread_bets": {"new": [{"id": "g:spread:home"}]},
+            "board": {"new": [{"id": "x"}]}}
+    assert [k for k, _ in N.collect(pred)] == ["bets", "spread_bets"]
+    assert N.is_bet_block("bets") and not N.is_bet_block("board")
