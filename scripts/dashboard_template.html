@@ -822,7 +822,7 @@ function mktBox(label, rows, emptyHtml, extra='', cmp=''){
   const r=rows[0];
   return `<div class="mkt is-${r.st.k}"><div class="mh"><span>${label}</span><span class="mhr"><span class="gl">GRADE</span>${gradeBadge(r.grade, r.gtip, false, r.tier)}${stPill(r.st)}</span></div>
     ${cmp}<span class="pick">${esc(r.pick)}</span><span class="odds">best price at ${esc(r.book)}</span>
-    ${r.why.join('')}<span class="why">${esc(r.st.d)}</span>${extra}
+    ${r.why.join('')}<span class="why">${esc(r.st.d)}</span>${r.bet?`<span class="why">${logLink(r.bet)}</span>`:''}${extra}
     ${rows.slice(1).map(o=>`<span class="why">Other side: <b>${esc(o.pick)}</b> · grade ${o.grade||'—'} · ${o.st.t}</span>`).join('')}</div>`;
 }
 
@@ -859,9 +859,9 @@ function totalBox(g){
   const wtxt = st ? st.d : reasons.length ? cap1(reasons.map(niceReason).join('; ')) : 'not evaluated';
   return `<div class="mkt tot ${best1?'is-'+best1.k:''}"><div class="mh"><span>TOTAL</span><span class="mhr">${gradeHtml}${pill}</span></div>
     <div class="tg"><div style="display:grid;gap:2px">${left}${model}</div><div style="display:grid;gap:2px">${best}</div></div>${tgLine}
-    <span class="why"><span class="${windy?'warn':''}">${weatherText(g)}</span> · Wind-under track: ${esc(wtxt)}</span>
-    <span class="why">Early-under track${e?` (${esc(`Under ${e.point} ${od(e.price)} ${e.book}`)}, sharp fair ${e.sharp_total})`:''}: ${esc(eTxt)}</span>
-    ${as_?`<span class="why">A+ totals track (${esc(pickOf(as_))} ${esc(as_.book||'')}): ${esc(cap1(ast.d))}</span>`:''}</div>`;
+    <span class="why"><span class="${windy?'warn':''}">${weatherText(g)}</span> · Wind-under track: ${esc(wtxt)}${ts&&ts.open?' '+logLink(ts.open):''}</span>
+    <span class="why">Early-under track${e?` (${esc(`Under ${e.point} ${od(e.price)} ${e.book}`)}, sharp fair ${e.sharp_total})`:''}: ${esc(eTxt)}${es&&es.open?' '+logLink(es.open):''}</span>
+    ${as_?`<span class="why">A+ totals track (${esc(pickOf(as_))} ${esc(as_.book||'')}): ${esc(cap1(ast.d))}${as_.open?' '+logLink(as_.open):''}</span>`:''}</div>`;
 }
 const sameML = (a,b) => a&&b&&a.team===b.team&&a.price===b.price&&a.book===b.book&&a.verdict===b.verdict&&Math.abs((a.ev_sharp??0)-(b.ev_sharp??0))<0.001;
 // per-track detail on a game card: every current track, its status and the grade of the offer it points at
@@ -874,7 +874,7 @@ function trackLines(g){
     const x = s.mkt==='ml' ? sideG2(g, s.side, s.price) : null;
     const t = s.mkt==='tot' ? sideTG(g, s.side||'under', s.point, s.price) : null;
     const gr = x ? gradeBadge(x.grade, g2Tip(x)) : t ? gradeBadge(t.grade, tgTip(t), false, tgTier(t.grade)) : s.mkt==='sp'&&sb&&sb.team===s.team&&sb.ev>0 ? gradeBadge(sb.grade, spTip(sb)) : '';
-    return `<div class="tk"><span class="tn">${CHIP[s.key]}</span>${stPill(st)}<span class="td">${gr?gr+' ':''}${esc(pickOf(s))} ${esc(s.book||'')}</span><span class="why">${st.k==='no'?'':esc(s.why)+'. '}${esc(cap1(st.d))}</span></div>`;
+    return `<div class="tk"><span class="tn">${CHIP[s.key]}</span>${stPill(st)}<span class="td">${gr?gr+' ':''}${esc(pickOf(s))} ${esc(s.book||'')}</span><span class="why">${st.k==='no'?'':esc(s.why)+'. '}${esc(cap1(st.d))}${s.open?' '+logLink(s.open):''}</span></div>`;
   });
   return `<details class="trk"${hot?' open':''}><summary class="subh">Track by track · ${hot?`${hot} of ${S.length} active`:`all ${S.length} say no`}</summary>${L.join('')}</details>`;
 }
@@ -910,7 +910,7 @@ function exchLine(g){
   const good=Object.values(x.best||{}).filter(b=>b.ev!=null&&b.ev>=0).sort((a,b)=>b.ev-a.ev).slice(0,3)
     .map(b=>`<b>${esc(b.label)}</b> ${esc(b.side==='over'||b.side==='under'?cap1(b.side)+' '+b.point:(b.side==='home'?g.home_team:g.away_team)+(b.point!=null?' '+ptd(b.point):''))} ${od(b.price)} (${sgn(b.ev)})`);
   const lg=OPEN_EXCH[g.game_id]||[];
-  const tail = lg.length ? ` · paper bet: ${lg.map(b=>esc(`${b.team} ${od(b.price)} ${b.book}`)).join(', ')}` : good.length ? ` · at or above fair: ${good.join(', ')}` : ' · none beat Pinnacle fair after fees';
+  const tail = lg.length ? ` · paper bet: ${lg.map(b=>esc(`${b.team} ${od(b.price)} ${b.book}`)+' '+logLink(b)).join(', ')}` : good.length ? ` · at or above fair: ${good.join(', ')}` : ' · none beat Pinnacle fair after fees';
   return parts.length||good.length||lg.length ? `<div class="ctx"><span title="Prices after each venue's fees (Robinhood = Kalshi's book + 1¢ commission + exchange fee). Moneyline shown; fair = Pinnacle no-vig."><span class="chip">${CHIP.exch}</span>Exchanges after fees: ${parts.join(' · ')}${tail}</span></div>` : '';
 }
 function sp2Line(g){
@@ -923,7 +923,7 @@ function propsLine(g){
   const v=g.props_receptions; if(!v) return '';
   const R=RULES.props_rec||{}, when=Date.parse(v.early_check_at||''), lg=OPEN_PROPS[g.game_id]||[];
   let d;
-  if(lg.length) d = `${lg.length} paper bet${lg.length===1?'':'s'}: ${lg.slice(0,6).map(b=>esc(`${b.player} ${cap1(b.side)} ${b.point} ${od(b.price)} ${b.book}`)).join(' · ')}${lg.length>6?' …':''}`;
+  if(lg.length) d = `${lg.length} paper bet${lg.length===1?'':'s'}: ${lg.slice(0,6).map(b=>esc(`${b.player} ${cap1(b.side)} ${b.point} ${od(b.price)} ${b.book}`)+' '+logLink(b)).join(' · ')}${lg.length>6?' …':''}`;
   else if(v.checked_at) d = `checked ${fmtWhen(Date.parse(v.checked_at))}${v.quoted_players!=null?` (${v.quoted_players} players quoted)`:''}: no price beat the other books by 2%+`;
   else if(Number.isFinite(when) && when > Date.now()-((R.window_tolerance_minutes||50)*60000)) d = `checks prices at ${fmtWhen(when)}`;
   else d = 'no check (window passed or no live odds)';

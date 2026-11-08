@@ -14,7 +14,7 @@ import os
 import re
 import sys
 import urllib.parse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -256,6 +256,14 @@ TRACK_LABELS = {None: "Moneyline v1", "spread": "Spread v1", "moneyline_v2": "Mo
 _FINALS: dict = {}
 
 
+def _ts(v):
+    try:
+        t = datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    return t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+
+
 def finals(sport: str, root: Path = ROOT) -> dict:
     """game_id -> (away_pts, home_pts) for finished games (college: CFBD cache; NFL: nflverse games.parquet)."""
     if sport not in _FINALS:
@@ -320,7 +328,17 @@ def score(rec: dict, ledgers: dict, schedule: dict | None = None) -> dict:
     if pd_ and ud:
         r["price_vs_paper"] = round(ud / pd_ - 1, 4)  # +2% = you got 2% more payout than the track logged
     if b.get("status") != "graded":
-        r["status"] = "open"
+        if b.get("status") in ("expired", "void", "cancelled") and isinstance(rec.get("game"), dict):
+            # the paper twin never got a result (e.g. a Kalshi resting bid that never filled): grade the real bet
+            # from the final score instead, keeping the track label
+            m = score_manual(rec)
+            m.update({k: r[k] for k in ("track_name", "track", "paper_price", "paper_book", "price_vs_paper") if k in r})
+            return m
+        kick = _ts(r.get("kickoff_utc"))
+        r["status"] = "check" if b.get("status") in ("expired", "void", "cancelled") or (
+            kick and datetime.now(timezone.utc) - kick > timedelta(days=3)) else "open"
+        if r["status"] == "check":
+            r["note"] = f"paper bet {b.get('status')}: add the game to grade it from the final score"
         return r
     same = rec.get("point") is None or b.get("point") is None or float(rec["point"]) == float(b["point"])
     res = b.get("result") if same else (None if b.get("player") else _result_at_point(b, float(rec["point"])))

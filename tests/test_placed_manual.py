@@ -22,3 +22,13 @@ def test_manual_bet_open_until_final(monkeypatch):
     monkeypatch.setitem(P._FINALS, "cfb", {})
     r = P.score(_rec("ml", "home", None), {})
     assert r["status"] == "open" and r["matchup"] == "Texas @ Missouri"
+
+
+def test_expired_paper_twin_falls_back_to_final(monkeypatch):
+    monkeypatch.setitem(P._FINALS, "cfb", {"1": (20.0, 28.0)})
+    rec = _rec("ml", "home", None, stake=64.0, cents=64) | {"bet_id": "kmk:X"}
+    led = {"kmk:X": {"id": "kmk:X", "status": "expired", "track": "kalshi_maker", "price": -178, "home": "Missouri", "away": "Texas"}}
+    r = P.score(rec, led)
+    assert r["status"] == "graded" and r["result"] == "win" and r["track_name"] and r["profit"] == 36.0
+    r2 = P.score({k: v for k, v in rec.items() if k != "game"}, led)
+    assert r2["status"] == "check"
