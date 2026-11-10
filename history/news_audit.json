@@ -1,30 +1,30 @@
 {
- "generated_at": "2026-11-10T00:12+00:00",
- "signals": 16588,
- "units": 3406,
+ "generated_at": "2026-11-10T14:53+00:00",
+ "signals": 16667,
+ "units": 3429,
  "skipped": {
-  "team_unclear": 411,
+  "team_unclear": 412,
   "no_game": 435,
-  "not_game_week": 974
+  "not_game_week": 978
  },
  "roster_check": {
-  "match": 15655,
-  "team_mismatch": 504,
-  "not_found": 427,
+  "match": 15730,
+  "team_mismatch": 507,
+  "not_found": 428,
   "ambiguous": 2
  },
- "graded": 1664,
- "pending": 76,
+ "graded": 1684,
+ "pending": 71,
  "overall": {
-  "n": 1664,
-  "correct": 1362,
-  "pct": 81.9
+  "n": 1684,
+  "correct": 1381,
+  "pct": 82.0
  },
  "by_signal": {
   "benched": {
-   "n": 11,
-   "correct": 6,
-   "pct": 54.5
+   "n": 12,
+   "correct": 7,
+   "pct": 58.3
   },
   "doubtful": {
    "n": 30,
@@ -32,24 +32,24 @@
    "pct": 90.0
   },
   "expected_to_play": {
-   "n": 451,
-   "correct": 358,
+   "n": 457,
+   "correct": 363,
    "pct": 79.4
   },
   "injured_reserve": {
-   "n": 212,
-   "correct": 173,
-   "pct": 81.6
+   "n": 214,
+   "correct": 175,
+   "pct": 81.8
   },
   "out": {
-   "n": 564,
-   "correct": 504,
-   "pct": 89.4
+   "n": 573,
+   "correct": 513,
+   "pct": 89.5
   },
   "returning": {
-   "n": 273,
-   "correct": 197,
-   "pct": 72.2
+   "n": 274,
+   "correct": 198,
+   "pct": 72.3
   },
   "suspended": {
    "n": 6,
@@ -57,40 +57,477 @@
    "pct": 50.0
   },
   "will_start": {
-   "n": 117,
-   "correct": 94,
-   "pct": 80.3
+   "n": 118,
+   "correct": 95,
+   "pct": 80.5
   }
  },
  "qb": {
-  "n": 164,
-  "correct": 111,
-  "pct": 67.7,
-  "pending": 24
+  "n": 168,
+  "correct": 114,
+  "pct": 67.9,
+  "pending": 23
  },
  "rule_population": {
-  "n": 136,
-  "correct": 98,
-  "pct": 72.1,
-  "pending": 17
+  "n": 138,
+  "correct": 100,
+  "pct": 72.5,
+  "pending": 18
  },
  "official_report_agreement": {
-  "n": 1433,
-  "agree": 1066,
-  "pct": 74.4
+  "n": 1450,
+  "agree": 1076,
+  "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 1740,
-  "median": 24.8,
-  "share_before_report": 65.5
+  "n": 1755,
+  "median": 25.6,
+  "share_before_report": 65.8
  },
  "qb_line_move_6h": {
-  "n": 268,
-  "avg_abs_after": 0.71,
-  "avg_abs_before": 0.36,
-  "avg_after_negative_signals": -0.53
+  "n": 284,
+  "avg_abs_after": 0.7,
+  "avg_abs_before": 0.37,
+  "avg_after_negative_signals": -0.54
  },
  "rows": [
+  {
+   "seen_at": "2026-11-10T14:23+00:00",
+   "player": "Jessie Bates",
+   "team": "JAX",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_JAX_TEN",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 78.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T14:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Liam Coen: \"Definitely a curve\" to getting Jessie Bates ready this week",
+     "quote": "Definitely a curve to getting Jessie Bates ready this week",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/liam-coen-definitely-a-curve-to-getting-jessie-bates-ready-this-week",
+     "player": "Jessie Bates",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T07:23+00:00",
+   "player": "Mike Evans",
+   "team": "SF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 85.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T07:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "49ers star receivers Mike Evans and Deebo Samuel head in opposite injury directions",
+     "quote": "preparing to go another week without Mike Evans",
+     "link": "https://sports.yahoo.com/articles/49ers-star-receivers-mike-evans-025630125.html",
+     "player": "Mike Evans",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T06:23+00:00",
+   "player": "Rhamondre Stevenson",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 86.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T06:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Source: Pats' Rhamondre Stevenson expected to miss time with knee tendon issue - ESPN",
+     "quote": "expected to miss time with knee tendon issue",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNS1hCeDRhMnVCZEtMLUZRY0NpTUN2Ni1TMTdHYmJoSVpINE9qbm5lYjdLRTlQMUdubGJMbmtHWWltcUJTTm9EczNmUGx3bnpyM2phNDNTUHJDUHhZLThfMnB6NEdEYkxTbHZUMWt6bG1Vc3Yydi11bVc4Q2hnZjBwelNtalc2RjFFQTZZTDVsMmw0ZVlzN3BWX3VSZVZVV2Jy?oc=5",
+     "player": "Rhamondre Stevenson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T04:59+00:00",
+   "player": "Jalen Travis",
+   "team": "IND",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 88.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T04:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Colts\u2019 Jalen Travis out 2-4 weeks after suffering knee injury vs. Cowboys - Yahoo Sports",
+     "quote": "out 2-4 weeks after suffering knee injury",
+     "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5ydnhNNTZsb1gzdGFadlpRX2o2VFpKamFBamNpNjlFVm5FcnR1eEVsS3hyN0JpcXA5S19Tb21wVDJqYWtjRFR3VUphakFMQVVKd2xnWXlYNC0yNjhGTEs3VDh4bWV4RlFzc0N2bnhQcTFUbF9mMkZNbVJFTQ?oc=5",
+     "player": "Jalen Travis",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T02:57+00:00",
+   "player": "Gardner Minshew",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": true,
+   "game_id": "2026_10_LA_ARI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 90.0,
+   "line_move": {
+    "after": 0.0,
+    "before": -2.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "google_injury",
+     "outlet": "Broncos Wire",
+     "title": "Cardinals signing ex-Broncos quarterback after Gardner Minshew injury - Broncos Wire",
+     "quote": "after Gardner Minshew injury",
+     "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNQlc0WURneW9Yd010cUVheWlYRUFGaHpFODBBTjhTc3RUN3VRYkFOU1pPOTI3bDFTc204TXg5ZGVrZGdKTjFxSHZ4Z29URDRRbUNyZk54NjlfUlFrdmtjWU5tdFVVeUtPdkVrcjRfcUVMZWNsdXAxaHAzTUxGXzAyUXo2clY1LTNjLWFYaGNPd3IyWGV3b0FKdDM1cWI0Y0FQLVN5dFBkVUJQYkJkcGFhSzUzN0ZpTEtodXBaYWVOVnZkZmxEOUg5ZWlsckhyd1d4RXZCYkh6VEM1UQ?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T05:23+00:00",
+     "source": "google_injury",
+     "outlet": "Diario AS",
+     "title": "Josh Jacobs signs with Arizona after Gardner Minshew\u2019s elbow injury - Diario AS",
+     "quote": "Gardner Minshew's elbow injury",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPOXhqVmFhZVNRMEpDQzRGdWJORzFzNmQ4ZHlBdEFic0JlQW1tdWpKXzllUWdPMUlWdE81Z1dGSjg2UDZHOGNCaUk1OGJnaHlPWHVkbXpWZnE1TmFzeWNQaTF3a0lsTTYxUnF4enFzbTZtZHptRElYR2otemYteERfX2ZNUEkxNmVwUGNOblBFMzVTWm1aN20xTmNNRnlSUUo30gG0AUFVX3lxTE8yN2FxNXZaT1VkWFRkb0JOcWVWN1RGV0QtWVI5OXZQa1UtQ1Ntak9QRHNZNEFOdkJySGxYME9IazNfQWRlSDdQTUFOdXdieGlzVnRqYVNNNW45T0pGVkZuWXZ5RGg1YmwyZjFldDRwTmNsT1c4LU5WV2xRbWhDUndUNmlKSGJoQWlUc1B3cFJ0OUZDYm5NQ2xiSG1qMUo5Vl9QZXRfZ002ZzBBZlZMNUk2MEFiYg?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T02:57+00:00",
+   "player": "A.J. Brown",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "The Patriots are already without A.J. Brown, Romeo Doubs, Michael Onwenu and Alijah Vera-Tucker. Now, Rhamondre Stevenson is expected to mis",
+     "quote": "already without A.J. Brown",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mzwgcq4pys2l",
+     "player": "A.J. Brown",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T02:57+00:00",
+   "player": "Romeo Doubs",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "The Patriots are already without A.J. Brown, Romeo Doubs, Michael Onwenu and Alijah Vera-Tucker. Now, Rhamondre Stevenson is expected to mis",
+     "quote": "already without Romeo Doubs",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mzwgcq4pys2l",
+     "player": "Romeo Doubs",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T02:57+00:00",
+   "player": "Michael Onwenu",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "The Patriots are already without A.J. Brown, Romeo Doubs, Michael Onwenu and Alijah Vera-Tucker. Now, Rhamondre Stevenson is expected to mis",
+     "quote": "already without Michael Onwenu",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mzwgcq4pys2l",
+     "player": "Michael Onwenu",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T02:57+00:00",
+   "player": "Alijah Vera-Tucker",
+   "team": "NE",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "The Patriots are already without A.J. Brown, Romeo Doubs, Michael Onwenu and Alijah Vera-Tucker. Now, Rhamondre Stevenson is expected to mis",
+     "quote": "already without Alijah Vera-Tucker",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mzwgcq4pys2l",
+     "player": "Alijah Vera-Tucker",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:59+00:00",
+   "player": "Justin Jefferson",
+   "team": "MIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_MIN_GB",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 91.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Justin Jefferson is standing on the sideline, talking to Kyler Murray and wide receivers coach Keenan McCardell. He's getting his helmet on ",
+     "quote": "getting his helmet on and preparing to go back in teh game",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3mzwdmf64sd2g",
+     "player": "Justin Jefferson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:59+00:00",
+   "player": "Tyler Goodson",
+   "team": "DAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 91.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Jake Ferguson, Tyler Goodson will miss multiple weeks for Cowboys",
+     "quote": "will play \"multiple weeks\" without backup running back Tyler Goodson",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jake-ferguson-tyler-goodson-will-miss-multiple-weeks-for-cowboys",
+     "player": "Tyler Goodson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T02:13+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Jake Ferguson, Tyler Goodson will miss multiple weeks for Cowboys",
+     "quote": "will miss multiple weeks",
+     "link": "https://sports.yahoo.com/articles/jake-ferguson-tyler-goodson-miss-015459313.html",
+     "player": "Tyler Goodson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "google_injury",
+     "outlet": "NDTV Sports",
+     "title": "Jake Ferguson Injury Update: Cowboys Tight End And Tyler Goodson Face Multi-Week Absences - NDTV Sports",
+     "quote": "Tyler Goodson Face Multi-Week Absences",
+     "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQbzdDQWJIeEtyQlNQdHBxbUozeEt2aEhUTTFBdzMwVkltajV1cFdIMmxQVWQ2ZnBBMzRuWUF2UHMyT2tKRmVPbW0wYTRqRlZ1dUJwS0doU0x0R1JLUFZSa3VMSDdtZi01M3VaUHBUMXk2cVdUNGtUMjZXRV9TVm1Zb0VxTFFrMWtvdm5TWFM5a2pGTG9GUUhfVWYwZ002UHBrWHFnb29YbEdYV1dVZk9od3lkSEk4LUNnTEVXM3ozaHBUTXVzYko0?oc=5",
+     "player": "Tyler Goodson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:38+00:00",
+   "player": "Justin Herbert",
+   "team": "LAC",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 115.4,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:38+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Imaging showed no fracture in Justin Herbert's finger",
+     "quote": "Imaging showed no fracture in Justin Herbert's finger",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/imaging-showed-no-fracture-in-justin-herberts-finger",
+     "player": "Justin Herbert",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Imaging showed no fracture in Justin Herbert&#39;s finger",
+     "quote": "Imaging showed no fracture in Justin Herbert's finger",
+     "link": "https://sports.yahoo.com/articles/imaging-showed-no-fracture-justin-013155401.html",
+     "player": "Justin Herbert",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Imaging showed no fracture in Justin Herbert&#39;s finger",
+     "quote": "Imaging showed no fracture in Justin Herbert's finger",
+     "link": "https://sports.yahoo.com/articles/imaging-showed-no-fracture-justin-013155401.html",
+     "player": "Justin Herbert",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:23+00:00",
+   "player": "Dion Dawkins",
+   "team": "BUF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_BUF_NYJ",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dion Dawkins and Alec Anderson Among Bills Inactives For Week 9 - Yahoo Sports",
+     "quote": "Among Bills Inactives For Week 9",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQdmRvR3dHY3lXTEVmcHZ3ZDVMVXVZV3Boel9xYXBOUV8tRUpqaHJRWnhpTEt6Zm9uQ0FVYW8zOVVuMy1xcG15c3BObGVvbEcxMTVkQXhaeGdocGZCZDNydGllMG1hREUyc2llN2NXQnRwREo4ZXk4S3h3SzNFMzl1TjIzNnVETnhR?oc=5",
+     "player": "Dion Dawkins",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:23+00:00",
+   "player": "Alec Anderson",
+   "team": "BUF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_BUF_NYJ",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dion Dawkins and Alec Anderson Among Bills Inactives For Week 9 - Yahoo Sports",
+     "quote": "Among Bills Inactives For Week 9",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQdmRvR3dHY3lXTEVmcHZ3ZDVMVXVZV3Boel9xYXBOUV8tRUpqaHJRWnhpTEt6Zm9uQ0FVYW8zOVVuMy1xcG15c3BObGVvbEcxMTVkQXhaeGdocGZCZDNydGllMG1hREUyc2llN2NXQnRwREo4ZXk4S3h3SzNFMzl1TjIzNnVETnhR?oc=5",
+     "player": "Alec Anderson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T01:23+00:00",
+   "player": "Max Brosmer",
+   "team": "MIN",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_10_MIN_GB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 91.6,
+   "line_move": {
+    "after": -1.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T01:23+00:00",
+     "source": "google_qb",
+     "outlet": "Pioneer Press",
+     "title": "Max Brosmer will be backup quarterback for Vikings against Bills - Pioneer Press",
+     "quote": "will be backup quarterback for Vikings against Bills",
+     "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQaWxlUVJtaV9raVY1NGVGd2p5WnVLajhqNGtvSF9lZWRhZ0Z4eEd1b3ZiTXJQSGpJSVJzSWg4NmFLQUt1RW03R3E2cFMtZDh0eEt3LUkySm9OaHdBM0J6WnZwODJnV0lqZmxjWlNlSERBQjlXWnc1bEdjX1RnTDRNQmhzYzFsaExTYVA4LXp0YWpnLThCUVNjSzZSUkZCNHhzXzZic0dB?oc=5",
+     "player": "Max Brosmer",
+     "signal": "will_start"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-09T23:59+00:00",
    "player": "Skyler Bell",
@@ -101,7 +538,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -126,7 +566,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -136,6 +579,26 @@
      "title": "Bills inactives vs. Vikings (Week 9, 2026): WR Skyler Bell LT Dion Dawkins LG Alec Anderson DL Greg Gaines OLB Mike Danna S Jalon Kilgore",
      "quote": "Bills inactives vs. Vikings (Week 9, 2026): LT Dion Dawkins",
      "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3mzw4chhh6s2p",
+     "player": "Dion Dawkins",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T00:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Monday Night Football: Bills LT Dion Dawkins, LG Alec Anderson are inactive vs. Vikings",
+     "quote": "will not have the left side of their offensive line",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/monday-night-football-bills-lt-dion-dawkins-lg-alec-anderson-are-inactive-vs-vikings",
+     "player": "Dion Dawkins",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Monday Night Football: Bills LT Dion Dawkins, LG Alec Anderson are inactive vs. Vikings",
+     "quote": "will not have the left side of their offensive line",
+     "link": "https://sports.yahoo.com/articles/monday-night-football-bills-lt-000630247.html",
      "player": "Dion Dawkins",
      "signal": "out"
     }
@@ -151,7 +614,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -161,6 +627,26 @@
      "title": "Bills inactives vs. Vikings (Week 9, 2026): WR Skyler Bell LT Dion Dawkins LG Alec Anderson DL Greg Gaines OLB Mike Danna S Jalon Kilgore",
      "quote": "Bills inactives vs. Vikings (Week 9, 2026): LG Alec Anderson",
      "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3mzw4chhh6s2p",
+     "player": "Alec Anderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T00:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Monday Night Football: Bills LT Dion Dawkins, LG Alec Anderson are inactive vs. Vikings",
+     "quote": "will not have the left side of their offensive line",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/monday-night-football-bills-lt-dion-dawkins-lg-alec-anderson-are-inactive-vs-vikings",
+     "player": "Alec Anderson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Monday Night Football: Bills LT Dion Dawkins, LG Alec Anderson are inactive vs. Vikings",
+     "quote": "will not have the left side of their offensive line",
+     "link": "https://sports.yahoo.com/articles/monday-night-football-bills-lt-000630247.html",
      "player": "Alec Anderson",
      "signal": "out"
     }
@@ -176,7 +662,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -201,7 +690,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -226,7 +718,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -251,7 +746,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 93.3,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": -2.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -262,6 +760,26 @@
      "title": "Cardinals' Gardner Minshew feared to have suffered a torn UCL, could be out for season, per report",
      "quote": "Carson Beck would get the start if Minshew is sidelined",
      "link": "https://www.cbssports.com/nfl/news/cardinals-gardner-minshew-feared-torn-ucl-could-out-for-season-report/",
+     "player": "Carson Beck",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "NFL Network: Cardinals' Gardner Minshew likely needs season-ending elbow surgery; Carson Beck in line to start - NFL.com",
+     "quote": "in line to start",
+     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNekVNSTh4cGtZRkhkOTJHb0U1ZjZCVEF2RS1IaWJJdzFHY1Vxb0NKSmk1RE9MZ0Y3N21VV3pXNWNldHdVY0ZZYnpaSFVzdkpXdm9NaDRWU0VidUVERFExY3ZNdDdVdnFqSm5YaWdxOEJjRjQ0b0hOTkhfeEJsOEFwVkpTWUFOVUY1OVZOOF9xSGNoUUg2SXZGUDV0UHpMOG9ua2ZDM05JU2FpTUxwNUExZWFweFZuU0hmUzFuUXdRTWtZOEw0WU5SM2ZhemI?oc=5",
+     "player": "Carson Beck",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "NFL Network: Cardinals' Gardner Minshew likely needs season-ending elbow surgery; Carson Beck in line to start - NFL.com",
+     "quote": "Carson Beck in line to start",
+     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNekVNSTh4cGtZRkhkOTJHb0U1ZjZCVEF2RS1IaWJJdzFHY1Vxb0NKSmk1RE9MZ0Y3N21VV3pXNWNldHdVY0ZZYnpaSFVzdkpXdm9NaDRWU0VidUVERFExY3ZNdDdVdnFqSm5YaWdxOEJjRjQ0b0hOTkhfeEJsOEFwVkpTWUFOVUY1OVZOOF9xSGNoUUg2SXZGUDV0UHpMOG9ua2ZDM05JU2FpTUxwNUExZWFweFZuU0hmUzFuUXdRTWtZOEw0WU5SM2ZhemI?oc=5",
      "player": "Carson Beck",
      "signal": "will_start"
     }
@@ -277,7 +795,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 94.1,
-   "line_move": null,
+   "line_move": {
+    "after": -2.0,
+    "before": 0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -320,6 +841,46 @@
      "link": "https://www.cbssports.com/nfl/news/cardinals-gardner-minshew-feared-torn-ucl-could-out-for-season-report/",
      "player": "Gardner Minshew",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T01:38+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Arizona Cardinals sign veteran quarterback Josh Johnson, signaling likely end of Gardner Minshew season",
+     "quote": "signaling likely end of Gardner Minshew season",
+     "link": "https://sports.yahoo.com/articles/arizona-cardinals-sign-veteran-quarterback-012453516.html",
+     "player": "Gardner Minshew",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T01:38+00:00",
+     "source": "google_injury",
+     "outlet": "Sportsnet.ca",
+     "title": "Report: Cardinals' Minshew likely needs season-ending surgery for torn UCL - Sportsnet.ca",
+     "quote": "Minshew likely needs season-ending surgery for torn UCL",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSWtkcFBYWHh0Mm9VSGx2ZGJVcnZzWmNsV0FnaDRjbnpKYnFsb2lFSXUzQmJQRlJhZHpyWW13eFBZOFlLcFZQUlFQZjFPUEozMzMtbVZ3d1NvQ2pJRmZVOWFtUXlrTXZlMXdkY2hsa0lhQkF6NnNuZUxzOXBvUFVyalRwdUY5cF9MLUlRYk9mUEVvdWRXeks2Y19WWDFibHp4cHg4cURjcmJGWi1xbjlR?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "NFL Network: Cardinals' Gardner Minshew likely needs season-ending elbow surgery; Carson Beck in line to start - NFL.com",
+     "quote": "likely needs season-ending elbow surgery",
+     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNekVNSTh4cGtZRkhkOTJHb0U1ZjZCVEF2RS1IaWJJdzFHY1Vxb0NKSmk1RE9MZ0Y3N21VV3pXNWNldHdVY0ZZYnpaSFVzdkpXdm9NaDRWU0VidUVERFExY3ZNdDdVdnFqSm5YaWdxOEJjRjQ0b0hOTkhfeEJsOEFwVkpTWUFOVUY1OVZOOF9xSGNoUUg2SXZGUDV0UHpMOG9ua2ZDM05JU2FpTUxwNUExZWFweFZuU0hmUzFuUXdRTWtZOEw0WU5SM2ZhemI?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "NFL Network: Cardinals' Gardner Minshew likely needs season-ending elbow surgery; Carson Beck in line to start - NFL.com",
+     "quote": "likely needs season-ending elbow surgery",
+     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNekVNSTh4cGtZRkhkOTJHb0U1ZjZCVEF2RS1IaWJJdzFHY1Vxb0NKSmk1RE9MZ0Y3N21VV3pXNWNldHdVY0ZZYnpaSFVzdkpXdm9NaDRWU0VidUVERFExY3ZNdDdVdnFqSm5YaWdxOEJjRjQ0b0hOTkhfeEJsOEFwVkpTWUFOVUY1OVZOOF9xSGNoUUg2SXZGUDV0UHpMOG9ua2ZDM05JU2FpTUxwNUExZWFweFZuU0hmUzFuUXdRTWtZOEw0WU5SM2ZhemI?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "out"
     }
    ]
   },
@@ -345,6 +906,36 @@
      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNay0tOXZxa0dCSExKZU4zMF8xUzVvd1BlUHZOQ1hNVDNLajhSV0JrdUNld0VwVFU5aWdGaGI3ZXFQOVM5S3pjMUxPSkJZTzZLb0ItZmtFWnNxVURHSlI5Y3g2SEdhREN0c1RobE1sV1J2N0RJZ094d3JDS0hNOERnWjJwdmRBR1E4eVdsdEtxblNhRWJpSDVPaVFFVGd1dw?oc=5",
      "player": "Jake Ferguson",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T01:59+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Jake Ferguson, Tyler Goodson will miss multiple weeks for Cowboys",
+     "quote": "will play \"multiple weeks\" without starting tight end Jake Ferguson",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jake-ferguson-tyler-goodson-will-miss-multiple-weeks-for-cowboys",
+     "player": "Jake Ferguson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T02:13+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Jake Ferguson, Tyler Goodson will miss multiple weeks for Cowboys",
+     "quote": "will miss multiple weeks",
+     "link": "https://sports.yahoo.com/articles/jake-ferguson-tyler-goodson-miss-015459313.html",
+     "player": "Jake Ferguson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "google_injury",
+     "outlet": "NDTV Sports",
+     "title": "Jake Ferguson Injury Update: Cowboys Tight End And Tyler Goodson Face Multi-Week Absences - NDTV Sports",
+     "quote": "Jake Ferguson Injury Update: Cowboys Tight End Face Multi-Week Absences",
+     "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQbzdDQWJIeEtyQlNQdHBxbUozeEt2aEhUTTFBdzMwVkltajV1cFdIMmxQVWQ2ZnBBMzRuWUF2UHMyT2tKRmVPbW0wYTRqRlZ1dUJwS0doU0x0R1JLUFZSa3VMSDdtZi01M3VaUHBUMXk2cVdUNGtUMjZXRV9TVm1Zb0VxTFFrMWtvdm5TWFM5a2pGTG9GUUhfVWYwZ002UHBrWHFnb29YbEdYV1dVZk9od3lkSEk4LUNnTEVXM3ozaHBUTXVzYko0?oc=5",
+     "player": "Jake Ferguson",
+     "signal": "out"
     }
    ]
   },
@@ -358,7 +949,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 94.3,
-   "line_move": null,
+   "line_move": {
+    "after": -2.0,
+    "before": 0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -379,6 +973,16 @@
      "title": "Cardinals rookie QB in line to make NFL debut after Gardner Minshew injury",
      "quote": "Will Carson Beck make his NFL debut in Week 10?",
      "link": "https://sports.yahoo.com/articles/cardinals-rookie-qb-line-nfl-230739029.html",
+     "player": "Carson Beck",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T04:03+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals QB Gardner Minshew could miss the remainder of the season, giving Carson Beck a shot - Yahoo Sports",
+     "quote": "giving Carson Beck a shot",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOeG1VN3c1d3pveUZZY25kNVdRWWRLd19fWkVVaWgyWXNMU2JGeVVYbWJGX1ZEenVOVHh5amFXYUhQR0NJMTZBaGxOS3JOYVFrVmdJQ0ZfWTdSTXduYzBiMjRRMmhNMktNTU1VS0VMUjZYX3E1VS1NLVk5OXd5YmMxQTRnUTFLTm10QTM0?oc=5",
      "player": "Carson Beck",
      "signal": "expected_to_play"
     }
@@ -489,7 +1093,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -524,7 +1131,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -559,7 +1169,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -594,7 +1207,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -629,7 +1245,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -49.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -684,6 +1303,16 @@
      "title": "Cardinals WR Michael Wilson out for season with a neck injury - Yahoo Sports",
      "quote": "out for season with a neck injury",
      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOZi1WbWF5MTYwcWIyQnp5NXpQSXVVOC1ZRHR5ZDZIQThaWU1PNUhFWUZSZUNERmcwOWhuVEFtcElycF9DTGNKRm1PQUJCSW9oUEg0cUFoZGhzallUbUJXSS0tam5IMU82cmV6c2xRblVSb3A2YTFCaHdZRUdYb2pwRm9iNTk4QTlmenB3?oc=5",
+     "player": "Michael Wilson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T04:44+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Michael Wilson Sidelined For Season With Neck Injury - Arizona Cardinals",
+     "quote": "Sidelined For Season With Neck Injury",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQSi02alp5cTg2RkR4YUUwQ1FOa3VBSlFacWNwTDJMdnZhUEctYzZRdF9FSTIxaGJUc3Z5S2FEdDFCc2N4RG9sTlA1VFNMLXcxa2UwazM2Tzlfalo4a0ZoVlpfZjZRYWdfYlJ0RmF3a0w3a096WXREZ1M4VzRsdF9xTHpmSGpGSnpxTG1vMGFn?oc=5",
      "player": "Michael Wilson",
      "signal": "injured_reserve"
     }
@@ -829,7 +1458,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 119.6,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -1000,7 +1632,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 97.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1076,7 +1711,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 98.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1172,7 +1810,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 98.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1898,6 +2539,76 @@
      "link": "https://sports.yahoo.com/articles/rhamondre-stevenson-ruled-packers-game-001321696.html",
      "player": "Rhamondre Stevenson",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T02:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mark-daniels.bsky.social (NE)",
+     "title": "The Patriots are already without A.J. Brown, Romeo Doubs, Michael Onwenu and Alijah Vera-Tucker. Now, Rhamondre Stevenson is expected to mis",
+     "quote": "expected to miss weeks due to a knee injury",
+     "link": "https://bsky.app/profile/mark-daniels.bsky.social/post/3mzwgcq4pys2l",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Patriots RB Rhamondre Stevenson reportedly expected to miss a &#39;few weeks&#39; with tendon injury in knee",
+     "quote": "expected to miss a 'few weeks' with tendon injury in knee",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/patriots-rb-rhamondre-stevenson-reportedly-expected-to-miss-a-few-weeks-with-tendon-injury-in-knee-032118587.html",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T03:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "News story: Patriots preparing to be without RB Rhamondre Stevenson vs. Lions due to knee tendon issue. www.espn.com/nfl/story/_/...",
+     "quote": "preparing to be without RB Rhamondre Stevenson vs. Lions due to knee tendon issue",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3mzwhhzbvu22u",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T03:48+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Patriots RB Rhamondre Stevenson will miss multiple weeks with a knee issue",
+     "quote": "will miss multiple weeks with a knee issue",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/patriots-rb-rhamondre-stevenson-will-miss-multiple-weeks-with-a-knee-issue",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T03:48+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Patriots RB Rhamondre Stevenson will miss multiple weeks with a knee issue",
+     "quote": "will miss multiple weeks with a knee issue",
+     "link": "https://sports.yahoo.com/articles/patriots-rb-rhamondre-stevenson-miss-032118790.html",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T04:03+00:00",
+     "source": "google_injury",
+     "outlet": "The New York Times",
+     "title": "Patriots RB Rhamondre Stevenson expected to miss at least 1 game with knee injury - The New York Times",
+     "quote": "expected to miss at least 1 game with knee injury",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPSTRVb21KaG9aLUtUb09yRm5RaGhIRGozOGVSLXV4WTlaaEhPUHRRcEdLWENnWWcxOC1lR1RldVliSzdjYzg4S1JKYzYwUzl3SkVjU01wa0FqTHlBWk8zQm1KVzhvc2llYUV0QU44dWdNcnFjYXVWVmxsak8yMXNXbUFubTZyRU0tSU9xS0VnNlEwenpHUVhKanpfUTQwTHN0TXZkZnFNVUU4UQ?oc=5",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T04:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Patriots RB Rhamondre Stevenson reportedly expected to miss a 'few weeks' with tendon injury in knee - Yahoo Sports",
+     "quote": "expected to miss a 'few weeks' with tendon injury in knee",
+     "link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPVHV4VlhnNklpbjVUSFkwaHZFOHduYUFIWld3NFdGV250X0trQ2hMN2lQcVpCUVVRWno5RHpXVEFHUkNBNXpodEo3MzE1VXRjV2pvQjJNZGpLZUpQMGRKT0E3dGVuZjZjTVNtQWZxSzhYb241b0hFRF9MVW11bk5RdHkwMXNOcHo0REJEQ05UNUE4T0ZxYjNyMnpaWXdndVdhNG9JNUJHYUpvNG1DT0NHM21iTHUtcGlxcEZoeHVTYUpIU1BfWndHM0hwRURnYW54dTNPQU1yQUJuajVhX01mWFpFU0JHRnNwTlVfZVpPYXpJOEZ4U2dR?oc=5",
+     "player": "Rhamondre Stevenson",
+     "signal": "out"
     }
    ]
   },
@@ -2058,6 +2769,26 @@
      "title": "Rams\u2019 Puka Nacua suffered concerning knee injury during Commanders game that requires MRI - Yahoo Sports",
      "quote": "suffered concerning knee injury during Commanders game that requires MRI",
      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOLTBwV19meFVfcWs0bTVwenFvRS1GUDBVTTBTMkdYamhCcHluTlpUT1NBcnNuZkdFcEhIX0s3TEM3UGpPMWRUczdxZU1RZmtfNTZiQ1k0OG04Z2NlSUd0YzM4aENMci13V1lfNE4wU0VVOFYwTjJIYXYwcnN2bFJrMmc5RC1PamttLWI0dw?oc=5",
+     "player": "Puka Nacua",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T06:05+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Latest Puka Nacua injury update shows WR will miss significant time for LA Rams - Yahoo Sports",
+     "quote": "WR will miss significant time",
+     "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOZEM3eGh2NnQ2Q2hxUzA4WVZUaHVNU0d6MHZYRXd2SWNXTmJvSExKNmxEcGtjZlQ1Sml4Rm5mM2JyRzVKNlBjLTBrS2wtT1ZIcG5rU2Y2ZlI4cFVLZDNXQnQwam5UcXdGQXozSlJySmFZYy1ZZ3p3VHVzYlhITTdIeVFIN193Zw?oc=5",
+     "player": "Puka Nacua",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T14:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Rams&#39; dream season has been a survival test. Now Puka Nacua is out | Opinion",
+     "quote": "Puka Nacua will miss several weeks with injury",
+     "link": "https://sports.yahoo.com/articles/rams-dream-season-survival-test-135345136.html",
      "player": "Puka Nacua",
      "signal": "out"
     }
@@ -2866,6 +3597,16 @@
      "link": "https://bsky.app/profile/spencito.bsky.social/post/3mzvpl2dub22q",
      "player": "Deshaun Watson",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T02:13+00:00",
+     "source": "google_injury",
+     "outlet": "San Antonio Express-News",
+     "title": "A cleared Deshaun Watson, a rising Shedeur Sanders and a Browns QB decision on hold - San Antonio Express-News",
+     "quote": "cleared",
+     "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQMXpwWVBlM2VVUmZVOVdIMENxQ1RxMUpiXzVMb1Iwel8yWHVFelhBUHpmSkdXTjdMaGpjeGkzSjh2Q2hhTFVvX2RBcmxtNXJfeXpMNUJXYXhZR1R1RXNfdDBZazBxTXR0em9iV1FnOVB2YlRPeEQtTUpzZXNUaTVOc3R1MmxDZEItOUxBVEd1Zy13OHo1TTRMbFlHRF9udw?oc=5",
+     "player": "Deshaun Watson",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -3602,7 +4343,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -19.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3642,6 +4386,16 @@
      "title": "Odell Beckham Jr. added to 53-man roster",
      "quote": "Vikings WR Odell Beckham Jr. moved from practice squad to main roster before Week 9 game",
      "link": "https://sports.yahoo.com/articles/odell-beckham-jr-added-53-220543340.html",
+     "player": "Odell Beckham Jr.",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T00:59+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Vikings sign former Giants star to active roster ahead of &#39;Monday Night Football&#39;",
+     "quote": "Vikings sign former Giants star to active roster ahead of 'Monday Night Football'",
+     "link": "https://sports.yahoo.com/articles/vikings-sign-former-giants-star-004412982.html",
      "player": "Odell Beckham Jr.",
      "signal": "expected_to_play"
     }
@@ -4105,7 +4859,10 @@
    "roster": "team_mismatch",
    "certainty": 1.0,
    "lead_vs_report_h": -2.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4398,7 +5155,10 @@
    "roster": "team_mismatch",
    "certainty": 0.85,
    "lead_vs_report_h": -0.8,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4807,7 +5567,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 1.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8599,7 +9362,10 @@
     "after": 0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -8722,7 +9488,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 50.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -8751,7 +9520,10 @@
     "after": 0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -8850,7 +9622,10 @@
     "after": 0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -13017,7 +13792,10 @@
     "after": -0.5,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -76150,9 +76928,9 @@
   "reasons": [
    "precision 72% (needs >= 95%)"
   ],
-  "n": 136,
-  "correct": 98,
-  "precision": 0.7206,
+  "n": 138,
+  "correct": 100,
+  "precision": 0.7246,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
