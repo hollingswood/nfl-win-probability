@@ -122,8 +122,15 @@
         "betwhale",
         "Betwhale",
         42.5,
+        -114,
+        -114
+       ],
+       [
+        "betus",
+        "BetUS",
+        42.0,
         -110,
-        -118
+        -110
        ],
        [
         "betonlineag",
@@ -255,22 +262,22 @@
         "polymarket",
         "Polymarket",
         42.5,
-        104,
+        100,
         -108
        ],
        [
         "prophetx",
         "ProphetX",
         42.5,
-        102,
+        103,
         -111
        ],
        [
         "betopenly",
         "BetOpenly",
         42.0,
-        101,
-        -101
+        100,
+        100
        ],
        [
         "pinnacle",
@@ -281,8 +288,8 @@
        ]
       ]
      },
-     "books": 27,
-     "consensus_home_prob": 0.5475,
+     "books": 28,
+     "consensus_home_prob": 0.5487,
      "sharp_home_prob": 0.5507,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.5505,
@@ -303,7 +310,7 @@
      "pin_sharp_home_prob_shin": 0.5527,
      "pinnacle_home_prob_shin": 0.5521,
      "best_exchange_home_ml": {
-      "price": -123,
+      "price": -124,
       "book": "ProphetX"
      },
      "best_exchange_away_ml": {
@@ -407,18 +414,34 @@
       },
       "betwhale": {
        "ml": [
-        -139,
-        108
+        -143,
+        110
        ],
        "sp": [
-        -2.5,
-        -108,
-        -119
+        -2.0,
+        -114,
+        -114
        ],
        "tot": [
         42.5,
+        -114,
+        -114
+       ]
+      },
+      "betus": {
+       "ml": [
+        -135,
+        115
+       ],
+       "sp": [
+        -1.5,
+        -120,
+        100
+       ],
+       "tot": [
+        42.0,
         -110,
-        -118
+        -110
        ]
       },
       "betonlineag": {
@@ -695,9 +718,9 @@
       }
      },
      "commence_time": "2026-11-13T01:15:00Z",
-     "blend_home_prob": 0.5056,
-     "home_ev_at_best": -0.0931,
-     "away_ev_at_best": 0.058
+     "blend_home_prob": 0.5063,
+     "home_ev_at_best": -0.0919,
+     "away_ev_at_best": 0.0565
     }
    },
    "top_factors": [
@@ -734,8 +757,8 @@
     "predicted_clv": -0.0252,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 65.8,
-    "consensus_total": 42.29,
+    "hours_before": 64.9,
+    "consensus_total": 42.3,
     "sharp_total": 42.27
    },
    "totals_grade_sides": {
@@ -896,11 +919,11 @@
     "book": "FanDuel",
     "p_sharp": 0.5527,
     "p_model": 0.4872,
-    "p_market": 0.5475,
+    "p_market": 0.5487,
     "p_needed": 0.5575,
     "ev_sharp": -0.0086,
     "ev_model": -0.1261,
-    "gap": 0.010022123893805412,
+    "gap": 0.008822123893805434,
     "verdict": "pass",
     "reasons": [
      "best price only -0.9% vs sharp books (need 2%)",
@@ -922,11 +945,11 @@
     "book": "FanDuel",
     "p_sharp": 0.5527,
     "p_model": 0.4872,
-    "p_market": 0.5475,
+    "p_market": 0.5487,
     "p_needed": 0.5575,
     "ev_sharp": -0.0086,
     "ev_model": -0.1261,
-    "gap": 0.010022123893805412,
+    "gap": 0.008822123893805434,
     "verdict": "pass",
     "reasons": [
      "best price only -0.9% vs sharp books (need 2%)",
@@ -985,8 +1008,8 @@
     "price": -110,
     "ev_sharp": -0.0271,
     "sharp_total": 42.27,
-    "consensus_total": 42.29,
-    "hours_before": 65.8,
+    "consensus_total": 42.3,
+    "hours_before": 64.9,
     "verdict": "pass",
     "reasons": [
      "best under only -2.7% vs the sharp fair total (need +0%)",
@@ -1054,7 +1077,7 @@
     "current_grade": "C"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 55.9,
@@ -1088,8 +1111,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": null,
-      "price": -126,
-      "ev": -0.0081,
+      "price": -127,
+      "ev": -0.0116,
       "best_book": "fanduel",
       "best_book_price": -126,
       "best_book_ev": -0.0097
@@ -1098,18 +1121,18 @@
       "label": "ProphetX",
       "side": "away",
       "point": null,
-      "price": 117,
-      "ev": -0.0297,
+      "price": 118,
+      "ev": -0.0253,
       "best_book": "draftkings",
       "best_book_price": 114,
       "best_book_ev": -0.0415
      },
      "spreads:home": {
-      "label": "Polymarket US",
+      "label": "Kalshi",
       "side": "home",
       "point": -2.5,
-      "price": -105,
-      "ev": -0.045,
+      "price": 101,
+      "ev": -0.0177,
       "best_book": "draftkings",
       "best_book_price": -110,
       "best_book_ev": -0.0657
@@ -1128,8 +1151,8 @@
       "label": "ProphetX",
       "side": "over",
       "point": 42.5,
-      "price": -100,
-      "ev": -0.028,
+      "price": 101,
+      "ev": -0.0232,
       "best_book": "espnbet",
       "best_book_price": 100,
       "best_book_ev": -0.0278
@@ -1264,8 +1287,15 @@
         "rebet",
         "ReBet",
         50.5,
-        -110,
-        -110
+        -109,
+        -120
+       ],
+       [
+        "betwhale",
+        "Betwhale",
+        50.5,
+        -109,
+        -119
        ],
        [
         "betrivers",
@@ -1355,7 +1385,7 @@
         "novig",
         "Novig",
         50.5,
-        -108,
+        -111,
         -113
        ],
        [
@@ -1374,8 +1404,8 @@
        ]
       ]
      },
-     "books": 19,
-     "consensus_home_prob": 0.2133,
+     "books": 20,
+     "consensus_home_prob": 0.2134,
      "sharp_home_prob": null,
      "sharp_books": 0,
      "pinnacle_home_prob": null,
@@ -1483,8 +1513,24 @@
        "sp": null,
        "tot": [
         50.5,
-        -110,
-        -110
+        -109,
+        -120
+       ]
+      },
+      "betwhale": {
+       "ml": [
+        330,
+        -476
+       ],
+       "sp": [
+        7.5,
+        -114,
+        -114
+       ],
+       "tot": [
+        50.5,
+        -109,
+        -119
        ]
       },
       "betrivers": {
@@ -1537,8 +1583,8 @@
       },
       "fliff": {
        "ml": [
-        315,
-        -455
+        320,
+        -465
        ],
        "sp": [
         7.5,
@@ -1665,8 +1711,8 @@
       }
      },
      "commence_time": "2026-11-15T18:00:00Z",
-     "blend_home_prob": 0.1662,
-     "home_ev_at_best": -0.1688,
+     "blend_home_prob": 0.1663,
+     "home_ev_at_best": -0.1685,
      "away_ev_at_best": 0.0299
     }
    },
@@ -1722,7 +1768,7 @@
     "predicted_clv": -0.0264,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "consensus_total": 50.84,
     "sharp_total": null
    },
@@ -1967,7 +2013,7 @@
     "current_grade": "C"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "away": {
       "quoted_cents": 81.0,
@@ -2264,7 +2310,7 @@
         "ProphetX",
         47.5,
         -116,
-        105
+        106
        ],
        [
         "pinnacle",
@@ -2302,7 +2348,7 @@
      },
      "best_exchange_away_ml": {
       "price": 108,
-      "book": "Kalshi"
+      "book": "Polymarket"
      },
      "consensus_home_margin": 1.5,
      "best_home_ml": {
@@ -2414,13 +2460,13 @@
       },
       "betwhale": {
        "ml": [
-        -123,
-        -105
+        -125,
+        -103
        ],
        "sp": [
         -1.0,
-        -118,
-        -109
+        -114,
+        -114
        ],
        "tot": [
         48.0,
@@ -2750,7 +2796,7 @@
     "predicted_clv": 0.013,
     "grade": "A+",
     "grading_version": 2,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "consensus_total": 48.33,
     "sharp_total": 48.33
    },
@@ -2940,7 +2986,7 @@
     "ev_sharp": 0.0042,
     "sharp_total": 48.33,
     "consensus_total": 48.33,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "verdict": "lean",
     "reasons": [
      "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
@@ -3016,13 +3062,13 @@
     "current_grade": "A+"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "away": {
-      "quoted_cents": 48.1,
-      "all_in_cents": 49.82,
-      "price": 101,
-      "ev": -0.0456
+      "quoted_cents": 49.0,
+      "all_in_cents": 50.77,
+      "price": -103,
+      "ev": -0.0634
      },
      "home": {
       "quoted_cents": 53.1,
@@ -3033,10 +3079,10 @@
     },
     "robinhood": {
      "away": {
-      "quoted_cents": 48.1,
-      "all_in_cents": 50.08,
-      "price": -100,
-      "ev": -0.0504
+      "quoted_cents": 49.0,
+      "all_in_cents": 51.02,
+      "price": -104,
+      "ev": -0.068
      },
      "home": {
       "quoted_cents": 53.1,
@@ -3080,8 +3126,8 @@
       "label": "ProphetX",
       "side": "under",
       "point": 47.5,
-      "price": 103,
-      "ev": -0.0345,
+      "price": 104,
+      "ev": -0.0299,
       "best_book": "fanduel",
       "best_book_price": 100,
       "best_book_ev": -0.0484
@@ -3158,7 +3204,7 @@
     "live_odds": {
      "event_id": "be0e03cc42fbc9b6962467b22c7bf9dd",
      "totals": {
-      "consensus_total": 39.76,
+      "consensus_total": 39.71,
       "sharp_total": 39.87,
       "median_point": 39.5,
       "totals_by_book": [
@@ -3217,8 +3263,8 @@
         "betwhale",
         "Betwhale",
         39.5,
-        -118,
-        -110
+        -114,
+        -114
        ],
        [
         "betus",
@@ -3350,7 +3396,7 @@
         "novig",
         "Novig",
         39.5,
-        -111,
+        -113,
         106
        ],
        [
@@ -3365,7 +3411,7 @@
         "ProphetX",
         39.5,
         -110,
-        103
+        100
        ],
        [
         "pinnacle",
@@ -3377,7 +3423,7 @@
       ]
      },
      "books": 27,
-     "consensus_home_prob": 0.3295,
+     "consensus_home_prob": 0.3296,
      "sharp_home_prob": 0.3295,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.3281,
@@ -3412,7 +3458,7 @@
       "key": "espnbet"
      },
      "best_away_ml": {
-      "price": -230,
+      "price": -225,
       "book": "DraftKings",
       "key": "draftkings"
      },
@@ -3442,8 +3488,8 @@
      "by_book": {
       "draftkings": {
        "ml": [
-        190,
-        -230
+        185,
+        -225
        ],
        "sp": [
         4.5,
@@ -3502,18 +3548,18 @@
       },
       "betwhale": {
        "ml": [
-        182,
+        184,
         -244
        ],
        "sp": [
-        5.0,
-        -118,
-        -109
+        4.5,
+        -114,
+        -114
        ],
        "tot": [
         39.5,
-        -118,
-        -110
+        -114,
+        -114
        ]
       },
       "betus": {
@@ -3662,8 +3708,8 @@
       },
       "courtside": {
        "ml": [
-        194,
-        -225
+        189,
+        -220
        ],
        "sp": [
         4.5,
@@ -3806,9 +3852,9 @@
       }
      },
      "commence_time": "2026-11-15T18:00:00Z",
-     "blend_home_prob": 0.2975,
-     "home_ev_at_best": -0.1074,
-     "away_ev_at_best": 0.0079
+     "blend_home_prob": 0.2976,
+     "home_ev_at_best": -0.1072,
+     "away_ev_at_best": 0.0146
     }
    },
    "top_factors": [
@@ -3863,8 +3909,8 @@
     "predicted_clv": -0.0357,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 130.6,
-    "consensus_total": 39.69,
+    "hours_before": 129.6,
+    "consensus_total": 39.63,
     "sharp_total": 39.86
    },
    "totals_grade_sides": {
@@ -3902,7 +3948,7 @@
      "draftkings",
      39.5,
      -108,
-     -0.0448
+     -0.0429
     ],
     [
      "over",
@@ -4015,7 +4061,7 @@
     "line moved against this side since first seen"
    ],
    "ml_v2_check": [
-    "best price only -2.8% vs sharp books (need 2%)",
+    "best price only -2.2% vs sharp books (need 2%)",
     "model disagrees",
     "starting QB not confirmed",
     "injury report not out"
@@ -4023,25 +4069,25 @@
    "ml_v2": {
     "side": "away",
     "team": "HOU",
-    "price": -230,
+    "price": -225,
     "book": "DraftKings",
     "p_sharp": 0.6773,
     "p_model": 0.6732,
-    "p_market": 0.6705,
-    "p_needed": 0.697,
-    "ev_sharp": -0.0282,
-    "ev_model": -0.0341,
-    "gap": 0.026469696969697032,
+    "p_market": 0.6704,
+    "p_needed": 0.6923,
+    "ev_sharp": -0.0217,
+    "ev_model": -0.0276,
+    "gap": 0.021907692307692295,
     "verdict": "pass",
     "reasons": [
-     "best price only -2.8% vs sharp books (need 2%)",
+     "best price only -2.2% vs sharp books (need 2%)",
      "model disagrees",
      "starting QB not confirmed",
      "injury report not out"
     ]
    },
    "ml_v3_check": [
-    "best price only -2.8% vs sharp books (need 2%)",
+    "best price only -2.2% vs sharp books (need 2%)",
     "model disagrees",
     "starting QB not confirmed",
     "injury report not out"
@@ -4049,18 +4095,18 @@
    "ml_v3": {
     "side": "away",
     "team": "HOU",
-    "price": -230,
+    "price": -225,
     "book": "DraftKings",
     "p_sharp": 0.6773,
     "p_model": 0.6732,
-    "p_market": 0.6705,
-    "p_needed": 0.697,
-    "ev_sharp": -0.0282,
-    "ev_model": -0.0341,
-    "gap": 0.026469696969697032,
+    "p_market": 0.6704,
+    "p_needed": 0.6923,
+    "ev_sharp": -0.0217,
+    "ev_model": -0.0276,
+    "gap": 0.021907692307692295,
     "verdict": "pass",
     "reasons": [
-     "best price only -2.8% vs sharp books (need 2%)",
+     "best price only -2.2% vs sharp books (need 2%)",
      "model disagrees",
      "starting QB not confirmed",
      "injury report not out"
@@ -4094,13 +4140,13 @@
    ],
    "totals_view": {
     "forecast_wind_mph": 11.9,
-    "consensus_total": 39.76,
+    "consensus_total": 39.71,
     "best_under": {
      "book": "FanDuel",
      "book_key": "fanduel",
      "point": 39.5,
      "price": -105,
-     "ev": -0.0416
+     "ev": -0.0388
     },
     "verdict": "pass",
     "reasons": [
@@ -4118,8 +4164,8 @@
     "price": -105,
     "ev_sharp": -0.0472,
     "sharp_total": 39.86,
-    "consensus_total": 39.69,
-    "hours_before": 130.6,
+    "consensus_total": 39.63,
+    "hours_before": 129.6,
     "verdict": "pass",
     "reasons": [
      "best under only -4.7% vs the sharp fair total (need +0%)",
@@ -4188,7 +4234,7 @@
     "book_key": "fanduel",
     "grade": "C",
     "predicted_clv": -0.0357,
-    "consensus_total": 39.69,
+    "consensus_total": 39.63,
     "sharp_total": 39.86,
     "verdict": "pass",
     "reasons": [
@@ -4197,7 +4243,7 @@
     "team": "Under"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 34.0,
@@ -4244,8 +4290,8 @@
       "price": -218,
       "ev": -0.0114,
       "best_book": "draftkings",
-      "best_book_price": -230,
-      "best_book_ev": -0.0278
+      "best_book_price": -225,
+      "best_book_ev": -0.0212
      },
      "totals:over": {
       "label": "ProphetX",
@@ -4261,8 +4307,8 @@
       "label": "ProphetX",
       "side": "under",
       "point": 39.5,
-      "price": 101,
-      "ev": -0.0092,
+      "price": -102,
+      "ev": -0.0237,
       "best_book": "fanduel",
       "best_book_price": -105,
       "best_book_ev": -0.0373
@@ -4398,8 +4444,8 @@
         "betwhale",
         "Betwhale",
         46.5,
-        -112,
-        -115
+        -114,
+        -114
        ],
        [
         "betonlineag",
@@ -4538,7 +4584,7 @@
         "prophetx",
         "ProphetX",
         46.5,
-        -104,
+        -101,
         -108
        ],
        [
@@ -4692,18 +4738,18 @@
       },
       "betwhale": {
        "ml": [
-        400,
+        390,
         -625
        ],
        "sp": [
         10.5,
-        -118,
-        -110
+        -114,
+        -114
        ],
        "tot": [
         46.5,
-        -112,
-        -115
+        -114,
+        -114
        ]
       },
       "betonlineag": {
@@ -5037,7 +5083,7 @@
     "predicted_clv": -0.0215,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "consensus_total": 46.64,
     "sharp_total": 46.64
    },
@@ -5278,7 +5324,7 @@
     "ev_sharp": -0.0363,
     "sharp_total": 46.64,
     "consensus_total": 46.64,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "verdict": "pass",
     "reasons": [
      "best under only -3.6% vs the sharp fair total (need +0%)",
@@ -5358,7 +5404,7 @@
     "current_grade": "C"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "away": {
       "quoted_cents": 84.0,
@@ -5399,11 +5445,11 @@
       "best_book_ev": -0.0375
      },
      "h2h:home": {
-      "label": "Kalshi",
+      "label": "ProphetX",
       "side": "home",
       "point": null,
-      "price": 456,
-      "ev": -0.0162,
+      "price": 466,
+      "ev": 0.0011,
       "best_book": "draftkings",
       "best_book_price": 440,
       "best_book_ev": -0.0442
@@ -5422,8 +5468,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": 10.5,
-      "price": -108,
-      "ev": -0.0423,
+      "price": -105,
+      "ev": -0.0289,
       "best_book": "espnbet",
       "best_book_price": -110,
       "best_book_ev": -0.05
@@ -5565,8 +5611,8 @@
         "betwhale",
         "Betwhale",
         45.0,
-        -118,
-        -109
+        -114,
+        -114
        ],
        [
         "betus",
@@ -5698,22 +5744,22 @@
         "novig",
         "Novig",
         44.5,
-        -113,
+        -115,
         -102
        ],
        [
         "polymarket",
         "Polymarket",
         44.5,
-        -108,
+        -113,
         100
        ],
        [
         "prophetx",
         "ProphetX",
         45.5,
-        100,
-        -113
+        101,
+        -110
        ],
        [
         "pinnacle",
@@ -5850,18 +5896,18 @@
       },
       "betwhale": {
        "ml": [
-        146,
+        148,
         -192
        ],
        "sp": [
-        3.5,
-        -125,
-        -104
+        3.0,
+        -103,
+        -125
        ],
        "tot": [
         45.0,
-        -118,
-        -109
+        -114,
+        -114
        ]
       },
       "betus": {
@@ -6211,7 +6257,7 @@
     "predicted_clv": -0.0218,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "consensus_total": 45.42,
     "sharp_total": 45.42
    },
@@ -6445,7 +6491,7 @@
     "ev_sharp": -0.0413,
     "sharp_total": 45.42,
     "consensus_total": 45.42,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "verdict": "pass",
     "reasons": [
      "best under only -4.1% vs the sharp fair total (need +0%)",
@@ -6523,7 +6569,7 @@
     "team": "Under"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 37.0,
@@ -6567,8 +6613,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": null,
-      "price": -182,
-      "ev": -0.0216,
+      "price": -184,
+      "ev": -0.0254,
       "best_book": "fanduel",
       "best_book_price": -178,
       "best_book_ev": -0.0145
@@ -6577,8 +6623,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": 3.5,
-      "price": -118,
-      "ev": -0.0283,
+      "price": -116,
+      "ev": -0.0204,
       "best_book": "draftkings",
       "best_book_price": -118,
       "best_book_ev": -0.0269
@@ -6587,8 +6633,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": -3.5,
-      "price": 104,
-      "ev": -0.0351,
+      "price": 103,
+      "ev": -0.0398,
       "best_book": "fanduel",
       "best_book_price": 100,
       "best_book_ev": -0.0534
@@ -6597,8 +6643,8 @@
       "label": "ProphetX",
       "side": "over",
       "point": 45.5,
-      "price": -102,
-      "ev": -0.0283,
+      "price": -101,
+      "ev": -0.0235,
       "best_book": "draftkings",
       "best_book_price": -105,
       "best_book_ev": -0.0418
@@ -6607,8 +6653,8 @@
       "label": "ProphetX",
       "side": "under",
       "point": 45.5,
-      "price": -115,
-      "ev": -0.0491,
+      "price": -112,
+      "ev": -0.0371,
       "best_book": "draftkings",
       "best_book_price": -115,
       "best_book_ev": -0.048
@@ -6671,7 +6717,7 @@
     "live_odds": {
      "event_id": "6c932a965110f3f89ec4a5f1a6ac256e",
      "totals": {
-      "consensus_total": 39.9,
+      "consensus_total": 39.94,
       "sharp_total": 39.87,
       "median_point": 39.5,
       "totals_by_book": [
@@ -6736,9 +6782,9 @@
        [
         "betwhale",
         "Betwhale",
-        39.5,
-        -120,
-        -108
+        40.0,
+        -114,
+        -114
        ],
        [
         "lowvig",
@@ -6856,8 +6902,8 @@
         "kalshi",
         "Kalshi",
         38.5,
-        -122,
-        108
+        -117,
+        113
        ],
        [
         "novig",
@@ -6890,7 +6936,7 @@
       ]
      },
      "books": 27,
-     "consensus_home_prob": 0.2136,
+     "consensus_home_prob": 0.2147,
      "sharp_home_prob": 0.2095,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.2171,
@@ -6911,7 +6957,7 @@
      "pin_sharp_home_prob_shin": 0.1979,
      "pinnacle_home_prob_shin": 0.2064,
      "best_exchange_home_ml": {
-      "price": 388,
+      "price": 376,
       "book": "Novig"
      },
      "best_exchange_away_ml": {
@@ -7031,18 +7077,18 @@
       },
       "betwhale": {
        "ml": [
-        320,
+        330,
         -476
        ],
        "sp": [
-        9.5,
-        -115,
-        -112
+        9.0,
+        -114,
+        -114
        ],
        "tot": [
-        39.5,
-        -120,
-        -108
+        40.0,
+        -114,
+        -114
        ]
       },
       "lowvig": {
@@ -7139,8 +7185,8 @@
       },
       "fliff": {
        "ml": [
-        330,
-        -490
+        335,
+        -495
        ],
        "sp": [
         9.5,
@@ -7315,9 +7361,9 @@
       }
      },
      "commence_time": "2026-11-15T21:05:00Z",
-     "blend_home_prob": 0.1612,
-     "home_ev_at_best": -0.2746,
-     "away_ev_at_best": 0.0339
+     "blend_home_prob": 0.1617,
+     "home_ev_at_best": -0.2722,
+     "away_ev_at_best": 0.0332
     }
    },
    "top_factors": [
@@ -7354,8 +7400,8 @@
     "predicted_clv": -0.0078,
     "grade": "A",
     "grading_version": 2,
-    "hours_before": 133.7,
-    "consensus_total": 39.99,
+    "hours_before": 132.7,
+    "consensus_total": 40.08,
     "sharp_total": 39.86
    },
    "totals_grade_sides": {
@@ -7365,7 +7411,7 @@
      "price": -115,
      "book": "theScore Bet",
      "book_key": "espnbet",
-     "predicted_clv": -0.0541,
+     "predicted_clv": -0.0535,
      "grade": "C",
      "grading_version": 2
     },
@@ -7414,7 +7460,7 @@
      "espnbet",
      39.5,
      -115,
-     -0.0541
+     -0.0535
     ],
     [
      "under",
@@ -7515,11 +7561,11 @@
     "book": "FanDuel",
     "p_sharp": 0.8021,
     "p_model": 0.826,
-    "p_market": 0.7864,
+    "p_market": 0.7853,
     "p_needed": 0.8113,
     "ev_sharp": -0.0114,
     "ev_model": 0.0181,
-    "gap": 0.024920754716981186,
+    "gap": 0.026020754716981176,
     "verdict": "pass",
     "reasons": [
      "best price only -1.1% vs sharp books (need 2%)",
@@ -7539,11 +7585,11 @@
     "book": "FanDuel",
     "p_sharp": 0.8021,
     "p_model": 0.826,
-    "p_market": 0.7864,
+    "p_market": 0.7853,
     "p_needed": 0.8113,
     "ev_sharp": -0.0114,
     "ev_model": 0.0181,
-    "gap": 0.024920754716981186,
+    "gap": 0.026020754716981176,
     "verdict": "pass",
     "reasons": [
      "best price only -1.1% vs sharp books (need 2%)",
@@ -7588,8 +7634,8 @@
     "price": -115,
     "ev_sharp": -0.0154,
     "sharp_total": 39.86,
-    "consensus_total": 39.99,
-    "hours_before": 133.7,
+    "consensus_total": 40.08,
+    "hours_before": 132.7,
     "verdict": "pass",
     "reasons": [
      "best under only -1.5% vs the sharp fair total (need +0%)",
@@ -7654,7 +7700,7 @@
     "current_grade": "A"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 22.0,
@@ -7688,8 +7734,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": null,
-      "price": 353,
-      "ev": -0.0653,
+      "price": 348,
+      "ev": -0.0754,
       "best_book": "draftkings",
       "best_book_price": 350,
       "best_book_ev": -0.0712
@@ -7855,8 +7901,8 @@
         "betwhale",
         "Betwhale",
         40.5,
-        -116,
-        -111
+        -109,
+        -119
        ],
        [
         "betus",
@@ -7996,21 +8042,21 @@
         "Polymarket",
         40.5,
         -104,
-        -108
+        -104
        ],
        [
         "prophetx",
         "ProphetX",
         40.5,
-        -104,
+        -106,
         -107
        ],
        [
         "betopenly",
         "BetOpenly",
         40.5,
-        -102,
-        102
+        104,
+        -104
        ],
        [
         "pinnacle",
@@ -8022,7 +8068,7 @@
       ]
      },
      "books": 28,
-     "consensus_home_prob": 0.554,
+     "consensus_home_prob": 0.5536,
      "sharp_home_prob": 0.5487,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.5665,
@@ -8043,7 +8089,7 @@
      "pin_sharp_home_prob_shin": 0.5507,
      "pinnacle_home_prob_shin": 0.5685,
      "best_exchange_home_ml": {
-      "price": -124,
+      "price": -125,
       "book": "BetOpenly"
      },
      "best_exchange_away_ml": {
@@ -8147,8 +8193,8 @@
       },
       "betwhale": {
        "ml": [
-        -145,
-        112
+        -143,
+        110
        ],
        "sp": [
         -2.5,
@@ -8157,8 +8203,8 @@
        ],
        "tot": [
         40.5,
-        -116,
-        -111
+        -109,
+        -119
        ]
       },
       "betus": {
@@ -8451,9 +8497,9 @@
       }
      },
      "commence_time": "2026-11-15T18:00:00Z",
-     "blend_home_prob": 0.606,
-     "home_ev_at_best": 0.0549,
-     "away_ev_at_best": -0.1333
+     "blend_home_prob": 0.6058,
+     "home_ev_at_best": 0.0546,
+     "away_ev_at_best": -0.1328
     }
    },
    "top_factors": [
@@ -8487,10 +8533,10 @@
     "price": -105,
     "book": "FanDuel",
     "book_key": "fanduel",
-    "predicted_clv": 0.0033,
+    "predicted_clv": 0.0042,
     "grade": "A+",
     "grading_version": 2,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "consensus_total": 40.75,
     "sharp_total": 40.37
    },
@@ -8511,7 +8557,7 @@
      "price": -105,
      "book": "FanDuel",
      "book_key": "fanduel",
-     "predicted_clv": 0.0033,
+     "predicted_clv": 0.0042,
      "grade": "A+",
      "grading_version": 2
     }
@@ -8529,7 +8575,7 @@
      "draftkings",
      40.5,
      -112,
-     -0.0233
+     -0.0229
     ],
     [
      "over",
@@ -8543,7 +8589,7 @@
      "fanduel",
      40.5,
      -105,
-     0.0033
+     0.0042
     ],
     [
      "over",
@@ -8557,7 +8603,7 @@
      "espnbet",
      40.5,
      -110,
-     -0.0199
+     -0.019
     ]
    ],
    "bet_check": [
@@ -8650,11 +8696,11 @@
     "book": "theScore Bet",
     "p_sharp": 0.4493,
     "p_model": 0.3354,
-    "p_market": 0.446,
+    "p_market": 0.4464,
     "p_needed": 0.4545,
     "ev_sharp": -0.0115,
     "ev_model": -0.2621,
-    "gap": 0.008545454545454578,
+    "gap": 0.008145454545454511,
     "verdict": "pass",
     "reasons": [
      "best price only -1.1% vs sharp books (need 2%)",
@@ -8676,11 +8722,11 @@
     "book": "theScore Bet",
     "p_sharp": 0.4493,
     "p_model": 0.3354,
-    "p_market": 0.446,
+    "p_market": 0.4464,
     "p_needed": 0.4545,
     "ev_sharp": -0.0115,
     "ev_model": -0.2621,
-    "gap": 0.008545454545454578,
+    "gap": 0.008145454545454511,
     "verdict": "pass",
     "reasons": [
      "best price only -1.1% vs sharp books (need 2%)",
@@ -8726,7 +8772,7 @@
     "ev_sharp": 0.0002,
     "sharp_total": 40.37,
     "consensus_total": 40.75,
-    "hours_before": 130.6,
+    "hours_before": 129.6,
     "verdict": "lean",
     "reasons": [
      "only bets at the Tue 7:10am AZ run, 96 h-7 days before kickoff"
@@ -8791,7 +8837,7 @@
     "current_grade": "A+"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 57.1,
@@ -8835,8 +8881,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": null,
-      "price": 123,
-      "ev": -0.0356,
+      "price": 124,
+      "ev": -0.0313,
       "best_book": "espnbet",
       "best_book_price": 120,
       "best_book_ev": -0.0507
@@ -8855,8 +8901,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": 2.5,
-      "price": -105,
-      "ev": -0.0289,
+      "price": -106,
+      "ev": -0.0334,
       "best_book": "espnbet",
       "best_book_price": -105,
       "best_book_ev": -0.0285
@@ -8865,8 +8911,8 @@
       "label": "ProphetX",
       "side": "over",
       "point": 40.5,
-      "price": -106,
-      "ev": -0.0199,
+      "price": -108,
+      "ev": -0.0288,
       "best_book": "draftkings",
       "best_book_price": -108,
       "best_book_ev": -0.0282
@@ -9012,6 +9058,13 @@
         -120
        ],
        [
+        "betwhale",
+        "Betwhale",
+        41.0,
+        -119,
+        -109
+       ],
+       [
         "betrivers",
         "BetRivers",
         40.5,
@@ -9093,7 +9146,7 @@
         "Kalshi",
         40.5,
         -108,
-        -104
+        100
        ],
        [
         "novig",
@@ -9125,8 +9178,8 @@
        ]
       ]
      },
-     "books": 20,
-     "consensus_home_prob": 0.653,
+     "books": 21,
+     "consensus_home_prob": 0.6524,
      "sharp_home_prob": null,
      "sharp_books": 0,
      "pinnacle_home_prob": null,
@@ -9137,10 +9190,10 @@
      "pinnacle_home_prob_shin": null,
      "best_exchange_home_ml": {
       "price": -194,
-      "book": "Kalshi"
+      "book": "Novig"
      },
      "best_exchange_away_ml": {
-      "price": 202,
+      "price": 200,
       "book": "BetOpenly"
      },
      "consensus_home_margin": 4.5,
@@ -9236,6 +9289,22 @@
         41.5,
         -109,
         -120
+       ]
+      },
+      "betwhale": {
+       "ml": [
+        -222,
+        168
+       ],
+       "sp": [
+        -4.5,
+        -114,
+        -114
+       ],
+       "tot": [
+        41.0,
+        -119,
+        -109
        ]
       },
       "betrivers": {
@@ -9416,9 +9485,9 @@
       }
      },
      "commence_time": "2026-11-15T18:00:00Z",
-     "blend_home_prob": 0.5925,
-     "home_ev_at_best": -0.1254,
-     "away_ev_at_best": 0.1574
+     "blend_home_prob": 0.5921,
+     "home_ev_at_best": -0.126,
+     "away_ev_at_best": 0.1585
     }
    },
    "top_factors": [
@@ -9452,11 +9521,11 @@
     "price": -110,
     "book": "DraftKings",
     "book_key": "draftkings",
-    "predicted_clv": -0.0041,
+    "predicted_clv": -0.0049,
     "grade": "A",
     "grading_version": 2,
-    "hours_before": 130.6,
-    "consensus_total": 41.36,
+    "hours_before": 129.6,
+    "consensus_total": 41.4,
     "sharp_total": null
    },
    "totals_grade_sides": {
@@ -9466,7 +9535,7 @@
      "price": -115,
      "book": "FanDuel",
      "book_key": "fanduel",
-     "predicted_clv": -0.0435,
+     "predicted_clv": -0.0438,
      "grade": "C",
      "grading_version": 2
     },
@@ -9476,7 +9545,7 @@
      "price": -110,
      "book": "DraftKings",
      "book_key": "draftkings",
-     "predicted_clv": -0.0041,
+     "predicted_clv": -0.0049,
      "grade": "A",
      "grading_version": 2
     }
@@ -9494,14 +9563,14 @@
      "draftkings",
      41.5,
      -110,
-     -0.0041
+     -0.0049
     ],
     [
      "over",
      "fanduel",
      40.5,
      -115,
-     -0.0435
+     -0.0438
     ],
     [
      "under",
@@ -9522,7 +9591,7 @@
      "espnbet",
      41.5,
      -115,
-     -0.0177
+     -0.018
     ]
    ],
    "bet_check": [
@@ -9692,8 +9761,8 @@
     "book": "DraftKings",
     "book_key": "draftkings",
     "grade": "A",
-    "predicted_clv": -0.0041,
-    "consensus_total": 41.36,
+    "predicted_clv": -0.0049,
+    "consensus_total": 41.4,
     "sharp_total": null,
     "verdict": "pass",
     "reasons": [
@@ -9702,12 +9771,12 @@
     "team": "Under"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
-      "quoted_cents": 66.0,
-      "all_in_cents": 67.56,
-      "price": -208,
+      "quoted_cents": 67.0,
+      "all_in_cents": 68.54,
+      "price": -218,
       "ev": null
      },
      "away": {
@@ -9719,9 +9788,9 @@
     },
     "robinhood": {
      "home": {
-      "quoted_cents": 66.0,
-      "all_in_cents": 67.99,
-      "price": -212,
+      "quoted_cents": 67.0,
+      "all_in_cents": 69.0,
+      "price": -223,
       "ev": null
      },
      "away": {
@@ -9896,8 +9965,8 @@
         "betwhale",
         "Betwhale",
         51.0,
-        -119,
-        -108
+        -114,
+        -114
        ],
        [
         "betparx",
@@ -10007,9 +10076,9 @@
        [
         "betopenly",
         "BetOpenly",
-        50.5,
-        -111,
-        111
+        51.0,
+        100,
+        100
        ],
        [
         "pinnacle",
@@ -10021,7 +10090,7 @@
       ]
      },
      "books": 28,
-     "consensus_home_prob": 0.5815,
+     "consensus_home_prob": 0.5824,
      "sharp_home_prob": 0.5832,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.5886,
@@ -10049,7 +10118,7 @@
       "price": 138,
       "book": "Polymarket"
      },
-     "consensus_home_margin": 2.8,
+     "consensus_home_margin": 2.5,
      "best_home_ml": {
       "price": -148,
       "book": "DraftKings",
@@ -10181,7 +10250,11 @@
         -156,
         127
        ],
-       "sp": null,
+       "sp": [
+        -2.5,
+        -115,
+        -105
+       ],
        "tot": [
         51.0,
         -110,
@@ -10238,18 +10311,18 @@
       },
       "betwhale": {
        "ml": [
-        -161,
-        124
+        -159,
+        122
        ],
        "sp": [
         -3.0,
-        -104,
+        -103,
         -125
        ],
        "tot": [
         51.0,
-        -119,
-        -108
+        -114,
+        -114
        ]
       },
       "betparx": {
@@ -10446,9 +10519,9 @@
       }
      },
      "commence_time": "2026-11-15T14:30:00Z",
-     "blend_home_prob": 0.5377,
-     "home_ev_at_best": -0.0991,
-     "away_ev_at_best": 0.0634
+     "blend_home_prob": 0.5382,
+     "home_ev_at_best": -0.0982,
+     "away_ev_at_best": 0.0622
     }
    },
    "top_factors": [
@@ -10485,7 +10558,7 @@
     "predicted_clv": -0.0244,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 127.1,
+    "hours_before": 126.1,
     "consensus_total": 51.55,
     "sharp_total": 51.55
    },
@@ -10643,11 +10716,11 @@
     "book": "DraftKings",
     "p_sharp": 0.5861,
     "p_model": 0.5098,
-    "p_market": 0.5815,
+    "p_market": 0.5824,
     "p_needed": 0.5968,
     "ev_sharp": -0.0179,
     "ev_model": -0.1457,
-    "gap": 0.015274193548387105,
+    "gap": 0.014374193548387093,
     "verdict": "pass",
     "reasons": [
      "best price only -1.8% vs sharp books (need 2%)",
@@ -10667,11 +10740,11 @@
     "book": "DraftKings",
     "p_sharp": 0.5861,
     "p_model": 0.5098,
-    "p_market": 0.5815,
+    "p_market": 0.5824,
     "p_needed": 0.5968,
     "ev_sharp": -0.0179,
     "ev_model": -0.1457,
-    "gap": 0.015274193548387105,
+    "gap": 0.014374193548387093,
     "verdict": "pass",
     "reasons": [
      "best price only -1.8% vs sharp books (need 2%)",
@@ -10717,7 +10790,7 @@
     "ev_sharp": -0.0411,
     "sharp_total": 51.55,
     "consensus_total": 51.55,
-    "hours_before": 127.1,
+    "hours_before": 126.1,
     "verdict": "pass",
     "reasons": [
      "best under only -4.1% vs the sharp fair total (need +0%)",
@@ -10749,18 +10822,19 @@
     "team": "NE",
     "point": 2.5,
     "price": 100,
-    "book": "FanDuel",
-    "ev": 0.0186,
-    "p_cover": 0.5093,
+    "book": "DraftKings",
+    "ev": 0.0322,
+    "p_cover": 0.5161,
     "p_push": 0.0,
     "grade": "C",
-    "score": -2,
+    "score": -1,
     "why": [
+     "+1 edge +3.2%",
      "-1 line moved against us",
      "-1 wrong side of 3/7"
     ],
     "grading_version": 1,
-    "expected_home_margin": 1.61,
+    "expected_home_margin": 1.38,
     "verdict": "pass",
     "reasons": [
      "grade C (needs A+)"
@@ -10782,7 +10856,7 @@
     "current_grade": "C"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 58.0,
@@ -10826,8 +10900,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": null,
-      "price": 131,
-      "ev": -0.0546,
+      "price": 135,
+      "ev": -0.0385,
       "best_book": "fanduel",
       "best_book_price": 130,
       "best_book_ev": -0.06
@@ -10836,8 +10910,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": -2.5,
-      "price": -118,
-      "ev": -0.016,
+      "price": -119,
+      "ev": -0.0199,
       "best_book": "draftkings",
       "best_book_price": -120,
       "best_book_ev": -0.0221
@@ -10846,8 +10920,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": 2.5,
-      "price": 111,
-      "ev": -0.0166,
+      "price": 110,
+      "ev": -0.0212,
       "best_book": "draftkings",
       "best_book_price": 100,
       "best_book_ev": -0.0668
@@ -10986,8 +11060,8 @@
         "betwhale",
         "Betwhale",
         48.5,
-        -111,
-        -116
+        -114,
+        -114
        ],
        [
         "lowvig",
@@ -11106,7 +11180,7 @@
         "Kalshi",
         48.5,
         100,
-        -108
+        -104
        ],
        [
         "novig",
@@ -11133,15 +11207,15 @@
         "prophetx",
         "ProphetX",
         48.5,
-        -103,
-        -106
+        -102,
+        -104
        ],
        [
         "betopenly",
         "BetOpenly",
         48.5,
-        103,
-        -103
+        100,
+        100
        ]
       ]
      },
@@ -11171,7 +11245,7 @@
       "book": "Polymarket"
      },
      "best_exchange_away_ml": {
-      "price": 180,
+      "price": 181,
       "book": "BetOpenly"
      },
      "consensus_home_margin": 3.5,
@@ -11292,13 +11366,13 @@
        ],
        "sp": [
         -3.5,
-        -112,
-        -115
+        -109,
+        -119
        ],
        "tot": [
         48.5,
-        -111,
-        -116
+        -114,
+        -114
        ]
       },
       "lowvig": {
@@ -11614,7 +11688,7 @@
     "predicted_clv": -0.042,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 137.9,
+    "hours_before": 136.9,
     "consensus_total": 48.82,
     "sharp_total": 48.89
    },
@@ -11860,7 +11934,7 @@
     "ev_sharp": -0.0493,
     "sharp_total": 48.89,
     "consensus_total": 48.82,
-    "hours_before": 137.9,
+    "hours_before": 136.9,
     "verdict": "pass",
     "reasons": [
      "best under only -4.9% vs the sharp fair total (need +0%)",
@@ -11927,7 +12001,7 @@
     "team": "Under"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 65.0,
@@ -11961,8 +12035,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": null,
-      "price": -184,
-      "ev": -0.0073,
+      "price": -186,
+      "ev": -0.0111,
       "best_book": "draftkings",
       "best_book_price": -180,
       "best_book_ev": -0.0001
@@ -11971,8 +12045,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": null,
-      "price": 169,
-      "ev": -0.0407,
+      "price": 171,
+      "ev": -0.0337,
       "best_book": "fanduel",
       "best_book_price": 166,
       "best_book_ev": -0.0498
@@ -11981,18 +12055,18 @@
       "label": "ProphetX",
       "side": "home",
       "point": -3.5,
-      "price": 104,
-      "ev": 0.0098,
+      "price": -101,
+      "ev": -0.0145,
       "best_book": "espnbet",
       "best_book_price": -105,
       "best_book_ev": -0.033
      },
      "spreads:away": {
-      "label": "Polymarket US",
+      "label": "ProphetX",
       "side": "away",
       "point": 3.5,
       "price": -105,
-      "ev": -0.0152,
+      "ev": -0.0151,
       "best_book": "draftkings",
       "best_book_price": -110,
       "best_book_ev": -0.0365
@@ -12011,8 +12085,8 @@
       "label": "ProphetX",
       "side": "under",
       "point": 48.5,
-      "price": -108,
-      "ev": -0.0222,
+      "price": -106,
+      "ev": -0.0132,
       "best_book": "fanduel",
       "best_book_price": -110,
       "best_book_ev": -0.03
@@ -12161,8 +12235,8 @@
         "betwhale",
         "Betwhale",
         43.0,
-        -115,
-        -112
+        -119,
+        -109
        ],
        [
         "ballybet",
@@ -12280,8 +12354,8 @@
         "betopenly",
         "BetOpenly",
         43.5,
-        104,
-        -104
+        100,
+        100
        ],
        [
         "polymarket",
@@ -12294,7 +12368,7 @@
         "prophetx",
         "ProphetX",
         43.5,
-        -101,
+        101,
         -110
        ],
        [
@@ -12328,11 +12402,11 @@
      "pin_sharp_home_prob_shin": 0.3731,
      "pinnacle_home_prob_shin": 0.3696,
      "best_exchange_home_ml": {
-      "price": 167,
-      "book": "Novig"
+      "price": 168,
+      "book": "BetOpenly"
      },
      "best_exchange_away_ml": {
-      "price": -165,
+      "price": -168,
       "book": "BetOpenly"
      },
      "consensus_home_margin": -3.5,
@@ -12480,18 +12554,18 @@
       },
       "betwhale": {
        "ml": [
-        146,
+        148,
         -192
        ],
        "sp": [
-        3.5,
-        -120,
-        -108
+        3.0,
+        -103,
+        -125
        ],
        "tot": [
         43.0,
-        -115,
-        -112
+        -119,
+        -109
        ]
       },
       "ballybet": {
@@ -12775,8 +12849,8 @@
     "predicted_clv": -0.0394,
     "grade": "C",
     "grading_version": 2,
-    "hours_before": 133.7,
-    "consensus_total": 43.37,
+    "hours_before": 132.7,
+    "consensus_total": 43.42,
     "sharp_total": 43.73
    },
    "totals_grade_sides": {
@@ -12786,7 +12860,7 @@
      "price": -105,
      "book": "FanDuel",
      "book_key": "fanduel",
-     "predicted_clv": -0.0439,
+     "predicted_clv": -0.0424,
      "grade": "C",
      "grading_version": 2
     },
@@ -12821,28 +12895,28 @@
      "fanduel",
      43.5,
      -105,
-     -0.0439
+     -0.0424
     ],
     [
      "under",
      "fanduel",
      43.5,
      -115,
-     -0.0468
+     -0.0488
     ],
     [
      "over",
      "espnbet",
      43.5,
      -105,
-     -0.0439
+     -0.0424
     ],
     [
      "under",
      "espnbet",
      43.5,
      -115,
-     -0.0468
+     -0.0488
     ]
    ],
    "bet_check": [
@@ -12996,8 +13070,8 @@
     "price": -112,
     "ev_sharp": -0.0539,
     "sharp_total": 43.73,
-    "consensus_total": 43.37,
-    "hours_before": 133.7,
+    "consensus_total": 43.42,
+    "hours_before": 132.7,
     "verdict": "pass",
     "reasons": [
      "best under only -5.4% vs the sharp fair total (need +0%)",
@@ -13076,7 +13150,7 @@
     "current_grade": "C"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 38.0,
@@ -13110,8 +13184,8 @@
       "label": "ProphetX",
       "side": "home",
       "point": null,
-      "price": 159,
-      "ev": -0.0436,
+      "price": 161,
+      "ev": -0.0363,
       "best_book": "espnbet",
       "best_book_price": 160,
       "best_book_ev": -0.039
@@ -13127,11 +13201,11 @@
       "best_book_ev": -0.0194
      },
      "spreads:home": {
-      "label": "ProphetX",
+      "label": "Kalshi",
       "side": "home",
       "point": 3.5,
       "price": -112,
-      "ev": -0.0213,
+      "ev": -0.0184,
       "best_book": "fanduel",
       "best_book_price": -115,
       "best_book_ev": -0.0323
@@ -13140,8 +13214,8 @@
       "label": "ProphetX",
       "side": "away",
       "point": -3.5,
-      "price": -104,
-      "ev": -0.0541,
+      "price": -102,
+      "ev": -0.0448,
       "best_book": "espnbet",
       "best_book_price": 100,
       "best_book_ev": -0.0352
@@ -13150,8 +13224,8 @@
       "label": "ProphetX",
       "side": "over",
       "point": 43.5,
-      "price": -103,
-      "ev": -0.0489,
+      "price": -101,
+      "ev": -0.0395,
       "best_book": "fanduel",
       "best_book_price": -105,
       "best_book_ev": -0.0576
@@ -13238,7 +13312,7 @@
     "live_odds": {
      "event_id": "7627192fd89b05120ab6c712aa23fd81",
      "totals": {
-      "consensus_total": 56.12,
+      "consensus_total": 56.07,
       "sharp_total": 55.96,
       "median_point": 55.5,
       "totals_by_book": [
@@ -13297,8 +13371,8 @@
         "betwhale",
         "Betwhale",
         55.5,
-        -115,
-        -112
+        -114,
+        -114
        ],
        [
         "betus",
@@ -13436,9 +13510,9 @@
        [
         "betopenly",
         "BetOpenly",
-        55.5,
-        102,
-        -102
+        56.0,
+        104,
+        -104
        ],
        [
         "polymarket",
@@ -13451,8 +13525,8 @@
         "prophetx",
         "ProphetX",
         55.5,
-        -117,
-        -102
+        -107,
+        100
        ],
        [
         "pinnacle",
@@ -13489,7 +13563,7 @@
       "book": "Kalshi"
      },
      "best_exchange_away_ml": {
-      "price": -200,
+      "price": -195,
       "book": "BetOpenly"
      },
      "consensus_home_margin": -4.0,
@@ -13589,18 +13663,18 @@
       },
       "betwhale": {
        "ml": [
-        172,
-        -227
+        168,
+        -222
        ],
        "sp": [
-        4.0,
-        -116,
-        -111
+        3.5,
+        -114,
+        -114
        ],
        "tot": [
         55.5,
-        -115,
-        -112
+        -114,
+        -114
        ]
       },
       "betus": {
@@ -13950,8 +14024,8 @@
     "predicted_clv": -0.0096,
     "grade": "A",
     "grading_version": 2,
-    "hours_before": 134.0,
-    "consensus_total": 56.11,
+    "hours_before": 133.0,
+    "consensus_total": 56.06,
     "sharp_total": 55.96
    },
    "totals_grade_sides": {
@@ -13996,7 +14070,7 @@
      "fanduel",
      55.5,
      -115,
-     -0.0784
+     -0.0786
     ],
     [
      "under",
@@ -14010,7 +14084,7 @@
      "espnbet",
      55.5,
      -115,
-     -0.0784
+     -0.0786
     ],
     [
      "under",
@@ -14176,8 +14250,8 @@
     "price": -105,
     "ev_sharp": -0.0203,
     "sharp_total": 55.96,
-    "consensus_total": 56.11,
-    "hours_before": 134.0,
+    "consensus_total": 56.06,
+    "hours_before": 133.0,
     "verdict": "pass",
     "reasons": [
      "best under only -2.0% vs the sharp fair total (need +0%)",
@@ -14252,7 +14326,7 @@
     "current_grade": "A"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "kalshi": {
      "home": {
       "quoted_cents": 33.0,
@@ -14444,13 +14518,6 @@
         -110
        ],
        [
-        "betwhale",
-        "Betwhale",
-        38.5,
-        -118,
-        -110
-       ],
-       [
         "ballybet",
         "Bally Bet",
         38.0,
@@ -14566,7 +14633,7 @@
         "prophetx",
         "ProphetX",
         38.5,
-        -112,
+        -109,
         -108
        ],
        [
@@ -14578,8 +14645,8 @@
        ]
       ]
      },
-     "books": 26,
-     "consensus_home_prob": 0.6738,
+     "books": 25,
+     "consensus_home_prob": 0.6742,
      "sharp_home_prob": 0.6742,
      "sharp_books": 2,
      "pinnacle_home_prob": 0.6729,
@@ -14600,8 +14667,8 @@
      "pin_sharp_home_prob_shin": 0.6813,
      "pinnacle_home_prob_shin": 0.6786,
      "best_exchange_home_ml": {
-      "price": -205,
-      "book": "BetOpenly"
+      "price": -212,
+      "book": "Novig"
      },
      "best_exchange_away_ml": {
       "price": 212,
@@ -14747,22 +14814,6 @@
        "tot": [
         38.5,
         -110,
-        -110
-       ]
-      },
-      "betwhale": {
-       "ml": [
-        -244,
-        182
-       ],
-       "sp": [
-        -5.0,
-        -118,
-        -110
-       ],
-       "tot": [
-        38.5,
-        -118,
         -110
        ]
       },
@@ -14988,9 +15039,9 @@
       }
      },
      "commence_time": "2026-11-17T01:15:00Z",
-     "blend_home_prob": 0.6696,
-     "home_ev_at_best": -0.0328,
-     "away_ev_at_best": -0.0287
+     "blend_home_prob": 0.6698,
+     "home_ev_at_best": -0.0324,
+     "away_ev_at_best": -0.0294
     }
    },
    "top_factors": [
@@ -15027,7 +15078,7 @@
     "predicted_clv": -0.0161,
     "grade": "B",
     "grading_version": 2,
-    "hours_before": 161.8,
+    "hours_before": 160.9,
     "consensus_total": 38.62,
     "sharp_total": 38.62
    },
@@ -15193,11 +15244,11 @@
     "book": "DraftKings",
     "p_sharp": 0.6813,
     "p_model": 0.6566,
-    "p_market": 0.6738,
+    "p_market": 0.6742,
     "p_needed": 0.6923,
     "ev_sharp": -0.0159,
     "ev_model": -0.0516,
-    "gap": 0.018507692307692336,
+    "gap": 0.01810769230769227,
     "verdict": "pass",
     "reasons": [
      "best price only -1.6% vs sharp books (need 2%)",
@@ -15219,11 +15270,11 @@
     "book": "DraftKings",
     "p_sharp": 0.6813,
     "p_model": 0.6566,
-    "p_market": 0.6738,
+    "p_market": 0.6742,
     "p_needed": 0.6923,
     "ev_sharp": -0.0159,
     "ev_model": -0.0516,
-    "gap": 0.018507692307692336,
+    "gap": 0.01810769230769227,
     "verdict": "pass",
     "reasons": [
      "best price only -1.6% vs sharp books (need 2%)",
@@ -15302,7 +15353,7 @@
     "ev_sharp": -0.0233,
     "sharp_total": 38.62,
     "consensus_total": 38.62,
-    "hours_before": 161.8,
+    "hours_before": 160.9,
     "verdict": "pass",
     "reasons": [
      "best under only -2.3% vs the sharp fair total (need +0%)",
@@ -15369,7 +15420,7 @@
     "team": "Under"
    },
    "exchanges": {
-    "checked_at": "2026-11-10T07:24+00:00",
+    "checked_at": "2026-11-10T08:23+00:00",
     "best": {
      "h2h:home": {
       "label": "ProphetX",
@@ -15392,11 +15443,11 @@
       "best_book_ev": -0.0551
      },
      "totals:over": {
-      "label": "Polymarket US",
+      "label": "ProphetX",
       "side": "over",
       "point": 38.5,
-      "price": -114,
-      "ev": -0.0596,
+      "price": -111,
+      "ev": -0.0505,
       "best_book": "draftkings",
       "best_book_price": -110,
       "best_book_ev": -0.0455
@@ -25204,110 +25255,6 @@
   "new": [],
   "checks": [
    {
-    "player": "Justin Herbert",
-    "team": "LAC",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_LAC_BAL",
-    "reason": "certainty 0.85 < 0.9",
-    "seen_at": "2026-11-10T01:38+00:00"
-   },
-   {
-    "player": "Gardner Minshew",
-    "team": "ARI",
-    "signal": "out",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "source accuracy below the bar",
-    "seen_at": "2026-11-10T01:38+00:00"
-   },
-   {
-    "player": "Gardner Minshew",
-    "team": "ARI",
-    "signal": "out",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "already bet this game",
-    "seen_at": "2026-11-10T01:38+00:00"
-   },
-   {
-    "player": "Justin Herbert",
-    "team": "LAC",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_LAC_BAL",
-    "reason": "certainty 0.8 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "J.J. McCarthy",
-    "team": "NYG",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_WAS_NYG",
-    "reason": "certainty 0.75 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Gardner Minshew",
-    "team": "ARI",
-    "signal": "out",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "source accuracy below the bar",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Carson Beck",
-    "team": "ARI",
-    "signal": "will_start",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "certainty 0.8 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Justin Herbert",
-    "team": "LAC",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_LAC_BAL",
-    "reason": "certainty 0.8 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "J.J. McCarthy",
-    "team": "NYG",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_WAS_NYG",
-    "reason": "certainty 0.75 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Gardner Minshew",
-    "team": "ARI",
-    "signal": "out",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "source accuracy below the bar",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Carson Beck",
-    "team": "ARI",
-    "signal": "will_start",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "certainty 0.85 < 0.9",
-    "seen_at": "2026-11-10T01:59+00:00"
-   },
-   {
-    "player": "Gardner Minshew",
-    "team": "ARI",
-    "signal": "questionable",
-    "game_id": "2026_10_LA_ARI",
-    "reason": "certainty 0.7 < 0.9",
-    "seen_at": "2026-11-10T02:13+00:00"
-   },
-   {
-    "player": "Deshaun Watson",
-    "team": "CLE",
-    "signal": "expected_to_play",
-    "game_id": "2026_10_HOU_CLE",
-    "reason": "certainty 0.8 < 0.9",
-    "seen_at": "2026-11-10T02:13+00:00"
-   },
-   {
     "player": "Gardner Minshew",
     "team": "ARI",
     "signal": "injured_reserve",
@@ -28469,7 +28416,7 @@
    "min_precision": 0.95
   }
  },
- "odds_checked_at": "2026-11-10T07:24+00:00",
+ "odds_checked_at": "2026-11-10T08:23+00:00",
  "futures_shop_bets": {
   "track": "futures_shop",
   "mode": "shadow",
@@ -28649,7 +28596,7 @@
   "new": [],
   "active": [
    {
-    "id": "kmk:KXNFLGAME-26NOV16LACBAL-LAC:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV16LACBAL-LAC:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28665,12 +28612,12 @@
     "bid_cents": 29,
     "yes_bid": 31.0,
     "yes_ask": 32.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV16LACBAL-BAL:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV16LACBAL-BAL:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28686,12 +28633,12 @@
     "bid_cents": 64,
     "yes_bid": 68.0,
     "yes_ask": 69.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15PITCIN-PIT:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15PITCIN-PIT:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28707,12 +28654,12 @@
     "bid_cents": 32,
     "yes_bid": 36.0,
     "yes_ask": 37.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15PITCIN-CIN:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15PITCIN-CIN:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28728,12 +28675,12 @@
     "bid_cents": 61,
     "yes_bid": 64.0,
     "yes_ask": 65.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15SFDAL-SF:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15SFDAL-SF:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28749,12 +28696,12 @@
     "bid_cents": 62,
     "yes_bid": 67.0,
     "yes_ask": 68.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15SFDAL-DAL:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15SFDAL-DAL:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28770,12 +28717,12 @@
     "bid_cents": 31,
     "yes_bid": 32.0,
     "yes_ask": 33.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15LARARI-LAR:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15LARARI-LAR:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28791,12 +28738,12 @@
     "bid_cents": 76,
     "yes_bid": 79.0,
     "yes_ask": 80.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15LARARI-ARI:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15LARARI-ARI:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28812,12 +28759,12 @@
     "bid_cents": 17,
     "yes_bid": 21.0,
     "yes_ask": 22.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15SEALV-SEA:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15SEALV-SEA:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28833,12 +28780,12 @@
     "bid_cents": 60,
     "yes_bid": 62.0,
     "yes_ask": 63.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15SEALV-LV:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15SEALV-LV:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28854,12 +28801,12 @@
     "bid_cents": 33,
     "yes_bid": 37.0,
     "yes_ask": 38.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15MIAIND-MIA:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15MIAIND-MIA:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28875,12 +28822,12 @@
     "bid_cents": 40,
     "yes_bid": 43.0,
     "yes_ask": 44.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15MIAIND-IND:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15MIAIND-IND:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28896,12 +28843,12 @@
     "bid_cents": 53,
     "yes_bid": 56.00000000000001,
     "yes_ask": 56.99999999999999,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15HOUCLE-HOU:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15HOUCLE-HOU:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28917,12 +28864,12 @@
     "bid_cents": 64,
     "yes_bid": 66.0,
     "yes_ask": 67.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15HOUCLE-CLE:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15HOUCLE-CLE:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28938,12 +28885,12 @@
     "bid_cents": 29,
     "yes_bid": 33.0,
     "yes_ask": 34.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15KCATL-KC:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15KCATL-KC:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28957,14 +28904,14 @@
     "season": 2026,
     "fair": 0.631,
     "bid_cents": 60,
-    "yes_bid": 63.0,
-    "yes_ask": 64.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "yes_bid": 64.0,
+    "yes_ask": 65.0,
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15KCATL-ATL:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15KCATL-ATL:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -28980,12 +28927,12 @@
     "bid_cents": 33,
     "yes_bid": 36.0,
     "yes_ask": 37.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15JACTEN-TEN:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15JACTEN-TEN:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29001,12 +28948,12 @@
     "bid_cents": 14,
     "yes_bid": 16.0,
     "yes_ask": 17.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15JACTEN-JAC:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15JACTEN-JAC:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29022,12 +28969,12 @@
     "bid_cents": 79,
     "yes_bid": 83.0,
     "yes_ask": 84.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15CARNO-NO:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15CARNO-NO:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29043,12 +28990,12 @@
     "bid_cents": 49,
     "yes_bid": 52.0,
     "yes_ask": 53.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15CARNO-CAR:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15CARNO-CAR:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29063,13 +29010,13 @@
     "fair": 0.4755,
     "bid_cents": 44,
     "yes_bid": 47.0,
-    "yes_ask": 48.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "yes_ask": 49.0,
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15NEDET-NE:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15NEDET-NE:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29085,12 +29032,12 @@
     "bid_cents": 37,
     "yes_bid": 42.0,
     "yes_ask": 43.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV15NEDET-DET:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV15NEDET-DET:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29106,12 +29053,12 @@
     "bid_cents": 56,
     "yes_bid": 56.99999999999999,
     "yes_ask": 57.99999999999999,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV12WASNYG-WAS:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV12WASNYG-WAS:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29127,12 +29074,12 @@
     "bid_cents": 41,
     "yes_bid": 45.0,
     "yes_ask": 46.0,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    },
    {
-    "id": "kmk:KXNFLGAME-26NOV12WASNYG-NYG:20261110T0734",
+    "id": "kmk:KXNFLGAME-26NOV12WASNYG-NYG:20261110T0829",
     "track": "kalshi_maker",
     "rules_version": 2,
     "sport": "nfl",
@@ -29148,8 +29095,8 @@
     "bid_cents": 52,
     "yes_bid": 55.00000000000001,
     "yes_ask": 56.00000000000001,
-    "posted_at": "2026-11-10T07:34+00:00",
-    "expires_at": "2026-11-10T08:49+00:00",
+    "posted_at": "2026-11-10T08:29+00:00",
+    "expires_at": "2026-11-10T09:44+00:00",
     "status": "active"
    }
   ],
@@ -29487,7 +29434,7 @@
    "rules_version": 2,
    "active": [
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NEVNIU-NIU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NEVNIU-NIU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29503,12 +29450,12 @@
      "bid_cents": 25,
      "yes_bid": 28.000000000000004,
      "yes_ask": 28.999999999999996,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NEVNIU-NEV:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NEVNIU-NEV:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29524,12 +29471,12 @@
      "bid_cents": 68,
      "yes_bid": 71.0,
      "yes_ask": 73.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MICHORE-ORE:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MICHORE-ORE:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29544,13 +29491,13 @@
      "fair": 0.7986,
      "bid_cents": 76,
      "yes_bid": 79.0,
-     "yes_ask": 80.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 81.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MICHORE-MICH:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MICHORE-MICH:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29566,12 +29513,12 @@
      "bid_cents": 17,
      "yes_bid": 20.0,
      "yes_ask": 21.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14USCIND-USC:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14USCIND-USC:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29587,12 +29534,12 @@
      "bid_cents": 24,
      "yes_bid": 28.999999999999996,
      "yes_ask": 30.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14USCIND-IND:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14USCIND-IND:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29608,12 +29555,12 @@
      "bid_cents": 69,
      "yes_bid": 71.0,
      "yes_ask": 72.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TTUOKST-TTU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TTUOKST-TTU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29629,12 +29576,12 @@
      "bid_cents": 35,
      "yes_bid": 41.0,
      "yes_ask": 42.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TTUOKST-OKST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TTUOKST-OKST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29650,12 +29597,12 @@
      "bid_cents": 58,
      "yes_bid": 60.0,
      "yes_ask": 61.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TENNTXAM-TXAM:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TENNTXAM-TXAM:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29671,12 +29618,12 @@
      "bid_cents": 40,
      "yes_bid": 42.0,
      "yes_ask": 43.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TENNTXAM-TENN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TENNTXAM-TENN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29690,14 +29637,14 @@
      "season": 2026,
      "fair": 0.5646,
      "bid_cents": 53,
-     "yes_bid": 56.00000000000001,
+     "yes_bid": 56.99999999999999,
      "yes_ask": 57.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MISSOKLA-OKLA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MISSOKLA-OKLA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29713,12 +29660,12 @@
      "bid_cents": 46,
      "yes_bid": 48.0,
      "yes_ask": 49.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MISSOKLA-MISS:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MISSOKLA-MISS:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29734,12 +29681,12 @@
      "bid_cents": 47,
      "yes_bid": 52.0,
      "yes_ask": 53.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TEXLSU-TEX:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TEXLSU-TEX:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29754,13 +29701,13 @@
      "fair": 0.3712,
      "bid_cents": 34,
      "yes_bid": 37.0,
-     "yes_ask": 38.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 39.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TEXLSU-LSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TEXLSU-LSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29776,12 +29723,12 @@
      "bid_cents": 59,
      "yes_bid": 61.0,
      "yes_ask": 62.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CSUWSU-WSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CSUWSU-WSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29797,12 +29744,12 @@
      "bid_cents": 73,
      "yes_bid": 74.0,
      "yes_ask": 76.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CSUWSU-CSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CSUWSU-CSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29818,12 +29765,12 @@
      "bid_cents": 20,
      "yes_bid": 25.0,
      "yes_ask": 26.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14USUSDSU-USU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14USUSDSU-USU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29839,12 +29786,12 @@
      "bid_cents": 51,
      "yes_bid": 55.00000000000001,
      "yes_ask": 56.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14USUSDSU-SDSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14USUSDSU-SDSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29860,12 +29807,12 @@
      "bid_cents": 42,
      "yes_bid": 43.0,
      "yes_ask": 45.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UNLVUNM-UNM:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UNLVUNM-UNM:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29881,12 +29828,12 @@
      "bid_cents": 81,
      "yes_bid": 83.0,
      "yes_ask": 85.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UNLVUNM-UNLV:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UNLVUNM-UNLV:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29902,12 +29849,12 @@
      "bid_cents": 12,
      "yes_bid": 16.0,
      "yes_ask": 17.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SJSUAFA-SJSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SJSUAFA-SJSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29923,12 +29870,12 @@
      "bid_cents": 16,
      "yes_bid": 19.0,
      "yes_ask": 21.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SJSUAFA-AFA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SJSUAFA-AFA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29944,12 +29891,12 @@
      "bid_cents": 77,
      "yes_bid": 80.0,
      "yes_ask": 81.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ORSTBSU-ORST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ORSTBSU-ORST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29965,12 +29912,12 @@
      "bid_cents": 14,
      "yes_bid": 17.0,
      "yes_ask": 18.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ORSTBSU-BSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ORSTBSU-BSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -29986,12 +29933,12 @@
      "bid_cents": 79,
      "yes_bid": 82.0,
      "yes_ask": 83.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FRESTXST-TXST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FRESTXST-TXST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30007,12 +29954,12 @@
      "bid_cents": 73,
      "yes_bid": 76.0,
      "yes_ask": 77.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FRESTXST-FRES:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FRESTXST-FRES:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30028,12 +29975,12 @@
      "bid_cents": 20,
      "yes_bid": 23.0,
      "yes_ask": 24.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14JVSTWKU-WKU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14JVSTWKU-WKU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30049,12 +29996,12 @@
      "bid_cents": 24,
      "yes_bid": 26.0,
      "yes_ask": 28.000000000000004,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14JVSTWKU-JVST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14JVSTWKU-JVST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30070,12 +30017,12 @@
      "bid_cents": 69,
      "yes_bid": 72.0,
      "yes_ask": 74.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FIUDEL-FIU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FIUDEL-FIU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30091,12 +30038,12 @@
      "bid_cents": 31,
      "yes_bid": 33.0,
      "yes_ask": 34.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FIUDEL-DEL:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FIUDEL-DEL:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30111,13 +30058,13 @@
      "fair": 0.656,
      "bid_cents": 62,
      "yes_bid": 65.0,
-     "yes_ask": 67.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 66.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NMSUMOSU-NMSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NMSUMOSU-NMSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30133,12 +30080,12 @@
      "bid_cents": 45,
      "yes_bid": 46.0,
      "yes_ask": 48.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NMSUMOSU-MOSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NMSUMOSU-MOSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30152,14 +30099,14 @@
      "season": 2026,
      "fair": 0.5187,
      "bid_cents": 48,
-     "yes_bid": 52.0,
+     "yes_bid": 51.0,
      "yes_ask": 53.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TROYUSA-USA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TROYUSA-USA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30175,12 +30122,12 @@
      "bid_cents": 55,
      "yes_bid": 57.99999999999999,
      "yes_ask": 60.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TROYUSA-TROY:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TROYUSA-TROY:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30196,12 +30143,12 @@
      "bid_cents": 38,
      "yes_bid": 40.0,
      "yes_ask": 42.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14APPMRSH-MRSH:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14APPMRSH-MRSH:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30217,12 +30164,12 @@
      "bid_cents": 44,
      "yes_bid": 47.0,
      "yes_ask": 48.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14APPMRSH-APP:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14APPMRSH-APP:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30238,12 +30185,12 @@
      "bid_cents": 49,
      "yes_bid": 51.0,
      "yes_ask": 53.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14GASOGAST-GAST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14GASOGAST-GAST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30259,12 +30206,12 @@
      "bid_cents": 31,
      "yes_bid": 36.0,
      "yes_ask": 37.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14GASOGAST-GASO:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14GASOGAST-GASO:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30280,12 +30227,12 @@
      "bid_cents": 62,
      "yes_bid": 63.0,
      "yes_ask": 65.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ARSTCCAR-CCAR:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ARSTCCAR-CCAR:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30301,12 +30248,12 @@
      "bid_cents": 49,
      "yes_bid": 51.0,
      "yes_ask": 53.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ARSTCCAR-ARST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ARSTCCAR-ARST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30322,12 +30269,12 @@
      "bid_cents": 44,
      "yes_bid": 47.0,
      "yes_ask": 49.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WYOUTEP-WYO:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WYOUTEP-WYO:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30343,12 +30290,12 @@
      "bid_cents": 72,
      "yes_bid": 74.0,
      "yes_ask": 76.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WYOUTEP-UTEP:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WYOUTEP-UTEP:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30362,14 +30309,14 @@
      "season": 2026,
      "fair": 0.2451,
      "bid_cents": 21,
-     "yes_bid": 23.0,
+     "yes_bid": 24.0,
      "yes_ask": 25.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NWOSU-OSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NWOSU-OSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30385,12 +30332,12 @@
      "bid_cents": 77,
      "yes_bid": 79.0,
      "yes_ask": 80.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NWOSU-NW:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NWOSU-NW:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30406,12 +30353,12 @@
      "bid_cents": 16,
      "yes_bid": 19.0,
      "yes_ask": 21.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NEBRUTG-RUTG:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NEBRUTG-RUTG:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30427,12 +30374,12 @@
      "bid_cents": 14,
      "yes_bid": 18.0,
      "yes_ask": 19.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14NEBRUTG-NEB:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14NEBRUTG-NEB:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30448,12 +30395,12 @@
      "bid_cents": 79,
      "yes_bid": 82.0,
      "yes_ask": 83.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MINNPSU-PSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MINNPSU-PSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30469,12 +30416,12 @@
      "bid_cents": 72,
      "yes_bid": 75.0,
      "yes_ask": 76.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14MINNPSU-MINN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14MINNPSU-MINN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30490,12 +30437,12 @@
      "bid_cents": 21,
      "yes_bid": 25.0,
      "yes_ask": 26.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WASHMSU-WASH:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WASHMSU-WASH:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30509,14 +30456,14 @@
      "season": 2026,
      "fair": 0.616,
      "bid_cents": 58,
-     "yes_bid": 61.0,
-     "yes_ask": 63.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_bid": 60.0,
+     "yes_ask": 61.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WASHMSU-MSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WASHMSU-MSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30532,12 +30479,12 @@
      "bid_cents": 35,
      "yes_bid": 38.0,
      "yes_ask": 39.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WISMD-WIS:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WISMD-WIS:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30553,12 +30500,12 @@
      "bid_cents": 71,
      "yes_bid": 75.0,
      "yes_ask": 76.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WISMD-MD:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WISMD-MD:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30574,12 +30521,12 @@
      "bid_cents": 22,
      "yes_bid": 24.0,
      "yes_ask": 26.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WAKESMU-WAKE:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WAKESMU-WAKE:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30594,13 +30541,13 @@
      "fair": 0.5,
      "bid_cents": 47,
      "yes_bid": 50.0,
-     "yes_ask": 52.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 51.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14WAKESMU-SMU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14WAKESMU-SMU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30616,12 +30563,12 @@
      "bid_cents": 47,
      "yes_bid": 48.0,
      "yes_ask": 49.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SYRNCST-SYR:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SYRNCST-SYR:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30637,12 +30584,12 @@
      "bid_cents": 53,
      "yes_bid": 56.00000000000001,
      "yes_ask": 57.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SYRNCST-NCST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SYRNCST-NCST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30658,12 +30605,12 @@
      "bid_cents": 40,
      "yes_bid": 42.0,
      "yes_ask": 44.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14LOUUNC-UNC:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14LOUUNC-UNC:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30679,12 +30626,12 @@
      "bid_cents": 35,
      "yes_bid": 40.0,
      "yes_ask": 41.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14LOUUNC-LOU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14LOUUNC-LOU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30698,14 +30645,14 @@
      "season": 2026,
      "fair": 0.6131,
      "bid_cents": 58,
-     "yes_bid": 60.0,
-     "yes_ask": 61.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_bid": 59.0,
+     "yes_ask": 60.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14GTCLEM-GT:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14GTCLEM-GT:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30721,12 +30668,12 @@
      "bid_cents": 14,
      "yes_bid": 16.0,
      "yes_ask": 17.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14GTCLEM-CLEM:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14GTCLEM-CLEM:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30742,12 +30689,12 @@
      "bid_cents": 79,
      "yes_bid": 82.0,
      "yes_ask": 84.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CALUVA-UVA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CALUVA-UVA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30763,12 +30710,12 @@
      "bid_cents": 76,
      "yes_bid": 78.0,
      "yes_ask": 79.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CALUVA-CAL:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CALUVA-CAL:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30784,12 +30731,12 @@
      "bid_cents": 17,
      "yes_bid": 21.0,
      "yes_ask": 22.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KSUTCU-TCU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KSUTCU-TCU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30805,12 +30752,12 @@
      "bid_cents": 74,
      "yes_bid": 76.0,
      "yes_ask": 77.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KSUTCU-KSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KSUTCU-KSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30826,12 +30773,12 @@
      "bid_cents": 19,
      "yes_bid": 22.0,
      "yes_ask": 23.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UTAHARIZ-UTAH:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UTAHARIZ-UTAH:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30847,12 +30794,12 @@
      "bid_cents": 53,
      "yes_bid": 56.00000000000001,
      "yes_ask": 56.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UTAHARIZ-ARIZ:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UTAHARIZ-ARIZ:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30868,12 +30815,12 @@
      "bid_cents": 40,
      "yes_bid": 43.0,
      "yes_ask": 44.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ASUUCF-UCF:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ASUUCF-UCF:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30889,12 +30836,12 @@
      "bid_cents": 56,
      "yes_bid": 59.0,
      "yes_ask": 60.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ASUUCF-ASU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ASUUCF-ASU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30910,12 +30857,12 @@
      "bid_cents": 37,
      "yes_bid": 40.0,
      "yes_ask": 41.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CINISU-ISU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CINISU-ISU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30931,12 +30878,12 @@
      "bid_cents": 56,
      "yes_bid": 59.0,
      "yes_ask": 60.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14CINISU-CIN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14CINISU-CIN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30952,12 +30899,12 @@
      "bid_cents": 37,
      "yes_bid": 42.0,
      "yes_ask": 43.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KUWVU-WVU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KUWVU-WVU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30973,12 +30920,12 @@
      "bid_cents": 54,
      "yes_bid": 56.00000000000001,
      "yes_ask": 56.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KUWVU-KU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KUWVU-KU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -30994,12 +30941,12 @@
      "bid_cents": 39,
      "yes_bid": 42.0,
      "yes_ask": 43.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14BAYBYU-BYU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14BAYBYU-BYU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31015,12 +30962,12 @@
      "bid_cents": 69,
      "yes_bid": 72.0,
      "yes_ask": 73.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14BAYBYU-BAY:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14BAYBYU-BAY:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31036,12 +30983,12 @@
      "bid_cents": 24,
      "yes_bid": 27.0,
      "yes_ask": 28.000000000000004,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14AUBMSST-MSST:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14AUBMSST-MSST:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31057,12 +31004,12 @@
      "bid_cents": 41,
      "yes_bid": 43.0,
      "yes_ask": 44.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14AUBMSST-AUB:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14AUBMSST-AUB:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31078,12 +31025,12 @@
      "bid_cents": 52,
      "yes_bid": 56.00000000000001,
      "yes_ask": 56.99999999999999,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FLAUK-UK:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FLAUK-UK:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31099,12 +31046,12 @@
      "bid_cents": 58,
      "yes_bid": 61.0,
      "yes_ask": 62.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FLAUK-FLA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FLAUK-FLA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31120,12 +31067,12 @@
      "bid_cents": 35,
      "yes_bid": 38.0,
      "yes_ask": 39.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SCARARK-SCAR:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SCARARK-SCAR:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31141,12 +31088,12 @@
      "bid_cents": 70,
      "yes_bid": 73.0,
      "yes_ask": 74.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14SCARARK-ARK:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14SCARARK-ARK:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31162,12 +31109,12 @@
      "bid_cents": 23,
      "yes_bid": 25.0,
      "yes_ask": 26.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UABTEM-UAB:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UABTEM-UAB:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31183,12 +31130,12 @@
      "bid_cents": 42,
      "yes_bid": 44.0,
      "yes_ask": 45.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UABTEM-TEM:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UABTEM-TEM:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31202,14 +31149,14 @@
      "season": 2026,
      "fair": 0.5458,
      "bid_cents": 51,
-     "yes_bid": 53.0,
+     "yes_bid": 54.0,
      "yes_ask": 55.00000000000001,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TULNRICE-TULN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TULNRICE-TULN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31225,12 +31172,12 @@
      "bid_cents": 42,
      "yes_bid": 45.0,
      "yes_ask": 46.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14TULNRICE-RICE:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14TULNRICE-RICE:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31246,12 +31193,12 @@
      "bid_cents": 51,
      "yes_bid": 53.0,
      "yes_ask": 55.00000000000001,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UNTUTSA-UTSA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UNTUTSA-UTSA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31267,12 +31214,12 @@
      "bid_cents": 43,
      "yes_bid": 46.0,
      "yes_ask": 47.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14UNTUTSA-UNT:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14UNTUTSA-UNT:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31288,12 +31235,12 @@
      "bid_cents": 50,
      "yes_bid": 54.0,
      "yes_ask": 55.00000000000001,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FAUTLSA-TLSA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FAUTLSA-TLSA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31308,13 +31255,13 @@
      "fair": 0.6667,
      "bid_cents": 63,
      "yes_bid": 65.0,
-     "yes_ask": 66.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 67.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14FAUTLSA-FAU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14FAUTLSA-FAU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31330,12 +31277,12 @@
      "bid_cents": 30,
      "yes_bid": 34.0,
      "yes_ask": 35.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ECUCHAR-ECU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ECUCHAR-ECU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31351,12 +31298,12 @@
      "bid_cents": 77,
      "yes_bid": 80.0,
      "yes_ask": 81.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14ECUCHAR-CHAR:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14ECUCHAR-CHAR:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31372,12 +31319,12 @@
      "bid_cents": 16,
      "yes_bid": 19.0,
      "yes_ask": 20.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KENNSHSU-SHSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KENNSHSU-SHSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31393,12 +31340,12 @@
      "bid_cents": 24,
      "yes_bid": 26.0,
      "yes_ask": 28.000000000000004,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14KENNSHSU-KENN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14KENNSHSU-KENN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31414,12 +31361,12 @@
      "bid_cents": 69,
      "yes_bid": 71.0,
      "yes_ask": 73.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14JMUCONN-JMU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14JMUCONN-JMU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31435,12 +31382,12 @@
      "bid_cents": 59,
      "yes_bid": 63.0,
      "yes_ask": 64.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV14JMUCONN-CONN:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV14JMUCONN-CONN:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31456,12 +31403,12 @@
      "bid_cents": 34,
      "yes_bid": 37.0,
      "yes_ask": 38.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13HOUCOLO-HOU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13HOUCOLO-HOU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31477,12 +31424,12 @@
      "bid_cents": 75,
      "yes_bid": 79.0,
      "yes_ask": 80.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13HOUCOLO-COLO:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13HOUCOLO-COLO:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31498,12 +31445,12 @@
      "bid_cents": 18,
      "yes_bid": 21.0,
      "yes_ask": 22.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13ILLUCLA-UCLA:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13ILLUCLA-UCLA:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31519,12 +31466,12 @@
      "bid_cents": 74,
      "yes_bid": 76.0,
      "yes_ask": 77.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13ILLUCLA-ILL:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13ILLUCLA-ILL:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31540,12 +31487,12 @@
      "bid_cents": 19,
      "yes_bid": 23.0,
      "yes_ask": 24.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13FSUPITT-PITT:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13FSUPITT-PITT:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31561,12 +31508,12 @@
      "bid_cents": 57,
      "yes_bid": 59.0,
      "yes_ask": 60.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV13FSUPITT-FSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV13FSUPITT-FSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31582,12 +31529,12 @@
      "bid_cents": 36,
      "yes_bid": 39.0,
      "yes_ask": 41.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV12MEMUSF-USF:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV12MEMUSF-USF:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31602,13 +31549,13 @@
      "fair": 0.3706,
      "bid_cents": 34,
      "yes_bid": 37.0,
-     "yes_ask": 39.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_ask": 38.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV12MEMUSF-MEM:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV12MEMUSF-MEM:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31624,12 +31571,12 @@
      "bid_cents": 59,
      "yes_bid": 62.0,
      "yes_ask": 63.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV11MASSTOL-TOL:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV11MASSTOL-TOL:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31645,12 +31592,12 @@
      "bid_cents": 81,
      "yes_bid": 83.0,
      "yes_ask": 84.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV11MASSTOL-MASS:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV11MASSTOL-MASS:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31666,12 +31613,12 @@
      "bid_cents": 12,
      "yes_bid": 15.0,
      "yes_ask": 16.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV11BUFFBALL-BUFF:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV11BUFFBALL-BUFF:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31687,12 +31634,12 @@
      "bid_cents": 52,
      "yes_bid": 55.00000000000001,
      "yes_ask": 56.00000000000001,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV11BUFFBALL-BALL:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV11BUFFBALL-BALL:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31708,12 +31655,12 @@
      "bid_cents": 41,
      "yes_bid": 44.0,
      "yes_ask": 45.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10OHIOMOH-OHIO:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10OHIOMOH-OHIO:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31727,14 +31674,14 @@
      "season": 2026,
      "fair": 0.5164,
      "bid_cents": 48,
-     "yes_bid": 52.0,
-     "yes_ask": 53.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "yes_bid": 51.0,
+     "yes_ask": 52.0,
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10OHIOMOH-MOH:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10OHIOMOH-MOH:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31750,12 +31697,12 @@
      "bid_cents": 45,
      "yes_bid": 48.0,
      "yes_ask": 49.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10KENTBGSU-KENT:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10KENTBGSU-KENT:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31771,12 +31718,12 @@
      "bid_cents": 31,
      "yes_bid": 34.0,
      "yes_ask": 35.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10KENTBGSU-BGSU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10KENTBGSU-BGSU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31792,12 +31739,12 @@
      "bid_cents": 62,
      "yes_bid": 65.0,
      "yes_ask": 66.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10WMUAKR-WMU:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10WMUAKR-WMU:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31813,12 +31760,12 @@
      "bid_cents": 81,
      "yes_bid": 85.0,
      "yes_ask": 86.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     },
     {
-     "id": "kmk:KXNCAAFGAME-26NOV10WMUAKR-AKR:20261110T0734",
+     "id": "kmk:KXNCAAFGAME-26NOV10WMUAKR-AKR:20261110T0829",
      "track": "kalshi_maker",
      "rules_version": 2,
      "sport": "cfb",
@@ -31834,8 +31781,8 @@
      "bid_cents": 12,
      "yes_bid": 14.000000000000002,
      "yes_ask": 15.0,
-     "posted_at": "2026-11-10T07:34+00:00",
-     "expires_at": "2026-11-10T08:49+00:00",
+     "posted_at": "2026-11-10T08:29+00:00",
+     "expires_at": "2026-11-10T09:44+00:00",
      "status": "active"
     }
    ],
