@@ -1,27 +1,27 @@
 {
- "generated_at": "2026-11-11T17:26+00:00",
+ "generated_at": "2026-11-11T18:29+00:00",
  "rules_version": 1,
- "picks_logged": 7658,
+ "picks_logged": 7666,
  "not_picks_skipped": {
   "first seen after kickoff": 666,
   "not NFL or college football": 249,
   "stated total is far from the game total (team total or prop)": 211,
-  "teams not recognized": 202,
+  "teams not recognized": 203,
   "this analyst's picks on the game contradict each other": 196,
-  "no game between these teams near the pick date": 87,
+  "no game between these teams near the pick date": 89,
   "picked side is not one of the two teams": 82,
+  "picked team isn't in this game": 46,
   "market price, not a pick": 45,
-  "picked team isn't in this game": 45,
   "stated spread doesn't match this game's line": 36,
   "stated spread is the other team's (side likely swapped)": 22,
   "the two teams are the same": 12,
   "the article has this analyst on both sides": 10,
   "fan-forum prediction": 10,
   "betting system or splits, not a pick": 8,
+  "the article's latest read shows the other side": 3,
   "opponent not named and the game can't be pinned down": 2,
   "no game for this team near the pick date": 2,
-  "no closing moneyline for this game": 2,
-  "the article's latest read shows the other side": 2
+  "no closing moneyline for this game": 2
  },
  "by_sport": {
   "nfl": {
@@ -348,7 +348,7 @@
      "n_line_value": 41,
      "pending": 0,
      "picks": 45,
-     "not_counted": 89
+     "not_counted": 90
     },
     {
      "picker": "Tim Lynch",
@@ -459,6 +459,24 @@
      "not_counted": 3
     },
     {
+     "picker": "Larry Hartstein",
+     "outlet": "SportsLine",
+     "sports": [
+      "nfl"
+     ],
+     "graded": 8,
+     "wins": 5,
+     "losses": 3,
+     "pushes": 0,
+     "win_pct": 0.625,
+     "units": 1.55,
+     "avg_line_value": 1.25,
+     "n_line_value": 8,
+     "pending": 1,
+     "picks": 9,
+     "not_counted": 12
+    },
+    {
      "picker": "Geoff Schwartz",
      "outlet": "FOX Sports",
      "sports": [
@@ -475,24 +493,6 @@
      "pending": 0,
      "picks": 8,
      "not_counted": 2
-    },
-    {
-     "picker": "Larry Hartstein",
-     "outlet": "SportsLine",
-     "sports": [
-      "nfl"
-     ],
-     "graded": 8,
-     "wins": 5,
-     "losses": 3,
-     "pushes": 0,
-     "win_pct": 0.625,
-     "units": 1.55,
-     "avg_line_value": 1.25,
-     "n_line_value": 8,
-     "pending": 0,
-     "picks": 8,
-     "not_counted": 12
     },
     {
      "picker": "Nick Falato",
@@ -2884,8 +2884,8 @@
      "units": -2.45,
      "avg_line_value": 0.25,
      "n_line_value": 12,
-     "pending": 2,
-     "picks": 14,
+     "pending": 3,
+     "picks": 15,
      "not_counted": 1
     },
     {
@@ -3154,8 +3154,8 @@
      "units": -7.02,
      "avg_line_value": -0.15,
      "n_line_value": 17,
-     "pending": 1,
-     "picks": 29,
+     "pending": 2,
+     "picks": 30,
      "not_counted": 11
     },
     {
@@ -3226,9 +3226,9 @@
      "units": -19.66,
      "avg_line_value": 0.31,
      "n_line_value": 49,
-     "pending": 2,
-     "picks": 63,
-     "not_counted": 65
+     "pending": 1,
+     "picks": 62,
+     "not_counted": 66
     }
    ],
    "picks_by_picker": {
@@ -5386,7 +5386,26 @@
      ]
     },
     "Larry Hartstein": {
-     "pending": [],
+     "pending": [
+      {
+       "kick": "2026-11-15T21:25:00+00:00",
+       "week": null,
+       "away": "SF",
+       "home": "DAL",
+       "market": "spread",
+       "pick": "San Francisco 49ers",
+       "line": -4,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://www.cbssports.com/betting/news/use-betmgm-bonus-code-cbssports-to-get-1500-bonus-bets-warriors-rockets-buffalo-ball-state-nba/",
+       "reason": "The Cowboys dropped their last two home games and lost multiple key players (Ferguson, Goodson, Locke). The 49ers have the top passing offense.",
+       "quote": "Now they host Brock Purdy and the NFL's top passing offense, which might be getting Deebo Samuel back. Dallas ranks 29th in EPA defensively.",
+       "seen_at": "2026-11-11T18:28+00:00"
+      }
+     ],
      "graded": [
       {
        "kick": "2026-11-03T01:15:00+00:00",
@@ -13479,6 +13498,25 @@
       {
        "kick": null,
        "week": null,
+       "away": "Houston Rockets",
+       "home": "Golden State Warriors",
+       "market": "spread",
+       "pick": "Houston Rockets",
+       "line": -5.5,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://www.cbssports.com/betting/news/use-betmgm-bonus-code-cbssports-to-get-1500-bonus-bets-warriors-rockets-buffalo-ball-state-nba/",
+       "reason": "The Rockets have the No. 5 scoring defense and the model projects Houston to cover in 56% of simulations. The Warriors are 2-2 on the road this season.",
+       "quote": "backing the Rockets to cover as 5.5-point favorites",
+       "seen_at": "2026-11-11T18:28+00:00",
+       "why": "teams not recognized"
+      },
+      {
+       "kick": null,
+       "week": null,
        "away": "Philadelphia 76ers",
        "home": "Boston Celtics",
        "market": "moneyline",
@@ -14026,25 +14064,6 @@
        "quote": "SportsLine predicts that the Ravens cover as 1.5-point underdogs in 54% of simulations.",
        "seen_at": "2026-10-25T18:27+00:00",
        "why": "this analyst's picks on the game contradict each other"
-      },
-      {
-       "kick": null,
-       "week": null,
-       "away": null,
-       "home": null,
-       "market": "total",
-       "pick": "over",
-       "line": 6.5,
-       "close_line": null,
-       "result": null,
-       "units": null,
-       "line_value": null,
-       "final": null,
-       "link": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-brewers-vs-rays-world-series-game-1-knicks-at-celtics-and-more/",
-       "reason": "Brewers and Rays combined for at least seven runs in each of the last three World Series contests, and both teams used large bullpens on Tuesday.",
-       "quote": "the SportsLine Projection Model doesn't see Game 5 being a low-scoring affair as the Over on the Over/Under betting line of 6.5 hits in well over 69% of its simulations",
-       "seen_at": "2026-10-25T12:24+00:00",
-       "why": "teams not recognized"
       }
      ]
     },
@@ -14064,9 +14083,27 @@
        "line_value": null,
        "final": null,
        "link": "https://vsin.com/nfl/commanders-vs-giants-predictions-week-10-thursday-night-football-odds-picks-and-player-props/",
-       "reason": "Commanders have a top-10 defense over last three weeks with strong pass defense. Jayden Daniels is superior to J.J. McCarthy and can make plays regardless of running game production.",
+       "reason": "Commanders have a top-10 defense over last three weeks with Jayden Daniels as QB, who previously rushed for 103 yards and two TDs against the Giants, while Giants rely on J.J. McCarthy who performed poorly against the Eagles.",
        "quote": "I'm taking the Commanders to win outright.",
        "seen_at": "2026-11-11T06:28+00:00"
+      },
+      {
+       "kick": "2026-11-13T01:15:00+00:00",
+       "week": null,
+       "away": "WAS",
+       "home": "NYG",
+       "market": "total",
+       "pick": "under",
+       "line": 210.5,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://vsin.com/nfl/commanders-vs-giants-predictions-week-10-thursday-night-football-odds-picks-and-player-props/",
+       "reason": "McCarthy threw only 127 yards against Eagles last week; extra film on him helping defenses prepare; rough weather expected Thursday.",
+       "quote": "McCarthy's passing yardage total stood out in this matchup. DraftKings has it at 210.5, while OptaAI projects him for only 188.86. That's an edge of 12.8% to the Under.",
+       "seen_at": "2026-11-11T18:28+00:00"
       }
      ],
      "graded": [
@@ -27577,24 +27614,6 @@
        "away": "WAS",
        "home": "NYG",
        "market": "moneyline",
-       "pick": "New York Giants",
-       "line": -135,
-       "close_line": null,
-       "result": null,
-       "units": null,
-       "line_value": null,
-       "final": null,
-       "link": "https://vsin.com/nfl/commanders-vs-giants-predictions-week-10-thursday-night-football-odds-picks-and-player-props/",
-       "reason": "McCarthy's passing yardage projection (188.86 yards) shows an edge of 12.8% to the Under at 210.5. He threw only 127 yards vs Eagles and faced extra defensive film.",
-       "quote": "LEAN: McCarthy Under 210.5 Passing Yards",
-       "seen_at": "2026-11-11T06:28+00:00"
-      },
-      {
-       "kick": "2026-11-13T01:15:00+00:00",
-       "week": null,
-       "away": "WAS",
-       "home": "NYG",
-       "market": "moneyline",
        "pick": "Washington Commanders",
        "line": null,
        "close_line": null,
@@ -28332,6 +28351,25 @@
      ],
      "not_counted": [
       {
+       "kick": "2026-11-13T01:15:00+00:00",
+       "week": null,
+       "away": "WAS",
+       "home": "NYG",
+       "market": "moneyline",
+       "pick": "New York Giants",
+       "line": -135,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://vsin.com/nfl/commanders-vs-giants-predictions-week-10-thursday-night-football-odds-picks-and-player-props/",
+       "reason": "McCarthy's passing yardage projection (188.86 yards) shows an edge of 12.8% to the Under at 210.5. He threw only 127 yards vs Eagles and faced extra defensive film.",
+       "quote": "LEAN: McCarthy Under 210.5 Passing Yards",
+       "seen_at": "2026-11-11T06:28+00:00",
+       "why": "the article's latest read shows the other side"
+      },
+      {
        "kick": "2026-11-08T21:25:00+00:00",
        "week": null,
        "away": "ARI",
@@ -28881,25 +28919,6 @@
        "quote": "TEASER OF THE WEEK Buccaneers +9/Falcons +8.5 (6-point teaser)",
        "seen_at": "2026-10-25T15:24+00:00",
        "why": "stated spread doesn't match this game's line"
-      },
-      {
-       "kick": null,
-       "week": null,
-       "away": "Boston Celtics",
-       "home": "New York Knicks",
-       "market": "moneyline",
-       "pick": "Boston Celtics",
-       "line": null,
-       "close_line": null,
-       "result": null,
-       "units": null,
-       "line_value": null,
-       "final": null,
-       "link": "https://vsin.com/nba/nba-primetime-previews-knicks-celtics-rockets-spurs-plus-best-bets-for-october-23/",
-       "reason": "Boston is 41-15 SU off two days rest and 44-16 SU off road losses under Mazzulla. Celtics have wing advantage with Tatum and Paul George, and strong point-of-attack defense with Derrick White.",
-       "quote": "Bet: Celtics ML (-130)",
-       "seen_at": "2026-10-24T03:24+00:00",
-       "why": "teams not recognized"
       }
      ]
     },
@@ -32443,6 +32462,24 @@
        "reason": "Houston covered in three straight away from home. Texans recorded 5 passing TDs and 8 defensive sacks in Week 9. Browns averaged 14.5 points in Watson's last four starts despite opponents having 13-21 record.",
        "quote": "the Texans (-4.5, 39.5) cover at the Browns at 1 p.m. ET",
        "seen_at": "2026-11-10T15:29+00:00"
+      },
+      {
+       "kick": "2026-11-15T18:00:00+00:00",
+       "week": null,
+       "away": "BUF",
+       "home": "NYJ",
+       "market": "total",
+       "pick": "over",
+       "line": 51.5,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://www.cbssports.com/betting/news/nfl-odds-picks-predictions-week-10-2026/",
+       "reason": "Model forecasts Bills win by double digits with over hitting in majority of simulations.",
+       "quote": "the Over hitting in 56% of simulations",
+       "seen_at": "2026-11-11T18:28+00:00"
       }
      ],
      "graded": [
@@ -39299,7 +39336,7 @@
    },
    "n_pickers": 178,
    "picks_graded": 1851,
-   "picks_pending": 51,
+   "picks_pending": 53,
    "hot_now": [
     {
      "picker": "Christopher Hart",
@@ -39353,7 +39390,7 @@
    "left_out": {
     "first seen after kickoff": 231,
     "stated total is far from the game total (team total or prop)": 131,
-    "teams not recognized": 123,
+    "teams not recognized": 124,
     "picked side is not one of the two teams": 76,
     "this analyst's picks on the game contradict each other": 56,
     "no game between these teams near the pick date": 42,
@@ -39364,7 +39401,8 @@
     "market price, not a pick": 8,
     "the two teams are the same": 4,
     "betting system or splits, not a pick": 2,
-    "opponent not named and the game can't be pinned down": 1
+    "opponent not named and the game can't be pinned down": 1,
+    "the article's latest read shows the other side": 1
    },
    "overall": {
     "w": 984,
@@ -39408,8 +39446,8 @@
      "units": 8.63,
      "avg_line_value": 0.21,
      "n_line_value": 42,
-     "pending": 0,
-     "picks": 51,
+     "pending": 1,
+     "picks": 52,
      "not_counted": 22
     },
     {
@@ -42056,7 +42094,7 @@
      "n_line_value": 26,
      "pending": 1,
      "picks": 28,
-     "not_counted": 2
+     "not_counted": 3
     },
     {
      "picker": "Nathan Hurst",
@@ -44702,7 +44740,7 @@
      "n_line_value": 30,
      "pending": 0,
      "picks": 30,
-     "not_counted": 18
+     "not_counted": 20
     },
     {
      "picker": "John Adams",
@@ -45736,7 +45774,7 @@
        "line_value": null,
        "final": null,
        "link": "https://vsin.com/college-football/college-football-week-11-picks-buffalo-vs-ball-state/",
-       "reason": "Both teams have played close games and overtime contests. Both offenses have been much better against MAC defenses than earlier in the season.",
+       "reason": "Both teams have played close games including overtime contests. Both offenses have been much better against MAC defenses than earlier in the season.",
        "quote": "I prefer Over 51.5 to anything else in this game.",
        "seen_at": "2026-11-10T15:29+00:00",
        "why": "no game between these teams near the pick date"
@@ -55596,6 +55634,44 @@
       {
        "kick": null,
        "week": null,
+       "away": "Army",
+       "home": "New Haven",
+       "market": "total",
+       "pick": "under",
+       "line": 133,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://vsin.com/college-basketball/college-basketball-picks-for-tuesday-november-10-from-adam-burke/",
+       "reason": "Both teams are offensively challenged with poor shooting efficiency and limited scoring options. Army relies heavily on 3-pointers at low success rates while New Haven lacks rebounding and has lost key scorers.",
+       "quote": "Pick: Under 133",
+       "seen_at": "2026-11-11T18:28+00:00",
+       "why": "no game between these teams near the pick date"
+      },
+      {
+       "kick": null,
+       "week": null,
+       "away": "Hofstra",
+       "home": "Arizona State",
+       "market": "spread",
+       "pick": "Hofstra",
+       "line": 19,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://vsin.com/college-basketball/college-basketball-picks-for-tuesday-november-10-from-adam-burke/",
+       "reason": "Hofstra's slow pace, three 7-footers, and perimeter shooting ability pose matchup problems for Arizona State's efficient offense and should allow them to stay competitive in a slow game.",
+       "quote": "Pick: Hofstra +19",
+       "seen_at": "2026-11-11T18:28+00:00",
+       "why": "picked team isn't in this game"
+      },
+      {
+       "kick": null,
+       "week": null,
        "away": "Norfolk State",
        "home": "Old Dominion",
        "market": "spread",
@@ -59475,7 +59551,26 @@
      ]
     },
     "SportsLine Projection Model": {
-     "pending": [],
+     "pending": [
+      {
+       "kick": "2026-11-12T00:30:00+00:00",
+       "week": null,
+       "away": "Buffalo",
+       "home": "Ball State",
+       "market": "moneyline",
+       "pick": "Buffalo",
+       "line": null,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://www.cbssports.com/betting/news/use-betmgm-bonus-code-cbssports-to-get-1500-bonus-bets-warriors-rockets-buffalo-ball-state-nba/",
+       "reason": "Buffalo has won four straight games and is 4-1 in the MAC, while Ball State is 3-6 overall and 2-3 in the MAC. The model projects Buffalo to cover in 64% of simulations.",
+       "quote": "backing Buffalo to defeat Ball State in Wednesday night MACtion",
+       "seen_at": "2026-11-11T18:28+00:00"
+      }
+     ],
      "graded": [
       {
        "kick": "2026-11-11T00:00:00+00:00",
@@ -75572,6 +75667,25 @@
       }
      ],
      "not_counted": [
+      {
+       "kick": null,
+       "week": null,
+       "away": "Robert Morris Colonials",
+       "home": "Arkansas Razorbacks",
+       "market": "total",
+       "pick": "under",
+       "line": 157.5,
+       "close_line": null,
+       "result": null,
+       "units": null,
+       "line_value": null,
+       "final": null,
+       "link": "https://www.saturdaydownsouth.com/news/college-basketball/robert-morris-vs-arkansas-preview-and-predictions/",
+       "reason": "Robert Morris has severe shooting inefficiency outside of their lead guard; secondary players shooting 21-27% makes reaching 160 points mathematically unlikely, and Arkansas will build a 25-30 point lead and slow pace in second half.",
+       "quote": "While Arkansas has plenty of scoring depth, taking the under 157.5 at -112 on DraftKings is our top play for the evening.",
+       "seen_at": "2026-11-11T18:28+00:00",
+       "why": "no game between these teams near the pick date"
+      },
       {
        "kick": null,
        "week": null,
@@ -100144,7 +100258,7 @@
    },
    "n_pickers": 306,
    "picks_graded": 2539,
-   "picks_pending": 37,
+   "picks_pending": 38,
    "hot_now": [
     {
      "picker": "Ariana Pensy",
@@ -100272,8 +100386,8 @@
     "this analyst's picks on the game contradict each other": 140,
     "stated total is far from the game total (team total or prop)": 80,
     "teams not recognized": 79,
-    "no game between these teams near the pick date": 45,
-    "picked team isn't in this game": 45,
+    "no game between these teams near the pick date": 47,
+    "picked team isn't in this game": 46,
     "market price, not a pick": 37,
     "stated spread doesn't match this game's line": 22,
     "the two teams are the same": 8,
@@ -100297,7 +100411,7 @@
   }
  },
  "picks_graded": 4390,
- "picks_pending": 88,
+ "picks_pending": 91,
  "late_picks_dropped": 666,
  "pickers": [
   {
@@ -100352,8 +100466,8 @@
    "units": 11.12,
    "avg_line_value": 0.07,
    "n_line_value": 83,
-   "pending": 0,
-   "picks": 96,
+   "pending": 1,
+   "picks": 97,
    "not_counted": 0
   },
   {
@@ -101301,24 +101415,6 @@
    "not_counted": 0
   },
   {
-   "picker": "Geoff Schwartz",
-   "outlet": "FOX Sports",
-   "sports": [
-    "nfl"
-   ],
-   "graded": 8,
-   "wins": 5,
-   "losses": 3,
-   "pushes": 0,
-   "win_pct": 0.625,
-   "units": 1.55,
-   "avg_line_value": 0.36,
-   "n_line_value": 7,
-   "pending": 0,
-   "picks": 8,
-   "not_counted": 0
-  },
-  {
    "picker": "Larry Hartstein",
    "outlet": "SportsLine",
    "sports": [
@@ -101332,6 +101428,24 @@
    "units": 1.55,
    "avg_line_value": 1.25,
    "n_line_value": 8,
+   "pending": 1,
+   "picks": 9,
+   "not_counted": 0
+  },
+  {
+   "picker": "Geoff Schwartz",
+   "outlet": "FOX Sports",
+   "sports": [
+    "nfl"
+   ],
+   "graded": 8,
+   "wins": 5,
+   "losses": 3,
+   "pushes": 0,
+   "win_pct": 0.625,
+   "units": 1.55,
+   "avg_line_value": 0.36,
+   "n_line_value": 7,
    "pending": 0,
    "picks": 8,
    "not_counted": 0
@@ -105008,8 +105122,8 @@
  },
  "audit": {
   "ok": true,
-  "checks": 14806,
-  "at": "2026-11-11T17:26+00:00",
+  "checks": 14810,
+  "at": "2026-11-11T18:29+00:00",
   "warnings": []
  }
 }
