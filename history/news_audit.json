@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-10T14:53+00:00",
- "signals": 16667,
- "units": 3429,
+ "generated_at": "2026-11-11T14:45+00:00",
+ "signals": 16800,
+ "units": 3468,
  "skipped": {
-  "team_unclear": 412,
-  "no_game": 435,
-  "not_game_week": 978
+  "team_unclear": 415,
+  "no_game": 436,
+  "not_game_week": 982
  },
  "roster_check": {
-  "match": 15730,
-  "team_mismatch": 507,
-  "not_found": 428,
+  "match": 15835,
+  "team_mismatch": 532,
+  "not_found": 431,
   "ambiguous": 2
  },
  "graded": 1684,
- "pending": 71,
+ "pending": 96,
  "overall": {
   "n": 1684,
   "correct": 1381,
@@ -66,13 +66,13 @@
   "n": 168,
   "correct": 114,
   "pct": 67.9,
-  "pending": 23
+  "pending": 31
  },
  "rule_population": {
   "n": 138,
   "correct": 100,
   "pct": 72.5,
-  "pending": 18
+  "pending": 24
  },
  "official_report_agreement": {
   "n": 1450,
@@ -80,17 +80,1044 @@
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 1755,
+  "n": 1780,
   "median": 25.6,
-  "share_before_report": 65.8
+  "share_before_report": 66.3
  },
  "qb_line_move_6h": {
-  "n": 284,
-  "avg_abs_after": 0.7,
-  "avg_abs_before": 0.37,
-  "avg_after_negative_signals": -0.54
+  "n": 294,
+  "avg_abs_after": 0.68,
+  "avg_abs_before": 0.42,
+  "avg_after_negative_signals": -0.53
  },
  "rows": [
+  {
+   "seen_at": "2026-11-11T06:23+00:00",
+   "player": "Daiyan Henley",
+   "team": "LAC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 86.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-11T06:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:zacstevens.bsky.social (DEN)",
+     "title": "What we learned w/Broncos today: -Traded 2027 4th round pick and 2028 5th round pick to the Chargers for LB Daiyan Henley -Henley will be de",
+     "quote": "Henley will be depth at ILB behind Alex Singleton & Justin Strnad",
+     "link": "https://bsky.app/profile/zacstevens.bsky.social/post/3mzzcccedg22d",
+     "player": "Daiyan Henley",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-11T01:23+00:00",
+   "player": "Malik Willis",
+   "team": "MIA",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 67.6,
+   "line_move": {
+    "after": -0.0,
+    "before": -1.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-11T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dolphins name new starting QB following Malik Willis injury - Yahoo Sports",
+     "quote": "Dolphins name new starting QB following Malik Willis injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOSEhWbV90Wk9oQ20ySWV2WW5oaXFvRjVRX09GSjFwR2cxMG1TWWJyc3czRlVMR0lybzE1Y2NMcEM4UXlRQUxyT3o2VHVuMFlKMm8xT2J1NUJZREpYVmtGclNwNHBucHI5cVVWeVpzcXNjS2poOFNSSUlueHNkcllGZFUxTlQtQ05QaWhxMA?oc=5",
+     "player": "Malik Willis",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-11T01:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Dolphins workout multiple quarterbacks following Malik Willis injury news",
+     "quote": "Dolphins workout multiple quarterbacks following Malik Willis injury news",
+     "link": "https://sports.yahoo.com/articles/dolphins-workout-multiple-quarterbacks-following-004156944.html",
+     "player": "Malik Willis",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T23:23+00:00",
+   "player": "Kirk Cousins",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_10_SEA_LV",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 69.6,
+   "line_move": {
+    "after": 0.0,
+    "before": -3.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T23:23+00:00",
+     "source": "google_injury",
+     "outlet": "The Denver Post",
+     "title": "Vikings get QB Kirk Cousins from Raiders for 3rd-rounder to lift struggling offense, AP source says - The Denver Post",
+     "quote": "Vikings get QB Kirk Cousins from Raiders for 3rd-rounder to lift struggling offense",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPVzlkMGxabmlvSy14RXp4YThxajloZWlYcEVlVnZ5cmRJaUJkZDNFTWJFZVp3MHhwT25qbFhqRVl0dWNFaDd1bnZzeGZnVHhVUHBWb1lIUHBEZTBISW9ET1pBc2k2T0k0c24tRTcycHk2WkNRQTdJWHNtSXJnWHRfZnlHbmFPeWdsNUE?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T23:03+00:00",
+   "player": "Kirk Cousins",
+   "team": "LV",
+   "signal": "returning",
+   "qb": true,
+   "game_id": "2026_10_SEA_LV",
+   "roster": "team_mismatch",
+   "certainty": 0.95,
+   "lead_vs_report_h": 70.0,
+   "line_move": {
+    "after": 0.0,
+    "before": -3.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T23:03+00:00",
+     "source": "google_qb",
+     "outlet": "CBS News",
+     "title": "Vikings reuniting with QB Kirk Cousins after trade with Raiders - CBS News",
+     "quote": "Vikings reuniting with QB Kirk Cousins after trade with Raiders",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQSjd0anNCQTgyd2lJdktYOEd2bVdITWVrejQ4VVd1ODgweWFxMnJSSzZwOHNOMnd3M0NMV0xmdjdrVExKRUJDeDN6dlBRRTBBS1M0M1RLdTVuZnRHLUhvTzNFSEg5U3lmV2F1WlNNYnNqNDZOcWFkWUZLdFhuM3NIempLcDJKSjNzVVcwZWdNbUU?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-10T23:44+00:00",
+     "source": "google_injury",
+     "outlet": "The Guardian",
+     "title": "NFL trade deadline: Kirk Cousins returns to Vikings as Raiders hand starting job to Fernando Mendoza - The Guardian",
+     "quote": "Kirk Cousins returns to Vikings",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOS3JFdDdFRVh0WXFQTkJPMkpUUlJidGZoMXBuTkFLMXVWcGRpQ253azkwLVNteGZVekdYRWxyTDh5VG43Qnk5TTR2dVh6bUw2TzRyTmVTU1BSOXp4LWZjUjF3QUNzV05KV3lkQXdwUkhyV3VzLTNDYUFaU1hLR0VNeUNjbUlLVDZyUHhNOHZPZXM5d1NobWNjVlVORWRfMEZEcXd2dDlIcnIwTXRUYVJmckhPRkFGOElF?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T22:24+00:00",
+   "player": "Josh Johnson",
+   "team": "ARI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_LA_ARI",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 70.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "#AZCardinals make moves, although no trades. - QB Gardner Minshew, WR Michael Wilson to IR. - Officially sign QB Josh Johnson and QB Joey Ag",
+     "quote": "Officially sign QB Josh Johnson and QB Joey Aguilar",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mzyh2hmgz22n",
+     "player": "Josh Johnson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T22:24+00:00",
+   "player": "Joey Aguilar",
+   "team": "JAX",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_JAX_TEN",
+   "roster": "team_mismatch",
+   "certainty": 0.7,
+   "lead_vs_report_h": 70.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "#AZCardinals make moves, although no trades. - QB Gardner Minshew, WR Michael Wilson to IR. - Officially sign QB Josh Johnson and QB Joey Ag",
+     "quote": "Officially sign QB Josh Johnson and QB Joey Aguilar",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mzyh2hmgz22n",
+     "player": "Joey Aguilar",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:45+00:00",
+   "player": "Xavier Smith",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "team_mismatch",
+   "certainty": 0.8,
+   "lead_vs_report_h": 71.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "The Rams have signed WR Xavier Smith back and placed WR Jordan Whittington on injured reserve. So they did technically add a wide receiver t",
+     "quote": "signed WR Xavier Smith back",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3mzyf6im2nk2g",
+     "player": "Xavier Smith",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T22:00+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Rams bring back WR Xavier Smith, sign him off 49ers practice squad",
+     "quote": "The Rams did not bring in a receiver via trade before the deadline, but they have acquired one who knows their system",
+     "link": "https://sports.yahoo.com/articles/rams-bring-back-wr-xavier-213349824.html",
+     "player": "Xavier Smith",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:45+00:00",
+   "player": "Kyle McCord",
+   "team": "MIA",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 71.2,
+   "line_move": {
+    "after": -0.0,
+    "before": -1.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dolphins add QB Malik Willis to IR due to lingering groin injury; Kyle McCord expected to start vs. Colts - Yahoo Sports",
+     "quote": "Kyle McCord expected to start vs. Colts",
+     "link": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxNMV9NUWlfaFkzMlV3V1ZxSWpiX3FTTUdHWVY2TWxBRWlYLVJSMjNWaHk5NW80c3IyVy14QUl5M1FKQmpHdVo3bDhqSEVyWjZXSC0yUHdMbjZtTHB1QzhsQUN4SGxRbzNuTW1rMHZaZ2U5OXZNU2xXcnBldmJnQjhERTM5amVTOVFPTl8yVWhrYVIwV2pIRFJWN2g4U3d1UDhpbXVmOExqQkhHbE1zRmlaOUhYYS1rZWpuWTBXSTNLbGVUS2I3T3BXbnNKeDluUUR1WVNIRzBZU3lNdTlRVENoaE9FSkpmWFVOYW9kZm1CelJuVE5NOEVoRnQ1a2RVZw?oc=5",
+     "player": "Kyle McCord",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "Dolphins place QB Malik Willis (groin) on injured reserve; Kyle McCord in line for first start - NFL.com",
+     "quote": "Kyle McCord in line for first start",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPdkl6d0F6LUJQN2F0TjFiaVJTV0hMZnhPdm9PZmNuZ0EyT2JBTEZUeml6TllQdUJkNWJQc1hKb3MzZXBScUlyOF9vaDlUbXRVSzZWOU51M2RPWUZ0NnlPVHVJQUtOUlU5dE1uUElnbHhVRFhZZnhoZkRaOThsR3R3QktST3RHcE9xTW5WZm5RemJGMTBYeGN0YjVyWEg3VF9TNDYyMkNrN01aSzA5bnVRbDdMRm1SdGc?oc=5",
+     "player": "Kyle McCord",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-11T01:43+00:00",
+     "source": "google_injury",
+     "outlet": "The Economic Times",
+     "title": "Who is Kyle McCord? Dolphins quarterback set for NFL debut after Malik Willis lands on injured reserve - The Economic Times",
+     "quote": "Dolphins quarterback set for NFL debut after Malik Willis lands on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOd3ZERk9Ha2h1NFZ4cHpBUnd5THF0NUwxbUZUMzAzTXN4QkhhY2VhcTU0N2pjLXY0MnBFRlRZTHZoNGJMWUtla0wzbXZvMUlEeEdyWUx5VVM1ZmNmcGNvbVdrcU1yYXBjM2FmSWFwQzh0bXIwRHZBTDVaVU1PVnFNcXNVMVJmbXkxUmNDcU9fUFMzOGtnNnF0OTh1eXU2QzVEZVo2dV9KcGFnM2JTMUpyLUdreTU0Y29LbE41R0U3SlJweDhydUxFQ3EzR1ZJdzE2c3h3Zm1qNnV0OURETUJGYlhYbXQxbGVRMWFRaXBqLWgxNXVXc1R5UXVhTHjSAYICQVVfeXFMT3Bqd1NtNHRGMElfSjBPeXZaVXdCM2hzTk11c01OVXlyQThZVnc2LUlwRVBmclpYZzUyRlZuRkE3dThQYmlVS0tiZzRyaS03Q1h5VzQ0eEFEejhvQU9VZGJLaS1zRk9ld3RmUm1TVzUtT0J2Rm9LUFViTzVoaUo4aHlpM2FiN0ZJTlNwZGtOV0xldHZNOEV1ZGlPOU00UUVLdGY0aXV0LTBDMm0wMzFxYjJZTFZtc1kxcmYzZmxDWlc2X1AxRGVjOGxfZ1NISnBkTmYydXFxSGFLRG1qaGs3Z3FzczZjdHdrUmVLNE1NWWIySDNqcFczU2RzR21FUnFZd0hR?oc=5",
+     "player": "Kyle McCord",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:23+00:00",
+   "player": "Jordan Whittington",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_10_LA_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "More Rams receiver news: Jordan Whittington to IR with his back and Xavier Smith is back in the fold",
+     "quote": "Jordan Whittington to IR with his back",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mzyesf66a22j",
+     "player": "Jordan Whittington",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "The Rams have signed WR Xavier Smith back and placed WR Jordan Whittington on injured reserve. So they did technically add a wide receiver t",
+     "quote": "placed WR Jordan Whittington on injured reserve",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3mzyf6im2nk2g",
+     "player": "Jordan Whittington",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-11T04:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Rams make pair of wide receiver moves amid Puka Nacua injury after quiet trade deadline",
+     "quote": "has been placed on",
+     "link": "https://sports.yahoo.com/articles/rams-pair-wide-receiver-moves-235126788.html",
+     "player": "Jordan Whittington",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:23+00:00",
+   "player": "Xavier Smith",
+   "team": "SF",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "More Rams receiver news: Jordan Whittington to IR with his back and Xavier Smith is back in the fold",
+     "quote": "Xavier Smith is back in the fold",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mzyesf66a22j",
+     "player": "Xavier Smith",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:23+00:00",
+   "player": "Kyle McCord",
+   "team": "MIA",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 71.6,
+   "line_move": {
+    "after": -1.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "google_injury",
+     "outlet": "Syracuse.com",
+     "title": "Former Syracuse quarterback Kyle McCord expected to make first NFL start (report) - Syracuse.com",
+     "quote": "expected to make first NFL start",
+     "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQdVVBcVNUZHdXYkl3LUZ2RmdjLXptUnFsaVVtLXhXQV85bnZ0azF0QWdTdkdZZU1KVlYtREQ5b2tnTE1uNW9xTlZuT1U5NHdQWm9zUkEtZlA4dF9fVnhLQjhaSFBrZVc5dkJpVG5jVzZQWW9GUFM3eE5zYkQ3emZMTjhnRlN3NWtoelliYUo1M0I1Mm9WVmV3akdCcnZJOWxlMklqZ0pZT3FXbkdxUDY1SW9BeEczWW12REoySw?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Dolphins add QB Malik Willis to IR due to lingering groin injury; Kyle McCord expected to start vs. Colts",
+     "quote": "Kyle McCord expected to start vs. Colts",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/dolphins-add-qb-malik-willis-to-ir-due-to-lingering-groin-injury-kyle-mccord-expected-to-start-vs-colts-210705783.html",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "google_injury",
+     "outlet": "Sun Sentinel",
+     "title": "Dolphins QB Malik Willis to IR as groin injury worsens; Kyle McCord to start at QB - Sun Sentinel",
+     "quote": "Kyle McCord to start at QB",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOLWtKYldodHA0UXIyTlAxWHRyRTVVUEJEQ1BwTU1YOGNTRUVmTlhUdHVlSVIta0tiMnVvRmJ3LU10Vk1OUFhKdGZyLV84S094QVgtNFJHWExWQW9DQ0lUWGtFVEdMdzF3cmo2ZGQzZURmUk9FLTRJdUJ0SmlaTzJKZThWQWhqLXBqaklBRVJCVzl1YmtvUlhBdlotX3pZbVNQQUJKbGxOeHNxd3VhWUtsUHJRTk9VV1VCNUplRDNCWQ?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T00:23+00:00",
+     "source": "google_qb",
+     "outlet": "Nacionale",
+     "title": "Who is Kyle McCord? The Dolphins' new starting QB after Malik Willis went on IR - Nacionale",
+     "quote": "Dolphins' new starting QB after Malik Willis went on IR",
+     "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOeTVrTnFQbUVyX0N1aXFVZy1HbTY0eDMyS09KM19Pa2VDbUJ3cFRBTkNMSmpScjEwa040X0t1ZDhuTWw3aVk2QlYzX1lMOHk4T0hleU9jeUk2RG82LVV6bFFxS3V2VDgyUGlucGJVN0VyWHMxNDZvV1h1bmdMN3pyaUxhNWtmY01NLWQyYzQxT2NjQ1o2TUY5ZFZwNXRLeTJHM1AtMVZnTkxOMGNfRDVKOGJB?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T12:45+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "QB Malik Willis on IR with injury, Kyle McCord to start for Dolphins - Yahoo Sports",
+     "quote": "Kyle McCord to start for Dolphins",
+     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE50elRNLUFPSnI4V18tMTdoX3d6XzU5LUVjVkVvRW9GREpSNmRBOWplWjBkRXZMUk1Qa2RDbmZVaGRtZl9fQWdiVnBvWUlSTEwyVTdlaGZiX0FZQUQ4MGN5Y3RDRmgzQV93eE1hd1NsTV85aDB6Qm9rYTd5YXVzWTg?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T14:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Five things to know about Dolphins starting quartebrack Kyle McCord - Yahoo Sports",
+     "quote": "Dolphins starting quartebrack Kyle McCord",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNdVY0enZTQnJsV3Z5dllLOHJqWjBnWVhjallrQVMyX1FLY2I3MnBJQ0FqOUtqOVNxUFhCclVGd2wtRXRVUWFUUm5IM0J3dXVjWnk3U19pY2RTQTV6Qk53TUhPQmVTTWtuYkNITjVObklqZF9kLXdzUlhJNVV2YWhGWEZBYXdmY0FVVXBZ?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T21:23+00:00",
+   "player": "Mendoza",
+   "team": "LV",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_10_SEA_LV",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 71.6,
+   "line_move": {
+    "after": 0.0,
+    "before": -3.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "google_injury",
+     "outlet": "KSNV",
+     "title": "Raiders trade QB Kirk Cousins to Minnesota: report; Mendoza in line to start - KSNV",
+     "quote": "Mendoza in line to start",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNcEd0WV9JYmRES1FKTENiU1RsMDRFQnpkd21WVzJGV1BHeFVkZjE2S0lKa3EzU29nektQRUtiUWxnUGU5a0J0ZVhDenBRVDNNVm5sa2p6YnV3aDVULTZjSlk5UGthRy1sTURLU19kVHJ6T2s4T0VhUU9DTnRhUERLVHd0S0pCVEp6YUNkRnhxczBnY3FsWmFsWkNXYmhSc3Z1amY2MEpPOWE?oc=5",
+     "player": "Mendoza",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T20:57+00:00",
+   "player": "Malik Willis",
+   "team": "MIA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 72.0,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T20:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ml-j.bsky.social (MIA)",
+     "title": "Dolphins are placing QB Malik Willis on IR with a groin injury -- he's received treatment on it each of the past two weeks, although it hasn",
+     "quote": "Dolphins are placing QB Malik Willis on IR with a groin injury",
+     "link": "https://bsky.app/profile/ml-j.bsky.social/post/3mzyd4d4xn223",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Dolphins add QB Malik Willis to IR due to lingering groin injury; Kyle McCord expected to start vs. Colts",
+     "quote": "Malik Willis to IR due to lingering groin injury",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/dolphins-add-qb-malik-willis-to-ir-due-to-lingering-groin-injury-kyle-mccord-expected-to-start-vs-colts-210705783.html",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "google_injury",
+     "outlet": "Sun Sentinel",
+     "title": "Dolphins QB Malik Willis to IR as groin injury worsens; Kyle McCord to start at QB - Sun Sentinel",
+     "quote": "Malik Willis to IR as groin injury worsens",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOLWtKYldodHA0UXIyTlAxWHRyRTVVUEJEQ1BwTU1YOGNTRUVmTlhUdHVlSVIta0tiMnVvRmJ3LU10Vk1OUFhKdGZyLV84S094QVgtNFJHWExWQW9DQ0lUWGtFVEdMdzF3cmo2ZGQzZURmUk9FLTRJdUJ0SmlaTzJKZThWQWhqLXBqaklBRVJCVzl1YmtvUlhBdlotX3pZbVNQQUJKbGxOeHNxd3VhWUtsUHJRTk9VV1VCNUplRDNCWQ?oc=5",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:23+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Groin injury sends Malik Willis to injured reserve - NBC Sports",
+     "quote": "Groin injury sends Malik Willis to injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOTHlMcGRaYS1Ibmdsa1llQzl1YjY3RWpndlhZWktCOFJLTGl0MVFvcW5ZM3J2aDVsV0ljVlQxUk5qV3ZzSWEzdzloRWJOWWZwVHdGSlllY2NOSHNvZ2FkY2dBR2I2eE5WRl9pM180WmJuSVR6VkdOZE9Hdl9IYm1zUm1TRlRTbkJaVGZYUDVqQTFXaFhWbUp1Y00waUh5NGVMcEtjUVZtLXlQVE9OLWZ4WkNaMjhneTg?oc=5",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "google_qb",
+     "outlet": "The Washington Post",
+     "title": "Dolphins placing QB Malik Willis on injured reserve, sidelining him at least 4 games - The Washington Post",
+     "quote": "Dolphins placing QB Malik Willis on injured reserve, sidelining him at least 4 games",
+     "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOX0ZMak51eDE4ZjlkaHQyeUVnMGtXNzJEZ09YUnhJTFlFVDV4Sm5YTDdFRHlIU1ctallmSkFWc0x6SEtQWml3TTdlQm1QQ2pFUC1tZFhuejFtY2F2LWFOWXBJSFVsaE9oMC1xV2dSRkUyR0t2eTBhcEpLNDRLMVQxTlNjeVJGM3FHOU1tYzN6ZFB4WHEyQVE2STNpTU9wWjVZOTQyaU4wNGozbDhZWVNtZ2FwUHA0ZG9MRTZTT1o2NXBndXN5SEpISTVnT3loX0VyRjFIWA?oc=5",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Dolphins add QB Malik Willis to IR due to lingering groin injury; Kyle McCord expected to start vs. Colts - Yahoo Sports",
+     "quote": "Dolphins add QB Malik Willis to IR due to lingering groin injury",
+     "link": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxNMV9NUWlfaFkzMlV3V1ZxSWpiX3FTTUdHWVY2TWxBRWlYLVJSMjNWaHk5NW80c3IyVy14QUl5M1FKQmpHdVo3bDhqSEVyWjZXSC0yUHdMbjZtTHB1QzhsQUN4SGxRbzNuTW1rMHZaZ2U5OXZNU2xXcnBldmJnQjhERTM5amVTOVFPTl8yVWhrYVIwV2pIRFJWN2g4U3d1UDhpbXVmOExqQkhHbE1zRmlaOUhYYS1rZWpuWTBXSTNLbGVUS2I3T3BXbnNKeDluUUR1WVNIRzBZU3lNdTlRVENoaE9FSkpmWFVOYW9kZm1CelJuVE5NOEVoRnQ1a2RVZw?oc=5",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T21:45+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "Dolphins place QB Malik Willis (groin) on injured reserve; Kyle McCord in line for first start - NFL.com",
+     "quote": "Dolphins place QB Malik Willis (groin) on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPdkl6d0F6LUJQN2F0TjFiaVJTV0hMZnhPdm9PZmNuZ0EyT2JBTEZUeml6TllQdUJkNWJQc1hKb3MzZXBScUlyOF9vaDlUbXRVSzZWOU51M2RPWUZ0NnlPVHVJQUtOUlU5dE1uUElnbHhVRFhZZnhoZkRaOThsR3R3QktST3RHcE9xTW5WZm5RemJGMTBYeGN0YjVyWEg3VF9TNDYyMkNrN01aSzA5bnVRbDdMRm1SdGc?oc=5",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T22:00+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Malik Willis injury update as Dolphins QB lands on IR with groin issue",
+     "quote": "Malik Willis has been placed on IR because of a groin injury",
+     "link": "https://sports.yahoo.com/articles/malik-willis-injury-dolphins-qb-214828352.html",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T20:42+00:00",
+   "player": "Kirk Cousins",
+   "team": "LV",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_10_SEA_LV",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 72.3,
+   "line_move": {
+    "after": 0.0,
+    "before": -3.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "google_injury",
+     "outlet": "Sky Sports",
+     "title": "Kirk Cousins: Minnesota Vikings reportedly re-sign quarterback from Las Vegas Raiders - Sky Sports",
+     "quote": "Minnesota Vikings reportedly re-sign quarterback from Las Vegas Raiders",
+     "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQUjFBWXp0RXdzTXBPTlJHMVExbnBQenJpUmI0VFRqM1hoTGJVWXBINF9naG85aUE3R3RtTWQxRGl1SVlMM2lWVzFvR2ZQUmZVYl9neHY0R3JBX3c4RmFnRVpLNDhxakk1Y01WdXRqMlV1bHJBa280RHFtTWZCbFhkSWtPYktQTG5NVTNBMmg0R2ttS3BzbHZRTVA5bWZPb2RPQkttNXZ3YkVDeUs3ZU9fbXdUbmpTYWNiRmRzbWU5Vk10d3Fhbjhn?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Vikings to trade for Raiders quarterback Kirk Cousins - Yahoo Sports",
+     "quote": "Vikings to trade for Raiders quarterback Kirk Cousins",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPSXlEcTZzbmhRbmNrZ1lWM1hKbUphVmNCOWtFa2FiNVVSclU3RzVlVEczR1phb0JvNG1uNnZIUnlJSC1ia2hvYXljeHg1NWZJU1pmSkFkNUl5amhFOXgybjJpNUNnUFlPeGRDQ3lNTkVzcVRMcUFZTkEtTFlZUmhLZGxQUnAzbFp3WEkwaTZFRm4?oc=5",
+     "player": "Kirk Cousins",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T20:42+00:00",
+   "player": "Daiyan Henley",
+   "team": "LAC",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 96.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Chargers trade Daiyan Henley to Broncos for 2027 fourth, 2028 fifth-round picks",
+     "quote": "Chargers trade Daiyan Henley to Broncos for 2027 fourth, 2028 fifth-round picks",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/chargers-trade-daiyan-henley-to-broncos-for-2027-fourth-2028-fifth-round-picks",
+     "player": "Daiyan Henley",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Broncos trade for Chargers LB Daiyan Henley",
+     "quote": "Denver Broncos have traded for Chargers linebacker Daiyan Henley",
+     "link": "https://sports.yahoo.com/articles/broncos-trade-chargers-lb-daiyan-201935838.html",
+     "player": "Daiyan Henley",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T20:23+00:00",
+   "player": "Fernando Mendoza",
+   "team": "LV",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_10_SEA_LV",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 72.6,
+   "line_move": {
+    "after": -2.0,
+    "before": -1.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T20:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Fernando Mendoza in line to make first start vs. Seahawks on Sunday",
+     "quote": "Fernando Mendoza in line to make first start vs. Seahawks on Sunday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/fernando-mendoza-in-line-to-make-first-start-vs-seahawks-on-sunday",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:23+00:00",
+     "source": "google_injury",
+     "outlet": "Fox 59",
+     "title": "Fernando Mendoza in line to start first NFL game after Kirk Cousins traded to Minnesota Vikings - Fox 59",
+     "quote": "Fernando Mendoza in line to start first NFL game after Kirk Cousins traded to Minnesota Vikings",
+     "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNWW5jS2FodVBZMWVETFdkSVFfVnRXSjFmWHFvd1NpQUJHRTJEeXBkRG54NWpKZGJyUkJINWRuNFVrcFhqT0o0bzNsQ1ZIS01ZdFFydHV1T2NfU21JRTJRYzVRc0k0a2ZhUVZ1d19yaTFIWGw1RlJIZkx2S0M5bTllbEQ5SVo3M1UyTFN2My1aRmZVMmVZVkhYS2dRWmJxb0ZkUXl2ZVlvbGxTSHFmXy1xcUZlbUpaZnJseWV1M0Z3dy1SZ0kzYUHSAcsBQVVfeXFMTmV6WjE5LWtlRUtRMENTZTB3OEdmX0VLa2xHVUNUS2Uwa0lMNFBXZHN5M3Vpa2JkNGtFZlhhZFlVcXpZczdBVFFzUTFCRWtadFMzMl81ekZlV0hfcVN5R01rLTB5RXpNWmJwSEwxT3ljQkpsR3BXVzNoZVlkLVhfX3FJMXRjbUI2ZV9QaTJybFhEdVJvN3RhLXhQYUI4bWViR2ItajZ6cXRvbE1fVHRjcldBVkhlNHZGdFh4NXM3RkNHMjBKeTJRdjhjWGs?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "google_injury",
+     "outlet": "The Sun",
+     "title": "Top NFL Draft pick Fernando Mendoza officially becomes Raiders starting QB - The Sun",
+     "quote": "Top NFL Draft pick Fernando Mendoza officially becomes Raiders starting QB",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQRU5CbjE5bDZYS2JvWXdXcmRoWEVVUmMzYzR2RGUxTWRCaEJBNkh4V2NRQWMtekdUSlhfMS12bWFfd3JZb3BsVXpJSC1MLWdXY0l0VGtJVEFUczZadVhfdUV3M2tYY0J2Nnp1UHk0endSdktfUjRZek1sNnhib0E1N3BwX2trSlIweTkzU2xR?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "google_injury",
+     "outlet": "Indiana Daily Student",
+     "title": "Former Indiana football quarterback Fernando Mendoza in line for first NFL start Sunday - Indiana Daily Student",
+     "quote": "Former Indiana football quarterback Fernando Mendoza in line for first NFL start Sunday",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQaGJnOVY3TlMxQ1E0U3ozc1dpTWptSHdoRjFxb0xpby1hQm9tbkhhaEhUM3cyZnpHV1VKWnlPMGE5MDNiNkRVOUZXSlpWek42U1VKMnpEQ29PdzFxRUk2ZHpqUUtOQ18yMmF6ckE5clFWU1QzX0UzNzZ5REVXX285bHF1SnpKOTJBM2lpMHY4cW9OeVpqSEMzbGlIZENyeUhMWmc?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:42+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Fernando Mendoza in line to make first start vs. Seahawks on Sunday",
+     "quote": "Fernando Mendoza in line to make first start vs. Seahawks on Sunday",
+     "link": "https://sports.yahoo.com/articles/fernando-mendoza-line-first-start-200407610.html",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T22:00+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Raiders rookie QB Fernando Mendoza in line to make first career start vs. Seahawks after Kirk Cousins trade",
+     "quote": "Raiders rookie QB Fernando Mendoza in line to make first career start vs. Seahawks",
+     "link": "https://sports.yahoo.com/nfl/article/raiders-rookie-qb-fernando-mendoza-in-line-to-make-first-career-start-vs-seahawks-after-kirk-cousins-trade-214941620.html",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Raiders rookie QB Fernando Mendoza in line to make first career start vs. Seahawks after Kirk Cousins trade - Yahoo Sports",
+     "quote": "Raiders rookie QB Fernando Mendoza in line to make first career start vs. Seahawks",
+     "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPNzlJSXkzX0FkLXhCYzlkaWZnN1RScHFEclh1TVREWk5XTnNJbm9IV1g1WncwSlQxbVh5TWl6d2o2VVdTZmdaUmV5THBNajFuV0hTLVVNNXlUVXU0ekxYZEJzdXNiQXJNVHVHbjJwQnVOXzVMbUhoXzVXQWY2WlNlNlhKT3BUdE55c0xqR2JjaTF6d2ZjbHMxMHlYYWQyU3M0WnlXdkEzQjdfVFVPRkp5T2Z2a1pDb2hrSjk5cHlBRFFnU3dreG5CN1JhQ2lieDVpYmpmOTBCbGVuNENLaWxWRG5yWFQ4WTdoN25uRml1Zw?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T23:03+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Former Indiana quarterback Fernando Mendoza to start for Las Vegas Raiders",
+     "quote": "Former Indiana quarterback Fernando Mendoza to start for Las Vegas Raiders",
+     "link": "https://sports.yahoo.com/articles/former-indiana-quarterback-fernando-mendoza-224120914.html",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T20:23+00:00",
+   "player": "Amani Hooker",
+   "team": "TEN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_JAX_TEN",
+   "roster": "team_mismatch",
+   "certainty": 0.9,
+   "lead_vs_report_h": 72.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T20:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Bills reportedly acquiring playmaking safety Amani Hooker from Titans, sending second-round pick in return",
+     "quote": "Bills reportedly acquiring playmaking safety Amani Hooker from Titans",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/bills-reportedly-acquiring-playmaking-safety-amani-hooker-from-titans-sending-second-round-pick-in-return-195913655.html",
+     "player": "Amani Hooker",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T18:23+00:00",
+   "player": "Jake Moody",
+   "team": "BAL",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": 98.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T18:23+00:00",
+     "source": "google_context",
+     "outlet": "ESPN",
+     "title": "Sources -- Falcons cutting kicker Nick Folk, signing Jake Moody - ESPN",
+     "quote": "signing Jake Moody",
+     "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPWkpxN2lWaWlFMFBiNXBQU1ZQVVVtU1JfbFJBRzBxdTdRNjN2WHA5NDcyWTdnWm9PVGU5WlZkc1R1T25NaXBUek9qblRMM2szWnlZYl9PdGJLbEtNNEtoX1hHSVY3TzlaQ1ZXdkUybFpzb0hlSDVMTDJET0FqUnlOcy1WMXFjQU96WjdaY0JoN3NSZVRHY0R1YS1GNVF0alVKQjFaNXdIOA?oc=5",
+     "player": "Jake Moody",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T18:20+00:00",
+   "player": "Tyler Goodson",
+   "team": "DAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 74.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T18:20+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Kendre Miller to visit Cowboys on Tuesday",
+     "quote": "Tyler Goodson injured",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-kendre-miller-to-visit-cowboys-on-tuesday",
+     "player": "Tyler Goodson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T18:20+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Report: Kendre Miller to visit Cowboys on Tuesday",
+     "quote": "Tyler Goodson injured",
+     "link": "https://sports.yahoo.com/articles/report-kendre-miller-visit-cowboys-180510983.html",
+     "player": "Tyler Goodson",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T17:57+00:00",
+   "player": "Gracen Halton",
+   "team": "SF",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_SF_DAL",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 75.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T17:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers rookie DT Gracen Halton sustained a broken and dislocated ankle on Sunday. Fred Warner had the same injury last season and would've be",
+     "quote": "sustained a broken and dislocated ankle on Sunday",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzxypiznlc2c",
+     "player": "Gracen Halton",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-11T01:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Kyle Shanahan Confirms Rookie Gracen Halton Out for Season With Ankle Injury - Yahoo Sports",
+     "quote": "Kyle Shanahan Confirms Rookie Gracen Halton Out for Season With Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNLTVWeV9mQ1MzWmpZU1ZjNEZXX2p3emxyZUhJRUJPdEZKdjJ1Z1oxUnlzek9QdzRpU0FLYi05LTJBWk9xU2o2WkFJTUgtanpzc1N4Y1Bfc19sYlFMTmVLZkNoSUQweE81UEJjckdSTDYzS3JkRlB3MlJLa2hRSk5BcXljZ3VYamd2aFpIbTBn?oc=5",
+     "player": "Gracen Halton",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T17:45+00:00",
+   "player": "Tyler Loop",
+   "team": "BAL",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 99.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T17:45+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Falcons steal K Jake Moody from Ravens\u2019 practice squad",
+     "quote": "Tyler Loop on IR",
+     "link": "https://sports.yahoo.com/articles/falcons-steal-k-jake-moody-171500138.html",
+     "player": "Tyler Loop",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T17:45+00:00",
+   "player": "Jake Moody",
+   "team": "BAL",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_10_LAC_BAL",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": 99.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T17:45+00:00",
+     "source": "google_context",
+     "outlet": "Falcons Wire",
+     "title": "Falcons sign kicker off Ravens' practice squad, cut Nick Folk - Falcons Wire",
+     "quote": "Falcons sign kicker off Ravens' practice squad",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNbFF5TE5jSEJsVE54ODBfM3NFS1lieXppZ2Fmd1hmMlU0aVZZWUstYlFHYTFsMFk5UzRuWVp2YWlQOGJTbWlTTG4wbl94d3ByMExRdzc2cDJfdHNOUjV3ZjUwTHNrdUVuc1Y2X0NGcEdTa3BPSmIyQjdERXcyMEVXcl8yMUROVWVxcUtIX2pfR3h2SmxZeEIyOWt3SUJxZFlsbnNXSjdmQ1hFY0dhaV80?oc=5",
+     "player": "Jake Moody",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T18:20+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Falcons cut Nick Folk, add Jake Moody as new kicker",
+     "quote": "add Jake Moody as new kicker",
+     "link": "https://sports.yahoo.com/articles/falcons-cut-nick-folk-add-175812032.html",
+     "player": "Jake Moody",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T16:44+00:00",
+   "player": "Zach Sieler",
+   "team": "MIA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_10_MIA_IND",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 76.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T16:44+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Dolphins DT Zach Sieler to have season-ending biceps surgery",
+     "quote": "season-ending biceps surgery",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-dolphins-dt-zach-sieler-to-have-season-ending-biceps-surgery",
+     "player": "Zach Sieler",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T17:23+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Dolphins lose captain Zach Sieler for season with ruptured biceps",
+     "quote": "Dolphins lose captain Zach Sieler for season with ruptured biceps",
+     "link": "https://www.cbssports.com/nfl/news/dolphins-zach-sieler-injury-2026/",
+     "player": "Zach Sieler",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T18:35+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Zach Sieler will miss the rest of the 2026 season",
+     "quote": "will miss the rest of the 2026 season",
+     "link": "https://sports.yahoo.com/articles/zach-sieler-miss-rest-2026-182320366.html",
+     "player": "Zach Sieler",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T19:00+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Miami Dolphins defensive tackle Zach Sieler out for Season",
+     "quote": "Miami Dolphins defensive tackle Zach Sieler out for Season",
+     "link": "https://sports.yahoo.com/articles/miami-dolphins-defensive-tackle-zach-184652223.html",
+     "player": "Zach Sieler",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "google_qb",
+     "outlet": "The New York Times",
+     "title": "Dolphins place QB Malik Willis, DT Zach Sieler on injured reserve - The New York Times",
+     "quote": "Dolphins place QB Malik Willis, DT Zach Sieler on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPWGVCVUpCdkJWS1MtcUwwRXNGWjBYRTY3ZFkwZUpoWFdDYlcyZjk4cUFBZmp4QlJDcjRPM0VKLTNSMWxJRGlabVNRRU5wbW1nTGRqVUw2NHJRT1hwSnJDRmlfX3lVOUI4bXNucUxaSlpYNGVfMU9hZVFmY3hzSUtmY3Z0Q3hWWVF2Q1hrV1RWelU?oc=5",
+     "player": "Zach Sieler",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T16:44+00:00",
+   "player": "Nick Allegretti",
+   "team": "WAS",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_10_WAS_NYG",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 28.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T16:44+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "#Commanders HC Dan Quinn confirmed Nick Allegretti will start at center Thursday.",
+     "quote": "confirmed Nick Allegretti will start at center Thursday",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3mzxu5pz7x22i",
+     "player": "Nick Allegretti",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T20:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Dan Quinn: Nick Allegretti starting at center vs Giants",
+     "quote": "Dan Quinn: Nick Allegretti starting at center vs Giants",
+     "link": "https://sports.yahoo.com/articles/dan-quinn-nick-allegretti-starting-200027931.html",
+     "player": "Nick Allegretti",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-10T15:05+00:00",
+   "player": "Kerby Joseph",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_NE_DET",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 77.9,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-10T15:05+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Detroit Lions safety Kerby Joseph won't make return in Germany; Dan Campbell talks violations (multiple) of team rules and kinda the trade d",
+     "quote": "won't make return in Germany",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3mzxnoa3gv22n",
+     "player": "Kerby Joseph",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T16:44+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Detroit Lions Kerby Joseph won\u2019t play in Germany",
+     "quote": "won't play in Germany",
+     "link": "https://sports.yahoo.com/articles/detroit-lions-kerby-joseph-won-161739799.html",
+     "player": "Kerby Joseph",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-10T14:23+00:00",
    "player": "Jessie Bates",
@@ -136,6 +1163,16 @@
      "title": "49ers star receivers Mike Evans and Deebo Samuel head in opposite injury directions",
      "quote": "preparing to go another week without Mike Evans",
      "link": "https://sports.yahoo.com/articles/49ers-star-receivers-mike-evans-025630125.html",
+     "player": "Mike Evans",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-10T19:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers WRs Keenan Allen Demarcus Robinson Jordan Watkins Jacob Cowing Brandin Cooks On the mend Deebo Samuel (hamstring, expected to practice",
+     "quote": "Mike Evans (Achilles)",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzy4oiyim22c",
      "player": "Mike Evans",
      "signal": "out"
     }
@@ -225,6 +1262,66 @@
      "title": "Josh Jacobs signs with Arizona after Gardner Minshew\u2019s elbow injury - Diario AS",
      "quote": "Gardner Minshew's elbow injury",
      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPOXhqVmFhZVNRMEpDQzRGdWJORzFzNmQ4ZHlBdEFic0JlQW1tdWpKXzllUWdPMUlWdE81Z1dGSjg2UDZHOGNCaUk1OGJnaHlPWHVkbXpWZnE1TmFzeWNQaTF3a0lsTTYxUnF4enFzbTZtZHptRElYR2otemYteERfX2ZNUEkxNmVwUGNOblBFMzVTWm1aN20xTmNNRnlSUUo30gG0AUFVX3lxTE8yN2FxNXZaT1VkWFRkb0JOcWVWN1RGV0QtWVI5OXZQa1UtQ1Ntak9QRHNZNEFOdkJySGxYME9IazNfQWRlSDdQTUFOdXdieGlzVnRqYVNNNW45T0pGVkZuWXZ5RGg1YmwyZjFldDRwTmNsT1c4LU5WV2xRbWhDUndUNmlKSGJoQWlUc1B3cFJ0OUZDYm5NQ2xiSG1qMUo5Vl9QZXRfZ002ZzBBZlZMNUk2MEFiYg?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "#AZCardinals make moves, although no trades. - QB Gardner Minshew, WR Michael Wilson to IR. - Officially sign QB Josh Johnson and QB Joey Ag",
+     "quote": "QB Gardner Minshew, WR Michael Wilson to IR",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mzyh2hmgz22n",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals add Gardner Minshew to IR, reportedly fear he has torn UCL that would be season-ending",
+     "quote": "Cardinals add Gardner Minshew to IR, reportedly fear he has torn UCL that would be season-ending",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/cardinals-add-gardner-minshew-to-ir-reportedly-fear-he-has-torn-ucl-that-would-be-season-ending-222123630.html",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T23:03+00:00",
+     "source": "google_qb",
+     "outlet": "The Washington Post",
+     "title": "Cardinals place QB Gardner Minshew on injured reserve, opening the door for rookie Carson Beck - The Washington Post",
+     "quote": "Cardinals place QB Gardner Minshew on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPOGVPWGhja3psdldueEVwblowb3ZxNmtnZ3hNUVU3aUpfc1lyQWJLanBmaXRZNkVmdGpkX1NXb1h5MGNTQjFpNHktUWt0a2VmOEx3bE1OZnlyczdRMWVvd3d3UDY0Nm9CaFlQa0w5RTNCd0dSWEhFNWxaNW54d2k2N2FUcEtfa1d2QzNhY291ckNFWlh4bDBGQmlFc1NCY0d2cmdiNU9vbGZubng0MWJVX09tNU5zaVNpMTJWc01iblNrNmdvckNVbnF3MGx5ZlFlTzVRN2ZmNTZFLVc2ZFE?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T23:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals add Gardner Minshew to IR, reportedly fear he has torn UCL that would be season-ending - Yahoo Sports",
+     "quote": "add Gardner Minshew to IR, reportedly fear he has torn UCL that would be season-ending",
+     "link": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRzlVR0dkd00xUHZ0NTVzRnN1SXExWHFEckhBYjNwMVotUGNZSzBSQ0JaU2tyWmk0TkZWRW1BVWVDUHFIQ3JqQVNZSWtyQnk5bnNmbVVvbjl3aWpvMzd4dnYyTXVKZjYxUElkXzZwdGQ0MGtvb0ZWbDNsai1YTkFxeHZCcWllb2Z3QWk3eTRjc3EwZ1I2Rl9fNEZ4Z1ZpdUJEVHA4LWFEWVdIamJoLWFEM2RDLXBKbXJUUTJiLXRBUm85bkc1QU0xQ3M3ZkZfYXRnckt0cUdaVXowM25Gc21pWU1FUDhXckxzbXpPdDRhLWRSams?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-11T00:47+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "Carson Beck In Line For First NFL Start As Cardinals Place Gardner Minshew On IR - FOX Sports",
+     "quote": "Place Gardner Minshew On IR",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxORktUaHM5bWVrRXBmYnlMd2tyMmJueFZ0bU1mQ2tRcVFPTC1valNvOHJzZE02cXhhU2NOX1RFemtUc042bVRBMlNsUHZiQ3dCc3NrZkZIUHhqcDNodVpMZmF4YTQwNURLcXR0WGlJd1ZNemR3WGxTLVc2T1QzX0hlZTNXbktqcDY3ZmQxa1drdE14aGtGOXhWUjM2VzN4RHhrWnM0RDlpcnnSAagBQVVfeXFMTVhzQ0FDXzdKeklrN054SkloY01waHpYQV9wbWJjeW9QYk9CWWN3OE80STdlNFptOTd6SFdWRUdFSGNUTlA5Vy1SSHhBMU5wUGJfeWhpYkNnZnJJaWJBRVFyTEpzTmYyUW5lTFA0Unh1ZjFJU2M5dkRSNDFoX2swVDdGUmc2cWN0eUJUYnRWcHRpUnAxVHFIdFBtUXJ1SHNMOHpCc01nNW55?oc=5",
+     "player": "Gardner Minshew",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-11T00:47+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Cardinals Place Gardner Minshew, Michael Wilson On IR - Arizona Cardinals",
+     "quote": "Place Gardner Minshew, Michael Wilson On IR",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOcEpCM0MxLVFaQWg2eDZOaFFmREx5WEs2Njk4VTh1amlOa2k2V3JVb3dtRzR1Vk1tbk1CbXA2bHVwaDdsc2hMcFd2c3NKdlk1Yk9HTVNfNlRxMzdRcnBNLUEyY2loWUlZS1RYOGNVY0JvMEdvcklTM0tFYVUyT0NndHdRdlZJR051TUhTV2NR?oc=5",
      "player": "Gardner Minshew",
      "signal": "injured_reserve"
     }
@@ -444,6 +1541,26 @@
      "title": "Imaging showed no fracture in Justin Herbert&#39;s finger",
      "quote": "Imaging showed no fracture in Justin Herbert's finger",
      "link": "https://sports.yahoo.com/articles/imaging-showed-no-fracture-justin-013155401.html",
+     "player": "Justin Herbert",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T15:49+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: J.J. McCarthy expected to play Week 10; Justin Herbert avoids finger fracture - NFL.com",
+     "quote": "Justin Herbert avoids finger fracture",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOYXFRX2dBTHFZUlJ4dF9LN211a19HSm1zeFVPZGlncHVocmFrT1pXQk1DWlRFY0g1WGRyeVlDR2pzeXU1RjlITDU3MnlKbk0zUldfbUJwVWZEZFNZLW1TU29YTTZFVWxabXUycTVXNWFNZVYxbmNIRVRqTXUxMmR4cWx1TFNDQUww?oc=5",
+     "player": "Justin Herbert",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T17:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Chargers dodge major bullet with latest Justin Herbert injury update - Yahoo Sports",
+     "quote": "dodge major bullet with latest Justin Herbert injury update",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQQ1picmx3ZHIxcEg3N2JQS3FtUmFqak9QZXhWTjg4NkVLRlNkRFpnNjRyeXJoVGVDanB1OEZCMDJnTEk2RzJZc1YyM3NHa0FIVExXYWRqN3FkeGZFbGNsN3JTTHM5NkVuZjZZX0Z0dkcxYWgxSGxnSTFYX1N5TjJQOTUxTkVoVE91NXRR?oc=5",
      "player": "Justin Herbert",
      "signal": "expected_to_play"
     }
@@ -782,6 +1899,26 @@
      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNekVNSTh4cGtZRkhkOTJHb0U1ZjZCVEF2RS1IaWJJdzFHY1Vxb0NKSmk1RE9MZ0Y3N21VV3pXNWNldHdVY0ZZYnpaSFVzdkpXdm9NaDRWU0VidUVERFExY3ZNdDdVdnFqSm5YaWdxOEJjRjQ0b0hOTkhfeEJsOEFwVkpTWUFOVUY1OVZOOF9xSGNoUUg2SXZGUDV0UHpMOG9ua2ZDM05JU2FpTUxwNUExZWFweFZuU0hmUzFuUXdRTWtZOEw0WU5SM2ZhemI?oc=5",
      "player": "Carson Beck",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-10T23:03+00:00",
+     "source": "google_qb",
+     "outlet": "The Washington Post",
+     "title": "Cardinals place QB Gardner Minshew on injured reserve, opening the door for rookie Carson Beck - The Washington Post",
+     "quote": "opening the door for rookie Carson Beck",
+     "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPOGVPWGhja3psdldueEVwblowb3ZxNmtnZ3hNUVU3aUpfc1lyQWJLanBmaXRZNkVmdGpkX1NXb1h5MGNTQjFpNHktUWt0a2VmOEx3bE1OZnlyczdRMWVvd3d3UDY0Nm9CaFlQa0w5RTNCd0dSWEhFNWxaNW54d2k2N2FUcEtfa1d2QzNhY291ckNFWlh4bDBGQmlFc1NCY0d2cmdiNU9vbGZubng0MWJVX09tNU5zaVNpMTJWc01iblNrNmdvckNVbnF3MGx5ZlFlTzVRN2ZmNTZFLVc2ZFE?oc=5",
+     "player": "Carson Beck",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T00:47+00:00",
+     "source": "google_injury",
+     "outlet": "FOX Sports",
+     "title": "Carson Beck In Line For First NFL Start As Cardinals Place Gardner Minshew On IR - FOX Sports",
+     "quote": "Carson Beck In Line For First NFL Start",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxORktUaHM5bWVrRXBmYnlMd2tyMmJueFZ0bU1mQ2tRcVFPTC1valNvOHJzZE02cXhhU2NOX1RFemtUc042bVRBMlNsUHZiQ3dCc3NrZkZIUHhqcDNodVpMZmF4YTQwNURLcXR0WGlJd1ZNemR3WGxTLVc2T1QzX0hlZTNXbktqcDY3ZmQxa1drdE14aGtGOXhWUjM2VzN4RHhrWnM0RDlpcnnSAagBQVVfeXFMTVhzQ0FDXzdKeklrN054SkloY01waHpYQV9wbWJjeW9QYk9CWWN3OE80STdlNFptOTd6SFdWRUdFSGNUTlA5Vy1SSHhBMU5wUGJfeWhpYkNnZnJJaWJBRVFyTEpzTmYyUW5lTFA0Unh1ZjFJU2M5dkRSNDFoX2swVDdGUmc2cWN0eUJUYnRWcHRpUnAxVHFIdFBtUXJ1SHNMOHpCc01nNW55?oc=5",
+     "player": "Carson Beck",
+     "signal": "will_start"
     }
    ]
   },
@@ -1018,6 +2155,16 @@
      "title": "Deebo Samuel is \u2018on track\u2019 to return; 49ers open to bringing back veteran defensive tackle",
      "quote": "Deebo Samuel is 'on track' to return",
      "link": "https://sports.yahoo.com/articles/deebo-samuel-track-return-49ers-225911392.html",
+     "player": "Deebo Samuel",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-10T19:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "49ers WRs Keenan Allen Demarcus Robinson Jordan Watkins Jacob Cowing Brandin Cooks On the mend Deebo Samuel (hamstring, expected to practice",
+     "quote": "Deebo Samuel (hamstring, expected to practice Wed)",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3mzy4oiyim22c",
      "player": "Deebo Samuel",
      "signal": "expected_to_play"
     }
@@ -1313,6 +2460,26 @@
      "title": "Michael Wilson Sidelined For Season With Neck Injury - Arizona Cardinals",
      "quote": "Sidelined For Season With Neck Injury",
      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQSi02alp5cTg2RkR4YUUwQ1FOa3VBSlFacWNwTDJMdnZhUEctYzZRdF9FSTIxaGJUc3Z5S2FEdDFCc2N4RG9sTlA1VFNMLXcxa2UwazM2Tzlfalo4a0ZoVlpfZjZRYWdfYlJ0RmF3a0w3a096WXREZ1M4VzRsdF9xTHpmSGpGSnpxTG1vMGFn?oc=5",
+     "player": "Michael Wilson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "#AZCardinals make moves, although no trades. - QB Gardner Minshew, WR Michael Wilson to IR. - Officially sign QB Josh Johnson and QB Joey Ag",
+     "quote": "QB Gardner Minshew, WR Michael Wilson to IR",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3mzyh2hmgz22n",
+     "player": "Michael Wilson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-11T00:47+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Cardinals Place Gardner Minshew, Michael Wilson On IR - Arizona Cardinals",
+     "quote": "Place Gardner Minshew, Michael Wilson On IR",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOcEpCM0MxLVFaQWg2eDZOaFFmREx5WEs2Njk4VTh1amlOa2k2V3JVb3dtRzR1Vk1tbk1CbXA2bHVwaDdsc2hMcFd2c3NKdlk1Yk9HTVNfNlRxMzdRcnBNLUEyY2loWUlZS1RYOGNVY0JvMEdvcklTM0tFYVUyT0NndHdRdlZJR051TUhTV2NR?oc=5",
      "player": "Michael Wilson",
      "signal": "injured_reserve"
     }
@@ -1698,6 +2865,16 @@
      "link": "https://www.cbssports.com/nfl/news/cam-skattebo-injury-update-giants-rb-thursday-night-commanders/",
      "player": "Cam Skattebo",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-10T22:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Cam Skattebo on Giants not adding a running back: They know what I can do",
+     "quote": "Cam Skattebo is set to return to the Giants lineup for Thursday night's game against the Commanders",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/cam-skattebo-on-giants-not-adding-a-running-back-they-know-what-i-can-do",
+     "player": "Cam Skattebo",
+     "signal": "returning"
     }
    ]
   },
@@ -2003,6 +3180,26 @@
      "title": "Source: Browns returning to Watson as QB1 despite Sanders' strong fill-in start - ESPN",
      "quote": "Browns returning to Watson as QB1 despite Sanders' strong fill-in start",
      "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQX0J2NnI4TWx4U2pKYzZNZWxQaVdxU3I0S3hxZmFIcFEyRUdRLUgwVW14SWdVUU9hSmlIWFZtWWJYZHh6ZUp6YlB1WFNuS0d4NENReDZ1eExSdGpWaE9IOWdiXzZYUXlZWi10RmZ0NnFPckZsYTRlQWppUDNsNlNxeUVOaXBCM0UwVXNQcHg0dUdldFFwZnZzUWdkUQ?oc=5",
+     "player": "Deshaun Watson",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T14:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Reports: Browns still plan on starting Deshaun Watson against Texans",
+     "quote": "Browns still plan on starting Deshaun Watson against Texans",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/reports-browns-still-plan-on-starting-deshaun-watson-against-texans",
+     "player": "Deshaun Watson",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-11T14:23+00:00",
+     "source": "google_injury",
+     "outlet": "RotoBaller",
+     "title": "Deshaun Watson Will Start in Week 10 Over Shedeur Sanders - NFL News | Fantasy Football - RotoBaller",
+     "quote": "Deshaun Watson Will Start in Week 10 Over Shedeur Sanders",
+     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOYTltRkI5UHJLakM3N1UzT2p4VERPU1pqbzZQeVBwbXcyaDFuQTRQMzc5RjN0eW1ZbXp3Tk9fY2VBU0JYWkRONTR4TUFuRGlRMzJJNlFaQ1BiTmR2UlBHV3lJeW1CckpTbE4taTVzUExKUmdvRWFuOVRJdGIzYTZCQ3lGc24yVFVUTm5SYkhEdjhLa2NpRzZ6b0NmcXNlLVZL?oc=5",
      "player": "Deshaun Watson",
      "signal": "will_start"
     }
@@ -2434,6 +3631,16 @@
      "title": "49ers lose DT Gracen Halton to season-ending ankle fracture - ESPN",
      "quote": "49ers lose DT Gracen Halton to season-ending ankle fracture",
      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeHQxMTU4NzhZZWJDYjdTWm8wVEo4TXEtLVkzQVdUNndmRGp1ZGhkWkpKUUFNX1Z6YkNib2N2NW9la3pObHl5WEVZSjA5dlZDMVRkWENOWU93ckxOVVB3STQxMW1MbmJhOVlxMzlneC1yQ1BDU1UwNU5pZ3JDMjYtUHV3RzZxNVNBWW92Rw?oc=5",
+     "player": "Gracen Halton",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-10T23:03+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Rams poach wide receiver from the 49ers\u2019 practice squad; Gracen Halton heads to the IR",
+     "quote": "Gracen Halton heads to the IR",
+     "link": "https://sports.yahoo.com/articles/rams-poach-wide-receiver-49ers-225350043.html",
      "player": "Gracen Halton",
      "signal": "injured_reserve"
     }
