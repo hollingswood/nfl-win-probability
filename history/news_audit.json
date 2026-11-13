@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-12T23:23+00:00",
- "signals": 17122,
- "units": 3600,
+ "generated_at": "2026-11-13T00:23+00:00",
+ "signals": 17152,
+ "units": 3611,
  "skipped": {
   "team_unclear": 419,
   "no_game": 436,
   "not_game_week": 996
  },
  "roster_check": {
-  "match": 16134,
-  "team_mismatch": 550,
+  "match": 16163,
+  "team_mismatch": 551,
   "not_found": 436,
   "ambiguous": 2
  },
  "graded": 1684,
- "pending": 131,
+ "pending": 132,
  "overall": {
   "n": 1684,
   "correct": 1381,
@@ -80,17 +80,42 @@
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 1815,
-  "median": 26.2,
+  "n": 1816,
+  "median": 26.1,
   "share_before_report": 66.7
  },
  "qb_line_move_6h": {
-  "n": 304,
+  "n": 306,
   "avg_abs_after": 0.66,
   "avg_abs_before": 0.41,
   "avg_after_negative_signals": -0.53
  },
  "rows": [
+  {
+   "seen_at": "2026-11-13T00:03+00:00",
+   "player": "Malik Harrison",
+   "team": "NYG",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_10_WAS_NYG",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -27.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-13T00:03+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Thursday Night Football: Giants LB Malik Harrison is inactive",
+     "quote": "Giants LB Malik Harrison is inactive",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/thursday-night-football-giants-lb-malik-harrison-is-inactive",
+     "player": "Malik Harrison",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-12T21:23+00:00",
    "player": "Cade Mays",
@@ -226,7 +251,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -20.7,
-   "line_move": null,
+   "line_move": {
+    "after": 0.5,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -252,7 +280,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 27.3,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
