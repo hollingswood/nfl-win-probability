@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-15T16:59+00:00",
+ "generated_at": "2026-11-15T19:17+00:00",
  "rules_version": 1,
- "items": 420,
+ "items": 421,
  "categories": {
   "coach_fired_or_hired": {
    "items": 2,
@@ -25,9 +25,9 @@
   },
   "illness_outbreak": {
    "items": 28,
-   "graded": 21,
-   "cover_rate_vs_close": 0.476,
-   "cover_p": 0.5864,
+   "graded": 22,
+   "cover_rate_vs_close": 0.5,
+   "cover_p": 0.5,
    "with_line_move": 23,
    "avg_line_move_toward": 0.2,
    "move_p": 0.0288,
@@ -38,39 +38,39 @@
    "graded": 26,
    "cover_rate_vs_close": 0.5,
    "cover_p": 0.5,
-   "with_line_move": 24,
-   "avg_line_move_toward": 0.76,
-   "move_p": 0.0135,
+   "with_line_move": 25,
+   "avg_line_move_toward": 0.71,
+   "move_p": 0.0166,
    "candidate": false
   },
   "motivation_or_locker_room": {
    "items": 27,
-   "graded": 18,
-   "cover_rate_vs_close": 0.444,
-   "cover_p": 0.6813,
-   "with_line_move": 20,
-   "avg_line_move_toward": 0.38,
-   "move_p": 0.0172,
+   "graded": 19,
+   "cover_rate_vs_close": 0.474,
+   "cover_p": 0.5907,
+   "with_line_move": 22,
+   "avg_line_move_toward": 0.39,
+   "move_p": 0.0082,
    "candidate": false
   },
   "offensive_line_shuffle": {
    "items": 94,
-   "graded": 79,
-   "cover_rate_vs_close": 0.544,
-   "cover_p": 0.2155,
-   "with_line_move": 82,
-   "avg_line_move_toward": 0.33,
-   "move_p": 0.0858,
+   "graded": 80,
+   "cover_rate_vs_close": 0.55,
+   "cover_p": 0.1855,
+   "with_line_move": 85,
+   "avg_line_move_toward": 0.35,
+   "move_p": 0.069,
    "candidate": false
   },
   "other": {
-   "items": 144,
-   "graded": 111,
-   "cover_rate_vs_close": 0.477,
-   "cover_p": 0.6825,
-   "with_line_move": 116,
-   "avg_line_move_toward": 0.4,
-   "move_p": 0.0062,
+   "items": 145,
+   "graded": 113,
+   "cover_rate_vs_close": 0.478,
+   "cover_p": 0.681,
+   "with_line_move": 128,
+   "avg_line_move_toward": 0.42,
+   "move_p": 0.0026,
    "candidate": false
   },
   "play_caller_change": {
@@ -78,9 +78,9 @@
    "graded": 13,
    "cover_rate_vs_close": 0.769,
    "cover_p": 0.0261,
-   "with_line_move": 14,
-   "avg_line_move_toward": 1.7,
-   "move_p": 0.0446,
+   "with_line_move": 16,
+   "avg_line_move_toward": 1.58,
+   "move_p": 0.0353,
    "candidate": false
   },
   "resting_starters": {
@@ -95,9 +95,9 @@
   },
   "scheme_or_role_change": {
    "items": 23,
-   "graded": 21,
-   "cover_rate_vs_close": 0.476,
-   "cover_p": 0.5864,
+   "graded": 22,
+   "cover_rate_vs_close": 0.5,
+   "cover_p": 0.5,
    "with_line_move": 22,
    "avg_line_move_toward": 0.12,
    "move_p": 0.2972,
@@ -115,7 +115,7 @@
   },
   "travel_or_weather_disruption": {
    "items": 27,
-   "graded": 20,
+   "graded": 22,
    "cover_rate_vs_close": 0.5,
    "cover_p": 0.5,
    "with_line_move": 24,
@@ -125,15 +125,6 @@
   }
  },
  "recent": [
-  {
-   "game_id": "2026_10_SEA_LV",
-   "team": "LV",
-   "category": "play_caller_change",
-   "direction": "hurts",
-   "seen": "2026-11-10T19:40+00:00",
-   "summary": "Las Vegas traded starting quarterback Kirk Cousins to Minnesota on the deadline.",
-   "implied_side": "away"
-  },
   {
    "game_id": "2026_10_SF_DAL",
    "team": "SF",
@@ -177,7 +168,8 @@
    "direction": "helps",
    "seen": "2026-11-10T22:31+00:00",
    "summary": "Minnesota Vikings acquired Kirk Cousins from Raiders at trade deadline.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 1.0
   },
   {
    "game_id": "2026_10_SEA_LV",
@@ -244,7 +236,8 @@
    "direction": "helps",
    "seen": "2026-11-12T16:12+00:00",
    "summary": "Jaguars made several trades before the deadline to signal commitment to the 2026 season.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.5
   },
   {
    "game_id": "2026_10_SEA_LV",
@@ -263,7 +256,8 @@
    "seen": "2026-11-12T21:14+00:00",
    "summary": "Lions traveling to Germany for Week 10 game vs Patriots, with multiple players unavailable to travel.",
    "implied_side": "away",
-   "line_move_toward": 0.5
+   "line_move_toward": 0.5,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_10_MIN_GB",
@@ -272,7 +266,8 @@
    "direction": "helps",
    "seen": "2026-11-12T22:53+00:00",
    "summary": "Kirk Cousins' return is described by Justin Jefferson as 'much needed' and a 'surreal moment' with positive timing and chemistry implications.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.5
   },
   {
    "game_id": "2026_10_LA_ARI",
@@ -290,7 +285,8 @@
    "direction": "hurts",
    "seen": "2026-11-12T23:23+00:00",
    "summary": "Texans added 2 offensive players to DNP list and 2 defensive players to limited list for Week 10.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 1.0
   },
   {
    "game_id": "2026_10_LAC_BAL",
@@ -317,7 +313,8 @@
    "direction": "hurts",
    "seen": "2026-11-12T23:22+00:00",
    "summary": "Kyle McCord will make his first NFL start as the Dolphins' quarterback.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.5
   },
   {
    "game_id": "2026_10_MIN_GB",
@@ -326,7 +323,8 @@
    "direction": "hurts",
    "seen": "2026-11-13T21:55+00:00",
    "summary": "Seven starters out or questionable for Packers-Vikings matchup.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.5
   },
   {
    "game_id": "2026_10_LA_ARI",
@@ -371,7 +369,8 @@
    "direction": "hurts",
    "seen": "2026-11-14T15:20+00:00",
    "summary": "Saints have 4 players ruled out for Sunday's matchup against Panthers.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 3.5
   },
   {
    "game_id": "2026_10_PIT_CIN",
@@ -390,7 +389,8 @@
    "seen": "2026-11-14T21:12+00:00",
    "summary": "RB TreVeyon Henderson placed on IR due to illness.",
    "implied_side": "home",
-   "line_move_toward": 0.0
+   "line_move_toward": 0.0,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_10_JAX_TEN",
@@ -399,6 +399,16 @@
    "direction": "hurts",
    "seen": "2026-11-14T22:05+00:00",
    "summary": "Starting left guard Peter Skoronski out with hamstring injury, absence extends beyond Week 11 vs JAX.",
+   "implied_side": "away",
+   "line_move_toward": 0.5
+  },
+  {
+   "game_id": "2026_11_TB_DET",
+   "team": "DET",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-11-15T15:27+00:00",
+   "summary": "Aidan Hutchinson suffered a knee injury during a celebration after a sack.",
    "implied_side": "away"
   }
  ]
