@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-14T14:34+00:00",
+ "generated_at": "2026-11-15T14:49+00:00",
  "rules_version": 1,
- "items": 416,
+ "items": 420,
  "categories": {
   "coach_fired_or_hired": {
    "items": 2,
@@ -24,13 +24,13 @@
    "candidate": false
   },
   "illness_outbreak": {
-   "items": 26,
+   "items": 28,
    "graded": 21,
    "cover_rate_vs_close": 0.476,
    "cover_p": 0.5864,
-   "with_line_move": 22,
+   "with_line_move": 23,
    "avg_line_move_toward": 0.2,
-   "move_p": 0.0284,
+   "move_p": 0.0288,
    "candidate": false
   },
   "kicker_or_special_teams": {
@@ -48,28 +48,28 @@
    "graded": 18,
    "cover_rate_vs_close": 0.444,
    "cover_p": 0.6813,
-   "with_line_move": 19,
-   "avg_line_move_toward": 0.34,
-   "move_p": 0.0312,
+   "with_line_move": 20,
+   "avg_line_move_toward": 0.38,
+   "move_p": 0.0172,
    "candidate": false
   },
   "offensive_line_shuffle": {
-   "items": 93,
+   "items": 94,
    "graded": 79,
    "cover_rate_vs_close": 0.544,
    "cover_p": 0.2155,
-   "with_line_move": 81,
-   "avg_line_move_toward": 0.34,
-   "move_p": 0.0838,
+   "with_line_move": 82,
+   "avg_line_move_toward": 0.33,
+   "move_p": 0.0858,
    "candidate": false
   },
   "other": {
-   "items": 143,
+   "items": 144,
    "graded": 111,
    "cover_rate_vs_close": 0.477,
    "cover_p": 0.6825,
-   "with_line_move": 114,
-   "avg_line_move_toward": 0.41,
+   "with_line_move": 116,
+   "avg_line_move_toward": 0.4,
    "move_p": 0.0062,
    "candidate": false
   },
@@ -98,9 +98,9 @@
    "graded": 21,
    "cover_rate_vs_close": 0.476,
    "cover_p": 0.5864,
-   "with_line_move": 21,
-   "avg_line_move_toward": -0.06,
-   "move_p": 0.6521,
+   "with_line_move": 22,
+   "avg_line_move_toward": 0.12,
+   "move_p": 0.2972,
    "candidate": false
   },
   "snap_limit": {
@@ -118,49 +118,13 @@
    "graded": 20,
    "cover_rate_vs_close": 0.5,
    "cover_p": 0.5,
-   "with_line_move": 22,
-   "avg_line_move_toward": 0.07,
-   "move_p": 0.4127,
+   "with_line_move": 24,
+   "avg_line_move_toward": 0.12,
+   "move_p": 0.331,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_10_MIN_GB",
-   "team": "MIN",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-11-10T19:39+00:00",
-   "summary": "Minnesota traded a 2027 third-round pick to acquire QB Kirk Cousins from the Raiders.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_10_JAX_TEN",
-   "team": "TEN",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-11-10T19:20+00:00",
-   "summary": "Tennessee traded safety Amani Hooker to Buffalo.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_10_SEA_LV",
-   "team": "LV",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-11-10T19:47+00:00",
-   "summary": "Raiders shipped out starting quarterback Kirk Cousins before facing Broncos.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_10_BUF_NYJ",
-   "team": "BUF",
-   "category": "offensive_line_shuffle",
-   "direction": "helps",
-   "seen": "2026-11-10T19:48+00:00",
-   "summary": "Bills acquired safety Amani Hooker from Titans for secondary help.",
-   "implied_side": "away"
-  },
   {
    "game_id": "2026_10_SEA_LV",
    "team": "LV",
@@ -298,7 +262,8 @@
    "direction": "hurts",
    "seen": "2026-11-12T21:14+00:00",
    "summary": "Lions traveling to Germany for Week 10 game vs Patriots, with multiple players unavailable to travel.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.5
   },
   {
    "game_id": "2026_10_MIN_GB",
@@ -398,6 +363,43 @@
    "seen": "2026-11-14T02:49+00:00",
    "summary": "Chargers players expressing frustration and loss of trust in front office after eight-game losing streak.",
    "implied_side": "home"
+  },
+  {
+   "game_id": "2026_10_CAR_NO",
+   "team": "NO",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-11-14T15:20+00:00",
+   "summary": "Saints have 4 players ruled out for Sunday's matchup against Panthers.",
+   "implied_side": "away"
+  },
+  {
+   "game_id": "2026_10_PIT_CIN",
+   "team": "PIT",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-11-14T18:18+00:00",
+   "summary": "Pat Freiermuth questionable with an illness for Week 10 vs. Bengals.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_10_NE_DET",
+   "team": "NE",
+   "category": "illness_outbreak",
+   "direction": "hurts",
+   "seen": "2026-11-14T21:12+00:00",
+   "summary": "RB TreVeyon Henderson placed on IR due to illness.",
+   "implied_side": "home",
+   "line_move_toward": 0.0
+  },
+  {
+   "game_id": "2026_10_JAX_TEN",
+   "team": "TEN",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-11-14T22:05+00:00",
+   "summary": "Starting left guard Peter Skoronski out with hamstring injury, absence extends beyond Week 11 vs JAX.",
+   "implied_side": "away"
   }
  ]
 }
