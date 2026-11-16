@@ -1,0 +1,17 @@
+{
+ "track": "cfb_picker_follow",
+ "version": 1,
+ "frozen": "2026-11-15",
+ "start": "2026-11-16T01:00+00:00",
+ "why": "Tyler 2026-11-15: track Brandon Marcello (CBS Sports) as a paper bet. He was on the hot list (18-8 over 4 weeks) when Tyler started following him; the frozen hot-picker test and the round-7 consensus study found no edge in following hot pickers, so this is a real-time test of one picker.",
+ "pickers": ["Brandon Marcello"],
+ "sports": ["cfb"],
+ "picks": "every pick the picks scorer counts for these pickers (matched to its real game, quote found in the article, deduped per game/market/side), first seen after `start` and before kickoff",
+ "entry": "the first college odds snapshot at or after the pick was first seen (no later than 12 h after, and 10+ min before kickoff); same side and market at your books: spread/total = best number, then best price; moneyline = best price. If none of your books quotes it, no bet (logged as skipped)",
+ "books": "my_books",
+ "units": 1,
+ "grading": "result at the bet's number and price from the CFBD final; CLV vs the last Pinnacle quote before kickoff (no-vig, same number)",
+ "validation": {"min_bets": 100, "roi_p_below": 0.05, "note": "judged on RESULTS (ROI one-sided p < 0.05 over 100+ bets) with CLV shown; picks are public, so beating the close is the stronger sign"},
+ "ledger": "cfb/paper_bets_picker_follow.json",
+ "queue": "cfb/picker_follow_queue.json"
+}

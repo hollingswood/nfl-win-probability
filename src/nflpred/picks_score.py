@@ -681,6 +681,11 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None, noti
                           and test["p_value"] < v["one_sided_p_below"] and (test["others_rate"] is None or test["cover_rate"] > test["others_rate"]))
     test["units"] = round(test["units"], 2)
     hot_now = hot_list(graded)
+    try:   # follow-a-picker paper track (picker_follow_rules.json): queue the followed pickers' counted picks
+        from cfbpred import picker_follow
+        picker_follow.queue_picks(graded + pending, hist)
+    except Exception as e:
+        print("picker follow queue failed:", e)
     by_sport = {}
     for sport in ("nfl", "cfb"):   # each page shows its own league
         gs, ps = [x for x in graded if x["sport"] == sport], [x for x in pending if x["sport"] == sport]

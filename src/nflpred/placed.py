@@ -250,7 +250,7 @@ TRACK_LABELS = {None: "Moneyline v1", "spread": "Spread v1", "moneyline_v2": "Mo
                 "tuesday_move": "Tuesday move", "qb_news": "QB news", "exchange_value": "Exchange value",
                 "kalshi_maker": "Kalshi resting orders", "futures_shop": "Futures", "cfb_shop": "Shop vs sharp",
                 "cfb_shop_v3": "Stricter overs (test)", "cfb_aplus": "College A+", "cfb_ml": "College moneyline",
-                "cfb_body_clock": "Body clock"}
+                "cfb_body_clock": "Body clock", "cfb_picker_follow": "Following Brandon Marcello"}
 
 
 _FINALS: dict = {}

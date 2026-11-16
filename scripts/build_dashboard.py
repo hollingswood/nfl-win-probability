@@ -438,7 +438,7 @@ def build_cfb(site: Path) -> Path | None:
     data["picks_audit"] = _json_or_none(ROOT / "history" / "picks_audit.json")
     try:  # pre-filled "I placed it" forms for open college paper bets
         from nflpred.placed import log_url
-        data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets", "cfb_kalshi_maker_bets")
+        data["log_urls"] = {b["id"]: log_url(b) for k in ("cfb_shop_bets", "cfb_aplus_bets", "cfb_shop_v3_bets", "cfb_ml_bets", "cfb_body_clock_bets", "cfb_kalshi_maker_bets", "cfb_picker_follow_bets")
                             for b in ((data.get(k) or {}).get("open") or []) if b.get("id")}
     except Exception as e:
         print("cfb log links skipped:", e)

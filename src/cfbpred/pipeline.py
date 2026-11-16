@@ -387,8 +387,14 @@ def run(now: datetime | None = None, force: bool = False) -> dict:
     except Exception as e:
         res["cfb_body_clock_bets"] = {"error": str(e)}
         print("cfb body clock failed:", e)
+    try:   # follow-a-picker paper track (v1: Brandon Marcello; picker_follow_rules.json)
+        from . import picker_follow
+        res["cfb_picker_follow_bets"] = picker_follow.process(now)
+    except Exception as e:
+        res["cfb_picker_follow_bets"] = {"error": str(e)}
+        print("cfb picker follow failed:", e)
     try:   # one phone alert per real bet: tracks that picked the same bet this run are merged into one push
-        alerts = {k: res[k] for k in ("cfb_ml_bets", "cfb_shop_bets", "cfb_aplus_bets", "cfb_body_clock_bets")
+        alerts = {k: res[k] for k in ("cfb_ml_bets", "cfb_shop_bets", "cfb_aplus_bets", "cfb_body_clock_bets", "cfb_picker_follow_bets")
                   if isinstance(res.get(k), dict) and res[k].get("new")}
         if alerts:
             from nflpred import notify
