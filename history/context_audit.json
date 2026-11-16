@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-16T00:19+00:00",
+ "generated_at": "2026-11-16T14:33+00:00",
  "rules_version": 1,
- "items": 425,
+ "items": 430,
  "categories": {
   "coach_fired_or_hired": {
    "items": 2,
@@ -25,12 +25,12 @@
   },
   "illness_outbreak": {
    "items": 28,
-   "graded": 24,
-   "cover_rate_vs_close": 0.458,
-   "cover_p": 0.6585,
-   "with_line_move": 25,
+   "graded": 26,
+   "cover_rate_vs_close": 0.462,
+   "cover_p": 0.6526,
+   "with_line_move": 27,
    "avg_line_move_toward": 0.04,
-   "move_p": 0.4016,
+   "move_p": 0.403,
    "candidate": false
   },
   "kicker_or_special_teams": {
@@ -45,32 +45,32 @@
   },
   "motivation_or_locker_room": {
    "items": 27,
-   "graded": 22,
-   "cover_rate_vs_close": 0.545,
-   "cover_p": 0.3349,
-   "with_line_move": 23,
+   "graded": 23,
+   "cover_rate_vs_close": 0.565,
+   "cover_p": 0.2658,
+   "with_line_move": 24,
    "avg_line_move_toward": 0.48,
-   "move_p": 0.0038,
+   "move_p": 0.0026,
    "candidate": false
   },
   "offensive_line_shuffle": {
-   "items": 94,
-   "graded": 86,
-   "cover_rate_vs_close": 0.57,
-   "cover_p": 0.0978,
+   "items": 96,
+   "graded": 87,
+   "cover_rate_vs_close": 0.575,
+   "cover_p": 0.0817,
    "with_line_move": 89,
    "avg_line_move_toward": 0.3,
    "move_p": 0.0896,
    "candidate": false
   },
   "other": {
-   "items": 146,
-   "graded": 129,
-   "cover_rate_vs_close": 0.512,
-   "cover_p": 0.3958,
-   "with_line_move": 134,
-   "avg_line_move_toward": 0.4,
-   "move_p": 0.0038,
+   "items": 148,
+   "graded": 133,
+   "cover_rate_vs_close": 0.511,
+   "cover_p": 0.3974,
+   "with_line_move": 136,
+   "avg_line_move_toward": 0.39,
+   "move_p": 0.0039,
    "candidate": false
   },
   "play_caller_change": {
@@ -114,68 +114,17 @@
    "candidate": false
   },
   "travel_or_weather_disruption": {
-   "items": 27,
-   "graded": 23,
-   "cover_rate_vs_close": 0.478,
-   "cover_p": 0.5826,
-   "with_line_move": 26,
-   "avg_line_move_toward": 0.08,
-   "move_p": 0.386,
+   "items": 28,
+   "graded": 25,
+   "cover_rate_vs_close": 0.48,
+   "cover_p": 0.5793,
+   "with_line_move": 27,
+   "avg_line_move_toward": 0.06,
+   "move_p": 0.4142,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_10_MIN_GB",
-   "team": "MIN",
-   "category": "play_caller_change",
-   "direction": "helps",
-   "seen": "2026-11-10T22:31+00:00",
-   "summary": "Minnesota Vikings acquired Kirk Cousins from Raiders at trade deadline.",
-   "implied_side": "away",
-   "line_move_toward": 1.0,
-   "result_vs_close": "win"
-  },
-  {
-   "game_id": "2026_10_SEA_LV",
-   "team": "LV",
-   "category": "scheme_or_role_change",
-   "direction": "hurts",
-   "seen": "2026-11-11T18:56+00:00",
-   "summary": "Kirk Cousins traded away; Fernando Mendoza to start as new quarterback for Raiders.",
-   "implied_side": "away",
-   "line_move_toward": 0.0,
-   "result_vs_close": "win"
-  },
-  {
-   "game_id": "2026_10_WAS_NYG",
-   "team": "NYG",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-11-11T22:02+00:00",
-   "summary": "Giants reported as nearly injury-free heading into Thursday night matchup with Commanders.",
-   "implied_side": "home",
-   "line_move_toward": -1.0,
-   "result_vs_close": "loss"
-  },
-  {
-   "game_id": "2026_10_PIT_CIN",
-   "team": "CIN",
-   "category": "illness_outbreak",
-   "direction": "hurts",
-   "seen": "2026-11-11T23:10+00:00",
-   "summary": "TreVeyon Henderson ruled out with illness for game vs. Lions in Germany.",
-   "implied_side": "away"
-  },
-  {
-   "game_id": "2026_10_PIT_CIN",
-   "team": "PIT",
-   "category": "other",
-   "direction": "helps",
-   "seen": "2026-11-12T12:41+00:00",
-   "summary": "Pittsburgh has a rest advantage and formidable defense heading into Week 10.",
-   "implied_side": "away"
-  },
   {
    "game_id": "2026_10_WAS_NYG",
    "team": "WAS",
@@ -194,7 +143,9 @@
    "direction": "helps",
    "seen": "2026-11-12T14:00+00:00",
    "summary": "The Bengals' Spain trip strengthened the locker room heading into Sunday Night Football.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.5,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_10_JAX_TEN",
@@ -279,7 +230,8 @@
    "seen": "2026-11-13T21:45+00:00",
    "summary": "Nationwide airport stop does not impact 49ers' Saturday travel for away game.",
    "implied_side": "away",
-   "line_move_toward": -0.5
+   "line_move_toward": -0.5,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_10_MIA_IND",
@@ -359,7 +311,9 @@
    "direction": "hurts",
    "seen": "2026-11-14T18:18+00:00",
    "summary": "Pat Freiermuth questionable with an illness for Week 10 vs. Bengals.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.5,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_10_NE_DET",
@@ -427,6 +381,53 @@
    "seen": "2026-11-15T22:30+00:00",
    "summary": "Chiefs rediscovered the deep ball immediately after trading for Josh Downs.",
    "implied_side": "home"
+  },
+  {
+   "game_id": "2026_11_IND_HOU",
+   "team": "IND",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-11-15T23:56+00:00",
+   "summary": "Colts staying with Daniel Jones at QB for short week despite poor performance.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_10_PIT_CIN",
+   "team": "CIN",
+   "category": "travel_or_weather_disruption",
+   "direction": "hurts",
+   "seen": "2026-11-15T23:49+00:00",
+   "summary": "Bengals returning from Madrid to host Steelers on Sunday night.",
+   "implied_side": "away",
+   "line_move_toward": -0.5,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_11_PIT_PHI",
+   "team": "PIT",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-11-16T02:47+00:00",
+   "summary": "Starting left guard Mason McCormick suffered a significant leg injury in Week 10.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_12_NE_LAC",
+   "team": "NE",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-11-16T02:46+00:00",
+   "summary": "Starting QB Drake Maye suffered an ankle injury and is expected to miss multiple weeks.",
+   "implied_side": "home"
+  },
+  {
+   "game_id": "2026_12_GB_LA",
+   "team": "LA",
+   "category": "offensive_line_shuffle",
+   "direction": "hurts",
+   "seen": "2026-11-16T06:14+00:00",
+   "summary": "Rams lost 2 centers on Sunday and may need to sign a replacement.",
+   "implied_side": "away"
   }
  ]
 }
