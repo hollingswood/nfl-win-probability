@@ -444,6 +444,11 @@ def regrade(x: dict) -> tuple[str, float] | None:
     return res, units
 
 
+HOT_MARKETS = ("spread", "total")   # hot rule v2 (2026-11-16): only -110 markets count for "hot" and for the test.
+# v1 pooled moneyline winners in: picking favourites straight up made pickers look 60%+ "hot" and the followed picks
+# "56%" (a pass on paper) while they lost 48.5 units; on spreads + totals the same picks went 164-180.
+
+
 def hot_list(graded: list[dict]) -> list[dict]:
     hot_now = []
     for sport in ("nfl", "cfb"):
@@ -453,7 +458,7 @@ def hot_list(graded: list[dict]) -> list[dict]:
         nxt = max(x["week"] for x in rows) + 1
         rec = {}
         for x in rows:
-            if nxt - 4 <= x["week"] < nxt:
+            if nxt - 4 <= x["week"] < nxt and x["market"] in HOT_MARKETS:
                 t = rec.setdefault(x["picker"], [0, 0]); t[0] += x["result"] == "win"; t[1] += x["result"] == "loss"
         for k, (w, l) in sorted(rec.items()):
             if is_named(k) and w + l >= 8 and w / (w + l) >= 0.60:
@@ -655,17 +660,21 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None, noti
         graded.append({**_row(it, g), **{k: g.get(k) for k in ("week", "result", "units", "close_line", "final", "line_value",
                                                                  "pick_is_home")}})
     # hot test: per sport and week, hot = >= 60% with >= 8 graded over the 4 previous weeks; follow next week's picks
-    test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0}
+    test = {"followed": 0, "w": 0, "l": 0, "units": 0.0, "others_w": 0, "others_l": 0, "ml_followed": 0, "ml_units": 0.0}
     for sport in ("nfl", "cfb"):
         rows = [x for x in graded if x["sport"] == sport]
         for wk in sorted({x["week"] for x in rows}):
             rec: dict = {}
             for x in rows:
-                if wk - 4 <= x["week"] < wk:
+                if wk - 4 <= x["week"] < wk and x["market"] in HOT_MARKETS:
                     t = rec.setdefault(x["picker"], [0, 0]); t[0] += x["result"] == "win"; t[1] += x["result"] == "loss"
             hot = {k for k, (w, l) in rec.items() if is_named(k) and w + l >= 8 and w / (w + l) >= 0.60}
             for x in rows:
                 if x["week"] != wk or x["result"] == "push":
+                    continue
+                if x["market"] not in HOT_MARKETS:     # v2: moneylines can't be judged against 52.4%; units only
+                    if x["picker"] in hot:
+                        test["ml_followed"] += 1; test["ml_units"] += x["units"]
                     continue
                 if x["picker"] in hot:
                     test["followed"] += 1; test["w"] += x["result"] == "win"; test["l"] += x["result"] == "loss"; test["units"] += x["units"]
@@ -680,6 +689,8 @@ def run(hist: Path = HIST, now: datetime | None = None, nfl=None, cfb=None, noti
     test["passed"] = bool(n >= v["min_followed_picks"] and test["cover_rate"] > v["cover_rate_vs_close_above"]
                           and test["p_value"] < v["one_sided_p_below"] and (test["others_rate"] is None or test["cover_rate"] > test["others_rate"]))
     test["units"] = round(test["units"], 2)
+    test["ml_units"] = round(test["ml_units"], 2)
+    test["rules_version"] = r.get("version")
     hot_now = hot_list(graded)
     try:   # follow-a-picker paper track (picker_follow_rules.json): queue the followed pickers' counted picks
         from cfbpred import picker_follow

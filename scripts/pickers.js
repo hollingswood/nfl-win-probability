@@ -21,7 +21,7 @@ function renderPickers(K0, sport, A, opts){
   el('pickstrip').innerHTML=[
     [wl(o.w||0,o.l||0), `${opts.label} vs the close · ${(o.units||0)>0?'+':''}${(o.units||0).toFixed(1)} units`],
     [o.avg_line_value!=null?`${o.avg_line_value>0?'+':''}${o.avg_line_value}`:'—', 'avg. line value, pts'],
-    [t.followed?wl(t.w,t.l):'—', `hot-picker test (NFL + college pooled): ${t.followed||0} / 200 followed picks${t.cover_rate!=null?` · ${Math.round(t.cover_rate*100)}% (everyone else ${t.others_rate!=null?Math.round(t.others_rate*100)+'%':'—'})`:''}`],
+    [t.followed?wl(t.w,t.l):'—', `hot-picker test, spreads + totals only (NFL + college pooled): ${t.followed||0} / 200 followed picks${t.cover_rate!=null?` · ${Math.round(t.cover_rate*100)}% (everyone else ${t.others_rate!=null?Math.round(t.others_rate*100)+'%':'—'})`:''}`],
     [(K.hot_now||[]).length, (K.hot_now||[]).length?`hot now: ${K.hot_now.map(h=>`${E(h.picker)} (${h.record})`).join(', ')}`:'hot pickers now (none yet: needs 8+ graded picks in 4 weeks)'],
   ].map(([b,x])=>`<div class="stat"><b class="num">${E(String(b))}</b><span>${x}</span></div>`).join('');
   const R=ALL.slice(0,40);
