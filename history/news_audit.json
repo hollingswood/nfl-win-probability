@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-16T23:11+00:00",
- "signals": 18099,
- "units": 3863,
+ "generated_at": "2026-11-17T00:11+00:00",
+ "signals": 18110,
+ "units": 3865,
  "skipped": {
   "team_unclear": 427,
-  "no_game": 518,
+  "no_game": 519,
   "not_game_week": 1163
  },
  "roster_check": {
-  "match": 17060,
-  "team_mismatch": 592,
+  "match": 17070,
+  "team_mismatch": 593,
   "not_found": 444,
   "ambiguous": 3
  },
  "graded": 1915,
- "pending": 61,
+ "pending": 62,
  "overall": {
   "n": 1915,
   "correct": 1563,
@@ -80,17 +80,52 @@
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 1976,
+  "n": 1977,
   "median": 24.4,
   "share_before_report": 64.4
  },
  "qb_line_move_6h": {
-  "n": 320,
+  "n": 322,
   "avg_abs_after": 0.64,
-  "avg_abs_before": 0.41,
-  "avg_after_negative_signals": -0.48
+  "avg_abs_before": 0.4,
+  "avg_after_negative_signals": -0.49
  },
  "rows": [
+  {
+   "seen_at": "2026-11-16T23:38+00:00",
+   "player": "DaRon Bland",
+   "team": "DAL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_TEN_DAL",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 93.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-16T23:38+00:00",
+     "source": "team_sites_2",
+     "outlet": "Dallas Cowboys | Official Site of the Dallas Cowboys",
+     "title": "DaRon Bland sidelined going forward due to injury - Dallas Cowboys | Official Site of the Dallas Cowboys",
+     "quote": "sidelined going forward due to injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQdExFU3VycjAzZC1haDR2MFNMS2JGLTNfZm9Ld3NrSnl1QWVZVDJSczUxa1diaWoyZm5WUjUxUnBUZ0ZmM0dEU2xWeHpNWGxoNXpDWmdzaVVHZHRIU2U2X1BZYVhDOEVOTDViSXpXaFdnYm1ucy1vQ2RVUTJGbndReXdURnhCc255YXEzWQ?oc=5",
+     "player": "DaRon Bland",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-16T23:53+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys RG Tyler Booker, CB DaRon Bland to miss several weeks with high ankle sprains",
+     "quote": "to miss several weeks with high ankle sprains",
+     "link": "https://sports.yahoo.com/nfl/article/cowboys-rg-tyler-booker-cb-daron-bland-to-miss-several-weeks-with-high-ankle-sprains-234641543.html",
+     "player": "DaRon Bland",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-16T22:48+00:00",
    "player": "Xavier Gipson",
@@ -111,6 +146,16 @@
      "title": "Giants sign WR Xavier Gipson, DB Tavierre Thomas to their active roster",
      "quote": "signed wide receiver Xavier Gipson to their active roster",
      "link": "https://sports.yahoo.com/articles/giants-sign-wr-xavier-gipson-223046125.html",
+     "player": "Xavier Gipson",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-16T23:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Charlie Jones out, Xavier Gipson in as Giants shake up return game",
+     "quote": "Xavier Gipson in as Giants shake up return game",
+     "link": "https://sports.yahoo.com/articles/charlie-jones-xavier-gipson-giants-230241597.html",
      "player": "Xavier Gipson",
      "signal": "expected_to_play"
     }
@@ -623,7 +668,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 99.4,
-   "line_move": null,
+   "line_move": {
+    "after": -0.5,
+    "before": -0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -698,6 +746,16 @@
      "title": "Tyler Booker set to miss multiple weeks",
      "quote": "set to miss multiple weeks",
      "link": "https://sports.yahoo.com/articles/tyler-booker-set-miss-multiple-194210648.html",
+     "player": "Tyler Booker",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-16T23:53+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Cowboys RG Tyler Booker, CB DaRon Bland to miss several weeks with high ankle sprains",
+     "quote": "to miss several weeks with high ankle sprains",
+     "link": "https://sports.yahoo.com/nfl/article/cowboys-rg-tyler-booker-cb-daron-bland-to-miss-several-weeks-with-high-ankle-sprains-234641543.html",
      "player": "Tyler Booker",
      "signal": "out"
     }
@@ -782,6 +840,16 @@
      "title": "Report: Raiders TE Brock Bowers avoids major ankle injury - Reuters",
      "quote": "avoids major ankle injury",
      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPbkhxNVVxTHBYaVJkUXlUZlV1aE5Pek1xTTg5Um5FODJfUGFtZjlUX3hJaF9vNXJTYVFMckxaTUVaRHB0b3FDb0FrdlNMU19XWVJacnZWTU9BS29sdDhFSERrLWdVclpyZ3QxUXZua0o0NlZMQm5qNnRrbHRZRUFXSlBrbjBPSENBUHAzZ0FwMFZHcUFBOXk2cXFkVDVub1JzTUtRNldGWQ?oc=5",
+     "player": "Brock Bowers",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-16T23:53+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN Philippines",
+     "title": "Raiders TE Brock Bowers avoids major ankle injury, source says - ESPN Philippines",
+     "quote": "avoids major ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWkp4UnNPVmVqQ3NJcUhISjJtd21uMWtPeHBvRk5BeVpFSVg4dWxwY3ZRZGhwSXRkZ3diMjZnd250WE1mZ0h0d0xUSURxRWFzbTVtU2dYSUJKeVVCdUpyeXl5cXZwTVFkYXpLdmFaM1FyVUFqRHdZM0tBUXhQMkt4LWpmNUZtc2pUaXRBMUNkbDdVN3hZcHJDSHpVUFlfMUpzVnh4Vmd4dG4?oc=5",
      "player": "Brock Bowers",
      "signal": "expected_to_play"
     }
