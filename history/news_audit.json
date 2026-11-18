@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-17T14:40+00:00",
- "signals": 18168,
- "units": 3887,
+ "generated_at": "2026-11-18T14:47+00:00",
+ "signals": 18266,
+ "units": 3921,
  "skipped": {
-  "team_unclear": 427,
-  "no_game": 523,
-  "not_game_week": 1165
+  "team_unclear": 430,
+  "no_game": 529,
+  "not_game_week": 1178
  },
  "roster_check": {
-  "match": 17127,
-  "team_mismatch": 594,
-  "not_found": 444,
+  "match": 17213,
+  "team_mismatch": 600,
+  "not_found": 450,
   "ambiguous": 3
  },
  "graded": 1939,
- "pending": 52,
+ "pending": 69,
  "overall": {
   "n": 1939,
   "correct": 1578,
@@ -66,7 +66,7 @@
   "n": 208,
   "correct": 133,
   "pct": 63.9,
-  "pending": 14
+  "pending": 15
  },
  "rule_population": {
   "n": 169,
@@ -80,17 +80,596 @@
   "pct": 74.3
  },
  "lead_vs_report_hours": {
-  "n": 1991,
-  "median": 24.6,
-  "share_before_report": 64.6
+  "n": 2008,
+  "median": 24.8,
+  "share_before_report": 64.9
  },
  "qb_line_move_6h": {
-  "n": 326,
+  "n": 327,
   "avg_abs_after": 0.63,
   "avg_abs_before": 0.4,
   "avg_after_negative_signals": -0.48
  },
  "rows": [
+  {
+   "seen_at": "2026-11-18T13:23+00:00",
+   "player": "Mason McCormick",
+   "team": "PIT",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 55.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T13:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Sources: Steelers G Mason McCormick avoided fracture, won't need ankle surgery - ESPN",
+     "quote": "avoided fracture, won't need ankle surgery",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOdnU0X01WSkpDTXpXRGRkbkVscXAzdWhOMzNQcl9jczJhY2M4N2tYRW9IdUxoVTdMaUdvYUpSbXpDTkJFcVRacmdGaDVlWUFoaUtGUXp2YWs3eGg3dkJzT0hrRDFBSVQ0ajZManByb1ZyZEpLMGtxWXhPV3d4Rm5scHFRTWtMTjlpTHdPNVRPRUpzajFNaC00?oc=5",
+     "player": "Mason McCormick",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T11:42+00:00",
+   "player": "DeShon Elliott",
+   "team": "PIT",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "match",
+   "certainty": 0.4,
+   "lead_vs_report_h": 57.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T11:42+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Steelers May Be Worried About DeShon Elliott Injury - Sports Illustrated",
+     "quote": "May Be Worried About DeShon Elliott Injury",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPc2dhYWt2czNPNHhlanRRNktnSG5KeHQ0RUt6OWxYb3BxU0dVR2RhTVNveTB5MmhWTEZTcTJHaWRiUTB2Wkd0NXpPQ2VFU21RaTBkMWhfTk1YaHNVRmlNUWFJdFl1VjVvWkQtSjlNaVVZak14eWhudjZPcEJzbEZyaG9ld3JZVE9GRGZfM0huR1BCTWFH?oc=5",
+     "player": "DeShon Elliott",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T05:23+00:00",
+   "player": "Luther Burden III",
+   "team": "CHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_NO_CHI",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 63.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T05:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Chicago Bears",
+     "title": "Bears receiver Luther Burden III clears concussion protocol - Chicago Bears",
+     "quote": "clears concussion protocol",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPVnVsZEV6amlRUmE3WTg3LW15dmstYUYxamxXS1JFWXZ5OEoyblpuWkNpNk5WT0VWOHVMa2ZpUENQRXl1bWJ0aXpDSThDek51c1dSblNLcEZpM1NfVHU3QmswS3A3SW9iZmw3SHhna3FNam15MDRNcUdZUUtWMl9CTENpTGJHWFNKUERGVW9EN1EzVEhndV94OA?oc=5",
+     "player": "Luther Burden III",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T01:42+00:00",
+   "player": "Sam",
+   "team": "PHI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "team_mismatch",
+   "certainty": 0.85,
+   "lead_vs_report_h": 67.3,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T01:42+00:00",
+     "source": "google_injury",
+     "outlet": "KOMO",
+     "title": "Seahawks stick with Sam: Update on Seattle's quarterback situation - KOMO",
+     "quote": "Seahawks stick with Sam",
+     "link": "https://news.google.com/rss/articles/CBMinAJBVV95cUxQaHdBYjNMVU9sWDI5Y3FMcy1USk1STXBPOWdlaUFlRHZ3aXR6S0pYQTBnbnFBZ2MybkRZZk5OUW5vNTJXdXY1QVNKQWJMLS0zMDZZVW4wSDVVZ3JwWmFaQkI2aDhjVjVNS0N6Zi1zWXlUbUJPNHVfMEgxRENyeFNtcFZvWW9aVHZfWlN5OU5GYjdBSDc2LWhiM0huMWIwaURGRHJia2xKZHF5clBMSzNRQWFvTWtQNTJPNWVVLUVhOUNVaWNkVW05cGt2QXNZcEktYXZzemxMRFJYeHpFbkJJbkVLNmRwd3k1bTZGZjd1WjJqM2NaSHk3SWJrZ19Ydlk0MWo3SHlsS24yMXNmempHS0t0dTRDZ2xYRFdyTw?oc=5",
+     "player": "Sam",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T00:23+00:00",
+   "player": "Jaylon Carlies",
+   "team": "IND",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_IND_HOU",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 20.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T00:23+00:00",
+     "source": "team_sites_2",
+     "outlet": "Colts.com",
+     "title": "Colts sign WR Quez Watkins to 53-man roster from practice squad, place LB Jaylon Carlies on injured reserve - Colts.com",
+     "quote": "place LB Jaylon Carlies on injured reserve",
+     "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPOWtmRXo4TFVnX1ZRMW1yM0xkMGl4eTROekxwbllKUERtTWpVM09wZ3hBaWZreUJjSFc1a3ZtZWdpelJPNk1XNTVrYkh3THhMZ1BJN0FONzFZUXdxQnd0Uzc0R19iYlBUQXJsZGJORUFEeTExOXRCNVNJVWJWTmhTaW80WHhvR2NlV3ZyaWdyRlRlY0Y4WXFiTGF1eEEyMDM2R0o4RXp5VEV3eXh0TXR2Rjl5VXNRd1p1d0VjR0RUUzUyMjZfaUlNX2VuNzlBQQ?oc=5",
+     "player": "Jaylon Carlies",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T00:00+00:00",
+   "player": "Kyler Gordon",
+   "team": "CHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_NO_CHI",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 69.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Bears\u2019 Kyler Gordon gets positive injury update after scare during Buccaneers game - ClutchPoints",
+     "quote": "positive injury update after scare",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNSkhqNFdWTWJyTkNhRFREVWJ0ODA3dHNMVUFMZ1NjQkdyTllSXzJmOGd3WTFacm9SdWZ4dUs4Z2FyZXgzR2FhWVRjSUxzLTB0SHlOeHlNam5CYldodkx1N2ROLTNxTlo4ekhVVG5hdFFtVzVyTjZzSWJ1ZkxhY3AtcDZRbVNBMmdFRHByYVloa2FLOFZacmozZ2VpZElMVWdzaTBISHJGRHJQY1dlTE9BaEhsNDhKTGRTOEV3anRMVQ?oc=5",
+     "player": "Kyler Gordon",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-18T00:00+00:00",
+   "player": "David Montgomery",
+   "team": "HOU",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_IND_HOU",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 21.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Texans\u2019 David Montgomery gives encouraging injury update for Colts game on TNF - ClutchPoints",
+     "quote": "encouraging injury update for Colts game on TNF",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQTEdMeFZtTHNJX0pIM3lFdkNuTDlPcXVHNEdCSTk5S0pWb25kVmVhWWgyTEtRenJvNkNmeEUwX3VRbUg4RUtyVlhKRUd4eEpJeERkcF9tX1M4bmJZRk9zUXNGeVhCOXE5TE9SZ1JxMUxtR2lsVU91NFhHTTZmc2VQN1Y0bW0tdFpMM2kwR09FSTdMUHRiNllucWNINXI1Vlc5TXRtT3Jsakt5cnRXYmthRnU3dw?oc=5",
+     "player": "David Montgomery",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T22:43+00:00",
+   "player": "Andrew Wingard",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_ARI_KC",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 70.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T22:43+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Arizona Cardinals place Andrew Wingard and Jordan Burch on injured reserve",
+     "quote": "placing safety Andrew Wingard on IR",
+     "link": "https://sports.yahoo.com/articles/arizona-cardinals-place-andrew-wingard-222209318.html",
+     "player": "Andrew Wingard",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T01:42+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Andrew Wingard Lands On IR, As Well As Jordan Burch - Arizona Cardinals",
+     "quote": "Andrew Wingard Lands On IR",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYzJEbUZzdkx0dldBNDQzUUxJdzlaTXdtdEJYdzNSOWZ0UEhGZXpRLXRsemJzOTN0dmJ6djkwNUQ3bDBXY2YtZGZvVEEzWXdvbjJNTTl1REF0SnNVOTVIVkNwTEd4UE5aa0Fvdllrbl9fZVRPWjdTWXJhVHhBRGxvUU03R0pjckFKd3Rj?oc=5",
+     "player": "Andrew Wingard",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T21:45+00:00",
+   "player": "Wan'Dale Robinson",
+   "team": "TEN",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_TEN_DAL",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T21:45+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Titans place WR Wan&#39;Dale Robinson on IR due to ankle injury, sign Xavier Restrepo to active roster",
+     "quote": "Titans place WR Wan'Dale Robinson on IR due to ankle injury",
+     "link": "https://sports.yahoo.com/mlb/breaking-news/article/titans-place-wr-wandale-robinson-on-ir-due-to-ankle-injury-sign-xavier-restrepo-to-active-roster-212922575.html",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T21:45+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Titans put Wan'Dale Robinson on injured reserve",
+     "quote": "Titans put Wan'Dale Robinson on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/titans-put-wandale-robinson-on-injured-reserve",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T21:59+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Wan&#39;Dale Robinson lands on injured reserve",
+     "quote": "lands on injured reserve",
+     "link": "https://sports.yahoo.com/articles/wandale-robinson-lands-injured-214851225.html",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T22:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:patriciatraina.bsky.social (NYG)",
+     "title": "Wan\u2019Dale Robinson\u2019s Injury Could Cost Giants a 2027 Compensatory Pick https://www.si.com/nfl/giants/onsi/giants-wandale-robinson-comp-pick-i",
+     "quote": "Wan'Dale Robinson's Injury Could Cost Giants a 2027 Compensatory Pick",
+     "link": "https://bsky.app/profile/patriciatraina.bsky.social/post/3n2k4qlla622s",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T23:17+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Titans put WR Wan'Dale Robinson on IR due to ankle injury - ESPN",
+     "quote": "Titans put WR Wan'Dale Robinson on IR due to ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPY1JxRkVrbU1HaUdyOUNjd0p4bEtBLWF2dUMtcy1ncVVIMEpTNGJlMC1OVHJLTmhZdDh0aTU5WmhRWmRRWjMtam5qWDlUQnF0YURjWEJmQlpLQkRBb3JDWHgtSDF2Ml9hbUJVTVU5V09qVmxWaXczcWhEZTcweE04ZkhjZVUybkhhRk9mUA?oc=5",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Fantasy Football Injury Alert: Big Opportunity for Carnell Tate and Four Sleepers as Wan'Dale Robinson Placed on IR - Sports Illustrated",
+     "quote": "Wan'Dale Robinson Placed on IR",
+     "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxORm5IZU56RzNKVUh4NGY0Qll4WXZYOVI0dXpkMDFFc0FpOC1VVEk3cnlMbTh2Z1Y0eU1MQ28zaUJjQkFlbDFsdm9nbmZaaHpYdmxwZDRPX2hoYUhXQmNBTF96eTRPaDZvZHlvd281bmc4Y0VRRWVIS0ZBNXlTaDlfa1hHalNVRlpULWZCWmxEUk91bzVFUjdIZGZraEFMT2s0bjJqb1ExMmNEUHpHRE5HYy1LWjZPQzd3U09jVWpFWFNjQ3hwTUVqSndhNDcxMGJOd0RKRDlQcWswZlBIS2dLTld2VkU?oc=5",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "team_sites_4",
+     "outlet": "Tennessee Titans",
+     "title": "Titans Promote WR Xavier Restrepo to 53-Man Roster, Place WR Wan'Dale Robinson on Injured Reserve - Tennessee Titans",
+     "quote": "Place WR Wan'Dale Robinson on Injured Reserve",
+     "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNZTZoUUM4UW9jcTFSY3RDdkI3Rm1peFhaVjZXYmpQaHVoOFBxZ2NtSVljN0pvWEtEY2ZiLU85cjdOd0NtaVNsbFlENy11akIzSVpWX25xYXBVOVJlMVpnTXhlUGxpcEJEaWlnSWhMc3dBa3VpOWhfTWt4Skh2Nkl0MzNuSldBWXlJTTVTTEJSRnU0a0tuS0xvR29vbE1UWXNBV0hVU3Z3Q3o1X0pEbEd0aHZ6VGRWOEx3ODdQdDJnZGVVNEhndEJ3aEFNdE1fWGpzMDF2QmJ2S1I4T25PQnc?oc=5",
+     "player": "Wan'Dale Robinson",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T21:23+00:00",
+   "player": "Jordan Phillips",
+   "team": "MIA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_MIA_BUF",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T21:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Dolphins DT Jordan Phillips will undergo season-ending biceps surgery",
+     "quote": "will undergo season-ending biceps surgery",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dolphins-dt-jordan-phillips-will-undergo-season-ending-biceps-surgery",
+     "player": "Jordan Phillips",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T21:23+00:00",
+   "player": "Ar'maj Reed-Adams",
+   "team": "BUF",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_MIA_BUF",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T21:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bills put OL Ar'maj Reed-Adams on injured reserve",
+     "quote": "put OL Ar'maj Reed-Adams on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bills-put-ol-armaj-reed-adams-on-injured-reserve",
+     "player": "Ar'maj Reed-Adams",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Bills put OL Ar&#39;maj Reed-Adams on injured reserve",
+     "quote": "put OL Ar'maj Reed-Adams on injured reserve",
+     "link": "https://sports.yahoo.com/articles/bills-put-ol-armaj-reed-210928690.html",
+     "player": "Ar'maj Reed-Adams",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T20:56+00:00",
+   "player": "Jordan Phillips",
+   "team": "MIA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_MIA_BUF",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 72.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T20:56+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ml-j.bsky.social (MIA)",
+     "title": "Per source, Dolphins DT Jordan Phillips will undergo surgery for torn biceps he suffered in the team's loss to the Colts in Week 10 -- he's ",
+     "quote": "out for the season",
+     "link": "https://bsky.app/profile/ml-j.bsky.social/post/3n2jw324vxa2t",
+     "player": "Jordan Phillips",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T21:45+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Dolphins DT Jordan Phillips will undergo season-ending biceps surgery",
+     "quote": "Dolphins DT Jordan Phillips will undergo season-ending biceps surgery",
+     "link": "https://sports.yahoo.com/articles/dolphins-dt-jordan-phillips-undergo-211417243.html",
+     "player": "Jordan Phillips",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Source: Jordan Phillips latest Dolphins DT to suffer season-ending injury - ESPN",
+     "quote": "season-ending injury",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNV1FnZk1qVGMxekxXTHdtd2JLVEZyQjk2Z1FyMFREQXM1RzBsNWJLX3FHNjJFZFA5Q3BuVWhuUTVrQjBEX1oyYWlNdU9YLWMzTVZRZm14bi1hUlRmRDdmbGEtVVpkWFlxNENVUUVVdXU4R2NPMWNCN2M2NGl0ZU1nTGFxY3RTaVdZNzZMTktyQWl0RkdyOTg4QQ?oc=5",
+     "player": "Jordan Phillips",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T20:23+00:00",
+   "player": "Quez Watkins",
+   "team": "IND",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_IND_HOU",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 24.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T20:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Colts sign WR Quez Watkins to the active roster from the practice squad",
+     "quote": "Colts signed wide receiver Quez Watkins to the 53-player roster from the practice squad",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/colts-sign-wr-quez-watkins-to-the-active-roster-from-the-practice-squad",
+     "player": "Quez Watkins",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T18:45+00:00",
+   "player": "Roman Wilson",
+   "team": "PIT",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 74.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T18:45+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers WR Roman Wilson trending towards playing vs. Eagles",
+     "quote": "trending towards playing vs. Eagles",
+     "link": "https://sports.yahoo.com/articles/steelers-wr-roman-wilson-trending-181515299.html",
+     "player": "Roman Wilson",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T18:23+00:00",
+   "player": "Luther Burden III",
+   "team": "CHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_NO_CHI",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 74.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Luther Burden III is out of concussion protocol, Ben Johnson said. CB Kyler Gordon has a shoulder injury. He appeared to injure his left sho",
+     "quote": "Luther Burden III is out of concussion protocol",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3n2jmnbgfjk2z",
+     "player": "Luther Burden III",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-17T20:56+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bears WR Luther Burden has cleared concussion protocol",
+     "quote": "cleared concussion protocol",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bears-wr-luther-burden-has-cleared-concussion-protocol",
+     "player": "Luther Burden",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-17T20:56+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Fantasy Football Injury Update: Luther Burden III Clears Concussion Protocol, On Track to Play in Week 11 - Sports Illustrated",
+     "quote": "On Track to Play in Week 11",
+     "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMWdqQkxiRG9ydVp1T3RiT1pUcHZHNkp0ZlNhT2l5eXNBWEpZMXZQZkoxZXZFZFhBalM2SXVjUGxtU3VvcGhZeTVjLWRaZWZLQmE4R1dhajYtWUZONVlqcnFiTDdHV2VtQUJtTXNET3V3S3g2VHIxOWxubUotMTh0RGl5Mk1TWUNwX1cwcDdtbHRpVXJoYXl5bnFtNUVja3JKS2tyMW94TWI0Z0ltSVlNUy12VzM2VUFiOV8yWlJkNURwZ2xQaTNGanFhaWJHU2psUWdxa2lTcw?oc=5",
+     "player": "Luther Burden III",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-18T07:41+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Fantasy Football Injury Update: Luther Burden III Clears Concussion Protocol, On Track to Play in Week 11 - Yahoo Sports",
+     "quote": "Clears Concussion Protocol, On Track to Play in Week 11",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPWnQ5VFVCWVdsUVkwQk5TRExqUG5BZmlBYTViaGVaeDZGTXB4X0FBQmJYZjVad1R0Ui0xVkQ1X2NVRmpYNlpudVNaWGVBSGtDUUVHNkpCU0lnV0Z5c0p1UE1uNkRXVGh4SHFZZ2hSVWgySmRRWi1udlJfWnpvWUdwSTZCbzVNRTBGUC11WmdDaw?oc=5",
+     "player": "Luther Burden III",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T17:56+00:00",
+   "player": "Azeez Al-Shaair",
+   "team": "HOU",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_IND_HOU",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 27.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T17:56+00:00",
+     "source": "google_injury",
+     "outlet": "Houston Chronicle",
+     "title": "Texans linebacker Azeez Al-Shaair out at least 4 weeks with groin injury - Houston Chronicle",
+     "quote": "out at least 4 weeks with groin injury",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPdXFsaUdvR3Y4cWxDbU1GTXR3RUREVFRoZEthVFZRQXZYeWxKWkRVM2JQSHE1Y2QwV0dWanNROHk0aThNRHp4d2FlSzB4VnhMcDVUbFJiQzVLLTFyY1FoN3JNYXhDcEF6VmtoeFNsd3hDYVpCeE84ZEN6LVVfMHUxNGY3QVVidUdPVnBFVmEzNFlVMlZMWkp1N1V6cmo?oc=5",
+     "player": "Azeez Al-Shaair",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-17T16:57+00:00",
+   "player": "Azeez Al-Shaair",
+   "team": "HOU",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_11_IND_HOU",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 28.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-17T16:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Texans place Azeez Al-Shaair on injured reserve",
+     "quote": "Texans place Azeez Al-Shaair on injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/texans-place-azeez-al-shaair-on-injured-reserve",
+     "player": "Azeez Al-Shaair",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T17:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Texans place Azeez Al-Shaair on injured reserve",
+     "quote": "Texans place Azeez Al-Shaair on injured reserve",
+     "link": "https://sports.yahoo.com/articles/texans-place-azeez-al-shaair-164741652.html",
+     "player": "Azeez Al-Shaair",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T18:45+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Texans' Azeez Al-Shaair reportedly facing surgery after move to injured reserve",
+     "quote": "move to injured reserve",
+     "link": "https://www.cbssports.com/nfl/news/texans-azeez-al-shaair-injury-surgery-ir-2026/",
+     "player": "Azeez Al-Shaair",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-17T13:53+00:00",
    "player": "Kerby Joseph",
@@ -111,6 +690,36 @@
      "title": "Detroit Lions plan to activate, play Kerby Joseph this week vs. Buccaneers",
      "quote": "expected to return this week vs. the Buccaneers",
      "link": "https://sports.yahoo.com/articles/detroit-lions-plan-activate-play-132933304.html",
+     "player": "Kerby Joseph",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-17T15:23+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Lions set to get key defensive player back in Week 11 in wake of Aidan Hutchinson injury",
+     "quote": "Safety Kerby Joseph has missed the entire season with a knee injury sustained last year, but he is set to return to the lineup this week",
+     "link": "https://www.cbssports.com/nfl/news/lions-kerby-joseph-set-to-return-week-11-buccaneers/",
+     "player": "Kerby Joseph",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-17T15:33+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Lions set to get key defensive player back in Week 11 in wake of Aidan Hutchinson injury",
+     "quote": "set to return to the lineup this week",
+     "link": "https://www.cbssports.com/nfl/news/lions-kerby-joseph-set-to-return-week-11-buccaneers/",
+     "player": "Kerby Joseph",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-18T00:00+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Lions plan for Kerby Joseph to make season debut Sunday, per Dan Campbell - ESPN",
+     "quote": "plan for Kerby Joseph to make season debut Sunday",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQNW1HZVpsN1RoR0wzSHNxdTVqNmNCeVJTdHE2M2IwSzRZc1F1dDIzR0VPeTlDX0Z1d2FpeUl0dlVEVzdzSkRzUWtuaUp3M0JMeG1iLVlvTldSRUVFSkY3b19IRXpoRUdtMkdhN09tbE55Z0twSkl0SjdnUjJCX0M1emZrZExidUk0ckFESkFCaVU4MmVPXzNsWA?oc=5",
      "player": "Kerby Joseph",
      "signal": "returning"
     }
@@ -156,6 +765,16 @@
      "title": "Lions plan for Kerby Joseph to play this week",
      "quote": "expect to have another defensive player in the lineup for the first time this year",
      "link": "https://sports.yahoo.com/articles/lions-plan-kerby-joseph-play-140602255.html",
+     "player": "Kerby Joseph",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-17T14:43+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Detroit Lions safety Kerby Joseph expected to play for the first time in 13 months against the Buccaneers www.freep.com/story/sports...",
+     "quote": "expected to play for the first time in 13 months against the Buccaneers",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2jban2v522k",
      "player": "Kerby Joseph",
      "signal": "expected_to_play"
     }
@@ -283,6 +902,16 @@
      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZi14eFZCZ3BUTGdNUXNOZ296Z0szdjEyZ2pFZFBPSjJreXNkbnFkVm5BQjZCaG41aDZwVXdycmZOWGpuMUR6bnZGUFVzRGJyYllPZlZFS1BOWGVrU2w4Smd1UkJuc2ZyWDQ5bm1kLVVQYU5hdE41M20zV2FpWk4yLWt6OUJsY1pnTWM4UFBpdw?oc=5",
      "player": "Kenneth Walker",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-17T22:59+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Chiefs rumors: Kenneth Walker III\u2019s injury considered \u2018minor,\u2019 KC hopeful for Week 11 return - ClutchPoints",
+     "quote": "injury considered 'minor,' KC hopeful for Week 11 return",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNTGp2NThmZWwtd1Zhd0JhQV9oTlJfM0lUNGRINmRrVEtxaDNFa3FBY05DUWJmZVR6OEdhOVZSWjllcnlwTWx6cGwzbk5RRno1R3g0eEtVOEFtRnlkRTVnaFhGNFlXVWlzNk1NQnd3WTVzMnVyU0NmMmV0Q3FmYUZwU3ZtOEczU0ViWm5BYlB4dEtKa2lNUi1XclMtd0ZNSnFEQ04xek5EalB2ZF9uNzVPbDFneGJwYzg?oc=5",
+     "player": "Kenneth Walker III",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -335,6 +964,16 @@
      "title": "Aaron Glenn emphatically keeps Geno Smith as Jets starter if healthy: \u2018Wouldn\u2019t be disrespectful to him\u2019",
      "quote": "Smith remains his starter when healthy",
      "link": "https://sports.yahoo.com/articles/aaron-glenn-emphatically-keeps-geno-233313414.html",
+     "player": "Geno Smith",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-17T22:23+00:00",
+     "source": "google_qb",
+     "outlet": "Athlon Sports",
+     "title": "New York Jets QB Geno Smith to Start on Sunday \u2013 Report - Athlon Sports",
+     "quote": "QB Geno Smith to Start on Sunday",
+     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSVZrdG9QUmdrd3BpdVlLcXN3d1NzbWF2YlRQTGpmbnBlRnJjMW5oVGx6MmdjS3VzVnNFcUxfcG51emRkY2lWSm9xUkU4Y29Ub0NWZ1pqTmhtcWo5RFQtM3BqaTFGaWdSdDdQWi16Tm5EX1RlazlVZ2tYcVFMeVdwQjlB?oc=5",
      "player": "Geno Smith",
      "signal": "will_start"
     }
@@ -746,6 +1385,26 @@
      "link": "https://sports.yahoo.com/articles/arizona-cardinals-lose-jordan-burch-002643201.html",
      "player": "Jordan Burch",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-17T21:59+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "A number of roster moves today by the #AZCardinals, including IR for S Dewey Wingard and OLB Jordan Burch. Promote S Wydett Williams, DL Jar",
+     "quote": "IR for...OLB Jordan Burch",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3n2jzdaxpg227",
+     "player": "Jordan Burch",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T01:42+00:00",
+     "source": "team_sites_1",
+     "outlet": "Arizona Cardinals",
+     "title": "Andrew Wingard Lands On IR, As Well As Jordan Burch - Arizona Cardinals",
+     "quote": "Jordan Burch Lands On IR",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYzJEbUZzdkx0dldBNDQzUUxJdzlaTXdtdEJYdzNSOWZ0UEhGZXpRLXRsemJzOTN0dmJ6djkwNUQ3bDBXY2YtZGZvVEEzWXdvbjJNTTl1REF0SnNVOTVIVkNwTEd4UE5aa0Fvdllrbl9fZVRPWjdTWXJhVHhBRGxvUU03R0pjckFKd3Rj?oc=5",
+     "player": "Jordan Burch",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -1042,6 +1701,16 @@
      "title": "Jordan Addison to miss multiple weeks after thumb surgery",
      "quote": "to miss multiple weeks after thumb surgery",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jordan-addison-to-miss-multiple-weeks-after-thumb-surgery",
+     "player": "Jordan Addison",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-17T20:23+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "NFL Week 11 Injury Report: Drake Maye likely done for season, surgery for Jordan Addison - NBC Sports",
+     "quote": "surgery for Jordan Addison",
+     "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQZFVlNVQzR0F5SU1pRWc1RHdJNG54dzU4aEZJc1ZpSUtiRFhsU1I3MzR2RkQwYWtYRTYyVVFZUUg4eUZqNC1GWHVKY3g2ek1lTDJpTHdYa2NfY01LWmdSX3p5dHlMbVlaa0hMSEZCZUQwTFlXYlFBZDF2RWZ2al9GeUlQSVdZZ25fSTNZb2NjMnJUR0RnV01NVnBKQTFEd3pHNUF1dXpfQUJLZlZvUFpBWmhxbGpFUy0wanNhbmMyNVRWcnA2WFhYVmtObGVXQWc?oc=5",
      "player": "Jordan Addison",
      "signal": "out"
     }
@@ -1436,6 +2105,16 @@
      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPOW5kRE1iYm1xeVRxZG5oUVY4LXp1UVZERUlHSWlYZnI1MF9yenNYR0w5OTktU2IwVUtUZ2t4bUFjbENsdURPLW51eFg2LTdGZmRIUzllbE1TamtHUlRha2FYUTBiMk1zY0o0RHNtRXRxc1NZa1QxTG1QZjZaWFd5U2ZqLTdmVXNJRmM5OXV2bi14R3dHY3Z0TXJGa1JZUQ?oc=5",
      "player": "Mason McCormick",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-18T12:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Steelers G Mason McCormick dislocated his ankle",
+     "quote": "out for the season",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-steelers-g-mason-mccormick-dislocated-his-ankle",
+     "player": "Mason McCormick",
+     "signal": "out"
     }
    ]
   },
@@ -1709,6 +2388,16 @@
      "title": "Geno Smith Injury Makes Drafting a QB an Even Bigger Jets Priority in 2027 - Sports Illustrated",
      "quote": "Geno Smith Injury",
      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOMlFTbmVNMmxUY1pxUUFuaVZod3RRaWlQVHE2cDU5d0R1azY2QnpEM2hqVWJUcU5YeUhJMUFRSnUyQVUzbUx6bXZORUs4UTJlRmRDSWZFNm9TLTZ1MkJicXZacTI1MWtpSXZqVFlMcVhKLWlRLUxIVkZRd2JnVGIwOEpzbm45NzdEOEJqQ20waGhoYkhKZGxaNGkyNXN6bmxIbzVMUXpYTDROZmc?oc=5",
+     "player": "Geno Smith",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-18T00:44+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jets Face a Cade Klubnik Conundrum as Geno Smith Injury Creates QB Uncertainty - Yahoo Sports",
+     "quote": "Geno Smith Injury Creates QB Uncertainty",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPQmFLNWNqU0hOc1Q2VlB6U0tyckNCOXV0b1lQLW9pSzExbUpCRUZnZ01oMlBLY0tkU2lsX0dnbF94ejdvQVMxODNqUDVPcWFicnE4ZjJfUGxMWnNTVmZpVmFQMG0zRDdrTll5ZHNFVGN3akZJOVltUnRISjZCMjZQdThKY3dmRHBi?oc=5",
      "player": "Geno Smith",
      "signal": "injured_reserve"
     }
