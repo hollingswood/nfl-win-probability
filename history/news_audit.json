@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-11-20T00:19+00:00",
- "signals": 18563,
- "units": 4051,
+ "generated_at": "2026-11-20T14:53+00:00",
+ "signals": 18628,
+ "units": 4069,
  "skipped": {
   "team_unclear": 433,
   "no_game": 543,
-  "not_game_week": 1184
+  "not_game_week": 1195
  },
  "roster_check": {
-  "match": 17496,
-  "team_mismatch": 611,
+  "match": 17559,
+  "team_mismatch": 613,
   "not_found": 453,
   "ambiguous": 3
  },
- "graded": 1939,
- "pending": 113,
+ "graded": 1953,
+ "pending": 106,
  "overall": {
-  "n": 1939,
-  "correct": 1578,
-  "pct": 81.4
+  "n": 1953,
+  "correct": 1591,
+  "pct": 81.5
  },
  "by_signal": {
   "benched": {
@@ -32,24 +32,24 @@
    "pct": 88.9
   },
   "expected_to_play": {
-   "n": 531,
-   "correct": 416,
+   "n": 534,
+   "correct": 418,
    "pct": 78.3
   },
   "injured_reserve": {
-   "n": 240,
-   "correct": 197,
-   "pct": 82.1
+   "n": 242,
+   "correct": 199,
+   "pct": 82.2
   },
   "out": {
-   "n": 665,
-   "correct": 593,
-   "pct": 89.2
+   "n": 671,
+   "correct": 599,
+   "pct": 89.3
   },
   "returning": {
-   "n": 305,
-   "correct": 221,
-   "pct": 72.5
+   "n": 308,
+   "correct": 224,
+   "pct": 72.7
   },
   "suspended": {
    "n": 6,
@@ -66,31 +66,234 @@
   "n": 208,
   "correct": 133,
   "pct": 63.9,
-  "pending": 19
+  "pending": 21
  },
  "rule_population": {
   "n": 169,
   "correct": 118,
   "pct": 69.8,
-  "pending": 12
+  "pending": 13
  },
  "official_report_agreement": {
-  "n": 1678,
-  "agree": 1246,
+  "n": 1690,
+  "agree": 1255,
   "pct": 74.3
  },
  "lead_vs_report_hours": {
-  "n": 2052,
+  "n": 2059,
   "median": 25.6,
-  "share_before_report": 65.4
+  "share_before_report": 65.5
  },
  "qb_line_move_6h": {
-  "n": 334,
-  "avg_abs_after": 0.62,
+  "n": 344,
+  "avg_abs_after": 0.61,
   "avg_abs_before": 0.39,
   "avg_after_negative_signals": -0.48
  },
  "rows": [
+  {
+   "seen_at": "2026-11-20T08:07+00:00",
+   "player": "Anthony Richardson",
+   "team": "IND",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 180.9,
+   "line_move": {
+    "after": 0.0,
+    "before": -1.5
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T08:07+00:00",
+     "source": "google_qb",
+     "outlet": "Bleacher Report",
+     "title": "Anthony Richardson Replaces Daniel Jones After Colts QB Benched vs. Texans Amid Struggles - Bleacher Report",
+     "quote": "Anthony Richardson Replaces Daniel Jones",
+     "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPRGJkZHFEUHM4Z2JseFNmOV8zd3hzRjdNNlgzQ2I2TG5PalRkNHN1X1lMeWdSMFZHTTV5c05uNU5NSkwtWGJHbjZpVXRTOEUyRFVSUE1lRDdRMlg2UTZZQjE4VmJpTWptWVR5UFpYQmx5eGVLLW9wVTE2cTNvMEp0ME5mNUZPWEczamJ4TFRYZlNTLXNUR2VNZGhGeGJQckxVUnBXakNPYU1wZHZuRUp3TC1CVjZ6RkI2RjJDSXQ1RDdMMkVZWmwwa1BMaF9yUQ?oc=5",
+     "player": "Anthony Richardson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T03:58+00:00",
+   "player": "Seth McGowan",
+   "team": "IND",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 185.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T03:58+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Colts\u2019 Seth McGowan picks up hamstring injury to make TNF nightmare vs. Texans even worse - ClutchPoints",
+     "quote": "picks up hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQay1oX25XSVdBQjFya25ydlJsNkNJeHoyN2dyc2VWX2N3RzAxdzRoRHNPUnd2Y3lDQ0ZxY0l5SGFRLVRYeW85RG5Zb2dHbk12MDhyalBILWJiRkxELUpZUC1IMXNRblI0STZ2eUhCNEdOQU1jN1YtNDA1U0tKbmFlV2tVSzRtSWJEcF9LMERMNVBibkpNa1ZiZEZxVzV4VnVtODJiODUzenQ1WnBFMTR6akNJTC1SRC05ZEdsVUh3OHFHRGJQWTRCQVpn?oc=5",
+     "player": "Seth McGowan",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T03:58+00:00",
+   "player": "Tyler Shough",
+   "team": "NO",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_11_NO_CHI",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 17.0,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T03:58+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Saints QB Tyler Shough Gets Encouraging Injury Update Before Bears Game - Yahoo Sports",
+     "quote": "Gets Encouraging Injury Update Before Bears Game",
+     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMndaVjJ1cDBDSzJTSXFSaXM3Z3BQTUpkYWhyNVYyWVN3OE01LVBoSjVqSUpDTDdqd2VPemp3RU16S2xxVVVsLVBfZGxTT0ZaTTBmZl9RWlRzOGp2M1UtMTZrcUQ5cXctNHNIZzVJdmtzZ0ZkNnBmQmRsekdROE1keU13?oc=5",
+     "player": "Tyler Shough",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T03:02+00:00",
+   "player": "Marvin Harrison Jr.",
+   "team": "HOU",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_BAL_HOU",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 186.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T03:02+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "What Happened to Marvin Harrison Jr., and When Will He Return? Latest on Texans WR\u2019s Injury and Why He\u2019s Out for Week 11 vs. Colts on TNF - Yahoo Sports",
+     "quote": "Out for Week 11 vs. Colts on TNF",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcDZZRGNfcDBtUVR3N2JSNmh3T2hYbmpSMnFrM3NQcXRXcGVHU3hFNzlOMW52RnRDdGVzdDNNRC1UVkpidTRRWkptS3MyOVY0b2xpNTREbkhNUzNfRDNRdm1GSEZYbTlwVHQtODM3anQycFZxVXRQLW82SXJLczQxYkN6YlRXNE0tWlBJ?oc=5",
+     "player": "Marvin Harrison Jr.",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T02:23+00:00",
+   "player": "Beaux Limmer",
+   "team": "LA",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 90.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T02:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "There are worse backup plans than Beaux Limmer",
+     "quote": "Beaux Limmer returns to the starting lineup",
+     "link": "https://sports.yahoo.com/articles/worse-backup-plans-beaux-limmer-020000209.html",
+     "player": "Beaux Limmer",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T01:44+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 19.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T01:44+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles\u2019 DeVonta Smith practice upgrade points to Week 11 injury return - Yahoo Sports",
+     "quote": "practice upgrade points to Week 11 injury return",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOV1F2QUJGV3VFUXFiMWl3d2FBR3ROVm9tajN6UmczRTA0UjlhTjUyQkxubFZJMVdxQ0pQOVFLYWNvQXA3SkpLVDkyTDRYRWVuWGpUS0hpNjJ4aXhwckJ4dVBpRllUQWozMUcxT0ZaaXZLMUpNbXB4MlU0Y0Nfcm5Qb2lnbmpMQzN2YmFKcFBRRQ?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-20T11:52+00:00",
+     "source": "google_qb",
+     "outlet": "Lyndy's Sports Annuals",
+     "title": "Week 11 WR rankings: Throw returning DeVonta Smith back into fantasy lineups - Lyndy's Sports Annuals",
+     "quote": "returning DeVonta Smith back into fantasy lineups",
+     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBscmgxMVYyaDVjR3dpcVBOcEd0MUdOUWI4SWptLW9jWWExdVJaYlJFbVVzdks4c081VlRNd09HUGE4dnZEWVd6MkU4NUtGYXBFd2ZjVDJuVUJMWVU5OVM2RENjeUZxYjBMYVNpVDd5anB1NUNuX3R0X1U3Yy0xVWc?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-20T12:55+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Eagles\u2019 DeVonta Smith practice upgrade points to Week 11 injury return - ClutchPoints",
+     "quote": "practice upgrade points to Week 11 injury return",
+     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPVURDUHp4VlFnRE85VE1lMEdqQjdnaFFhR29HZXQwOG9lTXdoejJDdGgtQXR4d1E4dHZaUFByOHdIRkp3R253ajdpMEZBWTM0RHZNb05oSXRNS2VOSFpiSEcxaWpnQ3pFY2F1SXF5NTVQOXFMZVBWVWdrXzVGekVUYV9SU1pKWUtralNZU3EzVWZiUzN5U3RhVmdTVEtQTW9EaWJmRmlkR0h6WEdmQkJxclpBT2J1S1FoNURDakJUYw?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-20T00:23+00:00",
+   "player": "D.J. Reed",
+   "team": "DET",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_TB_DET",
+   "roster": "team_mismatch",
+   "certainty": 0.65,
+   "lead_vs_report_h": 20.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-20T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "D.J. Reed Sends Clear Message About His Injury Status Before Buccaneers Game - Yahoo Sports",
+     "quote": "Sends Clear Message About His Injury Status",
+     "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9WODBoRlpPMS03clVxWVZTcllJMlpXM2V5UTFjR2VYbGhpZDBrMlNZZ0xLdXhzdjhBREc1dGM1MUlBd0ZXeHg3a1RVTDNrN0E3NWV3eEw1S210SUMtV2ZaSGs4eXZrTFk0NmZ6eWd0TzJYRGxaRkJHRA?oc=5",
+     "player": "D.J. Reed",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-19T23:23+00:00",
    "player": "Laremy Tunsil",
@@ -111,6 +314,16 @@
      "title": "My notebook ahead of #Commanders-#Bengals: - This is the toughest test yet for Washington's defense - Why Daronte Jones should stay aggressi",
      "quote": "LT Laremy Tunsil's chances of playing this season are \"very slim\"",
      "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2p7mcuts22o",
+     "player": "Laremy Tunsil",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T13:09+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "While he's making progress after suffering a torn triceps in training camp, #Commanders LT Laremy Tunsil isn\u2019t expected to return by the end",
+     "quote": "isn't expected to return by the end of the regular season",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2qnl5masc2z",
      "player": "Laremy Tunsil",
      "signal": "out"
     }
@@ -163,6 +376,16 @@
      "link": "https://sports.yahoo.com/articles/thursday-saints-vs-bears-injury-223455426.html",
      "player": "Pete Werner",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday\u2019s Saints vs. Bears Injury Report: Pete Werner remains out - Yahoo Sports",
+     "quote": "remains out",
+     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPT1RTQzFpbFdabHVHWG11RlV2ZXVkdnhaVEdKUC1HTVFnbGQ0SjhHWUxGUlVNaGpEV2dLZzJ1MzFFX1hUOVRRbUZkN1BxYjRPMUtfNnN5YmJBVGhLVFVOM0tXZDVSQ1pUZGVJRXhOMFZodEt5dGJqNWJzUTd3c050X21DSXVkdzQ?oc=5",
+     "player": "Pete Werner",
+     "signal": "out"
     }
    ]
   },
@@ -176,7 +399,10 @@
    "roster": "match",
    "certainty": 0.6,
    "lead_vs_report_h": 22.9,
-   "line_move": null,
+   "line_move": {
+    "after": 0.25,
+    "before": 0.75
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -202,7 +428,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 46.9,
-   "line_move": null,
+   "line_move": {
+    "after": 0.25,
+    "before": -0.25
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -238,6 +467,26 @@
      "title": "Fantasy Football Injury News: DeVonta Smith Plans to Return from Injury to the Eagles in Week 11 - Yahoo Sports",
      "quote": "DeVonta Smith Plans to Return from Injury to the Eagles in Week 11",
      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNaHRYeloyUEZ0SzhDcE81RUZqbWx5UV9vRGp6NmYtRDc0dE5yQXQ0VGc2aEthSGNVTVBwUVFIZkJEOFUyanNXVC1oVkNTaGNmVWZraU1Vazh4Mk9zWDB3WmhRbDhDdFN6andIaTNFQ1FuakgtZnN4NFRfWC1keTk1Zkx1Z2xRTjRxOFZsRmxR?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-20T03:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Eagles Injury Report: DeVonta Smith on track to play against Steelers",
+     "quote": "on track to play against Steelers",
+     "link": "https://sports.yahoo.com/articles/eagles-injury-report-devonta-smith-025145076.html",
+     "player": "DeVonta Smith",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-20T03:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles Injury Report: DeVonta Smith on track to play against Steelers - Yahoo Sports",
+     "quote": "on track to play against Steelers",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPeF8tcXVjSUNNTHJVdi1NRzk1Tmh4SDVHd1JTdi1UN3hOZkVtcERzb2Ixd1JvWUwtbExBRkd0dzNwNzFleVlyaV9EVms5UUEyd2FwVmpiV3BDWXVMSHNhWW4xd0U1a3N2QjM3ZkZHMV95cEx1Rk5kaVd3NEdmZmFld190dExvM3pmN3U0?oc=5",
      "player": "DeVonta Smith",
      "signal": "expected_to_play"
     }
@@ -290,6 +539,26 @@
      "link": "https://sports.yahoo.com/articles/bears-jeffery-simmons-limited-again-211500126.html",
      "player": "Jeffery Simmons",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-20T04:13+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Jeffery Simmons says knee injury won't keep him from playing",
+     "quote": "knee injury won't keep him from playing",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jeffery-simmons-says-knee-injury-wont-keep-him-from-playing",
+     "player": "Jeffery Simmons",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-20T04:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Jeffery Simmons says knee injury won&#39;t keep him from playing",
+     "quote": "knee injury won't keep him from playing",
+     "link": "https://sports.yahoo.com/articles/jeffery-simmons-says-knee-injury-040556272.html",
+     "player": "Jeffery Simmons",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -303,7 +572,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 23.6,
-   "line_move": null,
+   "line_move": {
+    "after": 0.5,
+    "before": 0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -329,7 +601,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -23.8,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -449,7 +724,10 @@
    "roster": "team_mismatch",
    "certainty": 0.3,
    "lead_vs_report_h": -20.4,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -474,7 +752,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": -20.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -484,6 +765,46 @@
      "title": "Report: Sauce Gardner is not expected to play vs. Texans due to calf injury",
      "quote": "not expected to play vs. Texans due to calf injury",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-sauce-gardner-is-not-expected-to-play-vs-texans-due-to-calf-injury",
+     "player": "Sauce Gardner",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T00:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Thursday Night Football: Sauce Gardner is officially inactive vs. Texans",
+     "quote": "officially inactive vs. Texans",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/thursday-night-football-sauce-gardner-is-officially-inactive-vs-texans",
+     "player": "Sauce Gardner",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Thursday Night Football: Sauce Gardner is officially inactive vs. Texans",
+     "quote": "officially inactive vs. Texans",
+     "link": "https://sports.yahoo.com/articles/thursday-night-football-sauce-gardner-235927622.html",
+     "player": "Sauce Gardner",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Thursday Night Football: Sauce Gardner is officially inactive vs. Texans - Yahoo Sports",
+     "quote": "officially inactive vs. Texans",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPekp3dDZ4Z0ZWOEdxcDdBOG8yRjZiNE9BVjFFMm8wakd2TkNxNVdVNm9MbnlHWWdCUzV6VmpWVjhzUkJpeUtuZ0ZYTGl1Vnp6ZVNVQVlIX3hkVUhUZnR6TzlCbko1TDBZLXZmUlFxWWF4V2tuS0RmMDFBSDMwVUdTX0h3TWVWZ28xSjlTNkxzcw?oc=5",
+     "player": "Sauce Gardner",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T00:47+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Indianapolis Colts injury report: Sauce Gardner ruled out vs Houston Texans - Yahoo Sports",
+     "quote": "ruled out vs Houston Texans",
+     "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPREpWV3dnT0FlYW1vbUVqY0FVNzVXX1lVQXhEaEhMbWROTG9OU0pKbk9wN201dXhYT1FNRWw2WFJaSUxTZGNtZDFaaDJGSldlWFBpaDl1S3ZCeE01c0dHQVhqOW5EUjRTdGZVcl9HYmh2WnJSelZOTW1ra21vVW1KcW5NODF2akZrdWR6ZkI0WWk?oc=5",
      "player": "Sauce Gardner",
      "signal": "out"
     }
@@ -499,7 +820,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -19.7,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -609,7 +933,10 @@
    "roster": "team_mismatch",
    "certainty": 0.9,
    "lead_vs_report_h": -15.8,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -684,7 +1011,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -3.8,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -709,7 +1039,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -3.8,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1129,7 +1462,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1343,6 +1679,16 @@
      "title": "Spadaro: Nick Sirianni confirms Joe Milton will start at quarterback - Philadelphia Eagles",
      "quote": "Nick Sirianni confirms Joe Milton will start at quarterback",
      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOY3VLWWpjZWVKR3cxM0YzeGJtcWpFOWlwQ3FfZVlsRTBYcDE3R1dBaG9TMlpDbGcwOUxWMGpiLWpfR0phaUxMM2lmZzExVURhNzlUUzdUcFBlTzdNbURzSXdWajhyRXRuT3FaSlliV1RtR3FUYjNkU216ajMwYXIzemtocFU5RVFjXzJ5UWcxVkVIYWs1QUVhX3pvMUp2Z0l2?oc=5",
+     "player": "Joe Milton",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-20T10:57+00:00",
+     "source": "google_qb",
+     "outlet": "Dailyfly News",
+     "title": "Eagles name Joe Milton starting quarterback for Week 11 matchup against Steelers - Dailyfly News",
+     "quote": "Eagles name Joe Milton starting quarterback for Week 11 matchup against Steelers",
+     "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNRzlVdDM3cmZ5QW9EbHNfbDFHRGcwVmVpZHRDQTlSQUcwZWUtcGFiV1JIYlBFbVNmMnlqc2w0MnhPcjVjRnZNa2cyS0x0bllNcE5BbzBVaEFpSl9WLVpMMkVpSzlCOHBvbzhwQ3AyaGptSXVFSjRfZTZwUDgtWFotQm5MV3ZRUGhVeVdWeEZpZjJxSG5NZHNZWlRzUm9ZMnM5TUxwdjVTR3g2TTdUVTZUcDB5YzZvVHhh?oc=5",
      "player": "Joe Milton",
      "signal": "will_start"
     }
@@ -1592,7 +1938,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 20.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1642,7 +1991,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 21.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1932,7 +2284,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 24.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2047,7 +2402,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 27.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2072,7 +2430,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 28.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2399,6 +2760,16 @@
      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNTGp2NThmZWwtd1Zhd0JhQV9oTlJfM0lUNGRINmRrVEtxaDNFa3FBY05DUWJmZVR6OEdhOVZSWjllcnlwTWx6cGwzbk5RRno1R3g0eEtVOEFtRnlkRTVnaFhGNFlXVWlzNk1NQnd3WTVzMnVyU0NmMmV0Q3FmYUZwU3ZtOEczU0ViWm5BYlB4dEtKa2lNUi1XclMtd0ZNSnFEQ04xek5EalB2ZF9uNzVPbDFneGJwYzg?oc=5",
      "player": "Kenneth Walker III",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-20T13:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "NFL injury tracker Week 11: Latest news, fantasy implications as Chiefs' Kenneth Walker III (groin) 'getting better,' 49ers' Mike Evans (Achilles) returns to practice - Yahoo Sports",
+     "quote": "'getting better'",
+     "link": "https://news.google.com/rss/articles/CBMitgJBVV95cUxPZzF3QmN6M013NTFvWVZ2N3JTeE4xbENTNG9kZXQ1a19aQW92WU96bzBCQlpZM0huX2xpVzN1MjNuZnN3ZVBLMVBrTGN2SVlmcFE0RkJsNTgxbzhQLXBXLWNGZlBUbzlVa0hDWV9zYnVzc1NBYVhJeFdlSFVHUlF0VWR4MnZmVFJ0QkUtdThkTlN1TWdTWjdvTi1aWjgweTZCTDlHM0hBd3NsQ0k2QVhzMmFXSkNHZnJLbzdkVE1SU0ZMX3Awa1FrLWFIeDQ1b3hIUjhNWldKclFLdFppWlRVWDZMVV82eXZieDJNYlZOTE1hMnh0QkxjSmFhU3N3M2pjclMyTlZ0SEl4TGFIaC1SN1pIU29UQVhtdWw1b1lxS3gzLXQtRGZJSEVQaDcwTnkzNkZtcFZR?oc=5",
+     "player": "Kenneth Walker III",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -2541,6 +2912,16 @@
      "title": "Rams center Coleman Shelton out 4-6 weeks with hamstring injury - ESPN",
      "quote": "out 4-6 weeks with hamstring injury",
      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQeXNsNkE2UGNmdVJCeUV5Q0EyT2dQUzl6R2xERFg1ZGZ2bjdzODJqX1BOa2Nqb3BYWG5UNDJZM3p2WmhHY1EwZWZ4SE5NaWJLTUVPS1ZjSHZUSUlqZUhlNGdHWS1Cb19UbnZLMUJ5a3ZjeF9Ja0t5VDNRU194VVVKeGNRcGN0OVRUN2tOTFdma0pEUGN3b29j?oc=5",
+     "player": "Coleman Shelton",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-20T02:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "There are worse backup plans than Beaux Limmer",
+     "quote": "Coleman Shelton injured for Rams",
+     "link": "https://sports.yahoo.com/articles/worse-backup-plans-beaux-limmer-020000209.html",
      "player": "Coleman Shelton",
      "signal": "injured_reserve"
     }
@@ -3146,6 +3527,16 @@
      "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOSUx6ZlJ3OFBpOXEzV3hyeFNOZkFIcHR3eVNCRURYZENTaF9oZUxUTXlfejFqZXk0MXJKNGR5TGtZZm9OeGN1UkFwY1BSUjlvNmJ2OWJLQ2RnTnlybFRJRjdOR1prQmxGTnh2WDhSSVdhWEl0Rm1RZ2hidm9udE5naXZ0U2ZhY1FvMU5aMGZkWm1tcl93UlhqWlZpN0trQkhmWjVSWnVGQS1jbFVad1BnNTh4eXpDNHpVckNIYl96Q1pGbnk0aXVaM0hkblVmeWFQQzlJYWpSSTlUQ19RSllOQ19abFBmNGdKS2VpOEdqSVhrNjRPSS1LU1VzRTBGNzhCYzMwWFhWOEMtZkNpNTZ0VXRR?oc=5",
      "player": "Malik Willis",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-20T10:57+00:00",
+     "source": "google_qb",
+     "outlet": "Herald Bulletin",
+     "title": "Dolphins backup Kyle McCord shows promise in first NFL start in place of the injured Malik Willis - Herald Bulletin",
+     "quote": "in place of the injured Malik Willis",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPQlRiM1FaTVBHdDJiOWwxb2VBTUZMcy1YNUJ3TjNUbGFkbEpkeGE3OURRTWd2Y01TX0lXMC1BUXlXWDRUb2RTX1JCSndIT0hPZmdCRVVhTVVnYlJoRnhUNmFKMmo2S0Rmc0tUeENxc3RsdkJwVXphQVpyMk1kWGpWNHJLN05TcndjT25sN1RhNUFJNnZDTkJtdlh4X1ZZY2YyQmp2Z09yTlNRajFSRktlM2ZWcFZyc2V3RVlIMi0tNHNsLXNvQmFpSmxZVzBEQWUyVWFDNjVFX2NZZlc4X0Fic29WQS12WWxsd0ZXZWZOTUhDemthZU5EU21fa3gxWmZUTEhMaXF2STlWLVFLaEllSkU5V25MOGs?oc=5",
+     "player": "Malik Willis",
+     "signal": "out"
     }
    ]
   },
@@ -3183,6 +3574,16 @@
      "title": "Dolphins backup Kyle McCord shows promise in first NFL start in place of the injured Malik Willis - Bozeman Daily Chronicle",
      "quote": "first NFL start in place of the injured Malik Willis",
      "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOSUx6ZlJ3OFBpOXEzV3hyeFNOZkFIcHR3eVNCRURYZENTaF9oZUxUTXlfejFqZXk0MXJKNGR5TGtZZm9OeGN1UkFwY1BSUjlvNmJ2OWJLQ2RnTnlybFRJRjdOR1prQmxGTnh2WDhSSVdhWEl0Rm1RZ2hidm9udE5naXZ0U2ZhY1FvMU5aMGZkWm1tcl93UlhqWlZpN0trQkhmWjVSWnVGQS1jbFVad1BnNTh4eXpDNHpVckNIYl96Q1pGbnk0aXVaM0hkblVmeWFQQzlJYWpSSTlUQ19RSllOQ19abFBmNGdKS2VpOEdqSVhrNjRPSS1LU1VzRTBGNzhCYzMwWFhWOEMtZkNpNTZ0VXRR?oc=5",
+     "player": "Kyle McCord",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-20T10:57+00:00",
+     "source": "google_qb",
+     "outlet": "Herald Bulletin",
+     "title": "Dolphins backup Kyle McCord shows promise in first NFL start in place of the injured Malik Willis - Herald Bulletin",
+     "quote": "first NFL start in place of the injured Malik Willis",
+     "link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPQlRiM1FaTVBHdDJiOWwxb2VBTUZMcy1YNUJ3TjNUbGFkbEpkeGE3OURRTWd2Y01TX0lXMC1BUXlXWDRUb2RTX1JCSndIT0hPZmdCRVVhTVVnYlJoRnhUNmFKMmo2S0Rmc0tUeENxc3RsdkJwVXphQVpyMk1kWGpWNHJLN05TcndjT25sN1RhNUFJNnZDTkJtdlh4X1ZZY2YyQmp2Z09yTlNRajFSRktlM2ZWcFZyc2V3RVlIMi0tNHNsLXNvQmFpSmxZVzBEQWUyVWFDNjVFX2NZZlc4X0Fic29WQS12WWxsd0ZXZWZOTUhDemthZU5EU21fa3gxWmZUTEhMaXF2STlWLVFLaEllSkU5V25MOGs?oc=5",
      "player": "Kyle McCord",
      "signal": "will_start"
     }
@@ -4046,7 +4447,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 72.2,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
