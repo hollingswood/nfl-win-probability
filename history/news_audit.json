@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-22T16:59+00:00",
- "signals": 19199,
- "units": 4228,
+ "generated_at": "2026-11-22T19:19+00:00",
+ "signals": 19234,
+ "units": 4243,
  "skipped": {
   "team_unclear": 433,
   "no_game": 543,
-  "not_game_week": 1212
+  "not_game_week": 1222
  },
  "roster_check": {
-  "match": 18106,
+  "match": 18141,
   "team_mismatch": 637,
   "not_found": 453,
   "ambiguous": 3
  },
  "graded": 1953,
- "pending": 201,
+ "pending": 213,
  "overall": {
   "n": 1953,
   "correct": 1591,
@@ -66,13 +66,13 @@
   "n": 208,
   "correct": 133,
   "pct": 63.9,
-  "pending": 32
+  "pending": 35
  },
  "rule_population": {
   "n": 169,
   "correct": 118,
   "pct": 69.8,
-  "pending": 24
+  "pending": 27
  },
  "official_report_agreement": {
   "n": 1690,
@@ -80,17 +80,320 @@
   "pct": 74.3
  },
  "lead_vs_report_hours": {
-  "n": 2154,
+  "n": 2166,
   "median": 23.6,
-  "share_before_report": 64.3
+  "share_before_report": 64.2
  },
  "qb_line_move_6h": {
-  "n": 360,
+  "n": 361,
   "avg_abs_after": 0.59,
-  "avg_abs_before": 0.39,
-  "avg_after_negative_signals": -0.45
+  "avg_abs_before": 0.38,
+  "avg_after_negative_signals": -0.44
  },
  "rows": [
+  {
+   "seen_at": "2026-11-22T18:23+00:00",
+   "player": "Carson Beck",
+   "team": "ARI",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:23+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals downgrade Carson Beck to out; Josh Johnson will start - Yahoo Sports",
+     "quote": "downgrade Carson Beck to out",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNSmlnaXNObHNRM1VGbktJSzgta0E5MGp2TzVrZ3VGMFdnWEItU0FuNGI1al94UjdMTllxeDlSdllrZEtKLXNIY2VBS2dEenNvTTBFWEZpSC1LRTcySGg0cHVQNzQ2VFA5Z29aVElNVGpucGhqQ2k0S25ib2xvS1h4RmhiSlJENnl3ZzN4VEVB?oc=5",
+     "player": "Carson Beck",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:23+00:00",
+   "player": "Josh Johnson",
+   "team": "ARI",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 122.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:23+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo Sports",
+     "title": "Cardinals downgrade Carson Beck to out; Josh Johnson will start - Yahoo Sports",
+     "quote": "Josh Johnson will start",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNSmlnaXNObHNRM1VGbktJSzgta0E5MGp2TzVrZ3VGMFdnWEItU0FuNGI1al94UjdMTllxeDlSdllrZEtKLXNIY2VBS2dEenNvTTBFWEZpSC1LRTcySGg0cHVQNzQ2VFA5Z29aVElNVGpucGhqQ2k0S25ib2xvS1h4RmhiSlJENnl3ZzN4VEVB?oc=5",
+     "player": "Josh Johnson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:00+00:00",
+   "player": "Jaylen Harrell",
+   "team": "TEN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 123.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Titans defensive end Jaylen Harrell involved in serious traffic accident on Friday, remains hospitalized in Florida - Yahoo Sports",
+     "quote": "remains hospitalized in Florida",
+     "link": "https://news.google.com/rss/articles/CBMijAJBVV95cUxOYUJtUGsxNWRBaHJSYXFKUWVVdXp0U3htWkN4and3d3VLOHcxMXRKd1RKY1FpLVVkczdFX1hxanJsWEhIVG0tSlVyb3d6ek9EUlBMWE1kV215cnQ2MjRJMWpNcnNfYVRKcHd0TEd0dW9EaEQ0WDRMNV9vZXVvSFRCMi1adzl5eGFkdm1mYTFfaEtHTWN6U3E4cWNGdjNLektkRlhKb2Z6SkFodzE3Uzl4UFQ0M0RJMi00TUlBMy04ZVhXTHpxZjQwYUlpUWhTU28yOUs1UnpSbkxDTUllMF9Db043T2N0YkpoSnJUX2Jyb2JlX2xmM3ZXaHU2V1U5SW5YYk9NOXVKMlQ2Ylgx?oc=5",
+     "player": "Jaylen Harrell",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:00+00:00",
+   "player": "Baker Mayfield",
+   "team": "TB",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_CAR_TB",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 147.0,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Bucs Report",
+     "title": "Report: Buccaneers QB Mayfield Will Start Against Lions Despite Foot Injury - Bucs Report",
+     "quote": "Mayfield Will Start Against Lions Despite Foot Injury",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPWGtyY2FmcTQwVV9sc1d4clpsb1hFaUdsM2VhU01wVHp1MjhWbS1HOTVwX1ZPNmdIcjY4dlk3NnFYcmZ4UDhOY3ZhbXZQY3FmdnJubjBZS214dWlUSXRJY1BuV29pZ2hZWVVYY0t1bWhFTlFvanN6Sll6UzdBZ29aZjFJaXhKNGNCaFlhOVhlTm5md2U0VWtqa1BhNW5VRDFzOW9ZaXEwQXZ3ZU1oQWIwNVVQONIBswFBVV95cUxPWGtyY2FmcTQwVV9sc1d4clpsb1hFaUdsM2VhU01wVHp1MjhWbS1HOTVwX1ZPNmdIcjY4dlk3NnFYcmZ4UDhOY3ZhbXZQY3FmdnJubjBZS214dWlUSXRJY1BuV29pZ2hZWVVYY0t1bWhFTlFvanN6Sll6UzdBZ29aZjFJaXhKNGNCaFlhOVhlTm5md2U0VWtqa1BhNW5VRDFzOW9ZaXEwQXZ3ZU1oQWIwNVVQOA?oc=5",
+     "player": "Baker Mayfield",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:00+00:00",
+   "player": "DeVonta Smith",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_PHI_DAL",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 75.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Eagles Week 11 injury report vs. Steelers: DeVonta Smith nearing return from hamstring injury - Yahoo Sports",
+     "quote": "nearing return from hamstring injury",
+     "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVnZfWFVKYXlpLVRLTndYSGhpbldwTFlDVndVcGwyZ2xpRDBGOEd1emdFaGFrcUx1dUE5bmZLRm9ENnB6UmlzTVVIOW52RFNTTzZSeVg2WEZ2ZnFrcHZNR0hlQWRJc05FNGF4dFBPbUhJbGQ1SUVrcDdfUHJCbWhHbUFNRQ?oc=5",
+     "player": "DeVonta Smith",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:00+00:00",
+   "player": "TJ Hockenson",
+   "team": "MIN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_MIN_SF",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -45.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Vikings Week 11 Injury Report: TJ Hockenson and Blake Cashman Return - Yahoo Sports",
+     "quote": "Return",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNMWRsZmhReEVIUjFxUTZGUUdYUzRwckFDOFBadEpXLVNLNFU2NF9uZU8zYUozWWc4RV9wVW5lRXhVaEpOb2ZCVUZHVEtLY3dlSC1Cc2hhckdneFNBbVRwblhGSDB5Wkx6VUVhMk1pTWdmOEdSOTJpYW5KVFo2a3BERl91aG4?oc=5",
+     "player": "TJ Hockenson",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T18:00+00:00",
+   "player": "Blake Cashman",
+   "team": "MIN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_MIN_SF",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -45.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Vikings Week 11 Injury Report: TJ Hockenson and Blake Cashman Return - Yahoo Sports",
+     "quote": "Return",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNMWRsZmhReEVIUjFxUTZGUUdYUzRwckFDOFBadEpXLVNLNFU2NF9uZU8zYUozWWc4RV9wVW5lRXhVaEpOb2ZCVUZHVEtLY3dlSC1Cc2hhckdneFNBbVRwblhGSDB5Wkx6VUVhMk1pTWdmOEdSOTJpYW5KVFo2a3BERl91aG4?oc=5",
+     "player": "Blake Cashman",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T17:41+00:00",
+   "player": "CJ West",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_MIN_SF",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -44.7,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T17:41+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mattmaiocco.bsky.social (SF)",
+     "title": "Super-classy statement from veteran WR Brandin Cooks, whom the 49ers waived on Saturday with WR Mike Evans and DT CJ West cleared to play.",
+     "quote": "cleared to play",
+     "link": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n2w5doixxc2f",
+     "player": "CJ West",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T17:23+00:00",
+   "player": "Zavion Thomas",
+   "team": "CHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_NO_CHI",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Everything you need to know about Bears-Saints, including injury updates: > How Ben Johnson can level up the run game (plus return of Kyle M",
+     "quote": "Zavion Thomas is active for Chicago Bears",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3n2w3mdqp4k23",
+     "player": "Zavion Thomas",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T17:23+00:00",
+   "player": "Peter Woods",
+   "team": "KC",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_ARI_KC",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chiefs-Cardinals Inactives: DT Peter Woods to miss third straight game",
+     "quote": "Peter Woods to miss third straight game",
+     "link": "https://sports.yahoo.com/articles/chiefs-cardinals-inactives-dt-peter-164500166.html",
+     "player": "Peter Woods",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T17:23+00:00",
+   "player": "Jalen Carter",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_11_PIT_PHI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Jalen Carter is ACTIVE for Eagles vs. Steelers",
+     "quote": "Jalen Carter is ACTIVE for Eagles vs. Steelers",
+     "link": "https://sports.yahoo.com/articles/jalen-carter-active-eagles-vs-163729876.html",
+     "player": "Jalen Carter",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-22T17:23+00:00",
+   "player": "Marco Wilson",
+   "team": "CAR",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_BAL_CAR",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -44.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "team_sites_1",
+     "outlet": "Panthers.com",
+     "title": "Week 11 Inactives vs. Baltimore: Cornerback Marco Wilson inactive for Ravens game - Panthers.com",
+     "quote": "Cornerback Marco Wilson inactive for Ravens game",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNLW1BZ01sREtnZm1yOWY1V2dGX1VpcEhRcEt5ZWtESk5lM3R4WW9waGlqTm9ZSUdyZ3FmNFFIQURiN3M5V3JGVnpJeGdjb0xmcnNtYlRjOVg0MkxEM3NYejdrV3Zjbmt1YW03cGFOSGxvQTFvOUhZeS16M3lwbjBCV0NpVmlaSXRtcTFsNktFdDRlcEg3ZHpxR0k0U3pJZVZPQjM0Ty14VXIzb1VJTWc?oc=5",
+     "player": "Marco Wilson",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-22T16:44+00:00",
    "player": "Dante Trader Jr.",
@@ -388,6 +691,16 @@
      "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3n2w25kj47s2n",
      "player": "Malik Muhammad",
      "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Everything you need to know about Bears-Saints, including injury updates: > How Ben Johnson can level up the run game (plus return of Kyle M",
+     "quote": "Malik Muhammad II return",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3n2w3mdqp4k23",
+     "player": "Malik Muhammad II",
+     "signal": "returning"
     }
    ]
   },
@@ -640,6 +953,16 @@
      "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE85S3l5UmliSUtQSGpmVkhzSHA1Q29zQ2xGRm0ycUJvRXJNb3h3N2NqMjNuSUFpNnJuZDRMbU8xNm5lUjBZY2k5bTlsWlpBcTlpVlVfdkF5bjBkRUNEeFFEMmpVQjFmRkFEZDZQenJFRk43eHZuaG9NRQ?oc=5",
      "player": "Baker Mayfield",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "google_injury",
+     "outlet": "Tampa Bay Buccaneers",
+     "title": "Bucs-Lions Inactives | Baker Mayfield Will Start - Tampa Bay Buccaneers",
+     "quote": "Baker Mayfield Will Start",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNeG1rSjBGNGhKRF9ZNWpLRGFyV09pRVJzbWJBWlNYVjlOd2taUTdzSnl0bnJqZXp1U2FUOUlreTR5eXJqNThyRHozWmNMN0NIandqSl9xQkdLQVZucWZZVnFLY1UwYUctV2pORXNENHpJUVJ4YU8wZVY5LUJIaER0U3dUdXk?oc=5",
+     "player": "Baker Mayfield",
+     "signal": "will_start"
     }
    ]
   },
@@ -858,7 +1181,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 128.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -1981,6 +2307,16 @@
      "title": "Bears inactives: QB Case Keenum (emergency QB3), CB Kyler Gordon, DT Jayden Loving, OL Jordan McFadden, LB Keyshaun Elliott RB Kyle Monangai",
      "quote": "RB Kyle Monangai and CB Malik Muhammad are officially back",
      "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3n2w25kj47s2n",
+     "player": "Kyle Monangai",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-22T17:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:philthompsontrib.bsky.social (CHI)",
+     "title": "Everything you need to know about Bears-Saints, including injury updates: > How Ben Johnson can level up the run game (plus return of Kyle M",
+     "quote": "Kyle Monangai return",
+     "link": "https://bsky.app/profile/philthompsontrib.bsky.social/post/3n2w3mdqp4k23",
      "player": "Kyle Monangai",
      "signal": "returning"
     }
