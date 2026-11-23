@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-23T14:44+00:00",
- "signals": 19371,
- "units": 4279,
+ "generated_at": "2026-11-23T23:15+00:00",
+ "signals": 19456,
+ "units": 4317,
  "skipped": {
   "team_unclear": 433,
   "no_game": 543,
-  "not_game_week": 1263
+  "not_game_week": 1274
  },
  "roster_check": {
-  "match": 18267,
-  "team_mismatch": 646,
-  "not_found": 455,
+  "match": 18347,
+  "team_mismatch": 649,
+  "not_found": 457,
   "ambiguous": 3
  },
  "graded": 2135,
- "pending": 54,
+ "pending": 70,
  "overall": {
   "n": 2135,
   "correct": 1742,
@@ -66,13 +66,13 @@
   "n": 236,
   "correct": 153,
   "pct": 64.8,
-  "pending": 8
+  "pending": 12
  },
  "rule_population": {
   "n": 190,
   "correct": 135,
   "pct": 71.1,
-  "pending": 7
+  "pending": 9
  },
  "official_report_agreement": {
   "n": 1840,
@@ -80,17 +80,524 @@
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 2189,
+  "n": 2205,
   "median": 23.6,
-  "share_before_report": 64.3
+  "share_before_report": 64.4
  },
  "qb_line_move_6h": {
-  "n": 368,
-  "avg_abs_after": 0.61,
-  "avg_abs_before": 0.38,
+  "n": 371,
+  "avg_abs_after": 0.6,
+  "avg_abs_before": 0.37,
   "avg_after_negative_signals": -0.31
  },
  "rows": [
+  {
+   "seen_at": "2026-11-23T22:42+00:00",
+   "player": "Aaron Rodgers",
+   "team": "PIT",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "team_mismatch",
+   "certainty": 0.95,
+   "lead_vs_report_h": 46.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T22:42+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Mike McCarthy doesn't mince words when asked if he thought about a QB change: 'Aaron Rodgers is our quarterback' - Yahoo Sports",
+     "quote": "'Aaron Rodgers is our quarterback'",
+     "link": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxQZG5KUTBKNVJ5YUI0eG1SRC0wb0Zwa0p3V2VIZE1iZ1N5dldQNjYydzhqYUhRR2lucFRkR09Pb2pteS14WW42U1AwN2tpX0F0LW5PMHBYVUxHVlAtVkc2eXM3M0NSV05VUWduLTd4Z04tTmxuOHcyREo0US03MzQ5RWx0NU16UU8tcVRzVlpmRHVCclFzSXFyYmRkOFdKUFBySk1sQ2IzcVI1a3l2d2VXWC1LWUtXZmMxVGtBT3R5WGRTazdfMzdUa2VFNkRvTFBEa0Nidk9oRE5FZW9zTUY5V2xvNk1SaDJCQVZUMFJET1JHZw?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T22:02+00:00",
+   "player": "Michael Pittman Jr.",
+   "team": "PIT",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 47.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T22:02+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers WR Michael Pittman Jr. expected to play vs. Broncos",
+     "quote": "expected to play vs. Broncos",
+     "link": "https://sports.yahoo.com/articles/steelers-wr-michael-pittman-jr-215046945.html",
+     "player": "Michael Pittman Jr.",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T21:47+00:00",
+   "player": "Swayze Bozeman",
+   "team": "CIN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_CIN_WAS",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -48.8,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T21:47+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bengals activate LB Swayze Bozeman, G Brian Parker from injured reserve",
+     "quote": "Bengals activate LB Swayze Bozeman from injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bengals-activate-lb-swayze-bozeman-g-brian-parker-from-injured-reserve",
+     "player": "Swayze Bozeman",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T21:47+00:00",
+   "player": "Brian Parker",
+   "team": "CIN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_CIN_WAS",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -48.8,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T21:47+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Bengals activate LB Swayze Bozeman, G Brian Parker from injured reserve",
+     "quote": "Bengals activate G Brian Parker from injured reserve",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bengals-activate-lb-swayze-bozeman-g-brian-parker-from-injured-reserve",
+     "player": "Brian Parker",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T21:24+00:00",
+   "player": "Greg Newsome",
+   "team": "NYG",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 95.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T21:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:patriciatraina.bsky.social (NYG)",
+     "title": "Giants CB Greg Newsome Out 'Multiple Weeks' With High Ankle Sprain, Harbaugh Says https://www.si.com/nfl/giants/onsi/giants-greg-newsome-hig",
+     "quote": "Out 'Multiple Weeks' With High Ankle Sprain",
+     "link": "https://bsky.app/profile/patriciatraina.bsky.social/post/3n2z2ntojn72b",
+     "player": "Greg Newsome",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-23T21:24+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Giants CB Greg Newsome out multiple weeks with high-ankle sprain",
+     "quote": "out multiple weeks with high-ankle sprain",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/giants-cb-greg-newsome-out-multiple-weeks-with-high-ankle-sprain",
+     "player": "Greg Newsome",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-23T21:24+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Greg Newsome injury: Giants CB out multiple weeks with ankle injury",
+     "quote": "out multiple weeks with ankle injury",
+     "link": "https://sports.yahoo.com/articles/greg-newsome-injury-giants-cb-210045672.html",
+     "player": "Greg Newsome",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-23T22:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Giants CB Greg Newsome out \u2018multiple weeks\u2019 with \u2018serious\u2019 ankle sprain suffered in win over Jaguars",
+     "quote": "out 'multiple weeks' with 'serious' ankle sprain",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/giants-cb-greg-newsome-out-multiple-weeks-with-serious-ankle-sprain-suffered-in-win-over-jaguars-221215797.html",
+     "player": "Greg Newsome",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T21:24+00:00",
+   "player": "Jacory Croskey-Merritt",
+   "team": "WAS",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_11_CIN_WAS",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -48.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T21:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "#Commanders RB Jacory Croskey-Merritt has officially been activated, clearing him to play against the Bengals tonight.",
+     "quote": "has officially been activated, clearing him to play against the Bengals tonight",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2yzmaeomk2o",
+     "player": "Jacory Croskey-Merritt",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T21:24+00:00",
+   "player": "Alex Highsmith",
+   "team": "PIT",
+   "signal": "doubtful",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 47.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T21:24+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Alex Highsmith unlikely to be ready for Week 12",
+     "quote": "unlikely to be ready for Week 12",
+     "link": "https://sports.yahoo.com/articles/alex-highsmith-unlikely-ready-week-205853727.html",
+     "player": "Alex Highsmith",
+     "signal": "doubtful"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T19:42+00:00",
+   "player": "Jalen Coker",
+   "team": "CAR",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_CAR_TB",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 121.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T19:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Panthers WR Jalen Coker is not in concussion protocol",
+     "quote": "not in concussion protocol",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/panthers-wr-jalen-coker-is-not-in-concussion-protocol",
+     "player": "Jalen Coker",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T19:23+00:00",
+   "player": "Terrance Ferguson",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 1.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "Rams TE Terrance Ferguson is out for the season with his ankle injury. It just wasn\u2019t able to heal in time to get back.",
+     "quote": "out for the season with his ankle injury",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3n2ytwu2rdk2e",
+     "player": "Terrance Ferguson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-23T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Rams TE Terrance Ferguson may need ankle surgery and will return to injured reserve per Sean McVay. His season is over.",
+     "quote": "will return to injured reserve per Sean McVay. His season is over.",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3n2ytx4m2hc2q",
+     "player": "Terrance Ferguson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-23T20:43+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Terrance Ferguson to miss rest of season",
+     "quote": "will remain on the Reserve/Injured list because of his injury",
+     "link": "https://sports.yahoo.com/articles/terrance-ferguson-miss-rest-season-201442083.html",
+     "player": "Terrance Ferguson",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-23T21:47+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Rams starter to finish the year on injured reserve",
+     "quote": "Terrance Ferguson is being shutdown by the Los Angeles Rams to finish the year on injured reserve",
+     "link": "https://sports.yahoo.com/articles/rams-starter-finish-injured-211656285.html",
+     "player": "Terrance Ferguson",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T18:23+00:00",
+   "player": "Josh Jacobs",
+   "team": "GB",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 2.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T18:23+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Josh Jacobs (finger) not expected to play in Rams-Packers Thanksgiving Eve showdown: Who Green Bay could use",
+     "quote": "not expected to play in Rams-Packers Thanksgiving Eve showdown",
+     "link": "https://www.cbssports.com/nfl/news/josh-jacobs-finger-not-expected-play-rams-packers-thanksgiving-eve-showdown-green-bay-replacement/",
+     "player": "Josh Jacobs",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-23T18:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Josh Jacobs not expected to play vs Rams",
+     "quote": "Josh Jacobs not expected to play vs Rams",
+     "link": "https://sports.yahoo.com/articles/josh-jacobs-not-expected-play-180000599.html",
+     "player": "Josh Jacobs",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T17:42+00:00",
+   "player": "Tommy DeVito",
+   "team": "NE",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 99.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T17:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Mike Vrabel says Pats don't plan to add another QB: Tommy DeVito is our starter",
+     "quote": "Tommy DeVito is our starter",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/mike-vrabel-says-pats-dont-plan-to-add-another-qb-tommy-devito-is-our-starter",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-23T17:57+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Patriots coach Mike Vrabel says Tommy DeVito will start Week 12, avoids Daniel Jones talk",
+     "quote": "Mike Vrabel on Drake Maye: We want to give him every opportunity to return at some point",
+     "link": "https://sports.yahoo.com/nfl/article/patriots-coach-mike-vrabel-says-tommy-devito-will-start-week-12-avoids-daniel-jones-talk-175222245.html",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-23T18:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Patriots coach Mike Vrabel says Tommy DeVito will start Week 12, avoids Daniel Jones talk - Yahoo Sports",
+     "quote": "Tommy DeVito will start Week 12",
+     "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNdElqZDdKSWRyU216VXJXcjlJTHJZUGc4M0hYdk1pQ2xiMktFeTJaNXY4dFkwYlFUZmlRTVE4ZmxJMFhKaVlXcEZNUkNBYmFCUXV3Z0dCZmE1NHlNWVQ3V3RtM2xuU2JWbTVxUGM0bHdmcDdla1ZIczBodmJHNEJDMlpEbzMzaTZtRmIzN0hfMmE1VXF5eVVVWWJJcjdsaTRaYzhnVnRWd1YzX0JtN3AwWFRiT3FydGJyRlZyc0ZMaXZiQjM4d2VRNnBDYnlzU2ZiZGxpazlLRQ?oc=5",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-23T19:42+00:00",
+     "source": "google_qb",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: Patriots QB Tommy DeVito to start vs. Chargers - NFL.com",
+     "quote": "Patriots QB Tommy DeVito to start vs. Chargers",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNUDBIbS1hN3ZXOFdYV1ZOWmxSOFhFUWlWaFdVTEY2RmZ5Z3g3X1d3aW01RFJpMkdDM2d2T3JUMERnU0gzQkxMODR1all2S3d6V0NCZ0sxT0lEVTB3V2RZd1FaOEhwMEstZmp5V3FuT3lldmdITHRiaEtBa3g5NkR0a2Uyc1lqUXA3OEE?oc=5",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T17:42+00:00",
+   "player": "Ladd McConkey",
+   "team": "LAC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 99.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T17:42+00:00",
+     "source": "team_sites_3",
+     "outlet": "Los Angeles Chargers",
+     "title": "Chargers-Jets Week 11 Inactives: Ladd McConkey Active, Tarheeb Still Won't Play Against New York - Los Angeles Chargers",
+     "quote": "Ladd McConkey Active",
+     "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFA5Vi1vTEZDWHdTYUJ3NGl3bFlaaWNHam13SkdURmh6UVluTDliSVRqNUdETDFKcVBzZzF0Ukxyd0ViSVU4ZzA2WndvSXNSbkQtNGFTbXNpbXUxaWFmaHNsWmsxZ2dBNlpY?oc=5",
+     "player": "Ladd McConkey",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T17:24+00:00",
+   "player": "Malik Willis",
+   "team": "MIA",
+   "signal": "injured_reserve",
+   "qb": true,
+   "game_id": "2026_12_NYJ_MIA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 99.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T17:24+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ml-j.bsky.social (MIA)",
+     "title": "As of today, Hafley said Dolphins QB Malik Willis will not require surgery He said they'll re-evaluate depending on how Willis feels at the ",
+     "quote": "will not require surgery...re-evaluate depending on how Willis feels at the end of his minimum required stay on injured reserve",
+     "link": "https://bsky.app/profile/ml-j.bsky.social/post/3n2ym67k2vx2g",
+     "player": "Malik Willis",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T16:03+00:00",
+   "player": "Bhayshul Tuten",
+   "team": "JAX",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 101.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T16:03+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports",
+     "title": "Fantasy Football Waiver Wire Week 12: Chris Rodriguez and Fernando Mendoza step up",
+     "quote": "Bhayshul Tuten banged up",
+     "link": "https://sports.yahoo.com/articles/fantasy-football-waiver-wire-week-154647684.html",
+     "player": "Bhayshul Tuten",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T16:03+00:00",
+   "player": "Chris Rodriguez",
+   "team": "JAX",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 101.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T16:03+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports",
+     "title": "Fantasy Football Waiver Wire Week 12: Chris Rodriguez and Fernando Mendoza step up",
+     "quote": "Chris Rodriguez is poised to take over the Jacksonville backfield",
+     "link": "https://sports.yahoo.com/articles/fantasy-football-waiver-wire-week-154647684.html",
+     "player": "Chris Rodriguez",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-23T16:03+00:00",
+   "player": "Fernando Mendoza",
+   "team": "LV",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_12_LV_CLE",
+   "roster": "team_mismatch",
+   "certainty": 0.65,
+   "lead_vs_report_h": 101.0,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-23T16:03+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports",
+     "title": "Fantasy Football Waiver Wire Week 12: Chris Rodriguez and Fernando Mendoza step up",
+     "quote": "Fernando Mendoza is finally on the streaming menu for his date with the Browns",
+     "link": "https://sports.yahoo.com/articles/fantasy-football-waiver-wire-week-154647684.html",
+     "player": "Fernando Mendoza",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-23T14:22+00:00",
    "player": "Rhyan",
@@ -311,6 +818,16 @@
      "title": "Colton McKivitz done for the year with ankle injury",
      "quote": "done for the year with ankle injury",
      "link": "https://sports.yahoo.com/articles/colton-mckivitz-done-ankle-injury-140411595.html",
+     "player": "Colton McKivitz",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-23T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN Singapore",
+     "title": "49ers' Colton McKivitz suffers season-ending ankle injury - ESPN Singapore",
+     "quote": "season-ending ankle injury",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPX1E4VU1MNWtKYTJBNXA2ZTZ1cmVsM1U5czVWV2k3b01sd3pJa1BXR3RyNUN0dEhtTV93ZXdiaVM2X1JKQ2g4Z2ZEWGx4c3FuaU9Mck9IcDZjWVVSbHV4RHMyYTFreURFRlQxaTNpd0pCRFlFNEpIY0lfakp0M3FEV1RSdXdWeXVUREItazBjMklSSElmMjg3dUtWQVhKTG5sSnZlczVmQVhfaUdhLUxZ?oc=5",
      "player": "Colton McKivitz",
      "signal": "injured_reserve"
     }
@@ -9356,6 +9873,26 @@
      "title": "Matt LaFleur confirms Packers plan to have Micah Parsons return Week 12 vs. Rams",
      "quote": "plan to have Micah Parsons return Week 12 vs. Rams",
      "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/matt-lafleur-confirms-packers-plan-to-have-micah-parsons-return-week-12-vs-rams",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-23T22:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Micah Parsons cleared to play Wednesday night",
+     "quote": "cleared to play Wednesday night",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/micah-parsons-cleared-to-play-wednesday-night",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-23T22:57+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Packers star Micah Parsons reportedly cleared to return from ACL injury, will make season debut vs. Rams on Thanksgiving Eve",
+     "quote": "cleared to return from ACL injury, will make season debut vs. Rams on Thanksgiving Eve",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/packers-star-micah-parsons-reportedly-cleared-to-return-from-acl-injury-will-make-season-debut-vs-rams-on-thanksgiving-eve-224615033.html",
      "player": "Micah Parsons",
      "signal": "returning"
     }
