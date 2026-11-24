@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-11-24T00:21+00:00",
- "signals": 19474,
- "units": 4324,
+ "generated_at": "2026-11-24T14:43+00:00",
+ "signals": 19518,
+ "units": 4341,
  "skipped": {
-  "team_unclear": 435,
+  "team_unclear": 436,
   "no_game": 543,
-  "not_game_week": 1276
+  "not_game_week": 1280
  },
  "roster_check": {
-  "match": 18362,
-  "team_mismatch": 650,
-  "not_found": 459,
+  "match": 18404,
+  "team_mismatch": 651,
+  "not_found": 460,
   "ambiguous": 3
  },
- "graded": 2135,
- "pending": 73,
+ "graded": 2148,
+ "pending": 65,
  "overall": {
-  "n": 2135,
-  "correct": 1742,
+  "n": 2148,
+  "correct": 1753,
   "pct": 81.6
  },
  "by_signal": {
@@ -32,8 +32,8 @@
    "pct": 87.5
   },
   "expected_to_play": {
-   "n": 578,
-   "correct": 450,
+   "n": 583,
+   "correct": 454,
    "pct": 77.9
   },
   "injured_reserve": {
@@ -42,13 +42,13 @@
    "pct": 82.5
   },
   "out": {
-   "n": 732,
-   "correct": 657,
+   "n": 736,
+   "correct": 661,
    "pct": 89.8
   },
   "returning": {
-   "n": 340,
-   "correct": 248,
+   "n": 343,
+   "correct": 250,
    "pct": 72.9
   },
   "suspended": {
@@ -57,40 +57,184 @@
    "pct": 50.0
   },
   "will_start": {
-   "n": 158,
-   "correct": 121,
-   "pct": 76.6
+   "n": 159,
+   "correct": 122,
+   "pct": 76.7
   }
  },
  "qb": {
-  "n": 236,
-  "correct": 153,
-  "pct": 64.8,
-  "pending": 12
+  "n": 237,
+  "correct": 154,
+  "pct": 65.0,
+  "pending": 14
  },
  "rule_population": {
   "n": 190,
   "correct": 135,
   "pct": 71.1,
-  "pending": 9
+  "pending": 11
  },
  "official_report_agreement": {
-  "n": 1840,
-  "agree": 1365,
+  "n": 1853,
+  "agree": 1375,
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 2208,
+  "n": 2213,
   "median": 23.6,
   "share_before_report": 64.4
  },
  "qb_line_move_6h": {
-  "n": 373,
-  "avg_abs_after": 0.6,
+  "n": 382,
+  "avg_abs_after": 0.61,
   "avg_abs_before": 0.37,
   "avg_after_negative_signals": -0.3
  },
  "rows": [
+  {
+   "seen_at": "2026-11-24T13:23+00:00",
+   "player": "Sam Darnold",
+   "team": "SEA",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_12_SEA_SF",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 79.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T13:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Mike Macdonald: \"Everything's positive\" with Sam Darnold, but nothing official yet",
+     "quote": "really optimistic about quarterback Sam Darnold returning in Week 12",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/mike-macdonald-everythings-positive-with-sam-darnold-but-nothing-official-yet",
+     "player": "Sam Darnold",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T14:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Pre-Snap Reads: Sam Darnold gets back to work",
+     "quote": "it's trending towards him starting on Sunday",
+     "link": "https://sports.yahoo.com/articles/pre-snap-reads-sam-darnold-140000963.html",
+     "player": "Sam Darnold",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T11:23+00:00",
+   "player": "Fernando Mendoza",
+   "team": "LV",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_LV_CLE",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 81.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T11:23+00:00",
+     "source": "google_qb",
+     "outlet": "Yahoo",
+     "title": "Fernando Mendoza Excitedly Updates His LinkedIn After Being Named Raiders\u2019 Starting Quarterback - Yahoo",
+     "quote": "Named Raiders' Starting Quarterback",
+     "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQRTdpZy02XzBIVEhDbjRuWHBfcXBxN25FSVg5SnByYks4a0t6aHJmdGhFdTZvMDBvX1k5ekI4VFpEVVBIbjVGT1NnYzdNSzFPWVFVanhuQlFqQ3RKd2l0blk5ZHhzcTlXQmRCVk1JZ2p5bmpndGYySW9xcWVkbmhMa09mUGJiWlhCQ1ZzUjRpeEdvY3VfdWc?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T08:23+00:00",
+   "player": "Jayden Daniels",
+   "team": "WAS",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 84.6,
+   "line_move": {
+    "after": -0.0,
+    "before": 0.5
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T08:23+00:00",
+     "source": "google_injury",
+     "outlet": "Cincinnati Enquirer",
+     "title": "Commanders QB Jayden Daniels plays through hand injury vs Bengals - Cincinnati Enquirer",
+     "quote": "plays through hand injury",
+     "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNYUYyTWFIWWlyYl9tOGlnZjNna3A2TjdKSE40MkI2Wkl0d3VYX2VzLVp5UG5ubG9uZkZXdXhvR21zekhzZVJsSFd3VWdkaFktelBPUnRvSmdJNE5lSXJWTmFuSjVtUDV5M2drZ3FIVUNScFlXblQxYXY3WjF4UGozcE1Pb2IxNU5qWXUtVFBDTTMyaGNoaDdpc1RuVVktSTR5X1Y0M3hGRzRxNEN3RWxTMWc3Z0ZyTDFxLU53LS1EOVI0QmdBdmplLVlKTUFmNmhq?oc=5",
+     "player": "Jayden Daniels",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T01:00+00:00",
+   "player": "Terrance Ferguson",
+   "team": "LA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -4.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T01:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:nateatkins.bsky.social (LA)",
+     "title": "At the trade deadline, Sean McVay said the Rams passed on receiver trades because of who they had coming back from injury -- Puka Nacua, Dav",
+     "quote": "Nacua and Ferguson needing season-ending surgery",
+     "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3n2zgvuv7sc2g",
+     "player": "Terrance Ferguson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T01:00+00:00",
+   "player": "Terry McLaurin",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_11_CIN_WAS",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -52.0,
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T01:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "What Happened to Terry McLaurin, and When Will He Return? Latest on Commanders Star\u2019s Injury and Why He\u2019s Out in Week 11 vs. Bengals - Yahoo Sports",
+     "quote": "Why He's Out in Week 11 vs. Bengals",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPV1Z2THNSVHNSWVozTGpWOGdMc1ZuNi1wQ1RkalZFZ3o2aTRsLUV5RElDVnlZZ2QtaG4wTGpETWJEc3pISFhlN3dYRUNhNVRBSXhjYkQ1d2NFQmJnaTVlQ0lMNFppbWpUdm1YVzF3NG9PTXRtOWZCQ25nOGVSNE1QQ3MyeG0yb0VPTmpoR1lxcw?oc=5",
+     "player": "Terry McLaurin",
+     "signal": "out"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-23T23:58+00:00",
    "player": "Dax Hill",
@@ -101,7 +245,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -126,7 +273,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -51.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -136,6 +286,16 @@
      "title": "#Commanders will be without CB Amik Robertson (ankle) tonight. Huge blow.",
      "quote": "will be without CB Amik Robertson (ankle) tonight",
      "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zcy7tbfc24",
+     "player": "Amik Robertson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T01:00+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Commanders news: Amik Robertson ruled out for MNF showdown with Bengals - ClutchPoints",
+     "quote": "Amik Robertson ruled out for MNF showdown with Bengals",
+     "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNMi1KTDZ0ekRySnBIUy04bjVFbkNEQ0RSYW9aN0h3azZVUHBya0hQYnBCcHB6RlJtWXplczM4Qm5YLWxMeG4xZFJtX0ZMYXV5a2RPT1kxMjZFaGpwcnBlVk1Zencyejk3MGw3T3RWd0U4UUdlRFVZWjh0RmxKWGlvV0pwVGItT2RlX3U3OXVDSnVjaGYzQ1QwbXJEUHVwajlkVG1oZU1IYV9Zb2JycHI0N2lB?oc=5",
      "player": "Amik Robertson",
      "signal": "out"
     }
@@ -176,7 +336,10 @@
    "roster": "team_mismatch",
    "certainty": 0.95,
    "lead_vs_report_h": 46.3,
-   "line_move": null,
+   "line_move": {
+    "after": 0.0,
+    "before": 0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -227,7 +390,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -48.8,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -252,7 +418,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -48.8,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -329,6 +498,16 @@
      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQSnZkTjY2Nnl1Q0ZWTjhQUUxfeTJxUzNqamRtVmsxVkk4b3hSNEpaYXZBTWEtS01fX281d3hmSXQ4Q09GT1JjOU1ENXBuNUFKMlBfN1VCajROWW1iMUpCeGZVNTV0NndhRVF6Q2JQMWEwVFZ0TEVvWTZEb1RVQW5VYndIYWVuUWNJOXVwQjg3aURNdzRLYmpmQnZ5SENDcndXemZOSlJQRmhEbHhGSWt3SDJJbw?oc=5",
      "player": "Greg Newsome II",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T00:46+00:00",
+     "source": "team_sites_3",
+     "outlet": "Giants.com",
+     "title": "CB Greg Newsome II to miss 'multiple weeks' with high ankle sprain - Giants.com",
+     "quote": "to miss 'multiple weeks' with high ankle sprain",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOaV84Q3hlcG5meFY4S1NtUk5aZFpWTHdBTnkwS01ZMTl1YnJpY2lkX21TX1Jwdl96MEhZREc4SFVzY3NKUVF5NDVJMFVHT2hiQkkzRWVSb2lPYXVpMWdHRFh2dUJ5OXlUejFZR21yRE94SmVNRW9WYzZGUnBwUEVZWUVsd2VqQ3gtekQ0NXdlNA?oc=5",
+     "player": "Greg Newsome II",
+     "signal": "out"
     }
    ]
   },
@@ -342,7 +521,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": -48.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1054,6 +1236,16 @@
      "title": "Colton McKivitz done for the year with ankle injury",
      "quote": "done for the year with ankle injury",
      "link": "https://sports.yahoo.com/articles/colton-mckivitz-done-ankle-injury-140411595.html",
+     "player": "Colton McKivitz",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T01:00+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports Bay Area & California",
+     "title": "49ers coach Kyle Shanahan provides update on \u2018crushing' Colton McKivitz injury - NBC Sports Bay Area & California",
+     "quote": "Kyle Shanahan provides update on 'crushing' Colton McKivitz injury",
+     "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVnJRZ3laZUtOVkdNYnVuZUZVTzBvRlJXZm15VmxSZnFwcU43NlFyR2hYTlVPbzFlUURGbk9ZZlg0b3VsSzl1NTR5MmZzcnNueGt4NEJ3LTRick9ZeTdIWjJKU2tOMzZBVXlLZ2lLZ0hqOUFBdFpSYVlZWklET1EtR3ZRbm9qNEFEYV9aM1FEbWVxdmRzS3QtQkZFM29ucWZmcF9N0gGrAUFVX3lxTE1ucVNvLVNMdjNGNERUbnpIZXcwRllpUU16MFh5Tlk4cDFpazdnZGZzQVlSUi1ZUlgzLThScGNxakZCVlA4bzdDOWw2TkxoR2FqeDhhOTZzWUtqd3pzRU8tUGhOaWRiOUsyak81VVoxV0FVRzZZdGtaMjZibW04OWJoOFlmcFp4Tl92dklINkdKQll0Yk9UUEJGVms4cjlVckRSUGRUMlJBRXY4Yw?oc=5",
      "player": "Colton McKivitz",
      "signal": "out"
     }
@@ -2924,7 +3116,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": -1.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3427,7 +3622,10 @@
    "roster": "match",
    "certainty": 0.95,
    "lead_vs_report_h": 3.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3462,7 +3660,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 3.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3487,7 +3688,10 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 3.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -3542,7 +3746,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 3.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -5979,7 +6186,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 45.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -6126,7 +6336,10 @@
     "after": 0.25,
     "before": -0.25
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -10004,6 +10217,16 @@
      "title": "Packers star Micah Parsons reportedly cleared to return from ACL injury, will make season debut vs. Rams on Thanksgiving Eve",
      "quote": "cleared to return from ACL injury, will make season debut vs. Rams on Thanksgiving Eve",
      "link": "https://sports.yahoo.com/nfl/breaking-news/article/packers-star-micah-parsons-reportedly-cleared-to-return-from-acl-injury-will-make-season-debut-vs-rams-on-thanksgiving-eve-224615033.html",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-24T06:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Packers\u2019 Micah Parsons officially cleared to return from ACL injury on Thanksgiving Eve vs. Rams - Yahoo Sports",
+     "quote": "officially cleared to return from ACL injury on Thanksgiving Eve vs. Rams",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOeTJmel9MV0I3eGJYS2ljQk5FMFl0bWp6QjVYeVVlbVhXLXJiMEFTRHktLV8zSzJtYnprMktIR204cmxlWklNaE1iT292NXdHVVJsSi05MnlBQi1MZTdBZ3prd2NuWm9YZVctWkpOVVY1M08xSHozczJCdFdVY2VXbmZWNmdFYS1Rb2NMUm1ONnNVSWs?oc=5",
      "player": "Micah Parsons",
      "signal": "returning"
     }
