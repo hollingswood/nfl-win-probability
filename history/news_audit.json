@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-24T14:43+00:00",
- "signals": 19518,
- "units": 4341,
+ "generated_at": "2026-11-25T14:41+00:00",
+ "signals": 19766,
+ "units": 4402,
  "skipped": {
-  "team_unclear": 436,
+  "team_unclear": 438,
   "no_game": 543,
-  "not_game_week": 1280
+  "not_game_week": 1289
  },
  "roster_check": {
-  "match": 18404,
-  "team_mismatch": 651,
-  "not_found": 460,
+  "match": 18630,
+  "team_mismatch": 671,
+  "not_found": 462,
   "ambiguous": 3
  },
  "graded": 2148,
- "pending": 65,
+ "pending": 91,
  "overall": {
   "n": 2148,
   "correct": 1753,
@@ -66,13 +66,13 @@
   "n": 237,
   "correct": 154,
   "pct": 65.0,
-  "pending": 14
+  "pending": 18
  },
  "rule_population": {
   "n": 190,
   "correct": 135,
   "pct": 71.1,
-  "pending": 11
+  "pending": 14
  },
  "official_report_agreement": {
   "n": 1853,
@@ -80,17 +80,980 @@
   "pct": 74.2
  },
  "lead_vs_report_hours": {
-  "n": 2213,
+  "n": 2239,
   "median": 23.6,
-  "share_before_report": 64.4
+  "share_before_report": 64.6
  },
  "qb_line_move_6h": {
-  "n": 382,
-  "avg_abs_after": 0.61,
+  "n": 390,
+  "avg_abs_after": 0.6,
   "avg_abs_before": 0.37,
-  "avg_after_negative_signals": -0.3
+  "avg_after_negative_signals": -0.29
  },
  "rows": [
+  {
+   "seen_at": "2026-11-25T12:23+00:00",
+   "player": "Josh Jacobs",
+   "team": "GB",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 0.5,
+   "lead_vs_report_h": -39.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T12:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Is Josh Jacobs playing tonight? Injury update for Packers RB",
+     "quote": "hoping to soon return from a finger injury",
+     "link": "https://sports.yahoo.com/nfl/articles/josh-jacobs-playing-tonight-injury-120526868.html",
+     "player": "Josh Jacobs",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T10:23+00:00",
+   "player": "Tommy DeVito",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 58.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T10:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Patriots Wednesday S\u2122\ufe0f12:45p: Jeremy Springer \u2b55\ufe0f\u00a9\ufe0f1:05p: Josh McDaniels \ud83d\udd12\ud83d\udeaa1:15p: Locker room \ud83c\udfc82:10p: Practice D\ud83e\udd3a3:45p: Zak Kuhr (then O assi",
+     "quote": "QB Tommy DeVito - \"I'm ready\"",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3n34vuptpsc2w",
+     "player": "Tommy DeVito",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T04:34+00:00",
+   "player": "Aaron Rodgers",
+   "team": "PIT",
+   "signal": "benched",
+   "qb": true,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 16.4,
+   "line_move": {
+    "after": 0.0,
+    "before": -1.0
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T04:34+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:zacstevens.bsky.social (DEN)",
+     "title": "What we learned w/Broncos today: -J.K. Dobbins suspended by Sean Payton for Friday\u2019s game against the Steelers for \u201cconduct detrimental [to ",
+     "quote": "Aaron Rodgers benched for Broncos game, Mason Rudolph will start",
+     "link": "https://bsky.app/profile/zacstevens.bsky.social/post/3n34df257ik2n",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "google_qb",
+     "outlet": "The New York Times",
+     "title": "Steelers bench QB Aaron Rodgers vs. Broncos, plan to start Mason Rudolph - The New York Times",
+     "quote": "Steelers bench QB Aaron Rodgers vs. Broncos, plan to start Mason Rudolph",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPU2YxRE0xN3NEeUdaeUNtTDE4NmN5a2lqeWJPaUZyMEFXdXFNNWFIWk5maDdKSlVWb004OUhPVXV0czNDYzNack1IbVVUWkFUQm92N2dGVjRudV8wNVhaa0IxVUxCdHRtVnBkTWxmVGQ3R2FlbHVHdWRhS2xsek1WLU95cGJ2MV94cnUtZlhZcDc2dWJ1d1lWcUpvQWNJYkw3UGVKVkRUVW1GRmpSMGc?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Steelers to start QB Mason Rudolph vs. Broncos with Aaron Rodgers benched, per report",
+     "quote": "inactive Aaron Rodgers",
+     "link": "https://sports.yahoo.com/nfl/articles/steelers-start-qb-mason-rudolph-042627546.html",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers bench Aaron Rodgers, name Mason Rudolph starting QB vs. Broncos",
+     "quote": "Steelers bench Aaron Rodgers",
+     "link": "https://sports.yahoo.com/nfl/articles/steelers-bench-aaron-rodgers-name-042340961.html",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_qb",
+     "outlet": "WRAL",
+     "title": "Steelers are benching Aaron Rodgers; Mason Rudolph to start at QB vs Broncos - WRAL",
+     "quote": "Steelers are benching Aaron Rodgers; Mason Rudolph to start at QB vs Broncos",
+     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOUFhpR0trZm11dUpvQlR3MTNnZDN5SXVDbWhfYlBaMk1uQ1NPRzAtS3hvMTF3Q0pKVnpwbjJMVG5KSGhaWGFsSzVtc2VSY240X0dfQXY1Ym9BNE1BNEswNEhDRmJEWnRfMHJGWVE1U2JsWU5KMEthbk1GZ3JvZVFyRFFWY3g1MTMzUGpXcnJNU3dyLS1lSEllRG41a0JPdVJ0Qzhxb0JfLVJ6UC1ZamQ3ZQ?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_injury",
+     "outlet": "WFMJ",
+     "title": "The Pittsburgh Steelers are benching QB Aaron Rodgers for Friday's game against Denver and starting Mason Rudolph - WFMJ",
+     "quote": "benching QB Aaron Rodgers for Friday's game against Denver",
+     "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOeGhjeDlZWGpJMnpJZ0lEdTNfLXZQNTlMemVrNnhDVlRkdkdOVExwT3dBS09WQ2pCTjBOeHYyMW1MUGZzNEU0ZTJvcEQtcnZ1SGNkQkNWVjdsclZ5b0lPbVlxc042VUJITjQ0dDZ0NjhhZjFNVDU2dnZMYTAxcnF2REZNQkFxc01LVlp4OUluVXd5WWpyVXE4R2RxeFFIVmRvT2NtNHRQdGtNVGwtNmstVXlwNUlUUXplaW1VZHM1VkViUjRlN2NzcUtxb0dpbGhtSDhtampYRkRqTjFENGV2THpCQjd0aEtIdURrcU9kcHRBaHFRU3NsQ01RX1hnaDJ6dXBleQ?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_qb",
+     "outlet": "ESPN",
+     "title": "Steelers bench struggling QB Aaron Rodgers, to start Mason Rudolph - ESPN",
+     "quote": "bench struggling QB Aaron Rodgers",
+     "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOX1c5QzcxNENFRkZ4dWNkdkxaaDJLTFN5OGxhQktXUnhvVXdzTGx0UWQzdUFreGZwNGlxSktzbmdkeEp4dzlTU2R6c1k3eU1odVFWTExvYmVYbUk2M2FydDJLSFNrc1ZwVzdkcWh1bWlpbWNMUEZjcTBIcWo5TGlxT196MXZRWDBtZVczMGpleGUxZW5XUjY1Ny1PbnVaS0lqRGkybXdyQmdyNWM?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers bench QB Aaron Rodgers and will start Mason Rudolph vs. the Broncos",
+     "quote": "benched veteran and future Hall of Fame quarterback Aaron Rodgers",
+     "link": "https://sports.yahoo.com/nfl/articles/steelers-bench-qb-aaron-rodgers-043312926.html",
+     "player": "Aaron Rodgers",
+     "signal": "benched"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T04:22+00:00",
+   "player": "Aaron Rodgers",
+   "team": "PIT",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 16.6,
+   "line_move": {
+    "after": 0.0,
+    "before": -0.75
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T04:22+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Aaron Rodgers inactive vs. Broncos, Steelers will start Mason Rudolph at QB instead",
+     "quote": "Aaron Rodgers will be inactive",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/aaron-rodgers-inactive-vs-broncos-steelers-will-start-mason-rudolph-at-qb-instead-041517816.html",
+     "player": "Aaron Rodgers",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T05:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Aaron Rodgers couldn&#39;t play forever, and he might have an unceremonious end at age 42",
+     "quote": "Aaron Rodgers won't be active for Friday's game against the Broncos",
+     "link": "https://sports.yahoo.com/nfl/article/aaron-rodgers-couldnt-play-forever-and-he-might-have-an-unceremonious-end-at-age-42-051331424.html",
+     "player": "Aaron Rodgers",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T04:22+00:00",
+   "player": "Mason Rudolph",
+   "team": "PIT",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 16.6,
+   "line_move": {
+    "after": 0.0,
+    "before": -0.75
+   },
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T04:22+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Aaron Rodgers inactive vs. Broncos, Steelers will start Mason Rudolph at QB instead",
+     "quote": "Mason Rudolph will start at quarterback on Friday against the Denver Broncos",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/aaron-rodgers-inactive-vs-broncos-steelers-will-start-mason-rudolph-at-qb-instead-041517816.html",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:34+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:zacstevens.bsky.social (DEN)",
+     "title": "What we learned w/Broncos today: -J.K. Dobbins suspended by Sean Payton for Friday\u2019s game against the Steelers for \u201cconduct detrimental [to ",
+     "quote": "Mason Rudolph will start against Denver",
+     "link": "https://bsky.app/profile/zacstevens.bsky.social/post/3n34df257ik2n",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "google_qb",
+     "outlet": "The New York Times",
+     "title": "Steelers bench QB Aaron Rodgers vs. Broncos, plan to start Mason Rudolph - The New York Times",
+     "quote": "plan to start Mason Rudolph",
+     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPU2YxRE0xN3NEeUdaeUNtTDE4NmN5a2lqeWJPaUZyMEFXdXFNNWFIWk5maDdKSlVWb004OUhPVXV0czNDYzNack1IbVVUWkFUQm92N2dGVjRudV8wNVhaa0IxVUxCdHRtVnBkTWxmVGQ3R2FlbHVHdWRhS2xsek1WLU95cGJ2MV94cnUtZlhZcDc2dWJ1d1lWcUpvQWNJYkw3UGVKVkRUVW1GRmpSMGc?oc=5",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Steelers to start QB Mason Rudolph vs. Broncos with Aaron Rodgers benched, per report",
+     "quote": "Mason Rudolph will be the starting QB against the Broncos",
+     "link": "https://sports.yahoo.com/nfl/articles/steelers-start-qb-mason-rudolph-042627546.html",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:46+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Steelers bench Aaron Rodgers, name Mason Rudolph starting QB vs. Broncos",
+     "quote": "name Mason Rudolph starting QB vs. Broncos",
+     "link": "https://sports.yahoo.com/nfl/articles/steelers-bench-aaron-rodgers-name-042340961.html",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_qb",
+     "outlet": "WRAL",
+     "title": "Steelers are benching Aaron Rodgers; Mason Rudolph to start at QB vs Broncos - WRAL",
+     "quote": "Mason Rudolph to start at QB vs Broncos",
+     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOUFhpR0trZm11dUpvQlR3MTNnZDN5SXVDbWhfYlBaMk1uQ1NPRzAtS3hvMTF3Q0pKVnpwbjJMVG5KSGhaWGFsSzVtc2VSY240X0dfQXY1Ym9BNE1BNEswNEhDRmJEWnRfMHJGWVE1U2JsWU5KMEthbk1GZ3JvZVFyRFFWY3g1MTMzUGpXcnJNU3dyLS1lSEllRG41a0JPdVJ0Qzhxb0JfLVJ6UC1ZamQ3ZQ?oc=5",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_injury",
+     "outlet": "WFMJ",
+     "title": "The Pittsburgh Steelers are benching QB Aaron Rodgers for Friday's game against Denver and starting Mason Rudolph - WFMJ",
+     "quote": "starting Mason Rudolph",
+     "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOeGhjeDlZWGpJMnpJZ0lEdTNfLXZQNTlMemVrNnhDVlRkdkdOVExwT3dBS09WQ2pCTjBOeHYyMW1MUGZzNEU0ZTJvcEQtcnZ1SGNkQkNWVjdsclZ5b0lPbVlxc042VUJITjQ0dDZ0NjhhZjFNVDU2dnZMYTAxcnF2REZNQkFxc01LVlp4OUluVXd5WWpyVXE4R2RxeFFIVmRvT2NtNHRQdGtNVGwtNmstVXlwNUlUUXplaW1VZHM1VkViUjRlN2NzcUtxb0dpbGhtSDhtampYRkRqTjFENGV2THpCQjd0aEtIdURrcU9kcHRBaHFRU3NsQ01RX1hnaDJ6dXBleQ?oc=5",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T04:55+00:00",
+     "source": "google_qb",
+     "outlet": "ESPN",
+     "title": "Steelers bench struggling QB Aaron Rodgers, to start Mason Rudolph - ESPN",
+     "quote": "to start Mason Rudolph",
+     "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOX1c5QzcxNENFRkZ4dWNkdkxaaDJLTFN5OGxhQktXUnhvVXdzTGx0UWQzdUFreGZwNGlxSktzbmdkeEp4dzlTU2R6c1k3eU1odVFWTExvYmVYbUk2M2FydDJLSFNrc1ZwVzdkcWh1bWlpbWNMUEZjcTBIcWo5TGlxT196MXZRWDBtZVczMGpleGUxZW5XUjY1Ny1PbnVaS0lqRGkybXdyQmdyNWM?oc=5",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T03:43+00:00",
+   "player": "Quinyon Mitchell",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_PHI_DAL",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 17.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T03:43+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
+     "quote": "he thinks Quinyon Mitchell will be fine",
+     "link": "https://sports.yahoo.com/articles/vic-fangio-delivers-good-news-133639686.html",
+     "player": "Quinyon Mitchell",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T02:23+00:00",
+   "player": "Paulson Adebo",
+   "team": "NYG",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 66.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T02:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Paulson Adebo gets shot at Giants redemption after up-and-down season",
+     "quote": "reclaims a starting job",
+     "link": "https://sports.yahoo.com/nfl/articles/paulson-adebo-gets-shot-giants-015946473.html",
+     "player": "Paulson Adebo",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-25T01:02+00:00",
+   "player": "Sam LaPorta",
+   "team": "DET",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_CHI_DET",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 20.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-25T01:02+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Lions news: Sam LaPorta gets notable injury upgrade for Bears game - ClutchPoints",
+     "quote": "gets notable injury upgrade for Bears game",
+     "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxORDltcGRnenBxX1VrVzVCUVhOWEc5ampYUDNOaDB0bklWdmc1WXE1bWMzc2Vob2ZvalJuTjVYNkVQNm8tZWF3TnE0RmxqZ2gzUGstVEY5cGJMLXdDRlFMR2Nab1E4N1VaUU5vdGVzNlRYOVRFYnVzdlM1XzRmQ2pLRUVCVUxTeGFVSUh3b3UzeG9pR1Z3T2c?oc=5",
+     "player": "Sam LaPorta",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T23:46+00:00",
+   "player": "Tyler Badie",
+   "team": "DEN",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": 21.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T23:46+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:parkerjgabriel.bsky.social (DEN)",
+     "title": "Everything we know about Sean Payton's decision to suspend #Broncos RB J.K. Dobbins and an uncertain future. Notable that Payton didn't say ",
+     "quote": "Tyler Badie eligible to return this week",
+     "link": "https://bsky.app/profile/parkerjgabriel.bsky.social/post/3n33srqjryc22",
+     "player": "Tyler Badie",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T23:46+00:00",
+   "player": "Brandon Jones",
+   "team": "DEN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 21.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T23:46+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Broncos vs. Steelers practice participation report: Tuesday",
+     "quote": "safety Brandon Jones, is looking like he is all the way back for this Black Friday game",
+     "link": "https://sports.yahoo.com/nfl/articles/broncos-vs-steelers-practice-participation-232025459.html",
+     "player": "Brandon Jones",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T22:12+00:00",
+   "player": "Greg Newsome",
+   "team": "NYG",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 70.8,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T22:12+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Giants put Greg Newsome on injured reserve",
+     "quote": "cornerback Greg Newsome will miss multiple weeks with a high-ankle sprain",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/giants-put-greg-newsome-on-injured-reserve",
+     "player": "Greg Newsome",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-24T22:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Giants put Greg Newsome on injured reserve",
+     "quote": "Giants put Greg Newsome on injured reserve",
+     "link": "https://sports.yahoo.com/nfl/articles/giants-put-greg-newsome-injured-220054972.html",
+     "player": "Greg Newsome",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-25T11:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Giants news: Playoff outlook, CB Greg Newsome placed on IR, more",
+     "quote": "CB Greg Newsome placed on IR",
+     "link": "https://sports.yahoo.com/nfl/articles/giants-news-playoff-outlook-cb-110000161.html",
+     "player": "Greg Newsome",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T21:47+00:00",
+   "player": "JK Dobbins",
+   "team": "DEN",
+   "signal": "suspended",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 23.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T21:47+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Sean Payton suspends RB JK Dobbins for Friday&#39;s game vs. Steelers due to &#39;conduct detrimental to the team&#39;",
+     "quote": "Sean Payton suspends RB JK Dobbins for Friday's game vs. Steelers due to 'conduct detrimental to the team'",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/sean-payton-suspends-rb-jk-dobbins-for-fridays-game-vs-steelers-due-to-conduct-detrimental-to-the-team-214323353.html",
+     "player": "JK Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T21:57+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Sean Payton suspends J.K. Dobbins for Week 12 for conduct detrimental to the team",
+     "quote": "Sean Payton suspends J.K. Dobbins for Week 12 for conduct detrimental to the team",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/sean-payton-suspends-j-k-dobbins-for-week-12-for-conduct-detrimental-to-the-team",
+     "player": "J.K. Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T22:12+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Broncos HC Sean Payton announces that the team has suspended RB JK Dobbins for one game",
+     "quote": "veteran running back JK Dobbins has been suspended for one game due to conduct detrimental to the team",
+     "link": "https://sports.yahoo.com/nfl/articles/broncos-hc-sean-payton-announces-214422445.html",
+     "player": "JK Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T22:12+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Sean Payton suspends J.K. Dobbins for Week 12 for conduct detrimental to the team",
+     "quote": "Sean Payton suspends J.K. Dobbins for Week 12 for conduct detrimental to the team",
+     "link": "https://sports.yahoo.com/nfl/articles/sean-payton-suspends-j-k-215212860.html",
+     "player": "JK Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T22:12+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "J.K. Dobbins suspended for one game by the team",
+     "quote": "J.K. Dobbins suspended for one game by the team",
+     "link": "https://sports.yahoo.com/nfl/articles/j-k-dobbins-suspended-one-215134902.html",
+     "player": "JK Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T22:42+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Broncos suspend RB J.K. Dobbins for one game. Here&#39;s why",
+     "quote": "suspended for one game",
+     "link": "https://sports.yahoo.com/nfl/articles/broncos-suspend-rb-j-k-221623115.html",
+     "player": "J.K. Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T22:42+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "Broncos suspend RB J.K. Dobbins one game for conduct detrimental to team",
+     "quote": "suspend RB J.K. Dobbins one game for conduct detrimental to team, will not play against the Steelers on Friday",
+     "link": "https://www.cbssports.com/nfl/news/broncos-suspend-rb-j-k-dobbins-one-game-conduct-detrimental-team/",
+     "player": "J.K. Dobbins",
+     "signal": "suspended"
+    },
+    {
+     "seen_at": "2026-11-24T23:23+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "JK Dobbins suspended for \u2018conduct detrimental\u2019 in mysterious Broncos decision",
+     "quote": "J.K. Dobbins suspended for 'conduct detrimental' in mysterious Broncos decision",
+     "link": "https://sports.yahoo.com/nfl/articles/jk-dobbins-suspended-conduct-detrimental-224505276.html",
+     "player": "J.K. Dobbins",
+     "signal": "suspended"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T21:47+00:00",
+   "player": "Brady Christensen",
+   "team": "CAR",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_CAR_TB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 95.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T21:47+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Panthers do not activate Brady Christensen at expiration of 21-day practice window",
+     "quote": "Panthers do not activate Brady Christensen at expiration of 21-day practice window",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/panthers-do-not-activate-brady-christensen-at-expiration-of-21-day-practice-window",
+     "player": "Brady Christensen",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T21:22+00:00",
+   "player": "Brady Christensen",
+   "team": "CAR",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_CAR_TB",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 95.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T21:22+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikekayefootball.bsky.social (CAR)",
+     "title": "The #Panthers have not activated OL Brady Christensen, a team spokesperson confirmed. He will revert back to the season-ending injured reser",
+     "quote": "will revert back to the season-ending injured reserve",
+     "link": "https://bsky.app/profile/mikekayefootball.bsky.social/post/3n33kyxoltc24",
+     "player": "Brady Christensen",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T21:22+00:00",
+   "player": "Caden Curry",
+   "team": "IND",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_NYG_IND",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 71.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T21:22+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Colts sign Shane Buechele and Wanya Morris in flurry of roster moves, place Caden Curry on IR",
+     "quote": "place Caden Curry on IR",
+     "link": "https://sports.yahoo.com/nfl/articles/colts-sign-shane-buechele-wanya-205735261.html",
+     "player": "Caden Curry",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T20:42+00:00",
+   "player": "Skyler Gill-Howard",
+   "team": "DET",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_CHI_DET",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 24.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T20:42+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:davebirkett.bsky.social (DET)",
+     "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season www.freep.com/story/sports...",
+     "quote": "lose rookie DT Skyler Gill-Howard for the season",
+     "link": "https://bsky.app/profile/davebirkett.bsky.social/post/3n33ijojquc2j",
+     "player": "Skyler Gill-Howard",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-24T22:57+00:00",
+     "source": "google_injury",
+     "outlet": "NFLTradeRumors.co",
+     "title": "Lions DT Skyler Gill-Howard Out For Season With Knee Injury - NFLTradeRumors.co",
+     "quote": "Out For Season With Knee Injury",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPVVFUaUNkeEtOUnlBZ0ItRnhKX092aTdYZnRXOHNObjJ5N0xaSWFROW5nUjU4MnRzVWhYVlctYzVxS1FvTldBZnJmcmw3eDlVRGM4REFkTHVoZlpwR09zLXJCODZRY3NZUHJyNFMzNy1XVTRLVDRzUE9OVTRmSEYxVzZZZ2J1SGFvWXJGd3BBSQ?oc=5",
+     "player": "Skyler Gill-Howard",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T20:23+00:00",
+   "player": "Elijah Hicks",
+   "team": "CHI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_CHI_DET",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 24.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T20:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:kfishbain.bsky.social (CHI)",
+     "title": "Per Bears head coach Ben Johnson, S Elijah Hicks has been placed in the concussion protocol. He's out for Thursday.",
+     "quote": "He's out for Thursday",
+     "link": "https://bsky.app/profile/kfishbain.bsky.social/post/3n33hes66gk2k",
+     "player": "Elijah Hicks",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T20:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:seanhammond.bsky.social (CHI)",
+     "title": "Bears coach Ben Johnson says backup safety Elijah Hicks is in concussion protocol. He will not play Thursday.",
+     "quote": "He will not play Thursday",
+     "link": "https://bsky.app/profile/seanhammond.bsky.social/post/3n33hesycek2a",
+     "player": "Elijah Hicks",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T19:57+00:00",
+   "player": "Christian Benford",
+   "team": "BUF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_KC_BUF",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 25.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T19:57+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:joebuscaglia.bsky.social (BUF)",
+     "title": "Bills HC Joe Brady said that CB Christian Benford \"and everybody\" will be out on the field for Tuesday's walkthrough. Benford was an estimat",
+     "quote": "will be out on the field for Tuesday's walkthrough",
+     "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3n33fuqb33s2q",
+     "player": "Christian Benford",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T19:23+00:00",
+   "player": "Skyler Gill-Howard",
+   "team": "DET",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_CHI_DET",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 25.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:detroitfootball.net (DET)",
+     "title": "Skyler Gill-Howard is done for the season.",
+     "quote": "is done for the season",
+     "link": "https://bsky.app/profile/detroitfootball.net/post/3n33ehilvyj2z",
+     "player": "Skyler Gill-Howard",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T19:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Lions DT Skyler Gill-Howard out for season with knee injury",
+     "quote": "out for the season with knee injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/lions-dt-skyler-gill-howard-out-for-season-with-knee-injury",
+     "player": "Skyler Gill-Howard",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T21:22+00:00",
+     "source": "google_injury",
+     "outlet": "Diario AS",
+     "title": "Detroit Lions lose another defender for the season as Skyler Gill-Howard suffers knee injury - Diario AS",
+     "quote": "lose another defender for the season as Skyler Gill-Howard suffers knee injury",
+     "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQTVFJQUtxTnEwdjBicmkzdXIzOXhmMURZN2Y4QVp2cm4tblk4Q0xRd2lvazVyeFBaTzV5OWYzQkhNQnUybWZlZUlva2JDMk92amN3NjkxbnU0dzVDcDdVQXQ0MVU3SktBZHFwQmllemt6cUpiV2lUcXZnWmNHXzIwRHBpa2EycFVVM2p2UjBoRmlVaHhZV3B4ZGd6TXpYRExwUUh4NnFzbEFPWGNGRHQwVnEwdEE4al9LTVJYZ1hNQU01TnPSAdcBQVVfeXFMTWFCM2pYMlhkVmxpUDRyMjAtb1BIV2s5QXlEVC1LOVFYZE84ZFdnX1pGZThyVGJlQmt5ZEVtcHlpLVUzajRaUTUtVVVSM3FwLVdWN0hxekdYWl9HUnRsNVYzTS0tY1hILXZNTXlnWmZFSUprSUlMMmZ4Yi1IRzJ2OWRzVHBMbENOYXBPUk5jQ180eVR1UzRYVzExejFUWHVFSkZjMWtpT3dyeVdjMktVa2c1d1l0SHR5SS1fclA1SU15S184emZxMVMyRzhYX25lRWRWVkxRZk0?oc=5",
+     "player": "Skyler Gill-Howard",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T21:22+00:00",
+     "source": "google_injury",
+     "outlet": "Diario AS",
+     "title": "Detroit Lions lose another defender for the season as Skyler Gill-Howard suffers knee injury - Diario AS",
+     "quote": "Detroit Lions lose another defender for the season as Skyler Gill-Howard suffers knee injury",
+     "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQTVFJQUtxTnEwdjBicmkzdXIzOXhmMURZN2Y4QVp2cm4tblk4Q0xRd2lvazVyeFBaTzV5OWYzQkhNQnUybWZlZUlva2JDMk92amN3NjkxbnU0dzVDcDdVQXQ0MVU3SktBZHFwQmllemt6cUpiV2lUcXZnWmNHXzIwRHBpa2EycFVVM2p2UjBoRmlVaHhZV3B4ZGd6TXpYRExwUUh4NnFzbEFPWGNGRHQwVnEwdEE4al9LTVJYZ1hNQU01TnPSAdcBQVVfeXFMTWFCM2pYMlhkVmxpUDRyMjAtb1BIV2s5QXlEVC1LOVFYZE84ZFdnX1pGZThyVGJlQmt5ZEVtcHlpLVUzajRaUTUtVVVSM3FwLVdWN0hxekdYWl9HUnRsNVYzTS0tY1hILXZNTXlnWmZFSUprSUlMMmZ4Yi1IRzJ2OWRzVHBMbENOYXBPUk5jQ180eVR1UzRYVzExejFUWHVFSkZjMWtpT3dyeVdjMktVa2c1d1l0SHR5SS1fclA1SU15S184emZxMVMyRzhYX25lRWRWVkxRZk0?oc=5",
+     "player": "Skyler Gill-Howard",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T22:23+00:00",
+     "source": "google_injury",
+     "outlet": "Diario AS",
+     "title": "Detroit Lions lose another defender for the season as Skyler Gill-Howard suffers knee injury - Diario AS",
+     "quote": "Detroit Lions lose another defender for the season as Skyler Gill-Howard suffers knee injury",
+     "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNYUIzalgyWGRWbGlQNHIyMC1vUEhXazlBeURULUs5UVhkTzhkV2dfWkZlOHJUYmVCa3lkRW1weWktVTNqNFpRNS1VVVIzcXAtV1Y3SHF6R1haX0dSdGw1VjNNLS1jWEgtdk1NeWdaZkVJSmtJSUwyZnhiLUhHMnY5ZHNUcExsQ05hcE9STmNDXzR5VHVTNFhXMTF6MVRYdUVKRmMxa2lPd3J5V2MyS1VrZzV3WXRIdHlJLV9yUDVJTXlLXzh6ZnExUzJHOFhfbmVFZFZWTFFmTdIB1wFBVV95cUxNYUIzalgyWGRWbGlQNHIyMC1vUEhXazlBeURULUs5UVhkTzhkV2dfWkZlOHJUYmVCa3lkRW1weWktVTNqNFpRNS1VVVIzcXAtV1Y3SHF6R1haX0dSdGw1VjNNLS1jWEgtdk1NeWdaZkVJSmtJSUwyZnhiLUhHMnY5ZHNUcExsQ05hcE9STmNDXzR5VHVTNFhXMTF6MVRYdUVKRmMxa2lPd3J5V2MyS1VrZzV3WXRIdHlJLV9yUDVJTXlLXzh6ZnExUzJHOFhfbmVFZFZWTFFmTQ?oc=5",
+     "player": "Skyler Gill-Howard",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T19:23+00:00",
+   "player": "Avila",
+   "team": "LA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -22.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Aside from Avila, Shelton and Ferguson being out (which we already knew), the Rams have no injury designations for tomorrow's game against t",
+     "quote": "Avila, Shelton and Ferguson being out",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3n33deu5xqc2g",
+     "player": "Avila",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T19:23+00:00",
+   "player": "Ferguson",
+   "team": "LA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -22.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Aside from Avila, Shelton and Ferguson being out (which we already knew), the Rams have no injury designations for tomorrow's game against t",
+     "quote": "Avila, Shelton and Ferguson being out",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3n33deu5xqc2g",
+     "player": "Ferguson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T18:23+00:00",
+   "player": "Kenneth Walker",
+   "team": "KC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_KC_BUF",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 26.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T18:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Chiefs expect Kenneth Walker to practice Tuesday",
+     "quote": "Chiefs expect Kenneth Walker to practice Tuesday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/chiefs-expect-kenneth-walker-to-practice-tuesday",
+     "player": "Kenneth Walker",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T17:45+00:00",
+   "player": "Saquon Barkley",
+   "team": "PHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_PHI_DAL",
+   "roster": "team_mismatch",
+   "certainty": 0.5,
+   "lead_vs_report_h": 27.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T17:45+00:00",
+     "source": "google_injury",
+     "outlet": "RotoWire",
+     "title": "NFL Injury Report & Analysis Week 12: Saquon Barkley Suffers Second Stinger - RotoWire",
+     "quote": "Saquon Barkley Suffers Second Stinger",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOU0RSOXBMeEhBajdiNVBCc0xyNG44a0NrdWZxQlNobE1GeGRxWk9oOTF0QkdhbWxnRlpyWWlWZWpGUWltRkF0QlpBaWdCcWVUcG9zN0ZHZDVKeHFob2lDb2FqM3Zmd0c2Z2wtcWhrSmJjdzF6X2RoRzZ5Mk9VNTgySXRLLWtoSk83Nndr?oc=5",
+     "player": "Saquon Barkley",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T16:49+00:00",
+   "player": "Vederian Lowe",
+   "team": "SF",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_12_SEA_SF",
+   "roster": "team_mismatch",
+   "certainty": 0.6,
+   "lead_vs_report_h": 76.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T16:49+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "The return of Vera-Tucker & Brown would reunite the most successful OL the Patriots have had this season. The Campbell/AVT/Wilson/Brown/Mose",
+     "quote": "The return of Vera-Tucker & Brown",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3n333xggcrk2s",
+     "player": "Vederian Lowe",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T16:42+00:00",
+   "player": "Denzel Ward",
+   "team": "CLE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_LV_CLE",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 76.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T16:42+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:spencito.bsky.social (CLE)",
+     "title": "Browns CB Denzel Ward on his hand injury after the bye week: Feeling a lot better coming off the bye week. Definitely able to rest up and he",
+     "quote": "Feeling a lot better coming off the bye week. Definitely able to rest up and heal up some injuries.",
+     "link": "https://bsky.app/profile/spencito.bsky.social/post/3n3337i5wgk2w",
+     "player": "Denzel Ward",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-24T16:23+00:00",
+   "player": "Josh Jacobs",
+   "team": "GB",
+   "signal": "doubtful",
+   "qb": false,
+   "game_id": "2026_12_GB_LA",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -19.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-24T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "Lineups",
+     "title": "NFL Thanksgiving Injury Report: Micah Parsons Probable, Josh Jacobs Doubtful for Packers - Lineups",
+     "quote": "Josh Jacobs Doubtful for Packers",
+     "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNUU03NW1HekdwN1pyc0Q5d2xNd3RrNVRCbDJCOUY4eGQwd3VTUVYwU0NlMFZVMjF5d1Y2cm1Pa3dHU0pCaXFfWVYyZGVMUW5hZHhnTTk3MGJwUGRVLWlTc0FnV2ZGbE9xeXR6b0F6Q2FubEdNNUdOcHZodHlsOTlTVTRjMjM2MUhWXy0tcEhGWkNONlN3dEFoVUxMblBtektnbkZkdklSV21fOGswT0V6N091T2JqbHFOMkxpOA?oc=5",
+     "player": "Josh Jacobs",
+     "signal": "doubtful"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-24T13:23+00:00",
    "player": "Sam Darnold",
@@ -101,7 +1064,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 79.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -137,7 +1103,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 81.6,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -202,6 +1171,16 @@
      "title": "At the trade deadline, Sean McVay said the Rams passed on receiver trades because of who they had coming back from injury -- Puka Nacua, Dav",
      "quote": "Nacua and Ferguson needing season-ending surgery",
      "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3n2zgvuv7sc2g",
+     "player": "Terrance Ferguson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T05:58+00:00",
+     "source": "google_injury",
+     "outlet": "Rams",
+     "title": "Injury Report, Week 12 vs. Packers: Steve Avila, Terrance Ferguson and Coleman Shelton ruled out; no designation for Kobie Turner - Rams",
+     "quote": "Terrance Ferguson ruled out",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPNzQxMEdiSjdNbG10VldaczA4RkhBZ3R2UjVMQ3FKRUZscEZvOVoxSFNSRGpyeWx0eUw3YUF4emJkN0t2RFVWN0ZkWkdPSnl2Y1pGUDNNNUtoQzVZeTZMaFpjc3VFdDJDT01kZUtsNmlodWtrUnZfNGRoRHZfbDNLS3UyRVNXdEdjUWNJSGx0UWhVYW91YjFmMjBWRTBNVUtiVmdSbnhfejJ0cnhhNkdYZzB6eTlQaFNpaEtGemhoWnZEaGxuNm5OVUVn?oc=5",
      "player": "Terrance Ferguson",
      "signal": "out"
     }
@@ -508,6 +1487,26 @@
      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOaV84Q3hlcG5meFY4S1NtUk5aZFpWTHdBTnkwS01ZMTl1YnJpY2lkX21TX1Jwdl96MEhZREc4SFVzY3NKUVF5NDVJMFVHT2hiQkkzRWVSb2lPYXVpMWdHRFh2dUJ5OXlUejFZR21yRE94SmVNRW9WYzZGUnBwUEVZWUVsd2VqQ3gtekQ0NXdlNA?oc=5",
      "player": "Greg Newsome II",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:patriciatraina.bsky.social (NYG)",
+     "title": "Greg Newsome II Facing Surgery, Lengthy Absence for Giants Secondary https://www.si.com/nfl/giants/onsi/giants-cornerback-newsome-injury-01m",
+     "quote": "Facing Surgery, Lengthy Absence for Giants Secondary",
+     "link": "https://bsky.app/profile/patriciatraina.bsky.social/post/3n33b3adfn72b",
+     "player": "Greg Newsome II",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T18:44+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "CB Greg Newsome II to have surgery on sprained ankle",
+     "quote": "CB Greg Newsome II will have tightrope surgery to repair his high ankle sprain",
+     "link": "https://sports.yahoo.com/articles/cb-greg-newsome-ii-surgery-182752277.html",
+     "player": "Greg Newsome II",
+     "signal": "out"
     }
    ]
   },
@@ -559,6 +1558,26 @@
      "title": "Alex Highsmith unlikely to be ready for Week 12",
      "quote": "unlikely to be ready for Week 12",
      "link": "https://sports.yahoo.com/articles/alex-highsmith-unlikely-ready-week-205853727.html",
+     "player": "Alex Highsmith",
+     "signal": "doubtful"
+    },
+    {
+     "seen_at": "2026-11-24T23:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "\"Going to be tough\" for Steelers LB Alex Highsmith to play this week",
+     "quote": "Going to be tough for Steelers LB Alex Highsmith to play this week",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/going-to-be-tough-for-steelers-lb-alex-highsmith-to-play-this-week",
+     "player": "Alex Highsmith",
+     "signal": "doubtful"
+    },
+    {
+     "seen_at": "2026-11-24T23:46+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "&quot;Going to be tough&quot; for Steelers LB Alex Highsmith to play this week",
+     "quote": "Going to be tough for Steelers LB Alex Highsmith to play this week",
+     "link": "https://sports.yahoo.com/nfl/articles/going-tough-steelers-lb-alex-231403653.html",
      "player": "Alex Highsmith",
      "signal": "doubtful"
     }
@@ -743,6 +1762,36 @@
      "title": "From teammate Nicole Yang: \u2018Tommy\u2019s our starter\u2019: Patriots coach Mike Vrabel endorses DeVito as his quarterback while injured Drake Maye rec",
      "quote": "'Tommy's our starter': Patriots coach Mike Vrabel endorses DeVito as his quarterback while injured Drake Maye recovers",
      "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3n2zauodm5s2s",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-24T23:46+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:christopherprice.bsky.social (NE)",
+     "title": "From teammate Nicole Yang: Tommy DeVito eager to seize his opportunity to shine as the Patriots\u2019 starting quarterback",
+     "quote": "eager to seize his opportunity to shine as the Patriots' starting quarterback",
+     "link": "https://bsky.app/profile/christopherprice.bsky.social/post/3n33t4u26vs2i",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T01:46+00:00",
+     "source": "google_injury",
+     "outlet": "New Haven Register",
+     "title": "Tommy DeVito embracing opportunity as starter with Patriots - New Haven Register",
+     "quote": "embracing opportunity as starter with Patriots",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOVWdUOVo1R012Skltdjk1VVJhWnBaVUp6S0Z4MEJHWDdSX2J5UXhSMFphTnotcFN2Y0dZSDBSb0VFSkpJSERPN1M5NXVnNVM4TmlWczlkXzFNLTBjeUc0Nk9wLTJ2Y2gwUkFldlI1UXZNTzFsWEc2VHVSRE1Bd1gzbkdOYjE0Xy12UVpsaTJKM2owSllsWmRsbE5qQU9rQ21rQVE?oc=5",
+     "player": "Tommy DeVito",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T14:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "Patriots.com",
+     "title": "Patriots Gameplan: how will the offense adjust for QB Tommy DeVito in Sunday's Week 12 matchup vs. the Chargers? - Patriots.com",
+     "quote": "how will the offense adjust for QB Tommy DeVito in Sunday's Week 12 matchup",
+     "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPOUNIelIxbTlQdHdyZ1dkc3k2YWtWdDVKWXo0ek4wOElCUUtYdk1UanRjSmFkNHFjUnVESTc2R2FIcEFmeUQ3bEVxQ0pWUHRSdG14UXNvaThZdko1UTdSYmc1RGtGV0p4UGZ3RXFWbG9ldDJQOTdqaFFGWC1Ud1U0X0s5dWhRa2FneDZvT1l2T2t0QW5KcXhCVVNQZG9taUlNdEwyV1FvRDZVY1poUFNXUDhTV3NhTEtPRTV6amZVX3owcHlpR1JqQ0RsSFNsQWF2dGZrLVJ3?oc=5",
      "player": "Tommy DeVito",
      "signal": "will_start"
     }
@@ -1058,6 +2107,16 @@
      "link": "https://bsky.app/profile/zacstevens.bsky.social/post/3n2xkcsf5wk2q",
      "player": "Sai'vion Jones",
      "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-25T00:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Broncos host 4 defensive linemen for tryouts after Sai'vion Jones injury - Yahoo Sports",
+     "quote": "after Sai'vion Jones injury",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNanROQm5qeGtvMlk1SXU2OTNXbEZhb0dKWkNfTHpwdndWZkdIbUlaa3J1aHVnMEZSZ2FPTUYyRjh5TjRxM0VmdmJaQ0tpM2YzMEc4UE5pdHIwcXlOek5mMGlLTC04dXctdF9IaEtrYXVMZU9PNi1scXRhLWo2RmVCRWFOSkNWZTMwOFBMNWtn?oc=5",
+     "player": "Sai'vion Jones",
+     "signal": "injured_reserve"
     }
    ]
   },
@@ -1246,6 +2305,16 @@
      "title": "49ers coach Kyle Shanahan provides update on \u2018crushing' Colton McKivitz injury - NBC Sports Bay Area & California",
      "quote": "Kyle Shanahan provides update on 'crushing' Colton McKivitz injury",
      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVnJRZ3laZUtOVkdNYnVuZUZVTzBvRlJXZm15VmxSZnFwcU43NlFyR2hYTlVPbzFlUURGbk9ZZlg0b3VsSzl1NTR5MmZzcnNueGt4NEJ3LTRick9ZeTdIWjJKU2tOMzZBVXlLZ2lLZ0hqOUFBdFpSYVlZWklET1EtR3ZRbm9qNEFEYV9aM1FEbWVxdmRzS3QtQkZFM29ucWZmcF9N0gGrAUFVX3lxTE1ucVNvLVNMdjNGNERUbnpIZXcwRllpUU16MFh5Tlk4cDFpazdnZGZzQVlSUi1ZUlgzLThScGNxakZCVlA4bzdDOWw2TkxoR2FqeDhhOTZzWUtqd3pzRU8tUGhOaWRiOUsyak81VVoxV0FVRzZZdGtaMjZibW04OWJoOFlmcFp4Tl92dklINkdKQll0Yk9UUEJGVms4cjlVckRSUGRUMlJBRXY4Yw?oc=5",
+     "player": "Colton McKivitz",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T03:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "49ers Lose Colton McKivitz for the Remainder of Season - Yahoo Sports",
+     "quote": "49ers Lose Colton McKivitz for the Remainder of Season",
+     "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPbU96RXVtam9UT3JFUWdhXzhIZWtSSWctUW5GMjJrV2U2MGhRcVVvT05SNlVfdnhuWUk4emxlQWdXbTZteXdkZS1VQmZET1RKa3VsZXNvUFIyaXdLXzVnSEpHTnlaU2ZLWFlGREpJOUc4VTBqQVpfRWZJMnZGa256NlowVnNmVi1pbFJEbkdHdFdTMEU?oc=5",
      "player": "Colton McKivitz",
      "signal": "out"
     }
@@ -1715,6 +2784,16 @@
      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOb3ZsSFl6M0ozaEVBczdEVmE5RE5ld3dYYWpqVW4wRmx4cXg5Z09KaDRmWkFTcGtJamVSdVVrNDN1cGtKeGlNRTRyTGZMRW9NaTd5cnlXSGc1dzZtTjNXTUZNVVZrWUp3Y1pacXdsaUV0SGpQWmlYVkZfV3R1dHVib3k1QmFJejBrN1hNbFZoUXprZ1M2b2FJUjFraHNnZmdIQXFVdFBreVZROHJOeVMxM3RkMzdSWUFOOEFXMdIB0AFBVV95cUxNckRyTi1EYjRwNnZ3ajBoTkFYUFVHb3NodW52ZlkyLUViclJWNEFVeUVZMVhnbHh5bXNkYTdOVE9YU1B6TjRwUzZ6NE1JeTZWQlE3dHotQjFVZXd4OGNua2hMR3hVQUt3NHpHX0ZVX21mNmZMVjd4bnNhRmFZWV9aeUg1Rm9MNVVseUp0VkhOek1iTFJPME5QaU44d3RPQ2dCN0l3N2dzS2JobWdCRGFXcjh5alFBUDVpZTM0S3BMNFoyd3lES3M5V3BOd1JRSGlG?oc=5",
      "player": "Carson Beck",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T02:23+00:00",
+     "source": "google_qb",
+     "outlet": "sharonherald.com",
+     "title": "40-year-old Josh Johnson will start at QB for Cardinals as rookie Carson Beck out with back spasms - sharonherald.com",
+     "quote": "out with back spasms",
+     "link": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNNUZjSEstWTg2TFE1Z1FDSUhpc3VXVldqODZVVEg4dlJKRlpXbExzZ3RnZlVCS3g3RVRySTl0Q0pHRGZfXzZ2dXNUMmE4OUhJdFU4SkJ5MUhJVVpqejdtWXZMbk55UjlzWllNUE9EQ3ZrUW9ybDhBYkxkdVhOT3ppSzkyS1hRTFl0SU5NNmprcGhlVnZVSTc1U2N4MmhmSmNTd280ejVhbERTUVZwU3FKVjYtX2FtNVBRZzctenFIZENaRVZXWlY4RE93RWF4UFpxcU9RNTVFRk5zN1BGaldYUjUyQW4xejhwTzljQkVhZV9hV0xVa1dabTk1bnA?oc=5",
+     "player": "Carson Beck",
+     "signal": "out"
     }
    ]
   },
@@ -1782,6 +2861,16 @@
      "title": "40-year-old Josh Johnson will start at QB for Cardinals as rookie Carson Beck out with back spasms - KY3",
      "quote": "40-year-old Josh Johnson will start at QB for Cardinals",
      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOb3ZsSFl6M0ozaEVBczdEVmE5RE5ld3dYYWpqVW4wRmx4cXg5Z09KaDRmWkFTcGtJamVSdVVrNDN1cGtKeGlNRTRyTGZMRW9NaTd5cnlXSGc1dzZtTjNXTUZNVVZrWUp3Y1pacXdsaUV0SGpQWmlYVkZfV3R1dHVib3k1QmFJejBrN1hNbFZoUXprZ1M2b2FJUjFraHNnZmdIQXFVdFBreVZROHJOeVMxM3RkMzdSWUFOOEFXMdIB0AFBVV95cUxNckRyTi1EYjRwNnZ3ajBoTkFYUFVHb3NodW52ZlkyLUViclJWNEFVeUVZMVhnbHh5bXNkYTdOVE9YU1B6TjRwUzZ6NE1JeTZWQlE3dHotQjFVZXd4OGNua2hMR3hVQUt3NHpHX0ZVX21mNmZMVjd4bnNhRmFZWV9aeUg1Rm9MNVVseUp0VkhOek1iTFJPME5QaU44d3RPQ2dCN0l3N2dzS2JobWdCRGFXcjh5alFBUDVpZTM0S3BMNFoyd3lES3M5V3BOd1JRSGlG?oc=5",
+     "player": "Josh Johnson",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-25T02:23+00:00",
+     "source": "google_qb",
+     "outlet": "sharonherald.com",
+     "title": "40-year-old Josh Johnson will start at QB for Cardinals as rookie Carson Beck out with back spasms - sharonherald.com",
+     "quote": "will start at QB for Cardinals",
+     "link": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNNUZjSEstWTg2TFE1Z1FDSUhpc3VXVldqODZVVEg4dlJKRlpXbExzZ3RnZlVCS3g3RVRySTl0Q0pHRGZfXzZ2dXNUMmE4OUhJdFU4SkJ5MUhJVVpqejdtWXZMbk55UjlzWllNUE9EQ3ZrUW9ybDhBYkxkdVhOT3ppSzkyS1hRTFl0SU5NNmprcGhlVnZVSTc1U2N4MmhmSmNTd280ejVhbERTUVZwU3FKVjYtX2FtNVBRZzctenFIZENaRVZXWlY4RE93RWF4UFpxcU9RNTVFRk5zN1BGaldYUjUyQW4xejhwTzljQkVhZV9hV0xVa1dabTk1bnA?oc=5",
      "player": "Josh Johnson",
      "signal": "will_start"
     }
@@ -2728,6 +3817,36 @@
      "link": "https://sports.yahoo.com/articles/micah-parsons-expected-season-debut-151648055.html",
      "player": "Micah Parsons",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T16:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Green Bay Packers News: Micah Parsons is ready to win",
+     "quote": "The Packers will finally have Micah Parsons back this week",
+     "link": "https://sports.yahoo.com/articles/green-bay-packers-news-micah-155659581.html",
+     "player": "Micah Parsons",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-25T00:47+00:00",
+     "source": "cbs",
+     "outlet": null,
+     "title": "NFL Thanksgiving injury report: Micah Parsons cleared for season debut, Kenneth Walker III practices",
+     "quote": "cleared for season debut",
+     "link": "https://www.cbssports.com/nfl/news/nfl-thanksgiving-injury-report-micah-parsons-cleared-kenneth-walker-iii-practices/",
+     "player": "Micah Parsons",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-25T01:46+00:00",
+     "source": "google_injury",
+     "outlet": "BVM Sports",
+     "title": "NFL Thanksgiving Injury Report: Parsons Cleared, Walker Practices - BVM Sports",
+     "quote": "Parsons Cleared",
+     "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOTFF1cnBPcmMzUUZUUVdEUHQ3a2lkVFozT0t0RnBDVG52TjhFcTRLQV9wQTFxUEU3NHNpcEl1Z3lLUExjOFAtUEMzN3VmaTF2ZEs5aDZ2TkpBRmRoOHpYdkpiUGRHR0xNVU1EZFUyZnJ0MmpmOVRXRTJaT1I3NWxTSUdueG5hS3hGX3hkVnFIZWh0cThXd3VleTFEOHVBUQ?oc=5",
+     "player": "Micah Parsons",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -3058,6 +4177,16 @@
      "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3n2u4hv4ajs2e",
      "player": "Steve Avila",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T05:58+00:00",
+     "source": "google_injury",
+     "outlet": "Rams",
+     "title": "Injury Report, Week 12 vs. Packers: Steve Avila, Terrance Ferguson and Coleman Shelton ruled out; no designation for Kobie Turner - Rams",
+     "quote": "Steve Avila ruled out",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPNzQxMEdiSjdNbG10VldaczA4RkhBZ3R2UjVMQ3FKRUZscEZvOVoxSFNSRGpyeWx0eUw3YUF4emJkN0t2RFVWN0ZkWkdPSnl2Y1pGUDNNNUtoQzVZeTZMaFpjc3VFdDJDT01kZUtsNmlodWtrUnZfNGRoRHZfbDNLS3UyRVNXdEdjUWNJSGx0UWhVYW91YjFmMjBWRTBNVUtiVmdSbnhfejJ0cnhhNkdYZzB6eTlQaFNpaEtGemhoWnZEaGxuNm5OVUVn?oc=5",
+     "player": "Steve Avila",
+     "signal": "out"
     }
    ]
   },
@@ -3101,6 +4230,46 @@
      "title": "Kyren Williams has a toe injury, is expected to be ready for Wednesday",
      "quote": "is expected to be ready for Wednesday",
      "link": "https://sports.yahoo.com/articles/kyren-williams-toe-injury-expected-225425744.html",
+     "player": "Kyren Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "google_injury",
+     "outlet": "RotoBaller",
+     "title": "Kyren Williams Off the Injury Report vs. Packers - NFL News | Fantasy Football - RotoBaller",
+     "quote": "Off the Injury Report vs. Packers",
+     "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNZmRVRW0teEJTQ3VNcjNHS0UybjREdkx1Q1F2VENsZkdEaTVHSkdiSHRfZHRzZV9GVC1MUnQzNjFNNkx2eEg3V0VjTHc1aUNVSWNOaEJWYnpNYTRYLV9xX2pQcmVqRWNaaDJxTkxiT1FfcGFGWGw5MndMWlR3Mm9UMUFvb0s4alJRbmVLOWF6MlJWa0tyS3lHa3R3?oc=5",
+     "player": "Kyren Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T19:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Kyren Williams off injury report, set to play Wednesday vs. Packers",
+     "quote": "he is still set to play in Wednesday's game against the Packers",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kyren-williams-off-injury-report-set-to-play-wednesday-vs-packers",
+     "player": "Kyren Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T19:42+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Kyren Williams off injury report, set to play Wednesday vs. Packers",
+     "quote": "set to play in Wednesday's game against the Packers",
+     "link": "https://sports.yahoo.com/articles/kyren-williams-off-injury-report-191728262.html",
+     "player": "Kyren Williams",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-24T22:02+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Kyren Williams cleared off injury report - NBC Sports",
+     "quote": "Kyren Williams cleared off injury report",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQZFZkTG8yZjZoSWxrWFQtWkZscHRJb2NybTRfanRiY0xYN19wTHFiLWlNYWY1cUswS0t4MDJrNDE3TjdON2dKUjFkcFdVWG9BV3FkWmRhS09EZGlRa3VkT1ZqMDV6RGJsMnVGT2VmSnI3SDNfMm5GUkZXNlBQWFlyUEJ0RmlaMnhpRWIwSEgzOE80OWZ3VUtlbDVxbDBTUmZqUHZhd0ZJaUl3QQ?oc=5",
      "player": "Kyren Williams",
      "signal": "expected_to_play"
     }
@@ -5783,6 +6952,16 @@
      "title": "LA Rams Get Concerning News on Puka Nacua Injury After WR Put On Injured Reserve - EssentiallySports",
      "quote": "WR Put On Injured Reserve",
      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPQXdMZnNOY3UtdGNjbXltTDhNbE1rLTA1STduMmlqeHVYSmhXUkdUaVBiOUlDbkVsYk50OTFUdXNjekFRc1VqZVVSQXhqVGFjXzhiS0hiVk1fYU9BcXBIbHR6blpBODNzUW5pV2JaenRXUy00ek1mTWpDRmhLb3NlOG1XQ1Ixb0RyWHgxZ3Bhek9SSWs2czhaUzNVbUpWT3ZUaUpVTEpCbWhDWHJTRGJJNEg5OU4yTEk1a051ZVdBaE8xM3paeGg1Q2I0cw?oc=5",
+     "player": "Puka Nacua",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-24T15:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Sean McVay: Puka Nacua is obviously a very important piece for us now and for the future",
+     "quote": "underwent successful knee surgery that is likely going to sideline him for the rest of 2026",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/sean-mcvay-puka-nacua-is-obviously-a-very-important-piece-for-us-now-and-for-the-future",
      "player": "Puka Nacua",
      "signal": "injured_reserve"
     }
@@ -9684,6 +10863,26 @@
      "link": "https://bsky.app/profile/nateatkins.bsky.social/post/3n2r4paisms2h",
      "player": "Coleman Shelton",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:adamgrosbard.bsky.social (LA)",
+     "title": "Aside from Avila, Shelton and Ferguson being out (which we already knew), the Rams have no injury designations for tomorrow's game against t",
+     "quote": "Avila, Shelton and Ferguson being out",
+     "link": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3n33deu5xqc2g",
+     "player": "Shelton",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-25T05:58+00:00",
+     "source": "google_injury",
+     "outlet": "Rams",
+     "title": "Injury Report, Week 12 vs. Packers: Steve Avila, Terrance Ferguson and Coleman Shelton ruled out; no designation for Kobie Turner - Rams",
+     "quote": "Coleman Shelton ruled out",
+     "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPNzQxMEdiSjdNbG10VldaczA4RkhBZ3R2UjVMQ3FKRUZscEZvOVoxSFNSRGpyeWx0eUw3YUF4emJkN0t2RFVWN0ZkWkdPSnl2Y1pGUDNNNUtoQzVZeTZMaFpjc3VFdDJDT01kZUtsNmlodWtrUnZfNGRoRHZfbDNLS3UyRVNXdEdjUWNJSGx0UWhVYW91YjFmMjBWRTBNVUtiVmdSbnhfejJ0cnhhNkdYZzB6eTlQaFNpaEtGemhoWnZEaGxuNm5OVUVn?oc=5",
+     "player": "Coleman Shelton",
+     "signal": "out"
     }
    ]
   },
@@ -10227,6 +11426,46 @@
      "title": "Packers\u2019 Micah Parsons officially cleared to return from ACL injury on Thanksgiving Eve vs. Rams - Yahoo Sports",
      "quote": "officially cleared to return from ACL injury on Thanksgiving Eve vs. Rams",
      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOeTJmel9MV0I3eGJYS2ljQk5FMFl0bWp6QjVYeVVlbVhXLXJiMEFTRHktLV8zSzJtYnprMktIR204cmxlWklNaE1iT292NXdHVVJsSi05MnlBQi1MZTdBZ3prd2NuWm9YZVctWkpOVVY1M08xSHozczJCdFdVY2VXbmZWNmdFYS1Rb2NMUm1ONnNVSWs?oc=5",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-24T17:23+00:00",
+     "source": "team_sites_2",
+     "outlet": "Green Bay Packers \u2013 packers.com",
+     "title": "Micah Parsons has winning in mind as he inches closer to return - Green Bay Packers \u2013 packers.com",
+     "quote": "inches closer to return",
+     "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOQ1pRcW84eWs1eUpoTm94c0FxRXprcTRlQVl5YURIV3pMdXRzRWxwcE5rRzZ4T1lXVVE5eFpCb1UycFdHTTU5SVRCdmJWRXVUWGM4TVRRUGFYNGFnOXE5NkMzZm9VQUI4aXdGOGhJS3hPWXptY3ZiN0pCdmxpVWg4OHBPRWV6VXZvaXVfRjBMWVJtVGZ6cy1UcDVzM1FaTEhfTGpKUmpXTQ?oc=5",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-24T19:23+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Injury Central",
+     "title": "Packers DE Micah Parsons Set to Make Season Debut in Week 12 After ACL Surgery - Sports Injury Central",
+     "quote": "Set to Make Season Debut in Week 12 After ACL Surgery",
+     "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE42REJvVFZWbkVLbDBaeVp6Z2hZSjBTTktUQ1RpRTBBbk95Z2t4Vkg2X2RSWUs1eFZOZHVYMDJfODh2cmg3MUktMS1GREpPM2dYelJJdkhyd0lFaFNfZTNaQk9vbFFGbkhZMFh6bG5RdDNsOEdhb1o3cw?oc=5",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-24T19:42+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Packers activate Micah Parsons to 53-man roster",
+     "quote": "Micah Parsons is back on the roster",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/packers-activate-micah-parsons-to-53-man-roster",
+     "player": "Micah Parsons",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-24T19:57+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Micah Parsons will make 2026 debut against Rams",
+     "quote": "will make 2026 debut against Rams",
+     "link": "https://sports.yahoo.com/articles/micah-parsons-2026-debut-against-194344889.html",
      "player": "Micah Parsons",
      "signal": "returning"
     }
