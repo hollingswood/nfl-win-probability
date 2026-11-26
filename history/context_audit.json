@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-26T14:45+00:00",
+ "generated_at": "2026-11-26T23:17+00:00",
  "rules_version": 1,
- "items": 504,
+ "items": 506,
  "categories": {
   "coach_fired_or_hired": {
    "items": 3,
@@ -28,19 +28,19 @@
    "graded": 30,
    "cover_rate_vs_close": 0.433,
    "cover_p": 0.7674,
-   "with_line_move": 30,
+   "with_line_move": 31,
    "avg_line_move_toward": 0.0,
    "move_p": 0.5,
    "candidate": false
   },
   "kicker_or_special_teams": {
-   "items": 35,
-   "graded": 34,
-   "cover_rate_vs_close": 0.5,
-   "cover_p": 0.5,
-   "with_line_move": 32,
-   "avg_line_move_toward": 0.65,
-   "move_p": 0.0069,
+   "items": 36,
+   "graded": 35,
+   "cover_rate_vs_close": 0.486,
+   "cover_p": 0.5671,
+   "with_line_move": 33,
+   "avg_line_move_toward": 0.63,
+   "move_p": 0.007,
    "candidate": false
   },
   "motivation_or_locker_room": {
@@ -48,9 +48,9 @@
    "graded": 27,
    "cover_rate_vs_close": 0.556,
    "cover_p": 0.2819,
-   "with_line_move": 27,
-   "avg_line_move_toward": 0.31,
-   "move_p": 0.0577,
+   "with_line_move": 28,
+   "avg_line_move_toward": 0.3,
+   "move_p": 0.0579,
    "candidate": false
   },
   "offensive_line_shuffle": {
@@ -58,19 +58,19 @@
    "graded": 99,
    "cover_rate_vs_close": 0.545,
    "cover_p": 0.1829,
-   "with_line_move": 99,
+   "with_line_move": 100,
    "avg_line_move_toward": 0.34,
    "move_p": 0.0483,
    "candidate": false
   },
   "other": {
-   "items": 176,
-   "graded": 156,
+   "items": 177,
+   "graded": 158,
    "cover_rate_vs_close": 0.494,
-   "cover_p": 0.5636,
-   "with_line_move": 155,
+   "cover_p": 0.5632,
+   "with_line_move": 157,
    "avg_line_move_toward": 0.35,
-   "move_p": 0.0039,
+   "move_p": 0.0041,
    "candidate": false
   },
   "play_caller_change": {
@@ -108,41 +108,23 @@
    "graded": 23,
    "cover_rate_vs_close": 0.565,
    "cover_p": 0.2658,
-   "with_line_move": 23,
+   "with_line_move": 24,
    "avg_line_move_toward": -0.02,
    "move_p": 0.5308,
    "candidate": false
   },
   "travel_or_weather_disruption": {
    "items": 32,
-   "graded": 29,
-   "cover_rate_vs_close": 0.448,
-   "cover_p": 0.7113,
-   "with_line_move": 31,
-   "avg_line_move_toward": 0.06,
-   "move_p": 0.3886,
+   "graded": 30,
+   "cover_rate_vs_close": 0.433,
+   "cover_p": 0.7674,
+   "with_line_move": 32,
+   "avg_line_move_toward": 0.11,
+   "move_p": 0.3137,
    "candidate": false
   }
  },
  "recent": [
-  {
-   "game_id": "2026_12_PHI_DAL",
-   "team": "PHI",
-   "category": "offensive_line_shuffle",
-   "direction": "hurts",
-   "seen": "2026-11-22T21:26+00:00",
-   "summary": "Eagles face offensive line questions with Hurts missing 2026 season.",
-   "implied_side": "home"
-  },
-  {
-   "game_id": "2026_12_BAL_HOU",
-   "team": "BAL",
-   "category": "other",
-   "direction": "hurts",
-   "seen": "2026-11-23T03:58+00:00",
-   "summary": "Ravens have lost five consecutive games, including Week 11 loss to previously winless Chargers.",
-   "implied_side": "home"
-  },
   {
    "game_id": "2026_12_NE_LAC",
    "team": "LAC",
@@ -204,7 +186,9 @@
    "direction": "helps",
    "seen": "2026-11-24T00:46+00:00",
    "summary": "DJ Reed upgraded to full practice for Week 12.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": -1.5,
+   "result_vs_close": "win"
   },
   {
    "game_id": "2026_12_PHI_DAL",
@@ -213,7 +197,8 @@
    "direction": "helps",
    "seen": "2026-11-24T05:32+00:00",
    "summary": "Mike McCarthy publicly stated confidence in Aaron Rodgers as the starting quarterback, shutting down benching speculation.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.0
   },
   {
    "game_id": "2026_12_CHI_DET",
@@ -222,7 +207,9 @@
    "direction": "hurts",
    "seen": "2026-11-24T11:00+00:00",
    "summary": "Bears face compressed week with Thursday game against Detroit Lions.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 1.5,
+   "result_vs_close": "loss"
   },
   {
    "game_id": "2026_12_NYG_IND",
@@ -321,7 +308,8 @@
    "direction": "hurts",
    "seen": "2026-11-25T15:10+00:00",
    "summary": "Micah Parsons on snap-count limit for season debut.",
-   "implied_side": "away"
+   "implied_side": "away",
+   "line_move_toward": 0.0
   },
   {
    "game_id": "2026_12_KC_BUF",
@@ -395,7 +383,28 @@
    "direction": "hurts",
    "seen": "2026-11-26T12:01+00:00",
    "summary": "Jalen Hurts has been out since Week 6 dealing with blood clots in his lungs.",
-   "implied_side": "home"
+   "implied_side": "home",
+   "line_move_toward": 0.0
+  },
+  {
+   "game_id": "2026_12_CHI_DET",
+   "team": "CHI",
+   "category": "kicker_or_special_teams",
+   "direction": "hurts",
+   "seen": "2026-11-26T17:50+00:00",
+   "summary": "Bears missing multiple special-teams stalwarts, Cam Lewis shifted to personal protector role on punt team.",
+   "implied_side": "home",
+   "line_move_toward": 0.0,
+   "result_vs_close": "loss"
+  },
+  {
+   "game_id": "2026_12_WAS_ARI",
+   "team": "ARI",
+   "category": "other",
+   "direction": "hurts",
+   "seen": "2026-11-26T20:50+00:00",
+   "summary": "Carson Beck remains out of Cardinals practice ahead of Commanders game.",
+   "implied_side": "away"
   }
  ]
 }
