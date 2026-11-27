@@ -1,20 +1,20 @@
 {
- "generated_at": "2026-11-27T14:43+00:00",
- "signals": 20336,
- "units": 4565,
+ "generated_at": "2026-11-27T21:53+00:00",
+ "signals": 20507,
+ "units": 4612,
  "skipped": {
-  "team_unclear": 444,
+  "team_unclear": 452,
   "no_game": 544,
-  "not_game_week": 1379
+  "not_game_week": 1382
  },
  "roster_check": {
-  "match": 19164,
-  "team_mismatch": 699,
-  "not_found": 470,
+  "match": 19320,
+  "team_mismatch": 706,
+  "not_found": 478,
   "ambiguous": 3
  },
  "graded": 2217,
- "pending": 84,
+ "pending": 110,
  "overall": {
   "n": 2217,
   "correct": 1815,
@@ -66,13 +66,13 @@
   "n": 240,
   "correct": 157,
   "pct": 65.4,
-  "pending": 24
+  "pending": 26
  },
  "rule_population": {
   "n": 193,
   "correct": 138,
   "pct": 71.5,
-  "pending": 18
+  "pending": 20
  },
  "official_report_agreement": {
   "n": 1916,
@@ -80,17 +80,939 @@
   "pct": 73.7
  },
  "lead_vs_report_hours": {
-  "n": 2301,
-  "median": 23.6,
-  "share_before_report": 64.4
+  "n": 2327,
+  "median": 23.2,
+  "share_before_report": 64.5
  },
  "qb_line_move_6h": {
-  "n": 408,
+  "n": 409,
   "avg_abs_after": 0.57,
   "avg_abs_before": 0.37,
   "avg_after_negative_signals": -0.29
  },
  "rows": [
+  {
+   "seen_at": "2026-11-27T21:23+00:00",
+   "player": "Mason Rudolph",
+   "team": "PIT",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_13_HOU_PIT",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 167.6,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "google_qb",
+     "outlet": "cwibc.co.id",
+     "title": "Steelers Name Mason Rudolph Starting Quarterback Against Broncos - cwibc.co.id",
+     "quote": "Name Mason Rudolph Starting Quarterback",
+     "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9tUHlYa1pWTDhySlhFSWhsa0FpaUhrUjRtZ25Da213RWpmU0MtdjlFNlVoR0tiWlY4R1ZUSEZPM2FjWFJoSUp2bTRjbWNISFR5dm1neHk0MGVtbjdsYUFGSkpoVXc3TzFrLVkw?oc=5",
+     "player": "Mason Rudolph",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T21:23+00:00",
+   "player": "Jon Gaines",
+   "team": "ARI",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "For the #AZCardinals, QB Carson Beck and OL Jon Gaines are out for Sunday's game. TE Hunter Long, LB Karson Sharar, and LB Cody Simon are qu",
+     "quote": "QB Carson Beck and OL Jon Gaines are out for Sunday's game",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3n3d3lyd53k2t",
+     "player": "Jon Gaines",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T21:23+00:00",
+   "player": "Zach Carter",
+   "team": "ARI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": -0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:darrenurban.bsky.social (ARI)",
+     "title": "For the #AZCardinals, QB Carson Beck and OL Jon Gaines are out for Sunday's game. TE Hunter Long, LB Karson Sharar, and LB Cody Simon are qu",
+     "quote": "DL Zach Carter will not be coming off IR yet",
+     "link": "https://bsky.app/profile/darrenurban.bsky.social/post/3n3d3lyd53k2t",
+     "player": "Zach Carter",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T21:23+00:00",
+   "player": "Carnell Tate",
+   "team": "TEN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "match",
+   "certainty": 0.9,
+   "lead_vs_report_h": -0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Carnell Tate set to play for the Titans in Week 12",
+     "quote": "cleared to play in Week 12",
+     "link": "https://sports.yahoo.com/nfl/articles/carnell-tate-set-play-titans-210050131.html",
+     "player": "Carnell Tate",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T21:23+00:00",
+   "player": "Bhayshul Tuten",
+   "team": "JAX",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "team_mismatch",
+   "certainty": 1.0,
+   "lead_vs_report_h": -0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "NFL injury tracker Week 12: Latest news, fantasy implications as Brock Purdy (ankle) misses practice again; Justin Herbert (concussion) remains in protocol; Parker Washington (shoulder), Bhayshul Tuten (ankle/foot) ruled out",
+     "quote": "Bhayshul Tuten (ankle/foot) ruled out",
+     "link": "https://sports.yahoo.com/fantasy/article/nfl-injury-tracker-week-12-latest-news-fantasy-implications-as-brock-purdy-ankle-misses-practice-again-justin-herbert-concussion-remains-in-protocol-parker-washington-shoulder-bhayshul-tuten-anklefoot-ruled-out-210030008.html",
+     "player": "Bhayshul Tuten",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:44+00:00",
+   "player": "Davis Allen",
+   "team": "LA",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_13_KC_LA",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 120.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:44+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Rams lose Davis Allen to potential season-ending injury - Yahoo Sports",
+     "quote": "Rams lose Davis Allen to potential season-ending injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOd0lQTFFZZ09Vcm9oUXNNbU1MUWtCTlQ5T0pSNk80eEtFNG03TUFLLUtKd19TRlhQV0pGaHNkZlF2eWlsVVB6SDlrN2pWa2FURHF0WDBaYmlYTDNtTk9fT1FDeE50YmhlSGZTcG12b3AwdFZlWndEX1VJLW1pRDF3dmtpakM3MV9HUjNIWA?oc=5",
+     "player": "Davis Allen",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:37+00:00",
+   "player": "Kyler Murray",
+   "team": "MIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "team_mismatch",
+   "certainty": 0.8,
+   "lead_vs_report_h": 0.4,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:37+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Kyler Murray off injury report, likely to be No. 2 QB vs. Falcons",
+     "quote": "officially off the injury report",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kyler-murray-off-injury-report-likely-to-be-no-2-qb-vs-falcons",
+     "player": "Kyler Murray",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:00+00:00",
+   "player": "Christian Darrisaw",
+   "team": "MIN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 1.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday, Kevin O\u2019Connell said. Ryan Van Demark will start at",
+     "quote": "Vikings will be without Christian Darrisaw",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3n3cxhn2jpm2t",
+     "player": "Christian Darrisaw",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:emleiker.bsky.social (MIN)",
+     "title": "WR Jordan Addison, LT Christian Darrisaw and CB Isaiah Rodgers will all be out Sunday vs. the Falcons. Ryan Van Demark will start at LT.",
+     "quote": "LT Christian Darrisaw will all be out Sunday vs. the Falcons",
+     "link": "https://bsky.app/profile/emleiker.bsky.social/post/3n3cxgtl6yk2e",
+     "player": "Christian Darrisaw",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:22+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Vikings rule out Jordan Addison, Christian Darrisaw, Isaiah Rodgers for Week 12",
+     "quote": "Vikings rule out Christian Darrisaw",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/vikings-rule-out-jordan-addison-christian-darrisaw-isaiah-rodgers-for-week-12",
+     "player": "Christian Darrisaw",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:00+00:00",
+   "player": "Isaiah Rodgers",
+   "team": "MIN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 1.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday, Kevin O\u2019Connell said. Ryan Van Demark will start at",
+     "quote": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3n3cxhn2jpm2t",
+     "player": "Isaiah Rodgers",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:emleiker.bsky.social (MIN)",
+     "title": "WR Jordan Addison, LT Christian Darrisaw and CB Isaiah Rodgers will all be out Sunday vs. the Falcons. Ryan Van Demark will start at LT.",
+     "quote": "CB Isaiah Rodgers will all be out Sunday vs. the Falcons",
+     "link": "https://bsky.app/profile/emleiker.bsky.social/post/3n3cxgtl6yk2e",
+     "player": "Isaiah Rodgers",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:22+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Vikings rule out Jordan Addison, Christian Darrisaw, Isaiah Rodgers for Week 12",
+     "quote": "Vikings rule out Isaiah Rodgers",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/vikings-rule-out-jordan-addison-christian-darrisaw-isaiah-rodgers-for-week-12",
+     "player": "Isaiah Rodgers",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:00+00:00",
+   "player": "Jordan Addison",
+   "team": "MIN",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 1.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday, Kevin O\u2019Connell said. Ryan Van Demark will start at",
+     "quote": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3n3cxhn2jpm2t",
+     "player": "Jordan Addison",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:emleiker.bsky.social (MIN)",
+     "title": "WR Jordan Addison, LT Christian Darrisaw and CB Isaiah Rodgers will all be out Sunday vs. the Falcons. Ryan Van Demark will start at LT.",
+     "quote": "WR Jordan Addison will all be out Sunday vs. the Falcons",
+     "link": "https://bsky.app/profile/emleiker.bsky.social/post/3n3cxgtl6yk2e",
+     "player": "Jordan Addison",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:22+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Vikings rule out Jordan Addison, Christian Darrisaw, Isaiah Rodgers for Week 12",
+     "quote": "Vikings rule out Jordan Addison",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/vikings-rule-out-jordan-addison-christian-darrisaw-isaiah-rodgers-for-week-12",
+     "player": "Jordan Addison",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:00+00:00",
+   "player": "Ryan Van Demark",
+   "team": "MIN",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 1.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:bengoessling.bsky.social (MIN)",
+     "title": "Vikings will be without Christian Darrisaw, Isaiah Rodgers and Jordan Addison on Sunday, Kevin O\u2019Connell said. Ryan Van Demark will start at",
+     "quote": "Ryan Van Demark will start at left tackle",
+     "link": "https://bsky.app/profile/bengoessling.bsky.social/post/3n3cxhn2jpm2t",
+     "player": "Ryan Van Demark",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:emleiker.bsky.social (MIN)",
+     "title": "WR Jordan Addison, LT Christian Darrisaw and CB Isaiah Rodgers will all be out Sunday vs. the Falcons. Ryan Van Demark will start at LT.",
+     "quote": "Ryan Van Demark will start at LT",
+     "link": "https://bsky.app/profile/emleiker.bsky.social/post/3n3cxgtl6yk2e",
+     "player": "Ryan Van Demark",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T20:00+00:00",
+   "player": "Brandon Aiyuk",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": 1.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Brandon Aiyuk will not play Sunday vs. Cardinals",
+     "quote": "Brandon Aiyuk will not play Sunday vs. Cardinals",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/brandon-aiyuk-will-not-play-sunday-vs-cardinals",
+     "player": "Brandon Aiyuk",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Dan Quinn: Brandon Aiyuk won&#39;t play vs Cardinals",
+     "quote": "Brandon Aiyuk won't play vs Cardinals",
+     "link": "https://sports.yahoo.com/nfl/articles/dan-quinn-brandon-aiyuk-won-193000958.html",
+     "player": "Brandon Aiyuk",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T19:23+00:00",
+   "player": "Jahan Dotson",
+   "team": "ATL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 1.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Falcons rule out WR Jahan Dotson, LG Matthew Bergeron",
+     "quote": "ruled out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-rule-out-wr-jahan-dotson-lg-matthew-bergeron",
+     "player": "Jahan Dotson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T19:23+00:00",
+   "player": "Matthew Bergeron",
+   "team": "ATL",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 1.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Falcons rule out WR Jahan Dotson, LG Matthew Bergeron",
+     "quote": "ruled out",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/falcons-rule-out-wr-jahan-dotson-lg-matthew-bergeron",
+     "player": "Matthew Bergeron",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T19:01+00:00",
+   "player": "Cole Holcomb",
+   "team": "PIT",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_DEN_PIT",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -46.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T19:01+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "LB Cole Holcomb inactive for the Steelers on Friday",
+     "quote": "LB Cole Holcomb inactive for the Steelers on Friday",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/lb-cole-holcomb-inactive-for-the-steelers-on-friday",
+     "player": "Cole Holcomb",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T19:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "LB Cole Holcomb inactive for the Steelers on Friday",
+     "quote": "inactive",
+     "link": "https://sports.yahoo.com/nfl/articles/lb-cole-holcomb-inactive-steelers-185002656.html",
+     "player": "Cole Holcomb",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T19:01+00:00",
+   "player": "Johnson",
+   "team": "ARI",
+   "signal": "will_start",
+   "qb": false,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 0.85,
+   "lead_vs_report_h": 2.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T19:01+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Johnson will start again for the Cardinals against Washington - Yahoo Sports",
+     "quote": "Johnson will start again for the Cardinals against Washington",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOSVlkZWFJdnAwQ2NsZTdNSk5PZ3FSUFU0UHFfRTZDdW1nZl9QYldyWVJhR3J4R3FwUVFtNVUxelkwaEtUdHJXbi1iWEU2UmUyR01WNUdEd3Mwbk0yemw4RE14UkxuVlhGX3JsX2MxRDF1VXRmMGZtM3RqOUsteFhoeGpXMkdEaTFPSzZjM2t5ejhMS2NI?oc=5",
+     "player": "Johnson",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T18:23+00:00",
+   "player": "Romeo Doubs",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.3,
+   "lead_vs_report_h": 2.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Game-status nuggets from Mike Vrabel: \ud83c\udfc8 Wouldn\u2019t anticipate WR Romeo Doubs being ready \ud83c\udfc8 DT Christian Barmore (knee) questionable \ud83c\udfc8 LG Alija",
+     "quote": "Wouldn't anticipate WR Romeo Doubs being ready",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3n3csdpuzfs22",
+     "player": "Romeo Doubs",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T18:23+00:00",
+   "player": "Alijah Vera-Tucker",
+   "team": "NE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 2.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Game-status nuggets from Mike Vrabel: \ud83c\udfc8 Wouldn\u2019t anticipate WR Romeo Doubs being ready \ud83c\udfc8 DT Christian Barmore (knee) questionable \ud83c\udfc8 LG Alija",
+     "quote": "LG Alijah Vera-Tucker (hamstring) set to travel to L.A., on cusp of return",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3n3csdpuzfs22",
+     "player": "Alijah Vera-Tucker",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T18:46+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Christian Barmore questionable for Patriots, Alijah Vera-Tucker will travel to L.A.",
+     "quote": "will travel to L.A.",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/christian-barmore-questionable-for-patriots-alijah-vera-tucker-will-travel-to-l-a",
+     "player": "Alijah Vera-Tucker",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T18:46+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Christian Barmore questionable for Patriots, Alijah Vera-Tucker will travel to L.A.",
+     "quote": "will travel to L.A.",
+     "link": "https://sports.yahoo.com/nfl/articles/christian-barmore-questionable-patriots-alijah-182954220.html",
+     "player": "Alijah Vera-Tucker",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T18:23+00:00",
+   "player": "Amik Robertson",
+   "team": "WAS",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_WAS_ARI",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 2.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "Didn't see #Commanders CB Amik Robertson (ankle) in the two practices open to media this week. That likely means he's out for the second gam",
+     "quote": "Didn't see #Commanders CB Amik Robertson (ankle) in the two practices open to media this week. That likely means he's out for the second game in a row.",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n3csadawzs2k",
+     "player": "Amik Robertson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T19:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Commanders CB Amik Robertson to miss second straight game",
+     "quote": "to miss second straight game",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/commanders-cb-amik-robertson-to-miss-second-straight-game",
+     "player": "Amik Robertson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T19:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:tashanreed.bsky.social (WAS)",
+     "title": "#Commanders HC Dan Quinn said CB Amik Robertson (ankle) won't play Sunday against the Cardinals.",
+     "quote": "won't play Sunday against the Cardinals",
+     "link": "https://bsky.app/profile/tashanreed.bsky.social/post/3n3cvcukgmk2o",
+     "player": "Amik Robertson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T19:45+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Commanders CB Amik Robertson to miss second straight game",
+     "quote": "to miss second straight game",
+     "link": "https://sports.yahoo.com/nfl/articles/commanders-cb-amik-robertson-miss-191651687.html",
+     "player": "Amik Robertson",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T21:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Commanders vs. Cardinals Friday injury report: Key cornerback to miss second straight game",
+     "quote": "formally ruled cornerback Amik Robertson out",
+     "link": "https://sports.yahoo.com/nfl/articles/commanders-vs-cardinals-friday-injury-210451879.html",
+     "player": "Amik Robertson",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T17:23+00:00",
+   "player": "Davis Allen",
+   "team": "LA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_13_KC_LA",
+   "roster": "match",
+   "certainty": 0.75,
+   "lead_vs_report_h": 123.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T17:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Davis Allen has a high-ankle sprain, Tyler Higbee has a chest contusion",
+     "quote": "looks like they'll be missing at least one of them when they get back on the field in Week 13",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/davis-allen-has-a-high-ankle-sprain-tyler-higbee-has-a-chest-contusion",
+     "player": "Davis Allen",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T17:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Davis Allen has a high-ankle sprain, Tyler Higbee has a chest contusion",
+     "quote": "looks like they'll be missing at least one of them when they get back on the field in Week 13",
+     "link": "https://sports.yahoo.com/nfl/articles/davis-allen-high-ankle-sprain-170237834.html",
+     "player": "Davis Allen",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T16:43+00:00",
+   "player": "Omar Cooper",
+   "team": "NYJ",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_NYJ_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 4.3,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T16:43+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Jets rule Omar Cooper out with ankle injury",
+     "quote": "Jets rule Omar Cooper out with ankle injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/jets-rule-omar-cooper-out-with-ankle-injury",
+     "player": "Omar Cooper",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:43+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Jets rule Omar Cooper out with ankle injury",
+     "quote": "Jets rule Omar Cooper out with ankle injury",
+     "link": "https://sports.yahoo.com/nfl/articles/jets-rule-omar-cooper-ankle-162057104.html",
+     "player": "Omar Cooper",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T18:00+00:00",
+     "source": "yahoo",
+     "outlet": "NY Post Sports",
+     "title": "Omar Cooper\u2019s Jets return comes into focus with receiver set to miss Miami matchup",
+     "quote": "Cooper, who will miss his seventh game of the season",
+     "link": "https://sports.yahoo.com/nfl/articles/omar-cooper-jets-return-comes-172736959.html",
+     "player": "Omar Cooper",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T16:43+00:00",
+   "player": "DJ Uiagalelei",
+   "team": "LAC",
+   "signal": "will_start",
+   "qb": true,
+   "game_id": "2026_12_NE_LAC",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 4.3,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T16:43+00:00",
+     "source": "google_qb",
+     "outlet": "The Sporting Tribune",
+     "title": "Justin Herbert remains in concussion protocol as DJ Uiagalelei prepares for start - The Sporting Tribune",
+     "quote": "DJ Uiagalelei prepares for start",
+     "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPSHJ2Sll4WkFhSkhnT0JzSFhUcWhXLVBGblJva3NJVDhkQnQzRGRWUjNBLUwxYTdnNlpsQ1hDcmxVRTVXQUN0Tm5LSDdFNG9lZ1pFeHlKTUk4VW8xMEthQnd4ZFpZZzVMMHRRTGlXd3ZtdjJWSUxwNFNFVGpaWGFqV2Y5MWRGemNLNDNYOVU0Ykl6S0ZybHRZN05nbWRYa1BsaGRZSDZPUzNaT1lzMUtzNmZPcGxCdU9nc1VqUnJLcUtLUlhMV0E?oc=5",
+     "player": "DJ Uiagalelei",
+     "signal": "will_start"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T15:50+00:00",
+   "player": "Parker Washington",
+   "team": "JAX",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_TEN_JAX",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 5.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T15:50+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Parker Washington out on Sunday with a shoulder injury",
+     "quote": "out on Sunday with a shoulder injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/parker-washington-out-on-sunday-with-a-shoulder-injury",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:05+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Parker Washington out on Sunday with a shoulder injury - Yahoo Sports",
+     "quote": "Parker Washington out on Sunday with a shoulder injury",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNQ3hjRmd3NjJ0MG5NRkdLQzhiWnctdVN0Zm56X29MQWJTRUJEYWtTRU91bGd0Qk4xRzJtNkg5S0xEYl9KdzdKZ2wyaEgxQVl1cHE5Q052dFY1Vl9USTlqclVnVldoYkh2RVhJbHhMbTZTTTF4cHFYU2pIOUNjSmdXdlNCM05hc1h1ZnBMZ0VZeWNOQVBoakdIOQ?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jaguars rule out WR Parker Washington against Titans with a shoulder injury that's 'week to week' - Yahoo Sports",
+     "quote": "Jaguars rule out WR Parker Washington against Titans with a shoulder injury that's 'week to week'",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNaDZlQ0hINDgxLTNpYVJLQzQwWW40SnI1bGZ4WjUtcGhaUWdmUXJpcXFpZ0NvdEs4UERNVlRHaS1fU3NlSm5HYnhXc2YtTjZDaTRtQTRFSzM3dFpZZWZlYXFsR1lUWDQtRG9sa1BJMmZzeExPWTNpTmZEZG5rNFg3OUhjYXZlMnlIeV84U0NhTQ?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Jaguars WR Parker Washington (shoulder) is 'week-to-week' - ESPN",
+     "quote": "Jaguars WR Parker Washington (shoulder) is 'week-to-week'",
+     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNSFd5NjhyMmlxdklzMkY1cEs5QWFEWDhuaFRVcnJZbThxa2s4VWhqVTllNnhYdXBSVHBIMkxtSC1MNGFKSjVVbEhKWmhBeG9YeWt2YWh0bEsyc0pyTE1QbUZFWTZpZVpCQ3hiY3Q1a1pETGx6X2RKYzhoLTNGazV1NUVnYmVhTk1kcWw3RUh0R2FBa28tQXhF?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "NFL news roundup: Jaguars WR Parker Washington (shoulder) out vs. Titans - NFL.com",
+     "quote": "Jaguars WR Parker Washington (shoulder) out vs. Titans",
+     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNNVAtQXZQYUpndkxvTFlHNUV4dXp5Qi10cnAtVVpuOUNUdFlNcnZRaDZZZVFoRk95bE5URFpxeGVwQ0tTUElROVFWNkdUc3dTajVvbzh2R1RZcExYQjQydW9MV2lOQzIxb3RuMmpzOFF4b1p2RHBSR1lfRDZEVW9OQnVoRzVmNnJ1N1E?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Parker Washington out on Sunday with a shoulder injury - NBC Sports",
+     "quote": "Parker Washington out on Sunday with a shoulder injury",
+     "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQMXp1OXNpa0MzSm5JVHFoWGtFcWhGMnAtMHJFNVNVX1pyb21VRktXNFluVGtXU0xzN3NSZnF2Y1FFOXd2eWVZTjd3UTBnRXRfSmY5WHN6MGRCLUtNNHBaWG0tVWRRdmJpb3FGakR6WUlNTi1LUncyNW9wN1VxZVN0QWxuT1pSa3h1c0JzVFZPWFFHN1NZYWFlRjAzRkVMeUZjam9WMFdSQVVQdU1ZMjhEbUNLRzg3SnM?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:23+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Parker Washington (shoulder) ruled out vs. Titans - NBC Sports",
+     "quote": "Parker Washington (shoulder) ruled out vs. Titans",
+     "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZHZnRFloM1ZITHBuQ25hVUlFYjI5c0kwQVFWemtkOTZWQ1JtNDRhSmIyd3JVVDR0Z1gzU1Q2NFVCX25IMXdVSDJvZVlHS0hrZWdrY203eHk5bGtuLUJzZWF6M2hCVWduVk5TaUR0aC1BQlhldzE0T2hMdUNUenFOWUhDdEV4UEkwSkpKOGpZNnR4Mnl3MjdEaEdBc2tQSUZrS01tZ05qOUlGQWtyUG9WSi1R?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T16:43+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Jaguars' Parker Washington injures shoulder, OUT vs. Titans - Yahoo Sports",
+     "quote": "Jaguars' Parker Washington injures shoulder, OUT vs. Titans",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNd0Y1MkFzVlBmX3JCTm9BVjl2eWtuT3h6NXdqYUZRcGlMUkVPWjdFd1o0Mjg0ZDhRR2FtREZvY3JNWm5HWTlycHZnb2xuVHRpTWpWNk5heEZTMHBuUTRrT2gybFVKM0xLMmx2TzdfOGFRTkcxaTVKMlA1akJPZnhURUlmTnBndFhOSU9VX1FnNkhDMzFjQUttN1JiZw?oc=5",
+     "player": "Parker Washington",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T15:50+00:00",
+   "player": "Juju Brents",
+   "team": "MIA",
+   "signal": "out",
+   "qb": false,
+   "game_id": "2026_12_NYJ_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 5.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T15:50+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ml-j.bsky.social (MIA)",
+     "title": "Dolphins CB Juju Brents will not play vs the Jets this week, per Jeff Hafley, but S Dante Trader Jr will return",
+     "quote": "will not play vs the Jets this week",
+     "link": "https://bsky.app/profile/ml-j.bsky.social/post/3n3cjf7iaia2r",
+     "player": "Juju Brents",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T18:46+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Dolphins cornerback JuJu Brents to miss Sunday\u2019s game against New York Jets",
+     "quote": "to miss Sunday's game against New York Jets",
+     "link": "https://sports.yahoo.com/nfl/articles/dolphins-cornerback-juju-brents-miss-181057986.html",
+     "player": "JuJu Brents",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T15:50+00:00",
+   "player": "Dante Trader Jr",
+   "team": "MIA",
+   "signal": "returning",
+   "qb": false,
+   "game_id": "2026_12_NYJ_MIA",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 5.2,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T15:50+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:ml-j.bsky.social (MIA)",
+     "title": "Dolphins CB Juju Brents will not play vs the Jets this week, per Jeff Hafley, but S Dante Trader Jr will return",
+     "quote": "will return",
+     "link": "https://bsky.app/profile/ml-j.bsky.social/post/3n3cjf7iaia2r",
+     "player": "Dante Trader Jr",
+     "signal": "returning"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T14:58+00:00",
+   "player": "Harrison Smith",
+   "team": "MIN",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_ATL_MIN",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 6.0,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T14:58+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Vikings news: Harrison Smith injury upgrade is good news for Falcons game - ClutchPoints",
+     "quote": "Harrison Smith injury upgrade is good news for Falcons game",
+     "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNZ0FFZUNnclBJMldOMG90ck1nNlpteFJldmswUXlMQV9fSWN2MS1PbjBkcVVlOEZtNVhYdi1hcVg5cUtmV3oyV0x0b3h6LThoRlIyLXQ3aVRseVJkOXlQR0NyUWRfd3pTTTBRZEVmNGJfR2N6REtIc0xFOTktU1dHYkREYmNSNXNlaE1WcF92cFpIU1hTQ3lxckZhLVNwTFhjbFJuQ2VjQllFc3NJT19sbFNWTlo?oc=5",
+     "player": "Harrison Smith",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T17:23+00:00",
+     "source": "google_injury",
+     "outlet": "ClutchPoints",
+     "title": "Vikings news: Harrison Smith injury upgrade is good news for Falcons game - ClutchPoints",
+     "quote": "injury upgrade is good news for Falcons game",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdk5BRFB3ekZ1cDlXZTJBSERzX0IyeEViODZLeGRvUzluZnRzVmt3eHpjaWlEMktyU2NsMjVnem5DaVRMVlg1eWNQNXA3M2ZOd3NONTh3NHl3Vzhtd2c3TExGd3EyVk1xOGZfMm9PblB3amV0YWwxbV9RZGF1OWFKaXpnby1URjVWR3BrMVJtUnl5bExSQkJoaks0a1c?oc=5",
+     "player": "Harrison Smith",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-27T12:23+00:00",
    "player": "Quinyon Mitchell",
@@ -126,7 +1048,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 11.1,
-   "line_move": null,
+   "line_move": {
+    "after": 0.25,
+    "before": -0.5
+   },
    "verdict": "pending",
    "in_rule_population": false,
    "evidence": [
@@ -239,6 +1164,76 @@
      "title": "Bears Exhaling on Caleb Williams Scare, Bracing for Colston Loveland Injury News - Sports Illustrated",
      "quote": "Bracing for Colston Loveland Injury News",
      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQcGloa0dBTmFMZnIxMnVSMEJ4TkZkb25lUW92anlNekw2cW85OENTZWdYWmoyd2t2eVVjMC1mMEhldlhnWUZKR2F2M2prZHJhcGpHODVOSFFjV201OWZhOFRZc3hWc184MHpiQUN4QkR1UXBCUmZMWmhSZXNiSm1tY24yTGdDV1lPUlZIVEtuVjNxVU1XYkxkbkZqcVhJZ1lFZ2dhLWlKTTV2WDlJbWdxXzVOaw?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T17:23+00:00",
+     "source": "yahoo",
+     "outlet": "Yahoo Sports",
+     "title": "Bears TE Colston Loveland reportedly suffered knee sprain vs. Lions, likely heading to IR",
+     "quote": "likely heading to IR",
+     "link": "https://sports.yahoo.com/nfl/breaking-news/article/bears-te-colston-loveland-reportedly-suffered-knee-sprain-vs-lions-likely-heading-to-ir-171947637.html",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T17:45+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Report: Colston Loveland is expected to land on IR with knee injury",
+     "quote": "expected to land on IR with knee injury",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-colston-loveland-is-expected-to-land-on-ir-with-knee-injury",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T17:45+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Bears TE Colston Loveland reportedly suffered knee sprain vs. Lions, likely heading to IR - Yahoo Sports",
+     "quote": "likely heading to IR",
+     "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxORERocWp3THF3UHd2eW1BRldzN0hhdFZrZEJsdkVqM1oyS0pBN2IwaC05cTJpMWhHVmJVUTZnQ1lsa1J5SnJkOFp0eTMxcGt3aXVOeDczLU10RWhFb0d4R2p1eVdiLTJUeDRwU2VJSUxqZ1FrT25SZ1FBVzJkdmJmVGRIZmQxa1JMVmJ0aTRpaFZ1aXJyem8tNXR3R2FWMVB1c0xhNFEza2U0TzZvOWczcHdCSURMOWNHN1VkQkNBZFZ3b3JaakRCdWhRLURNanFOOVh4RlJpb2Uydlh4bUhpajVTcjNJQlQz?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "RotoBaller",
+     "title": "Colston Loveland Headed to Injured Reserve With Knee Injury - NFL News | Fantasy Football - RotoBaller",
+     "quote": "Colston Loveland Headed to Injured Reserve With Knee Injury",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNdnFpVWFoWHdWU0hGTWtCSXI1ZDdrMm1pMkRGcXMyOXo4dEpzeTNzSjhiTm82c2M2cHYzS3htSWhJcUVoVWVWcVdWbUw1Q2EtcXR5TjI5aXYzME1WczlfR2daTU80TTZBM2FQWGZJTUdiZ09CQ3NLUXpOel9mVndBNVdHUVlWdzVhTkJzak5MX3BNNDVRMHBmdGtnZ243ZGpWSHZnQm8yYXc1Zw?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T18:00+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Bears get bad news on TE Colston Loveland after Thanksgiving knee injury - Yahoo Sports",
+     "quote": "Bears get bad news on TE Colston Loveland after Thanksgiving knee injury",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNWFZjOG1UQlJ4aElNQzA4VG9UVjQyOVAtQ2NpX3U3VkxGelBOT1BIWUMtY2s3ZzZ5ZnF3eUkwa3JRY0FIam9CX0o2bG55TndpY3lCYnc4ZGhHNk5hMjlud3ZxNkg2akhEQ3Q3blNTSnd4clRHbk1CUkZMc1U3c09vWk8wUS0?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "google_injury",
+     "outlet": "CBS Sports",
+     "title": "Bears TE Colston Loveland expected to land on injured reserve with knee injury, per report - CBS Sports",
+     "quote": "Bears TE Colston Loveland expected to land on injured reserve with knee injury, per report",
+     "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPTTVEM2RvZzlvaThLOU1oWkZHZTJIQmVUZTVyNFUtUGxuUHM2NzdwaVhRTmd3UGZ6QnJJUmJKSHBvVks5SzFVSHR2aEZZZERIRlZiLXZRZHZqLVhWZHl3cDMxR0t0el9uV0NvS2pJV2NPeWplSDY1anJndUlBQlNPTFVFNUVvQ1laRUpJTkN5bjI4emZ6YURPVnl3VDlGdHpyc2ZveEUyVkI?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    },
+    {
+     "seen_at": "2026-11-27T18:46+00:00",
+     "source": "yahoo",
+     "outlet": "USA TODAY Sports",
+     "title": "Colston Loveland expected to miss several weeks",
+     "quote": "expected to be placed on Injured Reserve",
+     "link": "https://sports.yahoo.com/nfl/articles/colston-loveland-expected-miss-several-182155588.html",
      "player": "Colston Loveland",
      "signal": "injured_reserve"
     }
@@ -677,6 +1672,16 @@
      "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3n3ajeqr4kc2n",
      "player": "Carlton Davis",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "bluesky",
+     "outlet": "bsky:mikereiss.bsky.social (NE)",
+     "title": "Game-status nuggets from Mike Vrabel: \ud83c\udfc8 Wouldn\u2019t anticipate WR Romeo Doubs being ready \ud83c\udfc8 DT Christian Barmore (knee) questionable \ud83c\udfc8 LG Alija",
+     "quote": "CB Carlton Davis III (knee)...out",
+     "link": "https://bsky.app/profile/mikereiss.bsky.social/post/3n3csdpuzfs22",
+     "player": "Carlton Davis III",
+     "signal": "out"
     }
    ]
   },
@@ -770,6 +1775,26 @@
      "title": "Bears TE Colston Loveland carted off with knee injury, ruled out - National Football Post",
      "quote": "carted off with knee injury, ruled out",
      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSkx1MUdFTG83bkdNVzRNckxfdk5CTm9ndDlQeVQtS2V1WGdlVFgwOU9lNEQ2SzFUczBUeEdpc3RQU3VPczlMQUZCSHZ0UVR6bWtpcV85NkJBbllMNmpJRmNBMUVPM3V5dWFWallVemFzRFhyR3RCYkJRVE1QUVFVN20wLUJhYm9ia0dUVkR5TzE5NkhZUERRTm9pX3hUMkNwaWc?oc=5",
+     "player": "Colston Loveland",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T15:50+00:00",
+     "source": "google_injury",
+     "outlet": "NBC Sports",
+     "title": "Colston Loveland (knee) ruled out vs. Lions - NBC Sports",
+     "quote": "ruled out vs. Lions",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQeWd1aVg0c0lUZFd5N3FWbEVJcHBsTkJwV1ByMDhuQ1Q4eGc0NTZmUVpSRk5Lb0lvUldGNTBLSkp0SXc1UXF2SUUzT1VHd0s5ZlVQeWRHSUtWVzh2bWhFZXZkVXRRYTJnU3R0LU1aZW9qNzZpTGs3QXZXXzFJTGp3b08wSlp2dGJheEM5RFZQbXZSX1NhUzJWY0RRUi1oQ045ZTZDcHZia0F6dw?oc=5",
+     "player": "Colston Loveland",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T20:59+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Bears\u2019 Colston Loveland week-to-week after dodging serious knee injury - Yahoo Sports",
+     "quote": "Colston Loveland week-to-week after dodging serious knee injury",
+     "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNYVBacUh4Q0t5NmZ1WjBILUs0aTZWeDlRYzd5WVF0ZU9fNXpBVjhpSzJKVmwtLUdIRXRtME94a3RHYlZqSzFuRkQwSW52T1RyX1VHMHVTajBCZVR0XzV0bnhnSkpxblczMm50a2ZrRFVPd0ZRSVVSUzRkNE9wUE1kcXRqM1QyMzZMOHo0X05B?oc=5",
      "player": "Colston Loveland",
      "signal": "out"
     }
@@ -3515,6 +4540,16 @@
      "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQRTdpZy02XzBIVEhDbjRuWHBfcXBxN25FSVg5SnByYks4a0t6aHJmdGhFdTZvMDBvX1k5ekI4VFpEVVBIbjVGT1NnYzdNSzFPWVFVanhuQlFqQ3RKd2l0blk5ZHhzcTlXQmRCVk1JZ2p5bmpndGYySW9xcWVkbmhMa09mUGJiWlhCQ1ZzUjRpeEdvY3VfdWc?oc=5",
      "player": "Fernando Mendoza",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-27T20:00+00:00",
+     "source": "google_qb",
+     "outlet": "Bleacher Report",
+     "title": "Fernando Mendoza Named Raiders Captain For Browns Game Ahead of QB's 2nd NFL Start - Bleacher Report",
+     "quote": "Named Raiders Captain For Browns Game Ahead of QB's 2nd NFL Start",
+     "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPNjUwVUZEbjhIX2NmY3hERU5jMDI2ZU1QcUVXUVZwaEgtVWFJSjhmSHhvekUwUXI1WDh5X04tbXNYQlJRNmZUTHNqMVB6eC1sUnRCUm03UlE4UklZUmJFLUIyTy1YUDZ3dnUzTXBGVU1iOUVERlRBdzJXYWN2LU5yb3oyNW9TQUtxMnBFdWtKZVo1UzJCY3Uwc0hBeGc1MWJ4N193eWx5TFM3WTRKXzhXZExEbGozNHJ3d05Z?oc=5",
+     "player": "Fernando Mendoza",
+     "signal": "will_start"
     }
    ]
   },
@@ -4887,6 +5922,16 @@
      "link": "https://sports.yahoo.com/articles/derrick-henry-cleared-concussion-evaluation-220725595.html",
      "player": "Derrick Henry",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T18:23+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Ravens Week 12 injury report vs. Texans: Derrick Henry good to go despite concussion concern - Yahoo Sports",
+     "quote": "Derrick Henry good to go despite concussion concern",
+     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPbTc2emZ5WkZ5aXhWSDNiMmd5RWJzR3FvX1NwdVhReTVNRlFSeVRKa05feUgxZXkwS0VnbzBleXVTUjdmVzBBeG90SF9qazQwa0JvS29hNnY1eW96dlBCQng1TjJENXlId3Z6TFd2bE15aktNX1hfQXM1N0hKMVJhTjNJTVd3azJj?oc=5",
+     "player": "Derrick Henry",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -5490,6 +6535,16 @@
      "title": "Whoever plays QB for Arizona, the Commanders are favored to win on Sunday - Daily Slop",
      "quote": "either start 3rd-round rookie Carson Beck or 40-year-old journeyman Josh Johnson",
      "link": "https://sports.yahoo.com/nfl/articles/whoever-plays-qb-arizona-commanders-160000071.html",
+     "player": "Josh Johnson",
+     "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-27T17:45+00:00",
+     "source": "google_injury",
+     "outlet": "NFLTradeRumors.co",
+     "title": "Cardinals Officially Rule Out Carson Beck, Josh Johnson Will Start Again - NFLTradeRumors.co",
+     "quote": "Josh Johnson Will Start Again",
+     "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxORkVLU3pUS2RDQllCSmpTZW13eHZlaE9HNUZ0OFZsZUVNZGZYMTBZS1hlcnlqSHRCRTBVN0VwbG8zTHFHM28tendlVm5JTGNXUkVlNXVQZUU2Q1dmalhpTVNSbHdLNnhqV1owRk02a3JpV1Z1TEkyWTFDa0ZVVW41YXdJY1hEVzFCS0xxdGRTZjFuWFNhTGhWUmdIcWFjT28?oc=5",
      "player": "Josh Johnson",
      "signal": "will_start"
     }
