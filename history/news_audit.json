@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-11-27T00:16+00:00",
- "signals": 20277,
- "units": 4546,
+ "generated_at": "2026-11-27T14:43+00:00",
+ "signals": 20336,
+ "units": 4565,
  "skipped": {
   "team_unclear": 444,
   "no_game": 544,
-  "not_game_week": 1369
+  "not_game_week": 1379
  },
  "roster_check": {
-  "match": 19106,
-  "team_mismatch": 698,
+  "match": 19164,
+  "team_mismatch": 699,
   "not_found": 470,
   "ambiguous": 3
  },
- "graded": 2178,
- "pending": 114,
+ "graded": 2217,
+ "pending": 84,
  "overall": {
-  "n": 2178,
-  "correct": 1780,
-  "pct": 81.7
+  "n": 2217,
+  "correct": 1815,
+  "pct": 81.9
  },
  "by_signal": {
   "benched": {
@@ -32,24 +32,24 @@
    "pct": 87.8
   },
   "expected_to_play": {
-   "n": 591,
-   "correct": 461,
-   "pct": 78.0
+   "n": 602,
+   "correct": 470,
+   "pct": 78.1
   },
   "injured_reserve": {
-   "n": 272,
-   "correct": 225,
-   "pct": 82.7
+   "n": 274,
+   "correct": 226,
+   "pct": 82.5
   },
   "out": {
-   "n": 745,
-   "correct": 670,
-   "pct": 89.9
+   "n": 768,
+   "correct": 692,
+   "pct": 90.1
   },
   "returning": {
-   "n": 349,
-   "correct": 254,
-   "pct": 72.8
+   "n": 350,
+   "correct": 255,
+   "pct": 72.9
   },
   "suspended": {
    "n": 7,
@@ -57,40 +57,287 @@
    "pct": 57.1
   },
   "will_start": {
-   "n": 160,
-   "correct": 123,
-   "pct": 76.9
+   "n": 162,
+   "correct": 125,
+   "pct": 77.2
   }
  },
  "qb": {
-  "n": 237,
-  "correct": 154,
-  "pct": 65.0,
+  "n": 240,
+  "correct": 157,
+  "pct": 65.4,
   "pending": 24
  },
  "rule_population": {
-  "n": 190,
-  "correct": 135,
-  "pct": 71.1,
-  "pending": 20
+  "n": 193,
+  "correct": 138,
+  "pct": 71.5,
+  "pending": 18
  },
  "official_report_agreement": {
-  "n": 1879,
-  "agree": 1393,
-  "pct": 74.1
+  "n": 1916,
+  "agree": 1413,
+  "pct": 73.7
  },
  "lead_vs_report_hours": {
-  "n": 2292,
+  "n": 2301,
   "median": 23.6,
   "share_before_report": 64.4
  },
  "qb_line_move_6h": {
-  "n": 406,
-  "avg_abs_after": 0.58,
-  "avg_abs_before": 0.38,
+  "n": 408,
+  "avg_abs_after": 0.57,
+  "avg_abs_before": 0.37,
   "avg_after_negative_signals": -0.29
  },
  "rows": [
+  {
+   "seen_at": "2026-11-27T12:23+00:00",
+   "player": "Quinyon Mitchell",
+   "team": "PHI",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_13_PHI_ARI",
+   "roster": "match",
+   "certainty": 0.8,
+   "lead_vs_report_h": 176.6,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T12:23+00:00",
+     "source": "yahoo",
+     "outlet": "NBC Sports Philadelphia",
+     "title": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out",
+     "quote": "expected to play Thursday after being listed as a full participant Wednesday",
+     "link": "https://sports.yahoo.com/nfl/articles/eagles-injury-quinyon-mitchell-good-140257041.html",
+     "player": "Quinyon Mitchell",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T09:52+00:00",
+   "player": "Brock Purdy",
+   "team": "SF",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_12_SEA_SF",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 11.1,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T09:52+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "NFL Insider Gives Hopeful Update on Brock Purdy\u2019s Ankle Injury - Yahoo Sports",
+     "quote": "Hopeful Update on Brock Purdy's Ankle Injury",
+     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPZDlGaWFiSEo3UUdmWndNMUJ0TlNpSDdNRE1TNkJ4bTRxNlF2QkRQZDRLTDhIT0tSVEp1RXRGMFVBb2JBTDA1Sy14YlhCaVRlWjIxY25Zc1lDOHJaZXIyMUdzdHdIUFo2Qk5ZVDU0WGxNN3NfOW96WnhmU3NxZGgyZjhseG9JMWxPN0tHMw?oc=5",
+     "player": "Brock Purdy",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T08:53+00:00",
+   "player": "Harold Fannin Jr.",
+   "team": "CLE",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_LV_CLE",
+   "roster": "match",
+   "certainty": 0.65,
+   "lead_vs_report_h": 12.1,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T08:53+00:00",
+     "source": "google_injury",
+     "outlet": "Yahoo Sports",
+     "title": "Browns\u2019 Harold Fannin Jr. injury upgrade is good news for pivotal Raiders clash - Yahoo Sports",
+     "quote": "injury upgrade is good news for pivotal Raiders clash",
+     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOakdVSkd2Rng2UW5RQ0wwdVlNNHFudVVIc0REYVdjRWtBR2tBTktYdWVjRGlTUnBmd0NIX1Nna1daNzlNMkU5TmRQNkk1Tk1lUWFyb2pGVHNaQTZsckJ6NGRpbm1NY29vVjdMdmhLUW9uMUI3T3ItejRmakh3aC1QVEkxNkU5cG9PNFE0?oc=5",
+     "player": "Harold Fannin Jr.",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T03:53+00:00",
+   "player": "Jalen Hurts",
+   "team": "PHI",
+   "signal": "out",
+   "qb": true,
+   "game_id": "2026_13_PHI_ARI",
+   "roster": "match",
+   "certainty": 1.0,
+   "lead_vs_report_h": 185.1,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": true,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T03:53+00:00",
+     "source": "google_qb",
+     "outlet": "Pro Football Network",
+     "title": "Jalen Hurts Injury Update: Eagles QB Out vs. Cowboys on Thanksgiving, Expected to Miss Rest of Season With Blood Clots in His Lungs - Pro Football Network",
+     "quote": "Eagles QB Out vs. Cowboys on Thanksgiving",
+     "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNS2o1Nm5HOUI0OTNiQVNLYUpqU245ZjFFVEhtQ0ZqQ2F6TmtGYS1feWdXZlFPNzdoRFdxT0tTTlhwbzEzRGFNVUFpQUpSYkRpMHpydU1MRTJGbHNRUVRsWGYyQVZOalZUd1otdGtzOE1TTjIyT3BMZVY0TXNTMllpa2F4RE9mUnRNTWZVcUxxQ3hYdnFIR1EwNFNMR0dMQmtMYnU4dA?oc=5",
+     "player": "Jalen Hurts",
+     "signal": "out"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T03:15+00:00",
+   "player": "Caleb Williams",
+   "team": "CHI",
+   "signal": "expected_to_play",
+   "qb": true,
+   "game_id": "2026_13_JAX_CHI",
+   "roster": "match",
+   "certainty": 0.7,
+   "lead_vs_report_h": 185.8,
+   "line_move": null,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T03:15+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Bears Exhaling on Caleb Williams Scare, Bracing for Colston Loveland Injury News - Sports Illustrated",
+     "quote": "Bears Exhaling on Caleb Williams Scare",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQcGloa0dBTmFMZnIxMnVSMEJ4TkZkb25lUW92anlNekw2cW85OENTZWdYWmoyd2t2eVVjMC1mMEhldlhnWUZKR2F2M2prZHJhcGpHODVOSFFjV201OWZhOFRZc3hWc184MHpiQUN4QkR1UXBCUmZMWmhSZXNiSm1tY24yTGdDV1lPUlZIVEtuVjNxVU1XYkxkbkZqcVhJZ1lFZ2dhLWlKTTV2WDlJbWdxXzVOaw?oc=5",
+     "player": "Caleb Williams",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T03:15+00:00",
+   "player": "Colston Loveland",
+   "team": "CHI",
+   "signal": "injured_reserve",
+   "qb": false,
+   "game_id": "2026_13_JAX_CHI",
+   "roster": "match",
+   "certainty": 0.6,
+   "lead_vs_report_h": 185.8,
+   "verdict": "pending",
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T03:15+00:00",
+     "source": "google_injury",
+     "outlet": "Sports Illustrated",
+     "title": "Bears Exhaling on Caleb Williams Scare, Bracing for Colston Loveland Injury News - Sports Illustrated",
+     "quote": "Bracing for Colston Loveland Injury News",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQcGloa0dBTmFMZnIxMnVSMEJ4TkZkb25lUW92anlNekw2cW85OENTZWdYWmoyd2t2eVVjMC1mMEhldlhnWUZKR2F2M2prZHJhcGpHODVOSFFjV201OWZhOFRZc3hWc184MHpiQUN4QkR1UXBCUmZMWmhSZXNiSm1tY24yTGdDV1lPUlZIVEtuVjNxVU1XYkxkbkZqcVhJZ1lFZ2dhLWlKTTV2WDlJbWdxXzVOaw?oc=5",
+     "player": "Colston Loveland",
+     "signal": "injured_reserve"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T00:23+00:00",
+   "player": "Dalton Kincaid",
+   "team": "BUF",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_KC_BUF",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -27.4,
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Dalton Kincaid active, Christian Benford inactive for Bills-Chiefs",
+     "quote": "active",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dalton-kincaid-active-christian-benford-inactive-for-bills-chiefs",
+     "player": "Dalton Kincaid",
+     "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Dalton Kincaid active, Christian Benford inactive for Bills-Chiefs",
+     "quote": "active",
+     "link": "https://sports.yahoo.com/nfl/articles/dalton-kincaid-active-christian-benford-000436538.html",
+     "player": "Dalton Kincaid",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T00:23+00:00",
+   "player": "Noah Gray",
+   "team": "KC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_KC_BUF",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -27.4,
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chiefs-Bills Inactives: TE Noah Gray and DT Peter Woods will play",
+     "quote": "will play",
+     "link": "https://sports.yahoo.com/nfl/articles/chiefs-bills-inactives-te-noah-000000608.html",
+     "player": "Noah Gray",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
+  {
+   "seen_at": "2026-11-27T00:23+00:00",
+   "player": "Peter Woods",
+   "team": "KC",
+   "signal": "expected_to_play",
+   "qb": false,
+   "game_id": "2026_12_KC_BUF",
+   "roster": "match",
+   "certainty": 0.95,
+   "lead_vs_report_h": -27.4,
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
+   "in_rule_population": false,
+   "evidence": [
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "SB Nation",
+     "title": "Chiefs-Bills Inactives: TE Noah Gray and DT Peter Woods will play",
+     "quote": "will play",
+     "link": "https://sports.yahoo.com/nfl/articles/chiefs-bills-inactives-te-noah-000000608.html",
+     "player": "Peter Woods",
+     "signal": "expected_to_play"
+    }
+   ]
+  },
   {
    "seen_at": "2026-11-26T23:59+00:00",
    "player": "Skyler Bell",
@@ -101,7 +348,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -126,7 +376,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -151,7 +404,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -176,7 +432,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -201,7 +460,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -211,6 +473,26 @@
      "title": "Bills inactives vs. Chiefs (Week 12, 2026): WR Skyler Bell OT Jude Bowry DL Greg Gaines OLB Mike Danna CB Christian Benford S Jalon Kilgore",
      "quote": "CB Christian Benford",
      "link": "https://bsky.app/profile/joebuscaglia.bsky.social/post/3n3auipcogc2h",
+     "player": "Christian Benford",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "pft",
+     "outlet": null,
+     "title": "Dalton Kincaid active, Christian Benford inactive for Bills-Chiefs",
+     "quote": "inactive",
+     "link": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dalton-kincaid-active-christian-benford-inactive-for-bills-chiefs",
+     "player": "Christian Benford",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T00:23+00:00",
+     "source": "yahoo",
+     "outlet": "ProFootball Talk on NBC Sports",
+     "title": "Dalton Kincaid active, Christian Benford inactive for Bills-Chiefs",
+     "quote": "inactive",
+     "link": "https://sports.yahoo.com/nfl/articles/dalton-kincaid-active-christian-benford-000436538.html",
      "player": "Christian Benford",
      "signal": "out"
     }
@@ -226,7 +508,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -27.0,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -276,7 +561,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 21.0,
-   "line_move": null,
+   "line_move": {
+    "after": -0.0,
+    "before": -0.0
+   },
    "verdict": "pending",
    "in_rule_population": true,
    "evidence": [
@@ -464,6 +752,26 @@
      "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBjUzJIT1BmSVJVQWFCNlJCY3I2NTZtZThCUnVmWENvWEZVcFYteHJxQmExd0xWV19jV0MxUU5BSEs0Vl9zeEtHWG1EWHozSUE0ZlNONGJUOXlkNHBOR1lnX0gydkdNVERwZmFhbmh1eUtjNEV4ZTVRNmh5MmY0UQ?oc=5",
      "player": "Colston Loveland",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T02:17+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN India",
+     "title": "Bears TE Colston Loveland ruled out vs. Lions with knee injury - ESPN India",
+     "quote": "ruled out vs. Lions with knee injury",
+     "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQbnNlS3d5dGZlOS1za2YyMVlzdlI0a3ViTG1mRHQ4UlRzLW1xNDVEMDlKYmIyU1JhVTBSemkwa1Y1RzNjbXpKeTZYTzR6S3JDMlNydWpHam9udFc3ZVRMRWtTNFdnMy1YbE5HbWItd0tKaXc2MXVnUnpWdktMQ1NVSWlQSmt1TlM1RV9vM2ZDSF94WjY5Wnl5OA?oc=5",
+     "player": "Colston Loveland",
+     "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T07:05+00:00",
+     "source": "google_injury",
+     "outlet": "National Football Post",
+     "title": "Bears TE Colston Loveland carted off with knee injury, ruled out - National Football Post",
+     "quote": "carted off with knee injury, ruled out",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSkx1MUdFTG83bkdNVzRNckxfdk5CTm9ndDlQeVQtS2V1WGdlVFgwOU9lNEQ2SzFUczBUeEdpc3RQU3VPczlMQUZCSHZ0UVR6bWtpcV85NkJBbllMNmpJRmNBMUVPM3V5dWFWallVemFzRFhyR3RCYkJRVE1QUVFVN20wLUJhYm9ia0dUVkR5TzE5NkhZUERRTm9pX3hUMkNwaWc?oc=5",
+     "player": "Colston Loveland",
+     "signal": "out"
     }
    ]
   },
@@ -600,8 +908,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -648,8 +956,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -696,8 +1004,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -744,8 +1052,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -772,8 +1080,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Questionable",
    "report_agrees": false,
    "in_rule_population": false,
@@ -840,8 +1148,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -868,8 +1176,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -896,8 +1204,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": -19.7,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Questionable",
    "report_agrees": false,
    "in_rule_population": false,
@@ -997,7 +1305,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -1032,7 +1343,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": -15.4,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1178,6 +1492,16 @@
      "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNTHJ0TnY4R1pSUXZUYU5fRDFiTl9EN24wQXloX0pveEc1aUs5aW85TXJ0bkRzejZJNW5wUUk3b1ZwcTNZSXJHaWp2ZmJUOUhzM3dHMmFZMzI1VTVsaXVKaE4yUVpwbHBwUldUSGVIQXBYeC1BamFuSUpsc1ZOTlBHYkNSaDNBQmU4eGRsbE1yQjk4cWlBMjRpMDdCMEhQekJsbVNiWnNKRDBmM0NFdXBqWXZlTWFsaThkbVpEa0hNSnhtSVdjMl91ejNzbkJUTlI5UTZWODJZOEt1SERnUUE?oc=5",
      "player": "Sam Darnold",
      "signal": "will_start"
+    },
+    {
+     "seen_at": "2026-11-27T12:23+00:00",
+     "source": "google_injury",
+     "outlet": "ESPN",
+     "title": "Why the Seahawks are turning back to quarterback Sam Darnold vs. the 49ers - ESPN",
+     "quote": "Seahawks are turning back to quarterback Sam Darnold vs. the 49ers",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQei1jTGVQR19QcEdkcXd4RjJLNE1ET1VBb181RjdvSTRGR3hGX0kteDJtbDl2UmtzbVdJV0x0cWlrS0tlbFVMV0NEbmV1Ni1XcEptY2NMRkctYXZ6UG0zaDFlVjdxelM3cjlxbFZMMjJNTkMxd1ZMUGVJN01ZYWFaTndtSkIySmtlOEc3T3NHM3Q1LUdHTFVHcTdNYw?oc=5",
+     "player": "Sam Darnold",
+     "signal": "will_start"
     }
    ]
   },
@@ -1273,7 +1597,10 @@
     "after": 0.0,
     "before": 0.0
    },
-   "verdict": "pending",
+   "truth": "started",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": true,
    "evidence": [
     {
@@ -1466,7 +1793,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1491,7 +1821,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 0.3,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1596,8 +1929,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 1.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -1694,7 +2027,10 @@
    "roster": "match",
    "certainty": 0.85,
    "lead_vs_report_h": 1.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1719,7 +2055,10 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 2.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1754,7 +2093,10 @@
    "roster": "match",
    "certainty": 0.9,
    "lead_vs_report_h": 3.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -1779,7 +2121,10 @@
    "roster": "team_mismatch",
    "certainty": 1.0,
    "lead_vs_report_h": 3.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
+   "official_status": "Out",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2095,6 +2440,16 @@
      "link": "https://sports.yahoo.com/nfl/article/aaron-rodgers-couldnt-play-forever-and-he-might-have-an-unceremonious-end-at-age-42-051331424.html",
      "player": "Aaron Rodgers",
      "signal": "out"
+    },
+    {
+     "seen_at": "2026-11-27T11:23+00:00",
+     "source": "google_injury",
+     "outlet": "NFL.com",
+     "title": "Rapoport on Aaron Rodgers: 'I don't know when we'll see him again' | 'GMFB' - NFL.com",
+     "quote": "I don't know when we'll see him again",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZ29fRUtxeXVMOWRfVk4xU2tYSHR4LVBHakxQMG1RWVN1OFB2bncxN1ZPUmV5cGVmY3F5TzBmcS1EQWowZm9TSkdidmlQV183THE1Q1VyS1VlN0M4NlNLTGd4VlJDeFZZbFF1WnhMbWt1c2x5V2RSM09YODR2N0d1TUJSMHJPQXI5LTlxLXNlRURQMXhURmh2WWk0SQ?oc=5",
+     "player": "Aaron Rodgers",
+     "signal": "out"
     }
    ]
   },
@@ -2207,7 +2562,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 17.3,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2345,6 +2703,16 @@
      "title": "Broncos activate RB Tyler Badie and place DL Sai\u2019vion Jones on the IR",
      "quote": "activated running back Tyler Badie from the injured reserve",
      "link": "https://sports.yahoo.com/nfl/articles/broncos-activate-rb-tyler-badie-220108503.html",
+     "player": "Tyler Badie",
+     "signal": "returning"
+    },
+    {
+     "seen_at": "2026-11-27T10:06+00:00",
+     "source": "team_sites_2",
+     "outlet": "Denver Broncos",
+     "title": "Broncos activate RB Tyler Badie from IR, promote RB Cody Schrader to active roster ahead of Week 12 game vs. Steelers - Denver Broncos",
+     "quote": "activate RB Tyler Badie from IR",
+     "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNTVhjcU1VM3haemo2MXVGbmJnV0VMU21IOVBqb1UwWVpTWHdibkgxUmQ0LVNZUGJqM0JteU1lUkZYZjEwYTNIUWZGU2pMMEd0Y3BUXzRvMm5aVGJWNWdZRHpwQWlRVzhsdW5Hb09KWFZrWERUWm5lVGVSZDU3bEFGYWtLUGtvSlNIZnVrVk5NM1NvQU1pM1RmVmp0MHM3RGZ2RFFDSDl5eU5mdXJKZlNwaHp3ajhMeGtNRE8wTnJ0a3Q4NllhTGVoYzZoWkx3WV9Qa1dNTWRLSHZWN2ZDVGY4dk01VHI?oc=5",
      "player": "Tyler Badie",
      "signal": "returning"
     }
@@ -2600,8 +2968,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 24.3,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": null,
    "in_rule_population": false,
@@ -2648,8 +3016,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 24.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -2746,7 +3114,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 25.1,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Questionable",
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2771,8 +3142,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 25.6,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -2895,7 +3266,10 @@
    "roster": "match",
    "certainty": 0.75,
    "lead_vs_report_h": 26.6,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "wrong",
+   "official_status": "Out",
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -2920,7 +3294,10 @@
    "roster": "team_mismatch",
    "certainty": 0.5,
    "lead_vs_report_h": 27.2,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": null,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4317,6 +4694,16 @@
      "link": "https://sports.yahoo.com/nfl/articles/brock-bowers-practicing-wednesday-missing-194734696.html",
      "player": "Brock Bowers",
      "signal": "expected_to_play"
+    },
+    {
+     "seen_at": "2026-11-27T14:23+00:00",
+     "source": "team_sites_3",
+     "outlet": "Raiders.com",
+     "title": "Key Matchups: Raiders hopeful for Brock Bowers\u2019 return in Sunday night showdown - Raiders.com",
+     "quote": "Raiders hopeful for Brock Bowers' return in Sunday night showdown",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNR24zaHpDMXh0MUh0SDJPRzNqNXFUTFlBV2NhSEEwSTlYYWphbXByWUE0Y3hRTkNLOVYwTUNmalBqR0dQUGYxWXcyX29aN2dWYWZFNjhWTVF3TjlSOEMycnhmY0tMNTNFUFlqYkh5MFo2MDNWZ2dDS2tKUkRaTEI2VDlNLW5fNVhHMXNvT0lOdG9PdFBxekxpRkNWQXpiN0hFZXBKa3lZRHlHQQ?oc=5",
+     "player": "Brock Bowers",
+     "signal": "expected_to_play"
     }
    ]
   },
@@ -4440,7 +4827,10 @@
    "roster": "match",
    "certainty": 0.8,
    "lead_vs_report_h": 68.6,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "wrong",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": false,
    "evidence": [
     {
@@ -4510,8 +4900,8 @@
    "roster": "match",
    "certainty": 0.7,
    "lead_vs_report_h": 71.3,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": null,
    "report_agrees": false,
    "in_rule_population": false,
@@ -4767,8 +5157,8 @@
    "roster": "match",
    "certainty": 1.0,
    "lead_vs_report_h": 73.0,
-   "truth": null,
-   "verdict": "pending",
+   "truth": "did not play",
+   "verdict": "correct",
    "official_status": "Out",
    "report_agrees": true,
    "in_rule_population": false,
@@ -4869,7 +5259,10 @@
     "after": -0.0,
     "before": -0.0
    },
-   "verdict": "pending",
+   "truth": "did not start",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": false,
    "in_rule_population": true,
    "evidence": [
     {
@@ -5166,7 +5559,10 @@
    "roster": "match",
    "certainty": 0.65,
    "lead_vs_report_h": 75.0,
-   "verdict": "pending",
+   "truth": "played",
+   "verdict": "correct",
+   "official_status": null,
+   "report_agrees": true,
    "in_rule_population": false,
    "evidence": [
     {
@@ -100084,11 +100480,11 @@
  "promotion": {
   "eligible": false,
   "reasons": [
-   "precision 71% (needs >= 95%)"
+   "precision 72% (needs >= 95%)"
   ],
-  "n": 190,
-  "correct": 135,
-  "precision": 0.7105,
+  "n": 193,
+  "correct": 138,
+  "precision": 0.715,
   "rules_version": 1,
   "min_n": 25,
   "min_precision": 0.95
